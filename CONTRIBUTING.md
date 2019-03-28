@@ -1,4 +1,4 @@
-# Contributing to [project name]
+# Contributing to siren-sdk
 
 ## Contributing
 
