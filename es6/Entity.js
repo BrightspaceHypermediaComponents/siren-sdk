@@ -3,7 +3,6 @@
 export class Entity {
 	constructor(entity, token, listener) {
 		this._entity = entity;
-		// eslint-disable-next-line no-undef
 		this._subEntities = new Map();
 		this._token = token;
 		this._listener = listener;
