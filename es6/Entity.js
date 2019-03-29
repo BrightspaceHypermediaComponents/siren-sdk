@@ -8,8 +8,8 @@ export class Entity {
 		this._listener = listener;
 	}
 
-	decompose() {
-		this._subEntities.forEach(entity => entity.decompose());
+	dispose() {
+		this._subEntities.forEach(entity => entity.dispose());
 		this._listener.remove();
 	}
 
@@ -17,7 +17,7 @@ export class Entity {
 	_subEntity(entityType, href, token, onChange) {
 		// Clean up if that href has already been added.
 		if (this._subEntities.has(href)) {
-			this._subEntities.get(href).decomposed();
+			this._subEntities.get(href).dispose();
 		}
 		entityFactory(entityType, href, token, (entity) => {
 			this._subEntities.set(href, entity);

@@ -15,8 +15,8 @@ export function entityFactory(entityType, href, token, onChange) {
 }
 
 // Some times the entity doesn't exists so this allows the cleanup code to be cleaner.
-export function decompose(entity) {
-	entity && entity.decompose && entity.decompose();
+export function dispose(entity) {
+	entity && entity.decompose && entity.dispose();
 }
 
 // Allows one to manage the event store listeners. Makes it easy to update, add and remove a listener for the entity store.
