@@ -1,6 +1,16 @@
 'use strict';
+import { entityFactory, dispose } from 'entityFactory.js';
 
+/**
+ * Abstract Entity class to help create entity classes.
+ */
 export class Entity {
+	/**
+	 * Primes the object used by the entityFactory. Should never be called outside.
+	 * @param {Object} entity A siren entity
+	 * @param {String|Function|null} token token
+	 * @param {Function} listener Listener helper class
+	 */
 	constructor(entity, token, listener) {
 		this._entity = entity;
 		this._subEntities = new Map();
@@ -8,18 +18,26 @@ export class Entity {
 		this._listener = listener;
 	}
 
+	/**
+	 * Cleans up this entity by deleting the callbacks listeners stored in the entity store.
+	 */
 	dispose() {
-		this._subEntities.forEach(entity => entity.dispose());
+		this._subEntities.forEach(entity => dispose(entity));
 		this._listener.remove();
 	}
 
-	// protected method to keep track of sub entities.
-	_subEntity(entityType, href, token, onChange) {
+	/**
+	 * Protected: Add a listener to a subentity of this entity.
+	 * @param {*} entityType A entity class that extends this class.
+	 * @param {*} href Href of the entity to be created
+	 * @param {*} onChange Function to be called when the subentity changes.
+	 */
+	_subEntity(entityType, href, onChange) {
 		// Clean up if that href has already been added.
 		if (this._subEntities.has(href)) {
-			this._subEntities.get(href).dispose();
+			dispose(this._subEntities.get(href));
 		}
-		entityFactory(entityType, href, token, (entity) => {
+		entityFactory(entityType, href, this._token, (entity) => {
 			this._subEntities.set(href, entity);
 			onChange(entity);
 		});
