@@ -1,0 +1,10 @@
+{
+  "extends": "brightspace/polymer-3-config",
+  "globals": {
+    "fastdom": false,
+    "Promise": false
+  },
+  "env": {
+    "es6": true
+  }
+}
