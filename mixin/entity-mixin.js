@@ -18,11 +18,11 @@ export const interalEntityMixin = function(superClass) {
 					reflectToAttribute: true
 				},
 				/**
-				 * Token
+				 * Token JWT Token for brightspace | a function that returns a JWT token for brightspace | null (defaults to cookie authentication in a browser)
 				 */
 				token: String,
 				/**
-				 * A real object.
+				 * Entity object that extends the Entity class.
 				 */
 				_entity: Object
 			};

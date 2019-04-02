@@ -7,11 +7,14 @@ import { entityFactory, dispose } from 'entityFactory.js';
 export class Entity {
 	/**
 	 * Primes the object used by the entityFactory. Should never be called outside.
-	 * @param {Object} entity A siren entity
-	 * @param {String|Function|null} token token
+	 * @param {Object} entity A hypermedia siren entity as defined by [the siren specification]{@link https://github.com/kevinswiber/siren}
+	 * @param {String|Function|null} token JWT Token for brightspace | a function that returns a JWT token for brightspace | null (defaults to cookie authentication in a browser)
 	 * @param {Function} listener Listener helper class
 	 */
 	constructor(entity, token, listener) {
+		if (new.target === Entity) {
+			throw new TypeError('Cannot construct Entity instances directly');
+		}
 		this._entity = entity;
 		this._subEntities = new Map();
 		this._token = token;
@@ -30,7 +33,7 @@ export class Entity {
 	 * Protected: Add a listener to a subentity of this entity.
 	 * @param {*} entityType A entity class that extends this class.
 	 * @param {*} href Href of the entity to be created
-	 * @param {*} onChange Function to be called when the subentity changes.
+	 * @param {*} onChange callback function that accepts an {entityType} to be called when subentity changes.
 	 */
 	_subEntity(entityType, href, onChange) {
 		// Clean up if that href has already been added.
