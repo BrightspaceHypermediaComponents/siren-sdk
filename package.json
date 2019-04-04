@@ -4,11 +4,31 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "npm run test:lint && npm run test:polymer:local",
+    "test:lint": "npm run test:lint:wc && npm run test:lint:js",
+    "test:lint:js": "eslint . --ext .js,.html test/**/*.js test/**/*.html demo/**/*.js demo/**/*.html",
+    "test:lint:wc": "polymer lint mixin/**/*.js",
+    "test:polymer:local": "polymer test --skip-plugin sauce",
+    "test:polymer:sauce": "polymer test --skip-plugin local"
   },
   "author": "",
   "license": "MIT",
   "dependencies": {
     "@polymer/polymer": "^3.0.0"
+  },
+  "devDependencies": {
+    "@babel/polyfill": "^7.0.0",
+    "@polymer/iron-component-page": "^3.0.0-pre.18",
+    "@polymer/iron-demo-helpers": "^3.0.0-pre.18",
+    "@polymer/polymer": "^3.0.0",
+    "@webcomponents/webcomponentsjs": "^2.2.1",
+    "babel-eslint": "^10.0.1",
+    "eslint": "^4.15.0",
+    "eslint-config-brightspace": "^0.4.0",
+    "eslint-plugin-html": "^4.0.1",
+    "lie": "^3.3.0",
+    "polymer-cli": "^1.9.1",
+    "wct-browser-legacy": "^1.0.1",
+    "whatwg-fetch": "^2.0.0"
   }
 }

@@ -65,7 +65,7 @@ class EntityListener {
 	}
 
 	_validate(href, token, onChange) {
-        // token can be empty.
+		// token can be empty.
 		return href && typeof onChange === 'function';
 	}
 }

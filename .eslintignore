@@ -1,0 +1,3 @@
+test/acceptance/*
+reports
+node_modules
