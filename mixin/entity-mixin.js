@@ -34,7 +34,8 @@ export const interalEntityMixin = function(superClass) {
 			];
 		}
 
-		detached() {
+		disconnectedCallback() {
+			super.disconnectedCallback();
 			// this calls this._entity.dispose() if entity is actually an entity.
 			// Note this will dispose all child entities used.
 			dispose(this._entity);
