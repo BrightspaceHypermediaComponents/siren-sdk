@@ -21,6 +21,10 @@ export class Entity {
 		this._listener = listener;
 	}
 
+	hasClass(className) {
+		return this._entity.hasClass(className);
+	}
+
 	/**
 	 * Cleans up this entity by deleting the callbacks listeners stored in the entity store.
 	 */

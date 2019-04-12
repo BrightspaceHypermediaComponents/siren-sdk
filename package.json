@@ -14,7 +14,8 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "@polymer/polymer": "^3.0.0"
+    "@polymer/polymer": "^3.0.0",
+    "d2l-polymer-siren-behaviors": "Brightspace/polymer-siren-behaviors#semver:^1"
   },
   "devDependencies": {
     "@babel/polyfill": "^7.0.0",
