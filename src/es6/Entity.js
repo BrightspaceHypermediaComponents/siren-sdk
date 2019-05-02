@@ -1,5 +1,5 @@
 'use strict';
-import { entityFactory, dispose } from './EntityFactory.js';
+import { entityFactory, dispose } from './EntityFactory.js.js';
 
 /**
  * Abstract Entity class to help create entity classes.
