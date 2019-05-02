@@ -2,7 +2,7 @@ import { Entity } from '../es6/Entity';
 import { NotificationEntity } from './NotificationEntity';
 import { Rels } from '../hypermedia-constants';
 /**
- * A collection of {@link NotificationEntity.js|Notification Entities}
+ * A collection of {@link NotificationEntity | Notification Entities}
  */
 export class NotificationCollectionEntity extends Entity {
 
