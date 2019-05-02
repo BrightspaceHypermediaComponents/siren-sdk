@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "generate:docs": "jsdoc es6 mixin -R README.md -r -d docs",
     "test": "npm run test:lint && npm run test:polymer:local",
     "test:lint": "npm run test:lint:wc && npm run test:lint:js",
     "test:lint:js": "eslint . --ext .js,.html test/**/*.js test/**/*.html demo/**/*.js demo/**/*.html",
@@ -27,6 +28,7 @@
     "eslint": "^4.15.0",
     "eslint-config-brightspace": "^0.4.0",
     "eslint-plugin-html": "^4.0.1",
+    "jsdoc": "^3.5.5",
     "lie": "^3.3.0",
     "polymer-cli": "^1.9.1",
     "wct-browser-legacy": "^1.0.1",
