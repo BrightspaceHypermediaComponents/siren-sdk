@@ -12,7 +12,7 @@ export class Entity {
 	 * @param {Function} listener Listener helper class
 	 */
 	constructor(entity, token, listener) {
-		if (new.target === Entity) {
+		if (this.constructor.name === Entity.name) {
 			throw new TypeError('Cannot construct Entity instances directly');
 		}
 		this._entity = entity;
