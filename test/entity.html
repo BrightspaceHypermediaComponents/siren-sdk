@@ -15,11 +15,16 @@
 
 		<script type="module">
 		import { Entity } from '../es6/Entity.js';
+		import { Nothing } from './nothing-entity.js';
 		/* global suite, test, expect */
 		suite('entity abstract', () => {
 
 			test('init throws', () => {
 				expect(() => { new Entity(); }).to.throw(TypeError);
+			});
+
+			test('init on extended does not throw', () => {
+				expect(() => { new Nothing(); }).to.not.throw(TypeError);
 			});
 
 		});
