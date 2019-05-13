@@ -25,7 +25,7 @@ export function entityFactory(entityType, href, token, onChange) {
  * @param {Object|Null} entity Object that is of an Entity type.
  */
 export function dispose(entity) {
-	entity && entity.decompose && entity.dispose();
+	entity && entity.dispose && entity.dispose();
 }
 
 /** Allows one to manage the event store listeners. Makes it easy to update, add and remove a listener for the entity store. */

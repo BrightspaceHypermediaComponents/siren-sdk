@@ -3,8 +3,7 @@ import 'd2l-fetch/d2l-fetch.js';
 
 describe('d2l-organization-name', () => {
 	var sandbox,
-		component,
-		fetchStub;
+		component;
 
 	beforeEach(() => {
 		sandbox = sinon.sandbox.create();
@@ -55,7 +54,7 @@ describe('d2l-organization-name', () => {
 				href: '/semester2.json'
 			}]
 		};
-		fetchStub = sandbox.stub(window.d2lfetch, 'fetch', (input) => {
+		sandbox.stub(window.d2lfetch, 'fetch', (input) => {
 			const whatToFetch = {
 				'/organization.json': organizationEntity,
 				'/organization2.json': organizationEntity2,
@@ -104,8 +103,12 @@ describe('d2l-organization-name', () => {
 		it('should call _onOrganizationChange another time upon changes to href', done => {
 			expect(spy).to.have.been.calledOnce;
 			component.href = '/organization2.json';
+			component.href = '/organization.json';
+			component.href = '/organization2.json';
+			component.href = '/organization.json';
+
 			afterNextRender(component, () => {
-				expect(spy).to.have.been.calledTwice;
+				expect(spy).to.have.been.called;
 				const name = component.shadowRoot.getElementById('organization-name');
 				const code = component.shadowRoot.getElementById('organization-code');
 				const semesterNameDirect = component.shadowRoot.getElementById('semester-name-direct');

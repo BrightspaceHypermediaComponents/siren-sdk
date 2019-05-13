@@ -46,14 +46,12 @@ class SdkSirenOrganizationInfo extends EntityMixin(PolymerElement) {
 	static get is() { return 'siren-sdk-organization-info'; }
 
 	_onOrganizationChange(organization) {
-		console.log(organization.name());
 		this._organizationName = organization.name();
 		this._organizationCode = organization.code();
 		this._semesterHref = organization._semesterHref();
 		organization.onSemesterChange((semester) => {
 			this._semesterNameDirect = semester.name();
 		});
-		console.log(this._organizationName);
 	}
 }
 
