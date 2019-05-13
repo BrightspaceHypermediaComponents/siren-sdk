@@ -53,9 +53,9 @@ export const interalEntityMixin = function(superClass) {
 		}
 
 		__onHrefChange(href, token) {
+			dispose(this._entity); // Make sure the entity is cleaned up before setting a new one.
 			if (typeof this._entityType === 'function') {
 				entityFactory(this._entityType, href, token, entity => {
-					dispose(this._entity); // Make sure the entity is cleaned up before setting a new one.
 					this._entity = entity;
 				});
 			}

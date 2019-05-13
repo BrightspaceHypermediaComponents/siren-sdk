@@ -30,6 +30,7 @@ class SdkSirenOrganizationInfo extends EntityMixin(PolymerElement) {
 	}
 	static get properties() {
 		return {
+			id: String,
 			_organizationName: String,
 			_organizationCode: String,
 			_semesterNameDirect: String,

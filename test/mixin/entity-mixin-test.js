@@ -73,7 +73,7 @@ describe('d2l-organization-name', () => {
 		sandbox.restore();
 	});
 
-	describe('basic', () => {
+	describe('Testing Swap', () => {
 		let spy, spy2;
 		beforeEach(done => {
 			component = fixture('no-params');
@@ -88,7 +88,7 @@ describe('d2l-organization-name', () => {
 			afterNextRender(component, done);
 		});
 
-		it('should call _onOrganizationChange upon changes to href', done => {
+		it('Everything works with no swap', done => {
 			expect(spy).to.have.been.calledOnce;
 
 			afterNextRender(component, () => {
@@ -106,7 +106,7 @@ describe('d2l-organization-name', () => {
 
 		});
 
-		it('should call _onOrganizationChange another time upon changes to href', done => {
+		it('Swap to elements', done => {
 			expect(spy).to.have.been.calledOnce;
 			expect(spy2).to.have.been.calledOnce;
 			component.href = '/organization2.json';
