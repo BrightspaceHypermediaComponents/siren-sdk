@@ -3,7 +3,8 @@ import 'd2l-fetch/d2l-fetch.js';
 
 describe('d2l-organization-name', () => {
 	var sandbox,
-		component;
+		component,
+		component2;
 
 	beforeEach(() => {
 		sandbox = sinon.sandbox.create();
@@ -73,12 +74,17 @@ describe('d2l-organization-name', () => {
 	});
 
 	describe('basic', () => {
-		let spy;
+		let spy, spy2;
 		beforeEach(done => {
 			component = fixture('no-params');
+			component2 = fixture('no-params-2');
 			spy = sandbox.spy(component, '_onOrganizationChange');
+			spy2 = sandbox.spy(component2, '_onOrganizationChange');
+
 			component.token = 'whatever';
+			component2.token = 'whatever';
 			component.href = '/organization.json';
+			component2.href = '/organization2.json';
 			afterNextRender(component, done);
 		});
 
@@ -102,13 +108,13 @@ describe('d2l-organization-name', () => {
 
 		it('should call _onOrganizationChange another time upon changes to href', done => {
 			expect(spy).to.have.been.calledOnce;
+			expect(spy2).to.have.been.calledOnce;
 			component.href = '/organization2.json';
-			component.href = '/organization.json';
-			component.href = '/organization2.json';
-			component.href = '/organization.json';
+			component2.href = '/organization.json';
 
 			afterNextRender(component, () => {
-				expect(spy).to.have.been.called;
+				expect(spy).to.have.been.calledTwice;
+				expect(spy2).to.have.been.calledTwice;
 				const name = component.shadowRoot.getElementById('organization-name');
 				const code = component.shadowRoot.getElementById('organization-code');
 				const semesterNameDirect = component.shadowRoot.getElementById('semester-name-direct');
