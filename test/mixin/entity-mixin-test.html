@@ -1,0 +1,30 @@
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, user-scalable=yes">
+		<script src="../../../@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
+		<script src="../../../wct-browser-legacy/browser.js"></script>
+
+		<script type="module" src="../../../siren-parser/global.js"></script>
+
+		<!-- For IE11 -->
+		<script src="../../../lie/dist/lie.polyfill.min.js"></script>
+		<script src="../../../whatwg-fetch/fetch.js"></script>
+
+		<script type="module" src="../utility/siren-sdk-organization-info.js"></script>
+
+	</head>
+	<body>
+		<test-fixture id="no-params">
+			<template>
+				<siren-sdk-organization-info id="a"></siren-sdk-organization-info>
+			</template>
+		</test-fixture>
+		<test-fixture id="no-params-2">
+			<template>
+				<siren-sdk-organization-info id="b"></siren-sdk-organization-info>
+			</template>
+		</test-fixture>
+		<script type="module" src="./entity-mixin-test.js"></script>
+	</body>
+</html>

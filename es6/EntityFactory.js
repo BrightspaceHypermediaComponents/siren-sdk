@@ -25,7 +25,7 @@ export function entityFactory(entityType, href, token, onChange) {
  * @param {Object|Null} entity Object that is of an Entity type.
  */
 export function dispose(entity) {
-	entity && entity.decompose && entity.dispose();
+	entity && entity.dispose && entity.dispose();
 }
 
 /** Allows one to manage the event store listeners. Makes it easy to update, add and remove a listener for the entity store. */
@@ -34,6 +34,7 @@ class EntityListener {
 		this._href;
 		this._token;
 		this._onChange;
+		this._removeListener;
 	}
 
 	add(href, token, onChange) {
@@ -45,8 +46,10 @@ class EntityListener {
 		this._token = token;
 		this._onChange = onChange;
 
-		window.D2L.Siren.EntityStore.addListener(this._href, this._token, this._onChange);
-		window.D2L.Siren.EntityStore.fetch(href, token);
+		window.D2L.Siren.EntityStore.addListener(this._href, this._token, this._onChange).then((removeListener) => {
+			this._removeListener = removeListener;
+			window.D2L.Siren.EntityStore.fetch(href, token);
+		});
 	}
 
 	update(href, token, onChange) {
@@ -58,10 +61,7 @@ class EntityListener {
 	}
 
 	remove() {
-		if (!this._validate(this._href, this._token, this._onChange)) {
-			return;
-		}
-		window.D2L.Siren.EntityStore.removeListener(this._href, this._token, this._listener);
+		this._removeListener && this._removeListener();
 	}
 
 	_validate(href, token, onChange) {
