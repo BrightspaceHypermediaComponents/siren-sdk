@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Class: EntityListener</title>
+    <title>JSDoc: Source: notifications/NotificationEntity.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,137 +17,48 @@
 
 <div id="main">
 
-    <h1 class="page-title">Class: EntityListener</h1>
+    <h1 class="page-title">Source: notifications/NotificationEntity.js</h1>
 
     
 
 
 
-
-<section>
-
-<header>
     
-        <h2><span class="attribs"><span class="type-signature"></span></span>EntityListener<span class="signature">()</span><span class="type-signature"></span></h2>
-        
-            <div class="class-description">Allows one to manage the event store listeners. Makes it easy to update, add and remove a listener for the entity store.</div>
-        
-    
-</header>
-
-<article>
-    <div class="container-overview">
-    
-        
-
-    
-    <h2>Constructor</h2>
-    
-
-    
-    <h4 class="name" id="EntityListener"><span class="type-signature"></span>new EntityListener<span class="signature">()</span><span class="type-signature"></span></h4>
-    
-
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="es6_EntityFactory.js.html">es6/EntityFactory.js</a>, <a href="es6_EntityFactory.js.html#line33">line 33</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
-    </div>
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</article>
-
-</section>
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import { Rels } from '../hypermedia-constants';
+/**
+ * A d2l Notification Entity is a representation of a notification that has a type and unread count
+ */
+export class NotificationEntity {
+	constructor(_entity) {
+		this._entity = _entity;
+	}
+	/**
+	 * Current count of unread notifications
+	 */
+	count() {
+		return this._entity &amp;&amp; this._entity.properties &amp;&amp; this._entity.properties.count;
+	}
+	/**
+	 * the type of notification
+	 */
+	type() {
+		return this._entity &amp;&amp; this._entity.properties &amp;&amp; this._entity.properties.type;
+	}
+
+	getLink() {
+		if (!this._entity.hasLinkByRel(Rels.Notifications.updatesSource)) {
+			return;
+		}
+
+		return this._entity.getLinkByRel(Rels.Notifications.updatesSource).href;
+	}
+
+}
+</code></pre>
+        </article>
+    </section>
 
 
 

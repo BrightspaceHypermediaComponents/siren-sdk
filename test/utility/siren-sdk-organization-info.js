@@ -6,7 +6,7 @@ Polymer-based web component for a organization name.
 @demo demo/d2l-organization-name/d2l-organization-name-demo.html Organization Name
 */
 import { html, PolymerElement } from '@polymer/polymer/polymer-element.js';
-import { EntityMixin } from '../../mixin/entity-mixin.js';
+import { EntityMixin } from '../../src/mixin/entity-mixin.js';
 import { OrganizationEntity } from '../utility/OrganizationEntity.js';
 import './siren-sdk-organization-name.js';
 

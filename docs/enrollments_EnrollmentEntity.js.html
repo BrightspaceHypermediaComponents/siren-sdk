@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: mixin/entity-mixin.js</title>
+    <title>JSDoc: Source: enrollments/EnrollmentEntity.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: mixin/entity-mixin.js</h1>
+    <h1 class="page-title">Source: enrollments/EnrollmentEntity.js</h1>
 
     
 
@@ -27,72 +27,79 @@
     <section>
         <article>
             <pre class="prettyprint source linenums"><code>'use strict';
-import { dedupingMixin } from '@polymer/polymer/lib/utils/mixin.js';
-import { entityFactory, dispose } from '../es6/EntityFactory.js';
 
-/**
- * This mixin takes care of all the clean up. Thanks to entity be able to clean up all it's childern.
- * @polymerMixin
- */
-export const interalEntityMixin = function(superClass) {
-	return class extends superClass {
-		static get properties() {
-			return {
-				/**
-				 * Href for the entity
-				 */
-				href: {
-					type: String,
-					reflectToAttribute: true
-				},
-				/**
-				 * Token JWT Token for brightspace | a function that returns a JWT token for brightspace | null (defaults to cookie authentication in a browser)
-				 */
-				token: String,
-				/**
-				 * Entity object that extends the Entity class.
-				 */
-				_entity: Object
-			};
-		}
+import { Entity } from '../es6/Entity.js';
+import { Rels } from '../hypermedia-constants';
+import { OrganizationEntity } from '../organizations/OrganizationEntity';
 
-		static get observers() {
-			return [
-				'__onHrefChange(href, token)'
-			];
-		}
-
-		disconnectedCallback() {
-			super.disconnectedCallback();
-			// this calls this._entity.dispose() if entity is actually an entity.
-			// Note this will dispose all child entities used.
-			dispose(this._entity);
-		}
-
-		/**
-		 * Protected method to set the entity type such as Organization Entity.
-		 * Requires to be called in the constructor
-		 * @param {Function} entityType  The type of the entity. For example OrganizationEntity
-		 */
-		_setEntityType(entityType) {
-			if (typeof entityType === 'function') {
-				this._entityType = entityType;
-			}
-		}
-
-		__onHrefChange(href, token) {
-			dispose(this._entity); // Make sure the entity is cleaned up before setting a new one.
-			if (typeof this._entityType === 'function') {
-				entityFactory(this._entityType, href, token, entity => {
-					this._entity = entity;
-				});
-			}
-		}
-
-	};
+export const classes = {
+	pinned: 'pinned',
+	enrollment: 'enrollment'
 };
+/**
+ * EnrollmentEntity class representation of a d2l enrollment.
+ */
+export class EnrollmentEntity extends Entity {
 
-export const EntityMixin = dedupingMixin(interalEntityMixin);
+	organizationHref() {
+		if (!this._entity || !this._entity.hasLinkByRel(Rels.organization)) {
+			return;
+		}
+
+		return this._entity.getLinkByRel(Rels.organization).href;
+	}
+
+	completionDate() {
+		if (!this._entity) {
+			return;
+		}
+		return this._sirenClassProperty(this._entity, 'completion');
+	}
+
+	dueDate() {
+		if (!this._entity) {
+			return;
+		}
+		return this._sirenClassProperty(this._entity, 'due-date');
+	}
+
+	isAttended() {
+		return this.hasClass('attended');
+	}
+
+	enrollments() {
+		return this._entity &amp;&amp; this._entity.getSubEntities('https://api.brightspace.com/rels/enrollment');
+	}
+
+	userActivityUsageUrl() {
+		if (!this._entity || !this._entity.hasLinkByRel(Rels.Activities.userActivityUsage)) {
+			return;
+		}
+
+		return this._entity.getLinkByRel(Rels.Activities.userActivityUsage).href;
+	}
+
+	onOrganizationChange(onChange) {
+		const organizationHref = this.organizationHref();
+		organizationHref &amp;&amp; this._subEntity(OrganizationEntity, organizationHref, onChange);
+	}
+
+	_sirenClassProperty(entity, sirenClass) {
+		if (!entity.hasSubEntityByClass(sirenClass)) {
+			return;
+		}
+		var subEntity = entity.getSubEntityByClass(sirenClass);
+
+		if (subEntity.hasClass('date')) {
+			return subEntity.properties ? subEntity.properties.date : null;
+		} else if (subEntity.hasClass('duration')) {
+			return subEntity.properties ? subEntity.properties.seconds : null;
+		} else if (subEntity.hasClass('completion')) {
+			return this._sirenClassProperty(subEntity,  'completion-date');
+		}
+	}
+
+}
 </code></pre>
         </article>
     </section>
