@@ -20,11 +20,23 @@ export class Entity {
 		this._token = token;
 		this._listener = listener;
 	}
-
+	/**
+	 * Checks to see if the entity has className attached.
+	 * @param {*} className Class name you want to see if the entity has attached to it.
+	 */
 	hasClass(className) {
-		return this._entity.hasClass(className);
+		return this._entity && this._entity.hasClass(className);
 	}
+	/**
+	 * Get the url assigned to this entity.
+	 */
+	self() {
+		if (!this._entity || !this._entity.hasLinkByRel('self')) {
+			return;
+		}
 
+		return this._entity.getLinkByRel('self').href;
+	}
 	/**
 	 * Cleans up this entity by deleting the callbacks listeners stored in the entity store.
 	 */
