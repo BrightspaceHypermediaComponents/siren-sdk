@@ -1,7 +1,7 @@
 'use strict';
 
-import { Entity } from '../../es6/Entity.js';
-import { SimpleEntity } from '../../es6/SimpleEntity.js';
+import { Entity } from '../../src/es6/Entity.js';
+import { SimpleEntity } from '../../src/es6/SimpleEntity.js';
 
 export const classes = {
 	course: 'course',

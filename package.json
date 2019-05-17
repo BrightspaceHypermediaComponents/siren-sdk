@@ -8,7 +8,7 @@
     "test": "npm run test:lint && npm run test:polymer:local",
     "test:lint": "npm run test:lint:wc && npm run test:lint:js",
     "test:lint:js": "eslint . --ext .js,.html test/**/*.js test/**/*.html demo/**/*.js demo/**/*.html",
-    "test:lint:wc": "polymer lint mixin/**/*.js",
+    "test:lint:wc": "polymer lint src/mixin/**/*.js",
     "test:polymer:local": "polymer test --skip-plugin sauce",
     "test:polymer:sauce": "polymer test --skip-plugin local"
   },

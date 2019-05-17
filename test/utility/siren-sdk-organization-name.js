@@ -1,5 +1,5 @@
 import { html, PolymerElement } from '@polymer/polymer/polymer-element.js';
-import { EntityMixin } from '../../mixin/entity-mixin.js';
+import { EntityMixin } from '../../src/mixin/entity-mixin.js';
 import { OrganizationEntity } from '../utility/OrganizationEntity.js';
 
 /**
