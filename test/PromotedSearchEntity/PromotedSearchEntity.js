@@ -12,7 +12,7 @@ describe('PromotedSearchEntity', () => {
 			'actions':[{
 				'title':'Alpha',
 				'href':'../data/my-enrollments-00',
-				'name":'00',
+				'name':'00',
 				'method':'GET'
 			},{
 				'title':'Omega',
