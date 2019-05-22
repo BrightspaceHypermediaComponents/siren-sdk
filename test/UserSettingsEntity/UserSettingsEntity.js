@@ -62,7 +62,7 @@ describe('UserSettingsEntity', () => {
 			var userSettings = new UserSettingsEntity(entity);
 			expect(userSettings.userSettingsAction().name).to.equal(action.name);
 		});
-		
+
 		it('Return correct Action method', () => {
 			var userSettings = new UserSettingsEntity(entity);
 			expect(userSettings.userSettingsAction().method).to.equal(action.method);
@@ -74,7 +74,7 @@ describe('UserSettingsEntity', () => {
 			var userSettings = new UserSettingsEntity(entity);
 			expect(userSettings.mostRecentEnrollmentsSearchName()).to.equal('search-my-enrollments');
 		});
-		
+
 		it('Return correct mostRecentEnrollmentsSearchType', () => {
 			var userSettings = new UserSettingsEntity(entity);
 			expect(userSettings.mostRecentEnrollmentsSearchType()).to.equal('None');
