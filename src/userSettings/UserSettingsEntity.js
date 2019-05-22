@@ -2,6 +2,7 @@
 
 import { Entity } from '../es6/Entity.js';
 import { Rels } from '../hypermedia-constants';
+import { Actions } from 'd2l-hypermedia-constants';
 
 export class UserSettingsEntity extends Entity {
 	userSettingsHref() {
@@ -12,9 +13,9 @@ export class UserSettingsEntity extends Entity {
     }
 
     userSettingsAction() {
-		if (!this._entity || !this._entity.hasActionByName(Actions.enrollments.updateUserSettings)) {
-			return;
-		}
+        if (!this._entity || !this._entity.hasActionByName(Actions.enrollments.updateUserSettings)) {
+            return;
+        }
 		return this._entity.getActionByName(Actions.enrollments.updateUserSettings);
     }
 
