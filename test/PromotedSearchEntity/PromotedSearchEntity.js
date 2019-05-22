@@ -14,7 +14,7 @@ describe('PromotedSearchEntity', () => {
 				'href':'../data/my-enrollments-00',
 				'name':'00',
 				'method':'GET'
-			},{
+			}, {
 				'title':'Omega',
 				'href':'../data/my-enrollments-10',
 				'name':'10',
@@ -30,7 +30,7 @@ describe('PromotedSearchEntity', () => {
 				'href':'../data/my-enrollments-00',
 				'name':'00',
 				'method':'GET'
-			},{
+			}, {
 				'title':'Omega',
 				'href':'../data/my-enrollments-10',
 				'name':'10',
@@ -42,7 +42,7 @@ describe('PromotedSearchEntity', () => {
 			var searchEntity = new PromotedSearchEntity(entity);
 			expect(searchEntity.actions()[0].name).to.equal(action[0].name);
 		});
-		
+
 		it('Return correct action href', () => {
 			var searchEntity = new PromotedSearchEntity(entity);
 			expect(searchEntity.actions()[1].href).to.equal(action[1].href);
@@ -57,7 +57,7 @@ describe('PromotedSearchEntity', () => {
 			var searchEntity = new PromotedSearchEntity(entity);
 			expect(searchEntity.actions()[0].method).to.equal(action[0].method);
 		});
-		
+
 		it('Return correct number of action', () => {
 			var searchEntity = new PromotedSearchEntity(entity);
 			expect(searchEntity.actions().length).to.equal(2);
