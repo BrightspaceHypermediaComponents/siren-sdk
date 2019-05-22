@@ -13,7 +13,7 @@ export const classes = {
  * OrganizationEntity class representation of a d2l organization. TODO: expand on what an organization is
  */
 export class OrganizationEntity extends Entity {
-	// Entity has a constructor that is called from the factory to keep track of what is required to be cleaned
+	// Entity has a constructor that is called from the factory to keep track of what is required to be cleaned.
 	name() {
 		return this._entity && this._entity.properties && this._entity.properties.name;
 	}
@@ -58,6 +58,14 @@ export class OrganizationEntity extends Entity {
 			&& homepageEntity.properties.path;
 	}
 
+	courseInfoUrl() {
+		if (!this._entity || !this._entity.hasLinkByRel(Rels.courseOfferingInfoPage)) {
+			return;
+		}
+
+		return this._entity.getLinkByRel(Rels.courseOfferingInfoPage).href;
+	}
+
 	imageEntity() {
 		return this._entity && this._entity.getSubEntityByClass(Classes.courseImage.courseImage);
 	}
@@ -89,10 +97,10 @@ export class OrganizationEntity extends Entity {
 	}
 
 	_notificationCollectionHref() {
-		if (!this._entity || !this._entity.hasLinkByRel(Rels.Notifications)) {
+		if (!this._entity || !this._entity.hasLinkByRel(Rels.Notifications.organizationNotifications)) {
 			return;
 		}
 
-		return this._entity.getLinkByRel(Rels.Notifications).href;
+		return this._entity.getLinkByRel(Rels.Notifications.organizationNotifications).href;
 	}
 }
