@@ -69,7 +69,7 @@ export class OrganizationEntity extends Entity {
 			date: date,
 			beforeStartDate: startDate ? startDate > nowDate : null,
 			afterEndDate: endDate ? endDate <= nowDate : null
-		}
+		};
 		return dateTime;
 	}
 
