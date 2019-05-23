@@ -4,6 +4,7 @@ import { Entity } from '../es6/Entity.js';
 import { SimpleEntity } from '../es6/SimpleEntity.js';
 import { Rels, Classes, Actions } from '../hypermedia-constants';
 import { NotificationCollectionEntity } from '../notifications/NotificationCollectionEntity';
+import { SequenceEntity } from '../sequences/SequenceEntity.js';
 export const classes = {
 	course: 'course',
 	active: 'active',
@@ -91,6 +92,11 @@ export class OrganizationEntity extends Entity {
 	onNotificationsChange(onChange) {
 		const notificationsHref = this._notificationCollectionHref();
 		notificationsHref && this._subEntity(NotificationCollectionEntity, notificationsHref, onChange);
+	}
+
+	onSequenceChange(onChange) {
+		const sequenceLink = this.sequenceLink();
+		sequenceLink && this._subEntity(SequenceEntity, sequenceLink, onChange);
 	}
 
 	_semesterHref() {
