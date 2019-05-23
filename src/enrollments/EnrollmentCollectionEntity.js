@@ -16,4 +16,12 @@ export class EnrollmentCollectionEntity extends Entity {
 		const enrollmentEntities = this._entity.getSubEntitiesByRel(Rels.userEnrollment);
 		return enrollmentEntities.map(e => e.href).filter(href => href);
 	}
+
+	getActionByName(url) {
+		if (!this._entity || !this._entity.hasActionByName(url)) {
+			return;
+		}
+
+		return this._entity.getActionByName(url);
+	}
 }
