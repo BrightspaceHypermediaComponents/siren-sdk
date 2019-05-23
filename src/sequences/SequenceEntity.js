@@ -1,7 +1,7 @@
 'use strict';
 
-import { Entity } from 'siren-sdk/es6/Entity.js';
-import { Rels } from 'd2l-hypermedia-constants';
+import { Entity } from '../es6/Entity.js';
+import { Rels} from '../hypermedia-constants';
 
 export const sequenceClasses = {
 	sequence: 'sequence',
