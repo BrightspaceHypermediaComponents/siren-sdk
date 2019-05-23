@@ -2,7 +2,7 @@
 
 import { Entity } from '../es6/Entity.js';
 import { SimpleEntity } from '../es6/SimpleEntity.js';
-import { Rels, Classes } from '../hypermedia-constants';
+import { Rels, Classes, Actions } from '../hypermedia-constants';
 import { NotificationCollectionEntity } from '../notifications/NotificationCollectionEntity';
 export const classes = {
 	course: 'course',
@@ -64,6 +64,11 @@ export class OrganizationEntity extends Entity {
 		}
 
 		return this._entity.getLinkByRel(Rels.courseOfferingInfoPage).href;
+	}
+
+	canChangeCourseImage() {
+		return this._entity
+			&& this._entity.hasActionByName(Actions.organizations.setCatalogImage);
 	}
 
 	imageEntity() {
