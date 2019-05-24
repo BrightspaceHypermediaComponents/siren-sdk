@@ -2,8 +2,9 @@
 
 import { Entity } from '../es6/Entity.js';
 import { SimpleEntity } from '../es6/SimpleEntity.js';
-import { Rels, Classes } from '../hypermedia-constants';
+import { Rels, Classes, Actions } from '../hypermedia-constants';
 import { NotificationCollectionEntity } from '../notifications/NotificationCollectionEntity';
+import { SequenceEntity } from '../sequences/SequenceEntity.js';
 export const classes = {
 	course: 'course',
 	active: 'active',
@@ -32,6 +33,44 @@ export class OrganizationEntity extends Entity {
 
 	isActive() {
 		return this._entity && this._entity.properties && this._entity.properties.isActive;
+	}
+
+	processedDate(hideCourseStartDate, hideCourseEndDate) {
+		var nowDate = Date.now();
+		var startDate = Date.parse(this.startDate());
+		var endDate = Date.parse(this.endDate());
+		var dateType = null;
+		var date = null;
+
+		if (startDate > nowDate) {
+			dateType = 'startsAt';
+			date = new Date(startDate);
+			if (hideCourseStartDate) {
+				return null;
+			}
+		} else if (endDate < nowDate) {
+			dateType = 'ended';
+			date = new Date(endDate);
+			if (hideCourseEndDate) {
+				return null;
+			}
+		} else if (endDate >= nowDate) {
+			dateType = 'endsAt';
+			date = new Date(endDate);
+			if (hideCourseEndDate) {
+				return null;
+			}
+		} else {
+			return null;
+		}
+
+		const dateTime = {
+			type: dateType,
+			date: date,
+			beforeStartDate: startDate ? startDate > nowDate : null,
+			afterEndDate: endDate ? endDate <= nowDate : null
+		};
+		return dateTime;
 	}
 
 	description() {
@@ -66,6 +105,11 @@ export class OrganizationEntity extends Entity {
 		return this._entity.getLinkByRel(Rels.courseOfferingInfoPage).href;
 	}
 
+	canChangeCourseImage() {
+		return this._entity
+			&& this._entity.hasActionByName(Actions.organizations.setCatalogImage);
+	}
+
 	imageEntity() {
 		return this._entity && this._entity.getSubEntityByClass(Classes.courseImage.courseImage);
 	}
@@ -86,6 +130,11 @@ export class OrganizationEntity extends Entity {
 	onNotificationsChange(onChange) {
 		const notificationsHref = this._notificationCollectionHref();
 		notificationsHref && this._subEntity(NotificationCollectionEntity, notificationsHref, onChange);
+	}
+
+	onSequenceChange(onChange) {
+		const sequenceLink = this.sequenceLink();
+		sequenceLink && this._subEntity(SequenceEntity, sequenceLink, onChange);
 	}
 
 	_semesterHref() {
