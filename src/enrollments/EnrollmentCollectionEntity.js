@@ -1,7 +1,7 @@
 'use strict';
 
 import { Entity } from '../es6/Entity.js';
-import { Rels } from '../hypermedia-constants';
+import { Rels, Actions } from '../hypermedia-constants';
 /**
  * A collection of sub entities pointing to distinct enrollments
  */
@@ -15,5 +15,13 @@ export class EnrollmentCollectionEntity extends Entity {
 		}
 		const enrollmentEntities = this._entity.getSubEntitiesByRel(Rels.userEnrollment);
 		return enrollmentEntities.map(e => e.href).filter(href => href);
+	}
+
+	searchMyPinnedEnrollmentsAction() {
+		return this.getActionByName(Actions.enrollments.searchMyPinnedEnrollments);
+	}
+
+	searchMyEnrollmentsAction() {
+		return this.getActionByName(Actions.enrollments.searchMyEnrollments);
 	}
 }
