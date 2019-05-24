@@ -1,7 +1,7 @@
 'use strict';
 
 import { Entity } from '../es6/Entity.js';
-import { Rels} from '../hypermedia-constants';
+import { Rels } from '../hypermedia-constants';
 
 export const sequenceClasses = {
 	sequence: 'sequence',
@@ -10,6 +10,7 @@ export const sequenceClasses = {
 
 export const sequencedActivityClasses = {
 	sequencedActivity: 'sequenced-activity',
+	activity: 'activity',
 };
 
 export class SequenceEntity extends Entity {
@@ -21,7 +22,7 @@ export class SequenceEntity extends Entity {
 		const subSequences = this._subSequences();
 
 		subSequences.forEach((entity) => {
-			entity && entity.href && this._subEntity(SequenceEntity, entity.href, onChange);
+			entity && this._subEntity(SequenceEntity, entity, onChange);
 		});
 	}
 
@@ -29,7 +30,7 @@ export class SequenceEntity extends Entity {
 		const sequencedActivity = this._sequencedActivity();
 
 		sequencedActivity.forEach((entity) => {
-			entity && entity.href && this._subEntity(SequencedActivityEntity, entity.href, onChange);
+			entity && this._subEntity(SequencedActivityEntity, entity, onChange);
 		});
 	}
 
@@ -55,11 +56,23 @@ class SequencedActivityEntity extends Entity {
 		return this._entity && this._entity.properties && this._entity.properties.title;
 	}
 
-	organizationHref() {
-		if (!this._entity || !this._entity.hasLinkByRel(Rels.organization)) {
+	organizationHrefs() {
+		const activity = this._activitySubEntities();
+		const orgHref = [];
+		activity.forEach((entity) => {
+			if (entity && entity.getSubEntitiesByClass(Rels.organization)) {
+				orgHref.push(entity.getLinkByRel(Rels.organization).href);
+			}
+		});
+
+		return orgHref;
+	}
+
+	_activitySubEntities() {
+		if (!this._entity) {
 			return;
 		}
 
-		return this._entity.getLinkByRel(Rels.organization).href;
+		return this._entity.getSubEntitiesByClass(sequencedActivityClasses.activity);
 	}
 }

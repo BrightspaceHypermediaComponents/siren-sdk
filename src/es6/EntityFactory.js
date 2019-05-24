@@ -8,8 +8,9 @@ import 'd2l-polymer-siren-behaviors/store/entity-store.js';
  * @param {String} href Href of the entity to be created
  * @param {String|Token|Null} token JWT Token for brightspace | a function that returns a JWT token for brightspace | null (defaults to cookie authentication in a browser)
  * @param {Function} onChange Callback function that accepts an {entityType} to be called when entity changes.
+ * @param {Object} entity (Optional) Entity that has already been fetched.
  */
-export function entityFactory(entityType, href, token, onChange) {
+export function entityFactory(entityType, href, token, onChange, entity) {
 	const entityListener = new EntityListener();
 	const onChangeWrapped = (entity) => {
 		const entityWrapped = new entityType(entity, token, entityListener);
@@ -17,7 +18,7 @@ export function entityFactory(entityType, href, token, onChange) {
 	};
 
 	// This add the listener then calls the fetch.
-	entityListener.add(href, token, onChangeWrapped);
+	entityListener.add(href, token, onChangeWrapped, entity);
 }
 
 /**
@@ -37,8 +38,8 @@ class EntityListener {
 		this._removeListener;
 	}
 
-	add(href, token, onChange) {
-		if (!this._validate(href, token, onChange)) {
+	add(href, token, onChange, entity) {
+		if (!this._validate(href, onChange, entity)) {
 			return;
 		}
 
@@ -48,24 +49,30 @@ class EntityListener {
 
 		window.D2L.Siren.EntityStore.addListener(this._href, this._token, this._onChange).then((removeListener) => {
 			this._removeListener = removeListener;
-			window.D2L.Siren.EntityStore.fetch(href, token);
+			if (entity) {
+				window.D2L.Siren.EntityStore.update(href, token, entity);
+			} else {
+				window.D2L.Siren.EntityStore.fetch(href, token);
+			}
 		});
 	}
 
-	update(href, token, onChange) {
+	update(href, token, onChange, entity) {
 		if (href === this._href || token === this._token || onChange === this._onChange) {
 			return;
 		}
 		this._removeListener();
-		this._addListener(href, token, onChange);
+		this._addListener(href, token, onChange, entity);
 	}
 
 	remove() {
 		this._removeListener && this._removeListener();
 	}
 
-	_validate(href, token, onChange) {
+	_validate(href, onChange, entity) {
+		const entityIsGood = !entity || (entity.hasLinkByRel('self')  && entity.getLinkByRel('self').href === href);
+
 		// token can be empty.
-		return href && typeof onChange === 'function';
+		return href && typeof onChange === 'function' && entityIsGood;
 	}
 }

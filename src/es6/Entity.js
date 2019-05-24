@@ -59,10 +59,50 @@ export class Entity {
 	/**
 	 * Protected: Add a listener to a subentity of this entity.
 	 * @param {*} entityType A entity class that extends this class.
-	 * @param {*} href Href of the entity to be created
+	 * @param {*} href Href or Entity of the entity to be created
 	 * @param {*} onChange callback function that accepts an {entityType} to be called when subentity changes.
 	 */
 	_subEntity(entityType, href, onChange) {
+		// Clean up if that href has already been added.
+		if (typeof href === 'string') {
+			this._subEntityByHref(entityType, href, onChange);
+		} else {
+			this._subEntityByEntity(entityType, href, onChange);
+		}
+	}
+
+	/**
+	 * Protected: Add a listener to a subentity of this entity.
+	 * @param {*} entityType A entity class that extends this class.
+	 * @param {*} source Href of the entity to be created
+	 * @param {*} onChange callback function that accepts an {entityType} to be called when subentity changes.
+	 */
+	_subEntityByHref(entityType, source, onChange) {
+		// Clean up if that href has already been added.
+		if (this._subEntities.has(source)) {
+			dispose(this._subEntities.get(source));
+		}
+		entityFactory(entityType, source, this._token, (entity) => {
+			this._subEntities.set(source, entity);
+			onChange(entity);
+		});
+	}
+
+	/**
+	 * Protected: Add a listener to a subentity of this entity.
+	 * @param {*} entityType A entity class that extends this class.
+	 * @param {*} entity Entity that has already been fetched as a sub-entity. Requires either an href or a self link
+	 * @param {*} onChange callback function that accepts an {entityType} to be called when subentity changes.
+	 */
+	_subEntityByEntity(entityType, entity, onChange) {
+		if (entity.href) {
+			return this._subEntityByHref(entityType, entity.href, onChange);
+		} else if (!entity || !entity.hasLinkByRel('self')) {
+			return;
+		}
+
+		const href = entity.getLinkByRel('self').href;
+
 		// Clean up if that href has already been added.
 		if (this._subEntities.has(href)) {
 			dispose(this._subEntities.get(href));
@@ -70,6 +110,6 @@ export class Entity {
 		entityFactory(entityType, href, this._token, (entity) => {
 			this._subEntities.set(href, entity);
 			onChange(entity);
-		});
+		}, entity);
 	}
 }
