@@ -33,6 +33,7 @@
     "lie": "^3.3.0",
     "polymer-cli": "^1.9.1",
     "wct-browser-legacy": "^1.0.1",
-    "whatwg-fetch": "^2.0.0"
+    "whatwg-fetch": "^2.0.0",
+    "d2l-hypermedia-constants": "^6"
   }
 }
