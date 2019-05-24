@@ -17,11 +17,11 @@ export class EnrollmentCollectionEntity extends Entity {
 		return enrollmentEntities.map(e => e.href).filter(href => href);
 	}
 
-	getActionByName(url) {
-		if (!this._entity || !this._entity.hasActionByName(url)) {
-			return;
-		}
+	searchMyPinnedEnrollmentsAction() {
+		return this.getActionByName(Actions.enrollments.searchMyPinnedEnrollments);
+	}
 
-		return this._entity.getActionByName(url);
+	searchMyEnrollmentsAction() {
+		return this.getActionByName(Actions.enrollments.searchMyEnrollments);
 	}
 }

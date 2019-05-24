@@ -44,6 +44,17 @@ export class Entity {
 		this._subEntities.forEach(entity => dispose(entity));
 		this._listener.remove();
 	}
+	/**
+	 * Get the action with an Action name that is attached to the entity
+	 * @param {*} actionName Action name to get the action attached to the entity.
+	 */
+	getActionByName(actionName) {
+		if (!this._entity || !this._entity.hasActionByName(actionName)) {
+			return;
+		}
+
+		return this._entity.getActionByName(actionName);
+	}
 
 	/**
 	 * Protected: Add a listener to a subentity of this entity.
