@@ -1,8 +1,7 @@
 'use strict';
 
 import { Entity } from '../es6/Entity.js';
-import { Rels } from '../hypermedia-constants';
-import { Actions } from 'd2l-hypermedia-constants';
+import { Rels, Actions } from '../hypermedia-constants';
 /**
  * A collection of sub entities pointing to distinct enrollments
  */
