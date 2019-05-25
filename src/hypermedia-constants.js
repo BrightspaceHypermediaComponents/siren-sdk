@@ -205,6 +205,10 @@ export const Classes = {
 		userAward: 'user-award',
 		userAwards: 'user-awards'
 	},
+	consortium: {
+		tokens: 'tokens',
+		token: 'token'
+	},
 	content: {
 		content: 'content',
 		sequencedActivity: 'sequenced-activity',
