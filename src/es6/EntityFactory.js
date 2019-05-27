@@ -49,6 +49,11 @@ class EntityListener {
 
 		window.D2L.Siren.EntityStore.addListener(this._href, this._token, this._onChange).then((removeListener) => {
 			this._removeListener = removeListener;
+			const storedEntity = window.D2L.Siren.EntityStore.get(this._href, this._token);
+			if (storedEntity) {
+				this._onChange(storedEntity);
+				return;
+			}
 			if (entity) {
 				window.D2L.Siren.EntityStore.update(href, token, entity);
 			} else {
