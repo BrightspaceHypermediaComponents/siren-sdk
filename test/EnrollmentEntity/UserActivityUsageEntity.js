@@ -1,7 +1,6 @@
-/* global describe it expect*/
-import { EnrollmentEntity } from '../../src/enrollments/EnrollmentEntity.js';
+import { UserActivityUsageEntity } from '../../src/enrollments/UserActivityUsageEntity.js';
 
-describe('EnrollmentEntity', () => {
+describe('UserActivityUsageEntity', () => {
 
 	describe('Tests for _sirenClassProperty', () => {
 		it('Read a date', () => {
@@ -21,8 +20,8 @@ describe('EnrollmentEntity', () => {
 					}
 				]
 			});
-			var enrollment = new EnrollmentEntity(entity);
-			expect(enrollment._sirenClassProperty(entity, 'due-date')).to.equal('2100-08-01T04:00:00.000Z');
+			var userActivityUsageEntity = new UserActivityUsageEntity(entity);
+			expect(userActivityUsageEntity._sirenClassProperty(entity, 'due-date')).to.equal('2100-08-01T04:00:00.000Z');
 		});
 
 		it('Read a duration', () => {
@@ -42,8 +41,8 @@ describe('EnrollmentEntity', () => {
 					}
 				]
 			});
-			var enrollment = new EnrollmentEntity(entity);
-			expect(enrollment._sirenClassProperty(entity, 'due-date')).to.equal(6);
+			var userActivityUsageEntity = new UserActivityUsageEntity(entity);
+			expect(userActivityUsageEntity._sirenClassProperty(entity, 'due-date')).to.equal(6);
 
 		});
 
@@ -75,8 +74,8 @@ describe('EnrollmentEntity', () => {
 					}
 				]
 			});
-			var enrollment = new EnrollmentEntity(entity);
-			expect(enrollment._sirenClassProperty(entity, 'due-date')).to.equal('2100-08-01T04:00:00.000Z');
+			var userActivityUsageEntity = new UserActivityUsageEntity(entity);
+			expect(userActivityUsageEntity._sirenClassProperty(entity, 'due-date')).to.equal('2100-08-01T04:00:00.000Z');
 
 		});
 	});
