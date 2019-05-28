@@ -2,6 +2,9 @@
 
 import { Entity } from '../es6/Entity.js';
 
+/**
+ * UserActivityUsageEntity class representation of a d2l UserActivityUsage.
+ */
 export class UserActivityUsageEntity extends Entity {
 	completionDate() {
 		if (!this._entity) {

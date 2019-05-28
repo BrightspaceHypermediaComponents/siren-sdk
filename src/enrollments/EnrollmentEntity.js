@@ -10,6 +10,9 @@ export const classes = {
 	enrollment: 'enrollment'
 };
 
+/**
+ * EnrollmentEntity class representation of a d2l enrollment.
+ */
 export class EnrollmentEntity extends Entity {
 	organizationHref() {
 		if (!this._entity || !this._entity.hasLinkByRel(Rels.organization)) {
