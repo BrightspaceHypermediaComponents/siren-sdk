@@ -76,24 +76,4 @@ describe('EnrollmentEntity', () => {
 			expect(enrollments[1].href).to.equal('enrollments/1.json');
 		});
 	});
-
-	describe('Tests for onChange functions', () => {
-		it('Should have onOrganizationChange called', done => {
-			var onChangeStub = sinon.stub();
-			enrollmentEntity.onOrganizationChange(onChangeStub);
-			setTimeout(() => {
-				expect(onChangeStub).to.be.called.once;
-				done();
-			}, 1000);
-		});
-
-		it('Should have onUserActivityUsageChange called', done => {
-			var onChangeStub = sinon.stub();
-			enrollmentEntity.onUserActivityUsageChange(onChangeStub);
-			setTimeout(() => {
-				expect(onChangeStub).to.be.called.once;
-				done();
-			}, 1000);
-		});
-	});
 });
