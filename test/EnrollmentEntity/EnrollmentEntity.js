@@ -84,7 +84,7 @@ describe('EnrollmentEntity', () => {
 			setTimeout(() => {
 				expect(onChangeStub).to.be.called.once;
 				done();
-			}, 50);
+			}, 1000);
 		});
 
 		it('Should have onUserActivityUsageChange called', done => {
@@ -93,7 +93,7 @@ describe('EnrollmentEntity', () => {
 			setTimeout(() => {
 				expect(onChangeStub).to.be.called.once;
 				done();
-			}, 50);
+			}, 1000);
 		});
 	});
 });
