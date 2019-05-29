@@ -89,7 +89,7 @@ describe('EnrollmentEntity', () => {
 
 		it('Should have onUserActivityUsageChange called', done => {
 			var onChangeStub = sinon.stub();
-			enrollmentEntity.onUserActivityUsageChange(onChangeStub)
+			enrollmentEntity.onUserActivityUsageChange(onChangeStub);
 			setTimeout(() => {
 				expect(onChangeStub).to.be.called.once;
 				done();
