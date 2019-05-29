@@ -2,10 +2,9 @@
 import { EnrollmentEntity } from '../../src/enrollments/EnrollmentEntity';
 
 describe('EnrollmentEntity', () => {
-	var sandbox, enrollmentEntity, action;
+	var enrollmentEntity, action;
 
 	beforeEach(() => {
-		sandbox = sinon.sandbox.create();
 
 		action = {
 			name: 'unpin-course',
@@ -41,10 +40,6 @@ describe('EnrollmentEntity', () => {
 			}]
 		});
 		enrollmentEntity = new EnrollmentEntity(entity);
-	});
-
-	afterEach(() => {
-		sandbox.restore();
 	});
 
 	describe('Tests for Propreties', () => {
