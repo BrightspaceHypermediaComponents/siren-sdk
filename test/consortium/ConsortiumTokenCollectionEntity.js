@@ -69,11 +69,11 @@ describe('Consortium entity', () => {
 			});
 
 			setTimeout(() => {
-				expect(tokenEntities.length).to.be.equal(2);
+				expect(tokenEntities.length, 'token entities length invalid').to.be.equal(2);
 				for (const entity of tokenEntities) {
 					expect(entity).to.be.an.instanceof(ConsortiumTokenEntity);
 				}
-				expect(rootEntities.length).to.be.equal(2);
+				expect(rootEntities.length, 'root entities length invalid').to.be.equal(2);
 				for (const rootEntity of rootEntities) {
 					expect(rootEntity).to.be.an.instanceof(root);
 				}
