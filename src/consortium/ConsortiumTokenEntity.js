@@ -1,7 +1,7 @@
 'use strict';
 
 import { Entity } from '../es6/Entity.js';
-import { Rels } from '../hypermedia-constants';
+import { Rels } from '../hypermedia-constants.js';
 import { entityFactory } from '../es6/EntityFactory.js';
 import { root } from '../root/root.js';
 /**
@@ -23,13 +23,13 @@ export class ConsortiumTokenEntity extends Entity {
 	}
 	/**
 	 * A constructed {@link root} object
-	 * @param function onChange Callback function that accepts an {entityType} to be called when entity changes
+	 * @param function onChange Callback function to be called when entity changes
 	 */
 	rootOrganizationEntity(onChange) {
 		if (!this._rootOranizationLink) {
 			return;
 		}
-		return entityFactory(root, this._rootOranizationLink, this.consortiumToken(), onChange);
+		entityFactory(root, this._rootOranizationLink, this.consortiumToken(), onChange);
 	}
 
 	_rootOranizationLink() {
