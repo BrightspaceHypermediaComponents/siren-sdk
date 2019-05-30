@@ -40,3 +40,4 @@ export class ConsortiumTokenEntity extends Entity {
 		return this._entity.getLinkByRel(Rels.root).href;
 	}
 }
+
