@@ -26,10 +26,10 @@ export class ConsortiumTokenEntity extends Entity {
 	 * @param function onChange Callback function to be called when entity changes
 	 */
 	rootOrganizationEntity(onChange) {
-		if (!this._rootOranizationLink) {
+		if (!this._rootOranizationLink()) {
 			return;
 		}
-		entityFactory(root, this._rootOranizationLink, this.consortiumToken(), onChange);
+		entityFactory(root, this._rootOranizationLink(), this.consortiumToken(), onChange);
 	}
 
 	_rootOranizationLink() {

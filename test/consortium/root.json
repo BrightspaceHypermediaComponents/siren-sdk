@@ -1,0 +1,15 @@
+{
+	"properties": { },
+	"classes": [],
+	"entities": [],
+	"links": [
+    {
+      "rels": ["https://api.brightspace.com/rels/enrollments"],
+      "href": "/enrollments.json"
+    },
+    {
+      "rel": ["self"],
+      "href": "/root.json"
+    }
+  ]
+}

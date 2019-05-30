@@ -1,6 +1,8 @@
 /* global describe it expect sinon*/
 import { ConsortiumTokenCollectionEntity } from '../../src/consortium/ConsortiumTokenCollectionEntity.js';
 import { ConsortiumTokenEntity } from '../../src/consortium/ConsortiumTokenEntity.js';
+import { Rels } from '../../src/hypermedia-constants.js';
+import { root } from '../../src/root/root.js';
 
 describe('Consortium entity', () => {
 
@@ -26,6 +28,10 @@ describe('Consortium entity', () => {
 							{
 								rel: ['self'],
 								href: 'https://consortium.api.dev.brightspace.com/1cb16d6a-8557-4850-8846-3fa9b6174494'
+							},
+							{
+								rel: [Rels.root],
+								href: '/root.json'
 							}
 						]
 					},
@@ -42,6 +48,10 @@ describe('Consortium entity', () => {
 							{
 								rel: ['self'],
 								href: 'https://consortium.api.dev.brightspace.com/8b33e567-c616-4667-868b-fdfe9edc3a78'
+							},
+							{
+								rel: [Rels.root],
+								href: '/root.json'
 							}
 						]
 					}
@@ -50,8 +60,12 @@ describe('Consortium entity', () => {
 			const consortium = new ConsortiumTokenCollectionEntity(entity);
 			expect(consortium._consortiumTokenEntities().length).to.equal(2);
 			const tokenEntities = [];
+			const rootEntities = [];
 			consortium.consortiumTokenEntities((entity) => {
 				tokenEntities.push(entity);
+				entity.rootOrganizationEntity((root) =>  {
+					rootEntities.push(root);
+				});
 			});
 
 			setTimeout(() => {
@@ -59,10 +73,15 @@ describe('Consortium entity', () => {
 				for (const entity of tokenEntities) {
 					expect(entity).to.be.an.instanceof(ConsortiumTokenEntity);
 				}
+				expect(rootEntities.length).to.be.equal(2);
+				for (const rootEntity of rootEntities) {
+					expect(rootEntity).to.be.an.instanceof(root);
+				}
 				expect(tokenEntities[0].consortiumToken()).to.be.equal(token1);
 				expect(tokenEntities[1].consortiumToken()).to.be.equal(token2);
 				expect(tokenEntities[0].consortiumTenant()).to.be.equal(tenant1);
 				expect(tokenEntities[1].consortiumTenant()).to.be.equal(tenant2);
+
 				done();
 			}, 50);
 		});
