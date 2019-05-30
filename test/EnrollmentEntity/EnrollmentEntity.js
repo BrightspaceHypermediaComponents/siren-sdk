@@ -1,84 +1,74 @@
 /* global describe it expect*/
-import { EnrollmentEntity } from '../../src/enrollments/EnrollmentEntity.js';
+import { EnrollmentEntity } from '../../src/enrollments/EnrollmentEntity';
 
 describe('EnrollmentEntity', () => {
+	var enrollmentEntity, action;
 
-	describe('Tests for _sirenClassProperty', () => {
-		it('Read a date', () => {
-			var entity =  window.D2L.Hypermedia.Siren.Parse({
-				entities: [
-					{
-						class: [
-							'date',
-							'due-date'
-						],
-						rel: [
-							'https://api.brightspace.com/rels/date'
-						],
-						properties: {
-							date: '2100-08-01T04:00:00.000Z'
-						}
-					}
-				]
-			});
-			var enrollment = new EnrollmentEntity(entity);
-			expect(enrollment._sirenClassProperty(entity, 'due-date')).to.equal('2100-08-01T04:00:00.000Z');
+	beforeEach(() => {
+
+		action = {
+			name: 'unpin-course',
+			method: 'PUT',
+			href: '/enrollments/users/169/organizations/1'
+		};
+
+		var entity = window.D2L.Hypermedia.Siren.Parse({
+			class: ['pinned', 'enrollment'],
+			entities: [
+				{
+					class: ['enrollment'],
+					rel: ['https://api.brightspace.com/rels/enrollment'],
+					href: 'enrollments/1.json'
+				},
+				{
+					class: ['enrollment'],
+					rel: ['https://api.brightspace.com/rels/enrollment'],
+					href: 'enrollments/1.json'
+				}
+			],
+			rel: ['https://api.brightspace.com/rels/user-enrollment'],
+			actions: [action],
+			links: [{
+				rel: ['https://api.brightspace.com/rels/organization'],
+				href: 'organizations.json'
+			}, {
+				rel: ['self'],
+				href: '/enrollments/users/169/organizations/1'
+			}, {
+				rel: ['https://activities.api.brightspace.com/rels/user-activity-usage'],
+				href: 'userActivityUsage.json'
+			}]
 		});
-
-		it('Read a duration', () => {
-			var entity =  window.D2L.Hypermedia.Siren.Parse({
-				entities: [
-					{
-						class: [
-							'duration',
-							'due-date'
-						],
-						rel: [
-							'https://api.brightspace.com/rels/date'
-						],
-						properties: {
-							seconds: 6
-						}
-					}
-				]
-			});
-			var enrollment = new EnrollmentEntity(entity);
-			expect(enrollment._sirenClassProperty(entity, 'due-date')).to.equal(6);
-
-		});
-
-		it('Read a completion', () => {
-			var entity =  window.D2L.Hypermedia.Siren.Parse({
-				entities: [
-					{
-						class: [
-							'completion',
-							'due-date'
-						],
-						entities: [
-							{
-								class: [
-									'completion-date',
-									'date'
-								],
-								rel: [
-									'https://api.brightspace.com/rels/date'
-								],
-								properties: {
-									date: '2100-08-01T04:00:00.000Z'
-								}
-							}
-						],
-						rel: [
-							'https://api.brightspace.com/rels/date'
-						]
-					}
-				]
-			});
-			var enrollment = new EnrollmentEntity(entity);
-			expect(enrollment._sirenClassProperty(entity, 'due-date')).to.equal('2100-08-01T04:00:00.000Z');
-
-		});
+		enrollmentEntity = new EnrollmentEntity(entity);
 	});
 
+	describe('Tests for Propreties', () => {
+		it('Return correct organizationHref', () => {
+			expect(enrollmentEntity.organizationHref()).to.equal('organizations.json');
+		});
+
+		it('Return correct userActivityUsageUrl', () => {
+			expect(enrollmentEntity.userActivityUsageUrl()).to.equal('userActivityUsage.json');
+		});
+
+		it('Should have class pinned', () => {
+			expect(enrollmentEntity.pinned()).to.equal(true);
+		});
+
+		it('Should have pin action', () => {
+			var pinAction = enrollmentEntity.pinAction();
+			expect(pinAction.name).to.equal(action.name);
+			expect(pinAction.method).to.equal(action.method);
+			expect(pinAction.href).to.equal(action.href);
+		});
+
+		it('Should have two enrollments', () => {
+			var enrollments = enrollmentEntity.enrollments();
+			expect(enrollments.length).to.equal(2);
+			expect(enrollments[0].class).to.contains('enrollment');
+			expect(enrollments[1].class).to.contains('enrollment');
+			expect(enrollments[0].href).to.equal('enrollments/1.json');
+			expect(enrollments[1].href).to.equal('enrollments/1.json');
+		});
+	});
 });
