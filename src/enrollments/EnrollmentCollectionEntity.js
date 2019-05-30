@@ -24,4 +24,25 @@ export class EnrollmentCollectionEntity extends Entity {
 	searchMyEnrollmentsAction() {
 		return this.getActionByName(Actions.enrollments.searchMyEnrollments);
 	}
+
+	getEnrollmentEntities() {
+		return this._entity.getSubEntitiesByClass('enrollment');
+	}
+
+	hasMoreEnrollments() {
+		return this._entity.hasLinkByRel('next');
+	}
+
+	getNextEnrollmentHref() {
+		if (!this.hasMoreEnrollments()) {
+			return;
+		}
+
+		return this._entity.getLinkByRel('next').href;
+	}
+
+	getSearchEnrollmentsActions() {
+		console.log(this._entity);
+		return this._entity.getActionByName(Actions.enrollments.searchMyEnrollments);
+	}
 }
