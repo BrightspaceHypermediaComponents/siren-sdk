@@ -42,7 +42,6 @@ export class EnrollmentCollectionEntity extends Entity {
 	}
 
 	getSearchEnrollmentsActions() {
-		console.log(this._entity);
 		return this._entity.getActionByName(Actions.enrollments.searchMyEnrollments);
 	}
 }
