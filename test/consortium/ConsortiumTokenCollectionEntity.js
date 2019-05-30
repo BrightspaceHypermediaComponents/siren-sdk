@@ -83,7 +83,7 @@ describe('Consortium entity', () => {
 				expect(tokenEntities[1].consortiumTenant()).to.be.equal(tenant2);
 
 				done();
-			}, 50);
+			}, 500);
 		});
 	});
 });
