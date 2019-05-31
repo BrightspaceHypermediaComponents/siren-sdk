@@ -1,4 +1,5 @@
 # siren-sdk
+[![Build Status](https://travis-ci.com/BrightspaceHypermediaComponents/siren-sdk.svg?branch=master)](https://travis-ci.com/BrightspaceHypermediaComponents/siren-sdk)
 
 This contains tools written in ES6 to help develop and use siren entities.
 
