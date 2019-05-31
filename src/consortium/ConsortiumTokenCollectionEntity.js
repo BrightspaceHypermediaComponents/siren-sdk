@@ -6,7 +6,8 @@ import { ConsortiumTokenEntity } from './ConsortiumTokenEntity.js';
 
 /**
  * Collection of {@link ConsortiumTokenEntity}
- * @class
+ * @hideconstructor
+ * @extends Entity
  */
 export class ConsortiumTokenCollectionEntity extends Entity {
 	/**

@@ -5,8 +5,9 @@ import { Rels } from '../hypermedia-constants.js';
 import { entityFactory } from '../es6/EntityFactory.js';
 import { root } from '../root/root.js';
 /**
- * ConsortiumTokenEntity contains all necessary information to navigate to another organization as a user.  Generally returned in a collection in {@link ConsortiumTokenEntity}
- * @class
+ * ConsortiumTokenEntity contains all necessary information to navigate to another organization as a user.  Generally returned in a collection in {@link ConsortiumTokenCollectionEntity}
+ * @hideconstructor
+ * @extends Entity
  */
 export class ConsortiumTokenEntity extends Entity {
 	/**
