@@ -29,7 +29,7 @@ describe('Consortium entity', () => {
 	const tenant1 = '1cb16d6a-8557-4850-8846-3fa9b6174494';
 	const tenant2 = '8b33e567-c616-4667-868b-fdfe9edc3a78';
 	const token2 = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwidGVuYW50aWQiOiI4YjMzZTU2Ny1jNjE2LTQ2NjctODY4Yi1mZGZlOWVkYzNhNzgiLCJpYXQiOjE1MTYyMzkwMjJ9.cQjR28qT_c-os_FeFy4-L1NhCIY-9utPLzSHrzIMuOc';
-	it('has collection', async() => {
+	it('has collection', done => {
 		const entity =  window.D2L.Hypermedia.Siren.Parse({
 			class: ['tokens'],
 			entities: [
@@ -85,29 +85,22 @@ describe('Consortium entity', () => {
 				rootEntities.push(root);
 			});
 		});
-		await new Promise(async(resolve) => {
-			for (;;) {
-				if (tokenEntities.length >= 2 && rootEntities.length >= 2) {
-					resolve();
-				}
-				await new Promise(resolve => {
-					setTimeout(()=>{ resolve();}, 5);
-				});
-			}
-		});
+		setTimeout(() => {
 
-		expect(tokenEntities.length, 'token entities length invalid').to.be.equal(2);
-		for (const entity of tokenEntities) {
-			expect(entity).to.be.an.instanceof(ConsortiumTokenEntity);
-		}
-		expect(rootEntities.length, 'root entities length invalid').to.be.equal(2);
-		for (const rootEntity of rootEntities) {
-			expect(rootEntity).to.be.an.instanceof(root);
-		}
-		expect(tokenEntities[0].consortiumToken()).to.be.equal(token1);
-		expect(tokenEntities[1].consortiumToken()).to.be.equal(token2);
-		expect(tokenEntities[0].consortiumTenant()).to.be.equal(tenant1);
-		expect(tokenEntities[1].consortiumTenant()).to.be.equal(tenant2);
+			expect(tokenEntities.length, 'token entities length invalid').to.be.equal(2);
+			for (const entity of tokenEntities) {
+				expect(entity).to.be.an.instanceof(ConsortiumTokenEntity);
+			}
+			expect(rootEntities.length, 'root entities length invalid').to.be.equal(2);
+			for (const rootEntity of rootEntities) {
+				expect(rootEntity).to.be.an.instanceof(root);
+			}
+			expect(tokenEntities[0].consortiumToken()).to.be.equal(token1);
+			expect(tokenEntities[1].consortiumToken()).to.be.equal(token2);
+			expect(tokenEntities[0].consortiumTenant()).to.be.equal(tenant1);
+			expect(tokenEntities[1].consortiumTenant()).to.be.equal(tenant2);
+			done();
+		}, 500);
 	});
 });
 
