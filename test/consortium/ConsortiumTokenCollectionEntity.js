@@ -4,6 +4,8 @@ import { ConsortiumTokenEntity } from '../../src/consortium/ConsortiumTokenEntit
 import { Rels } from '../../src/hypermedia-constants.js';
 import { root } from '../../src/root/root.js';
 
+import 'd2l-fetch/d2l-fetch.js';
+
 describe('Consortium entity', () => {
 	var sandbox;
 
@@ -114,7 +116,7 @@ describe('Consortium entity', () => {
 				expect(tokenEntities[0].consortiumTenant()).to.be.equal(tenant1);
 				expect(tokenEntities[1].consortiumTenant()).to.be.equal(tenant2);
 				done();
-			}, 500);
+			}, 80);
 		});
 	});
 });
