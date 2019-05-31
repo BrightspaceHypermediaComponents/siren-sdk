@@ -29,42 +29,25 @@
             <pre class="prettyprint source linenums"><code>'use strict';
 
 import { Entity } from '../es6/Entity.js';
-import { Rels } from '../hypermedia-constants';
+import { Actions, Rels } from '../hypermedia-constants';
 import { OrganizationEntity } from '../organizations/OrganizationEntity';
+import { UserActivityUsageEntity  } from './UserActivityUsageEntity.js';
 
 export const classes = {
 	pinned: 'pinned',
 	enrollment: 'enrollment'
 };
+
 /**
  * EnrollmentEntity class representation of a d2l enrollment.
  */
 export class EnrollmentEntity extends Entity {
-
 	organizationHref() {
 		if (!this._entity || !this._entity.hasLinkByRel(Rels.organization)) {
 			return;
 		}
 
 		return this._entity.getLinkByRel(Rels.organization).href;
-	}
-
-	completionDate() {
-		if (!this._entity) {
-			return;
-		}
-		return this._sirenClassProperty(this._entity, 'completion');
-	}
-
-	dueDate() {
-		if (!this._entity) {
-			return;
-		}
-		return this._sirenClassProperty(this._entity, 'due-date');
-	}
-
-	isAttended() {
-		return this.hasClass('attended');
 	}
 
 	enrollments() {
@@ -79,26 +62,29 @@ export class EnrollmentEntity extends Entity {
 		return this._entity.getLinkByRel(Rels.Activities.userActivityUsage).href;
 	}
 
+	pinned() {
+		return this.hasClass(classes.pinned);
+	}
+
+	pinAction() {
+		if (!this._entity || !this._entity.getActionByName) {
+			return;
+		}
+
+		return this.pinned()
+			? this._entity.getActionByName(Actions.enrollments.unpinCourse)
+			: this._entity.getActionByName(Actions.enrollments.pinCourse);
+	}
+
 	onOrganizationChange(onChange) {
 		const organizationHref = this.organizationHref();
 		organizationHref &amp;&amp; this._subEntity(OrganizationEntity, organizationHref, onChange);
 	}
 
-	_sirenClassProperty(entity, sirenClass) {
-		if (!entity.hasSubEntityByClass(sirenClass)) {
-			return;
-		}
-		var subEntity = entity.getSubEntityByClass(sirenClass);
-
-		if (subEntity.hasClass('date')) {
-			return subEntity.properties ? subEntity.properties.date : null;
-		} else if (subEntity.hasClass('duration')) {
-			return subEntity.properties ? subEntity.properties.seconds : null;
-		} else if (subEntity.hasClass('completion')) {
-			return this._sirenClassProperty(subEntity,  'completion-date');
-		}
+	onUserActivityUsageChange(onChange) {
+		const userActivityUsageUrl = this.userActivityUsageUrl();
+		userActivityUsageUrl &amp;&amp; this._subEntity(UserActivityUsageEntity, userActivityUsageUrl, onChange);
 	}
-
 }
 </code></pre>
         </article>
@@ -110,13 +96,13 @@ export class EnrollmentEntity extends Entity {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="EnrollmentCollectionEntity.html">EnrollmentCollectionEntity</a></li><li><a href="EnrollmentEntity.html">EnrollmentEntity</a></li><li><a href="Entity.html">Entity</a></li><li><a href="EntityListener.html">EntityListener</a></li><li><a href="NotificationCollectionEntity.html">NotificationCollectionEntity</a></li><li><a href="NotificationEntity.html">NotificationEntity</a></li><li><a href="OrganizationEntity.html">OrganizationEntity</a></li><li><a href="SimpleEntity.html">SimpleEntity</a></li></ul><h3>Global</h3><ul><li><a href="global.html#_entity">_entity</a></li><li><a href="global.html#_setEntityType">_setEntityType</a></li><li><a href="global.html#dispose">dispose</a></li><li><a href="global.html#entityFactory">entityFactory</a></li><li><a href="global.html#href">href</a></li><li><a href="global.html#interalEntityMixin">interalEntityMixin</a></li><li><a href="global.html#token">token</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="ConsortiumTokenCollectionEntity.html">ConsortiumTokenCollectionEntity</a></li><li><a href="ConsortiumTokenCollectionEntityEntity.html">Entity</a></li><li><a href="ConsortiumTokenEntity.html">ConsortiumTokenEntity</a></li><li><a href="ConsortiumTokenEntityEntity.html">Entity</a></li><li><a href="EnrollmentCollectionEntity.html">EnrollmentCollectionEntity</a></li><li><a href="EnrollmentEntity.html">EnrollmentEntity</a></li><li><a href="Entity.html">Entity</a></li><li><a href="EntityListener.html">EntityListener</a></li><li><a href="NotificationCollectionEntity.html">NotificationCollectionEntity</a></li><li><a href="NotificationEntity.html">NotificationEntity</a></li><li><a href="OrganizationEntity.html">OrganizationEntity</a></li><li><a href="SimpleEntity.html">SimpleEntity</a></li><li><a href="UserActivityUsageEntity.html">UserActivityUsageEntity</a></li></ul><h3>Global</h3><ul><li><a href="global.html#_entity">_entity</a></li><li><a href="global.html#_setEntityType">_setEntityType</a></li><li><a href="global.html#dispose">dispose</a></li><li><a href="global.html#entityFactory">entityFactory</a></li><li><a href="global.html#href">href</a></li><li><a href="global.html#interalEntityMixin">interalEntityMixin</a></li><li><a href="global.html#token">token</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.2</a> on Fri May 24 2019 10:38:21 GMT-0400 (Eastern Daylight Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.2</a> on Fri May 31 2019 09:09:15 GMT-0500 (Central Daylight Time)
 </footer>
 
 <script> prettyPrint(); </script>
