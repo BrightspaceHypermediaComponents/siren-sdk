@@ -96,7 +96,13 @@ export class OrganizationEntity extends Entity {
 			&& homepageEntity.properties
 			&& homepageEntity.properties.path;
 	}
+	fullyQualifiedOrganizationHomepageUrl() {
+		if (!this._entity || !this._entity.hasLinkByRel(Rels.organizationHomepage)) {
+			return;
+		}
 
+		return this._entity.getLinkByRel(Rels.organizationHomepage).href;
+	}
 	courseInfoUrl() {
 		if (!this._entity || !this._entity.hasLinkByRel(Rels.courseOfferingInfoPage)) {
 			return;
