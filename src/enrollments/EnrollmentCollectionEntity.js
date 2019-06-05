@@ -2,6 +2,7 @@
 
 import { Entity } from '../es6/Entity.js';
 import { Rels, Actions } from '../hypermedia-constants';
+import { EnrollmentEntity } from './EnrollmentEntity';
 /**
  * A collection of sub entities pointing to distinct enrollments
  */
@@ -43,5 +44,9 @@ export class EnrollmentCollectionEntity extends Entity {
 
 	getSearchEnrollmentsActions() {
 		return this._entity.getActionByName(Actions.enrollments.searchMyEnrollments);
+	}
+
+	onEnrollmentEntityChange(url, OnChange) {
+		url && this._subEntity(EnrollmentEntity, url, OnChange);
 	}
 }
