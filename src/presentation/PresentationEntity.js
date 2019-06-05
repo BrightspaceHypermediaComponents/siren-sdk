@@ -17,7 +17,7 @@ export class PresentationEntity extends Entity {
 	}
 
 	showOrganizationCode() {
-		return this._entity && this._entity.properties && this._entity.propertiess.ShowCourseCode;
+		return this._entity && this._entity.properties && this._entity.properties.ShowCourseCode;
 	}
 
 	showSemesterName() {
@@ -34,13 +34,13 @@ export class PresentationEntity extends Entity {
 
 	showUngradedQuizAttempts() {
 		return this._entity && this._entity.properties && this._entity.properties.ShowUngradedQuizAttempts;
-    }
+	}
 
-    showUnreadDiscussionMessages() {
+	showUnreadDiscussionMessages() {
 		return this._entity && this._entity.properties && this._entity.properties.ShowUnreadDiscussionMessages;
-    }
+	}
 
-    showUnreadDropboxSubmissions() {
+	showUnreadDropboxSubmissions() {
 		return this._entity && this._entity.properties && this._entity.properties.ShowUnreadDropboxSubmissions;
 	}
 }
