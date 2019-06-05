@@ -1,7 +1,6 @@
 'use strict';
 
 import { Entity } from '../es6/Entity.js';
-import { Rels, Actions } from '../hypermedia-constants';
 /**
  * A collection of sub entities pointing to distinct enrollments
  */
@@ -26,7 +25,7 @@ export class PresentationEntity extends Entity {
 	}
 
 	showDropboxUnreadFeedback() {
-		return this._entity && this._entity.properties && this._entity.properties.ShowDropboxUnreadFeedback
+		return this._entity && this._entity.properties && this._entity.properties.ShowDropboxUnreadFeedback;
 	}
 
 	showUnattemptedQuizzes() {
@@ -36,9 +35,11 @@ export class PresentationEntity extends Entity {
 	showUngradedQuizAttempts() {
 		return this._entity && this._entity.properties && this._entity.properties.ShowUngradedQuizAttempts;
     }
+
     showUnreadDiscussionMessages() {
 		return this._entity && this._entity.properties && this._entity.properties.ShowUnreadDiscussionMessages;
     }
+
     showUnreadDropboxSubmissions() {
 		return this._entity && this._entity.properties && this._entity.properties.ShowUnreadDropboxSubmissions;
 	}
