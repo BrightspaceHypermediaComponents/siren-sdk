@@ -44,4 +44,8 @@ export class EnrollmentCollectionEntity extends Entity {
 	getSearchEnrollmentsActions() {
 		return this._entity.getActionByName(Actions.enrollments.searchMyEnrollments);
 	}
+
+	onEnrollmentEntityChange(url, OnChange) {
+		url && this._subEntity(EnrollmentEntity, url, OnChange);
+	}
 }
