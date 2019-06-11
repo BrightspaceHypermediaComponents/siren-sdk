@@ -22,11 +22,11 @@ export class SequenceEntity extends Entity {
 		const subSequences = this._subSequences();
 
 		subSequences.forEach((entity, index) => {
-			onChange = (subSequence) => {
+			const onChangeWithIndex = (subSequence) => {
 				subSequence.index = () => index;
 				onChange(subSequence);
 			};
-			entity && this._subEntity(SequenceEntity, entity, onChange);
+			entity && this._subEntity(SequenceEntity, entity, onChangeWithIndex);
 		});
 	}
 
@@ -34,11 +34,11 @@ export class SequenceEntity extends Entity {
 		const sequencedActivities = this._sequencedActivity();
 
 		sequencedActivities.forEach((entity, index) => {
-			onChange = (sequencedActivity) => {
+			const onChangeWithIndex = (sequencedActivity) => {
 				sequencedActivity.index = () => index;
 				onChange(sequencedActivity);
 			};
-			entity && this._subEntity(SequencedActivityEntity, entity, onChange);
+			entity && this._subEntity(SequencedActivityEntity, entity, onChangeWithIndex);
 		});
 	}
 
