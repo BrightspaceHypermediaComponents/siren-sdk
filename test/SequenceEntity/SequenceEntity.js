@@ -13,14 +13,14 @@ describe('SequenceEntity', () => {
 			entityFactory(SequenceEntity, '/sequenceRoot', 'whatever', (entity) => {
 				entity.onSubSequencesChange((subSequence) => {
 					subSequence.onSequencedActivityChange((activity) => {
-						orgHref[activity.self()] = activity.organizationHrefs().pop();
+						orgHref[activity.index()] = activity.organizationHrefs().pop();
 					});
 				});
 			}, sirenSequenceRoot);
 
 			setTimeout(() => {
-				expect(orgHref['/activity/1']).to.equal('/organization/1');
-				expect(orgHref['/activity/2']).to.equal('/organization/2');
+				expect(orgHref[0]).to.equal('/organization/1');
+				expect(orgHref[1]).to.equal('/organization/2');
 				done();
 			}, 50);
 		});
