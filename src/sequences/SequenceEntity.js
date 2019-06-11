@@ -19,8 +19,9 @@ export class SequenceEntity extends Entity {
 	}
 
 	sequenceViewerApplicationHref() {
-		return this._entity && this._entity.hasLinkByRel('https://sequences.api.brightspace.com/rels/sequence-viewer-application') &&
-		this._entity.getLinkByRel('https://sequences.api.brightspace.com/rels/sequence-viewer-application').href;
+		const sequenceViewerRel = 'https://sequences.api.brightspace.com/rels/sequence-viewer-application';
+		return this._entity && this._entity.hasLinkByRel(sequenceViewerRel) &&
+		this._entity.getLinkByRel(sequenceViewerRel).href;
 	}
 
 	onSubSequencesChange(onChange) {
