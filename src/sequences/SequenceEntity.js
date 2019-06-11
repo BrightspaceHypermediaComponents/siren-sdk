@@ -21,15 +21,23 @@ export class SequenceEntity extends Entity {
 	onSubSequencesChange(onChange) {
 		const subSequences = this._subSequences();
 
-		subSequences.forEach((entity) => {
+		subSequences.forEach((entity, index) => {
+			onChange = (subSequence) => {
+				subSequence.index = () => index;
+				onChange(subSequence);
+			};
 			entity && this._subEntity(SequenceEntity, entity, onChange);
 		});
 	}
 
 	onSequencedActivityChange(onChange) {
-		const sequencedActivity = this._sequencedActivity();
+		const sequencedActivities = this._sequencedActivity();
 
-		sequencedActivity.forEach((entity) => {
+		sequencedActivities.forEach((entity, index) => {
+			onChange = (sequencedActivity) => {
+				sequencedActivity.index = () => index;
+				onChange(sequencedActivity);
+			};
 			entity && this._subEntity(SequencedActivityEntity, entity, onChange);
 		});
 	}
