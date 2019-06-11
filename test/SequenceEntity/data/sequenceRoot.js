@@ -288,3 +288,168 @@ export const sequenceRoot = {
 		href: '/sequenceRoot'
 	}]
 };
+
+export const sequenceRootMultipleTopLevel = {
+	class: [
+		'sequence',
+		'sequence-description'
+	],
+	properties: {
+		title: 'Applied Linear Algebra 1'
+	},
+	entities: [{
+		class: [
+			'sequence',
+			'sequence-description'
+		],
+		properties: {
+			title: 'Section 1'
+		},
+		entities: [],
+		links: [{
+			rel: [
+				'self',
+				'describes'
+			],
+			href: 'https://48368884-1c23-4799-8604-269aa985db53.sequences.api.dev.brightspace.com/121694/activity/121263?filterOnDatesAndDepth=0'
+		}, {
+			rel: [
+				'https://api.brightspace.com/rels/organization'
+			],
+			href: 'https://48368884-1c23-4799-8604-269aa985db53.organizations.api.dev.brightspace.com/121694'
+		}, {
+			rel: [
+				'https://sequences.api.brightspace.com/rels/default-return-url'
+			],
+			type: 'text/html',
+			href: 'https://qa2019716994g.bspc.com/d2l/le/content/121694/Home'
+		}, {
+			rel: [
+				'https://sequences.api.brightspace.com/rels/sequence-viewer-application'
+			],
+			type: 'text/html',
+			href: '/sequenceViewerApplicationHref/1'
+		}, {
+			rel: [
+				'alternate'
+			],
+			type: 'text/html',
+			href: 'https://qa2019716994g.bspc.com/d2l/le/content/121694/Home?itemIdentifier=D2L.LE.Content.ContentObject.ModuleCO-121263'
+		}, {
+			rel: [
+				'up'
+			],
+			href: 'https://48368884-1c23-4799-8604-269aa985db53.sequences.api.dev.brightspace.com/121694?deepEmbedEntities=1&filterOnDatesAndDepth=0'
+		}],
+		rel: [
+			'item'
+		]
+	}, {
+		class: [
+			'sequence',
+			'sequence-description'
+		],
+		properties: {
+			title: 'Section 2'
+		},
+		entities: [],
+		links: [{
+			rel: [
+				'self',
+				'describes'
+			],
+			href: 'https://48368884-1c23-4799-8604-269aa985db53.sequences.api.dev.brightspace.com/121694/activity/121264?filterOnDatesAndDepth=0'
+		}, {
+			rel: [
+				'https://api.brightspace.com/rels/organization'
+			],
+			href: 'https://48368884-1c23-4799-8604-269aa985db53.organizations.api.dev.brightspace.com/121694'
+		}, {
+			rel: [
+				'https://sequences.api.brightspace.com/rels/default-return-url'
+			],
+			type: 'text/html',
+			href: 'https://qa2019716994g.bspc.com/d2l/le/content/121694/Home'
+		}, {
+			rel: [
+				'https://sequences.api.brightspace.com/rels/sequence-viewer-application'
+			],
+			type: 'text/html',
+			href: '/sequenceViewerApplicationHref/2'
+		}, {
+			rel: [
+				'alternate'
+			],
+			type: 'text/html',
+			href: 'https://qa2019716994g.bspc.com/d2l/le/content/121694/Home?itemIdentifier=D2L.LE.Content.ContentObject.ModuleCO-121264'
+		}, {
+			rel: [
+				'up'
+			],
+			href: 'https://48368884-1c23-4799-8604-269aa985db53.sequences.api.dev.brightspace.com/121694?deepEmbedEntities=1&filterOnDatesAndDepth=0'
+		}],
+		rel: [
+			'item'
+		]
+	}, {
+		class: [
+			'sequence',
+			'sequence-description'
+		],
+		properties: {
+			title: 'Section 3'
+		},
+		entities: [],
+		links: [{
+			rel: [
+				'self',
+				'describes'
+			],
+			href: 'https://48368884-1c23-4799-8604-269aa985db53.sequences.api.dev.brightspace.com/121694/activity/121265?filterOnDatesAndDepth=0'
+		}, {
+			rel: [
+				'https://api.brightspace.com/rels/organization'
+			],
+			href: 'https://48368884-1c23-4799-8604-269aa985db53.organizations.api.dev.brightspace.com/121694'
+		}, {
+			rel: [
+				'https://sequences.api.brightspace.com/rels/default-return-url'
+			],
+			type: 'text/html',
+			href: 'https://qa2019716994g.bspc.com/d2l/le/content/121694/Home'
+		}, {
+			rel: [
+				'https://sequences.api.brightspace.com/rels/sequence-viewer-application'
+			],
+			type: 'text/html',
+			href: '/sequenceViewerApplicationHref/3'
+		}, {
+			rel: [
+				'alternate'
+			],
+			type: 'text/html',
+			href: 'https://qa2019716994g.bspc.com/d2l/le/content/121694/Home?itemIdentifier=D2L.LE.Content.ContentObject.ModuleCO-121265'
+		}, {
+			rel: [
+				'up'
+			],
+			href: 'https://48368884-1c23-4799-8604-269aa985db53.sequences.api.dev.brightspace.com/121694?deepEmbedEntities=1&filterOnDatesAndDepth=0'
+		}],
+		rel: [
+			'item'
+		]
+	}],
+	links: [{
+		rel: [
+			'self',
+			'describes'
+		],
+		href: '/sequenceRoot2'
+	}, {
+		rel: [
+			'up',
+			'https://api.brightspace.com/rels/organization'
+		],
+		href: 'https://48368884-1c23-4799-8604-269aa985db53.organizations.api.dev.brightspace.com/121694'
+	}]
+};
