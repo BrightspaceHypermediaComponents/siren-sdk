@@ -34,6 +34,15 @@ export class EnrollmentEntity extends Entity {
 		return this._entity.getLinkByRel(Rels.Activities.userActivityUsage).href;
 	}
 
+	getOrgUnitId() {
+		var match = /[0-9]+$/.exec(this.organizationHref());
+
+		if (!match) {
+			return;
+		}
+		return match[0];
+	}
+
 	pinned() {
 		return this.hasClass(classes.pinned);
 	}
