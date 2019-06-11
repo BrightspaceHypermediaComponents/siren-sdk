@@ -18,6 +18,11 @@ export class SequenceEntity extends Entity {
 		return this._entity && this._entity.properties && this._entity.properties.title;
 	}
 
+	sequenceViewerApplicationHref() {
+		return this._entity && this._entity.hasLinkByRel('https://sequences.api.brightspace.com/rels/sequence-viewer-application') &&
+		this._entity.getLinkByRel('https://sequences.api.brightspace.com/rels/sequence-viewer-application').href;
+	}
+
 	onSubSequencesChange(onChange) {
 		const subSequences = this._subSequences();
 
