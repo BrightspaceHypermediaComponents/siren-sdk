@@ -19,7 +19,7 @@ export class SequenceEntity extends Entity {
 	 */
 	completion() {
 		const subEntities = this._entity && this._entity.getSubEntitiesByRel && this._entity.getSubEntitiesByRel(Rels.completion);
-		const subEntity = subEntities.pop();
+		const subEntity = subEntities && subEntities[0];
 
 		if (!subEntity) {
 			return {};
