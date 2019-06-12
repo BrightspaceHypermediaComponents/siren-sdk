@@ -1,7 +1,7 @@
 'use strict';
 
 import { Entity } from '../es6/Entity.js';
-import { Rels } from '../hypermedia-constants';
+import { Classes, Rels } from '../hypermedia-constants';
 
 export const sequenceClasses = {
 	sequence: 'sequence',
@@ -14,6 +14,23 @@ export const sequencedActivityClasses = {
 };
 
 export class SequenceEntity extends Entity {
+	/**
+	 * @return An object with indices: completed, total, optionalViewed, optionalTotal, isCompleted
+	 */
+	completion() {
+		const subEntities = this._entity && this._entity.getSubEntitiesByRel && this._entity.getSubEntitiesByRel(Rels.completion);
+		const subEntity = subEntities.pop();
+
+		if (!subEntity) {
+			return;
+		}
+
+		const completionProperties = subEntity.properties || {};
+		completionProperties.isCompleted = !!(subEntity.hasClass && subEntity.hasClass(Classes.activities.complete));
+
+		return completionProperties;
+	}
+
 	title() {
 		return this._entity && this._entity.properties && this._entity.properties.title;
 	}

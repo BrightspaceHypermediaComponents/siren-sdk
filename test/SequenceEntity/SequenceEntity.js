@@ -59,6 +59,23 @@ describe('SequenceEntity', () => {
 			}, 50);
 		});
 
+		it('Check completion', done => {
+			const sirenSequenceRoot =  window.D2L.Hypermedia.Siren.Parse(sequenceRootMultipleTopLevel);
+			const completionData = {};
+			entityFactory(SequenceEntity, '/sequenceRoot2', 'whatever', (entity) => {
+				entity.onSubSequencesChange((subSequence) => {
+					completionData[subSequence.index()] = subSequence.completion();
+				});
+			}, sirenSequenceRoot);
+
+			setTimeout(() => {
+				expect(completionData[0]).deep.equal({completed: 0, total: 7, optionalTotal: 5, optionalViewed: 0, isCompleted: false});
+				expect(completionData[1]).deep.equal({completed: 7, total: 7, optionalTotal: 5, optionalViewed: 0, isCompleted: true});
+				expect(completionData[2]).deep.equal({completed: 4, total: 7, optionalTotal: 5, optionalViewed: 0, isCompleted: false});
+				done();
+			}, 50);
+		});
+
 	});
 
 });
