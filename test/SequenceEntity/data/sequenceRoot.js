@@ -305,7 +305,16 @@ export const sequenceRootMultipleTopLevel = {
 		properties: {
 			title: 'Section 1'
 		},
-		entities: [],
+		entities: [{
+			class: ['completion', 'incomplete'],
+			properties: {
+				completed: 0,
+				optionalTotal: 5,
+				optionalViewed: 0,
+				total: 7
+			},
+			rel: ['item', 'https://api.brightspace.com/rels/completion']
+		}],
 		links: [{
 			rel: [
 				'self',
@@ -352,7 +361,16 @@ export const sequenceRootMultipleTopLevel = {
 		properties: {
 			title: 'Section 2'
 		},
-		entities: [],
+		entities: [{
+			class: ['completion', 'complete'],
+			properties: {
+				completed: 7,
+				optionalTotal: 5,
+				optionalViewed: 0,
+				total: 7
+			},
+			rel: ['item', 'https://api.brightspace.com/rels/completion']
+		}],
 		links: [{
 			rel: [
 				'self',
@@ -399,7 +417,16 @@ export const sequenceRootMultipleTopLevel = {
 		properties: {
 			title: 'Section 3'
 		},
-		entities: [],
+		entities: [{
+			class: ['completion', 'incomplete'],
+			properties: {
+				completed: 4,
+				optionalTotal: 5,
+				optionalViewed: 0,
+				total: 7
+			},
+			rel: ['item', 'https://api.brightspace.com/rels/completion']
+		}],
 		links: [{
 			rel: [
 				'self',
