@@ -18,15 +18,13 @@ export class SequenceEntity extends Entity {
 	 * @return An object with indices: completed, total, optionalViewed, optionalTotal, isCompleted
 	 */
 	completion() {
-		const subEntities = this._entity && this._entity.getSubEntitiesByRel && this._entity.getSubEntitiesByRel(Rels.completion);
-		if (!subEntities) {
+		const completionEntity = this._entity && this._entity.getSubEntityByRel && this._entity.getSubEntityByRel(Rels.completion);
+		if (!completionEntity) {
 			return {};
 		}
 
-		const subEntity = subEntities[0];
-
-		const completionProperties = subEntity.properties || {};
-		completionProperties.isCompleted = subEntity.hasClass && subEntity.hasClass(Classes.activities.complete);
+		const completionProperties = completionEntity.properties || {};
+		completionProperties.isCompleted = completionEntity.hasClass && completionEntity.hasClass(Classes.activities.complete);
 
 		return completionProperties;
 	}
