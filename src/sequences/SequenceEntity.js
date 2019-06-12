@@ -18,19 +18,33 @@ export class SequenceEntity extends Entity {
 		return this._entity && this._entity.properties && this._entity.properties.title;
 	}
 
+	sequenceViewerApplicationHref() {
+		const sequenceViewerRel = 'https://sequences.api.brightspace.com/rels/sequence-viewer-application';
+		return this._entity && this._entity.hasLinkByRel(sequenceViewerRel) &&
+		this._entity.getLinkByRel(sequenceViewerRel).href;
+	}
+
 	onSubSequencesChange(onChange) {
 		const subSequences = this._subSequences();
 
-		subSequences.forEach((entity) => {
-			entity && this._subEntity(SequenceEntity, entity, onChange);
+		subSequences.forEach((entity, index) => {
+			const onChangeWithIndex = (subSequence) => {
+				subSequence.index = () => index;
+				onChange(subSequence);
+			};
+			entity && this._subEntity(SequenceEntity, entity, onChangeWithIndex);
 		});
 	}
 
 	onSequencedActivityChange(onChange) {
-		const sequencedActivity = this._sequencedActivity();
+		const sequencedActivities = this._sequencedActivity();
 
-		sequencedActivity.forEach((entity) => {
-			entity && this._subEntity(SequencedActivityEntity, entity, onChange);
+		sequencedActivities.forEach((entity, index) => {
+			const onChangeWithIndex = (sequencedActivity) => {
+				sequencedActivity.index = () => index;
+				onChange(sequencedActivity);
+			};
+			entity && this._subEntity(SequencedActivityEntity, entity, onChangeWithIndex);
 		});
 	}
 
