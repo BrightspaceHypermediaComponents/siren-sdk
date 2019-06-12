@@ -22,11 +22,11 @@ export class SequenceEntity extends Entity {
 		const subEntity = subEntities.pop();
 
 		if (!subEntity) {
-			return;
+			return {};
 		}
 
 		const completionProperties = subEntity.properties || {};
-		completionProperties.isCompleted = !!(subEntity.hasClass && subEntity.hasClass(Classes.activities.complete));
+		completionProperties.isCompleted = subEntity.hasClass && subEntity.hasClass(Classes.activities.complete);
 
 		return completionProperties;
 	}
