@@ -13,7 +13,7 @@ describe('SequenceEntity', () => {
 			entityFactory(SequenceEntity, '/sequenceRoot', 'whatever', (entity) => {
 				entity.onSubSequencesChange((subSequence) => {
 					subSequence.onSequencedActivityChange((activity) => {
-						orgHref[activity.index()] = activity.organizationHrefs().pop();
+						orgHref[activity.index()] = activity.organizationHref();
 					});
 				});
 			}, sirenSequenceRoot);
