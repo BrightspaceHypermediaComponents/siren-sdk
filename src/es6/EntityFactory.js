@@ -21,6 +21,10 @@ export function entityFactory(entityType, href, token, onChange, entity) {
 	entityListener.add(href, token, onChangeWrapped, entity);
 }
 
+export function updateEntity(href, token) {
+	window.D2L.Siren.EntityStore.fetch(href, token, true);
+}
+
 /**
  * Some times the entity doesn't exists so this allows the cleanup code to be cleaner.
  * @param {Object|Null} entity Object that is of an Entity type.
