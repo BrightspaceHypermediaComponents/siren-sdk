@@ -2,6 +2,7 @@
 
 import { Entity } from '../es6/Entity.js';
 import { Classes, Rels } from '../hypermedia-constants';
+import { OrganizationEntity } from '../organizations/OrganizationEntity.js';
 
 export const sequenceClasses = {
 	sequence: 'sequence',
@@ -85,23 +86,25 @@ class SequencedActivityEntity extends Entity {
 		return this._entity && this._entity.properties && this._entity.properties.title;
 	}
 
-	organizationHrefs() {
-		const activity = this._activitySubEntities();
-		const orgHref = [];
-		activity.forEach((entity) => {
-			if (entity && entity.getSubEntitiesByClass(Rels.organization)) {
-				orgHref.push(entity.getLinkByRel(Rels.organization).href);
-			}
-		});
+	organizationHref() {
+		const activity = this._activitySubEntity();
+		if (!activity || !activity.hasLinkByRel(Rels.organization)) {
+			return;
+		}
 
-		return orgHref;
+		return activity.getLinkByRel(Rels.organization).href;
 	}
 
-	_activitySubEntities() {
+	onOrganizationChange(onChange) {
+		const organizationHref = this.organizationHref();
+		organizationHref && this._subEntity(OrganizationEntity, organizationHref, onChange);
+	}
+
+	_activitySubEntity() {
 		if (!this._entity) {
 			return;
 		}
 
-		return this._entity.getSubEntitiesByClass(sequencedActivityClasses.activity);
+		return this._entity.getSubEntityByClass(sequencedActivityClasses.activity);
 	}
 }
