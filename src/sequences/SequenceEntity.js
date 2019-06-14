@@ -1,7 +1,7 @@
 'use strict';
 
 import { Entity } from '../es6/Entity.js';
-import { Classes, Rels } from '../hypermedia-constants';
+import { Rels } from '../hypermedia-constants';
 import { OrganizationEntity } from '../organizations/OrganizationEntity.js';
 
 export const sequenceClasses = {
@@ -25,7 +25,8 @@ export class SequenceEntity extends Entity {
 		}
 
 		const completionProperties = completionEntity.properties || {};
-		completionProperties.isCompleted = completionEntity.hasClass && completionEntity.hasClass(Classes.activities.complete);
+		const completed = 'completed';
+		completionProperties.isCompleted = completionEntity.hasClass && completionEntity.hasClass(completed);
 
 		return completionProperties;
 	}

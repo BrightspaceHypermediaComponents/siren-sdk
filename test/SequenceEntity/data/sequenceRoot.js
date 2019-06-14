@@ -362,7 +362,7 @@ export const sequenceRootMultipleTopLevel = {
 			title: 'Section 2'
 		},
 		entities: [{
-			class: ['completion', 'complete'],
+			class: ['completion', 'completed'],
 			properties: {
 				completed: 7,
 				optionalTotal: 5,
