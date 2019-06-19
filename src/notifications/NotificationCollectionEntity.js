@@ -16,7 +16,8 @@ export class NotificationCollectionEntity extends Entity {
 	}
 
 	_size() {
-		return this._notificationCollectionEntity().length;
+		const notificationCollectionEntity = this._notificationCollectionEntity();
+		return (notificationCollectionEntity && notificationCollectionEntity.length) || 0;
 	}
 
 	_notificationCollectionEntity() {
