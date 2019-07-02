@@ -1,6 +1,6 @@
 'use strict';
 
-import 'd2l-polymer-siren-behaviors/store/entity-store.js';
+import { fetch, get, addListener, update } from '../store/store.js';
 
 /**
  * This creates and fetch a new entity. Whenever the entity changes onChange is called.
@@ -10,7 +10,7 @@ import 'd2l-polymer-siren-behaviors/store/entity-store.js';
  * @param {Function} onChange Callback function that accepts an {entityType} to be called when entity changes.
  * @param {Object} entity (Optional) Entity that has already been fetched.
  */
-export function entityFactory(entityType, href, token, onChange, entity) {
+export async function entityFactory(entityType, href, token, onChange, entity) {
 	const entityListener = new EntityListener();
 	const onChangeWrapped = (entity) => {
 		const entityWrapped = new entityType(entity, token, entityListener);
@@ -18,7 +18,7 @@ export function entityFactory(entityType, href, token, onChange, entity) {
 	};
 
 	// This add the listener then calls the fetch.
-	entityListener.add(href, token, onChangeWrapped, entity);
+	await entityListener.add(href, token, onChangeWrapped, entity);
 }
 
 export function updateEntity(href, token) {
@@ -42,7 +42,7 @@ class EntityListener {
 		this._removeListener;
 	}
 
-	add(href, token, onChange, entity) {
+	async add(href, token, onChange, entity) {
 		if (!this._validate(href, onChange, entity)) {
 			return;
 		}
@@ -51,20 +51,19 @@ class EntityListener {
 		this._token = token;
 		this._onChange = onChange;
 
-		window.D2L.Siren.EntityStore.addListener(this._href, this._token, this._onChange).then((removeListener) => {
-			this._removeListener = removeListener;
-			window.D2L.Siren.EntityStore.get(this._href, this._token).then((storedEntity) => {
-				if (storedEntity) {
-					this._onChange(storedEntity);
-					return;
-				}
-				if (entity) {
-					window.D2L.Siren.EntityStore.update(href, token, entity);
-				} else {
-					window.D2L.Siren.EntityStore.fetch(href, token);
-				}
-			});
-		});
+		this._removeListener = await addListener(this._href, this._token, this._onChange);
+		const storedEntity = await get(this._href, this._token);
+
+		if (storedEntity) {
+			this._onChange(storedEntity);
+			return;
+		}
+
+		if (entity) {
+			await update(href, token, entity);
+		} else {
+			await fetch(href, token);
+		}
 	}
 
 	update(href, token, onChange, entity) {
