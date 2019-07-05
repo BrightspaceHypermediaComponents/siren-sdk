@@ -14,7 +14,8 @@ export const classes = {
 
 export const rels = {
 	alerts: 'https://api.brightspace.com/rels/notification-alerts'
-}
+};
+
 /**
  * OrganizationEntity class representation of a d2l organization. TODO: expand on what an organization is
  */
