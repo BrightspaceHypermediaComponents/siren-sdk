@@ -2,6 +2,7 @@
 
 import { Entity } from '../es6/Entity.js';
 import { SimpleEntity } from '../es6/SimpleEntity.js';
+import { AlertsEntity } from './AlertsEntity.js';
 import { Rels, Classes, Actions } from '../hypermedia-constants';
 import { NotificationCollectionEntity } from '../notifications/NotificationCollectionEntity';
 import { SequenceEntity } from '../sequences/SequenceEntity.js';
@@ -10,6 +11,11 @@ export const classes = {
 	active: 'active',
 	inactive: 'inactive'
 };
+
+export const rels = {
+	alerts: 'https://api.brightspace.com/rels/notification-alerts'
+};
+
 /**
  * OrganizationEntity class representation of a d2l organization. TODO: expand on what an organization is
  */
@@ -118,6 +124,19 @@ export class OrganizationEntity extends Entity {
 
 	imageEntity() {
 		return this._entity && this._entity.getSubEntityByClass(Classes.courseImage.courseImage);
+	}
+
+	alertsUrl() {
+		if (!this._entity || !this._entity.hasLinkByRel(rels.alerts)) {
+			return;
+		}
+
+		return this._entity.getLinkByRel(rels.alerts).href;
+	}
+
+	onAlertsChange(onChange) {
+		const alertsHref = this.alertsUrl();
+		alertsHref && this._subEntity(AlertsEntity, alertsHref, onChange);
 	}
 
 	onSemesterChange(onChange) {
