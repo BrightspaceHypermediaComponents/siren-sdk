@@ -1,6 +1,6 @@
 import { afterNextRender } from '@polymer/polymer/lib/utils/render-status.js';
 import 'd2l-fetch/d2l-fetch.js';
-
+window.D2L.Siren.WhitelistBehavior._testMode(true);
 describe('d2l-organization-name', () => {
 	var sandbox,
 		component,
