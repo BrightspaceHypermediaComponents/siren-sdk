@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Home</title>
+    <title>JSDoc: Source: AlertsEntity.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,32 +17,34 @@
 
 <div id="main">
 
-    <h1 class="page-title">Home</h1>
+    <h1 class="page-title">Source: AlertsEntity.js</h1>
 
     
 
 
 
     
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>'use strict';
 
+import { Entity } from '../es6/Entity.js';
 
-    <h3> </h3>
+/**
+ * AlertsEntity class representation of a d2l notification alerts.
+ */
+export class AlertsEntity extends Entity {
 
-
-
-
-
-
-
-
-
-
-    
-
-
-
-
-
+	/**
+	 * Whether or not there is unread alert message
+	 */
+	hasUnread() {
+		return this._entity &amp;&amp; this._entity.properties &amp;&amp; this._entity.properties.hasUnread;
+	}
+}
+</code></pre>
+        </article>
+    </section>
 
 
 
