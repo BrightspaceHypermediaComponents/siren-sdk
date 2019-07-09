@@ -9,7 +9,7 @@ describe('Consortium entity', () => {
 		it('hasaction', () =>{
 			const entity =  window.D2L.Hypermedia.Siren.Parse(consortiumRoot);
 			const consortiumRootEntity = new ConsortiumRootEntity(entity);
-			expect(consortiumRoot.actions[0].href).to.be.equals(consortiumRootEntity.getConsortiumCollection());
+			expect(consortiumRoot.actions[0].href).to.be.equals(consortiumRootEntity.getConsortiumCollection().href);
 		});
 	});
 });
