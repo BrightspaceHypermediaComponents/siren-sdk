@@ -4,7 +4,7 @@ import { Rels } from '../../src/hypermedia-constants.js';
 import { root } from '../../src/root/root.js';
 
 import 'd2l-fetch/d2l-fetch.js';
-
+window.D2L.Siren.WhitelistBehavior._testMode(true);
 describe('root', () => {
 	var sandbox;
 
