@@ -6,10 +6,13 @@ import { AlertsEntity } from './AlertsEntity.js';
 import { Rels, Classes, Actions } from '../hypermedia-constants';
 import { NotificationCollectionEntity } from '../notifications/NotificationCollectionEntity';
 import { SequenceEntity } from '../sequences/SequenceEntity.js';
+
 export const classes = {
-	course: 'course',
 	active: 'active',
-	inactive: 'inactive'
+	course: 'course',
+	courseOffering: 'course-offering',
+	inactive: 'inactive',
+	learningPath: 'learning-path',
 };
 
 export const rels = {
