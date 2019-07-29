@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Class: ConsortiumTokenEntity</title>
+    <title>JSDoc: Class: ConsortiumRootEntity</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Class: ConsortiumTokenEntity</h1>
+    <h1 class="page-title">Class: ConsortiumRootEntity</h1>
 
     
 
@@ -28,9 +28,9 @@
 
 <header>
     
-        <h2><span class="attribs"><span class="type-signature"></span></span>ConsortiumTokenEntity</h2>
+        <h2><span class="attribs"><span class="type-signature"></span></span>ConsortiumRootEntity</h2>
         
-            <div class="class-description">ConsortiumTokenEntity contains all necessary information to navigate to another organization as a user.  Generally returned in a collection in <a href="ConsortiumTokenCollectionEntity.html">ConsortiumTokenCollectionEntity</a></div>
+            <div class="class-description">Root entity that allows you to get <a href="ConsortiumTokenCollectionEntity.html">ConsortiumTokenCollectionEntity</a></div>
         
     
 </header>
@@ -83,7 +83,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="consortium_ConsortiumTokenEntity.js.html">consortium/ConsortiumTokenEntity.js</a>, <a href="consortium_ConsortiumTokenEntity.js.html#line12">line 12</a>
+        <a href="consortium_ConsortiumRootEntity.js.html">consortium/ConsortiumRootEntity.js</a>, <a href="consortium_ConsortiumRootEntity.js.html#line9">line 9</a>
     </li></ul></dd>
     
 
@@ -135,7 +135,7 @@
         <h3 class="subsection-title">Classes</h3>
 
         <dl>
-            <dt><a href="ConsortiumTokenEntityEntity.html">Entity</a></dt>
+            <dt><a href="ConsortiumRootEntityEntity.html">Entity</a></dt>
             <dd></dd>
         </dl>
     
@@ -721,194 +721,6 @@
     
 
     
-    <h4 class="name" id="consortiumTenant"><span class="type-signature"></span>consortiumTenant<span class="signature">()</span><span class="type-signature"></span></h4>
-    
-
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="consortium_ConsortiumTokenEntity.js.html">consortium/ConsortiumTokenEntity.js</a>, <a href="consortium_ConsortiumTokenEntity.js.html#line22">line 22</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
-<div class="param-desc">
-    tenantId of this tenant in a consortium
-</div>
-
-
-
-    
-
-
-
-
-
-        
-            
-
-    
-
-    
-    <h4 class="name" id="consortiumToken"><span class="type-signature"></span>consortiumToken<span class="signature">()</span><span class="type-signature"></span></h4>
-    
-
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="consortium_ConsortiumTokenEntity.js.html">consortium/ConsortiumTokenEntity.js</a>, <a href="consortium_ConsortiumTokenEntity.js.html#line16">line 16</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
-<div class="param-desc">
-    JWT to allow api calls to another tenant
-</div>
-
-
-
-    
-
-
-
-
-
-        
-            
-
-    
-
-    
     <h4 class="name" id="dispose"><span class="type-signature"></span>dispose<span class="signature">()</span><span class="type-signature"></span></h4>
     
 
@@ -1251,138 +1063,6 @@
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
         <a href="es6_Entity.js.html">es6/Entity.js</a>, <a href="es6_Entity.js.html#line27">line 27</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-            
-
-    
-
-    
-    <h4 class="name" id="rootOrganizationEntity"><span class="type-signature"></span>rootOrganizationEntity<span class="signature">(function)</span><span class="type-signature"></span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    A constructed <a href="root.html">root</a> object
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>function</code></td>
-            
-
-            <td class="type">
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">onChange Callback function to be called when entity changes</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="consortium_ConsortiumTokenEntity.js.html">consortium/ConsortiumTokenEntity.js</a>, <a href="consortium_ConsortiumTokenEntity.js.html#line29">line 29</a>
     </li></ul></dd>
     
 
