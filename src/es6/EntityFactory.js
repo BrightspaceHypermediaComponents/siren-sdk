@@ -18,7 +18,7 @@ export async function entityFactory(entityType, href, token, onChange, entity) {
 	};
 
 	// This add the listener then calls the fetch.
-	await entityListener.add(href, token, onChangeWrapped, entity);
+	entityListener.add(href, token, onChangeWrapped, entity);
 }
 
 export function updateEntity(href, token) {
