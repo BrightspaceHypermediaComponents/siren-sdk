@@ -10,7 +10,7 @@ import 'd2l-polymer-siren-behaviors/store/entity-store.js';
  * @param {Function} onChange Callback function that accepts an {entityType} to be called when entity changes.
  * @param {Object} entity (Optional) Entity that has already been fetched.
  */
-export function entityFactory(entityType, href, token, onChange, entity) {
+export async function entityFactory(entityType, href, token, onChange, entity) {
 	const entityListener = new EntityListener();
 	const onChangeWrapped = (entity) => {
 		const entityWrapped = new entityType(entity, token, entityListener);
@@ -18,7 +18,7 @@ export function entityFactory(entityType, href, token, onChange, entity) {
 	};
 
 	// This add the listener then calls the fetch.
-	entityListener.add(href, token, onChangeWrapped, entity);
+	await entityListener.add(href, token, onChangeWrapped, entity);
 }
 
 export function updateEntity(href, token) {
