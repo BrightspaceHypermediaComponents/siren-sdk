@@ -12,7 +12,20 @@ script:
     echo "Not a pull request and/or no secure environment variables, running headless tests...";
     npm run test:polymer:local || travis_terminate 1;
   fi
+after_success:
+- frauci-update-version && export TRAVIS_TAG=$(frauci-get-version)
+deploy:
+  provider: releases
+  api_key: "$GITHUB_RELEASE_TOKEN"
+  on:
+    tags: true
 env:
   global:
+  - OWNER_NAME: Brightspacehypermediacomponents
+  - REPO_NAME: siren-sdk
+  - DEFAULT_INCREMENT: patch
   - SAUCE_USERNAME: Desire2Learn
+  # SAUCE_ACCESS_KEY
   - secure: WiTCzPVsxlRQc6IZ7W7vBU3i6ygfP4AipR2q1pKhndzmUqwKAX/l39E+ShB6eu6O1W6t4JLoL649LIIElMMiw5TljfsG50bq4hLyO7ydN/pie9WqE+u50h1cquzA6PxqpeDUDfGSH4Mn/du7bEUCHT/o8B0pO64jajvmTLD/PjsmSTy0XDucxpnhfRFQb2R7AfKIWBBN4HJL5J8zq/hlL7hWU/fuHcHU+lhDazBPYOvG1eolP7MPtASToqkli2hk5/Z24YlHO7Top88up0NhdRUKuEwBIidkoqU+UH/shFoIeW18aue6c5fHyg/6vT16QK5vRvhUOEB2vTThO0agJpbGT7UHTK8kuv4kFCBSJYZJa2kByPsyrOo7ggj25L3tbBMhZUGgnTb/Zjym+FjpbCaHsh3Sgp0pUkgKRj0p8NEKa+3TGJe0TQ8fFsJibu/3PFgm9pkYVkamz+ttb038ykwkJslPa7BTdO+I8uSDrrVvg+djP8vOh1sOp61Vm39B2PkWKC+ECrKNFdKAGyffH0Q7ojKAGoQPBkMNeZCqTGpz/FeS40ALs/GNCdY1hQj++P2NXuBNqiRa3LomcqFQpeOXNP0uauJJCeDPWnRdLx8/p8C9nIZFfye1eU09JqqAL7fDtCA3FRC6LFekwKkwy9HzBKaN0GQ4kVnQMFjNXZg=
+  # GITHUB_RELEASE_TOKEN (86ea......29c7)
+  - secure: VhT6T6ezigwgVECx3KqERwVk+b++KiSxPbzv21X4fpCz9T9UWNy2wMiPBlwpHI7+ICsg1AJ6qDbANC4USIgV3WONSXiRkuWunCFuaMvgx8tnJEFWzwAb0gNoQ7w0HLf2OsoD0ri7I939ogJMW7Y5KWqHp3TRs8u3RlpdVFG2h92LtpP/mfJwYcKv3pkooZCdtuHw8jGuUn3o1JNFa5iv8eq5yO7EYh0h7rmNgEIoH5hPZKwUnOgBy+fsQooVwS0Oncbotv1s2nSFl+QCIQFSyjmR0pcthJvwo/h9/HP5vym7ndd+izubok07wM5hNXKyDxWSERgXjmegUV5SDyu8e0CG9LKvg+B9UPbZ8IZ8D0PiXvFybaRuNc2o9sT8wlHpB9nAyGVt8e42dmSNrPJwvIzjJbcTu4Xhs4vngGrHZOw3cMqojnW8XhQFuz8TuShhy9mVtP46Ve+XGjwd5qeAaX0v582xrU++AwTBnSTAK2DsaIgmZoCiqDO7TNX5dbSiiQsgfW41NXuO287iYWscv+cAbEKiDFCnjfX/7mat1g4uLdVkzLbPZAiJVr7t0q5siI+i/Iu2ZQJ3m2icvNZ9tRRz0iwa7HTRCkayXWoZsAChsMx4Ktg4dZGI+BDTKmNr4euq9zNanZgMExt2hiyOWKXuf3GZYDnCmpTzjgPfE8M=
