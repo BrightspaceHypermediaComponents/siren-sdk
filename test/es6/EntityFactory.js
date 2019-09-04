@@ -1,5 +1,5 @@
-import { entityFactory } from '../../src/es6/EntityFactory';
-import { Nothing } from '../nothing-entity';
+import { entityFactory } from '../../src/es6/EntityFactory.js';
+import { Nothing } from '../nothing-entity.js';
 
 /* global describe it expect sinon*/
 window.D2L.Siren.WhitelistBehavior._testMode(true);
@@ -7,12 +7,13 @@ describe('Entityfactory', () => {
 
 	describe('errors', () => {
 		it('bubbles to onchange', done => {
-			entityFactory(Nothing, 'http://notadomain.superbadtld', 'wutsatoken', (entity, error) => {
+			entityFactory(Nothing, 'http://localhost:8000/not/a/valid/thing', 'wutsatoken', (entity, err) => {
 				expect(entity).to.be.null;
-				expect(error).to.be.not.null;
-				expect(error.message).to.be.equal('Failed to fetch');
+				expect(err).to.be.not.null;
+				expect(err).to.be.equal(404);
 				done();
 			});
+
 		});
 	});
 });
