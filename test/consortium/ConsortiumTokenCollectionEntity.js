@@ -17,7 +17,7 @@ describe('Consortium entity', () => {
 			'entities': [],
 			'links': [
 				{
-					'rels': ['https://api.brightspace.com/rels/enrollments'],
+					'rel': ['https://api.brightspace.com/rels/enrollments'],
 					'href': '/enrollments.json'
 				},
 				{
@@ -95,14 +95,21 @@ describe('Consortium entity', () => {
 			expect(consortium._consortiumTokenEntities().length).to.equal(2);
 			const tokenEntities = [];
 			const rootEntities = [];
-			consortium.consortiumTokenEntities((entity) => {
+			const errors = [];
+			consortium.consortiumTokenEntities((entity, error) => {
+				if (error) {
+					errors.push(error);
+				}
 				tokenEntities.push(entity);
-				entity.rootOrganizationEntity((root) =>  {
+				entity.rootOrganizationEntity((root, error) =>  {
+					if (error) {
+						errors.push(error);
+					}
 					rootEntities.push(root);
 				});
 			});
 			setTimeout(() => {
-
+				expect(errors.length, 'callback errors, check test data for errors').to.be.equal(0);
 				expect(tokenEntities.length, 'token entities length invalid').to.be.equal(2);
 				for (const entity of tokenEntities) {
 					expect(entity).to.be.an.instanceof(ConsortiumTokenEntity);
