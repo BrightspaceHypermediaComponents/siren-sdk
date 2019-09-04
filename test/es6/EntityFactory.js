@@ -6,8 +6,26 @@ window.D2L.Siren.WhitelistBehavior._testMode(true);
 describe('Entityfactory', () => {
 
 	describe('errors', () => {
+		var sandbox;
+
+		beforeEach(() => {
+			sandbox = sinon.sandbox.create();
+
+			sandbox.stub(window.d2lfetch, 'fetch', () => {
+
+				return Promise.resolve({
+					ok: false,
+					status: 404
+				}
+				);
+			});
+		});
+
+		afterEach(() => {
+			sandbox.restore();
+		});
 		it('bubbles to onchange', done => {
-			entityFactory(Nothing, 'http://localhost:8000/not/a/valid/thing', 'wutsatoken', (entity, err) => {
+			entityFactory(Nothing, 'http://localhost/not/a/valid/thing', 'wutsatoken', (entity, err) => {
 				expect(entity).to.be.null;
 				expect(err).to.be.not.null;
 				expect(err).to.be.equal(404);
