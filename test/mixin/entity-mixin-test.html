@@ -12,17 +12,28 @@
 		<script src="../../../whatwg-fetch/fetch.js"></script>
 
 		<script type="module" src="../utility/siren-sdk-organization-info.js"></script>
+		<script type="module" src="../utility/siren-sdk-organization-info-lit.js"></script>
 
 	</head>
 	<body>
-		<test-fixture id="no-params">
+		<test-fixture id="no-params-polymer">
 			<template>
 				<siren-sdk-organization-info id="a"></siren-sdk-organization-info>
 			</template>
 		</test-fixture>
-		<test-fixture id="no-params-2">
+		<test-fixture id="no-params-2-polymer">
 			<template>
 				<siren-sdk-organization-info id="b"></siren-sdk-organization-info>
+			</template>
+		</test-fixture>
+		<test-fixture id="no-params-lit">
+			<template>
+				<siren-sdk-organization-info-lit id="c"></siren-sdk-organization-info-lit>
+			</template>
+		</test-fixture>
+		<test-fixture id="no-params-2-lit">
+			<template>
+				<siren-sdk-organization-info-lit id="d"></siren-sdk-organization-info-lit>
 			</template>
 		</test-fixture>
 		<script type="module" src="./entity-mixin-test.js"></script>
