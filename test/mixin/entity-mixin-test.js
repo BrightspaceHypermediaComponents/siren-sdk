@@ -72,63 +72,64 @@ describe('d2l-organization-name', () => {
 	afterEach(() => {
 		sandbox.restore();
 	});
+	[ 'lit' ].forEach(mixinType => {
+		describe(`Testing Swap ${mixinType}`, () => {
+			let spy, spy2;
+			beforeEach(done => {
+				component = fixture(`no-params-${mixinType}`);
+				component2 = fixture(`no-params-2-${mixinType}`);
+				spy = sandbox.spy(component, '_onOrganizationChange');
+				spy2 = sandbox.spy(component2, '_onOrganizationChange');
 
-	describe('Testing Swap', () => {
-		let spy, spy2;
-		beforeEach(done => {
-			component = fixture('no-params');
-			component2 = fixture('no-params-2');
-			spy = sandbox.spy(component, '_onOrganizationChange');
-			spy2 = sandbox.spy(component2, '_onOrganizationChange');
+				component.token = 'whatever';
+				component2.token = 'whatever';
+				component.href = '/organization.json';
+				component2.href = '/organization2.json';
+				afterNextRender(component, done);
+			});
 
-			component.token = 'whatever';
-			component2.token = 'whatever';
-			component.href = '/organization.json';
-			component2.href = '/organization2.json';
-			afterNextRender(component, done);
-		});
+			it('Everything works with no swap', done => {
+				expect(spy).to.have.been.calledOnce;
 
-		it('Everything works with no swap', done => {
-			expect(spy).to.have.been.calledOnce;
+				afterNextRender(component, () => {
+					const name = component.shadowRoot.getElementById('organization-name');
+					const code = component.shadowRoot.getElementById('organization-code');
+					const semesterNameDirect = component.shadowRoot.getElementById('semester-name-direct');
+					const semesterName = component.shadowRoot.getElementById('semester-name').shadowRoot;
 
-			afterNextRender(component, () => {
-				const name = component.shadowRoot.getElementById('organization-name');
-				const code = component.shadowRoot.getElementById('organization-code');
-				const semesterNameDirect = component.shadowRoot.getElementById('semester-name-direct');
-				const semesterName = component.shadowRoot.getElementById('semester-name').shadowRoot;
+					expect(name.innerHTML.replace(/<!---->/g, '')).to.be.equal('Course Name');
+					expect(code.innerHTML.replace(/<!---->/g, '')).to.be.equal('SCI100');
+					expect(semesterNameDirect.innerHTML.replace(/<!---->/g, '')).to.be.equal('Semester Name');
+					expect(semesterName.innerHTML.replace(/<!---->/g, '')).to.be.contains('Semester Name');
+					done();
+				});
 
-				expect(name.innerHTML).to.be.equal('Course Name');
-				expect(code.innerHTML).to.be.equal('SCI100');
-				expect(semesterNameDirect.innerHTML).to.be.equal('Semester Name');
-				expect(semesterName.innerHTML).to.be.contains('Semester Name');
-				done();
+			});
+
+			it('Swap to elements', done => {
+				expect(spy).to.have.been.calledOnce;
+				expect(spy2).to.have.been.calledOnce;
+				component.href = '/organization2.json';
+				component2.href = '/organization.json';
+
+				afterNextRender(component, () => {
+					expect(spy).to.have.been.calledTwice;
+					expect(spy2).to.have.been.calledTwice;
+					const name = component.shadowRoot.getElementById('organization-name');
+					const code = component.shadowRoot.getElementById('organization-code');
+					const semesterNameDirect = component.shadowRoot.getElementById('semester-name-direct');
+					const semesterName = component.shadowRoot.getElementById('semester-name').shadowRoot;
+
+					expect(name.innerHTML.replace(/<!---->/g, '')).to.be.equal('Course Name 2');
+					expect(code.innerHTML.replace(/<!---->/g, '')).to.be.equal('SCI101');
+					expect(semesterNameDirect.innerHTML.replace(/<!---->/g, '')).to.be.equal('Semester Name 2');
+					expect(semesterName.innerHTML.replace(/<!---->/g, '')).to.be.contains('Semester Name 2');
+					done();
+				});
+
 			});
 
 		});
-
-		it('Swap to elements', done => {
-			expect(spy).to.have.been.calledOnce;
-			expect(spy2).to.have.been.calledOnce;
-			component.href = '/organization2.json';
-			component2.href = '/organization.json';
-
-			afterNextRender(component, () => {
-				expect(spy).to.have.been.calledTwice;
-				expect(spy2).to.have.been.calledTwice;
-				const name = component.shadowRoot.getElementById('organization-name');
-				const code = component.shadowRoot.getElementById('organization-code');
-				const semesterNameDirect = component.shadowRoot.getElementById('semester-name-direct');
-				const semesterName = component.shadowRoot.getElementById('semester-name').shadowRoot;
-
-				expect(name.innerHTML).to.be.equal('Course Name 2');
-				expect(code.innerHTML).to.be.equal('SCI101');
-				expect(semesterNameDirect.innerHTML).to.be.equal('Semester Name 2');
-				expect(semesterName.innerHTML).to.be.contains('Semester Name 2');
-				done();
-			});
-
-		});
-
 	});
 
 });

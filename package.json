@@ -6,9 +6,8 @@
   "scripts": {
     "generate:docs": "jsdoc src -R README.md -r -d docs",
     "test": "npm run test:lint && npm run test:polymer:local",
-    "test:lint": "npm run test:lint:wc && npm run test:lint:js",
+    "test:lint": "npm run test:lint:js",
     "test:lint:js": "eslint . --ext .js,.html test/**/*.js test/**/*.html demo/**/*.js demo/**/*.html",
-    "test:lint:wc": "polymer lint src/mixin/**/*.js",
     "test:polymer:local": "polymer test --skip-plugin sauce",
     "test:polymer:sauce": "polymer test --skip-plugin local"
   },
@@ -32,6 +31,7 @@
     "frau-ci": "^1.40.0",
     "jsdoc": "^3.5.5",
     "lie": "^3.3.0",
+    "lit-element": "^2",
     "polymer-cli": "^1.9.1",
     "wct-browser-legacy": "^1.0.1",
     "whatwg-fetch": "^2.0.0"
