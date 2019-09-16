@@ -59,6 +59,29 @@ describe('SequenceEntity', () => {
 			}, 50);
 		});
 
+		it('Check to get alternate viewer href', done => {
+			const sirenSequenceRoot =  window.D2L.Hypermedia.Siren.Parse(sequenceRootMultipleTopLevel);
+			const orgHref = {};
+			entityFactory(SequenceEntity, '/sequenceRoot2', 'whatever', (entity) => {
+				entity.onSubSequencesChange((subSequence) => {
+					orgHref[subSequence.index()] = subSequence.alternateViewerHref();
+				});
+			}, sirenSequenceRoot);
+
+			setTimeout(() => {
+				expect(orgHref[0]).to.equal(
+					'https://qa2019716994g.bspc.com/d2l/le/content/121694/Home?itemIdentifier=D2L.LE.Content.ContentObject.ModuleCO-121263'
+				);
+				expect(orgHref[1]).to.equal(
+					'https://qa2019716994g.bspc.com/d2l/le/content/121694/Home?itemIdentifier=D2L.LE.Content.ContentObject.ModuleCO-121264'
+				);
+				expect(orgHref[2]).to.equal(
+					'https://qa2019716994g.bspc.com/d2l/le/content/121694/Home?itemIdentifier=D2L.LE.Content.ContentObject.ModuleCO-121265'
+				);
+				done();
+			}, 50);
+		});
+
 		it('Check completion', done => {
 			const sirenSequenceRoot =  window.D2L.Hypermedia.Siren.Parse(sequenceRootMultipleTopLevel);
 			const completionData = {};

@@ -41,6 +41,15 @@ export class SequenceEntity extends Entity {
 		this._entity.getLinkByRel(sequenceViewerRel).href;
 	}
 
+	alternateViewerHref() {
+		const alternateViewerRel = 'alternate';
+		return (
+			this._entity &&
+			this._entity.hasLinkByRel(alternateViewerRel) &&
+			this._entity.getLinkByRel(alternateViewerRel).href
+		);
+	}
+
 	onSubSequencesChange(onChange) {
 		const subSequences = this._subSequences();
 
