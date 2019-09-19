@@ -9,7 +9,8 @@
     "test:lint": "npm run test:lint:js",
     "test:lint:js": "eslint . --ext .js,.html test/**/*.js test/**/*.html demo/**/*.js demo/**/*.html",
     "test:polymer:local": "polymer test --skip-plugin sauce",
-    "test:polymer:sauce": "polymer test --skip-plugin local"
+    "test:polymer:sauce": "polymer test --skip-plugin local",
+    "serve": "polymer serve"
   },
   "author": "",
   "license": "MIT",
