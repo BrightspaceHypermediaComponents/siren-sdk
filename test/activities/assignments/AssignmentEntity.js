@@ -1,6 +1,6 @@
-import { AssignmentActivityEntity } from '../../../src/activities/assignments/AssignmentActivityEntity.js';
+import { AssignmentEntity } from '../../../src/activities/assignments/AssignmentEntity.js';
 
-describe('AssignmentActivityEntity', () => {
+describe('AssignmentEntity', () => {
 
 	describe('Basic loading', () => {
 		it('reads name', () => {
@@ -29,8 +29,8 @@ describe('AssignmentActivityEntity', () => {
 					'https://assignments.api.brightspace.com/rels/assignment'
 				]
 			});
-			var assignmentActivityEntity = new AssignmentActivityEntity(entity);
-			expect(assignmentActivityEntity.name()).to.equal('Extra Special Assignment');
+			var assignmentEntity = new AssignmentEntity(entity);
+			expect(assignmentEntity.name()).to.equal('Extra Special Assignment');
 		});
 	});
 });

@@ -1,6 +1,6 @@
 'use strict';
 
-import { AssignmentActivityEntity } from './AssignmentActivityEntity.js';
+import { AssignmentEntity } from './AssignmentEntity.js';
 import { Entity } from '../../es6/Entity.js';
 import { Rels } from '../../hypermedia-constants';
 
@@ -20,7 +20,7 @@ export class AssignmentActivityUsageEntity extends Entity {
 		const assignmentHref = this.assignmentHref();
 		// _subEntity builds new sub entity and allows this object to track it.
 		// So all sub entities are dispose when this object is disposed.
-		assignmentHref && this._subEntity(AssignmentActivityEntity, assignmentHref, onChange);
+		assignmentHref && this._subEntity(AssignmentEntity, assignmentHref, onChange);
 	}
 
 }

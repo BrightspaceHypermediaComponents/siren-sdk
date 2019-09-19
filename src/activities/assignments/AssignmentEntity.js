@@ -3,9 +3,9 @@
 import { Entity } from '../../es6/Entity.js';
 
 /**
- * AssignmentActivityEntity class representation of a d2l AssignmentActivity.
+ * AssignmentEntity class representation of a d2l Assignment.
  */
-export class AssignmentActivityEntity extends Entity {
+export class AssignmentEntity extends Entity {
 	name() {
 		return this._entity && this._entity.properties && this._entity.properties.name;
 	}
