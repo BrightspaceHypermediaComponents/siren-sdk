@@ -1,6 +1,4 @@
-import SirenParse from 'siren-parser';
 import { entityFactory, dispose } from '../es6/EntityFactory.js';
-import { SirenFetchLib } from '../lib/siren-fetch-lib.js';
 
 export const EntityMixinLit = superclass => class extends superclass {
 
@@ -21,16 +19,11 @@ export const EntityMixinLit = superclass => class extends superclass {
 			 * Entity object that extends the Entity class.
 			 */
 			_entity: { type: Object },
-			/**
-			 * SirenFetchLib object
-			 */
-			_sirenFetch: { type: Object }
 		};
 	}
 
 	constructor() {
 		super();
-		this._sirenFetch = new SirenFetchLib();
 	}
 
 	set href(href) {
@@ -90,21 +83,6 @@ export const EntityMixinLit = superclass => class extends superclass {
 		if (typeof entityType === 'function') {
 			this._entityType = entityType;
 		}
-	}
-
-	_performAction(action, fields, onChange) {
-		this._sirenFetch.callAction(action, fields).then(function(result) {
-			var entity = SirenParse(result.body);
-			dispose(this._entity);
-			if (typeof this._entityType === 'function') {
-				entityFactory(this._entityType, this.href, this.token, entity => {
-					this._entity = entity;
-					if (typeof onChange === 'function') {
-						onChange(entity);
-					}
-				}, entity);
-			}
-		}.bind(this));
 	}
 
 	__onHrefChange(href, token) {
