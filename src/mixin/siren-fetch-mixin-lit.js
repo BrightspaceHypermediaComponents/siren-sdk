@@ -1,4 +1,5 @@
 import 'd2l-fetch/d2l-fetch.js';
+import 'd2l-polymer-siren-behaviors/store/entity-store.js';
 import SirenParse from 'siren-parser';
 
 export const SirenFetchMixinLit = superclass => class extends superclass {
@@ -7,14 +8,14 @@ export const SirenFetchMixinLit = superclass => class extends superclass {
 		const url = new URL(action.href, window.location.origin);
 		const fields = [];
 		if (action.method === 'GET' || action.method === 'HEAD') {
-			for (let param in url.searchParams.entries()) {
+			for (const param in url.searchParams.entries()) {
 				fields.push({ name: param[0], value: param[1] });
 			}
-		// Disable URLSearchParams until they are fully supported (i.e. Edge)
-		/*
-		} else if (window.URLSearchParams && action.type === 'application/x-www-form-urlencoded') {
-			fields = new URLSearchParams();
-		*/
+			// Disable URLSearchParams until they are fully supported (i.e. Edge)
+			/*
+			} else if (window.URLSearchParams && action.type === 'application/x-www-form-urlencoded') {
+				fields = new URLSearchParams();
+			*/
 		}
 
 		if (action.fields && action.fields.forEach) {
@@ -82,7 +83,7 @@ export const SirenFetchMixinLit = superclass => class extends superclass {
 			self.dispatchEvent(new CustomEvent('d2l-siren-entity-save-start'));
 		}
 		return window.d2lfetch.fetch(href, opts)
-			.then(function (resp) {
+			.then(function(resp) {
 				if (sendSaveEvent && resp.ok) {
 					self.dispatchEvent(new CustomEvent('d2l-siren-entity-save-end'));
 				}
@@ -93,7 +94,7 @@ export const SirenFetchMixinLit = superclass => class extends superclass {
 					const errMsg = resp.statusText + ' response executing ' + opts.method + ' on ' + href + '.';
 					return resp.json().then(function(data) {
 						throw { json: data, message: errMsg };
-					}, function (data) {
+					}, function(data) {
 						throw { string: data, message: errMsg };
 					});
 				}
@@ -161,7 +162,7 @@ export const SirenFetchMixinLit = superclass => class extends superclass {
 			.then(function(result) {
 				const linkRequests = [];
 				if (result.links) {
-					result.links.forEach(function (link) {
+					result.links.forEach(function(link) {
 						linkRequests.push(window.D2L.Siren.EntityStore.fetch(link.href, token, true));
 					});
 				}
@@ -172,7 +173,7 @@ export const SirenFetchMixinLit = superclass => class extends superclass {
 			});
 	}
 
-	/*performSirenAction(action, fields, immediate) {
+	performSirenAction(action, fields, immediate) {
 		const self = this;
 		return window.D2L.Siren.EntityStore.getToken(this.token)
 			.then(function(resolved) {
@@ -181,5 +182,5 @@ export const SirenFetchMixinLit = superclass => class extends superclass {
 					return self._performSirenAction(action, fields, tokenValue);
 				}) : self._performSirenAction(action, fields, tokenValue);
 			});
-	}*/
-}
+	}
+};
