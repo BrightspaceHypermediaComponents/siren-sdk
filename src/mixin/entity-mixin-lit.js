@@ -18,8 +18,12 @@ export const EntityMixinLit = superclass => class extends superclass {
 			/**
 			 * Entity object that extends the Entity class.
 			 */
-			_entity: { type: Object }
+			_entity: { type: Object },
 		};
+	}
+
+	constructor() {
+		super();
 	}
 
 	set href(href) {

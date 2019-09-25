@@ -12,5 +12,9 @@ export class AssignmentEntity extends Entity {
 	canEditName() {
 		return this._entity && this._entity.hasActionByName('update-name');
 	}
+	getSaveNameAction() {
+		return this._entity && this._entity.getActionByName('update-name');
+	}
+
 }
 
