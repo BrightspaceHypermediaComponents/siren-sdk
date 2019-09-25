@@ -24,7 +24,7 @@ export class SirenFetchLib {
 	callAction(action, fields) {
 		var body = {};
 		if (fields) {
-			fields.forEach(function (field) {
+			fields.forEach(function(field) {
 				if (field.value !== undefined) {
 					body[field.name] = field.value;
 				}
