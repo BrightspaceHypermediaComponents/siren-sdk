@@ -22,7 +22,7 @@ async function load(el, href) {
 	await loading;
 }
 
-describe('simple d2l-organization-name', function() {
+describe('Simple Entity Mixin Test', function() {
 
 	// this.timeout(180000);
 
@@ -77,37 +77,34 @@ describe('simple d2l-organization-name', function() {
 		sandbox.restore();
 	});
 
-	describe('Testing Simple Entity', () => {
-
-		it('renders a name', async() => {
-			const el = await fixture(html`
+	it('renders a name', async() => {
+		const el = await fixture(html`
 				<siren-sdk-simple-organization token="whatever"></siren-sdk-simple-organization>
 			`);
 
-			await load(el, '/organization.json');
+		await load(el, '/organization.json');
 
-			expect(el).shadowDom.to.equal(`
+		expect(el).shadowDom.to.equal(`
 				<div id="organization-name">Course Name</div>
 			`);
-		});
+	});
 
-		it('updates a name', async() => {
-			const el = await fixture(html`
+	it('updates a name', async() => {
+		const el = await fixture(html`
 				<siren-sdk-simple-organization token="whatever"></siren-sdk-simple-organization>
 			`);
 
-			await load(el, '/organization.json');
+		await load(el, '/organization.json');
 
-			expect(el).shadowDom.to.equal(`
+		expect(el).shadowDom.to.equal(`
 				<div id="organization-name">Course Name</div>
 			`);
 
-			const updatedEntity = window.D2L.Hypermedia.Siren.Parse(organizationEntityUpdated);
-			await window.D2L.Siren.EntityStore.update('/organization.json', el.token, updatedEntity);
+		const updatedEntity = window.D2L.Hypermedia.Siren.Parse(organizationEntityUpdated);
+		await window.D2L.Siren.EntityStore.update('/organization.json', el.token, updatedEntity);
 
-			expect(el).shadowDom.to.equal(`
+		expect(el).shadowDom.to.equal(`
 				<div id="organization-name">Course Name Updated</div>
 			`);
-		});
 	});
 });
