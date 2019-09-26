@@ -1,5 +1,6 @@
 import 'd2l-fetch/d2l-fetch.js';
 import 'd2l-polymer-siren-behaviors/store/entity-store.js';
+import 'd2l-polymer-siren-behaviors/store/action-queue.js';
 import SirenParse from 'siren-parser';
 
 export const SirenFetchMixinLit = superclass => class extends superclass {
