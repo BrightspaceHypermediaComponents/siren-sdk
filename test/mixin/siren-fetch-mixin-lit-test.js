@@ -80,6 +80,8 @@ suite('siren-fetch-mixin-lit', function() {
 
 	teardown(function() {
 		sandbox.restore();
+		window.D2L.Siren.ActionQueue.queueEnd = Promise.resolve();
+		window.D2L.Siren.EntityStore.clear();
 	});
 
 	suite('smoke test', function() {
@@ -89,8 +91,9 @@ suite('siren-fetch-mixin-lit', function() {
 	});
 
 	suite('send action unit tests', function() {
+		var fetchStub;
 		setup(function() {
-			sinon.stub(window, 'fetch');
+			fetchStub = sinon.stub(window.d2lfetch, 'fetch');
 			var res = new window.Response(JSON.stringify(testEntity), {
 				status: 200,
 				headers: {
@@ -98,20 +101,21 @@ suite('siren-fetch-mixin-lit', function() {
 				},
 			});
 
-			window.fetch.returns(Promise.resolve(res));
+			fetchStub.returns(Promise.resolve(res));
 		});
 
 		teardown(function() {
-			window.fetch.restore();
+			fetchStub.restore();
 		});
 
 		test('send form-urlencoded', function() {
 			var result = element.performSirenAction(testAction);
 			result.then(function() {
-				sinon.assert.calledOnce(window.fetch);
-				var request = window.fetch.getCall(0).args[0];
-				expect(request.url).to.equal('http://api.x.io/orders/42/items');
-				expect(request.method).to.equal('POST');
+				expect(fetchStub.callCount).to.equal(1);
+				var requestUrl = fetchStub.getCall(0).args[0];
+				var requestMethod = fetchStub.getCall(0).args[1].method;
+				expect(requestUrl).to.equal('http://api.x.io/orders/42/items');
+				expect(requestMethod).to.equal('POST');
 			});
 			return result;
 		});
@@ -120,7 +124,9 @@ suite('siren-fetch-mixin-lit', function() {
 	suite('enqueue action unit tests', function() {
 		var res1, res2;
 		var fetchStub;
+		var actionQueueSpy;
 		setup(function() {
+			actionQueueSpy = sinon.spy(window.D2L.Siren.ActionQueue, 'enqueue');
 			fetchStub = sinon.stub(window.d2lfetch, 'fetch');
 			res1 = new window.Response(JSON.stringify(testEntity), {
 				status: 200,
@@ -135,6 +141,7 @@ suite('siren-fetch-mixin-lit', function() {
 
 		teardown(function() {
 			fetchStub.restore();
+			actionQueueSpy.restore();
 		});
 
 		test('enqueues actions', function() {
@@ -142,6 +149,7 @@ suite('siren-fetch-mixin-lit', function() {
 				new Promise(function(resolve) {
 					setTimeout(function() {
 						expect(fetchStub.callCount).to.equal(1);
+						expect(actionQueueSpy.callCount).to.equal(2);
 						resolve(res1);
 					});
 				})
@@ -160,6 +168,8 @@ suite('siren-fetch-mixin-lit', function() {
 			fetchStub.withArgs('http://api.x.io/orders/42/items').returns(
 				new Promise(function(resolve) {
 					setTimeout(function() {
+						expect(fetchStub.callCount).to.equal(2);
+						expect(actionQueueSpy.callCount).to.equal(1);
 						resolve(res1);
 					});
 				})
@@ -169,9 +179,7 @@ suite('siren-fetch-mixin-lit', function() {
 					resolve(res2);
 				})
 			);
-			var firstCall = element.performSirenAction(testAction).then(function() {
-				expect(fetchStub.callCount).to.equal(2);
-			});
+			var firstCall = element.performSirenAction(testAction);
 			element.performSirenAction(testAction2, null, true);
 			return firstCall;
 		});
