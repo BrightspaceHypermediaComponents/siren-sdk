@@ -22,11 +22,6 @@ export const EntityMixinLit = superclass => class extends superclass {
 		};
 	}
 
-	constructor() {
-		super();
-		// this._fetchEntity = runAsync((entityType, href, token) => entityFactoryPromisified(entityType, href, token));
-	}
-
 	disconnectedCallback() {
 		super.disconnectedCallback();
 		// this calls this._entity.dispose() if entity is actually an entity.
