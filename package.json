@@ -15,11 +15,13 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "@brightspace-ui/core": "^1",
     "@polymer/polymer": "^3.0.0",
     "d2l-polymer-siren-behaviors": "Brightspace/polymer-siren-behaviors#semver:^1"
   },
   "devDependencies": {
     "@babel/polyfill": "^7.0.0",
+    "@open-wc/testing": "^2.3.4",
     "@polymer/iron-component-page": "^3.0.0-pre.18",
     "@polymer/iron-demo-helpers": "^3.0.0-pre.18",
     "@polymer/iron-test-helpers": "^3.0.0",

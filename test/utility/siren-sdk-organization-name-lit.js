@@ -9,9 +9,9 @@ class SdkSirenOrganizationNameLit extends EntityMixinLit(LitElement) {
 		};
 	}
 
-	set _entity(entity) {
+	set entity(entity) {
 		if (this._entityHasChanged(entity)) {
-			super._entity = entity;
+			super.entity = entity;
 			this._onOrganizationChange(entity);
 		}
 	}
