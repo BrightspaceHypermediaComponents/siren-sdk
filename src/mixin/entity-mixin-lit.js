@@ -18,7 +18,7 @@ export const EntityMixinLit = superclass => class extends superclass {
 			/**
 			 * Entity object that extends the Entity class.
 			 */
-			entity: { type: Object }
+			_entity: { type: Object }
 		};
 	}
 
@@ -26,7 +26,7 @@ export const EntityMixinLit = superclass => class extends superclass {
 		super.disconnectedCallback();
 		// this calls this._entity.dispose() if entity is actually an entity.
 		// Note this will dispose all child entities used.
-		dispose(this.entity);
+		dispose(this._entity);
 	}
 
 	shouldUpdate(changedProperties) {
@@ -38,7 +38,7 @@ export const EntityMixinLit = superclass => class extends superclass {
 	}
 
 	_entityHasChanged(newValue, oldValue) {
-		oldValue = oldValue ? oldValue : this.entity;
+		oldValue = oldValue ? oldValue : this._entity;
 		return newValue !== oldValue;
 	}
 	/**
@@ -53,14 +53,14 @@ export const EntityMixinLit = superclass => class extends superclass {
 	}
 
 	_getEntity() {
-		dispose(this.entity);
+		dispose(this._entity);
 		if (typeof this._entityType === 'function') {
 			let pendingResolve;
 			var pendingPromise = new Promise(function(resolve) {
 				pendingResolve = resolve;
 			});
 
-			const pendingEvent = new CustomEvent('pending-state', {
+			const pendingEvent = new CustomEvent('d2l-pending-state', {
 				composed: true,
 				bubbles: true,
 				detail: { promise: pendingPromise }
@@ -68,7 +68,7 @@ export const EntityMixinLit = superclass => class extends superclass {
 			this.dispatchEvent(pendingEvent);
 
 			entityFactory(this._entityType, this.href, this.token, entity => {
-				this.entity = entity;
+				this._entity = entity;
 				if (pendingResolve) {
 					pendingResolve();
 					pendingResolve = null;

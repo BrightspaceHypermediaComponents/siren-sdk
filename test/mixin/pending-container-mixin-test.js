@@ -48,18 +48,14 @@ describe('PendingContainer', function() {
 				<siren-sdk-pending-container href='/organization.json' token="whatever"></siren-sdk-pending-container>
 			`);
 
-		expect(el).shadowDom.to.equal(`
-				<div>Loading...</div>
-				<siren-sdk-simple-organization hidden="" href="/organization.json" token="whatever"></siren-sdk-simple-organization>
-			`);
+		expect(el.shadowRoot.querySelector('div').hasAttribute('hidden')).is.false;
+		expect(el.shadowRoot.querySelector('siren-sdk-simple-organization').hasAttribute('hidden')).is.true;
 
-		await oneEvent(el, 'pending-resolved');
+		await oneEvent(el, 'd2l-pending-resolved');
 		await el.updateComplete;
 
-		expect(el).shadowDom.to.equal(`
-				<div hidden="">Loading...</div>
-				<siren-sdk-simple-organization href="/organization.json" token="whatever"></siren-sdk-simple-organization>
-			`);
+		expect(el.shadowRoot.querySelector('div').hasAttribute('hidden')).is.true;
+		expect(el.shadowRoot.querySelector('siren-sdk-simple-organization').hasAttribute('hidden')).is.false;
 	});
 
 });

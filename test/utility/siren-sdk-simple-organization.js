@@ -10,12 +10,12 @@ class SdkSirenSimpleOrganization extends EntityMixinLit(LitElement) {
 	}
 
 	shouldUpdate(changedProperties) {
-		return super.shouldUpdate(changedProperties) && this.entity;
+		return super.shouldUpdate(changedProperties) && this._entity;
 	}
 
 	render() {
 		return html`
-			<div id="organization-name">${this.entity.name()}</div>
+			<div id="organization-name">${this._entity.name()}</div>
 		`;
 	}
 }

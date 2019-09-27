@@ -1,8 +1,8 @@
 import { html, LitElement } from 'lit-element/lit-element.js';
-import { PendingContainer } from '../../src/mixin/pending-container.js';
+import { PendingContainerMixin } from '../../src/mixin/pending-container-mixin.js';
 import './siren-sdk-simple-organization.js';
 
-class SdkSirenPendingContainer extends PendingContainer(LitElement) {
+class SdkSirenPendingContainer extends PendingContainerMixin(LitElement) {
 	static get properties() {
 		return {
 			/**
@@ -21,8 +21,8 @@ class SdkSirenPendingContainer extends PendingContainer(LitElement) {
 
 	render() {
 		return html`
-			<div ?hidden="${!this.hasPendingChildren}">Loading...</div>
-			<siren-sdk-simple-organization ?hidden="${this.hasPendingChildren}" href="${this.href}" token="${this.token}"></siren-sdk-simple-organization>
+			<div ?hidden="${!this._hasPendingChildren}">Loading...</div>
+			<siren-sdk-simple-organization ?hidden="${this._hasPendingChildren}" href="${this.href}" token="${this.token}"></siren-sdk-simple-organization>
 		`;
 	}
 }

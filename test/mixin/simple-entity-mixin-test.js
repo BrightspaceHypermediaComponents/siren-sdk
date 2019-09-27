@@ -12,11 +12,11 @@ async function load(el, href) {
 	async function wait(e) {
 		const promise = e.detail.promise;
 		await promise;
-		el.removeEventListener('pending-state', wait);
+		el.removeEventListener('d2l-pending-state', wait);
 		loaded();
 	}
 
-	el.addEventListener('pending-state', wait);
+	el.addEventListener('d2l-pending-state', wait);
 	el.href = href;
 
 	await loading;
