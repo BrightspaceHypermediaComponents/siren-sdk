@@ -126,10 +126,7 @@ describe('d2l-organization-name', () => {
 					expect(semesterName.innerHTML.replace(/<!---->/g, '')).to.be.contains('Semester Name 2');
 					done();
 				});
-
 			});
-
 		});
 	});
-
 });

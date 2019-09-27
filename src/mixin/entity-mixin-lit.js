@@ -18,40 +18,8 @@ export const EntityMixinLit = superclass => class extends superclass {
 			/**
 			 * Entity object that extends the Entity class.
 			 */
-			_entity: { type: Object },
+			_entity: { type: Object }
 		};
-	}
-
-	constructor() {
-		super();
-	}
-
-	set href(href) {
-		const oldValue = this.__href;
-		this.__href = href;
-		this.requestUpdate('href', oldValue);
-	}
-
-	get href() {
-		return this.__href;
-	}
-
-	set token(token) {
-		const oldValue = this.__token;
-		this.__token = token;
-		this.requestUpdate('token', oldValue);
-	}
-
-	get token() {
-		return this.__token;
-	}
-
-	set _entity(entity) {
-		this.__entity = entity;
-	}
-
-	get _entity() {
-		return this.__entity;
 	}
 
 	disconnectedCallback() {
@@ -61,13 +29,12 @@ export const EntityMixinLit = superclass => class extends superclass {
 		dispose(this._entity);
 	}
 
-	requestUpdate(propChanges, oldValue) {
-		if ((propChanges === 'href' && this.href && this.href !== oldValue)
-			|| (propChanges === 'token' &&  this.token !== undefined && this.token !== oldValue)) {
-			this.__onHrefChange(this.href, this.token);
+	shouldUpdate(changedProperties) {
+		if ((changedProperties.has('href') || changedProperties.has('token')) &&
+			this.href && this.token) {
+			this._getEntity();
 		}
-
-		return super.requestUpdate(propChanges, oldValue);
+		return this.href && this.token;
 	}
 
 	_entityHasChanged(newValue, oldValue) {
@@ -85,11 +52,27 @@ export const EntityMixinLit = superclass => class extends superclass {
 		}
 	}
 
-	__onHrefChange(href, token) {
-		dispose(this._entity); // Make sure the entity is cleaned up before setting a new one.
+	_getEntity() {
+		dispose(this._entity);
 		if (typeof this._entityType === 'function') {
-			entityFactory(this._entityType, href, token, entity => {
+			let pendingResolve;
+			var pendingPromise = new Promise(function(resolve) {
+				pendingResolve = resolve;
+			});
+
+			const pendingEvent = new CustomEvent('d2l-pending-state', {
+				composed: true,
+				bubbles: true,
+				detail: { promise: pendingPromise }
+			});
+			this.dispatchEvent(pendingEvent);
+
+			entityFactory(this._entityType, this.href, this.token, entity => {
 				this._entity = entity;
+				if (pendingResolve) {
+					pendingResolve();
+					pendingResolve = null;
+				}
 			});
 		}
 	}
