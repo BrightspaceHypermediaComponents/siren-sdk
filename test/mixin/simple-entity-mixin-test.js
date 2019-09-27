@@ -102,6 +102,7 @@ describe('Simple Entity Mixin Test', function() {
 
 		const updatedEntity = window.D2L.Hypermedia.Siren.Parse(organizationEntityUpdated);
 		await window.D2L.Siren.EntityStore.update('/organization.json', el.token, updatedEntity);
+		await el.updateComplete;
 
 		expect(el).shadowDom.to.equal(`
 				<div id="organization-name">Course Name Updated</div>

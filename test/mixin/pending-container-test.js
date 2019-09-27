@@ -54,6 +54,7 @@ describe('PendingContainer', function() {
 			`);
 
 		await oneEvent(el, 'pending-resolved');
+		await el.updateComplete;
 
 		expect(el).shadowDom.to.equal(`
 				<div hidden="">Loading...</div>
