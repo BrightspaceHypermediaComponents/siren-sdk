@@ -81,12 +81,18 @@ export const SirenFetchMixinLit = superclass => class extends superclass {
 		const self = this;
 
 		if (sendSaveEvent) {
-			self.dispatchEvent(new CustomEvent('d2l-siren-entity-save-start'));
+			self.dispatchEvent(new CustomEvent('d2l-siren-entity-save-start', {
+				bubbles: true,
+				composed: true
+			}));
 		}
 		return window.d2lfetch.fetch(href, opts)
 			.then(function(resp) {
 				if (sendSaveEvent && resp.ok) {
-					self.dispatchEvent(new CustomEvent('d2l-siren-entity-save-end'));
+					self.dispatchEvent(new CustomEvent('d2l-siren-entity-save-end', {
+						bubbles: true,
+						composed: true
+					}));
 				}
 				return resp;
 			})
@@ -118,7 +124,11 @@ export const SirenFetchMixinLit = superclass => class extends superclass {
 				});
 			})
 			.catch(function(reason) {
-				self.dispatchEvent(new CustomEvent('d2l-siren-entity-save-error', { error: reason }));
+				self.dispatchEvent(new CustomEvent('d2l-siren-entity-save-error', {
+					error: reason,
+					bubbles: true,
+					composed: true
+				}));
 				throw reason;
 			});
 	}
