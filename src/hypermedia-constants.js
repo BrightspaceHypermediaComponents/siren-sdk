@@ -347,7 +347,9 @@ export const Actions = {
 	},
 	assignments: {
 		assign: 'assign',
-		delete: 'delete'
+		delete: 'delete',
+		updateInstructions: 'update-instructions',
+		updateName: 'update-name'
 	},
 	notifications: {
 		getCarrierClass: 'get-carrier',
