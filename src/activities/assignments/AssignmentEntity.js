@@ -57,5 +57,10 @@ export class AssignmentEntity extends Entity {
 		return instructionsEntity
 			&& instructionsEntity.getActionByName(Actions.assignments.updateInstructions);
 	}
+
+	getRichTextEditorConfig() {
+		return this._entity
+			&& this._entity.getSubEntityByRel(Rels.richTextEditorConfig);
+	}
 }
 
