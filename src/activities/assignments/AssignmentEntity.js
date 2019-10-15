@@ -59,8 +59,9 @@ export class AssignmentEntity extends Entity {
 	}
 
 	getRichTextEditorConfig() {
-		return this._entity
-			&& this._entity.getSubEntityByRel(Rels.richTextEditorConfig);
+		const instructionsEntity = this._getInstructionsEntity();
+		return instructionsEntity
+			&& instructionsEntity.getSubEntityByRel(Rels.richTextEditorConfig);
 	}
 }
 
