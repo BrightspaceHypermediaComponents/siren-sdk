@@ -2,6 +2,7 @@
 
 import { Entity } from '../es6/Entity.js';
 import { Rels } from '../hypermedia-constants';
+import { ActivityUsageEntity } from './ActivityUsageEntity.js';
 
 /**
  * ActivityUsageCollectionEntity class representation of a d2l activity usage collection.
@@ -36,6 +37,6 @@ class CollectedItemEntity extends Entity {
 
 	onActivityUsageChange(onChange) {
 		const activityUsageHref = this.activityUsageHref();
-		activityUsageHref && this._subEntity(Entity, activityUsageHref, onChange);
+		activityUsageHref && this._subEntity(ActivityUsageEntity, activityUsageHref, onChange);
 	}
 }
