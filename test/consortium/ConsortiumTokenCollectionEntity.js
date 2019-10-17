@@ -93,6 +93,7 @@ describe('Consortium entity', () => {
 			});
 			const consortium = new ConsortiumTokenCollectionEntity(entity);
 			expect(consortium._consortiumTokenEntities().length).to.equal(2);
+			expect(consortium.getConsortiumTokenEntitiesLength()).to.equal(2);
 			const tokenEntities = [];
 			const rootEntities = [];
 			const errors = [];
@@ -127,4 +128,3 @@ describe('Consortium entity', () => {
 		});
 	});
 });
-

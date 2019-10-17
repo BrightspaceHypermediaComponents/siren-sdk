@@ -21,6 +21,14 @@ export class ConsortiumTokenCollectionEntity extends Entity {
 		}
 	}
 	/**
+	 *
+	 * @returns length of array of siren consortium entities
+	 */
+	getConsortiumTokenEntitiesLength() {
+		const tokenEntities = this._consortiumTokenEntities() || [];
+		return tokenEntities.length;
+	}
+	/**
 	 * @returns array of siren consortium entities, can be used to create {@link ConsortiumTokenEntity}
 	 */
 	_consortiumTokenEntities() {
