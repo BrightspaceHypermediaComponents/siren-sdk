@@ -1,7 +1,5 @@
-'use strict';
-
 import { Entity } from '../es6/Entity.js';
-import { Rels } from '../hypermedia-constants';
+import { Actions, Classes, Rels } from '../hypermedia-constants';
 import { OrganizationEntity } from '../organizations/OrganizationEntity.js';
 import { UserActivityUsageEntity } from '../enrollments/UserActivityUsageEntity.js';
 import { ActivityUsageCollectionEntity } from './ActivityUsageCollectionEntity.js';
@@ -47,5 +45,25 @@ export class ActivityUsageEntity extends Entity {
 	onActivityCollectionChange(onChange) {
 		const activityCollectionHref = this.activityCollectionHref();
 		activityCollectionHref && this._subEntity(ActivityUsageCollectionEntity, activityCollectionHref, onChange);
+	}
+
+	_getDueDateSubEntity() {
+		return this._entity
+			&& this._entity.getSubEntityByClass(Classes.dates.dueDate);
+	}
+
+	dueDate() {
+		const dueDate = this._getDueDateSubEntity();
+		return dueDate && dueDate.properties.date;
+	}
+
+	canEditDueDate() {
+		const dueDate = this._getDueDateSubEntity();
+		return dueDate.hasActionByName(Actions.activities.update);
+	}
+
+	saveDueDateAction() {
+		const dueDate = this._getDueDateSubEntity();
+		return dueDate.getActionByName(Actions.activities.update);
 	}
 }

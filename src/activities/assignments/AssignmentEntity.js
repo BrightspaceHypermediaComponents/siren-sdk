@@ -63,5 +63,12 @@ export class AssignmentEntity extends Entity {
 		return instructionsEntity
 			&& instructionsEntity.getSubEntityByRel(Rels.richTextEditorConfig);
 	}
-}
 
+	activityUsageHref() {
+		if (!this._entity || !this._entity.hasLinkByRel(Rels.Activities.activityUsage)) {
+			return;
+		}
+
+		return this._entity.getLinkByRel(Rels.Activities.activityUsage).href;
+	}
+}

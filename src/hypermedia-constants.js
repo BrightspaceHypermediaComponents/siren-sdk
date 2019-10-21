@@ -344,7 +344,8 @@ export const Actions = {
 		setCatalogImage: 'set-catalog-image'
 	},
 	activities: {
-		selectCustomDateRange: 'select-custom-date-range'
+		selectCustomDateRange: 'select-custom-date-range',
+		update: 'update'
 	},
 	assignments: {
 		assign: 'assign',
