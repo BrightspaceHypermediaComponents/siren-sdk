@@ -47,19 +47,23 @@ export class ActivityUsageEntity extends Entity {
 		activityCollectionHref && this._subEntity(ActivityUsageCollectionEntity, activityCollectionHref, onChange);
 	}
 
-	dueDate() {
-		if (!this._entity || !this._entity.hasSubEntityByClass(Classes.dates.dueDate)) {
-			return;
-		}
+	_getDueDateSubEntity() {
+		return this._entity
+			&& this._entity.getSubEntityByClass(Classes.dates.dueDate);
+	}
 
-		return this._entity.getSubEntityByClass(Classes.dates.dueDate).properties.date;
+	dueDate() {
+		const dueDate = this._getDueDateSubEntity();
+		return dueDate && dueDate.properties.date;
 	}
 
 	canEditDueDate() {
-		return this._entity && this._entity.hasActionByName(Actions.activities.update);
+		const dueDate = this._getDueDateSubEntity();
+		return dueDate.hasActionByName(Actions.activities.update);
 	}
 
 	saveDueDateAction() {
-		return this._entity && this._entity.getActionByName(Actions.activities.update);
+		const dueDate = this._getDueDateSubEntity();
+		return dueDate.getActionByName(Actions.activities.update);
 	}
 }
