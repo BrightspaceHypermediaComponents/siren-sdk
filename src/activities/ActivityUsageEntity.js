@@ -32,6 +32,14 @@ export class ActivityUsageEntity extends Entity {
 		return this._entity.getLinkByRel(Rels.Activities.activityCollection).href;
 	}
 
+	editHref() {
+		if (!this._entity || !this._entity.hasLinkByRel(Rels.IANA.edit)) {
+			return;
+		}
+
+		return this._entity.getLinkByRel(Rels.IANA.edit).href;
+	}
+
 	onOrganizationChange(onChange) {
 		const organizationHref = this.organizationHref();
 		organizationHref && this._subEntity(OrganizationEntity, organizationHref, onChange);
