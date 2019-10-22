@@ -162,6 +162,9 @@ export const Rels = {
 	},
 	Users: {
 		canonicalUser: 'https://users.api.brightspace.com/rels/canonical-user'
+	},
+	IANA: {
+		edit: 'edit'
 	}
 };
 
