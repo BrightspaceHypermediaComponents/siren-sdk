@@ -3,6 +3,7 @@ import { Actions, Classes, Rels } from '../hypermedia-constants';
 import { OrganizationEntity } from '../organizations/OrganizationEntity.js';
 import { UserActivityUsageEntity } from '../enrollments/UserActivityUsageEntity.js';
 import { ActivityUsageCollectionEntity } from './ActivityUsageCollectionEntity.js';
+import { performSirenAction } from '../es6/SirenAction.js';
 
 /**
  * ActivityUsageEntity class representation of a d2l activity usage.
@@ -73,5 +74,20 @@ export class ActivityUsageEntity extends Entity {
 	saveDueDateAction() {
 		const dueDate = this._getDueDateSubEntity();
 		return dueDate && dueDate.getActionByName(Actions.activities.update);
+	}
+
+	async setDueDate(dateString) {
+		const dueDate = this.canEditDueDate && this._getDueDateSubEntity();
+		if (!dueDate) {
+			return;
+		}
+
+		const action = dueDate.getActionByName(Actions.activities.update);
+		if (!action) {
+			return;
+		}
+
+		const fields = [{ name: 'dueDate', value: dateString }];
+		await performSirenAction(this._token, action, fields);
 	}
 }
