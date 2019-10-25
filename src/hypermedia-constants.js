@@ -257,7 +257,15 @@ export const Classes = {
 		points: 'points'
 	},
 	organizations: {
-		courseOffering: 'course-offering'
+		courseOffering: 'course-offering',
+	},
+	organizationAvailability: {
+		orgUnitAvailability: 'orgunit-availability',
+		explicit: 'explicit',
+		inherit: 'inherit',
+		orgUnitType: 'orgunit-type',
+		current: 'current',
+		descendent: 'descendent'
 	},
 	quizzes: {
 		quiz: 'quiz',
@@ -341,7 +349,10 @@ export const Actions = {
 	},
 	organizations: {
 		removeHomepageBanner: 'remove-homepage-banner',
-		setCatalogImage: 'set-catalog-image'
+		setCatalogImage: 'set-catalog-image',
+		deleteItem: 'delete-item',
+		createExplicitAvailabilityItem: 'create-explicit-availability-item',
+		createInheritedAvailabilityItem: 'create-inherited-availability-item'
 	},
 	activities: {
 		selectCustomDateRange: 'select-custom-date-range'
