@@ -97,4 +97,57 @@ export class AssignmentEntity extends Entity {
 
 		return this._entity.getLinkByRel(Rels.Activities.activityUsage).href;
 	}
+
+	submissionType() {
+		if (!this._entity || !this._entity.properties) {
+			return;
+		}
+
+		return this._entity.properties.submissionType;
+	}
+
+	submissionTypeOptions() {
+		if (!this.canEditSubmissionType()) {
+			return [];
+		}
+
+		const action = this._entity.getActionByName(Actions.assignments.updateSubmissionType);
+		if (!action.hasFieldByName('submissionType')) {
+			return [];
+		}
+
+		return action.getFieldByName('submissionType').value;
+	}
+
+	canEditSubmissionType() {
+		return this._entity && this._entity.hasActionByName(Actions.assignments.updateSubmissionType);
+	}
+
+	async setSubmissionType(submissionType, completionType) {
+		submissionType = Number(submissionType);
+		completionType = Number(completionType);
+
+		const action = this.canEditSubmissionType() && this._entity.getActionByName(Actions.assignments.updateSubmissionType);
+		if (!action) {
+			return;
+		}
+
+		const fieldValue = action.getFieldByName('submissionType').value.find(v => {
+			return v.value === submissionType;
+		});
+		if (!fieldValue) {
+			return;
+		}
+
+		const validCompletionTypes = fieldValue.completionTypes;
+		if (validCompletionTypes !== null && validCompletionTypes.indexOf(completionType) === -1) {
+			throw new Error(`Invalid completionType ${completionType} for submissionType ${submissionType}`);
+		}
+
+		const fields = [
+			{ name: 'submissionType', value: submissionType },
+			{ name: 'completionType', value: completionType }
+		];
+		await performSirenAction(this._token, action, fields);
+	}
 }
