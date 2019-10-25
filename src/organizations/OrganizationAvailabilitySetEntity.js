@@ -10,7 +10,7 @@ import { OrganizationEntity } from './OrganizationEntity.js';
 export class OrganizationAvailabilitySetEntity extends Entity {
 	_getCurrentOrgUnitAvailabilityHref() {
 		const currentOrganizationHref = this.getOrganizationHref();
-		const currentOrgUnitId = currentOrganizationHref.substr(currentOrganizationHref.lastIndexOf("/") + 1);
+		const currentOrgUnitId = currentOrganizationHref.substr(currentOrganizationHref.lastIndexOf('/') + 1);
 		const selfHref = this._entity.getLinkByRel('self').href;
 		return selfHref + '/explicit/' + currentOrgUnitId;
 	}
@@ -26,11 +26,11 @@ export class OrganizationAvailabilitySetEntity extends Entity {
 
 	getAvailabilityEntitiesWithoutCurrentOrgUnit() {
 		const currentOrgUnitAvailabilityHref = this._getCurrentOrgUnitAvailabilityHref();
-		return this.getAvailabilityEntities().filter( e => e.href !== currentOrgUnitAvailabilityHref);
+		return this.getAvailabilityEntities().filter(e => e.href !== currentOrgUnitAvailabilityHref);
 	}
 
 	getOrganizationHref() {
-		if (this._entity.hasLinkByRel( Rels.organization)) {
+		if (this._entity.hasLinkByRel(Rels.organization)) {
 			return this._entity.getLinkByRel(Rels.organization).href;
 		}
 	}
