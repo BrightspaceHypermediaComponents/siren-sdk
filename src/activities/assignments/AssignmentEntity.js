@@ -1,7 +1,8 @@
 'use strict';
 
-import { Entity } from '../../es6/Entity.js';
+import { Entity } from '../../es6/Entity';
 import { Actions, Rels } from '../../hypermedia-constants';
+import { performSirenAction } from '../../es6/SirenAction';
 
 /**
  * AssignmentEntity class representation of a d2l Assignment.
@@ -13,6 +14,16 @@ export class AssignmentEntity extends Entity {
 
 	canEditName() {
 		return this._entity && this._entity.hasActionByName(Actions.assignments.updateName);
+	}
+
+	async setName(name) {
+		const action = this.canEditName() && this._entity.getActionByName(Actions.assignments.updateName);
+		if (!action) {
+			return;
+		}
+
+		const fields = [{ name: 'name', value: name }];
+		await performSirenAction(this._token, action, fields);
 	}
 
 	getSaveNameAction() {
@@ -56,6 +67,21 @@ export class AssignmentEntity extends Entity {
 		const instructionsEntity = this._getInstructionsEntity();
 		return instructionsEntity
 			&& instructionsEntity.getActionByName(Actions.assignments.updateInstructions);
+	}
+
+	async setInstructions(instructions) {
+		const instructionsEntity = this.canEditInstructions() && this._getInstructionsEntity();
+		if (!instructionsEntity) {
+			return;
+		}
+
+		const action = instructionsEntity.getActionByName(Actions.assignments.updateInstructions);
+		if (!action) {
+			return;
+		}
+
+		const fields = [{ name: 'instructions', value: instructions }];
+		await performSirenAction(this._token, action, fields);
 	}
 
 	getRichTextEditorConfig() {
