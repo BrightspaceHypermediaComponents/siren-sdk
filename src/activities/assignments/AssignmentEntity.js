@@ -26,10 +26,6 @@ export class AssignmentEntity extends Entity {
 		await performSirenAction(this._token, action, fields);
 	}
 
-	getSaveNameAction() {
-		return this._entity && this._entity.getActionByName(Actions.assignments.updateName);
-	}
-
 	_getInstructionsEntity() {
 		return this._entity
 			&& this._entity.hasSubEntityByRel(Rels.Assignments.instructions)
@@ -51,7 +47,12 @@ export class AssignmentEntity extends Entity {
 	}
 
 	instructionsEditorHtml() {
-		const updateInstructionsAction = this.getSaveInstructionsAction();
+		const instructionsEntity = this._getInstructionsEntity();
+		if (!instructionsEntity) {
+			return;
+		}
+
+		const updateInstructionsAction = instructionsEntity.getActionByName(Actions.assignments.updateInstructions);
 		return updateInstructionsAction
 			&& updateInstructionsAction.hasFieldByName('instructions')
 			&& updateInstructionsAction.getFieldByName('instructions').value;
@@ -61,12 +62,6 @@ export class AssignmentEntity extends Entity {
 		const instructionsEntity = this._getInstructionsEntity();
 		return instructionsEntity
 			&& instructionsEntity.hasActionByName(Actions.assignments.updateInstructions);
-	}
-
-	getSaveInstructionsAction() {
-		const instructionsEntity = this._getInstructionsEntity();
-		return instructionsEntity
-			&& instructionsEntity.getActionByName(Actions.assignments.updateInstructions);
 	}
 
 	async setInstructions(instructions) {
