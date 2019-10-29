@@ -2,7 +2,7 @@
 
 'use strict';
 
-suite('SirenUtil', function() {
+suite('SirenAction', function() {
 	var element, sandbox;
 
 	var testAction = { // example from https://github.com/kevinswiber/siren
@@ -86,7 +86,7 @@ suite('SirenUtil', function() {
 
 	suite('smoke test', function() {
 		test('can be instantiated', function() {
-			expect(element.tagName.toLowerCase()).to.equal('siren-util-test-component');
+			expect(element.tagName.toLowerCase()).to.equal('siren-action-test-component');
 		});
 	});
 
