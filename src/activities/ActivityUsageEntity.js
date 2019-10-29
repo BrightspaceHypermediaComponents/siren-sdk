@@ -69,8 +69,7 @@ export class ActivityUsageEntity extends Entity {
 	canEditDueDate() {
 		const dueDate = this._getDueDateSubEntity();
 		return (dueDate && dueDate.hasActionByName(Actions.activities.update))
-			|| this._entity.hasActionByName(Actions.activities.startAddNew)
-			|| false;
+			|| this._entity.hasActionByName(Actions.activities.startAddNew);
 	}
 
 	async setDueDate(dateString) {
