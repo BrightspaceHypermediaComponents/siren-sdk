@@ -18,7 +18,9 @@ export class OrganizationAvailabilityEntity extends Entity {
 	}
 
 	getOrganizationHref() {
-		return this._entity.getLinkByRel(Rels.organization);
+		if (this._entity.hasLinkByRel(Rels.organization)) {
+			return this._entity.getLinkByRel(Rels.organization).href;
+		}
 	}
 
 	isExplicitAvailability() {
