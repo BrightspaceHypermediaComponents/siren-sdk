@@ -354,7 +354,8 @@ export const Actions = {
 		assign: 'assign',
 		delete: 'delete',
 		updateInstructions: 'update-instructions',
-		updateName: 'update-name'
+		updateName: 'update-name',
+		updateSubmissionType: 'update-submission-type'
 	},
 	notifications: {
 		getCarrierClass: 'get-carrier',
