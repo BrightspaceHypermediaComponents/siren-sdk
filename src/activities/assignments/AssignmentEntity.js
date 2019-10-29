@@ -135,7 +135,9 @@ export class AssignmentEntity extends Entity {
 		}
 
 		const validCompletionTypes = fieldValue.completionTypes;
-		if (validCompletionTypes !== null && validCompletionTypes.indexOf(completionType) === -1) {
+		if (validCompletionTypes === null) {
+			completionType = 0;
+		} else if (validCompletionTypes.indexOf(completionType) === -1) {
 			throw new Error(`Invalid completionType ${completionType} for submissionType ${submissionType}`);
 		}
 
