@@ -118,9 +118,8 @@ export class AssignmentEntity extends Entity {
 		return this._entity && this._entity.hasActionByName(Actions.assignments.updateSubmissionType);
 	}
 
-	async setSubmissionType(submissionType, completionType) {
+	async setSubmissionType(submissionType) {
 		submissionType = Number(submissionType);
-		completionType = Number(completionType);
 
 		const action = this.canEditSubmissionType() && this._entity.getActionByName(Actions.assignments.updateSubmissionType);
 		if (!action) {
@@ -134,15 +133,69 @@ export class AssignmentEntity extends Entity {
 			return;
 		}
 
+		let completionType = 0;
 		const validCompletionTypes = fieldValue.completionTypes;
-		if (validCompletionTypes === null) {
-			completionType = 0;
-		} else if (validCompletionTypes.indexOf(completionType) === -1) {
-			throw new Error(`Invalid completionType ${completionType} for submissionType ${submissionType}`);
+		if (validCompletionTypes !== null) {
+			completionType = validCompletionTypes[0]; // Use first option as default
 		}
 
 		const fields = [
 			{ name: 'submissionType', value: submissionType },
+			{ name: 'completionType', value: completionType }
+		];
+		await performSirenAction(this._token, action, fields);
+	}
+
+	completionType() {
+		if (!this._entity || !this._entity.properties) {
+			return;
+		}
+
+		return this._entity.properties.completionType;
+	}
+
+	completionTypeOptions() {
+		if (!this.canEditCompletionType()) {
+			return [];
+		}
+
+		const action = this._entity.getActionByName(Actions.assignments.updateCompletionType);
+		if (!action.hasFieldByName('completionType')) {
+			return [];
+		}
+
+		const validCompletionTypes = this.submissionTypeOptions()
+			.find(option => option.value === this.submissionType().value)
+			.completionTypes;
+		if (validCompletionTypes === null) {
+			return [];
+		}
+
+		return action.getFieldByName('completionType').value.filter(option => {
+			return validCompletionTypes.indexOf(option.value) > -1;
+		});
+	}
+
+	canEditCompletionType() {
+		return this._entity && this._entity.hasActionByName(Actions.assignments.updateCompletionType);
+	}
+
+	async setCompletionType(completionType) {
+		completionType = Number(completionType);
+
+		const action = this.canEditCompletionType() && this._entity.getActionByName(Actions.assignments.updateCompletionType);
+		if (!action) {
+			return;
+		}
+
+		const fieldValue = action.getFieldByName('completionType').value.find(v => {
+			return v.value === completionType;
+		});
+		if (!fieldValue) {
+			return;
+		}
+
+		const fields = [
 			{ name: 'completionType', value: completionType }
 		];
 		await performSirenAction(this._token, action, fields);
