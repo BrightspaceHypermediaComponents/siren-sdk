@@ -68,21 +68,36 @@ export class ActivityUsageEntity extends Entity {
 
 	canEditDueDate() {
 		const dueDate = this._getDueDateSubEntity();
-		return (dueDate && dueDate.hasActionByName(Actions.activities.update)) || false;
-	}
-
-	saveDueDateAction() {
-		const dueDate = this._getDueDateSubEntity();
-		return dueDate && dueDate.getActionByName(Actions.activities.update);
+		return (dueDate && dueDate.hasActionByName(Actions.activities.update))
+			|| this._entity.hasActionByName(Actions.activities.startAddNew)
+			|| false;
 	}
 
 	async setDueDate(dateString) {
-		const dueDate = this.canEditDueDate && this._getDueDateSubEntity();
-		if (!dueDate) {
+		if (!this.canEditDueDate) {
 			return;
 		}
 
-		const action = dueDate.getActionByName(Actions.activities.update);
+		let action;
+		const dueDateEntity = this._getDueDateSubEntity();
+		if (dueDateEntity) {
+			action = dueDateEntity.getActionByName(Actions.activities.update);
+		} else {
+			if (!this._entity.hasActionByName(Actions.activities.startAddNew)) {
+				return;
+			}
+
+			const addNewAction = this._entity.getActionByName(Actions.activities.startAddNew);
+			const addNewEntity = await performSirenAction(this._token, addNewAction);
+
+			if (!addNewEntity.hasSubEntityByClass(Classes.dates.dueDate)) {
+				return;
+			}
+
+			const addNewDueDateEntity = addNewEntity.getSubEntityByClass(Classes.dates.dueDate);
+			action = addNewDueDateEntity.getActionByName(Actions.activities.create);
+		}
+
 		if (!action) {
 			return;
 		}
