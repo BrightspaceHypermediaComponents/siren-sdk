@@ -368,6 +368,7 @@ export const Actions = {
 		delete: 'delete',
 		updateInstructions: 'update-instructions',
 		updateName: 'update-name',
+		updateCompletionType: 'update-completion-type',
 		updateSubmissionType: 'update-submission-type'
 	},
 	notifications: {
