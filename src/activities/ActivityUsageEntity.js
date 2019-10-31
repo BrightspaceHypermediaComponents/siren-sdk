@@ -114,8 +114,8 @@ export class ActivityUsageEntity extends Entity {
 			return;
 		}
 
-		let updateDraftAction = this._entity.getActionByName(Actions.activities.updateDraft);
-		const fields = [{ name: Classes.activities.draft, value: isDraft }];
+		const updateDraftAction = this._entity.getActionByName(Actions.activities.updateDraft);
+		const fields = [{ name: 'draft', value: isDraft }];
 		await performSirenAction(this._token, updateDraftAction, fields);
 	}
 
