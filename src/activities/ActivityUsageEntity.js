@@ -104,4 +104,22 @@ export class ActivityUsageEntity extends Entity {
 		const fields = [{ name: 'dueDate', value: dateString }];
 		await performSirenAction(this._token, action, fields);
 	}
+
+	canEditDraft() {
+		return this._entity && this._entity.hasActionByName(Actions.activities.updateDraft);
+	}
+
+	async setDraftStatus(isDraft) {
+		if (!this.canEditDraft()) {
+			return;
+		}
+
+		let updateDraftAction = this._entity.getActionByName(Actions.activities.updateDraft);
+		const fields = [{ name: Classes.activities.draft, value: isDraft }];
+		await performSirenAction(this._token, updateDraftAction, fields);
+	}
+
+	isDraft() {
+		return this._entity && this._entity.hasClass(Classes.activities.draft);
+	}
 }
