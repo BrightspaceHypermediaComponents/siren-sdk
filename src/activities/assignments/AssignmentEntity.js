@@ -79,7 +79,7 @@ export class AssignmentEntity extends Entity {
 		await performSirenAction(this._token, action, fields);
 	}
 
-	getRichTextEditorConfig() {
+	instructionsRichTextEditorConfig() {
 		const instructionsEntity = this._getInstructionsEntity();
 		return instructionsEntity
 			&& instructionsEntity.getSubEntityByRel(Rels.richTextEditorConfig);
