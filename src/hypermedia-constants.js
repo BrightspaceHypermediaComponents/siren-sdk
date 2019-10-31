@@ -173,6 +173,7 @@ export const Classes = {
 		assigned: 'assigned',
 		complete: 'complete',
 		completion: 'completion',
+		draft: 'draft',
 		exempt: 'exempt',
 		feedbackDate: 'feedback-date',
 		userAssignmentActivity: 'user-assignment-activity',
