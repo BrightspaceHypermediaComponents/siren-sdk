@@ -74,10 +74,10 @@ describe('OrganizationAvailabilityEntity', () => {
 
 	describe('Delete Availability Action', () => {
 		it('can delete availability', () => {
-			expect(explicitEntity.canDeleteAvailability()).to.be.true;
+			expect(explicitEntity.canDelete()).to.be.true;
 		});
 		it('cannot delete availability', () => {
-			expect(cannotDeleteEntity.canDeleteAvailability()).to.be.false;
+			expect(cannotDeleteEntity.canDelete()).to.be.false;
 		});
 	});
 });

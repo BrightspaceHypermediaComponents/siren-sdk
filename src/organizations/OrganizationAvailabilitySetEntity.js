@@ -1,8 +1,9 @@
 'use strict';
 
 import { Entity } from '../es6/Entity.js';
-import { Rels, Classes, Actions } from '../hypermedia-constants';
 import { OrganizationEntity } from './OrganizationEntity.js';
+import { performSirenAction } from '../es6/SirenAction.js';
+import { Rels, Classes, Actions } from '../hypermedia-constants';
 
 /**
  * OrganizationAvailabilitySetEntity class representation of a d2l OrgUnitAvailabilitySet.
@@ -35,5 +36,26 @@ export class OrganizationAvailabilitySetEntity extends Entity {
 	onOrganizationChange(onChange) {
 		const organizationHref = this.getOrganizationHref();
 		organizationHref && this._subEntity(OrganizationEntity, organizationHref, onChange);
+	}
+
+	addExplicit(explicitOrgUnitId) {
+		const action = this.canAddAvailability() && this._entity.getActionByName(Actions.organizations.createExplicitAvailabilityItem);
+		if (!action) {
+			return;
+		}
+		const fields = [{ name: 'explicitOrgUnitId', value: explicitOrgUnitId }];
+		return performSirenAction(this._token, action, fields);
+	}
+
+	addInherit(ancestorOrgUnitId, descendantOrgUnitTypeId) {
+		const action = this.canAddAvailability() && this._entity.getActionByName(Actions.organizations.createInheritedAvailabilityItem);
+		if (!action) {
+			return;
+		}
+		const fields = [{ name: 'ancestorOrgUnitId', value: ancestorOrgUnitId }];
+		if (descendantOrgUnitTypeId) {
+			fields.push({ name: 'descendantOrgUnitTypeId', value: descendantOrgUnitTypeId });
+		}
+		return performSirenAction(this._token, action, fields);
 	}
 }

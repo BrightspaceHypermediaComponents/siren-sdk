@@ -1,14 +1,15 @@
 'use strict';
 
 import { Entity } from '../es6/Entity.js';
-import { Actions, Classes, Rels } from '../hypermedia-constants';
 import { OrganizationEntity } from './OrganizationEntity.js';
+import { performSirenAction } from '../es6/SirenAction.js';
+import { Actions, Classes, Rels } from '../hypermedia-constants';
 
 /**
  * OrganizationAvailabilityEntity class representation of a d2l OrgUnitAvailability.
  */
 export class OrganizationAvailabilityEntity extends Entity {
-	canDeleteAvailability() {
+	canDelete() {
 		return this._entity.hasActionByName(Actions.organizations.deleteItem);
 	}
 
@@ -45,5 +46,13 @@ export class OrganizationAvailabilityEntity extends Entity {
 			Classes.organizationAvailability.descendent
 		]);
 		return descendentTypeEntity && descendentTypeEntity.properties && descendentTypeEntity.properties.name;
+	}
+
+	async delete() {
+		const action = this.canDelete() && this._entity.getActionByName(Actions.organizations.deleteItem);
+		if (!action) {
+			return;
+		}
+		await performSirenAction(this._token, action);
 	}
 }
