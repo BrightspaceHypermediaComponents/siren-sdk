@@ -17,6 +17,14 @@ export class ActivityUsageEntity extends Entity {
 		return this._entity.getLinkByRel(Rels.organization).href;
 	}
 
+	specializationHref() {
+		if (!this._entity || !this._entity.hasLinkByRel(Rels.specialization)) {
+			return;
+		}
+
+		return this._entity.getLinkByRel(Rels.specialization).href;
+	}
+
 	userActivityUsageHref() {
 		if (!this._entity || !this._entity.hasLinkByRel(Rels.Activities.userActivityUsage)) {
 			return;
@@ -44,6 +52,11 @@ export class ActivityUsageEntity extends Entity {
 	onOrganizationChange(onChange) {
 		const organizationHref = this.organizationHref();
 		organizationHref && this._subEntity(OrganizationEntity, organizationHref, onChange);
+	}
+
+	onSpecializationChange(entityType, onChange) {
+		const specializationHref = this.specializationHref();
+		specializationHref && this._subEntity(entityType, specializationHref, onChange);
 	}
 
 	onUserActivityUsageChange(onChange) {
