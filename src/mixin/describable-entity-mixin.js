@@ -2,19 +2,19 @@ import { performSirenAction } from '../es6/SirenAction.js';
 
 export const DescribableEntityMixin = superclass => class extends superclass {
 
-	_isDescribableEntity() {
+	isDescribableEntity() {
 		return super.entity() && super.entity().hasClass('describable-entity');
 	}
 
 	getDescription() {
-		if (this._isDescribableEntity()) {
+		if (this.isDescribableEntity()) {
 			return super.entity().properties.description;
 		}
 		return;
 	}
 
 	async setDescription(description) {
-		if (this._isDescribableEntity()) {
+		if (this.isDescribableEntity()) {
 			const action = super.entity().getActionByName('update-description');
 			if (!action) {
 				return;
