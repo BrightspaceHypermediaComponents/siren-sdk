@@ -120,6 +120,10 @@ export class ActivityUsageEntity extends Entity {
 	}
 
 	isDraft() {
-		return this._entity && this._entity.hasClass(Classes.activities.draft);
+		return this._entity && this._entity.hasClass(Classes.activities.draftPublishedEntity) && this._entity.hasClass(Classes.activities.draft);
+	}
+
+	isPublished() {
+		return this._entity && this._entity.hasClass(Classes.activities.draftPublishedEntity) && this._entity.hasClass(Classes.activities.published);
 	}
 }
