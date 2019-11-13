@@ -105,10 +105,17 @@ export class ActivityUsageEntity extends Entity {
 		await performSirenAction(this._token, action, fields);
 	}
 
+	/**
+	 * @returns {bool} Whether or not edit draft action is present on the activity usage entity
+	 */
 	canEditDraft() {
 		return this._entity && this._entity.hasActionByName(Actions.activities.updateDraft);
 	}
 
+	/**
+	 * Updates the draft status of the activity usage entity to draft or published
+	 * @param {bool} isDraft The draft state to bet set for the activity usage entity
+	 */
 	async setDraftStatus(isDraft) {
 		if (!this.canEditDraft()) {
 			return;
@@ -119,10 +126,16 @@ export class ActivityUsageEntity extends Entity {
 		await performSirenAction(this._token, updateDraftAction, fields);
 	}
 
+	/**
+	 * @returns {bool} Whether or not the activity usage entity is draft
+	 */
 	isDraft() {
 		return this._entity && this._entity.hasClass(Classes.activities.draftPublishedEntity) && this._entity.hasClass(Classes.activities.draft);
 	}
 
+	/**
+	 * @returns {bool} Whether or not the activity usage entity is published
+	 */
 	isPublished() {
 		return this._entity && this._entity.hasClass(Classes.activities.draftPublishedEntity) && this._entity.hasClass(Classes.activities.published);
 	}
