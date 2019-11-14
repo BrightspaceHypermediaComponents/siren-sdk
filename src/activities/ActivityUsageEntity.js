@@ -8,6 +8,8 @@ import { performSirenAction } from '../es6/SirenAction.js';
 /**
  * ActivityUsageEntity class representation of a d2l activity usage.
  */
+const specializationRel = 'https://api.brightspace.com/rels/specialization';
+
 export class ActivityUsageEntity extends Entity {
 	organizationHref() {
 		if (!this._entity || !this._entity.hasLinkByRel(Rels.organization)) {
@@ -15,6 +17,14 @@ export class ActivityUsageEntity extends Entity {
 		}
 
 		return this._entity.getLinkByRel(Rels.organization).href;
+	}
+
+	specializationHref() {
+		if (!this._entity || !this._entity.hasLinkByRel(specializationRel)) {
+			return;
+		}
+
+		return this._entity.getLinkByRel(specializationRel).href;
 	}
 
 	userActivityUsageHref() {
@@ -44,6 +54,11 @@ export class ActivityUsageEntity extends Entity {
 	onOrganizationChange(onChange) {
 		const organizationHref = this.organizationHref();
 		organizationHref && this._subEntity(OrganizationEntity, organizationHref, onChange);
+	}
+
+	onSpecializationChange(entityType, onChange) {
+		const specializationHref = this.specializationHref();
+		specializationHref && this._subEntity(entityType, specializationHref, onChange);
 	}
 
 	onUserActivityUsageChange(onChange) {
