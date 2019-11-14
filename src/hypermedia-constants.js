@@ -173,8 +173,11 @@ export const Classes = {
 		assigned: 'assigned',
 		complete: 'complete',
 		completion: 'completion',
+		draft: 'draft',
+		draftPublishedEntity: 'draft-published-entity',
 		exempt: 'exempt',
 		feedbackDate: 'feedback-date',
+		published: 'published',
 		userAssignmentActivity: 'user-assignment-activity',
 		userQuizActivity: 'user-quiz-activity',
 		userQuizAttemptActivity: 'user-quiz-attempt-activity',
@@ -361,7 +364,8 @@ export const Actions = {
 		create: 'create',
 		selectCustomDateRange: 'select-custom-date-range',
 		startAddNew: 'start-add-new',
-		update: 'update'
+		update: 'update',
+		updateDraft: 'update-draft'
 	},
 	assignments: {
 		assign: 'assign',
