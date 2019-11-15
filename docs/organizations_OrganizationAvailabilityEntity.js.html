@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Class: UserActivityUsageEntity</title>
+    <title>JSDoc: Source: organizations/OrganizationAvailabilityEntity.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,137 +17,67 @@
 
 <div id="main">
 
-    <h1 class="page-title">Class: UserActivityUsageEntity</h1>
+    <h1 class="page-title">Source: organizations/OrganizationAvailabilityEntity.js</h1>
 
     
 
 
 
-
-<section>
-
-<header>
     
-        <h2><span class="attribs"><span class="type-signature"></span></span>UserActivityUsageEntity<span class="signature">()</span><span class="type-signature"></span></h2>
-        
-            <div class="class-description">UserActivityUsageEntity class representation of a d2l UserActivityUsage.</div>
-        
-    
-</header>
-
-<article>
-    <div class="container-overview">
-    
-        
-
-    
-    <h2>Constructor</h2>
-    
-
-    
-    <h4 class="name" id="UserActivityUsageEntity"><span class="type-signature"></span>new UserActivityUsageEntity<span class="signature">()</span><span class="type-signature"></span></h4>
-    
-
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="enrollments_UserActivityUsageEntity.js.html">enrollments/UserActivityUsageEntity.js</a>, <a href="enrollments_UserActivityUsageEntity.js.html#line8">line 8</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
-    </div>
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</article>
-
-</section>
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>'use strict';
+
+import { Entity } from '../es6/Entity.js';
+import { Actions, Classes, Rels } from '../hypermedia-constants';
+import { OrganizationEntity } from './OrganizationEntity.js';
+
+/**
+ * OrganizationAvailabilityEntity class representation of a d2l OrgUnitAvailability.
+ */
+export class OrganizationAvailabilityEntity extends Entity {
+	canDeleteAvailability() {
+		return this._entity.hasActionByName(Actions.organizations.deleteItem);
+	}
+
+	onOrganizationChange(onChange) {
+		const organizationHref = this.getOrganizationHref();
+		organizationHref &amp;&amp; this._subEntity(OrganizationEntity, organizationHref, onChange);
+	}
+
+	getOrganizationHref() {
+		if (this._entity.hasLinkByRel(Rels.organization)) {
+			return this._entity.getLinkByRel(Rels.organization).href;
+		}
+	}
+
+	isExplicitAvailability() {
+		return this._entity.hasClass(Classes.organizationAvailability.explicit);
+	}
+
+	isInheritAvailability() {
+		return this._entity.hasClass(Classes.organizationAvailability.inherit);
+	}
+
+	getCurrentTypeName() {
+		const currentTypeEntity = this._entity.getSubEntityByClasses([
+			Classes.organizationAvailability.orgUnitType,
+			Classes.organizationAvailability.current
+		]);
+		return currentTypeEntity &amp;&amp; currentTypeEntity.properties &amp;&amp; currentTypeEntity.properties.name;
+	}
+
+	getDescendentTypeName() {
+		const descendentTypeEntity = this._entity.getSubEntityByClasses([
+			Classes.organizationAvailability.orgUnitType,
+			Classes.organizationAvailability.descendent
+		]);
+		return descendentTypeEntity &amp;&amp; descendentTypeEntity.properties &amp;&amp; descendentTypeEntity.properties.name;
+	}
+}
+</code></pre>
+        </article>
+    </section>
 
 
 

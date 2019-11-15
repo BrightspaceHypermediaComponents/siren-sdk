@@ -8,6 +8,9 @@ import { Rels } from '../../hypermedia-constants';
  * AssignmentActivityUsageEntity class representation of a d2l AssignmentActivityUsage.
  */
 export class AssignmentActivityUsageEntity extends Entity {
+	/**
+	 * @returns {string} URL of the assignment entity associated with this assignment activity usage
+	 */
 	assignmentHref() {
 		if (!this._entity || !this._entity.hasLinkByRel(Rels.assignment)) {
 			return;
