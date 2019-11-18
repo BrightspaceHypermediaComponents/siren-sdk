@@ -25,11 +25,11 @@ export class OrganizationAvailabilityEntity extends Entity {
 	}
 
 	isExplicitAvailability() {
-		return this._entity.hasClass(Classes.organizationAvailability.explicit);
+		return this.hasClass(Classes.organizationAvailability.explicit);
 	}
 
 	isInheritAvailability() {
-		return this._entity.hasClass(Classes.organizationAvailability.inherit);
+		return this.hasClass(Classes.organizationAvailability.inherit);
 	}
 
 	getCurrentTypeName() {
@@ -48,11 +48,11 @@ export class OrganizationAvailabilityEntity extends Entity {
 		return descendentTypeEntity && descendentTypeEntity.properties && descendentTypeEntity.properties.name;
 	}
 
-	async delete() {
-		const action = this.canDelete() && this._entity.getActionByName(Actions.organizations.deleteItem);
+	delete() {
+		const action = this.canDelete() && this.getActionByName(Actions.organizations.deleteItem);
 		if (!action) {
 			return;
 		}
-		await performSirenAction(this._token, action);
+		return performSirenAction(this._token, action);
 	}
 }

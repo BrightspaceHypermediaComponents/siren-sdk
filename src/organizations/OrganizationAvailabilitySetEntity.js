@@ -17,8 +17,10 @@ export class OrganizationAvailabilitySetEntity extends Entity {
 		return this._entity.getSubEntitiesByClass(Classes.organizationAvailability.orgUnitAvailability);
 	}
 
-	getEntitiesExcludingCurrentOrgUnit() {
-		return this._getAvailabilityEntities().filter(e => !e.hasClass(Classes.organizationAvailability.current));
+	getAvailabilityHrefs() {
+		return this._getAvailabilityEntities()
+			.filter(e => !e.hasClass(Classes.organizationAvailability.current))
+			.map(e => e.href);
 	}
 
 	getOrganizationHref() {
@@ -39,7 +41,7 @@ export class OrganizationAvailabilitySetEntity extends Entity {
 	}
 
 	addExplicit(explicitOrgUnitId) {
-		const action = this.canAddAvailability() && this._entity.getActionByName(Actions.organizations.createExplicitAvailabilityItem);
+		const action = this.canAddAvailability() && this.getActionByName(Actions.organizations.createExplicitAvailabilityItem);
 		if (!action) {
 			return;
 		}

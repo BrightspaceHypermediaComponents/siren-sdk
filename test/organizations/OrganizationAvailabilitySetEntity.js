@@ -27,11 +27,11 @@ describe('OrganizationAvailabilitySetEntity', () => {
 			expect(actualCurrentOrgUnitEntity.href).to.equal('https://1b0a911c-2d9e-45e1-8091-5cfb7de38a95.organizations.api.proddev.d2l/6606/availability-set/NjYwNl8xMDAwMDA1XzI1NDAwMF81/explicit/6606');
 		});
 
-		it('can getEntitiesExcludingCurrentOrgUnit href', () => {
-			const entities = entity.getEntitiesExcludingCurrentOrgUnit();
-			expect(entities.length).to.equal(2);
-			expect(entities[0].href).to.equal('https://1b0a911c-2d9e-45e1-8091-5cfb7de38a95.organizations.api.proddev.d2l/6606/availability-set/NjYwNl8xMDAwMDA1XzI1NDAwMF81/inherit/121147');
-			expect(entities[1].href).to.equal('https://1b0a911c-2d9e-45e1-8091-5cfb7de38a95.organizations.api.proddev.d2l/6606/availability-set/NjYwNl8xMDAwMDA1XzI1NDAwMF81/inherit/121147/205');
+		it('can getAvailabilityHrefs href', () => {
+			const hrefs = entity.getAvailabilityHrefs();
+			expect(hrefs.length).to.equal(2);
+			expect(hrefs[0]).to.equal('https://1b0a911c-2d9e-45e1-8091-5cfb7de38a95.organizations.api.proddev.d2l/6606/availability-set/NjYwNl8xMDAwMDA1XzI1NDAwMF81/inherit/121147');
+			expect(hrefs[1]).to.equal('https://1b0a911c-2d9e-45e1-8091-5cfb7de38a95.organizations.api.proddev.d2l/6606/availability-set/NjYwNl8xMDAwMDA1XzI1NDAwMF81/inherit/121147/205');
 		});
 	});
 
