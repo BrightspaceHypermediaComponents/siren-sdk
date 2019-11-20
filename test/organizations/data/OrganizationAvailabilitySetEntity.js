@@ -78,7 +78,7 @@ export const testData = {
 					},
 					{
 						'type': 'number',
-						'name': 'descendentOrgUnitTypeId'
+						'name': 'descendantOrgUnitTypeId'
 					}
 				]
 			}

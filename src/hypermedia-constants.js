@@ -271,7 +271,7 @@ export const Classes = {
 		inherit: 'inherit',
 		orgUnitType: 'orgunit-type',
 		current: 'current',
-		descendent: 'descendent'
+		descendant: 'descendant'
 	},
 	quizzes: {
 		quiz: 'quiz',
