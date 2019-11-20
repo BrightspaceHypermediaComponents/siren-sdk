@@ -40,12 +40,12 @@ export class OrganizationAvailabilityEntity extends Entity {
 		return currentTypeEntity && currentTypeEntity.properties && currentTypeEntity.properties.name;
 	}
 
-	getDescendentTypeName() {
-		const descendentTypeEntity = this._entity.getSubEntityByClasses([
+	getDescendantTypeName() {
+		const descendantTypeEntity = this._entity.getSubEntityByClasses([
 			Classes.organizationAvailability.orgUnitType,
-			Classes.organizationAvailability.descendent
+			Classes.organizationAvailability.descendant
 		]);
-		return descendentTypeEntity && descendentTypeEntity.properties && descendentTypeEntity.properties.name;
+		return descendantTypeEntity && descendantTypeEntity.properties && descendantTypeEntity.properties.name;
 	}
 
 	delete() {

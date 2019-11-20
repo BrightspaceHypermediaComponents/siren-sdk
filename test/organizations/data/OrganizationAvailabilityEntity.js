@@ -153,7 +153,7 @@ export const testData = {
 			}
 		]
 	},
-	inheritWithDescendentType: {
+	inheritWithDescendantType: {
 		'class': [
 			'orgunit-availability',
 			'inherit'
@@ -164,7 +164,7 @@ export const testData = {
 		'entities': [
 			{
 				'class': [
-					'descendent',
+					'descendant',
 					'orgunit-type'
 				],
 				'rel': [

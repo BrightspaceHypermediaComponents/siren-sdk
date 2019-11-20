@@ -3,7 +3,7 @@ import { testData } from './data/OrganizationAvailabilityEntity.js';
 
 describe('OrganizationAvailabilityEntity', () => {
 	let currentEntity, explicitEntity, inheritEntity,
-		inheritWithDescendentTypeEntity, cannotDeleteEntity;
+		inheritWithDescendantTypeEntity, cannotDeleteEntity;
 
 	beforeEach(() => {
 		const currentAvailabilityJson = window.D2L.Hypermedia.Siren.Parse(testData.current);
@@ -15,8 +15,8 @@ describe('OrganizationAvailabilityEntity', () => {
 		const inheritAvailabilityJson = window.D2L.Hypermedia.Siren.Parse(testData.inherit);
 		inheritEntity = new OrganizationAvailabilityEntity(inheritAvailabilityJson);
 
-		const inheritWithDescendentTypeAvailabilityJson = window.D2L.Hypermedia.Siren.Parse(testData.inheritWithDescendentType);
-		inheritWithDescendentTypeEntity = new OrganizationAvailabilityEntity(inheritWithDescendentTypeAvailabilityJson);
+		const inheritWithDescendantTypeAvailabilityJson = window.D2L.Hypermedia.Siren.Parse(testData.inheritWithDescendantType);
+		inheritWithDescendantTypeEntity = new OrganizationAvailabilityEntity(inheritWithDescendantTypeAvailabilityJson);
 
 		const cannotDeleteJson = window.D2L.Hypermedia.Siren.Parse(testData.cannotDelete);
 		cannotDeleteEntity = new OrganizationAvailabilityEntity(cannotDeleteJson);
@@ -42,9 +42,9 @@ describe('OrganizationAvailabilityEntity', () => {
 			expect(inheritEntity.isExplicitAvailability()).to.be.false;
 			expect(inheritEntity.isInheritAvailability()).to.be.true;
 		});
-		it('inherit (with descendent type) is inherit', () => {
-			expect(inheritWithDescendentTypeEntity.isExplicitAvailability()).to.be.false;
-			expect(inheritWithDescendentTypeEntity.isInheritAvailability()).to.be.true;
+		it('inherit (with descendant type) is inherit', () => {
+			expect(inheritWithDescendantTypeEntity.isExplicitAvailability()).to.be.false;
+			expect(inheritWithDescendantTypeEntity.isInheritAvailability()).to.be.true;
 		});
 	});
 
@@ -58,17 +58,17 @@ describe('OrganizationAvailabilityEntity', () => {
 		it('gets typeName of inherit entity', () => {
 			expect(inheritEntity.getCurrentTypeName()).to.equal('Department');
 		});
-		it('gets typeName of inherit (with descendent type) entity', () => {
-			expect(inheritWithDescendentTypeEntity.getCurrentTypeName()).to.equal('Department');
+		it('gets typeName of inherit (with descendant type) entity', () => {
+			expect(inheritWithDescendantTypeEntity.getCurrentTypeName()).to.equal('Department');
 		});
 	});
 
-	describe('getDescendentTypeName', () => {
-		it('can getDescendentTypeName', () => {
-			expect(inheritWithDescendentTypeEntity.getDescendentTypeName()).to.equal('College');
+	describe('getDescendantTypeName', () => {
+		it('can getDescendantTypeName', () => {
+			expect(inheritWithDescendantTypeEntity.getDescendantTypeName()).to.equal('College');
 		});
-		it('cannot get descendent type name as it doesn\'t exist', () => {
-			expect(explicitEntity.getDescendentTypeName()).to.be.undefined;
+		it('cannot get descendant type name as it doesn\'t exist', () => {
+			expect(explicitEntity.getDescendantTypeName()).to.be.undefined;
 		});
 	});
 
