@@ -68,7 +68,8 @@ export const Rels = {
 	// Assignments
 	Assignments: {
 		instructions: 'https://assignments.api.brightspace.com/rels/instructions',
-		attachments: 'https://assignments.api.brightspace.com/rels/attachments'
+		attachments: 'https://assignments.api.brightspace.com/rels/attachments',
+		annotations: 'https://assignments.api.brightspace.com/rels/annotations'
 	},
 	// Awards
 	Awards: {
@@ -373,7 +374,8 @@ export const Actions = {
 		updateInstructions: 'update-instructions',
 		updateName: 'update-name',
 		updateCompletionType: 'update-completion-type',
-		updateSubmissionType: 'update-submission-type'
+		updateSubmissionType: 'update-submission-type',
+		updateAnnotationToolsAvailability: 'update-annotation-tools-availability'
 	},
 	notifications: {
 		getCarrierClass: 'get-carrier',

@@ -258,4 +258,28 @@ export class AssignmentEntity extends Entity {
 		];
 		await performSirenAction(this._token, action, fields);
 	}
+
+	annotationToolsAvailable() {
+		return this._entity.getSubEntityByClasses(["annotations", "enabled"]);
+	}
+
+	canSeeAnnotations() {
+		const annotationsEntity = this._entity.getSubEntityByClass("annotations");
+		return annotationsEntity && annotationsEntity.hasActionByName(Actions.assignments.updateAnnotationToolsAvailability);
+	}
+
+	async setAnnotationToolsAvailability(isAvailable) {
+		isAvailable = Boolean(isAvailable);
+
+		const action = this.canSeeAnnotations() && this._entity.getSubEntityByClass("annotations").getActionByName(Actions.assignments.updateAnnotationToolsAvailability);
+		if (!action) {
+			return;
+		}
+
+		const fields = [
+			{ name: 'annotationToolsAvailability', value: isAvailable }
+		];
+		await performSirenAction(this._token, action, fields);
+	}
+
 }
