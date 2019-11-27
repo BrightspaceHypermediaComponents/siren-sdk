@@ -260,18 +260,18 @@ export class AssignmentEntity extends Entity {
 	}
 
 	annotationToolsAvailable() {
-		return this._entity.getSubEntityByClasses(["annotations", "enabled"]);
+		return this._entity.getSubEntityByClasses(['annotations', 'enabled']);
 	}
 
 	canSeeAnnotations() {
-		const annotationsEntity = this._entity.getSubEntityByClass("annotations");
+		const annotationsEntity = this._entity.getSubEntityByClass('annotations');
 		return annotationsEntity && annotationsEntity.hasActionByName(Actions.assignments.updateAnnotationToolsAvailability);
 	}
 
 	async setAnnotationToolsAvailability(isAvailable) {
 		isAvailable = Boolean(isAvailable);
 
-		const action = this.canSeeAnnotations() && this._entity.getSubEntityByClass("annotations").getActionByName(Actions.assignments.updateAnnotationToolsAvailability);
+		const action = this.canSeeAnnotations() && this._entity.getSubEntityByClass('annotations').getActionByName(Actions.assignments.updateAnnotationToolsAvailability);
 		if (!action) {
 			return;
 		}
