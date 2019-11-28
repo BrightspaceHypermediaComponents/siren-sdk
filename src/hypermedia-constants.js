@@ -200,7 +200,10 @@ export const Classes = {
 		link: 'link',
 		submissionComment: 'submission-comment',
 		submissionDate: 'submission-date',
-		submissionList: 'assignment-submission-list'
+		submissionList: 'assignment-submission-list',
+		annotationTools: 'annotations',
+		annotationEnabled: 'enabled',
+		annotationDisabled: 'disabled'
 	},
 	awards: {
 		available: 'available',

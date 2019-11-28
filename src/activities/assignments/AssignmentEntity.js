@@ -1,7 +1,7 @@
 'use strict';
 
 import { Entity } from '../../es6/Entity';
-import { Actions, Rels } from '../../hypermedia-constants';
+import { Actions, Rels, Classes } from '../../hypermedia-constants';
 import { performSirenAction } from '../../es6/SirenAction';
 
 /**
@@ -259,19 +259,32 @@ export class AssignmentEntity extends Entity {
 		await performSirenAction(this._token, action, fields);
 	}
 
-	annotationToolsAvailable() {
-		return this._entity.getSubEntityByClasses(['annotations', 'enabled']);
+	/**
+	 * @returns {bool} Whether or not annotations are enabled for the assignment entity
+	 */
+	getAvailableAnnotationTools() {
+		const annotationsEntity = this._entity.getSubEntityByRel(Rels.Assignments.annotations);
+		return annotationsEntity && annotationsEntity.hasClass(Classes.assignments.annotationEnabled);
 	}
 
+	/**
+	 * @returns {bool} Whether or not the user can see and set annotation availability for the assignment entity
+	 */
 	canSeeAnnotations() {
-		const annotationsEntity = this._entity.getSubEntityByClass('annotations');
+		const annotationsEntity = this._entity.getSubEntityByRel(Rels.Assignments.annotations);
 		return annotationsEntity && annotationsEntity.hasActionByName(Actions.assignments.updateAnnotationToolsAvailability);
 	}
 
+	/**
+	 * Set the status of whether annotation tools are available or not for the assignment entity
+	 * @param {bool} isAvailable Annotation availability - this is the value that the annotation availability of the assignment will be set to
+	 */
 	async setAnnotationToolsAvailability(isAvailable) {
 		isAvailable = Boolean(isAvailable);
 
-		const action = this.canSeeAnnotations() && this._entity.getSubEntityByClass('annotations').getActionByName(Actions.assignments.updateAnnotationToolsAvailability);
+		const annotationsEntity = this._entity.getSubEntityByRel(Rels.Assignments.annotations);
+
+		const action = this.canSeeAnnotations() && annotationsEntity && annotationsEntity.getActionByName(Actions.assignments.updateAnnotationToolsAvailability);
 		if (!action) {
 			return;
 		}
