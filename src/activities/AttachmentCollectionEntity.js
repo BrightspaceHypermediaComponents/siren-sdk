@@ -41,7 +41,11 @@ export class AttachmentCollectionEntity extends Entity {
 		}
 
 		const action = this._entity.getActionByName('add-link');
-		const fields = [{ name: name, href: href }];
+		const fields = [{
+			name: 'name', value: name
+		}, {
+			name: 'href', value: href
+		}];
 		await performSirenAction(this._token, action, fields);
 	}
 
@@ -63,7 +67,11 @@ export class AttachmentCollectionEntity extends Entity {
 		}
 
 		const action = this._entity.getActionByName('add-google-drive-link');
-		const fields = [{ name: name, href: href }];
+		const fields = [{
+			name: 'name', value: name
+		}, {
+			name: 'href', value: href
+		}];
 		await performSirenAction(this._token, action, fields);
 	}
 
@@ -85,7 +93,11 @@ export class AttachmentCollectionEntity extends Entity {
 		}
 
 		const action = this._entity.getActionByName('add-onedrive-link');
-		const fields = [{ name: name, href: href }];
+		const fields = [{
+			name: 'name', value: name
+		}, {
+			name: 'href', value: href
+		}];
 		await performSirenAction(this._token, action, fields);
 	}
 }
