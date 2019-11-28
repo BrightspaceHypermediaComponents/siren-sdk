@@ -68,6 +68,7 @@ export const Rels = {
 	// Assignments
 	Assignments: {
 		instructions: 'https://assignments.api.brightspace.com/rels/instructions',
+		releaseConditions: 'https://assignments.api.brightspace.com/rels/release-conditions',
 		attachments: 'https://assignments.api.brightspace.com/rels/attachments',
 		annotations: 'https://assignments.api.brightspace.com/rels/annotations'
 	},

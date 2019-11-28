@@ -192,6 +192,23 @@ export class AssignmentEntity extends Entity {
 	}
 
 	/**
+	 * @returns {bool} Whether the release conditions sub entity is present.
+	 */
+	canEditReleaseConditions() {
+
+		return this._entity.hasSubEntityByRel(Rels.Assignments.releaseConditions);
+	}
+
+	/**
+	 * @returns {string} Url of the MVC release conditions dialog.
+	 */
+	editReleaseConditionsUrl() {
+
+		const entity = this._entity.getSubEntityByRel(Rels.Assignments.releaseConditions);
+		return entity ? entity.properties.url : undefined;
+	}
+
+	/**
 	 * @returns {object} Completion type of the assignment (including type value and type title)
 	 */
 	completionType() {
