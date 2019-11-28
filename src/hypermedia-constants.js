@@ -53,6 +53,7 @@ export const Rels = {
 		userActivityUsage: 'https://activities.api.brightspace.com/rels/user-activity-usage',
 		myUnassessedActivities: 'https://activities.api.brightspace.com/rels/my-unassessed-activities',
 		overdue: 'https://activities.api.brightspace.com/rels/overdue',
+		releaseConditionsDialogOpener: 'https://activities.api.brightspace.com/rels/release-conditions-dialog-opener',
 		nextPeriod: 'https://activities.api.brightspace.com/rels/next-period',
 		nextWeek: 'https://activities.api.brightspace.com/rels/next-week',
 		previousPeriod: 'https://activities.api.brightspace.com/rels/previous-period',
