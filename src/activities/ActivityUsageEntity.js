@@ -113,7 +113,7 @@ export class ActivityUsageEntity extends Entity {
 	 * @param {string} dateString Date string to set as the due date, or empty string to clear the due date
 	 */
 	async setDueDate(dateString) {
-		if (!this.canEditDueDate) {
+		if (!this.canEditDueDate()) {
 			return;
 		}
 

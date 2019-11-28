@@ -258,4 +258,15 @@ export class AssignmentEntity extends Entity {
 		];
 		await performSirenAction(this._token, action, fields);
 	}
+
+	/**
+	 * @returns {string} URL of the assignment's attachments collection
+	 */
+	attachmentsCollectionHref() {
+		if (!this._entity || !this._entity.hasLinkByRel(Rels.Assignments.attachments)) {
+			return;
+		}
+
+		return this._entity.getLinkByRel(Rels.Assignments.attachments).href;
+	}
 }
