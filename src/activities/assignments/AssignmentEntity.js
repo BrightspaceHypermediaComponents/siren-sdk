@@ -295,6 +295,7 @@ export class AssignmentEntity extends Entity {
 		await performSirenAction(this._token, action, fields);
 	}
 
+	/**
 	 * @returns {string} URL of the assignment's attachments collection
 	 */
 	attachmentsCollectionHref() {
