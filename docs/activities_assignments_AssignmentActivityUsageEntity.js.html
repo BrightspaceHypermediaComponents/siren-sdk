@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: es6/EntityFactory.js</title>
+    <title>JSDoc: Source: activities/assignments/AssignmentActivityUsageEntity.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: es6/EntityFactory.js</h1>
+    <h1 class="page-title">Source: activities/assignments/AssignmentActivityUsageEntity.js</h1>
 
     
 
@@ -28,93 +28,32 @@
         <article>
             <pre class="prettyprint source linenums"><code>'use strict';
 
-import 'd2l-polymer-siren-behaviors/store/entity-store.js';
+import { AssignmentEntity } from './AssignmentEntity.js';
+import { Entity } from '../../es6/Entity.js';
+import { Rels } from '../../hypermedia-constants';
 
 /**
- * This creates and fetch a new entity. Whenever the entity changes onChange is called.
- * @param {Function} entityType The type of the entity. For example OrganizationEntity
- * @param {String} href Href of the entity to be created
- * @param {String|Token|Null} token JWT Token for brightspace | a function that returns a JWT token for brightspace | null (defaults to cookie authentication in a browser)
- * @param {Function} onChange Callback function that accepts an {entityType} to be called when entity changes. If there are errors onChange is called with (null, error)
- * @param {Object} entity (Optional) Entity that has already been fetched.
+ * AssignmentActivityUsageEntity class representation of a d2l AssignmentActivityUsage.
  */
-export function entityFactory(entityType, href, token, onChange, entity) {
-	const entityListener = new EntityListener();
-	const onChangeWrapped = (entity, error) => {
-		if (entity) {
-			onChange(new entityType(entity, token, entityListener));
-		} else {
-			onChange(null, error);
-		}
-	};
-	// This add the listener then calls the fetch.
-	entityListener.add(href, token, onChangeWrapped, entity);
-}
-
-export function updateEntity(href, token) {
-	window.D2L.Siren.EntityStore.fetch(href, token, true);
-}
-
-/**
- * Some times the entity doesn't exists so this allows the cleanup code to be cleaner.
- * @param {Object|Null} entity Object that is of an Entity type.
- */
-export function dispose(entity) {
-	entity &amp;&amp; entity.dispose &amp;&amp; entity.dispose();
-}
-
-/** Allows one to manage the event store listeners. Makes it easy to update, add and remove a listener for the entity store. */
-class EntityListener {
-	constructor() {
-		this._href;
-		this._token;
-		this._onChange;
-		this._removeListener;
-	}
-
-	add(href, token, onChange, entity) {
-		if (!this._validate(href, onChange, entity)) {
+export class AssignmentActivityUsageEntity extends Entity {
+	/**
+	 * @returns {string} URL of the assignment entity associated with this assignment activity usage
+	 */
+	assignmentHref() {
+		if (!this._entity || !this._entity.hasLinkByRel(Rels.assignment)) {
 			return;
 		}
 
-		this._href = href;
-		this._token = token;
-		this._onChange = onChange;
-
-		window.D2L.Siren.EntityStore.addListener(this._href, this._token, this._onChange).then((removeListener) => {
-			this._removeListener = removeListener;
-			window.D2L.Siren.EntityStore.get(this._href, this._token).then((storedEntity) => {
-				if (storedEntity) {
-					this._onChange(storedEntity);
-					return;
-				}
-				if (entity) {
-					window.D2L.Siren.EntityStore.update(href, token, entity);
-				} else {
-					window.D2L.Siren.EntityStore.fetch(href, token);
-				}
-			});
-		});
+		return this._entity.getLinkByRel(Rels.assignment).href;
 	}
 
-	update(href, token, onChange, entity) {
-		if (href === this._href || token === this._token || onChange === this._onChange) {
-			return;
-		}
-		this._removeListener();
-		this._addListener(href, token, onChange, entity);
+	onAssignmentChange(onChange) {
+		const assignmentHref = this.assignmentHref();
+		// _subEntity builds new sub entity and allows this object to track it.
+		// So all sub entities are dispose when this object is disposed.
+		assignmentHref &amp;&amp; this._subEntity(AssignmentEntity, assignmentHref, onChange);
 	}
 
-	remove() {
-		this._removeListener &amp;&amp; this._removeListener();
-	}
-
-	_validate(href, onChange, entity) {
-		const entityIsGood = !entity || (entity.hasLinkByRel('self')  &amp;&amp; entity.getLinkByRel('self').href === href);
-
-		// token can be empty.
-		return href &amp;&amp; typeof onChange === 'function' &amp;&amp; entityIsGood;
-	}
 }
 </code></pre>
         </article>

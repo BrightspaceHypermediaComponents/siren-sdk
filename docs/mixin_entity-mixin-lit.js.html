@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Class: UserActivityUsageEntity</title>
+    <title>JSDoc: Source: mixin/entity-mixin-lit.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,137 +17,97 @@
 
 <div id="main">
 
-    <h1 class="page-title">Class: UserActivityUsageEntity</h1>
+    <h1 class="page-title">Source: mixin/entity-mixin-lit.js</h1>
 
     
 
 
 
-
-<section>
-
-<header>
     
-        <h2><span class="attribs"><span class="type-signature"></span></span>UserActivityUsageEntity<span class="signature">()</span><span class="type-signature"></span></h2>
-        
-            <div class="class-description">UserActivityUsageEntity class representation of a d2l UserActivityUsage.</div>
-        
-    
-</header>
-
-<article>
-    <div class="container-overview">
-    
-        
-
-    
-    <h2>Constructor</h2>
-    
-
-    
-    <h4 class="name" id="UserActivityUsageEntity"><span class="type-signature"></span>new UserActivityUsageEntity<span class="signature">()</span><span class="type-signature"></span></h4>
-    
-
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="enrollments_UserActivityUsageEntity.js.html">enrollments/UserActivityUsageEntity.js</a>, <a href="enrollments_UserActivityUsageEntity.js.html#line8">line 8</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
-    </div>
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</article>
-
-</section>
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import { entityFactory, dispose } from '../es6/EntityFactory.js';
+
+export const EntityMixinLit = superclass => class extends superclass {
+
+	static get properties() {
+		return {
+			/**
+			 * Href for the entity
+			 */
+			href: {
+				type: String,
+				reflect: true
+			},
+			/**
+			 * Token JWT Token for brightspace | a function that returns a JWT token for brightspace | null (defaults to cookie authentication in a browser)
+			 */
+			token: { type: String },
+			/**
+			 * Entity object that extends the Entity class.
+			 */
+			_entity: { type: Object }
+		};
+	}
+
+	disconnectedCallback() {
+		super.disconnectedCallback();
+		// this calls this._entity.dispose() if entity is actually an entity.
+		// Note this will dispose all child entities used.
+		dispose(this._entity);
+	}
+
+	shouldUpdate(changedProperties) {
+		if ((changedProperties.has('href') || changedProperties.has('token')) &amp;&amp;
+			this.href &amp;&amp; this.token) {
+			this._getEntity();
+		}
+		return this.href &amp;&amp; this.token;
+	}
+
+	_entityHasChanged(newValue, oldValue) {
+		oldValue = oldValue ? oldValue : this._entity;
+		return newValue !== oldValue;
+	}
+	/**
+	 * Protected method to set the entity type such as Organization Entity.
+	 * Requires to be called in the constructor
+	 * @param {Function} entityType  The type of the entity. For example OrganizationEntity
+	 */
+	_setEntityType(entityType) {
+		if (typeof entityType === 'function') {
+			this._entityType = entityType;
+		}
+	}
+
+	_getEntity() {
+		dispose(this._entity);
+		if (typeof this._entityType === 'function') {
+			let pendingResolve;
+			var pendingPromise = new Promise(function(resolve) {
+				pendingResolve = resolve;
+			});
+
+			const pendingEvent = new CustomEvent('d2l-pending-state', {
+				composed: true,
+				bubbles: true,
+				detail: { promise: pendingPromise }
+			});
+			this.dispatchEvent(pendingEvent);
+
+			entityFactory(this._entityType, this.href, this.token, entity => {
+				this._entity = entity;
+				if (pendingResolve) {
+					pendingResolve();
+					pendingResolve = null;
+				}
+			});
+		}
+	}
+};
+</code></pre>
+        </article>
+    </section>
 
 
 

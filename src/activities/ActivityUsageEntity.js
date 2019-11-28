@@ -11,6 +11,9 @@ import { performSirenAction } from '../es6/SirenAction.js';
 const specializationRel = 'https://api.brightspace.com/rels/specialization';
 
 export class ActivityUsageEntity extends Entity {
+	/**
+	 * @returns {string} URL of the organization associated with the activity usage, if present
+	 */
 	organizationHref() {
 		if (!this._entity || !this._entity.hasLinkByRel(Rels.organization)) {
 			return;
@@ -19,6 +22,9 @@ export class ActivityUsageEntity extends Entity {
 		return this._entity.getLinkByRel(Rels.organization).href;
 	}
 
+	/**
+	 * @returns {string} URL of the specialization associated with the activity usage, if present
+	 */
 	specializationHref() {
 		if (!this._entity || !this._entity.hasLinkByRel(specializationRel)) {
 			return;
@@ -27,6 +33,9 @@ export class ActivityUsageEntity extends Entity {
 		return this._entity.getLinkByRel(specializationRel).href;
 	}
 
+	/**
+	 * @returns {string} URL of the user activity usage associated with the activity usage (for the current user), if present
+	 */
 	userActivityUsageHref() {
 		if (!this._entity || !this._entity.hasLinkByRel(Rels.Activities.userActivityUsage)) {
 			return;
@@ -35,6 +44,9 @@ export class ActivityUsageEntity extends Entity {
 		return this._entity.getLinkByRel(Rels.Activities.userActivityUsage).href;
 	}
 
+	/**
+	 * @returns {string} URL of the activity collection associated with the activity usage, if present
+	 */
 	activityCollectionHref() {
 		if (!this._entity || !this._entity.hasLinkByRel(Rels.Activities.activityCollection)) {
 			return;
@@ -43,6 +55,9 @@ export class ActivityUsageEntity extends Entity {
 		return this._entity.getLinkByRel(Rels.Activities.activityCollection).href;
 	}
 
+	/**
+	 * @returns {string} URL to edit the activity usage, if present
+	 */
 	editHref() {
 		if (!this._entity || !this._entity.hasLinkByRel(Rels.IANA.edit)) {
 			return;
@@ -80,7 +95,7 @@ export class ActivityUsageEntity extends Entity {
 	}
 
 	/**
-	 * @returns {bool} Whether or not you have the ability to edit the due date
+	 * @returns {bool} Whether or not the edit due date action is present on the activity usage entity
 	 */
 	canEditDueDate() {
 		return this._canEditDate( Classes.dates.dueDate )
