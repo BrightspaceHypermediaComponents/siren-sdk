@@ -160,22 +160,12 @@ export class ActivityUsageEntity extends Entity {
 			&& this._entity.getSubEntityByClass(dateClass);
 	}
 
-	/**
-	 * @param {string} dateClass The class for the date entity
-	 * @returns {bool} Whether or not edit *date* action is present on the activity usage entity
-	 */
 	_canEditDate(dateClass) {
 		const date = this._getDateSubEntity(dateClass);
 		return (date && date.hasActionByName(Actions.activities.update))
 			|| this._entity.hasActionByName(Actions.activities.startAddNew);
 	}
 
-	/**
-	 * Updates either start, end or due date of the activity usage entity to the date specified
-	 * @param {string} dateValue Date value to set as the date, or empty string to clear the date
-	 * @param {string} dateClass The class for the date to update
-	 * @param {string} dateField The field of the date to update. example: "endDate"
-	 */
 	async _setDate(dateValue, dateClass, dateField) {
 		if (!this._canEditDate(dateClass)) {
 			return;
