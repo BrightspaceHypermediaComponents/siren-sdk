@@ -71,31 +71,105 @@ export class ActivityUsageEntity extends Entity {
 		activityCollectionHref && this._subEntity(ActivityUsageCollectionEntity, activityCollectionHref, onChange);
 	}
 
-	_getDueDateSubEntity() {
-		return this._entity
-			&& this._entity.getSubEntityByClass(Classes.dates.dueDate);
-	}
-
+	/**
+	 * @returns {bool} The due date of the activity usage
+	 */
 	dueDate() {
-		const dueDate = this._getDueDateSubEntity();
+		const dueDate = this._getDateSubEntity(Classes.dates.dueDate);
 		return dueDate && dueDate.properties.date;
 	}
 
+	/**
+	 * @returns {bool} Whether or not you have the ability to edit the due date
+	 */
 	canEditDueDate() {
-		const dueDate = this._getDueDateSubEntity();
-		return (dueDate && dueDate.hasActionByName(Actions.activities.update))
+		return this._canEditDate( Classes.dates.dueDate )
+	}
+
+	/**
+	 * Updates the due date of the activity usage entity
+	 * @param {string} dateValue The due date to be set
+	 */
+	async setDueDate(dateValue) {
+		await this._setDate(dateValue, Classes.dates.startDate, 'dueDate');
+	}
+
+	/**
+	 * @returns {bool} The start date of the activity usage
+	 */
+	startDate() {
+		const startDate = this._getDateSubEntity(Classes.dates.startDate);
+		return startDate && startDate.properties.date;
+	}
+
+	/**
+	 * @returns {bool} Whether or not you have the ability to edit the start date
+	 */
+	canEditStartDate() {
+		return this._canEditDate( Classes.dates.startDate )
+	}
+
+	/**
+	 * Updates the start date of the activity usage entity
+	 * @param {string} dateValue The start date to be set
+	 */
+	async setStartDate(dateValue) {
+		await this._setDate(dateValue, Classes.dates.startDate, 'startDate');
+	}
+
+	/**
+	 * @returns {bool} The end date of the activity usage
+	 */
+	endDate() {
+		const endDate = this._getDateSubEntity(Classes.dates.endDate);
+		return endDate && endDate.properties.date;
+	}
+
+	/**
+	 * @returns {bool} Whether or not you have the ability to edit the end date
+	 */
+	canEditEndDate() {
+		return this._canEditDate( Classes.dates.endDate )
+	}
+
+	/**
+	 * Updates the end date of the activity usage entity
+	 * @param {string} dateValue The end date to be set
+	 */
+	async setEndDate(dateValue) {
+		await this._setDate( dateValue, Classes.dates.endDate, 'endDate');
+	}
+
+	_getDateSubEntity(dateClass) {
+		return this._entity
+			&& this._entity.getSubEntityByClass(dateClass);
+	}
+
+	/**
+	 * @param {string} dateClass The class for the date entity
+	 * @returns {bool} Whether or not you have the ability to edit a specific date 
+	 */
+	_canEditDate( dateClass ) {
+		const date = this._getDateSubEntity(dateClass);
+		return (date && date.hasActionByName(Actions.activities.update))
 			|| this._entity.hasActionByName(Actions.activities.startAddNew);
 	}
 
-	async setDueDate(dateString) {
-		if (!this.canEditDueDate) {
+	/**
+	 * Updates either start, end or due date of the activity usage entity
+	 * @param {string} dateValue The date value to be set
+	 * @param {string} dateClass The class for the date to update
+	 * @param {string} dateField The field of the date to update
+	 */
+	async _setDate(dateValue, dateClass, dateField) {
+		if (!this._canEditDate(dateClass)) {
 			return;
 		}
 
 		let action;
-		const dueDateEntity = this._getDueDateSubEntity();
-		if (dueDateEntity) {
-			action = dueDateEntity.getActionByName(Actions.activities.update);
+		const dateEntity = this._getDateSubEntity(dateClass);
+		if (dateEntity) {
+			action = dateEntity.getActionByName(Actions.activities.update);
 		} else {
 			if (!this._entity.hasActionByName(Actions.activities.startAddNew)) {
 				return;
@@ -104,19 +178,18 @@ export class ActivityUsageEntity extends Entity {
 			const addNewAction = this._entity.getActionByName(Actions.activities.startAddNew);
 			const addNewEntity = await performSirenAction(this._token, addNewAction);
 
-			if (!addNewEntity.hasSubEntityByClass(Classes.dates.dueDate)) {
+			if (!addNewEntity.hasSubEntityByClass(dateClass)) {
 				return;
 			}
 
-			const addNewDueDateEntity = addNewEntity.getSubEntityByClass(Classes.dates.dueDate);
-			action = addNewDueDateEntity.getActionByName(Actions.activities.create);
+			const addNewDateEntity = addNewEntity.getSubEntityByClass(dateClass);
+			action = addNewDateEntity.getActionByName(Actions.activities.create);
 		}
 
 		if (!action) {
 			return;
 		}
-
-		const fields = [{ name: 'dueDate', value: dateString }];
+		const fields = [{ name: dateField, value: dateValue }];
 		await performSirenAction(this._token, action, fields);
 	}
 
