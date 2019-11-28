@@ -98,7 +98,7 @@ export class ActivityUsageEntity extends Entity {
 	 * @returns {bool} Whether or not the edit due date action is present on the activity usage entity
 	 */
 	canEditDueDate() {
-		return this._canEditDate( Classes.dates.dueDate )
+		return this._canEditDate(Classes.dates.dueDate);
 	}
 
 	/**
@@ -121,7 +121,7 @@ export class ActivityUsageEntity extends Entity {
 	 * @returns {bool} Whether or not the edit start date action is present on the activity usage entity
 	 */
 	canEditStartDate() {
-		return this._canEditDate( Classes.dates.startDate )
+		return this._canEditDate(Classes.dates.startDate);
 	}
 
 	/**
@@ -144,7 +144,7 @@ export class ActivityUsageEntity extends Entity {
 	 * @returns {bool} Whether or not the edit end date action is present on the activity usage entity
 	 */
 	canEditEndDate() {
-		return this._canEditDate( Classes.dates.endDate )
+		return this._canEditDate(Classes.dates.endDate);
 	}
 
 	/**
@@ -152,7 +152,7 @@ export class ActivityUsageEntity extends Entity {
 	 * @param {string} dateValue Date string to set as the end date, or empty string to clear the end date
 	 */
 	async setEndDate(dateValue) {
-		await this._setDate( dateValue, Classes.dates.endDate, 'endDate');
+		await this._setDate(dateValue, Classes.dates.endDate, 'endDate');
 	}
 
 	_getDateSubEntity(dateClass) {
@@ -164,7 +164,7 @@ export class ActivityUsageEntity extends Entity {
 	 * @param {string} dateClass The class for the date entity
 	 * @returns {bool} Whether or not edit *date* action is present on the activity usage entity
 	 */
-	_canEditDate( dateClass ) {
+	_canEditDate(dateClass) {
 		const date = this._getDateSubEntity(dateClass);
 		return (date && date.hasActionByName(Actions.activities.update))
 			|| this._entity.hasActionByName(Actions.activities.startAddNew);
