@@ -53,6 +53,8 @@ export class OrganizationAvailabilityEntity extends Entity {
 		if (!action) {
 			return;
 		}
-		return performSirenAction(this._token, action);
+		return performSirenAction(this._token, action).then(() => {
+			this.dispose();
+		});
 	}
 }
