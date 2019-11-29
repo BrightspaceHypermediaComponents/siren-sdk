@@ -143,8 +143,11 @@ const _performSirenAction = function(action, fields, tokenValue) {
 					linkRequests.push(window.D2L.Siren.EntityStore.fetch(link.href, token, true));
 				});
 			}
-			const entity = SirenParse(result.body);
+			const entity = result.body ? SirenParse(result.body) : null;
 			return Promise.all(linkRequests).then(function() {
+				if (!entity) {
+					return window.D2L.Siren.EntityStore.remove(url.href, token);
+				}
 				return window.D2L.Siren.EntityStore.update(url.href, token, entity);
 			});
 		});
