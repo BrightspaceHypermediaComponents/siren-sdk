@@ -106,7 +106,7 @@ export class ActivityUsageEntity extends Entity {
 	 * @param {string} dateValue Date string to set as the due date, or empty string to clear the due date
 	 */
 	async setDueDate(dateValue) {
-		await this._setDate(dateValue, Classes.dates.startDate, 'dueDate');
+		await this._setDate(dateValue, Classes.dates.dueDate, 'dueDate');
 	}
 
 	/**
