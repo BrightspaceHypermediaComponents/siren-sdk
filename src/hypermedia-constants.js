@@ -362,7 +362,8 @@ export const Actions = {
 		setCatalogImage: 'set-catalog-image',
 		deleteItem: 'delete-item',
 		createExplicitAvailabilityItem: 'create-explicit-availability-item',
-		createInheritedAvailabilityItem: 'create-inherited-availability-item'
+		createInheritedAvailabilityItem: 'create-inherited-availability-item',
+		createCurrentOrgUnitAvailabilityItem: 'create-current-orgunit-availability-item'
 	},
 	activities: {
 		create: 'create',
