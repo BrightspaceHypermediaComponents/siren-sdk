@@ -36,11 +36,68 @@ describe('OrganizationAvailabilitySetEntity', () => {
 	});
 
 	describe('Add Availability Action', () => {
-		it('can add availability', () => {
-			expect(entity.canAddAvailability()).to.be.true;
+		describe('Has Action', () => {
+			let sandbox, addCurrentOrgUnitSpy, addExplicitSpy, addInheritSpy;
+
+			beforeEach(() => {
+				sandbox = sinon.sandbox.create();
+				addCurrentOrgUnitSpy = sandbox.spy(entity, 'addCurrentOrgUnit');
+				addExplicitSpy = sandbox.spy(entity, 'addExplicit');
+				addInheritSpy = sandbox.spy(entity, 'addInherit');
+			});
+
+			afterEach(() => {
+				sandbox.restore();
+			});
+
+			it('can add availability', () => {
+				expect(entity.canAddAvailability()).to.be.true;
+			});
+
+			it('returns a promise when adding the current org unit', () => {
+				entity.addCurrentOrgUnit();
+				expect(addCurrentOrgUnitSpy.returnValues[0]).to.be.a('promise');
+			});
+
+			it('returns a promise when adding an explicit org unit', () => {
+				entity.addExplicit(1234);
+				expect(addExplicitSpy.returnValues[0]).to.be.a('promise');
+			});
+
+			it('returns a promise when adding an inherited org unit', () => {
+				entity.addInherit(1234, 20);
+				expect(addInheritSpy.returnValues[0]).to.be.a('promise');
+			});
 		});
-		it('cannot add availability', () => {
-			expect(cannotAddEntity.canAddAvailability()).to.be.false;
+
+		describe('Does not have Action', () => {
+			let sandbox, addCurrentOrgUnitSpy, addExplicitSpy, addInheritSpy;
+
+			beforeEach(() => {
+				sandbox = sinon.sandbox.create();
+				addCurrentOrgUnitSpy = sandbox.spy(cannotAddEntity, 'addCurrentOrgUnit');
+				addExplicitSpy = sandbox.spy(cannotAddEntity, 'addExplicit');
+				addInheritSpy = sandbox.spy(cannotAddEntity, 'addInherit');
+			});
+
+			afterEach(() => {
+				sandbox.restore();
+			});
+
+			it('returns false for canAddAvailability function', () => {
+				expect(cannotAddEntity.canAddAvailability()).to.be.false;
+			});
+
+			it('returns undefined if attempting to add availability', () => {
+				cannotAddEntity.addCurrentOrgUnit();
+				expect(addCurrentOrgUnitSpy.returnValues[0]).to.be.undefined;
+
+				cannotAddEntity.addExplicit(1234);
+				expect(addExplicitSpy.returnValues[0]).to.be.undefined;
+
+				cannotAddEntity.addInherit(1234, 50);
+				expect(addInheritSpy.returnValues[0]).to.be.undefined;
+			});
 		});
 	});
 });

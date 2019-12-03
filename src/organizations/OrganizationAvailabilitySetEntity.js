@@ -32,7 +32,8 @@ export class OrganizationAvailabilitySetEntity extends Entity {
 	canAddAvailability() {
 		return this._entity
 			&& this._entity.hasActionByName(Actions.organizations.createExplicitAvailabilityItem)
-			&& this._entity.hasActionByName(Actions.organizations.createInheritedAvailabilityItem);
+			&& this._entity.hasActionByName(Actions.organizations.createInheritedAvailabilityItem)
+			&& this._entity.hasActionByName(Actions.organizations.createCurrentOrgUnitAvailabilityItem);
 	}
 
 	onOrganizationChange(onChange) {
@@ -59,5 +60,13 @@ export class OrganizationAvailabilitySetEntity extends Entity {
 			fields.push({ name: 'descendantOrgUnitTypeId', value: descendantOrgUnitTypeId });
 		}
 		return performSirenAction(this._token, action, fields);
+	}
+
+	addCurrentOrgUnit() {
+		const action = this.canAddAvailability() && this.getActionByName(Actions.organizations.createCurrentOrgUnitAvailabilityItem);
+		if (!action) {
+			return;
+		}
+		return performSirenAction(this._token, action);
 	}
 }
