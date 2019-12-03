@@ -134,7 +134,7 @@ export class AssignmentEntity extends Entity {
 			return false;
 		}
 
-		return this._entity.hasSubEntityByRel(Rels.Assignments.turnitinDialogOpener)
+		return this._entity.hasSubEntityByRel(Rels.Assignments.turnitinDialogOpener);
 	}
 
 	/**
