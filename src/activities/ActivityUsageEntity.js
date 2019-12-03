@@ -60,6 +60,10 @@ export class ActivityUsageEntity extends Entity {
 	 */
 	canEditReleaseConditions() {
 
+		if (!this._entity) {
+			return false;
+		}
+
 		return this._entity.hasSubEntityByRel(Rels.Activities.releaseConditionsDialogOpener);
 	}
 

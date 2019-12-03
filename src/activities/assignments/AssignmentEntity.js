@@ -126,6 +126,27 @@ export class AssignmentEntity extends Entity {
 	}
 
 	/**
+	 * @returns {bool} Whether the turnitin dialog opener sub entity is present.
+	 */
+	canEditTurnitin() {
+
+		if (!this._entity) {
+			return false;
+		}
+
+		return this._entity.hasSubEntityByRel(Rels.Assignments.turnitinDialogOpener)
+	}
+
+	/**
+	 * @returns {string} Url of the legacy turnitin dialog.
+	 */
+	editTurnitinUrl() {
+
+		const entity = this._entity.getSubEntityByRel(Rels.Assignments.turnitinDialogOpener);
+		return entity ? entity.properties.url : undefined;
+	}
+
+	/**
 	 * @returns {object} Submission type of the assignment (including type value and type title)
 	 */
 	submissionType() {
