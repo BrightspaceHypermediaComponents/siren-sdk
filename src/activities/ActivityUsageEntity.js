@@ -56,6 +56,23 @@ export class ActivityUsageEntity extends Entity {
 	}
 
 	/**
+	 * @returns {bool} Whether the release conditions dialog opener sub entity is present.
+	 */
+	canEditReleaseConditions() {
+
+		return this._entity.hasSubEntityByRel(Rels.Activities.releaseConditionsDialogOpener);
+	}
+
+	/**
+	 * @returns {string} Url of the MVC release conditions dialog.
+	 */
+	editReleaseConditionsUrl() {
+
+		const entity = this._entity.getSubEntityByRel(Rels.Activities.releaseConditionsDialogOpener);
+		return entity ? entity.properties.url : undefined;
+	}
+
+	/**
 	 * @returns {string} URL to edit the activity usage, if present
 	 */
 	editHref() {
