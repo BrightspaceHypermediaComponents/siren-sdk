@@ -80,4 +80,60 @@ describe('OrganizationAvailabilityEntity', () => {
 			expect(cannotDeleteEntity.canDelete()).to.be.false;
 		});
 	});
+
+	describe('Delete Availability Action', () => {
+		describe('Has Action', () => {
+			let sandbox, deleteExplicitEntitySpy, deleteInheritEntitySpy, deleteInheritWithDescendantTypeEntitySpy;
+
+			beforeEach(() => {
+				sandbox = sinon.sandbox.create();
+				deleteExplicitEntitySpy = sandbox.spy(explicitEntity, 'delete');
+				deleteInheritEntitySpy = sandbox.spy(inheritEntity, 'delete');
+				deleteInheritWithDescendantTypeEntitySpy = sandbox.spy(inheritWithDescendantTypeEntity, 'delete');
+			});
+
+			afterEach(() => {
+				sandbox.restore();
+			});
+
+			it('can delete availability', () => {
+				expect(explicitEntity.canDelete()).to.be.true;
+				expect(inheritEntity.canDelete()).to.be.true;
+				expect(inheritWithDescendantTypeEntity.canDelete()).to.be.true;
+			});
+
+			it('returns a promise when calling delete()', () => {
+				explicitEntity.delete();
+				expect(deleteExplicitEntitySpy.returnValues[0]).to.be.a('promise');
+
+				inheritEntity.delete();
+				expect(deleteInheritEntitySpy.returnValues[0]).to.be.a('promise');
+
+				inheritWithDescendantTypeEntity.delete();
+				expect(deleteInheritWithDescendantTypeEntitySpy.returnValues[0]).to.be.a('promise');
+			});
+		});
+
+		describe('Does not have Action', () => {
+			let sandbox, deleteCannotDeleteEntitySpy;
+
+			beforeEach(() => {
+				sandbox = sinon.sandbox.create();
+				deleteCannotDeleteEntitySpy = sandbox.spy(cannotDeleteEntity, 'delete');
+			});
+
+			afterEach(() => {
+				sandbox.restore();
+			});
+
+			it('returns false for canDelete function', () => {
+				expect(cannotDeleteEntity.canDelete()).to.be.false;
+			});
+
+			it('returns undefined if attempting to delete availability', () => {
+				cannotDeleteEntity.delete();
+				expect(deleteCannotDeleteEntitySpy.returnValues[0]).to.be.undefined;
+			});
+		});
+	});
 });

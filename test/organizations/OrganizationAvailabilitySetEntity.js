@@ -1,6 +1,5 @@
 import { OrganizationAvailabilitySetEntity } from '../../src/organizations/OrganizationAvailabilitySetEntity.js';
 import { testData } from './data/OrganizationAvailabilitySetEntity.js';
-import * as SirenAction from '../../src/es6/SirenAction.js';
 
 describe('OrganizationAvailabilitySetEntity', () => {
 	let entity, cannotAddEntity;
@@ -37,71 +36,67 @@ describe('OrganizationAvailabilitySetEntity', () => {
 	});
 
 	describe('Add Availability Action', () => {
-		let sandbox;
-		let performSirenActionSpy;
-
-		beforeEach(() => {
-			sandbox = sinon.sandbox.create();
-			performSirenActionSpy = sandbox.spy(SirenAction, "performSirenAction");
-		});
-
-		afterEach(() => {
-			sandbox.restore();
-		});
-
 		describe('Has Action', () => {
+			let sandbox, addCurrentOrgUnitSpy, addExplicitSpy, addInheritSpy;
+
+			beforeEach(() => {
+				sandbox = sinon.sandbox.create();
+				addCurrentOrgUnitSpy = sandbox.spy(entity, 'addCurrentOrgUnit');
+				addExplicitSpy = sandbox.spy(entity, 'addExplicit');
+				addInheritSpy = sandbox.spy(entity, 'addInherit');
+			});
+
+			afterEach(() => {
+				sandbox.restore();
+			});
+
 			it('can add availability', () => {
 				expect(entity.canAddAvailability()).to.be.true;
 			});
 
-			it('can add current org unit availability', () => {
+			it('returns a promise when adding the current org unit', () => {
 				entity.addCurrentOrgUnit();
-				expect(performSirenActionSpy.calledOnce).to.be.true;
+				expect(addCurrentOrgUnitSpy.returnValues[0]).to.be.a('promise');
 			});
 
-			it('can add explicit org unit availability', () => {
-				let explicitOrgUnitId = 1234;
-
-				entity.addExplicit(explicitOrgUnitId);
-				expect(performSirenActionSpy.calledOnce).to.be.true;
-
-				const call = performSirenActionSpy.getCall(0);
-				expect(call.args.length).to.equal(3);
-				const fieldsArg = call.args[2];
-
-				const explicitOrgUnitIdField = fieldsArg.find(field => field.name === 'explicitOrgUnitId');
-				expect(explicitOrgUnitIdField.value).to.equal(explicitOrgUnitId);
+			it('returns a promise when adding an explicit org unit', () => {
+				entity.addExplicit(1234);
+				expect(addExplicitSpy.returnValues[0]).to.be.a('promise');
 			});
 
-			it('can add inherit org unit availability', () => {
-				let ancestorOrgUnitId = 1234;
-				let descendantOrgUnitTypeId = 20;
-
-				entity.addInherit(ancestorOrgUnitId, descendantOrgUnitTypeId);
-				expect(performSirenActionSpy.calledOnce).to.be.true;
-
-				const call = performSirenActionSpy.getCall(0);
-				expect(call.args.length).to.equal(3);
-				const fieldsArg = call.args[2];
-
-				const ancestorOrgUnitIdField = fieldsArg.find(field => field.name === 'ancestorOrgUnitId');
-				expect(ancestorOrgUnitIdField.value).to.equal(ancestorOrgUnitId);
-
-				const descendantOrgUnitTypeIdField = fieldsArg.find(field => field.name === 'descendantOrgUnitTypeId');
-				expect(descendantOrgUnitTypeIdField.value).to.equal(descendantOrgUnitTypeId);
+			it('returns a promise when adding an inherited org unit', () => {
+				entity.addInherit(1234, 20);
+				expect(addInheritSpy.returnValues[0]).to.be.a('promise');
 			});
 		});
 
 		describe('Does not have Action', () => {
+			let sandbox, addCurrentOrgUnitSpy, addExplicitSpy, addInheritSpy;
+
+			beforeEach(() => {
+				sandbox = sinon.sandbox.create();
+				addCurrentOrgUnitSpy = sandbox.spy(cannotAddEntity, 'addCurrentOrgUnit');
+				addExplicitSpy = sandbox.spy(cannotAddEntity, 'addExplicit');
+				addInheritSpy = sandbox.spy(cannotAddEntity, 'addInherit');
+			});
+
+			afterEach(() => {
+				sandbox.restore();
+			});
+
 			it('returns false for canAddAvailability function', () => {
 				expect(cannotAddEntity.canAddAvailability()).to.be.false;
 			});
 
-			it('will not call performSirenAction', () => {
+			it('returns undefined if attempting to add availability', () => {
 				cannotAddEntity.addCurrentOrgUnit();
+				expect(addCurrentOrgUnitSpy.returnValues[0]).to.be.undefined;
+
 				cannotAddEntity.addExplicit(1234);
+				expect(addExplicitSpy.returnValues[0]).to.be.undefined;
+
 				cannotAddEntity.addInherit(1234, 50);
-				expect(performSirenActionSpy.called).to.be.false;
+				expect(addInheritSpy.returnValues[0]).to.be.undefined;
 			});
 		});
 	});
