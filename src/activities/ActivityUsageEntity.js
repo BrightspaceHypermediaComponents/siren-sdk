@@ -177,10 +177,21 @@ export class ActivityUsageEntity extends Entity {
 			&& this._entity.getSubEntityByClass(dateClass);
 	}
 
-	_canEditDate(dateClass) {
-		const date = this._getDateSubEntity(dateClass);
-		return (date && date.hasActionByName(Actions.activities.update))
-			|| this._entity.hasActionByName(Actions.activities.startAddNew);
+	async _canEditDate(dateClass) {
+
+		const dateEntity = this._getDateSubEntity(dateClass);
+		if (dateEntity && dateEntity.hasActionByName(Actions.activities.update)) {
+			return true;
+		}
+
+		const addNewAction = this._entity.getActionByName(Actions.activities.startAddNew);
+		const addNewEntity = await performSirenAction(this._token, addNewAction);
+
+		if (addNewEntity && addNewEntity.hasSubEntityByClass(dateClass)) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	async _setDate(dateValue, dateClass, dateField) {
