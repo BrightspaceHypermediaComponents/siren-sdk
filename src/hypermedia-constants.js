@@ -69,6 +69,7 @@ export const Rels = {
 	// Assignments
 	Assignments: {
 		instructions: 'https://assignments.api.brightspace.com/rels/instructions',
+		turnitinDialogOpener: 'https://assignments.api.brightspace.com/rels/turnitin-dialog-opener',
 		attachments: 'https://assignments.api.brightspace.com/rels/attachments',
 		annotations: 'https://assignments.api.brightspace.com/rels/annotations'
 	},
