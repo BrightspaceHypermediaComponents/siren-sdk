@@ -95,9 +95,15 @@ export class Entity {
 				this._subEntities.set(source, entity);
 				onChange(entity, error);
 				if (error) {
-					reject();
+					reject && reject();
+					resolve = null;
+					reject = null;
 				} else {
-					Promise.all(entity._subEntitiesLoadStatus).then(resolve);
+					Promise.all(entity._subEntitiesLoadStatus).then(() => {
+						resolve && resolve();
+						resolve = null;
+						reject = null;
+					});
 				}
 			});
 		}));
@@ -126,7 +132,10 @@ export class Entity {
 			entityFactory(entityType, href, this._token, (entity) => {
 				this._subEntities.set(href, entity);
 				onChange(entity);
-				Promise.all(entity._subEntitiesLoadStatus).then(resolve);
+				Promise.all(entity._subEntitiesLoadStatus).then(() => {
+					resolve && resolve();
+					resolve = null;
+				});
 			}, entity);
 		}));
 	}
