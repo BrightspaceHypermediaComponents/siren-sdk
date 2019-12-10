@@ -24,6 +24,7 @@ class SdkSirenOrganizationInfoLit extends EntityMixinLit(LitElement) {
 	constructor() {
 		super();
 		this._setEntityType(OrganizationEntity);
+		this._semesterNameDirectLoaded = null;
 	}
 
 	render() {
@@ -41,6 +42,10 @@ class SdkSirenOrganizationInfoLit extends EntityMixinLit(LitElement) {
 		this._semesterHref = organization._semesterHref();
 		organization.onSemesterChange((semester) => {
 			this._semesterNameDirect = semester.name();
+		});
+
+		organization.subEntitiesLoaded().then(() => {
+			this._semesterNameDirectLoaded = this._semesterNameDirect;
 		});
 	}
 }
