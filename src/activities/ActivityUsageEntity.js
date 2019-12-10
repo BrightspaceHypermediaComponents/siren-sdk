@@ -234,7 +234,11 @@ export class ActivityUsageEntity extends Entity {
 	}
 
 	async save(activity) {
-		await this.setDueDate(activity.dueDate);
-		await this.setDraftStatus(activity.isDraft);
+		if (activity.dueDate !== this.dueDate()) {
+			await this.setDueDate(activity.dueDate);
+		}
+		if (activity.isDraft !== this.isDraft()) {
+			await this.setDraftStatus(activity.isDraft);
+		}
 	}
 }

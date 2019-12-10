@@ -9,17 +9,28 @@ import { performSirenAction } from '../../es6/SirenAction';
  */
 export class AssignmentEntity extends Entity {
 
-	async save(name, instructions) {
+	async save(assignment) {
+		if (!this._isDirty(assignment)) {
+			return;
+		}
+
+		// TODO - Just hacking the name action here - for optimal update maybe we should bring the existing
+		// PATCH/PUT action that allows for updating multiple fields up to date
 		const action = this.canEditName() && this._entity.getActionByName(Actions.assignments.updateName);
 		if (!action) {
 			return;
 		}
 
 		const fields = [
-			{ name: 'name', value: name },
-			{ name: 'instructions', value: instructions }
+			{ name: 'name', value: assignment.name },
+			{ name: 'instructions', value: assignment.instructions }
 		];
 		await performSirenAction(this._token, action, fields);
+	}
+
+	_isDirty(assignment) {
+		return assignment.name !== this.name() ||
+			assignment.instructions !== this.instructionsEditorHtml();
 	}
 
 	/**
