@@ -8,6 +8,20 @@ import { performSirenAction } from '../../es6/SirenAction';
  * AssignmentEntity class representation of a d2l Assignment.
  */
 export class AssignmentEntity extends Entity {
+
+	async save(name, instructions) {
+		const action = this.canEditName() && this._entity.getActionByName(Actions.assignments.updateName);
+		if (!action) {
+			return;
+		}
+
+		const fields = [
+			{ name: 'name', value: name },
+			{ name: 'instructions', value: instructions }
+		];
+		await performSirenAction(this._token, action, fields);
+	}
+
 	/**
 	 * @returns {string} Name of the assignment
 	 */

@@ -232,4 +232,9 @@ export class ActivityUsageEntity extends Entity {
 	isPublished() {
 		return this._entity && this._entity.hasClass(Classes.activities.draftPublishedEntity) && this._entity.hasClass(Classes.activities.published);
 	}
+
+	async save(activity) {
+		await this.setDueDate(activity.dueDate);
+		await this.setDraftStatus(activity.isDraft);
+	}
 }
