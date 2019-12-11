@@ -19,6 +19,7 @@ export class Entity {
 		this._subEntities = new Map();
 		this._token = token;
 		this._listener = listener;
+		this._subEntitiesLoadStatus = [];
 	}
 	/**
 	 * Checks to see if the entity has className attached.
@@ -36,6 +37,9 @@ export class Entity {
 		}
 
 		return this._entity.getLinkByRel('self').href;
+	}
+	subEntitiesLoaded() {
+		return Promise.all(this._subEntitiesLoadStatus);
 	}
 	/**
 	 * Cleans up this entity by deleting the callbacks listeners stored in the entity store.
@@ -63,6 +67,9 @@ export class Entity {
 	 * @param {*} onChange callback function that accepts an {entityType} to be called when subentity changes.
 	 */
 	_subEntity(entityType, href, onChange) {
+		if (!href) {
+			return;
+		}
 		// Clean up if that href has already been added.
 		if (typeof href === 'string') {
 			this._subEntityByHref(entityType, href, onChange);
@@ -82,10 +89,24 @@ export class Entity {
 		if (this._subEntities.has(source)) {
 			dispose(this._subEntities.get(source));
 		}
-		entityFactory(entityType, source, this._token, (entity) => {
-			this._subEntities.set(source, entity);
-			onChange(entity);
-		});
+
+		this._subEntitiesLoadStatus.push(new Promise((resolve, reject) => {
+			entityFactory(entityType, source, this._token, (entity, error) => {
+				this._subEntities.set(source, entity);
+				onChange(entity, error);
+				if (error) {
+					reject && reject();
+					resolve = null;
+					reject = null;
+				} else {
+					Promise.all(entity._subEntitiesLoadStatus).then(() => {
+						resolve && resolve();
+						resolve = null;
+						reject = null;
+					});
+				}
+			});
+		}));
 	}
 
 	/**
@@ -107,9 +128,15 @@ export class Entity {
 		if (this._subEntities.has(href)) {
 			dispose(this._subEntities.get(href));
 		}
-		entityFactory(entityType, href, this._token, (entity) => {
-			this._subEntities.set(href, entity);
-			onChange(entity);
-		}, entity);
+		this._subEntitiesLoadStatus.push(new Promise((resolve) => {
+			entityFactory(entityType, href, this._token, (entity) => {
+				this._subEntities.set(href, entity);
+				onChange(entity);
+				Promise.all(entity._subEntitiesLoadStatus).then(() => {
+					resolve && resolve();
+					resolve = null;
+				});
+			}, entity);
+		}));
 	}
 }

@@ -72,7 +72,7 @@ describe('d2l-organization-name', () => {
 	afterEach(() => {
 		sandbox.restore();
 	});
-	[ 'lit' ].forEach(mixinType => {
+	[ 'lit', 'polymer' ].forEach(mixinType => {
 		describe(`Testing Swap ${mixinType}`, () => {
 			let spy, spy2;
 			beforeEach(done => {
@@ -101,6 +101,7 @@ describe('d2l-organization-name', () => {
 					expect(code.innerHTML.replace(/<!---->/g, '')).to.be.equal('SCI100');
 					expect(semesterNameDirect.innerHTML.replace(/<!---->/g, '')).to.be.equal('Semester Name');
 					expect(semesterName.innerHTML.replace(/<!---->/g, '')).to.be.contains('Semester Name');
+					expect(component._semesterNameDirectLoaded).to.be.equal('Semester Name');
 					done();
 				});
 

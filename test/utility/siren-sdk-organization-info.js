@@ -53,6 +53,10 @@ class SdkSirenOrganizationInfo extends EntityMixin(PolymerElement) {
 		organization.onSemesterChange((semester) => {
 			this._semesterNameDirect = semester.name();
 		});
+
+		organization.subEntitiesLoaded().then(() => {
+			this._semesterNameDirectLoaded = this._semesterNameDirect;
+		});
 	}
 }
 
