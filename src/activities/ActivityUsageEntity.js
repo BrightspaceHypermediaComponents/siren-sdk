@@ -56,6 +56,27 @@ export class ActivityUsageEntity extends Entity {
 	}
 
 	/**
+	 * @returns {bool} Whether the release conditions dialog opener sub entity is present.
+	 */
+	canEditReleaseConditions() {
+
+		if (!this._entity) {
+			return false;
+		}
+
+		return this._entity.hasSubEntityByRel(Rels.Activities.releaseConditionsDialogOpener);
+	}
+
+	/**
+	 * @returns {string} Url of the MVC release conditions dialog.
+	 */
+	editReleaseConditionsUrl() {
+
+		const entity = this._entity.getSubEntityByRel(Rels.Activities.releaseConditionsDialogOpener);
+		return entity ? entity.properties.url : undefined;
+	}
+
+	/**
 	 * @returns {string} URL to edit the activity usage, if present
 	 */
 	editHref() {
@@ -106,7 +127,7 @@ export class ActivityUsageEntity extends Entity {
 	 * @param {string} dateValue Date string to set as the due date, or empty string to clear the due date
 	 */
 	async setDueDate(dateValue) {
-		await this._setDate(dateValue, Classes.dates.startDate, 'dueDate');
+		await this._setDate(dateValue, Classes.dates.dueDate, 'dueDate');
 	}
 
 	/**
@@ -160,10 +181,21 @@ export class ActivityUsageEntity extends Entity {
 			&& this._entity.getSubEntityByClass(dateClass);
 	}
 
-	_canEditDate(dateClass) {
-		const date = this._getDateSubEntity(dateClass);
-		return (date && date.hasActionByName(Actions.activities.update))
-			|| this._entity.hasActionByName(Actions.activities.startAddNew);
+	async _canEditDate(dateClass) {
+
+		const dateEntity = this._getDateSubEntity(dateClass);
+		if (dateEntity && dateEntity.hasActionByName(Actions.activities.update)) {
+			return true;
+		}
+
+		const addNewAction = this._entity.getActionByName(Actions.activities.startAddNew);
+		const addNewEntity = await performSirenAction(this._token, addNewAction);
+
+		if (addNewEntity && addNewEntity.hasSubEntityByClass(dateClass)) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	async _setDate(dateValue, dateClass, dateField) {

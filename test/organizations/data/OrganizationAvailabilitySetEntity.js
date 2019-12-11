@@ -81,6 +81,13 @@ export const testData = {
 						'name': 'descendantOrgUnitTypeId'
 					}
 				]
+			},
+			{
+				'type': 'application/x-www-form-urlencoded',
+				'title': 'Create Current Org Unit Availability Item',
+				'href': 'https://1b0a911c-2d9e-45e1-8091-5cfb7de38a95.organizations.api.proddev.d2l/6606/availability-set/NjYwNl8xMDAwMDA1XzI1NDAwMF81',
+				'name': 'create-current-orgunit-availability-item',
+				'method': 'POST'
 			}
 		]
 	},

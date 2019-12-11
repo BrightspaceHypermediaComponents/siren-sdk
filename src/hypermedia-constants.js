@@ -53,6 +53,7 @@ export const Rels = {
 		userActivityUsage: 'https://activities.api.brightspace.com/rels/user-activity-usage',
 		myUnassessedActivities: 'https://activities.api.brightspace.com/rels/my-unassessed-activities',
 		overdue: 'https://activities.api.brightspace.com/rels/overdue',
+		releaseConditionsDialogOpener: 'https://activities.api.brightspace.com/rels/release-conditions-dialog-opener',
 		nextPeriod: 'https://activities.api.brightspace.com/rels/next-period',
 		nextWeek: 'https://activities.api.brightspace.com/rels/next-week',
 		previousPeriod: 'https://activities.api.brightspace.com/rels/previous-period',
@@ -68,6 +69,7 @@ export const Rels = {
 	// Assignments
 	Assignments: {
 		instructions: 'https://assignments.api.brightspace.com/rels/instructions',
+		turnitinDialogOpener: 'https://assignments.api.brightspace.com/rels/turnitin-dialog-opener',
 		attachments: 'https://assignments.api.brightspace.com/rels/attachments',
 		annotations: 'https://assignments.api.brightspace.com/rels/annotations'
 	},
@@ -362,7 +364,8 @@ export const Actions = {
 		setCatalogImage: 'set-catalog-image',
 		deleteItem: 'delete-item',
 		createExplicitAvailabilityItem: 'create-explicit-availability-item',
-		createInheritedAvailabilityItem: 'create-inherited-availability-item'
+		createInheritedAvailabilityItem: 'create-inherited-availability-item',
+		createCurrentOrgUnitAvailabilityItem: 'create-current-orgunit-availability-item'
 	},
 	activities: {
 		create: 'create',
