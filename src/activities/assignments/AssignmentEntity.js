@@ -10,9 +10,17 @@ import { performSirenAction } from '../../es6/SirenAction';
 export class AssignmentEntity extends Entity {
 
 	async save(assignment) {
-		if (!this._isDirty(assignment)) {
-			return;
+
+		if (!this._isDetailsDirty(assignment)) {
+			await this.saveDetails(assignment);
 		}
+
+		if (assignment.annotationToolsAvalable !== this.getAvailableAnnotationTools()) {
+			this.setAnnotationToolsAvailability(assignment.annotationToolsAvailable);
+		}
+	}
+
+	async saveDetails(assignment) {
 
 		// TODO - Just hacking the name action here - for optimal update maybe we should bring the existing
 		// PATCH/PUT action that allows for updating multiple fields up to date
@@ -23,14 +31,18 @@ export class AssignmentEntity extends Entity {
 
 		const fields = [
 			{ name: 'name', value: assignment.name },
-			{ name: 'instructions', value: assignment.instructions }
+			{ name: 'instructions', value: assignment.instructions },
+			{ name: 'submissionType', value: Number(assignment.submissionType) },
+			{ name: 'completionType', value: Number(assignment.completionType) },
 		];
 		await performSirenAction(this._token, action, fields);
 	}
 
-	_isDirty(assignment) {
+	_isDetailsDirty(assignment) {
 		return assignment.name !== this.name() ||
-			assignment.instructions !== this.instructionsEditorHtml();
+			assignment.instructions !== this.instructionsEditorHtml() ||
+			Number(assignment.submissionType) !== this.submissionType() ||
+			Number(assignment.completionTpe) !== this.completionType();
 	}
 
 	/**
@@ -231,6 +243,16 @@ export class AssignmentEntity extends Entity {
 	 * @returns {Array} Set of completion type options for this assignment
 	 */
 	completionTypeOptions() {
+		return this.validCompletionTypeOptions(this.submissionType().value);
+	}
+
+	/**
+	 * @returns {Array} Set of completion type options for the submissionType
+	 */
+	validCompletionTypeOptions(submissionType) {
+
+		submissionType = Number(submissionType);
+
 		if (!this.canEditCompletionType()) {
 			return [];
 		}
@@ -240,16 +262,34 @@ export class AssignmentEntity extends Entity {
 			return [];
 		}
 
-		const validCompletionTypes = this.submissionTypeOptions()
-			.find(option => option.value === this.submissionType().value)
-			.completionTypes;
-		if (validCompletionTypes === null) {
-			return [];
-		}
+		const validCompletionTypes = this.validCompletionTypes(submissionType)
 
 		return action.getFieldByName('completionType').value.filter(option => {
 			return validCompletionTypes.indexOf(option.value) > -1;
 		});
+	}
+
+	validCompletionTypes(submissionType) {
+		submissionType = Number(submissionType);
+		const validCompletionTypes = this.submissionTypeOptions()
+			.find(option => option.value === submissionType)
+			.completionTypes;
+		if (validCompletionTypes === null) {
+			return [];
+		}
+		return validCompletionTypes;
+	}
+
+	ensureValidCompletionType(submissionType, completionType) {
+		submissionType = Number(submissionType);
+		completionType = Number(completionType);
+
+		const validCompletionTypes = this.validCompletionTypes(submissionType);
+
+		if (validCompletionTypes.indexOf(completionType) === -1) {
+			return validCompletionTypes.length > 0 ? validCompletionTypes[0] : '';
+		}
+		return completionType;
 	}
 
 	/**
