@@ -9,7 +9,8 @@ const rels = {
 };
 
 const actions = {
-	searchOrganizationCollection: 'search-course-collection'
+	searchOrganizationCollection: 'search-course-collection',
+	createOrgUnit: 'create-org-unit'
 };
 
 /**
@@ -118,5 +119,39 @@ export class OrganizationCollectionEntity extends Entity {
 		);
 		const link = entity && entity.getLinkByRel('self');
 		return link && link.href;
+	}
+
+	async createOrgUnit(name, code, type) {
+		const createOrgUnitAction = this._entity.getActionByName(
+			actions.createOrgUnit
+		);
+		const defaultFields = this._getDefaultFields(createOrgUnitAction, ['parentId', 'draft']);
+		const fields = [
+			{ name: 'orgUnitTypeId', value: type },
+			{ name: 'name', value: name },
+			{ name: 'code', value: code },
+			...defaultFields
+		];
+		const entity = await performSirenAction(
+			this._token,
+			createOrgUnitAction,
+			fields
+		);
+		return new OrganizationEntity(entity, this._token);
+	}
+
+	canCreateOrgUnit() {
+		return this._entity.hasActionByName(actions.createOrgUnit);
+	}
+
+	_getDefaultFields(action, fieldNames) {
+		const defaultFields = [];
+		fieldNames.forEach(name => {
+			if (action.hasFieldByName(name)) {
+				const field = action.getFieldByName(name);
+				field.value && defaultFields.push({ name, value: field.value });
+			}
+		});
+		return defaultFields;
 	}
 }
