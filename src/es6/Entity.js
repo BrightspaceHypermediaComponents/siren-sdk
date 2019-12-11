@@ -38,8 +38,8 @@ export class Entity {
 
 		return this._entity.getLinkByRel('self').href;
 	}
-	async subEntitiesLoaded() {
-		await Promise.all(this._subEntitiesLoadStatus);
+	subEntitiesLoaded() {
+		return Promise.all(this._subEntitiesLoadStatus);
 	}
 	/**
 	 * Cleans up this entity by deleting the callbacks listeners stored in the entity store.
