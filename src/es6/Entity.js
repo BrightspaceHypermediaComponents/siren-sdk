@@ -1,5 +1,5 @@
 'use strict';
-import { entityFactory, dispose } from './EntityFactory.js';
+import { entityFactory, dispose, updateEntity } from './EntityFactory.js';
 
 /**
  * Abstract Entity class to help create entity classes.
@@ -40,6 +40,9 @@ export class Entity {
 	}
 	subEntitiesLoaded() {
 		return Promise.all(this._subEntitiesLoadStatus);
+	}
+	update(entity) {
+		updateEntity(this.self(), this._token, entity);
 	}
 	/**
 	 * Cleans up this entity by deleting the callbacks listeners stored in the entity store.
