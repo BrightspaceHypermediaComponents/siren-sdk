@@ -36,9 +36,7 @@ export class ActivityUsageCollectionEntity extends Entity {
 		this._entity.entities.forEach((entity) => {
 			if (href === entity.getLinkByRel('self').href) {
 				const action = entity.getActionByName(actions.removeActivity);
-				performSirenAction(this._token, action).then((response) => {
-					this.update(response);
-				});
+				performSirenAction(this._token, action);
 			} else {
 				newEntityList.push(entity);
 			}
