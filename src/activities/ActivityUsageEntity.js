@@ -269,6 +269,12 @@ export class ActivityUsageEntity extends Entity {
 		if (activity.dueDate !== this.dueDate()) {
 			await this.setDueDate(activity.dueDate);
 		}
+		if (activity.startDate !== this.startDate()) {
+			await this.setStartDate(activity.startDate);
+		}
+		if (activity.endDate !== this.endDate()) {
+			await this.setEndDate(activity.endDate);
+		}
 		if (activity.isDraft !== this.isDraft()) {
 			await this.setDraftStatus(activity.isDraft);
 		}

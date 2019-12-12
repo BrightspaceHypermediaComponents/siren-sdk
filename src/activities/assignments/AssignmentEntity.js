@@ -11,11 +11,11 @@ export class AssignmentEntity extends Entity {
 
 	async save(assignment) {
 
-		if (!this._isDetailsDirty(assignment)) {
+		if (this._isDetailsDirty(assignment)) {
 			await this.saveDetails(assignment);
 		}
 
-		if (assignment.annotationToolsAvalable !== this.getAvailableAnnotationTools()) {
+		if (assignment.annotationToolsAvailable !== this.getAvailableAnnotationTools()) {
 			this.setAnnotationToolsAvailability(assignment.annotationToolsAvailable);
 		}
 	}
@@ -41,8 +41,8 @@ export class AssignmentEntity extends Entity {
 	_isDetailsDirty(assignment) {
 		return assignment.name !== this.name() ||
 			assignment.instructions !== this.instructionsEditorHtml() ||
-			Number(assignment.submissionType) !== this.submissionType() ||
-			Number(assignment.completionTpe) !== this.completionType();
+			Number(assignment.submissionType) !== this.submissionType().value ||
+			Number(assignment.completionType) !== this.completionType().value;
 	}
 
 	/**
