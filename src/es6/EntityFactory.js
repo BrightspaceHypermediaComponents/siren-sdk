@@ -23,8 +23,12 @@ export function entityFactory(entityType, href, token, onChange, entity) {
 	entityListener.add(href, token, onChangeWrapped, entity);
 }
 
-export function updateEntity(href, token) {
-	window.D2L.Siren.EntityStore.fetch(href, token, true);
+export function updateEntity(href, token, entity) {
+	if (entity) {
+		window.D2L.Siren.EntityStore.update(href, token, entity);
+	} else {
+		window.D2L.Siren.EntityStore.fetch(href, token, true);
+	}
 }
 
 /**

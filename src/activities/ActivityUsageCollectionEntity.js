@@ -3,6 +3,11 @@
 import { Entity } from '../es6/Entity.js';
 import { Rels } from '../hypermedia-constants';
 import { ActivityUsageEntity } from './ActivityUsageEntity.js';
+import { performSirenAction } from '../es6/SirenAction.js';
+
+const actions = {
+	removeActivity: 'remove-activity'
+};
 
 /**
  * ActivityUsageCollectionEntity class representation of a d2l activity usage collection.
@@ -24,6 +29,22 @@ export class ActivityUsageCollectionEntity extends Entity {
 			};
 			entity && this._subEntity(CollectedItemEntity, entity, onChangeWithIndex);
 		});
+	}
+
+	removeItem(href) {
+		const newEntityList = [];
+		this._entity.entities.forEach((entity) => {
+			if (href === entity.getLinkByRel('self').href) {
+				const action = entity.getActionByName(actions.removeActivity);
+				performSirenAction(this._token, action).then((response) => {
+					this.update(response);
+				});
+			} else {
+				newEntityList.push(entity);
+			}
+		});
+		this._entity.entities = newEntityList;
+		this.update(this._entity);
 	}
 }
 
