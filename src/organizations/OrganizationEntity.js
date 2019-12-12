@@ -6,6 +6,7 @@ import { AlertsEntity } from './AlertsEntity.js';
 import { Rels, Classes, Actions } from '../hypermedia-constants';
 import { NotificationCollectionEntity } from '../notifications/NotificationCollectionEntity';
 import { SequenceEntity } from '../sequences/SequenceEntity.js';
+import { ActivityUsageEntity } from '../activities/ActivityUsageEntity.js';
 
 export const classes = {
 	active: 'active',
@@ -179,5 +180,19 @@ export class OrganizationEntity extends Entity {
 		}
 
 		return this._entity.getLinkByRel(Rels.Notifications.organizationNotifications).href;
+	}
+
+	onActivityUsageChange(onChange) {
+		const activityUsageHref = this._activityUsageHref();
+		activityUsageHref && this._subEntity(ActivityUsageEntity, activityUsageHref, onChange);
+	}
+
+	_activityUsageHref() {
+		const rel = Rels.Activities.activityUsage;
+		if (!this._entity || !this._entity.hasLinkByRel(rel)) {
+			return;
+		}
+
+		return this._entity.getLinkByRel(rel).href;
 	}
 }
