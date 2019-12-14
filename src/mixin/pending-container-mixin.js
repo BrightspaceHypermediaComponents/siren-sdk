@@ -32,6 +32,9 @@ export const PendingContainerMixin = superclass => class extends superclass {
 		}
 		this._hasPendingChildren = true;
 		this.__pendingCount++;
+
+		e.stopPropagation();
+
 		try {
 			await promise;
 		} catch (e) {
