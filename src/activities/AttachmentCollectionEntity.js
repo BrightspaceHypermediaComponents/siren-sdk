@@ -20,7 +20,8 @@ export class AttachmentCollectionEntity extends Entity {
 	canAddAttachments() {
 		return this.canAddLinkAttachment()
 			|| this.canAddGoogleDriveLinkAttachment()
-			|| this.canAddOneDriveLinkAttachment();
+			|| this.canAddOneDriveLinkAttachment()
+			|| this.canAddFileAttachment();
 	}
 
 	/**
@@ -99,5 +100,12 @@ export class AttachmentCollectionEntity extends Entity {
 			name: 'href', value: href
 		}];
 		await performSirenAction(this._token, action, fields);
+	}
+
+	/**
+	 * @returns {bool} Returns true if the add-file action is present on the entity
+	 */
+	canAddFileAttachment() {
+		return this._entity.hasActionByName('add-file');
 	}
 }

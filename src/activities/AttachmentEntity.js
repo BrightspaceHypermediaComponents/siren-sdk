@@ -13,10 +13,18 @@ export class AttachmentEntity extends Entity {
 	}
 
 	/**
-	 * @returns {string} Attachment's location (for link attachments)
+	 * @returns {string} Attachment's URL location (for link attachments) or file location (for file attachments)
 	 */
 	href() {
-		return this._entity && this._entity.properties && this._entity.properties.href;
+		if (!this._entity) {
+			return;
+		}
+
+		if (this._entity.hasLinkByRel('alternate')) {
+			return this._entity.getLinkByRel('alternate').href;
+		}
+
+		return this._entity.properties && this._entity.properties.href;
 	}
 
 	/**
