@@ -18,6 +18,17 @@ export class EnrollmentCollectionEntity extends Entity {
 		return enrollmentEntities.map(e => e.href).filter(href => href);
 	}
 
+	onEnrollmentsChange(onChange) {
+		const enrollments = this.enrollmentsHref();
+
+		enrollments.forEach((entity, index) => {
+			const onChangeWithIndex = collectedEnrollment => {
+				onChange(collectedEnrollment, index);
+			};
+			entity && this._subEntity(EnrollmentEntity, entity, onChangeWithIndex);
+		});
+	}
+
 	searchMyPinnedEnrollmentsAction() {
 		return this.getActionByName(Actions.enrollments.searchMyPinnedEnrollments);
 	}
