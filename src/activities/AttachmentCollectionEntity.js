@@ -110,18 +110,20 @@ export class AttachmentCollectionEntity extends Entity {
 	}
 
 	/**
-	 * Attaches an existing temp file to the attachment collection
-	 * @param {string} tempFileId ID of an existing temp file e.g. "abcd1234.png;filename.png"
+	 * Attaches an existing file to the attachment collection
+	 * @param {string} fileSystemType Type of file system the existing file is stored on (see enum FileSystemTypes)
+	 * @param {string} fileId ID of an existing file e.g. "abcd1234.png;filename.png" or "/shared/filename.png"
 	 */
-	async addTempFileAttachment(tempFileId) {
+	async addFileAttachment(fileSystemType, fileId) {
 		if (!this.canAddFileAttachment()) {
 			return;
 		}
 
 		const action = this._entity.getActionByName('add-file');
-		const fields = [{
-			name: 'tempFileId', value: tempFileId
-		}];
+		const fields = [
+			{ name: 'fileSystemType', value: fileSystemType },
+			{ name: 'fileId', value: fileId }
+		];
 		await performSirenAction(this._token, action, fields);
 	}
 }
