@@ -60,7 +60,8 @@ export const Rels = {
 		previousWeek: 'https://activities.api.brightspace.com/rels/previous-week',
 		feedback: 'https://activities.api.brightspace.com/rels/feedback',
 		activityGrade: 'https://activities.api.brightspace.com/rels/activity-grade',
-		activityHomepage: 'https://activities.api.brightspace.com/rels/activity-homepage'
+		activityHomepage: 'https://activities.api.brightspace.com/rels/activity-homepage',
+		scoreOutOf: 'https://activities.api.brightspace.com/rels/score-out-of'
 	},
 	// Assessments
 	Assessments: {
@@ -181,6 +182,7 @@ export const Classes = {
 		exempt: 'exempt',
 		feedbackDate: 'feedback-date',
 		published: 'published',
+		scoreOutOf: 'score-out-of',
 		userAssignmentActivity: 'user-assignment-activity',
 		userQuizActivity: 'user-quiz-activity',
 		userQuizAttemptActivity: 'user-quiz-attempt-activity',
@@ -372,7 +374,10 @@ export const Actions = {
 		selectCustomDateRange: 'select-custom-date-range',
 		startAddNew: 'start-add-new',
 		update: 'update',
-		updateDraft: 'update-draft'
+		updateDraft: 'update-draft',
+		scoreOutOf: {
+			update: 'update'
+		}
 	},
 	assignments: {
 		assign: 'assign',

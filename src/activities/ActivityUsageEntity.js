@@ -264,4 +264,126 @@ export class ActivityUsageEntity extends Entity {
 	isPublished() {
 		return this._entity && this._entity.hasClass(Classes.activities.draftPublishedEntity) && this._entity.hasClass(Classes.activities.published);
 	}
+
+	/**
+	 * @returns {string} Score out of value of the activity usage
+	 */
+	scoreOutOf() {
+		if (this.canEditScoreOutOf()) {
+			const action = this._getScoreOutOfAction();
+			if (action.hasFieldByName('scoreOutOf')) {
+				return action.getFieldByName('scoreOutOf').value;
+			}
+		}
+		return this._getScoreOutOfEntity().properties.scoreOutOf;
+	}
+
+	/**
+	 * @returns {string} True if the activity usage is associated with a grade item, False otherwise
+	 */
+	inGrades() {
+		if (this.canEditScoreOutOf()) {
+			const action = this._getScoreOutOfAction();
+			if (action.hasFieldByName('inGrades')) {
+				return action.getFieldByName('inGrades').value;
+			}
+		}
+		return this._getScoreOutOfEntity().properties.inGrades;
+	}
+
+	/**
+	 * @returns {string} Grade type of the grade item associated with the activity usage
+	 */
+	gradeType() {
+		if (this.canEditScoreOutOf()) {
+			const action = this._getScoreOutOfAction();
+			if (action.hasFieldByName('gradeType')) {
+				const gradeTypes = action.getFieldByName('gradeType').value.filter(x => x.selected);
+				if (gradeTypes.length > 0) {
+					return gradeTypes[0].title;
+				}
+			}
+		}
+		return this._getScoreOutOfEntity().properties.gradeType || 'Points';
+	}
+
+	/**
+	 * Updates the score out of value of the activity usage entity
+	 * @param {number} score The numerical score value to bet set for the activity usage entity
+	 * @param {boolean} addToGrades True if a new grade item should be associated with this activity usage
+	 */
+	async setScoreOutOf(score, addToGrades) {
+		if (!this.canEditScoreOutOf()) {
+			return;
+		}
+
+		let fields = [{ name: 'scoreOutOf', value: score }];
+		if (addToGrades) {
+			fields.push({ name: 'inGrades', value: true });
+			fields.push({ name: 'gradeType', value: 'Numeric' });
+		}
+		await performSirenAction(this._token, this._getScoreOutOfAction(), fields);
+	}
+
+	/**
+	 * Removes the grade association with the activity usage entity
+	 */
+	async removeFromGrades() {
+		if (!this.canEditScoreOutOf()) {
+			return;
+		}
+
+		const fields = [{ name: 'inGrades', value: false }];
+		await performSirenAction(this._token, this._getScoreOutOfAction(), fields);
+	}
+
+	/**
+	 * Creates a new grade item and adds it as a grade association with the activity usage entity
+	 */
+	async addToGrades() {
+		if (!this.canEditScoreOutOf()) {
+			return;
+		}
+
+		const fields = [
+			{ name: 'inGrades', value: true },
+			{ name: 'gradeType', value: 'Numeric' }
+		];
+		await performSirenAction(this._token, this._getScoreOutOfAction(), fields);
+	}
+
+	/**
+	 * Updates the score out of value of the activity usage entity to ungraded and removes any grade association
+	 */
+	async setUngraded() {
+		if (!this.canEditScoreOutOf()) {
+			return;
+		}
+
+		const fields = [
+			{ name: 'inGrades', value: false },
+			{ name: 'scoreOutOf', value: "" }
+		];
+		await performSirenAction(this._token, this._getScoreOutOfAction(), fields);
+	}
+
+	/**
+	 * @returns {bool} Whether or not the update score out of action is present on the score-out-of subentity of the activity usage entity
+	 */
+	canEditScoreOutOf() {
+		const scoreOutOfEntity = this._getScoreOutOfEntity();
+		return scoreOutOfEntity
+			&& scoreOutOfEntity.hasActionByName(Actions.activities.scoreOutOf.update);
+	}
+
+	_getScoreOutOfEntity() {
+		return this._entity
+			&& this._entity.getSubEntityByRel(Rels.Activities.scoreOutOf);
+	}
+
+	_getScoreOutOfAction() {
+		const scoreOutOfEntity = this._getScoreOutOfEntity();
+		return scoreOutOfEntity
+			&& scoreOutOfEntity.getActionByName(Actions.activities.scoreOutOf.update);
+	}
 }
