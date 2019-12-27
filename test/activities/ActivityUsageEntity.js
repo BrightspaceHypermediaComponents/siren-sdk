@@ -48,7 +48,7 @@ describe('ActivityUsageEntity', () => {
 			});
 
 			it('gets due date', () => {
-				expect(entity.dueDate()).to.equal("2019-12-26T04:59:00.000Z");
+				expect(entity.dueDate()).to.equal('2019-12-26T04:59:00.000Z');
 			});
 
 			it('can edit due date', () => {
@@ -56,7 +56,7 @@ describe('ActivityUsageEntity', () => {
 			});
 
 			it('returns a promise when setting due date', () => {
-				entity.setDueDate("2019-12-27T04:59:00.000Z");
+				entity.setDueDate('2019-12-27T04:59:00.000Z');
 				expect(setDueDateSpy.returnValues[0]).to.be.a('promise');
 			});
 		});
@@ -74,7 +74,7 @@ describe('ActivityUsageEntity', () => {
 			});
 
 			it('gets due date', () => {
-				expect(readonlyEntity.dueDate()).to.equal("2019-12-26T04:59:00.000Z");
+				expect(readonlyEntity.dueDate()).to.equal('2019-12-26T04:59:00.000Z');
 			});
 
 			it('returns false for canEditDueDate function', () => {
@@ -82,8 +82,8 @@ describe('ActivityUsageEntity', () => {
 			});
 
 			it('returns undefined if attempting to edit due date', () => {
-				readonlyEntity.setDueDate("2019-12-27T04:59:00.000Z")
-					.then(result => expect(setDueDateSpy.returnValues[0]).to.be.undefined);
+				readonlyEntity.setDueDate('2019-12-27T04:59:00.000Z')
+					.then(() => expect(setDueDateSpy.returnValues[0]).to.be.undefined);
 			});
 		});
 	});
@@ -145,7 +145,7 @@ describe('ActivityUsageEntity', () => {
 
 			it('returns undefined if attempting to edit draft state', () => {
 				readonlyEntity.setDraftStatus(false)
-					.then(result => expect(setDraftStatusSpy.returnValues[0]).to.be.undefined);
+					.then(() => expect(setDraftStatusSpy.returnValues[0]).to.be.undefined);
 			});
 		});
 	});
@@ -175,7 +175,7 @@ describe('ActivityUsageEntity', () => {
 			});
 
 			it('gets gradeType', () => {
-				expect(entity.gradeType()).to.equal("Points");
+				expect(entity.gradeType()).to.equal('Points');
 			});
 
 			it('can edit score out of', () => {
@@ -183,7 +183,7 @@ describe('ActivityUsageEntity', () => {
 			});
 
 			it('returns a promise when setting scoreOutOf', () => {
-				entity.setScoreOutOf("70");
+				entity.setScoreOutOf('70');
 				expect(setScoreOutOfSpy.returnValues[0]).to.be.a('promise');
 			});
 
@@ -227,7 +227,7 @@ describe('ActivityUsageEntity', () => {
 			});
 
 			it('gets gradeType', () => {
-				expect(readonlyEntity.gradeType()).to.equal("Points");
+				expect(readonlyEntity.gradeType()).to.equal('Points');
 			});
 
 			it('can edit score out of', () => {
@@ -236,22 +236,22 @@ describe('ActivityUsageEntity', () => {
 
 			it('returns undefined if attempting to setting scoreOutOf', () => {
 				readonlyEntity.setScoreOutOf(70)
-					.then(result => expect(setScoreOutOfSpy.returnValues[0]).to.be.undefined);
+					.then(() => expect(setScoreOutOfSpy.returnValues[0]).to.be.undefined);
 			});
 
 			it('returns undefined if attempting to removing from grades', () => {
 				readonlyEntity.removeFromGrades()
-					.then(result => expect(removeFromGradesSpy.returnValues[0]).to.be.undefined);
+					.then(() => expect(removeFromGradesSpy.returnValues[0]).to.be.undefined);
 			});
 
 			it('returns undefined if attempting to adding to grades', () => {
 				readonlyEntity.addToGrades()
-					.then(result => expect(addToGradesSpy.returnValues[0]).to.be.undefined);
+					.then(() => expect(addToGradesSpy.returnValues[0]).to.be.undefined);
 			});
 
 			it('returns undefined if attempting to setting ungraded', () => {
 				readonlyEntity.setUngraded()
-					.then(result => expect(setUngradedSpy.returnValues[0]).to.be.undefined);
+					.then(() => expect(setUngradedSpy.returnValues[0]).to.be.undefined);
 			});
 		});
 	});

@@ -317,7 +317,7 @@ export class ActivityUsageEntity extends Entity {
 			return;
 		}
 
-		let fields = [{ name: 'scoreOutOf', value: score }];
+		const fields = [{ name: 'scoreOutOf', value: score }];
 		if (addToGrades) {
 			fields.push({ name: 'inGrades', value: true });
 			fields.push({ name: 'gradeType', value: 'Numeric' });
@@ -362,7 +362,7 @@ export class ActivityUsageEntity extends Entity {
 
 		const fields = [
 			{ name: 'inGrades', value: false },
-			{ name: 'scoreOutOf', value: "" }
+			{ name: 'scoreOutOf', value: '' }
 		];
 		await performSirenAction(this._token, this._getScoreOutOfAction(), fields);
 	}
