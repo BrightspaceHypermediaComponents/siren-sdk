@@ -269,42 +269,39 @@ export class ActivityUsageEntity extends Entity {
 	 * @returns {string} Score out of value of the activity usage
 	 */
 	scoreOutOf() {
-		if (this.canEditScoreOutOf()) {
-			const action = this._getScoreOutOfAction();
-			if (action.hasFieldByName('scoreOutOf')) {
-				return action.getFieldByName('scoreOutOf').value;
-			}
+		const action = this._getScoreOutOfAction();
+		if (action && action.hasFieldByName('scoreOutOf')) {
+			return action.getFieldByName('scoreOutOf').value;
 		}
-		return this._getScoreOutOfEntity().properties.scoreOutOf;
+		const scoreOutOfEntity = this._getScoreOutOfEntity();
+		return scoreOutOfEntity ? scoreOutOfEntity.properties.scoreOutOf : undefined;
 	}
 
 	/**
 	 * @returns {string} True if the activity usage is associated with a grade item, False otherwise
 	 */
 	inGrades() {
-		if (this.canEditScoreOutOf()) {
-			const action = this._getScoreOutOfAction();
-			if (action.hasFieldByName('inGrades')) {
-				return action.getFieldByName('inGrades').value;
-			}
+		const action = this._getScoreOutOfAction();
+		if (action && action.hasFieldByName('inGrades')) {
+			return action.getFieldByName('inGrades').value;
 		}
-		return this._getScoreOutOfEntity().properties.inGrades;
+		const scoreOutOfEntity = this._getScoreOutOfEntity();
+		return scoreOutOfEntity ? scoreOutOfEntity.properties.inGrades : undefined;
 	}
 
 	/**
 	 * @returns {string} Grade type of the grade item associated with the activity usage
 	 */
 	gradeType() {
-		if (this.canEditScoreOutOf()) {
-			const action = this._getScoreOutOfAction();
-			if (action.hasFieldByName('gradeType')) {
-				const gradeTypes = action.getFieldByName('gradeType').value.filter(x => x.selected);
-				if (gradeTypes.length > 0) {
-					return gradeTypes[0].title;
-				}
+		const action = this._getScoreOutOfAction();
+		if (action && action.hasFieldByName('gradeType')) {
+			const gradeTypes = action.getFieldByName('gradeType').value.filter(x => x.selected);
+			if (gradeTypes.length > 0) {
+				return gradeTypes[0].title;
 			}
 		}
-		return this._getScoreOutOfEntity().properties.gradeType || 'Points';
+		const scoreOutOfEntity = this._getScoreOutOfEntity();
+		return scoreOutOfEntity ? scoreOutOfEntity.properties.gradeType : undefined;
 	}
 
 	/**
