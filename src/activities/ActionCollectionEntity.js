@@ -1,6 +1,7 @@
 'use strict';
 
 import { Entity } from '../es6/Entity.js';
+import { SelflessEntity } from '../es6/SelflessEntity.js';
 import { Rels } from '../hypermedia-constants';
 import { ActivityUsageEntity } from './ActivityUsageEntity.js';
 import { performSirenAction } from '../es6/SirenAction';
@@ -14,10 +15,13 @@ export class ActionCollectionEntity extends Entity {
 			return;
 		}
 		return this._entity.getSubEntitiesByRel('item').map(item => {
-			const actionItemEntity = new ActionItemEntity();
-			actionItemEntity._entity = item;
+			const actionItemEntity = new ActionItemEntity(this, item);
 			return actionItemEntity;
 		});
+	}
+
+	items() {
+		return this._items();
 	}
 
 	getNextAction() {
@@ -32,7 +36,7 @@ export class ActionCollectionEntity extends Entity {
 
 }
 
-class ActionItemEntity extends Entity {
+class ActionItemEntity extends SelflessEntity {
 	activityUsageHref() {
 		if (!this._entity || !this._entity.hasLinkByRel(Rels.Activities.activityUsage)) {
 			return;
