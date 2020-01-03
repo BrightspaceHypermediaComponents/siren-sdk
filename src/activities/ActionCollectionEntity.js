@@ -1,6 +1,4 @@
 'use strict';
-
-import { Entity } from '../es6/Entity.js';
 import { SelflessEntity } from '../es6/SelflessEntity.js';
 import { Rels } from '../hypermedia-constants';
 import { ActivityUsageEntity } from './ActivityUsageEntity.js';
@@ -9,13 +7,13 @@ import { performSirenAction } from '../es6/SirenAction';
 /**
  * ActionCollection Entity representation of a D2L Action Collection response
  */
-export class ActionCollectionEntity extends Entity {
+export class ActionCollectionEntity extends SelflessEntity {
 	_items() {
 		if (!this._entity) {
 			return;
 		}
 		return this._entity.getSubEntitiesByRel('item').map(item => {
-			const actionItemEntity = new ActionItemEntity(this, item);
+			const actionItemEntity = new ActionItemEntity(this._sdkParentEntity, item);
 			return actionItemEntity;
 		});
 	}
