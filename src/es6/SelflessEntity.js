@@ -2,7 +2,8 @@
 import { EntitySirenProperties } from './EntitySirenProperties.js';
 
 /**
- * Abstract Entity class to help create entity classes.
+ * Abstract Entity class to help create entity classes without self-links.
+ * These entities are transient, and are not saved within the Entity Store.
  */
 export class SelflessEntity extends EntitySirenProperties {
 	/**
