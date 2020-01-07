@@ -373,6 +373,24 @@ export class ActivityUsageEntity extends Entity {
 			&& scoreOutOfEntity.hasActionByName(Actions.activities.scoreOutOf.update);
 	}
 
+	/**
+	 * @returns {bool} Whether or not the inGrades property is present on the score-out-of subentity of the activity usage entity
+	 */
+	canSeeGrades() {
+		const scoreOutOfEntity = this._getScoreOutOfEntity();
+		return scoreOutOfEntity
+			&& typeof scoreOutOfEntity.properties.inGrades !== 'undefined';
+	}
+
+	/**
+	 * @returns {bool} Whether or not the inGrades field is present on the update action of the score-out-of subentity of the activity usage entity
+	 */
+	canEditGrades() {
+		const scoreOutOfAction = this._getScoreOutOfAction();
+		return scoreOutOfAction
+			&& scoreOutOfAction.hasFieldByName('inGrades');
+	}
+
 	_getScoreOutOfEntity() {
 		return this._entity
 			&& this._entity.getSubEntityByRel(Rels.Activities.scoreOutOf);
