@@ -379,7 +379,7 @@ export class ActivityUsageEntity extends Entity {
 	canSeeGrades() {
 		const scoreOutOfEntity = this._getScoreOutOfEntity();
 		return scoreOutOfEntity
-			&& typeof scoreOutOfEntity.properties.inGrades !== 'undefined';
+			&& scoreOutOfEntity.properties.hasOwnProperty('inGrades');
 	}
 
 	/**
