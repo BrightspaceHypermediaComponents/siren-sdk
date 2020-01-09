@@ -288,6 +288,51 @@ export class AssignmentEntity extends Entity {
 		return annotationsEntity && annotationsEntity.hasClass(Classes.assignments.annotationEnabled);
 	}
 
+	/** @returns {bool} Whether anonymous marking is available */
+	isAnonymousMarkingAvailable() {
+		if (!this._entity) return false;
+		const subEntity = this._entity.getSubEntityByRel(Rels.Assignments.anonymousMarking);
+		return !!subEntity;
+	}
+
+	/** @returns {bool} Whether anonymous marking is enabled */
+	isAnonymousMarkingEnabled() {
+		if (!this._entity) return false;
+		const subEntity = this._entity.getSubEntityByRel(Rels.Assignments.anonymousMarking);
+		if (!subEntity) return false;
+		return subEntity.hasClass('checked');
+	}
+
+	/** @returns {bool} Whether anonymous marking can be edited */
+	canEditAnonymousMarking() {
+		if (!this._entity) return false;
+		const subEntity = this._entity.getSubEntityByRel(Rels.Assignments.anonymousMarking);
+		if (!subEntity) return false;
+		return subEntity.hasActionByName(Actions.assignments.anonymousMarking.updateAnonymousMarking);
+	}
+
+	/** @returns {string} Help text when anonymous marking cannot be edited */
+	getAnonymousMarkingHelpText() {
+		if (!this._entity) return null;
+		const subEntity = this._entity.getSubEntityByRel(Rels.Assignments.anonymousMarking);
+		if (!subEntity) return null;
+		return subEntity.title || null;
+	}
+
+	/**
+	 * Sets anonymous marking
+	 * @param {bool} isAnonymous Whether anonymous marking is enabled
+	 */
+	async setAnonymousMarking(isAnonymous) {
+		if (!this._entity) return;
+		const subEntity = this._entity.getSubEntityByRel(Rels.Assignments.anonymousMarking);
+		if (!subEntity) return;
+		const action = subEntity.getActionByName(Actions.assignments.anonymousMarking.updateAnonymousMarking);
+		if (!action) return;
+		const fields = [ { name: 'isAnonymous', value: isAnonymous } ];
+		await performSirenAction(this._token, action, fields);
+	}
+
 	/**
 	 * @returns {bool} Whether or not the user can see and set annotation availability for the assignment entity
 	 */

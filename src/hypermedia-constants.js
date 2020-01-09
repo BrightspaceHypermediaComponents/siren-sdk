@@ -70,6 +70,7 @@ export const Rels = {
 	// Assignments
 	Assignments: {
 		instructions: 'https://assignments.api.brightspace.com/rels/instructions',
+		anonymousMarking: 'https://assignments.api.brightspace.com/rels/anonymous-marking',
 		turnitinDialogOpener: 'https://assignments.api.brightspace.com/rels/turnitin-dialog-opener',
 		attachments: 'https://assignments.api.brightspace.com/rels/attachments',
 		annotations: 'https://assignments.api.brightspace.com/rels/annotations'
@@ -383,6 +384,9 @@ export const Actions = {
 		assign: 'assign',
 		delete: 'delete',
 		updateInstructions: 'update-instructions',
+		anonymousMarking: {
+			updateAnonymousMarking: 'update-anonymous-marking'
+		},
 		updateName: 'update-name',
 		updateCompletionType: 'update-completion-type',
 		updateSubmissionType: 'update-submission-type',
