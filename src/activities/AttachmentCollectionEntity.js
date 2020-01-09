@@ -103,7 +103,7 @@ export class AttachmentCollectionEntity extends Entity {
 	}
 
 	/**
-	 * @returns {bool} Returns true if the add-video-note-link action is present on the entity
+	 * @returns {bool} Returns true if the add-video-note action is present on the entity
 	 */
 	canAddVideoNoteAttachment() {
 		return this._entity.hasActionByName('add-video-note');
