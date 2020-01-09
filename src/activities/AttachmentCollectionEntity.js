@@ -21,7 +21,18 @@ export class AttachmentCollectionEntity extends Entity {
 		return this.canAddLinkAttachment()
 			|| this.canAddGoogleDriveLinkAttachment()
 			|| this.canAddOneDriveLinkAttachment()
-			|| this.canAddFileAttachment();
+			|| this.canAddFileAttachment()
+			|| this.canAddVideoNoteAttachment()
+			|| this.canAddAudioNoteAttachment();
+	}
+
+	async _addLinkAttachment(action, name, href) {
+		const fields = [{
+			name: 'name', value: name
+		}, {
+			name: 'href', value: href
+		}];
+		await performSirenAction(this._token, action, fields);
 	}
 
 	/**
@@ -42,12 +53,7 @@ export class AttachmentCollectionEntity extends Entity {
 		}
 
 		const action = this._entity.getActionByName('add-link');
-		const fields = [{
-			name: 'name', value: name
-		}, {
-			name: 'href', value: href
-		}];
-		await performSirenAction(this._token, action, fields);
+		await this._addLinkAttachment(action, name, href);
 	}
 
 	/**
@@ -68,12 +74,7 @@ export class AttachmentCollectionEntity extends Entity {
 		}
 
 		const action = this._entity.getActionByName('add-google-drive-link');
-		const fields = [{
-			name: 'name', value: name
-		}, {
-			name: 'href', value: href
-		}];
-		await performSirenAction(this._token, action, fields);
+		await this._addLinkAttachment(action, name, href);
 	}
 
 	/**
@@ -94,11 +95,14 @@ export class AttachmentCollectionEntity extends Entity {
 		}
 
 		const action = this._entity.getActionByName('add-onedrive-link');
-		const fields = [{
-			name: 'name', value: name
-		}, {
-			name: 'href', value: href
-		}];
+		await this._addLinkAttachment(action, name, href);
+	}
+
+	async _addFileAttachment(action, fileSystemType, fileId) {
+		const fields = [
+			{ name: 'fileSystemType', value: fileSystemType },
+			{ name: 'fileId', value: fileId }
+		];
 		await performSirenAction(this._token, action, fields);
 	}
 
@@ -120,11 +124,28 @@ export class AttachmentCollectionEntity extends Entity {
 		}
 
 		const action = this._entity.getActionByName('add-video-note');
-		const fields = [
-			{ name: 'fileSystemType', value: fileSystemType },
-			{ name: 'fileId', value: fileId }
-		];
-		await performSirenAction(this._token, action, fields);
+		await this._addFileAttachment(action, fileSystemType, fileId);
+	}
+
+	/**
+	 * @returns {bool} Returns true if the add-audio-note action is present on the entity
+	 */
+	canAddAudioNoteAttachment() {
+		return this._entity.hasActionByName('add-audio-note');
+	}
+
+	/**
+	 * Adds an Audio Note attachment to the attachments collection
+	 * @param {string} fileSystemType Type of file system the audio note is stored on (see enum FileSystemTypes)
+	 * @param {string} fileId ID of an existing audio note e.g. "abcd1234.html;filename.html"
+	 */
+	async addAudioNoteAttachment(fileSystemType, fileId) {
+		if (!this.canAddAudioNoteAttachment()) {
+			return;
+		}
+
+		const action = this._entity.getActionByName('add-audio-note');
+		await this._addFileAttachment(action, fileSystemType, fileId);
 	}
 
 	/**
@@ -145,10 +166,6 @@ export class AttachmentCollectionEntity extends Entity {
 		}
 
 		const action = this._entity.getActionByName('add-file');
-		const fields = [
-			{ name: 'fileSystemType', value: fileSystemType },
-			{ name: 'fileId', value: fileId }
-		];
-		await performSirenAction(this._token, action, fields);
+		await this._addFileAttachment(action, fileSystemType, fileId);
 	}
 }
