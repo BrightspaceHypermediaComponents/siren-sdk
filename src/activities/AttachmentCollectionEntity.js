@@ -103,6 +103,31 @@ export class AttachmentCollectionEntity extends Entity {
 	}
 
 	/**
+	 * @returns {bool} Returns true if the add-video-note action is present on the entity
+	 */
+	canAddVideoNoteAttachment() {
+		return this._entity.hasActionByName('add-video-note');
+	}
+
+	/**
+	 * Adds a Video Note attachment to the attachments collection
+	 * @param {string} fileSystemType Type of file system the video note is stored on (see enum FileSystemTypes)
+	 * @param {string} fileId ID of an existing video note e.g. "abcd1234.html;filename.html"
+	 */
+	async addVideoNoteAttachment(fileSystemType, fileId) {
+		if (!this.canAddVideoNoteAttachment()) {
+			return;
+		}
+
+		const action = this._entity.getActionByName('add-video-note');
+		const fields = [
+			{ name: 'fileSystemType', value: fileSystemType },
+			{ name: 'fileId', value: fileId }
+		];
+		await performSirenAction(this._token, action, fields);
+	}
+
+	/**
 	 * @returns {bool} Returns true if the add-file action is present on the entity
 	 */
 	canAddFileAttachment() {
