@@ -53,6 +53,18 @@ export class EnrollmentCollectionEntity extends Entity {
 		return this._entity.getLinkByRel('next').href;
 	}
 
+	hasMyLearning(){
+		return this._entity.hasLinkByRel('https://api.brightspace.com/rels/my-learning');
+	}
+
+	getMyLearningHref() {
+		if (!this.hasMyLearning()){
+			return;
+		}
+
+		return this._entity.getLinkByRel('https://api.brightspace.com/rels/my-learning').href;
+	}
+
 	getSearchEnrollmentsActions() {
 		return this._entity.getActionByName(Actions.enrollments.searchMyEnrollments);
 	}
