@@ -3,6 +3,11 @@
 import { Entity } from '../es6/Entity.js';
 import { Rels, Actions } from '../hypermedia-constants';
 import { EnrollmentEntity } from './EnrollmentEntity';
+
+const rels = {
+	myLearning: 'https://api.brightspace.com/rels/my-learning'
+};
+
 /**
  * A collection of sub entities pointing to distinct enrollments
  */
@@ -54,7 +59,7 @@ export class EnrollmentCollectionEntity extends Entity {
 	}
 
 	hasMyLearning() {
-		return this._entity.hasLinkByRel('https://api.brightspace.com/rels/my-learning');
+		return this._entity.hasLinkByRel(rels.myLearning);
 	}
 
 	getMyLearningHref() {
@@ -62,7 +67,7 @@ export class EnrollmentCollectionEntity extends Entity {
 			return;
 		}
 
-		return this._entity.getLinkByRel('https://api.brightspace.com/rels/my-learning').href;
+		return this._entity.getLinkByRel(rels.myLearning).href;
 	}
 
 	getSearchEnrollmentsActions() {
