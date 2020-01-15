@@ -53,12 +53,12 @@ export class EnrollmentCollectionEntity extends Entity {
 		return this._entity.getLinkByRel('next').href;
 	}
 
-	hasMyLearning(){
+	hasMyLearning() {
 		return this._entity.hasLinkByRel('https://api.brightspace.com/rels/my-learning');
 	}
 
 	getMyLearningHref() {
-		if (!this.hasMyLearning()){
+		if (!this.hasMyLearning()) {
 			return;
 		}
 
