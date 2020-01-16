@@ -56,6 +56,17 @@ export class ActivityUsageEntity extends Entity {
 	}
 
 	/**
+	 * @returns {string} URL of the grade-candidates collection associated with the activity usage, if present
+	 */
+	gradeCandidatesHref() {
+		if (!this._entity || !this._entity.hasLinkByRel(Rels.Activities.gradeCandidates)) {
+			return;
+		}
+
+		return this._entity.getLinkByRel(Rels.Activities.gradeCandidates).href;
+	}
+
+	/**
 	 * @returns {bool} Whether the release conditions dialog opener sub entity is present.
 	 */
 	canEditReleaseConditions() {
