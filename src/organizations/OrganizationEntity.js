@@ -7,6 +7,7 @@ import { Rels, Classes, Actions } from '../hypermedia-constants';
 import { NotificationCollectionEntity } from '../notifications/NotificationCollectionEntity';
 import { SequenceEntity } from '../sequences/SequenceEntity.js';
 import { ActivityUsageEntity } from '../activities/ActivityUsageEntity.js';
+import { performSirenAction } from '../es6/SirenAction';
 
 export const classes = {
 	active: 'active',
@@ -18,6 +19,10 @@ export const classes = {
 
 export const rels = {
 	alerts: 'https://api.brightspace.com/rels/notification-alerts'
+};
+
+const actions = {
+	delete: 'delete'
 };
 
 /**
@@ -164,6 +169,19 @@ export class OrganizationEntity extends Entity {
 	onSequenceChange(onChange) {
 		const sequenceLink = this.sequenceLink();
 		sequenceLink && this._subEntity(SequenceEntity, sequenceLink, onChange);
+	}
+
+	canDelete() {
+		return this._entity.hasActionByName(actions.delete);
+	}
+
+	async delete() {
+		const action = this.canDelete() && this._entity.getActionByName(actions.delete);
+		if (!action) {
+			return;
+		}
+
+		await performSirenAction(this._token, action);
 	}
 
 	_semesterHref() {
