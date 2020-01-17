@@ -1,5 +1,3 @@
-'use strict';
-
 import { Entity } from '../../src/es6/Entity.js';
 import { SimpleEntity } from '../../src/es6/SimpleEntity.js';
 

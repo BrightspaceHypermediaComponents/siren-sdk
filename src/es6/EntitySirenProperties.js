@@ -1,5 +1,3 @@
-'use strict';
-
 /**
  * Abstract Entity class to help create entity classes.
  */

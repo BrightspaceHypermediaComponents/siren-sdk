@@ -1,4 +1,3 @@
-'use strict';
 import { Entity } from '../es6/Entity';
 import { GradeCandidateEntity } from './GradeCandidateEntity';
 

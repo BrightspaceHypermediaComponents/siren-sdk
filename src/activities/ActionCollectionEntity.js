@@ -1,4 +1,3 @@
-'use strict';
 import { SelflessEntity } from '../es6/SelflessEntity.js';
 import { Rels } from '../hypermedia-constants';
 import { ActivityUsageEntity } from './ActivityUsageEntity.js';

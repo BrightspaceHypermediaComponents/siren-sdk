@@ -1,5 +1,3 @@
-'use strict';
-
 import { Entity } from '../es6/Entity.js';
 import { Rels, Actions } from '../hypermedia-constants';
 import { EnrollmentEntity } from './EnrollmentEntity';
