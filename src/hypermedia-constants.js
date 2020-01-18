@@ -61,7 +61,8 @@ export const Rels = {
 		feedback: 'https://activities.api.brightspace.com/rels/feedback',
 		activityGrade: 'https://activities.api.brightspace.com/rels/activity-grade',
 		activityHomepage: 'https://activities.api.brightspace.com/rels/activity-homepage',
-		scoreOutOf: 'https://activities.api.brightspace.com/rels/score-out-of'
+		scoreOutOf: 'https://activities.api.brightspace.com/rels/score-out-of',
+		gradeCandidates: 'https://activities.api.brightspace.com/rels/grade-candidates'
 	},
 	// Assessments
 	Assessments: {

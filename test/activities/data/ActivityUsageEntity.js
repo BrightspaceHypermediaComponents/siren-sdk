@@ -147,6 +147,12 @@ export const testData = {
 					'https://conditions.api.brightspace.com/rels/conditions'
 				],
 				'href': 'http://vlx1-mdulat.desire2learn.d2l:44444/d2l/api/hm/conditions/activity-usage/TmpZd05sOHlNREF3WHpNeC42NjA5'
+			},
+			{
+				'rel': [
+					'https://activities.api.brightspace.com/rels/grade-candidates'
+				],
+				'href': 'http://vlx1-mdulat.desire2learn.d2l:44444/d2l/api/hm/activities/activities/6606_2000_31/usages/6609/grade-candidates'
 			}
 		],
 		'actions': [

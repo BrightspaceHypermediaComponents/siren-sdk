@@ -1,4 +1,3 @@
-'use strict';
 import { Entity } from './Entity.js';
 
 /**

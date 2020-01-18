@@ -1,7 +1,5 @@
 /* global suite, test, fixture, expect, setup, teardown, sinon */
 
-'use strict';
-
 suite('SirenAction', function() {
 	var element, sandbox;
 

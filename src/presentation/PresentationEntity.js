@@ -1,5 +1,3 @@
-'use strict';
-
 import { Entity } from '../es6/Entity.js';
 /**
  * A collection of sub entities pointing to distinct enrollments
