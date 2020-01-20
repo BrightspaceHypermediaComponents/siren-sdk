@@ -72,7 +72,9 @@ export const Rels = {
 		instructions: 'https://assignments.api.brightspace.com/rels/instructions',
 		turnitinDialogOpener: 'https://assignments.api.brightspace.com/rels/turnitin-dialog-opener',
 		attachments: 'https://assignments.api.brightspace.com/rels/attachments',
-		annotations: 'https://assignments.api.brightspace.com/rels/annotations'
+		annotations: 'https://assignments.api.brightspace.com/rels/annotations',
+		folderType: 'https://assignments.api.brightspace.com/rels/folder-type',
+		groupsHomepage: 'https://assignments.api.brightspace.com/rels/groups-homepage'
 	},
 	// Awards
 	Awards: {
@@ -196,6 +198,11 @@ export const Classes = {
 		annotated: 'annotated',
 		assignment: 'assignment',
 		assignmentSubmission: 'assignment-submission',
+		assignmentType: {
+			individual: 'individual',
+			noGroupType: 'no-group-type',
+			readOnly: 'read-only'
+		},
 		attachment: 'attachment',
 		attachmentList: 'attachment-list',
 		instructions: 'instructions',
@@ -382,6 +389,8 @@ export const Actions = {
 	assignments: {
 		assign: 'assign',
 		delete: 'delete',
+		setToGroup: 'set-to-group',
+		setToIndividual: 'set-to-individual',
 		updateInstructions: 'update-instructions',
 		updateName: 'update-name',
 		updateCompletionType: 'update-completion-type',
