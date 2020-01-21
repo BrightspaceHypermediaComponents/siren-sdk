@@ -231,10 +231,10 @@ export class AssignmentEntity extends Entity {
 		if (!action) return;
 
 		
-		const groupTypeId = action.fields[0].value[0].value;
+		const defaultGroupTypeId = action.fields[0].value[0].value;
 		
 		const fields = [
-			{ name: 'groupTypeId', value: groupTypeId },
+			{ name: 'groupTypeId', value: defaultGroupTypeId },
 			{ name: 'folderType', value: 1 }
 		];
 		await performSirenAction(this._token, action, fields);
