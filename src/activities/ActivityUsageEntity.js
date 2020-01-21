@@ -56,6 +56,17 @@ export class ActivityUsageEntity extends Entity {
 	}
 
 	/**
+	 * @returns {string} URL of the grade-candidates collection associated with the activity usage, if present
+	 */
+	gradeCandidatesHref() {
+		if (!this._entity || !this._entity.hasLinkByRel(Rels.Activities.gradeCandidates)) {
+			return;
+		}
+
+		return this._entity.getLinkByRel(Rels.Activities.gradeCandidates).href;
+	}
+
+	/**
 	 * @returns {bool} Whether the release conditions dialog opener sub entity is present.
 	 */
 	canEditReleaseConditions() {
@@ -371,6 +382,24 @@ export class ActivityUsageEntity extends Entity {
 		const scoreOutOfEntity = this._getScoreOutOfEntity();
 		return scoreOutOfEntity
 			&& scoreOutOfEntity.hasActionByName(Actions.activities.scoreOutOf.update);
+	}
+
+	/**
+	 * @returns {bool} Whether or not the inGrades property is present on the score-out-of subentity of the activity usage entity
+	 */
+	canSeeGrades() {
+		const scoreOutOfEntity = this._getScoreOutOfEntity();
+		return scoreOutOfEntity
+			&& scoreOutOfEntity.properties.hasOwnProperty('inGrades');
+	}
+
+	/**
+	 * @returns {bool} Whether or not the inGrades field is present on the update action of the score-out-of subentity of the activity usage entity
+	 */
+	canEditGrades() {
+		const scoreOutOfAction = this._getScoreOutOfAction();
+		return scoreOutOfAction
+			&& scoreOutOfAction.hasFieldByName('inGrades');
 	}
 
 	_getScoreOutOfEntity() {

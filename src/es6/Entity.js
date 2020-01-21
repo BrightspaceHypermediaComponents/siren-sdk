@@ -1,10 +1,10 @@
-'use strict';
 import { entityFactory, dispose, updateEntity } from './EntityFactory.js';
+import { EntitySirenProperties } from './EntitySirenProperties.js';
 
 /**
  * Abstract Entity class to help create entity classes.
  */
-export class Entity {
+export class Entity extends EntitySirenProperties {
 	/**
 	 * Primes the object used by the entityFactory. Should never be called outside.
 	 * @param {Object} entity A hypermedia siren entity as defined by [the siren specification]{@link https://github.com/kevinswiber/siren}
@@ -12,6 +12,7 @@ export class Entity {
 	 * @param {Function} listener Listener helper class
 	 */
 	constructor(entity, token, listener) {
+		super();
 		if (this.constructor === Entity) {
 			throw new TypeError('Cannot construct Entity instances directly');
 		}
@@ -20,13 +21,6 @@ export class Entity {
 		this._token = token;
 		this._listener = listener;
 		this._subEntitiesLoadStatus = [];
-	}
-	/**
-	 * Checks to see if the entity has className attached.
-	 * @param {*} className Class name you want to see if the entity has attached to it.
-	 */
-	hasClass(className) {
-		return this._entity && this._entity.hasClass(className);
 	}
 	/**
 	 * Get the url assigned to this entity.
@@ -51,18 +45,6 @@ export class Entity {
 		this._subEntities.forEach(entity => dispose(entity));
 		this._listener.remove();
 	}
-	/**
-	 * Get the action with an Action name that is attached to the entity
-	 * @param {*} actionName Action name to get the action attached to the entity.
-	 */
-	getActionByName(actionName) {
-		if (!this._entity || !this._entity.hasActionByName(actionName)) {
-			return;
-		}
-
-		return this._entity.getActionByName(actionName);
-	}
-
 	/**
 	 * Protected: Add a listener to a subentity of this entity.
 	 * @param {*} entityType A entity class that extends this class.

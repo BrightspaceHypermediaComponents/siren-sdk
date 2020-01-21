@@ -61,7 +61,8 @@ export const Rels = {
 		feedback: 'https://activities.api.brightspace.com/rels/feedback',
 		activityGrade: 'https://activities.api.brightspace.com/rels/activity-grade',
 		activityHomepage: 'https://activities.api.brightspace.com/rels/activity-homepage',
-		scoreOutOf: 'https://activities.api.brightspace.com/rels/score-out-of'
+		scoreOutOf: 'https://activities.api.brightspace.com/rels/score-out-of',
+		gradeCandidates: 'https://activities.api.brightspace.com/rels/grade-candidates'
 	},
 	// Assessments
 	Assessments: {
@@ -70,6 +71,7 @@ export const Rels = {
 	// Assignments
 	Assignments: {
 		instructions: 'https://assignments.api.brightspace.com/rels/instructions',
+		anonymousMarking: 'https://assignments.api.brightspace.com/rels/anonymous-marking',
 		turnitinDialogOpener: 'https://assignments.api.brightspace.com/rels/turnitin-dialog-opener',
 		attachments: 'https://assignments.api.brightspace.com/rels/attachments',
 		annotations: 'https://assignments.api.brightspace.com/rels/annotations',
@@ -392,6 +394,9 @@ export const Actions = {
 		setToGroup: 'set-to-group',
 		setToIndividual: 'set-to-individual',
 		updateInstructions: 'update-instructions',
+		anonymousMarking: {
+			updateAnonymousMarking: 'update-anonymous-marking'
+		},
 		updateName: 'update-name',
 		updateCompletionType: 'update-completion-type',
 		updateSubmissionType: 'update-submission-type',

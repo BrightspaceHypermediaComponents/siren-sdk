@@ -1,4 +1,3 @@
-'use strict';
 import { dedupingMixin } from '@polymer/polymer/lib/utils/mixin.js';
 import { entityFactory, dispose } from '../es6/EntityFactory.js';
 import { mixinBehaviors } from '@polymer/polymer/lib/legacy/class.js';

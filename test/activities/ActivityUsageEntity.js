@@ -25,6 +25,10 @@ describe('ActivityUsageEntity', () => {
 			expect(entity.userActivityUsageHref()).to.equal('http://vlx1-mdulat.desire2learn.d2l:44444/d2l/api/hm/activities/activities/6606_2000_31/usages/6609/users/169');
 		});
 
+		it('can get gradeCandidatesHref', () => {
+			expect(entity.gradeCandidatesHref()).to.equal('http://vlx1-mdulat.desire2learn.d2l:44444/d2l/api/hm/activities/activities/6606_2000_31/usages/6609/grade-candidates');
+		});
+
 		it('can edit release conditions', () => {
 			expect(entity.canEditReleaseConditions()).to.be.true;
 		});

@@ -1,5 +1,3 @@
-'use strict';
-
 import { Entity } from '../es6/Entity.js';
 import { OrganizationEntity } from './OrganizationEntity';
 import { performSirenAction } from '../es6/SirenAction.js';

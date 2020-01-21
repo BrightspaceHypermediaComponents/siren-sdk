@@ -1,5 +1,3 @@
-'use strict';
-
 import 'd2l-polymer-siren-behaviors/store/entity-store.js';
 
 /**
