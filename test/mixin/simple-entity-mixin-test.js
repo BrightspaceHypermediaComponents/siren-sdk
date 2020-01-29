@@ -62,7 +62,7 @@ describe('Simple Entity Mixin Test', function() {
 			}]
 		};
 
-		sandbox.stub(window.d2lfetch, 'fetch', (input) => {
+		sandbox.stub(window.d2lfetch, 'fetch').callsFake((input) => {
 			const whatToFetch = {
 				'/organization.json': organizationEntity
 			};
