@@ -3,6 +3,7 @@
 import { AssignmentEntity } from '../../../src/activities/assignments/AssignmentEntity.js';
 import { nonEditableAssignment } from './data/NonEditableAssignment.js';
 import { editableAssignment } from './data/EditableAssignment.js';
+import { getFormData } from '../../utility/test-helpers.js';
 
 describe('AssignmentEntity', () => {
 	var editableEntity, nonEditableEntity;
@@ -48,9 +49,11 @@ describe('AssignmentEntity', () => {
 				instructions: 'New instructions'
 			});
 
-			const form = await fetchMock.lastCall().request.formData();
-			expect(form.get('name')).to.equal('New name');
-			expect(form.get('instructions')).to.equal('New instructions');
+			const form = await getFormData(fetchMock.lastCall().request);
+			if (!form.notSupported) {
+				expect(form.get('name')).to.equal('New name');
+				expect(form.get('instructions')).to.equal('New instructions');
+			}
 			expect(fetchMock.called()).to.be.true;
 		});
 
