@@ -391,7 +391,8 @@ export const Actions = {
 		updateName: 'update-name',
 		updateCompletionType: 'update-completion-type',
 		updateSubmissionType: 'update-submission-type',
-		updateAnnotationToolsAvailability: 'update-annotation-tools-availability'
+		updateAnnotationToolsAvailability: 'update-annotation-tools-availability',
+		update: 'quick-create-folder'
 	},
 	notifications: {
 		getCarrierClass: 'get-carrier',
