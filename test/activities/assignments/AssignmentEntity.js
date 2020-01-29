@@ -1,101 +1,20 @@
+/* global fetchMock */
+
 import { AssignmentEntity } from '../../../src/activities/assignments/AssignmentEntity.js';
+import { nonEditableAssignment } from './data/NonEditableAssignment.js';
+import { editableAssignment } from './data/EditableAssignment.js';
+import { getFormData } from '../../utility/test-helpers.js';
 
 describe('AssignmentEntity', () => {
 	var editableEntity, nonEditableEntity;
 
 	beforeEach(() => {
-		nonEditableEntity = window.D2L.Hypermedia.Siren.Parse({
-			'class': [
-				'assignment'
-			],
-			'properties': {
-				'name': 'Extra Special Assignment',
-			},
-			'links': [
-				{
-					'rel': [
-						'self'
-					],
-					'href': 'https://f5aa43d7-c082-485c-84f5-4808147fe98a.assignments.api.dev.brightspace.com/123065/folders/7'
-				},
-				{
-					'rel': [
-						'https://activities.api.brightspace.com/rels/activity-usage'
-					],
-					'href': 'https://f5aa43d7-c082-485c-84f5-4808147fe98a.activities.api.dev.brightspace.com/activities/6606_2000_7/usages/123065'
-				},
-			],
-			'rel': [
-				'https://assignments.api.brightspace.com/rels/assignment'
-			]
-		});
+		nonEditableEntity = window.D2L.Hypermedia.Siren.Parse(nonEditableAssignment);
+		editableEntity = window.D2L.Hypermedia.Siren.Parse(editableAssignment);
+	});
 
-		editableEntity = window.D2L.Hypermedia.Siren.Parse({
-			'class': [
-				'assignment'
-			],
-			'properties': {
-				'name': 'Extra Special Assignment',
-			},
-			'actions': [
-				{
-					'class': [
-						'required'
-					],
-					'href': 'https://f5aa43d7-c082-485c-84f5-4808147fe98a.assignments.api.dev.brightspace.com/123065/folders/7',
-					'name': 'update-name',
-					'method': 'PATCH',
-					'fields': [
-						{
-							'type': 'text',
-							'name': 'name',
-							'value': 'Folder 1'
-						}
-					]
-				},
-				{
-					'href': 'https://f5aa43d7-c082-485c-84f5-4808147fe98a.assignments.api.dev.brightspace.com/123065/folders/7',
-					'name': 'update-instructions',
-					'method': 'PATCH',
-					'fields': [
-						{
-							'type': 'text',
-							'name': 'instructions',
-							'value': ''
-						}
-					]
-				},
-				{
-					'href': 'https://f5aa43d7-c082-485c-84f5-4808147fe98a.assignments.api.dev.brightspace.com/123065/folders/7',
-					'name': 'update-max-grade-point',
-					'method': 'PATCH',
-					'fields': [
-						{
-							'type': 'number',
-							'name': 'outOf',
-							'value': 10.000000000
-						}
-					]
-				},
-			],
-			'links': [
-				{
-					'rel': [
-						'self'
-					],
-					'href': 'https://f5aa43d7-c082-485c-84f5-4808147fe98a.assignments.api.dev.brightspace.com/123065/folders/7'
-				},
-				{
-					'rel': [
-						'https://activities.api.brightspace.com/rels/activity-usage'
-					],
-					'href': 'https://f5aa43d7-c082-485c-84f5-4808147fe98a.activities.api.dev.brightspace.com/activities/6606_2000_7/usages/123065'
-				},
-			],
-			'rel': [
-				'https://assignments.api.brightspace.com/rels/assignment'
-			]
-		});
+	afterEach(() => {
+		fetchMock.reset();
 	});
 
 	describe('Basic loading', () => {
@@ -104,16 +23,60 @@ describe('AssignmentEntity', () => {
 			expect(assignmentEntity.name()).to.equal('Extra Special Assignment');
 		});
 	});
+
 	describe('Editable', () => {
 		it('sets canEditName to true', () => {
 			var assignmentEntity = new AssignmentEntity(editableEntity);
 			expect(assignmentEntity.canEditName()).to.be.true;
 		});
 	});
+
 	describe('Non Editable', () => {
 		it('sets canEditName to false', () => {
 			var assignmentEntity = new AssignmentEntity(nonEditableEntity);
 			expect(assignmentEntity.canEditName()).to.be.false;
+		});
+	});
+
+	describe('Saves', () => {
+		it('saves name and instructions', async() => {
+			fetchMock.patchOnce('https://f5aa43d7-c082-485c-84f5-4808147fe98a.assignments.api.dev.brightspace.com/123065/folders/7', editableEntity);
+
+			var assignmentEntity = new AssignmentEntity(editableEntity);
+
+			await assignmentEntity.save({
+				name: 'New name',
+				instructions: 'New instructions'
+			});
+
+			const form = await getFormData(fetchMock.lastCall().request);
+			if (!form.notSupported) {
+				expect(form.get('name')).to.equal('New name');
+				expect(form.get('instructions')).to.equal('New instructions');
+			}
+			expect(fetchMock.called()).to.be.true;
+		});
+
+		it('skips save if not dirty', async() => {
+			var assignmentEntity = new AssignmentEntity(editableEntity);
+
+			await assignmentEntity.save({
+				name: 'Extra Special Assignment',
+				instructions: '<p>These are your instructions</p>'
+			});
+
+			expect(fetchMock.done());
+		});
+
+		it('skips save if not editable', async() => {
+			var assignmentEntity = new AssignmentEntity(nonEditableEntity);
+
+			await assignmentEntity.save({
+				name: 'New name',
+				instructions: 'New instructions'
+			});
+
+			expect(fetchMock.done());
 		});
 	});
 });

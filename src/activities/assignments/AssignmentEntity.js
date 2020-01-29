@@ -369,4 +369,35 @@ export class AssignmentEntity extends Entity {
 
 		return this._entity.getLinkByRel(Rels.Assignments.attachments).href;
 	}
+
+	canSave() {
+		return this._entity && this._entity.hasActionByName(Actions.assignments.update);
+	}
+
+	async save(assignment) {
+		const action = this.canSave() && this._entity.getActionByName(Actions.assignments.update);
+		if (!action) {
+			return;
+		}
+
+		// TODO - Need to force PATCH on this API now. The backend just delegates the PATCH call to the PUT
+		// implementation with the correct semantics for unprovided fields
+		action.method = 'PATCH';
+
+		const fields = [];
+
+		if (assignment.name && assignment.name !== this.name() && this.canEditName()) {
+			fields.push({ name: 'name', value: assignment.name });
+		}
+
+		if (assignment.instructions &&
+				assignment.instructions !== this.instructionsEditorHtml() &&
+				this.canEditInstructions()) {
+			fields.push({ name: 'instructions', value: assignment.instructions });
+		}
+
+		if (fields.length > 0) {
+			await performSirenAction(this._token, action, fields);
+		}
+	}
 }
