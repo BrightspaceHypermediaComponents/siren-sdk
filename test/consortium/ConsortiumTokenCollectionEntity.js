@@ -26,7 +26,7 @@ describe('Consortium entity', () => {
 				}
 			]
 		};
-		sandbox.stub(window.d2lfetch, 'fetch', (input) => {
+		sandbox.stub(window.d2lfetch, 'fetch').callsFake((input) => {
 			const whatToFetch = {
 				'/root.json': rootResponse
 			};

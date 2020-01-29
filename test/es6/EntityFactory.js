@@ -11,7 +11,7 @@ describe('Entityfactory', () => {
 		beforeEach(() => {
 			sandbox = sinon.sandbox.create();
 
-			sandbox.stub(window.d2lfetch, 'fetch', () => {
+			sandbox.stub(window.d2lfetch, 'fetch').callsFake(() => {
 
 				return Promise.resolve({
 					ok: false,

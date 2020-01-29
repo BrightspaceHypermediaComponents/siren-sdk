@@ -55,7 +55,7 @@ describe('d2l-organization-name', () => {
 				href: '/semester2.json'
 			}]
 		};
-		sandbox.stub(window.d2lfetch, 'fetch', (input) => {
+		sandbox.stub(window.d2lfetch, 'fetch').callsFake((input) => {
 			const whatToFetch = {
 				'/organization.json': organizationEntity,
 				'/organization2.json': organizationEntity2,
