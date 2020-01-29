@@ -39,7 +39,7 @@ describe('AssignmentEntity', () => {
 
 	describe('Saves', () => {
 		it('saves name and instructions', async() => {
-			fetchMock.putOnce('https://f5aa43d7-c082-485c-84f5-4808147fe98a.assignments.api.dev.brightspace.com/123065/folders/7', editableEntity);
+			fetchMock.patchOnce('https://f5aa43d7-c082-485c-84f5-4808147fe98a.assignments.api.dev.brightspace.com/123065/folders/7', editableEntity);
 
 			var assignmentEntity = new AssignmentEntity(editableEntity);
 

@@ -380,6 +380,10 @@ export class AssignmentEntity extends Entity {
 			return;
 		}
 
+		// TODO - Need to force PATCH on this API now. The backend just delegates the PATCH call to the PUT
+		// implementation with the correct semantics for unprovided fields
+		action.method = 'PATCH';
+
 		const fields = [];
 
 		if (assignment.name && assignment.name !== this.name() && this.canEditName()) {
