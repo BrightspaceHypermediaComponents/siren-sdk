@@ -57,6 +57,24 @@ describe('AssignmentEntity', () => {
 			expect(fetchMock.called()).to.be.true;
 		});
 
+		it('saves empty instructions', async() => {
+			fetchMock.patchOnce('https://f5aa43d7-c082-485c-84f5-4808147fe98a.assignments.api.dev.brightspace.com/123065/folders/7', editableEntity);
+
+			var assignmentEntity = new AssignmentEntity(editableEntity);
+
+			await assignmentEntity.save({
+				name: 'New name',
+				instructions: ''
+			});
+
+			const form = await getFormData(fetchMock.lastCall().request);
+			if (!form.notSupported) {
+				expect(form.get('name')).to.equal('New name');
+				expect(form.get('instructions')).to.equal('');
+			}
+			expect(fetchMock.called()).to.be.true;
+		});
+
 		it('skips save if not dirty', async() => {
 			var assignmentEntity = new AssignmentEntity(editableEntity);
 

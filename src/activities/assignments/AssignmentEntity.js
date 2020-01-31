@@ -386,11 +386,11 @@ export class AssignmentEntity extends Entity {
 
 		const fields = [];
 
-		if (assignment.name && assignment.name !== this.name() && this.canEditName()) {
+		if (typeof assignment.name !== 'undefined' && assignment.name !== this.name() && this.canEditName()) {
 			fields.push({ name: 'name', value: assignment.name });
 		}
 
-		if (assignment.instructions &&
+		if (typeof assignment.instructions !== 'undefined' &&
 				assignment.instructions !== this.instructionsEditorHtml() &&
 				this.canEditInstructions()) {
 			fields.push({ name: 'instructions', value: assignment.instructions });
