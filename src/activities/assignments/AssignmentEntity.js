@@ -147,7 +147,7 @@ export class AssignmentEntity extends Entity {
 	/**
 	 * @returns {string} Name of the selected group category for the assignment type
 	 */
-	getAssignmentTypeSelectedGroupCategoryName(){
+	getAssignmentTypeSelectedGroupCategoryName() {
 		if (!this._entity) return null;
 		const subEntity = this._entity.getSubEntityByRel(Rels.Assignments.folderType);
 		if (!subEntity || !subEntity.properties || !subEntity.properties.groupName) return null;
@@ -157,7 +157,7 @@ export class AssignmentEntity extends Entity {
 	/**
 	 * @returns {bool} If the assignment type cannot be changed
 	 */
-	isAssignmentTypeReadOnly(){
+	isAssignmentTypeReadOnly() {
 		if (!this._entity) return false;
 		const subEntity = this._entity.getSubEntityByRel(Rels.Assignments.folderType);
 		if (!subEntity) return false;
@@ -167,7 +167,7 @@ export class AssignmentEntity extends Entity {
 	/**
 	 * @returns {bool} If the assignment type "group assignment" can be set
 	 */
-	isGroupAssignmentTypeDisabled(){
+	isGroupAssignmentTypeDisabled() {
 		if (!this._entity) return false;
 		const subEntity = this._entity.getSubEntityByRel(Rels.Assignments.folderType);
 		if (!subEntity) return false;
@@ -177,10 +177,10 @@ export class AssignmentEntity extends Entity {
 	/**
 	 * @returns {string} The additional information related to the assignment type
 	 */
-	getAssignmentTypeInformationText(){
+	getAssignmentTypeInformationText() {
 		if (!this._entity) return null;
 		const subEntity = this._entity.getSubEntityByRel(Rels.Assignments.folderType);
-		if( !subEntity || !subEntity.properties || !subEntity.properties.informationText) {
+		if (!subEntity || !subEntity.properties || !subEntity.properties.informationText) {
 			return null;
 		}
 		return subEntity.properties.informationText;
@@ -189,7 +189,7 @@ export class AssignmentEntity extends Entity {
 	/**
 	 * @returns {bool} If the assignment type is set to individual assignment
 	 */
-	isIndividualAssignmentType(){
+	isIndividualAssignmentType() {
 		if (!this._entity) return false;
 		const subEntity = this._entity.getSubEntityByRel(Rels.Assignments.folderType);
 		if (!subEntity) return false;
@@ -199,7 +199,7 @@ export class AssignmentEntity extends Entity {
 	/**
 	 * @returns {Array} The list of group categories for group assignment type
 	 */
-	getAssignmentTypeGroupCategoryOptions(){
+	getAssignmentTypeGroupCategoryOptions() {
 		if (!this._entity) return [];
 		const subEntity = this._entity.getSubEntityByRel(Rels.Assignments.folderType);
 		if (!subEntity) return [];
@@ -211,12 +211,12 @@ export class AssignmentEntity extends Entity {
 	/**
 	 * @returns {String} The groups homepage link
 	 */
-	getGroupsHomepageLink(){
+	getGroupsHomepageLink() {
 		if (!this._entity) return null;
 		const subEntity = this._entity.getSubEntityByRel(Rels.Assignments.folderType);
 		if (!subEntity) return null;
 		const groupHomepageSubEntity = subEntity.getSubEntityByRel(Rels.Assignments.groupsHomepage);
-		if (!groupHomepageSubEntity || !groupHomepageSubEntity.properties || !groupHomepageSubEntity.properties.url ) return null;
+		if (!groupHomepageSubEntity || !groupHomepageSubEntity.properties || !groupHomepageSubEntity.properties.url) return null;
 		return groupHomepageSubEntity.properties.url;
 	}
 
@@ -230,9 +230,8 @@ export class AssignmentEntity extends Entity {
 		const action = subEntity.getActionByName(Actions.assignments.setToGroup);
 		if (!action) return;
 
-		
 		const defaultGroupTypeId = action.fields[0].value[0].value;
-		
+
 		const fields = [
 			{ name: 'groupTypeId', value: defaultGroupTypeId },
 			{ name: 'folderType', value: 1 }
