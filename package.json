@@ -1,6 +1,6 @@
 {
   "name": "siren-sdk",
-  "version": "1.10.3",
+  "version": "1.10.5",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -26,17 +26,22 @@
     "@polymer/iron-demo-helpers": "^3.0.0-pre.18",
     "@polymer/iron-test-helpers": "^3.0.0",
     "@polymer/polymer": "^3.0.0",
+    "@polymer/test-fixture": "^4.0.2",
     "@webcomponents/webcomponentsjs": "^2.2.1",
     "babel-eslint": "^10.0.1",
+    "chai": "^4.2.0",
     "eslint": "^4.15.0",
     "eslint-config-brightspace": "^0.4.0",
     "eslint-plugin-html": "^4.0.1",
+    "fetch-mock": "^8.3.2",
     "frau-ci": "^1.40.0",
     "jsdoc": "^3.5.5",
     "lie": "^3.3.0",
     "lit-element": "^2",
+    "mocha": "^7.0.1",
     "polymer-cli": "^1.9.1",
-    "wct-browser-legacy": "^1.0.1",
+    "sinon": "^7.5.0",
+    "wct-mocha": "^1.0.1",
     "whatwg-fetch": "^2.0.0"
   }
 }
