@@ -200,6 +200,10 @@ export class ActivityUsageEntity extends Entity {
 		}
 
 		const addNewAction = this._entity.getActionByName(Actions.activities.startAddNew);
+		if (!addNewAction) {
+			return false;
+		}
+
 		const addNewEntity = await performSirenAction(this._token, addNewAction);
 
 		if (addNewEntity && addNewEntity.hasSubEntityByClass(dateClass)) {
@@ -411,5 +415,17 @@ export class ActivityUsageEntity extends Entity {
 		const scoreOutOfEntity = this._getScoreOutOfEntity();
 		return scoreOutOfEntity
 			&& scoreOutOfEntity.getActionByName(Actions.activities.scoreOutOf.update);
+	}
+
+	async save(activity) {
+		if (typeof activity.dueDate !== 'undefined' &&
+			activity.dueDate !== this.dueDate()) {
+			await this.setDueDate(activity.dueDate);
+		}
+
+		if (typeof activity.isDraft !== 'undefined' &&
+			activity.isDraft !== this.isDraft()) {
+			await this.setDraftStatus(activity.isDraft);
+		}
 	}
 }
