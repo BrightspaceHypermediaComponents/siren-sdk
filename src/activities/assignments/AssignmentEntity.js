@@ -145,6 +145,181 @@ export class AssignmentEntity extends Entity {
 	}
 
 	/**
+	 * @returns {string} Name of the selected group category for the assignment type
+	 */
+	getAssignmentTypeSelectedGroupCategoryName() {
+		if (!this._entity) {
+			return null;
+		}
+		const subEntity = this._entity.getSubEntityByRel(Rels.Assignments.folderType);
+		if (!subEntity || !subEntity.properties || !subEntity.properties.groupName) {
+			return null;
+		}
+		return subEntity.properties.groupName;
+	}
+
+	/**
+	 * @returns {bool} If the assignment type cannot be changed
+	 */
+	isAssignmentTypeReadOnly() {
+		if (!this._entity) {
+			return false;
+		}
+		const subEntity = this._entity.getSubEntityByRel(Rels.Assignments.folderType);
+		if (!subEntity) {
+			return false;
+		}
+		return subEntity.hasClass(Classes.assignments.assignmentType.readOnly);
+	}
+
+	/**
+	 * @returns {bool} If the assignment type "group assignment" can be set
+	 */
+	isGroupAssignmentTypeDisabled() {
+		if (!this._entity) {
+			return false;
+		}
+		const subEntity = this._entity.getSubEntityByRel(Rels.Assignments.folderType);
+		if (!subEntity) {
+			return false;
+		}
+		return subEntity.hasClass(Classes.assignments.assignmentType.noGroupType);
+	}
+
+	/**
+	 * @returns {string} The additional information related to the assignment type
+	 */
+	getAssignmentTypeInformationText() {
+		if (!this._entity) {
+			return null;
+		}
+		const subEntity = this._entity.getSubEntityByRel(Rels.Assignments.folderType);
+		if (!subEntity || !subEntity.properties || !subEntity.properties.informationText) {
+			return null;
+		}
+		return subEntity.properties.informationText;
+	}
+
+	/**
+	 * @returns {bool} If the assignment type is set to individual assignment
+	 */
+	isIndividualAssignmentType() {
+		if (!this._entity) {
+			return false;
+		}
+		const subEntity = this._entity.getSubEntityByRel(Rels.Assignments.folderType);
+		if (!subEntity) {
+			return false;
+		}
+		return subEntity.hasClass(Classes.assignments.assignmentType.individual);
+	}
+
+	/**
+	 * @returns {Array} The list of group categories for group assignment type
+	 */
+	getAssignmentTypeGroupCategoryOptions() {
+		if (!this._entity) {
+			return [];
+		}
+		const subEntity = this._entity.getSubEntityByRel(Rels.Assignments.folderType);
+		if (!subEntity) {
+			return [];
+		}
+		const action = subEntity.getActionByName(Actions.assignments.setToGroup);
+		if (!action || !action.hasFieldByName('groupTypeId')) {
+			return [];
+		}
+		return action.getFieldByName('groupTypeId').value;
+	}
+
+	/**
+	 * @returns {String} The groups homepage link
+	 */
+	getGroupsHomepageLink() {
+		if (!this._entity) {
+			return null;
+		}
+		const subEntity = this._entity.getSubEntityByRel(Rels.Assignments.folderType);
+		if (!subEntity) {
+			return null;
+		}
+		const groupHomepageSubEntity = subEntity.getSubEntityByRel(Rels.Assignments.groupsHomepage);
+		if (!groupHomepageSubEntity || !groupHomepageSubEntity.properties || !groupHomepageSubEntity.properties.url) {
+			return null;
+		}
+		return groupHomepageSubEntity.properties.url;
+	}
+
+	/**
+	 * Sets the assignment type to group using a default group category
+	 */
+	async setToGroupAssignmentType() {
+		if (!this._entity) {
+			return;
+		}
+		const subEntity = this._entity.getSubEntityByRel(Rels.Assignments.folderType);
+		if (!subEntity) {
+			return;
+		}
+		const action = subEntity.getActionByName(Actions.assignments.setToGroup);
+		if (!action) {
+			return;
+		}
+
+		const defaultGroupTypeId = action.fields[0].value[0].value;
+
+		const fields = [
+			{ name: 'groupTypeId', value: defaultGroupTypeId },
+			{ name: 'folderType', value: 1 }
+		];
+		await performSirenAction(this._token, action, fields);
+	}
+
+	/**
+	 * Sets the assignment type to group with a specific group
+	 * @param {number} groupTypeId id of the group category
+	 */
+	async setAssignmentTypeGroupCategory(groupTypeId) {
+		if (!this._entity) {
+			return;
+		}
+		const subEntity = this._entity.getSubEntityByRel(Rels.Assignments.folderType);
+		if (!subEntity) {
+			return;
+		}
+		const action = subEntity.getActionByName(Actions.assignments.setToGroup);
+		if (!action) {
+			return;
+		}
+
+		const fields = [
+			{ name: 'groupTypeId', value: groupTypeId },
+			{ name: 'folderType', value: 1 }
+		];
+		await performSirenAction(this._token, action, fields);
+	}
+
+	/**
+	 * Sets the assignment type to individual
+	 */
+	async setToIndividualAssignmentType() {
+		if (!this._entity) {
+			return;
+		}
+		const subEntity = this._entity.getSubEntityByRel(Rels.Assignments.folderType);
+		if (!subEntity) {
+			return;
+		}
+		const action = subEntity.getActionByName(Actions.assignments.setToIndividual);
+		if (!action) {
+			return;
+		}
+
+		const fields = action.fields;
+		await performSirenAction(this._token, action, fields);
+	}
+
+	/**
 	 * @returns {object} Submission type of the assignment (including type value and type title)
 	 */
 	submissionType() {
