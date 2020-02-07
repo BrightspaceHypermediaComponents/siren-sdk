@@ -193,7 +193,7 @@ export class ActivityUsageEntity extends Entity {
 	 * @param {string} dueDate Date string to set as the due date, or empty string to clear the due date
 	 * @param {string} endDate Date string to set as the end date, or empty string to clear the end date
 	 */
-	async setDates(startDate, dueDate, endDate){
+	async setDates(startDate, dueDate, endDate) {
 		let action;
 		const datesEntity = this._getDateSubEntity('dates');
 		if (datesEntity) {
