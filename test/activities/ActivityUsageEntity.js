@@ -233,7 +233,7 @@ describe('ActivityUsageEntity', () => {
 		});
 
 		describe('due date', () => {
-			it('saves due date', async() => {
+			it('saves due date in aggregate', async() => {
 				fetchMock.patchOnce('http://vlx1-mdulat.desire2learn.d2l:44444/d2l/api/hm/activities/activities/6606_2000_31/usages/6609', entityJson);
 
 				await entity.save({
@@ -242,7 +242,9 @@ describe('ActivityUsageEntity', () => {
 
 				const form = await getFormData(fetchMock.lastCall().request);
 				if (!form.notSupported) {
+					expect(form.get('startDate')).to.equal('');
 					expect(form.get('dueDate')).to.equal('2020-02-23T04:59:00.000Z');
+					expect(form.get('endDate')).to.equal('');
 				}
 				expect(fetchMock.called()).to.be.true;
 			});
