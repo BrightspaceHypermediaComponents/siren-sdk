@@ -145,6 +145,17 @@ export class AssignmentEntity extends Entity {
 	}
 
 	/**
+	 * @returns {Array} The list of associated rubrics
+	 */
+	getRubrics() {
+		if (!this._entity) {
+			return [];
+		}
+
+		return this._entity.getLinksByRel(Rels.rubric);
+	}
+
+	/**
 	 * @returns {string} Name of the selected group category for the assignment type
 	 */
 	getAssignmentTypeSelectedGroupCategoryName() {
