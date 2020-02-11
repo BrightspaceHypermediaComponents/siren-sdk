@@ -13,6 +13,21 @@ export class AttachmentCollectionEntity extends Entity {
 	}
 
 	/**
+ * @returns {Array} Returns all Attachment sub-entities hrefs from the attachments collection
+ */
+	getAttachmentEntityHrefs() {
+		const attachments = this.getAttachmentEntities();
+		const attachmentHrefs = attachments.map(attachment => {
+			if (attachment.href) {
+				return attachment.href;
+			}
+
+			return attachment.getLinkByRel('self').href;
+		});
+		return attachmentHrefs;
+	}
+
+	/**
 	 * @returns {bool} Returns true if any valid action to add attachments is present on the entity
 	 */
 	canAddAttachments() {
