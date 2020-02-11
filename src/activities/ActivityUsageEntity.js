@@ -187,6 +187,58 @@ export class ActivityUsageEntity extends Entity {
 		await this._setDate(dateValue, Classes.dates.endDate, 'endDate');
 	}
 
+	/**
+	 * Updates start date, due date and end date together to the dates specified
+	 * @param {string} startDate Date string to set as the start date, or empty string to clear the start date
+	 * @param {string} dueDate Date string to set as the due date, or empty string to clear the due date
+	 * @param {string} endDate Date string to set as the end date, or empty string to clear the end date
+	 */
+	async setDates(startDate, dueDate, endDate) {
+		let action;
+		const datesEntity = this._getDateSubEntity('dates');
+		if (datesEntity) {
+			action = datesEntity.getActionByName(Actions.activities.update);
+		}
+
+		if (!action) {
+			return;
+		}
+
+		const startDateChanged = this._hasDateChanged(startDate, this.startDate());
+		const dueDateChanged = this._hasDateChanged(dueDate, this.dueDate());
+		const endDateChanged = this._hasDateChanged(endDate, this.endDate());
+
+		if (startDateChanged || dueDateChanged || endDateChanged) {
+			const startDateValue = this._getDateValue(startDate, this.startDate());
+			const dueDateValue = this._getDateValue(dueDate, this.dueDate());
+			const endDateValue = this._getDateValue(endDate, this.endDate());
+
+			const fields = [
+				{ name: 'startDate', value: startDateValue },
+				{ name: 'dueDate', value: dueDateValue },
+				{ name: 'endDate', value: endDateValue }
+			];
+
+			await performSirenAction(this._token, action, fields);
+		}
+	}
+
+	_hasDateChanged(newDate, oldDate) {
+		return typeof newDate !== 'undefined' && newDate !== oldDate;
+	}
+
+	_getDateValue(primaryDate, secondaryDate) {
+		if (typeof primaryDate !== 'undefined') {
+			return primaryDate;
+		}
+
+		if (secondaryDate) {
+			return secondaryDate;
+		}
+
+		return '';
+	}
+
 	_getDateSubEntity(dateClass) {
 		return this._entity
 			&& this._entity.getSubEntityByClass(dateClass);
@@ -418,14 +470,11 @@ export class ActivityUsageEntity extends Entity {
 	}
 
 	async save(activity) {
-		if (typeof activity.dueDate !== 'undefined' &&
-			activity.dueDate !== this.dueDate()) {
-			await this.setDueDate(activity.dueDate);
-		}
-
 		if (typeof activity.isDraft !== 'undefined' &&
 			activity.isDraft !== this.isDraft()) {
 			await this.setDraftStatus(activity.isDraft);
 		}
+
+		await this.setDates(activity.startDate, activity.dueDate, activity.endDate);
 	}
 }
