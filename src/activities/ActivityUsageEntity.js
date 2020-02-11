@@ -204,14 +204,14 @@ export class ActivityUsageEntity extends Entity {
 			return;
 		}
 
-		const startDateChanged = typeof startDate !== 'undefined' && startDate !== this.startDate();
-		const dueDateChanged = typeof dueDate !== 'undefined' && dueDate !== this.dueDate();
-		const endDateChanged = typeof endDate !== 'undefined' && endDate !== this.endDate();
+		const startDateChanged = this._hasDateChanged(startDate, this.startDate());
+		const dueDateChanged = this._hasDateChanged(dueDate, this.dueDate());
+		const endDateChanged = this._hasDateChanged(endDate, this.endDate());
 
 		if (startDateChanged || dueDateChanged || endDateChanged) {
-			const startDateValue = typeof startDate !== 'undefined' ? startDate : this.startDate();
-			const dueDateValue = typeof dueDate !== 'undefined' ? dueDate : this.dueDate();
-			const endDateValue = typeof endDate !== 'undefined' ? endDate : this.endDate();
+			const startDateValue = this._getDateValue(startDate, this.startDate());
+			const dueDateValue = this._getDateValue(dueDate, this.dueDate());
+			const endDateValue = this._getDateValue(endDate, this.endDate());
 
 			const fields = [
 				{ name: 'startDate', value: startDateValue },
@@ -221,6 +221,22 @@ export class ActivityUsageEntity extends Entity {
 
 			await performSirenAction(this._token, action, fields);
 		}
+	}
+
+	_hasDateChanged(newDate, oldDate) {
+		return typeof newDate !== 'undefined' && newDate !== oldDate;
+	}
+
+	_getDateValue(primaryDate, secondaryDate) {
+		if (typeof primaryDate !== 'undefined') {
+			return primaryDate;
+		}
+
+		if (secondaryDate) {
+			return secondaryDate;
+		}
+
+		return '';
 	}
 
 	_getDateSubEntity(dateClass) {
