@@ -203,12 +203,24 @@ export class ActivityUsageEntity extends Entity {
 		if (!action) {
 			return;
 		}
-		const fields = [
-			{ name: 'startDate', value: startDate },
-			{ name: 'dueDate', value: dueDate },
-			{ name: 'endDate', value: endDate }
-		];
-		await performSirenAction(this._token, action, fields);
+
+		const startDateChanged = typeof startDate !== 'undefined' && startDate !== this.startDate();
+		const dueDateChanged = typeof dueDate !== 'undefined' && dueDate !== this.dueDate();
+		const endDateChanged = typeof endDate !== 'undefined' && endDate !== this.endDate();
+
+		if (startDateChanged || dueDateChanged || endDateChanged) {
+			const startDateValue = typeof startDate !== 'undefined' ? startDate : this.startDate();
+			const dueDateValue = typeof dueDate !== 'undefined' ? dueDate : this.dueDate();
+			const endDateValue = typeof endDate !== 'undefined' ? endDate : this.endDate();
+
+			const fields = [
+				{ name: 'startDate', value: startDateValue },
+				{ name: 'dueDate', value: dueDateValue },
+				{ name: 'endDate', value: endDateValue }
+			];
+
+			await performSirenAction(this._token, action, fields);
+		}
 	}
 
 	_getDateSubEntity(dateClass) {
@@ -447,15 +459,6 @@ export class ActivityUsageEntity extends Entity {
 			await this.setDraftStatus(activity.isDraft);
 		}
 
-		const startDateChanged = typeof activity.startDate !== 'undefined';
-		const dueDateChanged = typeof activity.dueDate !== 'undefined';
-		const endDateChanged = typeof activity.endDate !== 'undefined';
-
-		if (startDateChanged || dueDateChanged || endDateChanged) {
-			const startDate = startDateChanged ? activity.startDate : this.startDate();
-			const dueDate = dueDateChanged ? activity.dueDate : this.dueDate();
-			const endDate = endDateChanged ? activity.endDate : this.endDate();
-			await this.setDates(startDate, dueDate, endDate);
-		}
+		await this.setDates(activity.startDate, activity.dueDate, activity.endDate);
 	}
 }
