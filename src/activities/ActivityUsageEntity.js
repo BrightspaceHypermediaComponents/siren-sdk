@@ -188,6 +188,14 @@ export class ActivityUsageEntity extends Entity {
 	}
 
 	/**
+	 * @returns {bool} Whether or not the edit dates action is present on the activity usage entity (for saving start, end, and due date together)
+	 */
+	canEditDates() {
+		const datesEntity = this._getDateSubEntity('dates');
+		return datesEntity && datesEntity.hasActionByName(Actions.activities.update);
+	}
+
+	/**
 	 * Updates start date, due date and end date together to the dates specified
 	 * @param {string} startDate Date string to set as the start date, or empty string to clear the start date
 	 * @param {string} dueDate Date string to set as the due date, or empty string to clear the due date
