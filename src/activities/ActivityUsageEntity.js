@@ -428,4 +428,16 @@ export class ActivityUsageEntity extends Entity {
 			await this.setDraftStatus(activity.isDraft);
 		}
 	}
+
+	/**
+	 * @returns {string} The href to the associations collection.
+	 */
+	getRubricAssociationsHref(){
+		if (!this._entity) {
+			return [];
+		}
+
+		return this._entity.getLinkByRel(Rels.Activities.associations).href;
+
+	}
 }
