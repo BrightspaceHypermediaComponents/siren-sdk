@@ -12,11 +12,12 @@ export class Associations extends Entity {
 			return [];
 		}
 
-		const singleAssociations = this._entity.getSubEntitiesByClass(Classes.associations.singleAssociation);
-		const singleAssociationsHrefs = [];
-		singleAssociations.forEach(a => {
-			singleAssociationsHrefs.push(a.getLinkByRel('self').href);
-		});
+		const singleAssociations = this._entity.getSubEntitiesByClass(
+			Classes.associations.singleAssociation
+		);
+		const singleAssociationsHrefs = singleAssociations.map(
+			a => a.getLinkByRel('self').href
+		);
 
 		return singleAssociationsHrefs;
 

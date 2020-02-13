@@ -489,9 +489,9 @@ export class ActivityUsageEntity extends Entity {
 	/**
 	 * @returns {string} The href to the associations collection.
 	 */
-	getRubricAssociationsHref(){
-		if (!this._entity) {
-			return [];
+	getRubricAssociationsHref() {
+		if (!this._entity || !this._entity.hasLinkByRel(Rels.Activities.associations)) {
+			return;
 		}
 
 		return this._entity.getLinkByRel(Rels.Activities.associations).href;

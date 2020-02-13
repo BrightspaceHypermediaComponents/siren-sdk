@@ -7,13 +7,13 @@ import { Rels } from '../hypermedia-constants';
 
 export class Association extends Entity {
 
-	getRubricLink(){
-		if (!this._entity) {
-			return [];
+	getRubricLink() {
+		if (!this._entity || !this._entity.hasLinkByRel(Rels.Rubrics.rubric)) {
+			return;
 		}
 
 		return this._entity.getLinkByRel(Rels.Rubrics.rubric).href;
 
 	}
-	
+
 }
