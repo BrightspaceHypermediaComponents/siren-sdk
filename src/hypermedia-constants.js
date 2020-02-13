@@ -62,7 +62,8 @@ export const Rels = {
 		activityGrade: 'https://activities.api.brightspace.com/rels/activity-grade',
 		activityHomepage: 'https://activities.api.brightspace.com/rels/activity-homepage',
 		scoreOutOf: 'https://activities.api.brightspace.com/rels/score-out-of',
-		gradeCandidates: 'https://activities.api.brightspace.com/rels/grade-candidates'
+		gradeCandidates: 'https://activities.api.brightspace.com/rels/grade-candidates',
+		associations: 'https://activities.api.brightspace.com/rels/associations'
 	},
 	// Assessments
 	Assessments: {
@@ -152,7 +153,8 @@ export const Rels = {
 		level: 'https://rubrics.api.brightspace.com/rels/level',
 		levels: 'https://rubrics.api.brightspace.com/rels/levels',
 		overallLevel: 'https://rubrics.api.brightspace.com/rels/overall-level',
-		overallLevels: 'https://rubrics.api.brightspace.com/rels/overall-levels'
+		overallLevels: 'https://rubrics.api.brightspace.com/rels/overall-levels',
+		rubric: 'https://rubrics.api.brightspace.com/rels/rubric'
 	},
 	Surveys: {
 		survey: 'https://surveys.api.brightspace.com/rels/survey'
@@ -217,6 +219,9 @@ export const Classes = {
 		annotationTools: 'annotations',
 		annotationEnabled: 'enabled',
 		annotationDisabled: 'disabled'
+	},
+	associations: {
+		singleAssociation: 'single-association'
 	},
 	awards: {
 		available: 'available',

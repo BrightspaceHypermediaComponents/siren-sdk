@@ -485,4 +485,16 @@ export class ActivityUsageEntity extends Entity {
 
 		await this.setDates(activity.startDate, activity.dueDate, activity.endDate);
 	}
+
+	/**
+	 * @returns {string} The href to the associations collection.
+	 */
+	getRubricAssociationsHref() {
+		if (!this._entity || !this._entity.hasLinkByRel(Rels.Activities.associations)) {
+			return;
+		}
+
+		return this._entity.getLinkByRel(Rels.Activities.associations).href;
+
+	}
 }
