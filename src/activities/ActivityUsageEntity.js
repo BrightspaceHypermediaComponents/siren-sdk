@@ -196,12 +196,26 @@ export class ActivityUsageEntity extends Entity {
 	}
 
 	/**
+	 * Validates range/order of start date, due date, and end date against each other
+	 * @param {string} startDate Date string to set as the start date, or empty string to clear the start date
+	 * @param {string} dueDate Date string to set as the due date, or empty string to clear the due date
+	 * @param {string} endDate Date string to set as the end date, or empty string to clear the end date
+	 */
+	async validateDates(startDate, dueDate, endDate) {
+		await this._setOrValidateDates(startDate, dueDate, endDate, true);
+	}
+
+	/**
 	 * Updates start date, due date and end date together to the dates specified
 	 * @param {string} startDate Date string to set as the start date, or empty string to clear the start date
 	 * @param {string} dueDate Date string to set as the due date, or empty string to clear the due date
 	 * @param {string} endDate Date string to set as the end date, or empty string to clear the end date
 	 */
 	async setDates(startDate, dueDate, endDate) {
+		await this._setOrValidateDates(startDate, dueDate, endDate, false);
+	}
+
+	async _setOrValidateDates(startDate, dueDate, endDate, validateOnly) {
 		let action;
 		const datesEntity = this._getDateSubEntity('dates');
 		if (datesEntity) {
@@ -226,6 +240,10 @@ export class ActivityUsageEntity extends Entity {
 				{ name: 'dueDate', value: dueDateValue },
 				{ name: 'endDate', value: endDateValue }
 			];
+
+			if (validateOnly) {
+				fields.push({ name: 'validateOnly', value: true });
+			}
 
 			await performSirenAction(this._token, action, fields);
 		}
@@ -475,6 +493,10 @@ export class ActivityUsageEntity extends Entity {
 		const scoreOutOfEntity = this._getScoreOutOfEntity();
 		return scoreOutOfEntity
 			&& scoreOutOfEntity.getActionByName(Actions.activities.scoreOutOf.update);
+	}
+
+	async validate(activity) {
+		await this.validateDates(activity.startDate, activity.dueDate, activity.endDate);
 	}
 
 	async save(activity) {
