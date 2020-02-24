@@ -87,6 +87,21 @@ export class ActivityUsageEntity extends Entity {
 		return entity ? entity.properties.url : undefined;
 	}
 
+	/** @returns {string} Href of the related conditions entity */
+	conditionsHref() {
+
+		if (!this._entity) {
+			return null;
+		}
+
+		const link = this._entity.getLinkByRel(Rels.Conditions.conditions);
+		if (!link) {
+			return null;
+		}
+
+		return link.href;
+	}
+
 	/**
 	 * @returns {string} URL to edit the activity usage, if present
 	 */
