@@ -8,6 +8,9 @@ import { performSirenAction } from '../es6/SirenAction';
 
 export class Association extends Entity {
 
+	/**
+	 * @returns {string} Returns the rubric href of the association
+	 */
 	getRubricLink() {
 		if (!this._entity || !this._entity.hasLinkByRel(Rels.Rubrics.rubric)) {
 			return;
@@ -17,7 +20,10 @@ export class Association extends Entity {
 
 	}
 
-	async deleteAssociation(){
+	/**
+	 * Deletes the association
+	 */
+	async deleteAssociation() {
 		if (!this._entity || !this._entity.hasActionByName(Actions.associations.deleteAssociation)) {
 			return;
 		}
