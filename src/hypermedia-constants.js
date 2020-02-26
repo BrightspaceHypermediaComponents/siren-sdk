@@ -452,5 +452,8 @@ export const Actions = {
 	},
 	outcomes: {
 		select: 'select'
-	}
+	},
+	associations: {
+		deleteAssociation: 'delete-association'
+	},
 };
