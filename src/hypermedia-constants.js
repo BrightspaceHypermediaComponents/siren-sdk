@@ -65,6 +65,11 @@ export const Rels = {
 		gradeCandidates: 'https://activities.api.brightspace.com/rels/grade-candidates',
 		associations: 'https://activities.api.brightspace.com/rels/associations'
 	},
+	Conditions: {
+		conditions: 'https://conditions.api.brightspace.com/rels/conditions',
+		createDialogOpener: 'https://conditions.api.brightspace.com/rels/--legacy-create-dialog-opener',
+		attachDialogOpener: 'https://conditions.api.brightspace.com/rels/--legacy-attach-dialog-opener',
+	},
 	// Assessments
 	Assessments: {
 		assessmentApplication: 'https://assessments.api.brightspace.com/rels/assessment-application'
@@ -197,6 +202,9 @@ export const Classes = {
 		userDiscussionActivity: 'user-discussion-activity',
 		userChecklistActivity: 'user-checklist-activity',
 		userSurveyActivity: 'user-survey-activity'
+	},
+	conditions: {
+		legacyCondition: '--legacy-condition'
 	},
 	assignments: {
 		annotated: 'annotated',
@@ -374,6 +382,9 @@ export const Actions = {
 			clearRoleFilters: 'clear-role-filters',
 			removeFilter: 'remove-filter'
 		}
+	},
+	conditions: {
+		legacyReplace: '--legacy-replace'
 	},
 	organizations: {
 		removeHomepageBanner: 'remove-homepage-banner',

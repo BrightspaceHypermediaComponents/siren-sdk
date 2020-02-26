@@ -43,7 +43,9 @@ export class Entity extends EntitySirenProperties {
 	 */
 	dispose() {
 		this._subEntities.forEach(entity => dispose(entity));
-		this._listener.remove();
+		if (this._listener) {
+			this._listener.remove();
+		}
 	}
 	/**
 	 * Protected: Add a listener to a subentity of this entity.
