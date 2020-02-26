@@ -433,6 +433,22 @@ export class AssignmentEntity extends Entity {
 	}
 
 	/**
+	 * @returns {Array} Set of all possible completion type options
+	 */
+	allCompletionTypeOptions() {
+		if (!this.canEditCompletionType()) {
+			return [];
+		}
+
+		const action = this._entity.getActionByName(Actions.assignments.updateCompletionType);
+		if (!action.hasFieldByName('completionType')) {
+			return [];
+		}
+
+		return action.getFieldByName('completionType').value;
+	}
+
+	/**
 	 * @returns {bool} Whether or not the edit completion type action is present on the assignment entity
 	 */
 	canEditCompletionType() {
