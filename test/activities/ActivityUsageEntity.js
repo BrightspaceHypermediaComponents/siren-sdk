@@ -5,11 +5,14 @@ import { testData } from './data/ActivityUsageEntity.js';
 import { getFormData } from '../utility/test-helpers.js';
 
 describe('ActivityUsageEntity', () => {
-	let entity, readonlyEntity, entityJson;
+	let entity, entityCannotEditGrades, readonlyEntity, entityJson, entityJsonCannotEditGrades;
 
 	beforeEach(() => {
 		entityJson = window.D2L.Hypermedia.Siren.Parse(testData.activityUsageEntityEditable);
 		entity = new ActivityUsageEntity(entityJson);
+
+		entityJsonCannotEditGrades = window.D2L.Hypermedia.Siren.Parse(testData.activityUsageEntityEditableCannotEditGrades);
+		entityCannotEditGrades = new ActivityUsageEntity(entityJsonCannotEditGrades);
 
 		const readonlyJson = window.D2L.Hypermedia.Siren.Parse(testData.activityUsageEntityReadOnly);
 		readonlyEntity = new ActivityUsageEntity(readonlyJson);
@@ -350,6 +353,24 @@ describe('ActivityUsageEntity', () => {
 				if (!form.notSupported) {
 					expect(form.get('scoreOutOf')).to.equal('56');
 					expect(form.get('inGrades')).to.equal('false');
+				}
+				expect(fetchMock.called()).to.be.true;
+			});
+
+			it('skips updating grade if cannot edit grade', async() => {
+				fetchMock.postOnce('http://vlx1-mdulat.desire2learn.d2l:44444/d2l/api/hm/assignments/6609/folders/31/score-out-of', entityJsonCannotEditGrades);
+
+				await entityCannotEditGrades.save({
+					scoreAndGrade: {
+						scoreOutOf: '99',
+						inGrades: false
+					}
+				});
+
+				const form = await getFormData(fetchMock.lastCall().request);
+				if (!form.notSupported) {
+					expect(form.get('scoreOutOf')).to.equal('99');
+					expect(form.get('inGrades')).to.be.null;
 				}
 				expect(fetchMock.called()).to.be.true;
 			});

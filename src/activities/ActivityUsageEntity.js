@@ -423,8 +423,9 @@ export class ActivityUsageEntity extends Entity {
 		}
 
 		const fields = [{ name: 'scoreOutOf', value: score }];
-		fields.push({ name: 'inGrades', value: inGrades });
-		if (inGrades) {
+
+		if (this.canEditGrades()) {
+			fields.push({ name: 'inGrades', value: inGrades });
 			fields.push({ name: 'gradeType', value: 'Numeric' });
 		}
 		await performSirenAction(this._token, this._getScoreOutOfAction(), fields);
