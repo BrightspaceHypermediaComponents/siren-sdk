@@ -70,6 +70,38 @@ export const testData = {
 			},
 			{
 				'class': [
+					'dates'
+				],
+				'rel': [
+					'https://api.brightspace.com/rels/date'
+				],
+				'actions': [
+					{
+						'href': 'http://vlx1-mdulat.desire2learn.d2l:44444/d2l/api/hm/activities/activities/6606_2000_31/usages/6609',
+						'name': 'update',
+						'method': 'PATCH',
+						'fields': [
+							{
+								'type': 'text',
+								'name': 'startDate',
+								'value': ''
+							},
+							{
+								'type': 'text',
+								'name': 'dueDate',
+								'value': '2019-12-26T04:59:00.000Z'
+							},
+							{
+								'type': 'text',
+								'name': 'endDate',
+								'value': ''
+							}
+						]
+					}
+				]
+			},
+			{
+				'class': [
 					'due-date',
 					'date'
 				],

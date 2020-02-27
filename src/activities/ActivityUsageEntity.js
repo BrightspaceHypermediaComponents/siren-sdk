@@ -264,7 +264,7 @@ export class ActivityUsageEntity extends Entity {
 		}
 	}
 
-	_hasDateChanged(newDate, oldDate) {
+	_hasDateChanged(newDate, oldDate = '') {
 		return typeof newDate !== 'undefined' && newDate !== oldDate;
 	}
 
@@ -415,16 +415,16 @@ export class ActivityUsageEntity extends Entity {
 	/**
 	 * Updates the score out of value of the activity usage entity
 	 * @param {number} score The numerical score value to bet set for the activity usage entity
-	 * @param {boolean} addToGrades True if a new grade item should be associated with this activity usage
+	 * @param {boolean} inGrades True if a grade item should be associated with this activity usage
 	 */
-	async setScoreOutOf(score, addToGrades) {
+	async setScoreOutOf(score, inGrades) {
 		if (!this.canEditScoreOutOf()) {
 			return;
 		}
 
 		const fields = [{ name: 'scoreOutOf', value: score }];
-		if (addToGrades) {
-			fields.push({ name: 'inGrades', value: true });
+		fields.push({ name: 'inGrades', value: inGrades });
+		if (inGrades) {
 			fields.push({ name: 'gradeType', value: 'Numeric' });
 		}
 		await performSirenAction(this._token, this._getScoreOutOfAction(), fields);
@@ -514,6 +514,17 @@ export class ActivityUsageEntity extends Entity {
 		await this.validateDates(activity.startDate, activity.dueDate, activity.endDate);
 	}
 
+	async saveScoreAndGrade(scoreAndGrade) {
+		if (!scoreAndGrade) {
+			return;
+		}
+
+		if (scoreAndGrade.scoreOutOf !== this.scoreOutOf().toString() ||
+			scoreAndGrade.inGrades !== this.inGrades()) {
+			await this.setScoreOutOf(scoreAndGrade.scoreOutOf, scoreAndGrade.inGrades);
+		}
+	}
+
 	async save(activity) {
 		if (typeof activity.isDraft !== 'undefined' &&
 			activity.isDraft !== this.isDraft()) {
@@ -521,6 +532,8 @@ export class ActivityUsageEntity extends Entity {
 		}
 
 		await this.setDates(activity.startDate, activity.dueDate, activity.endDate);
+
+		await this.saveScoreAndGrade(activity.scoreAndGrade);
 	}
 
 	/**
