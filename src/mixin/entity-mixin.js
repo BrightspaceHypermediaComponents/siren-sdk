@@ -21,7 +21,7 @@ export const interalEntityMixin = function(superClass) {
 					reflectToAttribute: true
 				},
 				/**
-				 * Token JWT Token for brightspace | a function that returns a JWT token for brightspace | null (defaults to cookie authentication in a browser)
+				 * Token JWT Token for brightspace | a function that returns a JWT token for brightspace
 				 */
 				token: String,
 				/**
@@ -70,6 +70,9 @@ export const interalEntityMixin = function(superClass) {
 		}
 
 		__onHrefChange(href, token) {
+			if (!href || (typeof token !== 'string' && typeof token !== 'function')) {
+				return;
+			}
 			dispose(this._entity); // Make sure the entity is cleaned up before setting a new one.
 			if (typeof this._entityType === 'function') {
 				entityFactory(this._entityType, href, token, entity => {
