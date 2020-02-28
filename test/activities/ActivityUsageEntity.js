@@ -5,11 +5,14 @@ import { testData } from './data/ActivityUsageEntity.js';
 import { getFormData } from '../utility/test-helpers.js';
 
 describe('ActivityUsageEntity', () => {
-	let entity, readonlyEntity, entityJson;
+	let entity, entityCannotEditGrades, readonlyEntity, entityJson, entityJsonCannotEditGrades;
 
 	beforeEach(() => {
 		entityJson = window.D2L.Hypermedia.Siren.Parse(testData.activityUsageEntityEditable);
 		entity = new ActivityUsageEntity(entityJson);
+
+		entityJsonCannotEditGrades = window.D2L.Hypermedia.Siren.Parse(testData.activityUsageEntityEditableCannotEditGrades);
+		entityCannotEditGrades = new ActivityUsageEntity(entityJsonCannotEditGrades);
 
 		const readonlyJson = window.D2L.Hypermedia.Siren.Parse(testData.activityUsageEntityReadOnly);
 		readonlyEntity = new ActivityUsageEntity(readonlyJson);
@@ -245,7 +248,7 @@ describe('ActivityUsageEntity', () => {
 					expect(form.get('startDate')).to.equal('');
 					expect(form.get('dueDate')).to.equal('2020-02-23T04:59:00.000Z');
 					expect(form.get('endDate')).to.equal('');
-					expect(form.get('validateOnly')).to.be.undefined;
+					expect(form.get('validateOnly')).to.be.null;
 				}
 				expect(fetchMock.called()).to.be.true;
 			});
@@ -298,6 +301,102 @@ describe('ActivityUsageEntity', () => {
 				expect(fetchMock.done());
 			});
 		});
+
+		describe('score and grade', () => {
+			it('saves updated score', async() => {
+				fetchMock.postOnce('http://vlx1-mdulat.desire2learn.d2l:44444/d2l/api/hm/assignments/6609/folders/31/score-out-of', entityJson);
+
+				await entity.save({
+					scoreAndGrade: {
+						scoreOutOf: '99',
+						inGrades: true
+					}
+				});
+
+				const form = await getFormData(fetchMock.lastCall().request);
+				if (!form.notSupported) {
+					expect(form.get('scoreOutOf')).to.equal('99');
+					expect(form.get('inGrades')).to.equal('true');
+				}
+				expect(fetchMock.called()).to.be.true;
+			});
+
+			it('saves empty score', async() => {
+				fetchMock.postOnce('http://vlx1-mdulat.desire2learn.d2l:44444/d2l/api/hm/assignments/6609/folders/31/score-out-of', entityJson);
+
+				await entity.save({
+					scoreAndGrade: {
+						scoreOutOf: '',
+						inGrades: false
+					}
+				});
+
+				const form = await getFormData(fetchMock.lastCall().request);
+				if (!form.notSupported) {
+					expect(form.get('scoreOutOf')).to.equal('');
+					expect(form.get('inGrades')).to.equal('false');
+				}
+				expect(fetchMock.called()).to.be.true;
+			});
+
+			it('removes from grades', async() => {
+				fetchMock.postOnce('http://vlx1-mdulat.desire2learn.d2l:44444/d2l/api/hm/assignments/6609/folders/31/score-out-of', entityJson);
+
+				await entity.save({
+					scoreAndGrade: {
+						scoreOutOf: '56',
+						inGrades: false
+					}
+				});
+
+				const form = await getFormData(fetchMock.lastCall().request);
+				if (!form.notSupported) {
+					expect(form.get('scoreOutOf')).to.equal('56');
+					expect(form.get('inGrades')).to.equal('false');
+				}
+				expect(fetchMock.called()).to.be.true;
+			});
+
+			it('skips updating grade if cannot edit grade', async() => {
+				fetchMock.postOnce('http://vlx1-mdulat.desire2learn.d2l:44444/d2l/api/hm/assignments/6609/folders/31/score-out-of', entityJsonCannotEditGrades);
+
+				await entityCannotEditGrades.save({
+					scoreAndGrade: {
+						scoreOutOf: '99',
+						inGrades: false
+					}
+				});
+
+				const form = await getFormData(fetchMock.lastCall().request);
+				if (!form.notSupported) {
+					expect(form.get('scoreOutOf')).to.equal('99');
+					expect(form.get('inGrades')).to.be.null;
+				}
+				expect(fetchMock.called()).to.be.true;
+			});
+
+			it('skips save if not dirty', async() => {
+				await entity.save({
+					scoreAndGrade: {
+						scoreOutOf: '56',
+						inGrades: true
+					}
+				});
+
+				expect(fetchMock.done());
+			});
+
+			it('skips save if not editable', async() => {
+				await readonlyEntity.save({
+					scoreAndGrade: {
+						scoreOutOf: '99',
+						inGrades: false
+					}
+				});
+
+				expect(fetchMock.done());
+			});
+		});
 	});
 
 	describe('Validation', () => {
@@ -319,7 +418,7 @@ describe('ActivityUsageEntity', () => {
 				const form = await getFormData(fetchMock.lastCall().request);
 				if (!form.notSupported) {
 					expect(form.get('startDate')).to.equal('2020-02-23T04:59:00.000Z');
-					expect(form.get('dueDate')).to.equal('2020-02-23T04:59:00.000Z');
+					expect(form.get('dueDate')).to.equal('2020-02-24T04:59:00.000Z');
 					expect(form.get('endDate')).to.equal('2020-02-25T04:59:00.000Z');
 					expect(form.get('validateOnly')).to.equal('true');
 				}
@@ -328,9 +427,9 @@ describe('ActivityUsageEntity', () => {
 
 			it('skips validation if not dirty', async() => {
 				await entity.validate({
-					startDate: '2020-02-23T04:59:00.000Z',
-					dueDate: '2020-02-24T04:59:00.000Z',
-					endDate: '2020-02-25T04:59:00.000Z',
+					startDate: '',
+					dueDate: '2019-12-26T04:59:00.000Z',
+					endDate: '',
 				});
 
 				expect(fetchMock.done());
