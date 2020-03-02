@@ -598,6 +598,18 @@ export class AssignmentEntity extends Entity {
 			fields.push({ name: 'instructions', value: assignment.instructions });
 		}
 
+		if (typeof assignment.submissionType !== 'undefined' &&
+				assignment.submissionType !== this.submissionType() &&
+				this.canEditSubmissionType()) {
+			fields.push({ name: 'submissionType', value: assignment.submissionType });
+		}
+
+		if (typeof assignment.completionType !== 'undefined' &&
+				assignment.completionType !== this.completionType() &&
+				this.canEditCompletionType()) {
+			fields.push({ name: 'completionType', value: assignment.completionType });
+		}
+
 		if (fields.length > 0) {
 			await performSirenAction(this._token, action, fields);
 		}
