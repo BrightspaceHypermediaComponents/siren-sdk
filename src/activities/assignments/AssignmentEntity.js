@@ -327,6 +327,7 @@ export class AssignmentEntity extends Entity {
 		}
 
 		const fields = action.fields;
+		debugger;
 		await performSirenAction(this._token, action, fields);
 	}
 
@@ -610,6 +611,21 @@ export class AssignmentEntity extends Entity {
 			fields.push({ name: 'completionType', value: assignment.completionType });
 		}
 
+		if (typeof assignment.isIndividualAssignmentType !== 'undefined') {
+			if(assignment.isIndividualAssignmentType !== this.isIndividualAssignmentType()){
+				fields.push({ name: 'isIndividualAssignmentType', value: assignment.isIndividualAssignmentType });
+			}
+
+			if (!assignment.isIndividualAssignmentType && !this.isGroupAssignmentTypeDisabled()) {
+				fields.push({ name: 'groupTypeId', value: assignment.groupTypeId });
+				fields.push({ name: 'folderType', value: 1 });
+			}else{
+				fields.push({ name: 'groupTypeId', type: "hidden" });
+				fields.push({ name: 'folderType', type: "hidden", value: 2 });
+			}
+		}
+
+		debugger;
 		if (fields.length > 0) {
 			await performSirenAction(this._token, action, fields);
 		}

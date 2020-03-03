@@ -121,6 +121,7 @@ const _performSirenAction = function(action, fields, tokenValue) {
 		fields = _getSirenFields(action);
 	}
 
+	debugger;
 	if (action.type.indexOf('json') !== -1) {
 		const json = {};
 		for (let i = 0; i < fields.length; i++) {
