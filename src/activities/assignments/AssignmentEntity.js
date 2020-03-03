@@ -433,6 +433,22 @@ export class AssignmentEntity extends Entity {
 	}
 
 	/**
+	 * @returns {Array} Set of all possible completion type options
+	 */
+	allCompletionTypeOptions() {
+		if (!this.canEditCompletionType()) {
+			return [];
+		}
+
+		const action = this._entity.getActionByName(Actions.assignments.updateCompletionType);
+		if (!action.hasFieldByName('completionType')) {
+			return [];
+		}
+
+		return action.getFieldByName('completionType').value;
+	}
+
+	/**
 	 * @returns {bool} Whether or not the edit completion type action is present on the assignment entity
 	 */
 	canEditCompletionType() {
@@ -580,6 +596,18 @@ export class AssignmentEntity extends Entity {
 				assignment.instructions !== this.instructionsEditorHtml() &&
 				this.canEditInstructions()) {
 			fields.push({ name: 'instructions', value: assignment.instructions });
+		}
+
+		if (typeof assignment.submissionType !== 'undefined' &&
+				assignment.submissionType !== this.submissionType() &&
+				this.canEditSubmissionType()) {
+			fields.push({ name: 'submissionType', value: assignment.submissionType });
+		}
+
+		if (typeof assignment.completionType !== 'undefined' &&
+				assignment.completionType !== this.completionType() &&
+				this.canEditCompletionType()) {
+			fields.push({ name: 'completionType', value: assignment.completionType });
 		}
 
 		if (fields.length > 0) {

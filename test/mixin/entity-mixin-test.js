@@ -129,5 +129,24 @@ describe('d2l-organization-name', () => {
 				});
 			});
 		});
+		describe(`Testing No Token ${mixinType}`, () => {
+			let spy, spy2;
+			beforeEach(done => {
+				component = fixture(`no-params-${mixinType}`);
+				component2 = fixture(`no-params-2-${mixinType}`);
+				spy = sandbox.spy(component, '_onOrganizationChange');
+				spy2 = sandbox.spy(component2, '_onOrganizationChange');
+
+				component.token = 'whatever';
+				component.href = '/organization.json';
+				component2.href = '/organization2.json';
+				afterNextRender(component, done);
+			});
+
+			it('Not called if token is undefined', () => {
+				expect(spy).to.have.been.calledOnce;
+				expect(spy2).to.have.not.been.called;
+			});
+		});
 	});
 });

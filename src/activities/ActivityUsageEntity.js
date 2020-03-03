@@ -87,6 +87,21 @@ export class ActivityUsageEntity extends Entity {
 		return entity ? entity.properties.url : undefined;
 	}
 
+	/** @returns {string} Href of the related conditions entity */
+	conditionsHref() {
+
+		if (!this._entity) {
+			return null;
+		}
+
+		const link = this._entity.getLinkByRel(Rels.Conditions.conditions);
+		if (!link) {
+			return null;
+		}
+
+		return link.href;
+	}
+
 	/**
 	 * @returns {string} URL to edit the activity usage, if present
 	 */
@@ -196,12 +211,26 @@ export class ActivityUsageEntity extends Entity {
 	}
 
 	/**
+	 * Validates range/order of start date, due date, and end date against each other
+	 * @param {string} startDate Date string to set as the start date, or empty string to clear the start date
+	 * @param {string} dueDate Date string to set as the due date, or empty string to clear the due date
+	 * @param {string} endDate Date string to set as the end date, or empty string to clear the end date
+	 */
+	async validateDates(startDate, dueDate, endDate) {
+		await this._setOrValidateDates(startDate, dueDate, endDate, true);
+	}
+
+	/**
 	 * Updates start date, due date and end date together to the dates specified
 	 * @param {string} startDate Date string to set as the start date, or empty string to clear the start date
 	 * @param {string} dueDate Date string to set as the due date, or empty string to clear the due date
 	 * @param {string} endDate Date string to set as the end date, or empty string to clear the end date
 	 */
 	async setDates(startDate, dueDate, endDate) {
+		await this._setOrValidateDates(startDate, dueDate, endDate, false);
+	}
+
+	async _setOrValidateDates(startDate, dueDate, endDate, validateOnly) {
 		let action;
 		const datesEntity = this._getDateSubEntity('dates');
 		if (datesEntity) {
@@ -227,11 +256,15 @@ export class ActivityUsageEntity extends Entity {
 				{ name: 'endDate', value: endDateValue }
 			];
 
+			if (validateOnly) {
+				fields.push({ name: 'validateOnly', value: true });
+			}
+
 			await performSirenAction(this._token, action, fields);
 		}
 	}
 
-	_hasDateChanged(newDate, oldDate) {
+	_hasDateChanged(newDate, oldDate = '') {
 		return typeof newDate !== 'undefined' && newDate !== oldDate;
 	}
 
@@ -382,16 +415,17 @@ export class ActivityUsageEntity extends Entity {
 	/**
 	 * Updates the score out of value of the activity usage entity
 	 * @param {number} score The numerical score value to bet set for the activity usage entity
-	 * @param {boolean} addToGrades True if a new grade item should be associated with this activity usage
+	 * @param {boolean} inGrades True if a grade item should be associated with this activity usage
 	 */
-	async setScoreOutOf(score, addToGrades) {
+	async setScoreOutOf(score, inGrades) {
 		if (!this.canEditScoreOutOf()) {
 			return;
 		}
 
 		const fields = [{ name: 'scoreOutOf', value: score }];
-		if (addToGrades) {
-			fields.push({ name: 'inGrades', value: true });
+
+		if (this.canEditGrades()) {
+			fields.push({ name: 'inGrades', value: inGrades });
 			fields.push({ name: 'gradeType', value: 'Numeric' });
 		}
 		await performSirenAction(this._token, this._getScoreOutOfAction(), fields);
@@ -477,6 +511,21 @@ export class ActivityUsageEntity extends Entity {
 			&& scoreOutOfEntity.getActionByName(Actions.activities.scoreOutOf.update);
 	}
 
+	async validate(activity) {
+		await this.validateDates(activity.startDate, activity.dueDate, activity.endDate);
+	}
+
+	async saveScoreAndGrade(scoreAndGrade) {
+		if (!scoreAndGrade) {
+			return;
+		}
+
+		if (scoreAndGrade.scoreOutOf !== this.scoreOutOf().toString() ||
+			scoreAndGrade.inGrades !== this.inGrades()) {
+			await this.setScoreOutOf(scoreAndGrade.scoreOutOf, scoreAndGrade.inGrades);
+		}
+	}
+
 	async save(activity) {
 		if (typeof activity.isDraft !== 'undefined' &&
 			activity.isDraft !== this.isDraft()) {
@@ -484,6 +533,8 @@ export class ActivityUsageEntity extends Entity {
 		}
 
 		await this.setDates(activity.startDate, activity.dueDate, activity.endDate);
+
+		await this.saveScoreAndGrade(activity.scoreAndGrade);
 	}
 
 	/**
