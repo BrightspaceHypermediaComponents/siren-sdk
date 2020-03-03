@@ -14,14 +14,17 @@ export class GradeCandidateEntity extends Entity {
 	}
 
 	/**
-	 * @returns {string} Grade candidate's weight value
+	 * @returns {string} Grade candidate's base weight value
 	 */
-	weight() {
-		const weightEntity = !this.isCategory() && this._entity && this._entity.getSubEntitiesByRel(Rels.Grades.weight);
-		if (weightEntity) {
-			return weightEntity[0].properties && weightEntity[0].properties.weight;
-		}
-		return '';
+	baseWeight() {
+		return this._entity && this._entity.properties && this._entity.properties.baseWeight;
+	}
+
+	/**
+	 * @returns {string} Grade candidate's max points value
+	 */
+	maxPoints() {
+		return this._entity && this._entity.properties && this._entity.properties.maxPoints;
 	}
 
 	/**

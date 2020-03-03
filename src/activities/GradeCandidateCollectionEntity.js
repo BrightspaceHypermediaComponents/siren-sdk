@@ -19,7 +19,6 @@ export class GradeCandidateCollectionEntity extends Entity {
 		});
 	}
 
-	
 	/**
 	 * @param {*} href Href of an entity in the collection
 	 * @returns {Array} Returns grade-candidate entity hrefs
@@ -34,7 +33,7 @@ export class GradeCandidateCollectionEntity extends Entity {
 					}
 				});
 			}
-		};
+		}
 
 		return [];
 	}
