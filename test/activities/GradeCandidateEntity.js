@@ -1,44 +1,110 @@
-import { GradeCandidateCollectionEntity } from '../../src/activities/GradeCandidateCollectionEntity.js';
-import { testData } from './data/GradeCandidateCollectionEntity.js';
+/* global fetchMock */
 
-describe('GradeCandidateCollectionEntity', () => {
-	let collectionEntity;
-	let sandbox;
+import { getFormData } from '../utility/test-helpers.js';
+import { GradeCandidateEntity } from '../../src/activities/GradeCandidateEntity.js';
+import { testData } from './data/GradeCandidateEntity.js';
 
-	beforeEach(() => {
-		const entityJson = window.D2L.Hypermedia.Siren.Parse(testData.gradeCandidateCollectionEntity);
-		collectionEntity = new GradeCandidateCollectionEntity(entityJson);
-		sandbox = sinon.sandbox.create();
-	});
-
+describe('GradeCandidateEntity', () => {
 	afterEach(() => {
-		sandbox.restore();
+		fetchMock.reset();
 	});
 
-	describe('GradeCandidateEntity', () => {
-		let associateGradeSpy;
-		let entity;
+	describe('Grade', () => {
+		let entity, entityJson;
 
 		beforeEach(() => {
-			entity = collectionEntity.getGradeCandidateEntities()[0];
-			associateGradeSpy = sandbox.spy(entity, 'associateGrade');
+			entityJson = window.D2L.Hypermedia.Siren.Parse(testData.gradeCandidateEntity.grade);
+			entity = new GradeCandidateEntity(entityJson);
 		});
 
-		it('gets name', () => {
-			expect(entity.name()).to.equal('Assignment 1 Grade');
+		it('gets href', () => {
+			expect(entity.href()).to.equal('https://9caa9c10-0175-4c56-84e5-fc2bca4d8a52.grades.api.proddev.d2l/organizations/6609/grades/20');
 		});
 
-		it('gets maxPoints', () => {
-			expect(entity.maxPoints()).to.equal('30');
+		it('gets getGradeCandidates', () => {
+			expect(entity.getGradeCandidates()).to.be.an('array').that.is.empty;
+		});
+
+		it('is not a category', () => {
+			expect(entity.isCategory()).to.be.false;
 		});
 
 		it('can associate grade', () => {
 			expect(entity.canAssociateGrade()).to.be.true;
 		});
 
-		it('returns a promise when associating grade', () => {
-			entity.associateGrade();
-			expect(associateGradeSpy.returnValues[0]).to.be.a('promise');
+		it('returns a promise when associating grade', async() => {
+			fetchMock.postOnce('https://9caa9c10-0175-4c56-84e5-fc2bca4d8a52.activities.api.proddev.d2l/activities/6606_2000_11/usages/6609/associate-grade', entityJson);
+
+			await entity.associateGrade();
+
+			const form = await getFormData(fetchMock.lastCall().request);
+			if (!form.notSupported) {
+				expect(form.get('gradeItemId')).to.equal('20');
+			}
+			expect(fetchMock.called()).to.be.true;
+		});
+	});
+
+	describe('Grade without Associate Action', () => {
+		let entity;
+
+		beforeEach(() => {
+			const entityJson = window.D2L.Hypermedia.Siren.Parse(testData.gradeCandidateEntity.gradeWithoutAssociateAction);
+			entity = new GradeCandidateEntity(entityJson);
+		});
+
+		it('gets href', () => {
+			expect(entity.href()).to.equal('https://9caa9c10-0175-4c56-84e5-fc2bca4d8a52.grades.api.proddev.d2l/organizations/6609/grades/20');
+		});
+
+		it('gets getGradeCandidates', () => {
+			expect(entity.getGradeCandidates()).to.be.an('array').that.is.empty;
+		});
+
+		it('is not a category', () => {
+			expect(entity.isCategory()).to.be.false;
+		});
+
+		it('can not associate to grade', () => {
+			expect(entity.canAssociateGrade()).to.be.false;
+		});
+
+		it('skips associating as it does not have the associate action', async() => {
+			await entity.associateGrade();
+			expect(fetchMock.done());
+		});
+	});
+
+	describe('Category with Grade', () => {
+		let entity;
+
+		beforeEach(() => {
+			const entityJson = window.D2L.Hypermedia.Siren.Parse(testData.gradeCandidateEntity.categoryWithGrade);
+			entity = new GradeCandidateEntity(entityJson);
+		});
+
+		it('gets href', () => {
+			expect(entity.href()).to.equal('https://9caa9c10-0175-4c56-84e5-fc2bca4d8a52.grades.api.proddev.d2l/organizations/6609/grade-categories/5010');
+		});
+
+		it('gets getGradeCandidates', () => {
+			const expected = entity.getGradeCandidates();
+			expect(expected).to.be.an('array');
+			expect(expected).to.have.lengthOf(1);
+		});
+
+		it('is a category', () => {
+			expect(entity.isCategory()).to.be.true;
+		});
+
+		it('can associate grade', () => {
+			expect(entity.canAssociateGrade()).to.be.false;
+		});
+
+		it('skips associating as it does not hve the associate action', async() => {
+			await entity.associateGrade();
+			expect(fetchMock.done());
 		});
 	});
 });

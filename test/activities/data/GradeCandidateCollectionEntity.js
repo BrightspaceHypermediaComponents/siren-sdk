@@ -10,22 +10,19 @@ export const testData = {
 					'grade-candidate'
 				],
 				'rel': [
-					'item'
+					'item',
+					'https://grades.api.brightspace.com/rels/grade'
 				],
-				'properties': {
-					'name': 'Assignment 1 Grade',
-					'maxPoints': '30'
-				},
 				'actions': [
 					{
-						'href': 'http://vlx1-mdulat.desire2learn.d2l:44444/d2l/api/hm/activities/activities/6606_2000_1/usages/6609/associate-grade',
+						'href': 'https://9caa9c10-0175-4c56-84e5-fc2bca4d8a52.activities.api.proddev.d2l/activities/6606_2000_11/usages/6609/associate-grade',
 						'name': 'associate-grade',
 						'method': 'POST',
 						'fields': [
 							{
 								'type': 'hidden',
 								'name': 'gradeItemId',
-								'value': '5006'
+								'value': 20
 							}
 						]
 					}
@@ -35,9 +32,59 @@ export const testData = {
 						'rel': [
 							'https://grades.api.brightspace.com/rels/grade'
 						],
-						'href': 'http://vlx1-mdulat.desire2learn.d2l:44444/d2l/api/hm/grades/organizations/6609/grades/5006'
+						'href': 'https://9caa9c10-0175-4c56-84e5-fc2bca4d8a52.grades.api.proddev.d2l/organizations/6609/grades/20'
 					}
-
+				]
+			},
+			{
+				'class': [
+					'grade-category'
+				],
+				'rel': [
+					'item',
+					'https://grades.api.brightspace.com/rels/grade-category'
+				],
+				'entities': [
+					{
+						'class': [
+							'current-association',
+							'grade-candidate'
+						],
+						'rel': [
+							'item',
+							'https://grades.api.brightspace.com/rels/grade'
+						],
+						'actions': [
+							{
+								'href': 'https://9caa9c10-0175-4c56-84e5-fc2bca4d8a52.activities.api.proddev.d2l/activities/6606_2000_11/usages/6609/associate-grade',
+								'name': 'associate-grade',
+								'method': 'POST',
+								'fields': [
+									{
+										'type': 'hidden',
+										'name': 'gradeItemId',
+										'value': 5024
+									}
+								]
+							}
+						],
+						'links': [
+							{
+								'rel': [
+									'https://grades.api.brightspace.com/rels/grade'
+								],
+								'href': 'https://9caa9c10-0175-4c56-84e5-fc2bca4d8a52.grades.api.proddev.d2l/organizations/6609/grades/5024'
+							}
+						]
+					}
+				],
+				'links': [
+					{
+						'rel': [
+							'https://grades.api.brightspace.com/rels/grade-category'
+						],
+						'href': 'https://9caa9c10-0175-4c56-84e5-fc2bca4d8a52.grades.api.proddev.d2l/organizations/6609/grade-categories/5010'
+					}
 				]
 			},
 			{
@@ -45,22 +92,19 @@ export const testData = {
 					'grade-candidate'
 				],
 				'rel': [
-					'item'
+					'item',
+					'https://grades.api.brightspace.com/rels/grade'
 				],
-				'properties': {
-					'name': 'Assignment 2 Grade',
-					'maxPoints': '30'
-				},
 				'actions': [
 					{
-						'href': 'http://vlx1-mdulat.desire2learn.d2l:44444/d2l/api/hm/activities/activities/6606_2000_1/usages/6609/associate-grade',
+						'href': 'https://9caa9c10-0175-4c56-84e5-fc2bca4d8a52.activities.api.proddev.d2l/activities/6606_2000_11/usages/6609/associate-grade',
 						'name': 'associate-grade',
 						'method': 'POST',
 						'fields': [
 							{
 								'type': 'hidden',
 								'name': 'gradeItemId',
-								'value': '5007'
+								'value': 6024
 							}
 						]
 					}
@@ -70,7 +114,7 @@ export const testData = {
 						'rel': [
 							'https://grades.api.brightspace.com/rels/grade'
 						],
-						'href': 'http://vlx1-mdulat.desire2learn.d2l:44444/d2l/api/hm/grades/organizations/6609/grades/5007'
+						'href': 'https://9caa9c10-0175-4c56-84e5-fc2bca4d8a52.grades.api.proddev.d2l/organizations/6609/grades/6024'
 					}
 				]
 			}
@@ -80,7 +124,7 @@ export const testData = {
 				'rel': [
 					'self'
 				],
-				'href': 'http://vlx1-mdulat.desire2learn.d2l:44444/d2l/api/hm/activities/activities/6606_2000_1/usages/6609/grade-candidates'
+				'href': 'https://9caa9c10-0175-4c56-84e5-fc2bca4d8a52.activities.api.proddev.d2l/activities/6606_2000_11/usages/6609/grade-candidates?gradeTypes=5&includeGradesWithDirectRubrics=0'
 			}
 		]
 	}
