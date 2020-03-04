@@ -1,4 +1,4 @@
-import { Classes } from '../hypermedia-constants';
+import { Classes, Rels } from '../hypermedia-constants';
 import { Entity } from '../es6/Entity';
 import { performSirenAction } from '../es6/SirenAction';
 
@@ -7,24 +7,29 @@ import { performSirenAction } from '../es6/SirenAction';
  */
 export class GradeCandidateEntity extends Entity {
 	/**
-	 * @returns {string} Grade candidate's name
+	 * @returns {string} Grade's URL
 	 */
-	name() {
-		return this._entity && this._entity.properties && this._entity.properties.name;
+	href() {
+		const entity = this._entity;
+
+		if (!this._entity) {
+			return;
+		}
+
+		if (this.isCategory() && entity.hasLinkByRel(Rels.Grades.category)) {
+			return entity.getLinkByRel(Rels.Grades.category).href;
+		}
+
+		if (!this.isCategory() && entity.hasLinkByRel(Rels.Grades.grade)) {
+			return entity.getLinkByRel(Rels.Grades.grade).href;
+		}
 	}
 
 	/**
-	 * @returns {string} Grade candidate's base weight value
+	 * @returns {Array} Returns all grade-candidate sub-entities
 	 */
-	baseWeight() {
-		return this._entity && this._entity.properties && this._entity.properties.baseWeight;
-	}
-
-	/**
-	 * @returns {string} Grade candidate's max points value
-	 */
-	maxPoints() {
-		return this._entity && this._entity.properties && this._entity.properties.maxPoints;
+	getGradeCandidates() {
+		return (this._entity && this._entity.getSubEntitiesByRel(Rels.Grades.grade)) || [];
 	}
 
 	/**
