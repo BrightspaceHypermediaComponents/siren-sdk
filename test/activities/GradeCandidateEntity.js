@@ -1,25 +1,20 @@
+/* global fetchMock */
+
+import { getFormData } from '../utility/test-helpers.js';
 import { GradeCandidateEntity } from '../../src/activities/GradeCandidateEntity.js';
 import { testData } from './data/GradeCandidateEntity.js';
 
 describe('GradeCandidateEntity', () => {
-	let sandbox;
-
-	beforeEach(() => {
-		sandbox = sinon.sandbox.create();
-	});
-
 	afterEach(() => {
-		sandbox.restore();
+		fetchMock.reset();
 	});
 
 	describe('Grade', () => {
-		let entity;
-		let associateGradeSpy;
+		let entity, entityJson;
 
 		beforeEach(() => {
-			const entityJson = window.D2L.Hypermedia.Siren.Parse(testData.gradeCandidateEntity.grade);
+			entityJson = window.D2L.Hypermedia.Siren.Parse(testData.gradeCandidateEntity.grade);
 			entity = new GradeCandidateEntity(entityJson);
-			associateGradeSpy = sandbox.spy(entity, 'associateGrade');
 		});
 
 		it('gets href', () => {
@@ -38,20 +33,25 @@ describe('GradeCandidateEntity', () => {
 			expect(entity.canAssociateGrade()).to.be.true;
 		});
 
-		it('returns a promise when associating grade', () => {
-			entity.associateGrade();
-			expect(associateGradeSpy.returnValues[0]).to.be.a('promise');
+		it('returns a promise when associating grade', async() => {
+			fetchMock.postOnce('https://9caa9c10-0175-4c56-84e5-fc2bca4d8a52.activities.api.proddev.d2l/activities/6606_2000_11/usages/6609/associate-grade', entityJson);
+
+			await entity.associateGrade();
+
+			const form = await getFormData(fetchMock.lastCall().request);
+			if (!form.notSupported) {
+				expect(form.get('gradeItemId')).to.equal('20');
+			}
+			expect(fetchMock.called()).to.be.true;
 		});
 	});
 
 	describe('Grade without Associate Action', () => {
 		let entity;
-		let associateGradeSpy;
 
 		beforeEach(() => {
 			const entityJson = window.D2L.Hypermedia.Siren.Parse(testData.gradeCandidateEntity.gradeWithoutAssociateAction);
 			entity = new GradeCandidateEntity(entityJson);
-			associateGradeSpy = sandbox.spy(entity, 'associateGrade');
 		});
 
 		it('gets href', () => {
@@ -66,24 +66,22 @@ describe('GradeCandidateEntity', () => {
 			expect(entity.isCategory()).to.be.false;
 		});
 
-		it('can associate grade', () => {
+		it('can not associate to grade', () => {
 			expect(entity.canAssociateGrade()).to.be.false;
 		});
 
-		it('cannot associate to a grade', () => {
-			entity.associateGrade();
-			expect(associateGradeSpy.returnValues).to.not.be.a('promise');
+		it('skips associating as it does not have the associate action', async() => {
+			await entity.associateGrade();
+			expect(fetchMock.done());
 		});
 	});
 
 	describe('Category with Grade', () => {
 		let entity;
-		let associateGradeSpy;
 
 		beforeEach(() => {
 			const entityJson = window.D2L.Hypermedia.Siren.Parse(testData.gradeCandidateEntity.categoryWithGrade);
 			entity = new GradeCandidateEntity(entityJson);
-			associateGradeSpy = sandbox.spy(entity, 'associateGrade');
 		});
 
 		it('gets href', () => {
@@ -104,9 +102,9 @@ describe('GradeCandidateEntity', () => {
 			expect(entity.canAssociateGrade()).to.be.false;
 		});
 
-		it('cannot associate to a grade', () => {
-			entity.associateGrade();
-			expect(associateGradeSpy.returnValues).to.not.be.a('promise');
+		it('skips associating as it does not hve the associate action', async() => {
+			await entity.associateGrade();
+			expect(fetchMock.done());
 		});
 	});
 });

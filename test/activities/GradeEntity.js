@@ -43,25 +43,4 @@ describe('GradeEntity', () => {
 			expect(entity.maxPoints()).to.equal(100);
 		});
 	});
-
-	describe('Grade Category', () => {
-		let entity;
-
-		beforeEach(() => {
-			const entityJson = window.D2L.Hypermedia.Siren.Parse(testData.gradeEntity.category);
-			entity = new GradeEntity(entityJson);
-		});
-
-		it('gets name', () => {
-			expect(entity.name()).to.equal('Category 1');
-		});
-
-		it('gets baseWeight', () => {
-			expect(entity.baseWeight()).to.be.undefined;
-		});
-
-		it('gets maxPoints', () => {
-			expect(entity.maxPoints()).to.be.undefined;
-		});
-	});
 });
