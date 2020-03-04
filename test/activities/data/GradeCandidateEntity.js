@@ -2,6 +2,7 @@ export const testData = {
 	gradeCandidateEntity: {
 		grade: {
 			'class': [
+				'current-association',
 				'grade-candidate'
 			],
 			'rel': [

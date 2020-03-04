@@ -29,6 +29,10 @@ describe('GradeCandidateEntity', () => {
 			expect(entity.isCategory()).to.be.false;
 		});
 
+		it('is the current association', () => {
+			expect(entity.isCurrentAssociation()).to.be.true;
+		});
+
 		it('can associate grade', () => {
 			expect(entity.canAssociateGrade()).to.be.true;
 		});
@@ -66,6 +70,10 @@ describe('GradeCandidateEntity', () => {
 			expect(entity.isCategory()).to.be.false;
 		});
 
+		it('is not the current association', () => {
+			expect(entity.isCurrentAssociation()).to.be.false;
+		});
+
 		it('can not associate to grade', () => {
 			expect(entity.canAssociateGrade()).to.be.false;
 		});
@@ -96,6 +104,10 @@ describe('GradeCandidateEntity', () => {
 
 		it('is a category', () => {
 			expect(entity.isCategory()).to.be.true;
+		});
+
+		it('is not the current association', () => {
+			expect(entity.isCurrentAssociation()).to.be.false;
 		});
 
 		it('can associate grade', () => {

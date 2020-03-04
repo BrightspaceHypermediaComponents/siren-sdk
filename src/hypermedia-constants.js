@@ -286,6 +286,7 @@ export const Classes = {
 	grades: {
 		category: 'grade-category',
 		comments: 'comments',
+		currentAssociation: 'current-association',
 		description: 'description',
 		final: 'final',
 		grade: 'grade',
