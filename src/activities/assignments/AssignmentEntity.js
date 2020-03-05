@@ -6,7 +6,6 @@ import { performSirenAction } from '../../es6/SirenAction';
  * AssignmentEntity class representation of a d2l Assignment.
  */
 export class AssignmentEntity extends Entity {
-
 	/**
 	 * @returns {string} Name of the assignment
 	 */
