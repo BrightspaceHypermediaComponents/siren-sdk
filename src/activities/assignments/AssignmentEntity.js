@@ -323,7 +323,7 @@ export class AssignmentEntity extends Entity {
 			return;
 		}
 		const action = subEntity.getActionByName(Actions.assignments.setToIndividual);
-		if (!action){
+		if (!action) {
 			return;
 		}
 
