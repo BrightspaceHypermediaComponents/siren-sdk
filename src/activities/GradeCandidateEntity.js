@@ -40,6 +40,13 @@ export class GradeCandidateEntity extends Entity {
 	}
 
 	/**
+	 * @returns {bool} True if candidate is the currently associated item
+	 */
+	isCurrentAssociation() {
+		return this._entity && this._entity.hasClass(Classes.grades.currentAssociation);
+	}
+
+	/**
 	 * @returns {bool} True if the associate-grade action is present on the grade candidate
 	 */
 	canAssociateGrade() {
