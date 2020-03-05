@@ -610,7 +610,7 @@ export class AssignmentEntity extends Entity {
 			fields.push({ name: 'completionType', value: assignment.completionType });
 		}
 
-		if (typeof assignment.isIndividualAssignmentType !== 'undefined' && 
+		if (typeof assignment.isIndividualAssignmentType !== 'undefined' &&
 				assignment.isIndividualAssignmentType !== this.isIndividualAssignmentType()) {
 			if (!assignment.isIndividualAssignmentType && !this.isGroupAssignmentTypeDisabled()) {
 				fields.push({ name: 'groupTypeId', value: assignment.groupTypeId });
