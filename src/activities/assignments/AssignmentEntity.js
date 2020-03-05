@@ -7,19 +7,6 @@ import { performSirenAction } from '../../es6/SirenAction';
  */
 export class AssignmentEntity extends Entity {
 
-	_getActionSetToIndividualAssignmentType() {
-		if (!this._entity) {
-			return;
-		}
-
-		const subEntity = this._entity.getSubEntityByRel(Rels.Assignments.folderType);
-		if (!subEntity) {
-			return;
-		}
-
-		return subEntity.getActionByName(Actions.assignments.setToIndividual);
-	}
-
 	/**
 	 * @returns {string} Name of the assignment
 	 */
@@ -328,7 +315,17 @@ export class AssignmentEntity extends Entity {
 	 * Sets the assignment type to individual
 	 */
 	async setToIndividualAssignmentType() {
-		const action = this._getActionSetToIndividualAssignmentType();
+		if (!this._entity) {
+			return;
+		}
+		const subEntity = this._entity.getSubEntityByRel(Rels.Assignments.folderType);
+		if (!subEntity) {
+			return;
+		}
+		const action = subEntity.getActionByName(Actions.assignments.setToIndividual);
+		if (!action){
+			return;
+		}
 
 		const fields = action.fields;
 		await performSirenAction(this._token, action, fields);
@@ -615,18 +612,12 @@ export class AssignmentEntity extends Entity {
 		}
 
 		if (typeof assignment.isIndividualAssignmentType !== 'undefined') {
-			if (assignment.isIndividualAssignmentType !== this.isIndividualAssignmentType()) {
-				fields.push({ name: 'isIndividualAssignmentType', value: assignment.isIndividualAssignmentType });
-			}
-
 			if (!assignment.isIndividualAssignmentType && !this.isGroupAssignmentTypeDisabled()) {
 				fields.push({ name: 'groupTypeId', value: assignment.groupTypeId });
 				fields.push({ name: 'folderType', value: 1 });
 			} else {
-				const action = this._getActionSetToIndividualAssignmentType();
-				if (action) {
-					fields.push(action.fields);
-				}
+				fields.push({ name: 'groupTypeId', value: null });
+				fields.push({ name: 'folderType', value: 2 });
 			}
 		}
 
