@@ -625,4 +625,19 @@ export class AssignmentEntity extends Entity {
 			await performSirenAction(this._token, action, fields);
 		}
 	}
+
+	equals(assignment) {
+		const diffs = [
+			[this.name(), assignment.name],
+			[this.instructionsEditorHtml(), assignment.instructions],
+			[this.submissionType() && String(this.submissionType().value), assignment.submissionType],
+			[this.completionType() && this.completionType().value, assignment.completionType]
+		];
+		for (const [left, right] of diffs) {
+			if (left !== right) {
+				return false;
+			}
+		}
+		return true;
+	}
 }
