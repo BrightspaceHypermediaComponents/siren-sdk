@@ -1,3 +1,4 @@
+import { Classes } from '../hypermedia-constants';
 import { Entity } from '../es6/Entity.js';
 
 /**
@@ -11,7 +12,12 @@ export class AssociationCollectionEntity extends Entity {
 			return [];
 		}
 
-		return this._entity.getSubEntitiesByRel('item');
+		let associations = this._entity.getSubEntitiesByRel('item');
+
+		return associations.filter(
+			a => a.hasClass(Classes.associations.singleAssociation)
+			|| a.hasClass(Classes.associations.potentialAssociation)
+		);
 
 	}
 
