@@ -458,4 +458,36 @@ describe('ActivityUsageEntity', () => {
 			});
 		});
 	});
+
+	describe('Equals', () => {
+		it('return true when equal', () => {
+			expect(entity.equals({
+				dates: {
+					dueDate: '2019-12-26T04:59:00.000Z',
+					startDate: undefined,
+					endDate: undefined
+				},
+				isDraft: true,
+				scoreAndGrade: {
+					scoreOutOf: '56',
+					inGrades: true
+				}
+			})).to.be.true;
+		});
+
+		it('return false when equal', () => {
+			expect(entity.equals({
+				dates: {
+					dueDate: '2019-12-26T04:59:00.000Z',
+					startDate: undefined,
+					endDate: undefined
+				},
+				isDraft: false,
+				scoreAndGrade: {
+					scoreOutOf: '56',
+					inGrades: false
+				}
+			})).to.be.false;
+		});
+	});
 });
