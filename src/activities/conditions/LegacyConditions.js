@@ -121,11 +121,11 @@ export class LegacyConditions extends Entity {
 	operatorOptions() {
 
 		if (!this._entity) {
-			return;
+			return [];
 		}
 
 		const entity = this._entity.getSubEntityByRel(Rels.Conditions.operators);
-		return entity ? entity.properties.options : undefined;
+		return entity ? entity.properties.options : [];
 	}
 
 	/** @returns {bool} Whether they can save. */
