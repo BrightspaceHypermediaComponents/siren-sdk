@@ -67,6 +67,7 @@ export const Rels = {
 	},
 	Conditions: {
 		conditions: 'https://conditions.api.brightspace.com/rels/conditions',
+		operators: 'https://conditions.api.brightspace.com/rels/--legacy-operators',
 		createDialogOpener: 'https://conditions.api.brightspace.com/rels/--legacy-create-dialog-opener',
 		attachDialogOpener: 'https://conditions.api.brightspace.com/rels/--legacy-attach-dialog-opener',
 	},
