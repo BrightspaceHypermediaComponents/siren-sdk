@@ -1,26 +1,19 @@
 import { Entity } from '../es6/Entity.js';
-import { Classes } from '../hypermedia-constants';
 
 /**
  * Associations class representation of  associations.
  */
 
-export class Associations extends Entity {
+export class AssociationCollectionEntity extends Entity {
 
-	getSingleAssocationHrefs() {
+	getAllAssociations() {
 		if (!this._entity) {
 			return [];
 		}
 
-		const singleAssociations = this._entity.getSubEntitiesByClass(
-			Classes.associations.singleAssociation
-		);
-		const singleAssociationsHrefs = singleAssociations.map(
-			a => a.getLinkByRel('self').href
-		);
-
-		return singleAssociationsHrefs;
+		return this._entity.getSubEntitiesByRel('item');
 
 	}
 
 }
+export const Associations = AssociationCollectionEntity;

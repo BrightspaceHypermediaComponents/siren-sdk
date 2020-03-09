@@ -55,3 +55,4 @@ export class AssociationEntity extends Entity {
 	}
 
 }
+export const Association = AssociationEntity;
