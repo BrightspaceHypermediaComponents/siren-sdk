@@ -12,7 +12,7 @@ export class AssociationCollectionEntity extends Entity {
 			return [];
 		}
 
-		let associations = this._entity.getSubEntitiesByRel('item');
+		const associations = this._entity.getSubEntitiesByRel('item');
 
 		return associations.filter(
 			a => a.hasClass(Classes.associations.singleAssociation)
