@@ -42,7 +42,7 @@ export class AssociationEntity extends Entity {
 		await performSirenAction(this._token, action);
 	}
 
-		/**
+	/**
 	 * Create the association
 	 */
 	async createAssociation() {
