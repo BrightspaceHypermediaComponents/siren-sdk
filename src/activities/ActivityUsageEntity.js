@@ -518,9 +518,20 @@ export class ActivityUsageEntity extends Entity {
 			return;
 		}
 
+		if (scoreAndGrade.associatedGrade) {
+			await this.associateGrade(scoreAndGrade.associatedGrade);
+		}
+
 		if (scoreAndGrade.scoreOutOf !== this.scoreOutOf().toString() ||
 			scoreAndGrade.inGrades !== this.inGrades()) {
 			await this.setScoreOutOf(scoreAndGrade.scoreOutOf, scoreAndGrade.inGrades);
+		}
+	}
+
+	async associateGrade(grade) {
+		const previouslyAssociatedGrade = this._entity.getLinkByRel(Rels.Grades.grade);
+		if (!previouslyAssociatedGrade || previouslyAssociatedGrade.href !== grade.href()) {
+			await grade.associateGrade();
 		}
 	}
 
