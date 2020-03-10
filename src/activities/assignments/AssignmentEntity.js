@@ -2,6 +2,10 @@ import { Entity } from '../../es6/Entity';
 import { Actions, Rels, Classes } from '../../hypermedia-constants';
 import { performSirenAction } from '../../es6/SirenAction';
 
+const actions = {
+	delete: 'delete-folder'
+};
+
 /**
  * AssignmentEntity class representation of a d2l Assignment.
  */
@@ -639,5 +643,20 @@ export class AssignmentEntity extends Entity {
 			}
 		}
 		return true;
+	}
+
+	canDelete() {
+		return this._entity.hasActionByName(actions.delete);
+	}
+
+	async delete() {
+		const action = this.canDelete() && this._entity.getActionByName(actions.delete);
+		if (!action) {
+			return;
+		}
+
+		await performSirenAction(this._token, action).then(() => {
+			this.dispose();
+		});
 	}
 }
