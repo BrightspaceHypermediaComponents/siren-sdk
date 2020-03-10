@@ -7,6 +7,22 @@ import { Entity } from '../es6/Entity.js';
 
 export class AssociationCollectionEntity extends Entity {
 
+	getSingleAssocationHrefs() {
+		if (!this._entity) {
+			return [];
+		}
+
+		const singleAssociations = this._entity.getSubEntitiesByClass(
+			Classes.associations.singleAssociation
+		);
+		const singleAssociationsHrefs = singleAssociations.map(
+			a => a.getLinkByRel('self').href
+		);
+
+		return singleAssociationsHrefs;
+
+	}
+
 	getAllAssociations() {
 		if (!this._entity) {
 			return [];
