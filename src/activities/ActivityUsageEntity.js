@@ -529,20 +529,16 @@ export class ActivityUsageEntity extends Entity {
 			return;
 		}
 
-		if (scoreAndGrade.associatedGrade) {
-			await this.associateGrade(scoreAndGrade.associatedGrade);
+		const associatedGrade = scoreAndGrade.associatedGrade;
+		const associateGrade = associatedGrade && associatedGrade.href !== this.gradeHref() && associatedGrade.canAssociateGrade();
+		if (associateGrade) {
+			await associatedGrade.associateGrade();
 		}
 
-		if (scoreAndGrade.scoreOutOf !== this.scoreOutOf().toString() ||
+		if (associateGrade ||
+			scoreAndGrade.scoreOutOf !== this.scoreOutOf().toString() ||
 			scoreAndGrade.inGrades !== this.inGrades()) {
 			await this.setScoreOutOf(scoreAndGrade.scoreOutOf, scoreAndGrade.inGrades);
-		}
-	}
-
-	async associateGrade(grade) {
-		const previouslyAssociatedGrade = this.gradeHref();
-		if (!previouslyAssociatedGrade || previouslyAssociatedGrade !== grade.href()) {
-			await grade.associateGrade();
 		}
 	}
 
