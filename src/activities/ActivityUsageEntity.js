@@ -411,6 +411,17 @@ export class ActivityUsageEntity extends Entity {
 	}
 
 	/**
+	 * @returns {string} URL of the grade associated with the activity usage, if present
+	 */
+	gradeHref() {
+		if (!this._entity || !this._entity.hasLinkByRel(Rels.Grades.grade)) {
+			return;
+		}
+
+		return this._entity.getLinkByRel(Rels.Grades.grade).href;
+	}
+
+	/**
 	 * Updates the score out of value of the activity usage entity
 	 * @param {number} score The numerical score value to bet set for the activity usage entity
 	 * @param {boolean} inGrades True if a grade item should be associated with this activity usage
@@ -518,7 +529,14 @@ export class ActivityUsageEntity extends Entity {
 			return;
 		}
 
-		if (scoreAndGrade.scoreOutOf !== this.scoreOutOf().toString() ||
+		const associatedGrade = scoreAndGrade.associatedGrade;
+		const associateGrade = associatedGrade && associatedGrade.href !== this.gradeHref() && associatedGrade.canAssociateGrade();
+		if (associateGrade) {
+			await associatedGrade.associateGrade();
+		}
+
+		if (associateGrade ||
+			scoreAndGrade.scoreOutOf !== this.scoreOutOf().toString() ||
 			scoreAndGrade.inGrades !== this.inGrades()) {
 			await this.setScoreOutOf(scoreAndGrade.scoreOutOf, scoreAndGrade.inGrades);
 		}
