@@ -608,6 +608,19 @@ export class AssignmentEntity extends Entity {
 			fields.push({ name: 'isAnonymous', value: assignment.isAnonymous });
 		}
 
+		const shouldSaveAnnotations =
+			typeof assignment.annotationToolsAvailable !== 'undefined' &&
+			assignment.annotationToolsAvailable !== this.getAvailableAnnotationTools() &&
+			this.canSeeAnnotations();
+
+		if (shouldSaveAnnotations) {
+
+			fields.push({
+				name: 'annotationToolsAvailability',
+				value: assignment.annotationToolsAvailable
+			});
+		}
+
 		if (typeof assignment.submissionType !== 'undefined' &&
 				assignment.submissionType !== this.submissionType() &&
 				this.canEditSubmissionType()) {
