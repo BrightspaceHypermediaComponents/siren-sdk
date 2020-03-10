@@ -610,14 +610,13 @@ export class AssignmentEntity extends Entity {
 			fields.push({ name: 'completionType', value: assignment.completionType });
 		}
 
-		if (typeof assignment.isIndividualAssignmentType !== 'undefined' &&
-				assignment.isIndividualAssignmentType !== this.isIndividualAssignmentType()) {
-			if (!assignment.isIndividualAssignmentType && !this.isGroupAssignmentTypeDisabled()) {
-				fields.push({ name: 'groupTypeId', value: assignment.groupTypeId });
-				fields.push({ name: 'folderType', value: 1 });
-			} else {
+		if (typeof assignment.isIndividualAssignmentType !== 'undefined' && !this.isAssignmentTypeReadOnly()) {
+			if (assignment.isIndividualAssignmentType) {
 				fields.push({ name: 'groupTypeId', value: null });
 				fields.push({ name: 'folderType', value: 2 });
+			}else if (!assignment.isIndividualAssignmentType && !this.isGroupAssignmentTypeDisabled()) {
+				fields.push({ name: 'groupTypeId', value: assignment.groupTypeId });
+				fields.push({ name: 'folderType', value: 1 });
 			}
 		}
 
