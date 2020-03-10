@@ -240,7 +240,9 @@ describe('ActivityUsageEntity', () => {
 				fetchMock.patchOnce('http://vlx1-mdulat.desire2learn.d2l:44444/d2l/api/hm/activities/activities/6606_2000_31/usages/6609', entityJson);
 
 				await entity.save({
-					dueDate: '2020-02-23T04:59:00.000Z'
+					dates: {
+						dueDate: '2020-02-23T04:59:00.000Z'
+					}
 				});
 
 				const form = await getFormData(fetchMock.lastCall().request);
@@ -255,7 +257,9 @@ describe('ActivityUsageEntity', () => {
 
 			it('skips save if not dirty', async() => {
 				await entity.save({
-					dueDate: '2019-12-26T04:59:00.000Z'
+					dates: {
+						dueDate: '2019-12-26T04:59:00.000Z'
+					}
 				});
 
 				expect(fetchMock.done());
@@ -263,7 +267,9 @@ describe('ActivityUsageEntity', () => {
 
 			it('skips save if not editable', async() => {
 				await readonlyEntity.save({
-					dueDate: '2020-02-23T04:59:00.000Z'
+					dates: {
+						dueDate: '2020-02-23T04:59:00.000Z'
+					}
 				});
 
 				expect(fetchMock.done());
@@ -410,9 +416,11 @@ describe('ActivityUsageEntity', () => {
 				fetchMock.patchOnce('http://vlx1-mdulat.desire2learn.d2l:44444/d2l/api/hm/activities/activities/6606_2000_31/usages/6609', entityJson);
 
 				await entity.validate({
-					startDate: '2020-02-23T04:59:00.000Z',
-					dueDate: '2020-02-24T04:59:00.000Z',
-					endDate: '2020-02-25T04:59:00.000Z',
+					dates: {
+						startDate: '2020-02-23T04:59:00.000Z',
+						dueDate: '2020-02-24T04:59:00.000Z',
+						endDate: '2020-02-25T04:59:00.000Z'
+					}
 				});
 
 				const form = await getFormData(fetchMock.lastCall().request);
@@ -427,9 +435,11 @@ describe('ActivityUsageEntity', () => {
 
 			it('skips validation if not dirty', async() => {
 				await entity.validate({
-					startDate: '',
-					dueDate: '2019-12-26T04:59:00.000Z',
-					endDate: '',
+					dates: {
+						startDate: '',
+						dueDate: '2019-12-26T04:59:00.000Z',
+						endDate: ''
+					}
 				});
 
 				expect(fetchMock.done());
@@ -437,9 +447,11 @@ describe('ActivityUsageEntity', () => {
 
 			it('skips validation if not editable', async() => {
 				await readonlyEntity.validate({
-					startDate: '2020-02-23T04:59:00.000Z',
-					dueDate: '2020-02-24T04:59:00.000Z',
-					endDate: '2020-02-25T04:59:00.000Z',
+					dates: {
+						startDate: '2020-02-23T04:59:00.000Z',
+						dueDate: '2020-02-24T04:59:00.000Z',
+						endDate: '2020-02-25T04:59:00.000Z'
+					}
 				});
 
 				expect(fetchMock.done());

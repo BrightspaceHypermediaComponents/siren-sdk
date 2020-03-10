@@ -212,25 +212,23 @@ export class ActivityUsageEntity extends Entity {
 
 	/**
 	 * Validates range/order of start date, due date, and end date against each other
-	 * @param {string} startDate Date string to set as the start date, or empty string to clear the start date
-	 * @param {string} dueDate Date string to set as the due date, or empty string to clear the due date
-	 * @param {string} endDate Date string to set as the end date, or empty string to clear the end date
+	 * @param {object} dates Dates object containing start, due, and end date, or empty strings to clear
 	 */
-	async validateDates(startDate, dueDate, endDate) {
-		await this._setOrValidateDates(startDate, dueDate, endDate, true);
+	async validateDates(dates) {
+		if (!dates) return;
+		await this._saveOrValidateDates(dates.startDate, dates.dueDate, dates.endDate, true);
 	}
 
 	/**
 	 * Updates start date, due date and end date together to the dates specified
-	 * @param {string} startDate Date string to set as the start date, or empty string to clear the start date
-	 * @param {string} dueDate Date string to set as the due date, or empty string to clear the due date
-	 * @param {string} endDate Date string to set as the end date, or empty string to clear the end date
+	 * @param {object} dates Dates object containing start, due, and end date, or empty strings to clear
 	 */
-	async setDates(startDate, dueDate, endDate) {
-		await this._setOrValidateDates(startDate, dueDate, endDate, false);
+	async saveDates(dates) {
+		if (!dates) return;
+		await this._saveOrValidateDates(dates.startDate, dates.dueDate, dates.endDate, false);
 	}
 
-	async _setOrValidateDates(startDate, dueDate, endDate, validateOnly) {
+	async _saveOrValidateDates(startDate, dueDate, endDate, validateOnly) {
 		let action;
 		const datesEntity = this._getDateSubEntity('dates');
 		if (datesEntity) {
@@ -350,7 +348,7 @@ export class ActivityUsageEntity extends Entity {
 	 * @param {bool} isDraft The draft state to bet set for the activity usage entity
 	 */
 	async setDraftStatus(isDraft) {
-		if (!this.canEditDraft()) {
+		if (!this.canEditDraft() || typeof isDraft === 'undefined' || isDraft === this.isDraft()) {
 			return;
 		}
 
@@ -512,7 +510,7 @@ export class ActivityUsageEntity extends Entity {
 	}
 
 	async validate(activity) {
-		await this.validateDates(activity.startDate, activity.dueDate, activity.endDate);
+		await this.validateDates(activity.dates);
 	}
 
 	async saveScoreAndGrade(scoreAndGrade) {
@@ -527,13 +525,10 @@ export class ActivityUsageEntity extends Entity {
 	}
 
 	async save(activity) {
-		if (typeof activity.isDraft !== 'undefined' &&
-			activity.isDraft !== this.isDraft()) {
-			await this.setDraftStatus(activity.isDraft);
-		}
+		if (!activity) return;
 
-		await this.setDates(activity.startDate, activity.dueDate, activity.endDate);
-
+		await this.setDraftStatus(activity.isDraft);
+		await this.saveDates(activity.dates);
 		await this.saveScoreAndGrade(activity.scoreAndGrade);
 	}
 
