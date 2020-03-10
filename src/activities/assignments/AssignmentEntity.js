@@ -598,6 +598,16 @@ export class AssignmentEntity extends Entity {
 			fields.push({ name: 'instructions', value: assignment.instructions });
 		}
 
+		const shouldSaveAnonymousMarking =
+			typeof assignment.isAnonymous !== 'undefined' &&
+			assignment.isAnonymous !== this.isAnonymousMarkingEnabled() &&
+			this.canEditAnonymousMarking();
+
+		if (shouldSaveAnonymousMarking) {
+
+			fields.push({ name: 'isAnonymous', value: assignment.isAnonymous });
+		}
+
 		if (typeof assignment.submissionType !== 'undefined' &&
 				assignment.submissionType !== this.submissionType() &&
 				this.canEditSubmissionType()) {
