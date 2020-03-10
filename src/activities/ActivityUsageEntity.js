@@ -530,7 +530,7 @@ export class ActivityUsageEntity extends Entity {
 		}
 
 		const associatedGrade = scoreAndGrade.associatedGrade;
-		const associateGrade = associatedGrade && associatedGrade.href !== this.gradeHref() && associatedGrade.canAssociateGrade();
+		const associateGrade = associatedGrade && associatedGrade.href() !== this.gradeHref() && associatedGrade.canAssociateGrade();
 		if (associateGrade) {
 			await associatedGrade.associateGrade();
 		}

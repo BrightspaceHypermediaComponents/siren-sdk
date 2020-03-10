@@ -3,6 +3,8 @@
 import { ActivityUsageEntity } from '../../src/activities/ActivityUsageEntity.js';
 import { testData } from './data/ActivityUsageEntity.js';
 import { getFormData } from '../utility/test-helpers.js';
+import { GradeCandidateEntity } from '../../src/activities/GradeCandidateEntity.js';
+import { testData as gradeCandidateTestData } from './data/GradeCandidateEntity.js';
 
 describe('ActivityUsageEntity', () => {
 	let entity, entityCannotEditGrades, readonlyEntity, entityJson, entityJsonCannotEditGrades;
@@ -29,6 +31,10 @@ describe('ActivityUsageEntity', () => {
 
 		it('can get userActivityUsageHref', () => {
 			expect(entity.userActivityUsageHref()).to.equal('http://vlx1-mdulat.desire2learn.d2l:44444/d2l/api/hm/activities/activities/6606_2000_31/usages/6609/users/169');
+		});
+
+		it('can get gradeHref', () => {
+			expect(entity.gradeHref()).to.equal('http://vlx1-mdulat.desire2learn.d2l:44444/d2l/api/hm/grades/organizations/6609/grades/6064');
 		});
 
 		it('can get gradeCandidatesHref', () => {
@@ -397,6 +403,58 @@ describe('ActivityUsageEntity', () => {
 					scoreAndGrade: {
 						scoreOutOf: '99',
 						inGrades: false
+					}
+				});
+
+				expect(fetchMock.done());
+			});
+		});
+
+		describe('score and grade - associated grade', () => {
+			let gradeCandidateJson, gradeCandidateEntity, gradeCandidateCannotAssociateEntity, gradeUsedInActivityUsageEntity;
+			beforeEach(() => {
+				gradeCandidateJson = window.D2L.Hypermedia.Siren.Parse(gradeCandidateTestData.gradeCandidateEntity.grade);
+				gradeCandidateEntity = new GradeCandidateEntity(gradeCandidateJson);
+
+				const gradeCandidateCannotAssociateJson = window.D2L.Hypermedia.Siren.Parse(gradeCandidateTestData.gradeCandidateEntity.gradeWithoutAssociateAction);
+				gradeCandidateCannotAssociateEntity = new GradeCandidateEntity(gradeCandidateCannotAssociateJson);
+
+				const gradeUsedInActivityUsageJson = window.D2L.Hypermedia.Siren.Parse(gradeCandidateTestData.gradeCandidateEntity.gradeUsedInActivityUsage);
+				gradeUsedInActivityUsageEntity = new GradeCandidateEntity(gradeUsedInActivityUsageJson);
+			});
+			it('associates grade and update score out of (even though out of value has not changed)', async() => {
+				fetchMock.postOnce('https://9caa9c10-0175-4c56-84e5-fc2bca4d8a52.activities.api.proddev.d2l/activities/6606_2000_11/usages/6609/associate-grade', gradeCandidateJson);
+				fetchMock.postOnce('http://vlx1-mdulat.desire2learn.d2l:44444/d2l/api/hm/assignments/6609/folders/31/score-out-of', entityJson);
+
+				await entity.save({
+					scoreAndGrade: {
+						scoreOutOf: '56',
+						inGrades: true,
+						associatedGrade: gradeCandidateEntity
+					}
+				});
+
+				expect(fetchMock.done());
+			});
+
+			it('skips associating if already associated to this grade', async() => {
+				await entity.save({
+					scoreAndGrade: {
+						scoreOutOf: '56',
+						inGrades: true,
+						associatedGrade: gradeUsedInActivityUsageEntity
+					}
+				});
+
+				expect(fetchMock.done());
+			});
+
+			it('skips associating if cannot associate', async() => {
+				await entity.save({
+					scoreAndGrade: {
+						scoreOutOf: '56',
+						inGrades: true,
+						associatedGrade: gradeCandidateCannotAssociateEntity
 					}
 				});
 
