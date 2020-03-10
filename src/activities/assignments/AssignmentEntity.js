@@ -614,7 +614,7 @@ export class AssignmentEntity extends Entity {
 			if (assignment.isIndividualAssignmentType) {
 				fields.push({ name: 'groupTypeId', value: null });
 				fields.push({ name: 'folderType', value: 2 });
-			}else if (!assignment.isIndividualAssignmentType && !this.isGroupAssignmentTypeDisabled()) {
+			} else if (!assignment.isIndividualAssignmentType && !this.isGroupAssignmentTypeDisabled()) {
 				fields.push({ name: 'groupTypeId', value: assignment.groupTypeId });
 				fields.push({ name: 'folderType', value: 1 });
 			}
