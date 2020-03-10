@@ -107,6 +107,27 @@ export class LegacyConditions extends Entity {
 		return entity ? entity.properties.negativeText : undefined;
 	}
 
+	/** @returns {bool} Whether operator can be edited */
+	canEditOperator() {
+
+		if (!this._entity) {
+			return false;
+		}
+
+		return this._entity.hasSubEntityByRel(Rels.Conditions.operators);
+	}
+
+	/** @returns {Array} Operator options */
+	operatorOptions() {
+
+		if (!this._entity) {
+			return [];
+		}
+
+		const entity = this._entity.getSubEntityByRel(Rels.Conditions.operators);
+		return entity ? entity.properties.options : [];
+	}
+
 	/** @returns {bool} Whether they can save. */
 	canSave() {
 

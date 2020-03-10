@@ -1,14 +1,13 @@
 import { Entity } from '../es6/Entity';
-import { GradeCandidateEntity } from './GradeCandidateEntity';
 
 /**
  * Entity representation of a collection of grade candidates
  */
 export class GradeCandidateCollectionEntity extends Entity {
 	/**
-	 * @returns {Array} Returns all grade-candidate sub-entities from the grade-candidates collection
+	 * @returns {Array} Returns all grade-candidate and category sub-entities
 	 */
-	getGradeCandidateEntities() {
-		return this._entity.getSubEntitiesByRel('item').map(entity => new GradeCandidateEntity(entity));
+	getGradeCandidates() {
+		return (this._entity && this._entity.getSubEntitiesByRel('item')) || [];
 	}
 }

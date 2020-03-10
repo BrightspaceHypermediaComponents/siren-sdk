@@ -38,6 +38,28 @@ describe('AssignmentEntity', () => {
 		});
 	});
 
+	describe('Equals', () => {
+		it('return true when equal', () => {
+			var assignmentEntity = new AssignmentEntity(editableEntity);
+			expect(assignmentEntity.equals({
+				name: 'Extra Special Assignment',
+				instructions: '<p>These are your instructions</p>',
+				submissionType: undefined,
+				completionType: undefined
+			})).to.be.true;
+		});
+
+		it('return false when equal', () => {
+			var assignmentEntity = new AssignmentEntity(editableEntity);
+			expect(assignmentEntity.equals({
+				name: 'Extra Special Assignment',
+				instructions: '<p>These are your instructions</p>',
+				submissionType: 'mySubmissionType',
+				completionType: 'myCompletionType'
+			})).to.be.false;
+		});
+	});
+
 	describe('Saves', () => {
 		it('saves name and instructions', async() => {
 			fetchMock.patchOnce('https://f5aa43d7-c082-485c-84f5-4808147fe98a.assignments.api.dev.brightspace.com/123065/folders/7', editableEntity);

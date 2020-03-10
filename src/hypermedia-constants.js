@@ -67,6 +67,7 @@ export const Rels = {
 	},
 	Conditions: {
 		conditions: 'https://conditions.api.brightspace.com/rels/conditions',
+		operators: 'https://conditions.api.brightspace.com/rels/--legacy-operators',
 		createDialogOpener: 'https://conditions.api.brightspace.com/rels/--legacy-create-dialog-opener',
 		attachDialogOpener: 'https://conditions.api.brightspace.com/rels/--legacy-attach-dialog-opener',
 	},
@@ -119,6 +120,7 @@ export const Rels = {
 	},
 	// Grades API sub-domain rels
 	Grades: {
+		category: 'https://grades.api.brightspace.com/rels/grade-category',
 		comment: 'https://grades.api.brightspace.com/rels/comment',
 		comments: 'https://grades.api.brightspace.com/rels/comments',
 		description: 'https://grades.api.brightspace.com/rels/description',
@@ -283,7 +285,9 @@ export const Classes = {
 		unpinned: 'unpinned'
 	},
 	grades: {
+		category: 'grade-category',
 		comments: 'comments',
+		currentAssociation: 'current-association',
 		description: 'description',
 		final: 'final',
 		grade: 'grade',

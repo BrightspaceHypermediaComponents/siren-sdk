@@ -532,6 +532,23 @@ export class ActivityUsageEntity extends Entity {
 		await this.saveScoreAndGrade(activity.scoreAndGrade);
 	}
 
+	equals(activity) {
+		const diffs = [
+			[this.dueDate(), activity.dates.dueDate],
+			[this.startDate(), activity.dates.startDate],
+			[this.endDate(), activity.dates.endDate],
+			[this.isDraft(), activity.isDraft],
+			[`${this.scoreOutOf()}`, activity.scoreAndGrade.scoreOutOf],
+			[this.inGrades(), activity.scoreAndGrade.inGrades]
+		];
+
+		for (const [left, right] of diffs) {
+			if (left !== right) {
+				return false;
+			}
+		}
+		return true;
+	}
 	/**
 	 * @returns {string} The href to the associations collection.
 	 */
