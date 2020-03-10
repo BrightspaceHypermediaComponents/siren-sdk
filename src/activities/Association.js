@@ -1,12 +1,11 @@
 import { Entity } from '../es6/Entity.js';
-import { Actions, Rels } from '../hypermedia-constants';
+import { Actions, Classes, Rels } from '../hypermedia-constants';
 import { performSirenAction } from '../es6/SirenAction';
-
 /**
  * Association class representation of an association.
  */
 
-export class Association extends Entity {
+export class AssociationEntity extends Entity {
 
 	/**
 	 * @returns {string} Returns the rubric href of the association
@@ -21,6 +20,17 @@ export class Association extends Entity {
 	}
 
 	/**
+	 * @returns {bool} Returns whether or not the association is a single-association
+	 */
+	isSingleAssociation() {
+		if (!this._entity) {
+			return false;
+		}
+
+		return this._entity.hasClass(Classes.associations.singleAssociation);
+	}
+
+	/**
 	 * Deletes the association
 	 */
 	async deleteAssociation() {
@@ -32,4 +42,17 @@ export class Association extends Entity {
 		await performSirenAction(this._token, action);
 	}
 
+	/**
+	 * Create the association
+	 */
+	async createAssociation() {
+		if (!this._entity || !this._entity.hasActionByName(Actions.associations.createAssociation)) {
+			return;
+		}
+
+		const action = this._entity.getActionByName(Actions.associations.createAssociation);
+		await performSirenAction(this._token, action);
+	}
+
 }
+export const Association = AssociationEntity;

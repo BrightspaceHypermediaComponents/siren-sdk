@@ -231,7 +231,8 @@ export const Classes = {
 		annotationDisabled: 'disabled'
 	},
 	associations: {
-		singleAssociation: 'single-association'
+		singleAssociation: 'single-association',
+		potentialAssociation: 'potential-association'
 	},
 	awards: {
 		available: 'available',
@@ -469,6 +470,7 @@ export const Actions = {
 		select: 'select'
 	},
 	associations: {
-		deleteAssociation: 'delete-association'
+		deleteAssociation: 'delete-association',
+		createAssociation: 'create-association'
 	},
 };
