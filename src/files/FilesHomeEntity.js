@@ -15,7 +15,7 @@ export class FilesHomeEntity extends Entity {
 	}
 
 	/**
-	 * @retirms {string } Calls the Siren action to get a preview location for the specified file
+	 * @returns {string } Calls the Siren action to get a preview location for the specified file
 	 */
 	async getFilePreviewLocationEntity(fileSystemType, fileId) {
 		if (!this.canPreviewFiles()) {

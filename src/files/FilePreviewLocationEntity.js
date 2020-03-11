@@ -6,7 +6,7 @@ import { Entity } from '../es6/Entity';
 export class FilePreviewLocationEntity extends Entity {
 
 	/**
-	 * @returns {bool} True if the file preview location action is present
+	 * @returns {string} Returns the file preview location for the file
 	 */
 	previewLocation() {
 		return this._entity && this._entity.properties && this._entity.properties.previewLocation;
