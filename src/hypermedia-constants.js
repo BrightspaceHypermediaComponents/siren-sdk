@@ -108,6 +108,10 @@ export const Rels = {
 		mySubscriptions: 'https://discussions.api.brightspace.com/rels/my-subscriptions',
 		topic: 'https://discussions.api.brightspace.com/rels/topic'
 	},
+	// Files API sub-domain rels
+	Files: {
+		files: 'https://files.api.brightspace.com/rels/files',
+	},
 	// Folio API sub-domain rels
 	Folio: {
 		contentItem: 'https://folio.api.brightspace.com/rels/Content',
@@ -473,4 +477,7 @@ export const Actions = {
 		deleteAssociation: 'delete-association',
 		createAssociation: 'create-association'
 	},
+	files: {
+		filePreviewLocation: 'file-preview-location'
+	}
 };
