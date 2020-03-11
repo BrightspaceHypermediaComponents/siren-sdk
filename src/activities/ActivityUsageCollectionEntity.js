@@ -4,7 +4,8 @@ import { ActivityUsageEntity } from './ActivityUsageEntity.js';
 import { performSirenAction } from '../es6/SirenAction.js';
 
 const actions = {
-	removeActivity: 'remove-activity'
+	removeActivity: 'remove-activity',
+	moveActivity: 'move-activity'
 };
 
 /**
@@ -29,6 +30,13 @@ export class ActivityUsageCollectionEntity extends Entity {
 		});
 	}
 
+	async moveItem(itemToMoveId, targetId) {
+		const action = this.getActionByName(actions.moveActivity);
+		const fields = [{name: 'itemToMoveId', value: itemToMoveId}];
+		targetId && fields.push({name: 'targetId', value: targetId});
+		await performSirenAction(this._token, action, fields);
+	}
+
 	removeItem(href) {
 		const newEntityList = [];
 		this._entity.entities.forEach((entity) => {
@@ -45,6 +53,10 @@ export class ActivityUsageCollectionEntity extends Entity {
 }
 
 class CollectedItemEntity extends Entity {
+	id() {
+		return this._entity && this._entity.properties && this._entity.properties.id;
+	}
+
 	activityUsageHref() {
 		if (!this._entity || !this._entity.hasLinkByRel(Rels.Activities.activityUsage)) {
 			return;
