@@ -98,6 +98,38 @@ export const testData = {
 					'href': 'https://9caa9c10-0175-4c56-84e5-fc2bca4d8a52.grades.api.proddev.d2l/organizations/6609/grade-categories/5010'
 				}
 			]
+		},
+		gradeUsedInActivityUsage: {
+			'class': [
+				'current-association',
+				'grade-candidate'
+			],
+			'rel': [
+				'item',
+				'https://grades.api.brightspace.com/rels/grade'
+			],
+			'actions': [
+				{
+					'href': 'https://9caa9c10-0175-4c56-84e5-fc2bca4d8a52.activities.api.proddev.d2l/activities/6606_2000_11/usages/6609/associate-grade',
+					'name': 'associate-grade',
+					'method': 'POST',
+					'fields': [
+						{
+							'type': 'hidden',
+							'name': 'gradeItemId',
+							'value': 20
+						}
+					]
+				}
+			],
+			'links': [
+				{
+					'rel': [
+						'https://grades.api.brightspace.com/rels/grade'
+					],
+					'href': 'http://vlx1-mdulat.desire2learn.d2l:44444/d2l/api/hm/grades/organizations/6609/grades/6064'
+				}
+			]
 		}
 	}
 };
