@@ -1,5 +1,6 @@
 import { Entity } from '../es6/Entity';
 import { performSirenAction } from '../es6/SirenAction';
+import { Rels } from '../hypermedia-constants';
 
 /**
  * Entity representation of a collection of attachments
@@ -180,5 +181,16 @@ export class AttachmentCollectionEntity extends Entity {
 
 		const action = this._entity.getActionByName('add-file');
 		await this._addFileAttachment(action, fileSystemType, fileId);
+	}
+
+	/**
+* @returns {string} Returns URL of the files home API
+*/
+	getFilesHref() {
+		if (!this._entity || !this._entity.hasLinkByRel(Rels.Files.files)) {
+			return;
+		}
+
+		return this._entity.getLinkByRel(Rels.Files.files).href;
 	}
 }
