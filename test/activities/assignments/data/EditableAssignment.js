@@ -148,6 +148,12 @@ export const editableAssignment = {
 					'value': '<p>These are your instructions updated again</p>'
 				}
 			]
+		},
+		{
+			'title': 'Delete an assignment folder',
+			'href': 'https://f5aa43d7-c082-485c-84f5-4808147fe98a.assignments.api.dev.brightspace.com/123065/folders/7',
+			'name': 'delete-folder',
+			'method': 'DELETE'
 		}
 	],
 	'links': [
