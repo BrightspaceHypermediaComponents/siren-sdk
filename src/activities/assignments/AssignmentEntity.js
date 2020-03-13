@@ -148,6 +148,20 @@ export class AssignmentEntity extends Entity {
 		return entity ? entity.properties.url : undefined;
 	}
 
+	/** @returns {bool} Whether originality check is enabled */
+	isOriginalityCheckEnabled() {
+
+		const entity = this._entity.getSubEntityByRel(Rels.Assignments.turnitinDialogOpener);
+		return entity ? Boolean(entity.properties.isOriginalityCheckEnabled) : false;
+	}
+
+	/** @returns {bool} Whether grade mark is enabled */
+	isGradeMarkEnabled() {
+
+		const entity = this._entity.getSubEntityByRel(Rels.Assignments.turnitinDialogOpener);
+		return entity ? Boolean(entity.properties.isGradeMarkEnabled) : false;
+	}
+
 	/**
 	 * @returns {Array} The list of associated rubrics
 	 */
