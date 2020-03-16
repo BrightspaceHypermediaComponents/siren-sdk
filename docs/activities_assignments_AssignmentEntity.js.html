@@ -231,6 +231,31 @@ export class AssignmentEntity extends Entity {
 	}
 
 	/**
+	 * @returns {Array} Set of completion type options for this assignment
+	 */
+	completionTypeOptions() {
+		if (!this.canEditCompletionType()) {
+			return [];
+		}
+
+		const action = this._entity.getActionByName(Actions.assignments.updateCompletionType);
+		if (!action.hasFieldByName('completionType')) {
+			return [];
+		}
+
+		const validCompletionTypes = this.submissionTypeOptions()
+			.find(option => option.value === this.submissionType().value)
+			.completionTypes;
+		if (validCompletionTypes === null) {
+			return [];
+		}
+
+		return action.getFieldByName('completionType').value.filter(option => {
+			return validCompletionTypes.indexOf(option.value) > -1;
+		});
+	}
+
+	/**
 	 * @returns {bool} Whether or not the edit completion type action is present on the assignment entity
 	 */
 	canEditCompletionType() {
