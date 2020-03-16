@@ -220,17 +220,6 @@ export class AssignmentEntity extends Entity {
 	}
 
 	/**
-	 * @returns {object} Completion type of the assignment (including type value and type title)
-	 */
-	completionType() {
-		if (!this._entity || !this._entity.properties) {
-			return;
-		}
-
-		return this._entity.properties.completionType;
-	}
-
-	/**
 	 * @returns {bool} Whether or not the edit completion type action is present on the assignment entity
 	 */
 	canEditCompletionType() {
