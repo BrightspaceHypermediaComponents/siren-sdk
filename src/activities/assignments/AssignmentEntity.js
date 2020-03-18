@@ -646,7 +646,7 @@ export class AssignmentEntity extends Entity {
 			[this.name(), assignment.name],
 			[this.instructionsEditorHtml(), assignment.instructions],
 			[this.submissionType() && String(this.submissionType().value), assignment.submissionType],
-			[this.completionType() && this.completionType().value, assignment.completionType]
+			[this.completionType() && String(this.completionType().value), assignment.completionType]
 		];
 		for (const [left, right] of diffs) {
 			if (left !== right) {
