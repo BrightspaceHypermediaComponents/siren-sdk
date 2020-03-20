@@ -30,14 +30,14 @@ const _getEntityUrl = function(action, fields) {
 	}
 
 	let url = new URL(action.href, window.location.origin);
-
-	if (fields) {
-		fields = _appendHiddenFields(action, fields);
+	let tempFields = fields ? [...fields] : [];
+	if (tempFields.length) {
+		_appendHiddenFields(action, tempFields);
 	} else {
-		fields = _getSirenFields(action);
+		tempFields = _getSirenFields(action);
 	}
 	if (action.method === 'GET' || action.method === 'HEAD') {
-		const params = _createURLSearchParams(fields);
+		const params = _createURLSearchParams(tempFields);
 		url = new URL(url.pathname + '?' + params.toString(), url.origin);
 	}
 
@@ -116,7 +116,7 @@ const _performSirenAction = function(action, fields, tokenValue) {
 	let body;
 
 	if (fields) {
-		fields = _appendHiddenFields(action, fields);
+		_appendHiddenFields(action, fields);
 	} else {
 		fields = _getSirenFields(action);
 	}
