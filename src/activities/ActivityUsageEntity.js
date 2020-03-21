@@ -530,9 +530,9 @@ export class ActivityUsageEntity extends Entity {
 		}
 
 		const associatedGrade = scoreAndGrade.associatedGrade;
-		const replaceGradeItem = scoreAndGrade.inGrades && !associatedGrade && this.gradeHref() && scoreAndGrade.associateNewGradeAction;
+		const createNewGradeItem = scoreAndGrade.inGrades && !associatedGrade && scoreAndGrade.associateNewGradeAction;
 		const associateToExistingGrade = scoreAndGrade.inGrades && associatedGrade && associatedGrade.canAssociateGrade() && this.gradeHref() !== associatedGrade.href();
-		if (replaceGradeItem) {
+		if (createNewGradeItem) {
 			await this._replaceGradeItem(scoreAndGrade);
 		} else if (associateToExistingGrade) {
 			await associatedGrade.associateGrade();
