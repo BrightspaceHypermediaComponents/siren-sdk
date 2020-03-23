@@ -92,7 +92,84 @@ export const editableAssignment = {
 					]
 				}
 			]
-		}
+		},
+		{
+			'class': [
+				'folder-type',
+				'group'
+			],
+			'rel': [
+				'https://assignments.api.brightspace.com/rels/folder-type'
+			],
+			'properties': {
+				'groupName': 'Project 1',
+				'informationText': 'Create new groups in the Groups tool.'
+			},
+			'entities': [
+				{
+					'class': [
+						'groups-homepage'
+					],
+					'rel': [
+						'https://assignments.api.brightspace.com/rels/groups-homepage'
+					],
+					'properties': {
+						'url': 'https://qa2020521349g.bspc.com/d2l/lms/group/group_list.d2l?ou=123065'
+					}
+				}
+			],
+			'actions': [
+				{
+					'href': 'https://ce6a9031-de13-4f58-bfdf-e88412930452.assignments.api.dev.brightspace.com/123065/folders/7',
+					'name': 'set-to-individual',
+					'method': 'PATCH',
+					'fields': [
+						{
+							'type': 'hidden',
+							'name': 'groupTypeId'
+						},
+						{
+							'type': 'hidden',
+							'name': 'folderType',
+							'value': 2
+						}
+					]
+				},
+				{
+					'href': 'https://ce6a9031-de13-4f58-bfdf-e88412930452.assignments.api.dev.brightspace.com/123065/folders/7',
+					'name': 'set-to-group',
+					'method': 'PATCH',
+					'fields': [
+						{
+							'type': 'radio',
+							'name': 'groupTypeId',
+							'value': [
+								{
+									'title': 'Project 1',
+									'value': 314,
+									'selected': true
+								},
+								{
+									'title': 'Project 2',
+									'value': 315,
+									'selected': false
+								},
+								{
+									'title': 'Project 3',
+									'value': 316,
+									'selected': false
+								}
+							]
+						},
+						{
+							'type': 'hidden',
+							'name': 'folderType',
+							'value': 1
+						}
+					]
+				}
+			]
+		},
 	],
 	'actions': [
 		{
