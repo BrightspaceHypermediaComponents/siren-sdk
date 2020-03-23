@@ -45,7 +45,11 @@ describe('AssignmentEntity', () => {
 				name: 'Extra Special Assignment',
 				instructions: '<p>These are your instructions</p>',
 				submissionType: undefined,
-				completionType: undefined
+				completionType: undefined,
+				isAnonymous: false,
+				annotationToolsAvailable: true,
+				isIndividualAssignmentType: false,
+				groupTypeId: '314'
 			})).to.be.true;
 		});
 
@@ -54,8 +58,11 @@ describe('AssignmentEntity', () => {
 			expect(assignmentEntity.equals({
 				name: 'Extra Special Assignment',
 				instructions: '<p>These are your instructions</p>',
-				submissionType: 'mySubmissionType',
-				completionType: 'myCompletionType'
+				submissionType: undefined,
+				completionType: undefined,
+				isAnonymous: false,
+				annotationToolsAvailable: true,
+				isIndividualAssignmentType: true
 			})).to.be.false;
 		});
 	});
