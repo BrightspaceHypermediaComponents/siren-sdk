@@ -1,4 +1,4 @@
-import { Classes, Rels } from '../hypermedia-constants';
+import { Actions, Classes, Rels } from '../hypermedia-constants';
 import { Entity } from '../es6/Entity';
 import { performSirenAction } from '../es6/SirenAction';
 
@@ -50,7 +50,7 @@ export class GradeCandidateEntity extends Entity {
 	 * @returns {bool} True if the associate-grade action is present on the grade candidate
 	 */
 	canAssociateGrade() {
-		return this._entity && this._entity.hasActionByName('associate-grade');
+		return this._entity && this._entity.hasActionByName(Actions.activities.associateGrade);
 	}
 
 	/**
@@ -61,7 +61,7 @@ export class GradeCandidateEntity extends Entity {
 			return;
 		}
 
-		const action = this._entity.getActionByName('associate-grade');
+		const action = this._entity.getActionByName(Actions.activities.associateGrade);
 		await performSirenAction(this._token, action);
 	}
 }

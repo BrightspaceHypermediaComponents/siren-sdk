@@ -1,3 +1,4 @@
+import { Actions } from '../hypermedia-constants';
 import { Entity } from '../es6/Entity';
 
 /**
@@ -9,5 +10,9 @@ export class GradeCandidateCollectionEntity extends Entity {
 	 */
 	getGradeCandidates() {
 		return (this._entity && this._entity.getSubEntitiesByRel('item')) || [];
+	}
+
+	getAssociateNewGradeAction() {
+		return this._entity && this._entity.getActionByName(Actions.activities.associateNewGrade);
 	}
 }

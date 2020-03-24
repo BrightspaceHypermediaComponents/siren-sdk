@@ -411,7 +411,9 @@ export const Actions = {
 		updateDraft: 'update-draft',
 		scoreOutOf: {
 			update: 'update'
-		}
+		},
+		associateGrade: 'associate-grade',
+		associateNewGrade: 'associate-new-grade',
 	},
 	assignments: {
 		assign: 'assign',

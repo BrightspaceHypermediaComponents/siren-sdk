@@ -530,16 +530,33 @@ export class ActivityUsageEntity extends Entity {
 		}
 
 		const associatedGrade = scoreAndGrade.associatedGrade;
-		const associateGrade = associatedGrade && associatedGrade.href() !== this.gradeHref() && associatedGrade.canAssociateGrade();
-		if (associateGrade) {
+		const createNewGradeItem = scoreAndGrade.inGrades && !associatedGrade && scoreAndGrade.associateNewGradeAction;
+		const associateToExistingGrade = scoreAndGrade.inGrades && associatedGrade && associatedGrade.canAssociateGrade() && this.gradeHref() !== associatedGrade.href();
+		if (createNewGradeItem) {
+			await this._replaceGradeItem(scoreAndGrade);
+		} else if (associateToExistingGrade) {
 			await associatedGrade.associateGrade();
 		}
 
-		if (associateGrade ||
+		if (associateToExistingGrade ||
 			scoreAndGrade.scoreOutOf !== this.scoreOutOf().toString() ||
 			scoreAndGrade.inGrades !== this.inGrades()) {
 			await this.setScoreOutOf(scoreAndGrade.scoreOutOf, scoreAndGrade.inGrades);
 		}
+	}
+
+	async _replaceGradeItem(scoreAndGrade) {
+		const action = scoreAndGrade.associateNewGradeAction;
+		if (!action || !this.canEditGrades()) {
+			return;
+		}
+
+		const fields = [
+			{ name: 'gradeName', value: scoreAndGrade.newGradeName },
+			{ name: 'scoreOutOf', value: scoreAndGrade.scoreOutOf }
+		];
+
+		await performSirenAction(this._token, action, fields);
 	}
 
 	async save(activity) {
