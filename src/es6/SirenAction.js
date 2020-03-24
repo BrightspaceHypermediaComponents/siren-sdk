@@ -30,14 +30,8 @@ const _getEntityUrl = function(action, fields) {
 	}
 
 	let url = new URL(action.href, window.location.origin);
-	let tempFields = fields ? [...fields] : [];
-	if (tempFields.length) {
-		_appendHiddenFields(action, tempFields);
-	} else {
-		tempFields = _getSirenFields(action);
-	}
 	if (action.method === 'GET' || action.method === 'HEAD') {
-		const params = _createURLSearchParams(tempFields);
+		const params = _createURLSearchParams(fields);
 		url = new URL(url.pathname + '?' + params.toString(), url.origin);
 	}
 
@@ -111,8 +105,6 @@ const _performSirenAction = function(action, fields, tokenValue) {
 	const headers = new Headers();
 	tokenValue && headers.append('Authorization', 'Bearer ' + tokenValue);
 
-	const url = _getEntityUrl(action, fields);
-
 	let body;
 
 	if (fields) {
@@ -120,6 +112,8 @@ const _performSirenAction = function(action, fields, tokenValue) {
 	} else {
 		fields = _getSirenFields(action);
 	}
+
+	const url = _getEntityUrl(action, fields);
 
 	if (action.type.indexOf('json') !== -1) {
 		const json = {};
