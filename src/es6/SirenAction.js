@@ -151,6 +151,68 @@ const _performSirenAction = function(action, fields, tokenValue) {
 		});
 };
 
+const _combineActions = function(actionsAndFields) {
+	if (!actionsAndFields) return [];
+
+	// The structure of this is a map (hrefs) containing a map (methods) containing a map (fields)
+	const hrefsMap = new Map();
+
+	actionsAndFields.forEach(actionAndField => {
+		if (!actionAndField || !actionAndField.action) return;
+		const href = actionAndField.action.href;
+		const method = actionAndField.action.method;
+		if (!href || !method) return;
+
+		const methodsMap = hrefsMap.get(href) || new Map();
+		const fieldsMap = methodsMap.get(method) || new Map();
+
+		let fields;
+		if (actionAndField.fields) {
+			fields = _appendHiddenFields(actionAndField.action, actionAndField.fields);
+		} else {
+			fields = _getSirenFields(actionAndField.action);
+		}
+		fields.forEach(field => fieldsMap.set(field.name, field.value));
+
+		methodsMap.set(method, fieldsMap);
+		hrefsMap.set(href, methodsMap);
+	});
+
+	const combinedActions = [];
+	for (const [href, methodsMap] of hrefsMap.entries()) {
+		for (const [method, fieldsMap] of methodsMap) {
+			const fields = [];
+			for (const [fieldName, fieldValue] of fieldsMap) {
+				fields.push({ name: fieldName, value: fieldValue });
+			}
+			const action = { href, method, fields, type: 'application/x-www-form-urlencoded' };
+			combinedActions.push(action);
+		}
+	}
+
+	return combinedActions;
+};
+
+/**
+ * Combines actions that share the same action href and method into one action.
+ * Then executes list of combined actions. Performing siren actions immediately not supported.
+ */
+export const performSirenActions = function(token, actionsAndFields) {
+	if (!actionsAndFields || !actionsAndFields.length) return;
+	const combinedActions = _combineActions(actionsAndFields);
+
+	return window.D2L.Siren.EntityStore.getToken(token)
+		.then(function(resolved) {
+			const tokenValue = resolved.tokenValue;
+			const actionPromises = combinedActions.map(action => {
+				return window.D2L.Siren.ActionQueue.enqueue(function() {
+					return _performSirenAction(action, null, tokenValue);
+				});
+			});
+			return Promise.all(actionPromises);
+		});
+};
+
 export const performSirenAction = function(token, action, fields, immediate) {
 	return window.D2L.Siren.EntityStore.getToken(token)
 		.then(function(resolved) {

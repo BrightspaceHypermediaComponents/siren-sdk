@@ -3,7 +3,7 @@ import { Actions, Classes, Rels } from '../hypermedia-constants';
 import { OrganizationEntity } from '../organizations/OrganizationEntity.js';
 import { UserActivityUsageEntity } from '../enrollments/UserActivityUsageEntity.js';
 import { ActivityUsageCollectionEntity } from './ActivityUsageCollectionEntity.js';
-import { performSirenAction } from '../es6/SirenAction.js';
+import { performSirenAction, performSirenActions } from '../es6/SirenAction.js';
 
 /**
  * ActivityUsageEntity class representation of a d2l activity usage.
@@ -216,19 +216,32 @@ export class ActivityUsageEntity extends Entity {
 	 */
 	async validateDates(dates) {
 		if (!dates) return;
-		await this._saveOrValidateDates(dates.startDate, dates.dueDate, dates.endDate, true);
+		if (!this._hasDatesChanged(dates.startDate, dates.dueDate, dates.endDate)) return;
+
+		const datesActionAndFields = this._generateDatesAction(dates.startDate, dates.dueDate, dates.dueDate, true);
+		if (datesActionAndFields) {
+			await performSirenAction(this._token, datesActionAndFields.action, datesActionAndFields.fields);
+		}
 	}
 
 	/**
 	 * Updates start date, due date and end date together to the dates specified
 	 * @param {object} dates Dates object containing start, due, and end date, or empty strings to clear
 	 */
-	async saveDates(dates) {
+	async saveDates(dates, deferSave) {
 		if (!dates) return;
-		await this._saveOrValidateDates(dates.startDate, dates.dueDate, dates.endDate, false);
+		if (!this._hasDatesChanged(dates.startDate, dates.dueDate, dates.endDate)) return;
+
+		const datesActionAndFields = this._generateDatesAction(dates.startDate, dates.dueDate, dates.dueDate, false);
+		if (!datesActionAndFields) return;
+		if (deferSave) {
+			return datesActionAndFields;
+		} else {
+			await performSirenAction(this._token, datesActionAndFields.action, datesActionAndFields.fields);
+		}
 	}
 
-	async _saveOrValidateDates(startDate, dueDate, endDate, validateOnly) {
+	_generateDatesAction(startDate, dueDate, endDate, validateOnly) {
 		let action;
 		const datesEntity = this._getDateSubEntity('dates');
 		if (datesEntity) {
@@ -239,31 +252,31 @@ export class ActivityUsageEntity extends Entity {
 			return;
 		}
 
-		const startDateChanged = this._hasDateChanged(startDate, this.startDate());
-		const dueDateChanged = this._hasDateChanged(dueDate, this.dueDate());
-		const endDateChanged = this._hasDateChanged(endDate, this.endDate());
+		const startDateValue = this._getDateValue(startDate, this.startDate());
+		const dueDateValue = this._getDateValue(dueDate, this.dueDate());
+		const endDateValue = this._getDateValue(endDate, this.endDate());
 
-		if (startDateChanged || dueDateChanged || endDateChanged) {
-			const startDateValue = this._getDateValue(startDate, this.startDate());
-			const dueDateValue = this._getDateValue(dueDate, this.dueDate());
-			const endDateValue = this._getDateValue(endDate, this.endDate());
+		const fields = [
+			{ name: 'startDate', value: startDateValue },
+			{ name: 'dueDate', value: dueDateValue },
+			{ name: 'endDate', value: endDateValue }
+		];
 
-			const fields = [
-				{ name: 'startDate', value: startDateValue },
-				{ name: 'dueDate', value: dueDateValue },
-				{ name: 'endDate', value: endDateValue }
-			];
-
-			if (validateOnly) {
-				fields.push({ name: 'validateOnly', value: true });
-			}
-
-			await performSirenAction(this._token, action, fields);
+		if (validateOnly) {
+			fields.push({ name: 'validateOnly', value: true });
 		}
+
+		return { action, fields };
 	}
 
 	_hasDateChanged(newDate, oldDate = '') {
 		return typeof newDate !== 'undefined' && newDate !== oldDate;
+	}
+
+	_hasDatesChanged(startDate, dueDate, endDate) {
+		return this._hasDateChanged(startDate, this.startDate())
+			|| this._hasDateChanged(dueDate, this.dueDate())
+			|| this._hasDateChanged(endDate, this.endDate());
 	}
 
 	_getDateValue(primaryDate, secondaryDate) {
@@ -524,7 +537,7 @@ export class ActivityUsageEntity extends Entity {
 		await this.validateDates(activity.dates);
 	}
 
-	async saveScoreAndGrade(scoreAndGrade) {
+	async _associateGrade(scoreAndGrade, deferSave) {
 		if (!scoreAndGrade) {
 			return;
 		}
@@ -533,19 +546,19 @@ export class ActivityUsageEntity extends Entity {
 		const createNewGradeItem = scoreAndGrade.inGrades && !associatedGrade && scoreAndGrade.associateNewGradeAction;
 		const associateToExistingGrade = scoreAndGrade.inGrades && associatedGrade && associatedGrade.canAssociateGrade() && this.gradeHref() !== associatedGrade.href();
 		if (createNewGradeItem) {
-			await this._replaceGradeItem(scoreAndGrade);
+			const associateGradeActionAndFields = this._generateAssociateNewGradeAction(scoreAndGrade);
+			if (!associateGradeActionAndFields) return;
+			if (deferSave) {
+				return associateGradeActionAndFields;
+			} else {
+				await performSirenAction(this._token, associateGradeActionAndFields.action, associateGradeActionAndFields.fields);
+			}
 		} else if (associateToExistingGrade) {
 			await associatedGrade.associateGrade();
 		}
-
-		if (associateToExistingGrade ||
-			scoreAndGrade.scoreOutOf !== this.scoreOutOf().toString() ||
-			scoreAndGrade.inGrades !== this.inGrades()) {
-			await this.setScoreOutOf(scoreAndGrade.scoreOutOf, scoreAndGrade.inGrades);
-		}
 	}
 
-	async _replaceGradeItem(scoreAndGrade) {
+	_generateAssociateNewGradeAction(scoreAndGrade) {
 		const action = scoreAndGrade.associateNewGradeAction;
 		if (!action || !this.canEditGrades()) {
 			return;
@@ -556,15 +569,35 @@ export class ActivityUsageEntity extends Entity {
 			{ name: 'scoreOutOf', value: scoreAndGrade.scoreOutOf }
 		];
 
-		await performSirenAction(this._token, action, fields);
+		return { action, fields };
+	}
+
+	_shouldSetScoreOutOf(scoreAndGrade) {
+		if (!scoreAndGrade) {
+			return;
+		}
+
+		const associatedGrade = scoreAndGrade.associatedGrade;
+		const associateToExistingGrade = scoreAndGrade.inGrades && associatedGrade && associatedGrade.canAssociateGrade() && this.gradeHref() !== associatedGrade.href();
+
+		return associateToExistingGrade
+			|| scoreAndGrade.scoreOutOf !== this.scoreOutOf().toString()
+			|| scoreAndGrade.inGrades !== this.inGrades();
 	}
 
 	async save(activity) {
 		if (!activity) return;
 
 		await this.setDraftStatus(activity.isDraft);
-		await this.saveDates(activity.dates);
-		await this.saveScoreAndGrade(activity.scoreAndGrade);
+
+		const dateActionAndFields = await this.saveDates(activity.dates, true);
+		const associateGradeActionAndFields = await this._associateGrade(activity.scoreAndGrade, true);
+		const sirenActions = [dateActionAndFields, associateGradeActionAndFields];
+		await performSirenActions(this._token, sirenActions);
+
+		if (this._shouldSetScoreOutOf(activity.scoreAndGrade)) {
+			await this.setScoreOutOf(activity.scoreAndGrade.scoreOutOf, activity.scoreAndGrade.inGrades);
+		}
 	}
 
 	equals(activity) {
