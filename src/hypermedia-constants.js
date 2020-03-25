@@ -475,7 +475,8 @@ export const Actions = {
 	},
 	associations: {
 		deleteAssociation: 'delete-association',
-		createAssociation: 'create-association'
+		createAssociation: 'create-association',
+		createPotentialAssociation: 'create-potential-association'
 	},
 	files: {
 		filePreviewLocation: 'file-preview-location'

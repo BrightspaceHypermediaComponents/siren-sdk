@@ -1,6 +1,6 @@
-import { Classes } from '../hypermedia-constants';
 import { Entity } from '../es6/Entity.js';
-
+import { Actions, Classes } from '../hypermedia-constants';
+import { performSirenAction } from '../es6/SirenAction';
 /**
  * Associations class representation of  associations.
  */
@@ -35,6 +35,20 @@ export class AssociationCollectionEntity extends Entity {
 			|| a.hasClass(Classes.associations.potentialAssociation)
 		);
 
+	}
+
+	async createPotentialAssociation() {
+		if (!this._entity || !this._entity.hasActionByName(Actions.associations.createPotentialAssociation)) {
+			return;
+		}
+		
+		const fields = [
+			{ name: 'type', value: 'rubrics' }
+		];
+
+		const action = this._entity.getActionByName(Actions.associations.createAssociation);
+
+		return await performSirenAction(this._token, action, fields);
 	}
 
 }
