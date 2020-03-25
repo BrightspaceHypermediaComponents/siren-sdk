@@ -218,7 +218,7 @@ export class ActivityUsageEntity extends Entity {
 		if (!dates) return;
 		if (!this._hasDatesChanged(dates.startDate, dates.dueDate, dates.endDate)) return;
 
-		const datesActionAndFields = this._generateDatesAction(dates.startDate, dates.dueDate, dates.dueDate, true);
+		const datesActionAndFields = this._generateDatesAction(dates.startDate, dates.dueDate, dates.endDate, true);
 		if (datesActionAndFields) {
 			await performSirenAction(this._token, datesActionAndFields.action, datesActionAndFields.fields);
 		}
@@ -232,7 +232,7 @@ export class ActivityUsageEntity extends Entity {
 		if (!dates) return;
 		if (!this._hasDatesChanged(dates.startDate, dates.dueDate, dates.endDate)) return;
 
-		const datesActionAndFields = this._generateDatesAction(dates.startDate, dates.dueDate, dates.dueDate, false);
+		const datesActionAndFields = this._generateDatesAction(dates.startDate, dates.dueDate, dates.endDate, false);
 		if (!datesActionAndFields) return;
 		if (deferSave) {
 			return datesActionAndFields;
