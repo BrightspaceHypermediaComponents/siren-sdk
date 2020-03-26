@@ -41,7 +41,7 @@ export class AssociationCollectionEntity extends Entity {
 		if (!this._entity || !this._entity.hasActionByName(Actions.associations.createPotentialAssociation)) {
 			return;
 		}
-		
+
 		const fields = [
 			{ name: 'type', value: 'rubrics' }
 		];
