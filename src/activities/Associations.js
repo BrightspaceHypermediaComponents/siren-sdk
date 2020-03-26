@@ -46,7 +46,7 @@ export class AssociationCollectionEntity extends Entity {
 			{ name: 'type', value: 'rubrics' }
 		];
 
-		const action = this._entity.getActionByName(Actions.associations.createAssociation);
+		const action = this._entity.getActionByName(Actions.associations.createPotentialAssociation);
 
 		return await performSirenAction(this._token, action, fields);
 	}
