@@ -1,185 +1,146 @@
-/* global suite, test, fixture, expect, setup, teardown, sinon */
+/* global fetchMock */
 
-suite('SirenAction', function() {
-	var element, sandbox;
+import { getFormData } from '../utility/test-helpers.js';
+import { performSirenAction, performSirenActions } from '../../src/es6/SirenAction.js';
+import { sirenActionTestData } from './data/SirenAction.js';
 
-	var testAction = { // example from https://github.com/kevinswiber/siren
-		'name': 'add-item',
-		'title': 'Add Item',
-		'method': 'POST',
-		'href': 'http://api.x.io/orders/42/items',
-		'type': 'application/x-www-form-urlencoded',
-		'fields': [
-			{ 'name': 'orderNumber', 'type': 'hidden', 'value': '42' },
-			{ 'name': 'productCode', 'type': 'text' },
-			{ 'name': 'quantity', 'type': 'number' }
-		]
-	};
+describe('SirenAction', () => {
+	afterEach(() => {
+		fetchMock.reset();
+	});
 
-	var testAction2 = {
-		'name': 'delete-item',
-		'title': 'Delete Item',
-		'method': 'DELETE',
-		'href': 'http://api.x.io/orders/42/items/5',
-		'type': 'application/x-www-form-urlencoded'
-	};
+	describe('performSirenAction', () => {
+		it('sends form-urlencoded', async() => {
+			fetchMock.postOnce('http://api.x.io/orders/42/items', {});
 
-	var testEntity = { // example from https://github.com/kevinswiber/siren
-		'class': ['order'],
-		'properties': {
-			'orderNumber': 42,
-			'itemCount': 3,
-			'status': 'pending'
-		},
-		'entities': [
-			{
-				'class': ['items', 'collection'],
-				'rel': ['http://x.io/rels/order-items'],
-				'href': 'http://api.x.io/orders/42/items'
-			},
-			{
-				'class': ['info', 'customer'],
-				'rel': ['http://x.io/rels/customer'],
-				'properties': {
-					'customerId': 'pj123',
-					'name': 'Peter Joseph'
-				},
-				'links': [
-					{ 'rel': ['self'], 'href': 'http://api.x.io/customers/pj123' }
-				]
+			await performSirenAction('token', sirenActionTestData.itemsPost1, [{ name: 'productCode', value: '12345' }]);
+
+			const form = await getFormData(fetchMock.lastCall().request);
+			if (!form.notSupported) {
+				expect(form.get('orderNumber')).to.equal('42');
+				expect(form.get('productCode')).to.equal('12345');
 			}
-		],
-		'actions': [
-			{
-				'name': 'add-item',
-				'title': 'Add Item',
-				'method': 'POST',
-				'href': 'http://api.x.io/orders/42/items',
-				'type': 'application/x-www-form-urlencoded',
-				'fields': [
-					{ 'name': 'orderNumber', 'type': 'hidden', 'value': '42' },
-					{ 'name': 'productCode', 'type': 'text' },
-					{ 'name': 'quantity', 'type': 'number' }
-				]
+			expect(fetchMock.called()).to.be.true;
+		});
+
+		describe('Siren ActionQueue Enqueue', () => {
+			let sandbox, actionQueueSpy;
+
+			beforeEach(() => {
+				sandbox = sinon.sandbox.create();
+				actionQueueSpy = sandbox.spy(window.D2L.Siren.ActionQueue, 'enqueue');
+			});
+
+			afterEach(() => {
+				sandbox.restore();
+			});
+
+			it('enqueues, and does not execute immediately', async() => {
+				fetchMock.postOnce('http://api.x.io/orders/42/items', {});
+				await performSirenAction('token', sirenActionTestData.itemsPost1, [{ name: 'productCode', value: '12345' }], false);
+				expect(actionQueueSpy.callCount).to.equal(1);
+				expect(fetchMock.called()).to.be.true;
+			});
+
+			it('does not enqueue, and executes immediately', async() => {
+				fetchMock.postOnce('http://api.x.io/orders/42/items', {});
+				await performSirenAction('token', sirenActionTestData.itemsPost1, [{ name: 'productCode', value: '12345' }], true);
+				expect(actionQueueSpy.callCount).to.equal(0);
+				expect(fetchMock.called()).to.be.true;
+			});
+		});
+	});
+
+	describe('performSirenActions', () => {
+		let AFitemsPost1, AFitemPatch1, AFitemPatch2, AFitemDelete1;
+
+		beforeEach(() => {
+			AFitemsPost1 = { action: sirenActionTestData.itemsPost1, fields: [{ name: 'productCode', value: '10000' }] };
+			AFitemPatch1 = { action: sirenActionTestData.itemPatch1, fields: [{ name: 'productCode', value: '20000'}] };
+			AFitemPatch2 = { action: sirenActionTestData.itemPatch2, fields: [{ name: 'quantity', value: '10' }] };
+			AFitemDelete1 = { action: sirenActionTestData.itemDelete1 };
+		});
+
+		it('sends 1 request when working with 1 action with no (i.e. undefined) fields', async() => {
+			fetchMock.deleteOnce('http://api.x.io/orders/42/items/5', {});
+			await performSirenActions('token', [AFitemDelete1]);
+			expect(fetchMock.called()).to.be.true;
+		});
+
+		it('sends 1 request when working with 1 action with no (i.e. empty array) fields', async() => {
+			fetchMock.deleteOnce('http://api.x.io/orders/42/items/5', {});
+			AFitemDelete1.fields = [];
+			await performSirenActions('token', [AFitemDelete1]);
+			expect(fetchMock.called()).to.be.true;
+		});
+
+		it('sends 1 request when working with 1 action with fields', async() => {
+			fetchMock.postOnce('http://api.x.io/orders/42/items', {});
+
+			await performSirenActions('token', [AFitemsPost1]);
+
+			const form = await getFormData(fetchMock.lastCall().request);
+			if (!form.notSupported) {
+				expect(form.get('orderNumber')).to.equal('42');
+				expect(form.get('productCode')).to.equal('10000');
 			}
-		],
-		'links': [
-			{ 'rel': ['self'], 'href': 'http://api.x.io/orders/42' },
-			{ 'rel': ['previous'], 'href': 'http://api.x.io/orders/41' },
-			{ 'rel': ['next'], 'href': 'http://api.x.io/orders/43' }
-		]
-	};
+			expect(fetchMock.called()).to.be.true;
+		});
 
-	setup(function() {
-		sandbox = sinon.sandbox.create();
-		element = fixture('basic');
-		element.token = 'foozleberries';
-	});
+		it('sends 2 requests when working with 2 actions with different endpoints', async() => {
+			fetchMock.postOnce('http://api.x.io/orders/42/items', {});
+			fetchMock.patchOnce('http://api.x.io/orders/42/items/5', {});
 
-	teardown(function() {
-		sandbox.restore();
-		window.D2L.Siren.ActionQueue.queueEnd = Promise.resolve();
-		window.D2L.Siren.EntityStore.clear();
-	});
+			await performSirenActions('token', [AFitemsPost1, AFitemPatch1]);
 
-	suite('smoke test', function() {
-		test('can be instantiated', function() {
-			expect(element.tagName.toLowerCase()).to.equal('siren-action-test-component');
+			let form = await getFormData(fetchMock.calls()[0].request);
+			if (!form.notSupported) {
+				expect(form.get('orderNumber')).to.equal('42');
+				expect(form.get('productCode')).to.equal('10000');
+			}
+
+			form = await getFormData(fetchMock.calls()[1].request);
+			if (!form.notSupported) {
+				expect(form.get('orderNumber')).to.equal('50');
+				expect(form.get('productCode')).to.equal('20000');
+			}
+
+			expect(fetchMock.done()).to.be.true;
+		});
+
+		it('sends 2 requests when working with 2 actions with the same endpoint but different methods', async() => {
+			fetchMock.patchOnce('http://api.x.io/orders/42/items/5', {});
+			fetchMock.deleteOnce('http://api.x.io/orders/42/items/5', {});
+
+			await performSirenActions('token', [AFitemPatch1, AFitemDelete1]);
+
+			const form = await getFormData(fetchMock.calls()[0].request);
+			if (!form.notSupported) {
+				expect(form.get('orderNumber')).to.equal('50');
+				expect(form.get('productCode')).to.equal('20000');
+			}
+
+			expect(fetchMock.done()).to.be.true;
+		});
+
+		it('sends 1 request when working with 2 actions with the same endpoint and the same method', async() => {
+			fetchMock.patchOnce('http://api.x.io/orders/42/items/5', {});
+
+			await performSirenActions('token', [AFitemPatch1, AFitemPatch2]);
+
+			const form = await getFormData(fetchMock.lastCall().request);
+			if (!form.notSupported) {
+				expect(form.get('orderNumber')).to.equal('50');
+				expect(form.get('productCode')).to.equal('20000');
+				expect(form.get('visibleToCustomer')).to.equal('true');
+				expect(form.get('quantity')).to.equal('10');
+			}
+
+			expect(fetchMock.called()).to.be.true;
 		});
 	});
 
-	suite('send action unit tests', function() {
-		var fetchStub;
-		setup(function() {
-			fetchStub = sinon.stub(window.d2lfetch, 'fetch');
-			var res = new window.Response(JSON.stringify(testEntity), {
-				status: 200,
-				headers: {
-					'Content-type': 'application/json'
-				},
-			});
+	describe('enqueue action', () => {
 
-			fetchStub.returns(Promise.resolve(res));
-		});
-
-		teardown(function() {
-			fetchStub.restore();
-		});
-
-		test('send form-urlencoded', function() {
-			var result = element.performSirenAction(testAction);
-			result.then(function() {
-				expect(fetchStub.callCount).to.equal(1);
-				var requestUrl = fetchStub.getCall(0).args[0];
-				var requestMethod = fetchStub.getCall(0).args[1].method;
-				expect(requestUrl).to.equal('http://api.x.io/orders/42/items');
-				expect(requestMethod).to.equal('POST');
-			});
-			return result;
-		});
-	});
-
-	suite('enqueue action unit tests', function() {
-		var res1, res2;
-		var fetchStub;
-		var actionQueueSpy;
-		setup(function() {
-			actionQueueSpy = sinon.spy(window.D2L.Siren.ActionQueue, 'enqueue');
-			fetchStub = sinon.stub(window.d2lfetch, 'fetch');
-			res1 = new window.Response(JSON.stringify(testEntity), {
-				status: 200,
-				headers: {
-					'Content-type': 'application/json'
-				},
-			});
-			res2 = new window.Response(null, {
-				status: 204
-			});
-		});
-
-		teardown(function() {
-			fetchStub.restore();
-			actionQueueSpy.restore();
-		});
-
-		test('enqueues actions', function() {
-			fetchStub.withArgs('http://api.x.io/orders/42/items').returns(
-				new Promise(function(resolve) {
-					setTimeout(function() {
-						expect(fetchStub.callCount).to.equal(1);
-						expect(actionQueueSpy.callCount).to.equal(2);
-						resolve(res1);
-					});
-				})
-			);
-			fetchStub.withArgs('http://api.x.io/orders/42/items/5').returns(
-				new Promise(function(resolve) {
-					resolve(res2);
-				})
-			);
-			var firstCall = element.performSirenAction(testAction);
-			element.performSirenAction(testAction2);
-			return firstCall;
-		});
-
-		test('immediate actions skip queue', function() {
-			fetchStub.withArgs('http://api.x.io/orders/42/items').returns(
-				new Promise(function(resolve) {
-					setTimeout(function() {
-						expect(fetchStub.callCount).to.equal(2);
-						expect(actionQueueSpy.callCount).to.equal(1);
-						resolve(res1);
-					});
-				})
-			);
-			fetchStub.withArgs('http://api.x.io/orders/42/items/5').returns(
-				new Promise(function(resolve) {
-					resolve(res2);
-				})
-			);
-			var firstCall = element.performSirenAction(testAction);
-			element.performSirenAction(testAction2, null, true);
-			return firstCall;
-		});
 	});
 });

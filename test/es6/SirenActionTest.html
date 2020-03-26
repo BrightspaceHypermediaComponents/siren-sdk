@@ -9,22 +9,17 @@
 		<script src="/node_modules/@polymer/test-fixture/test-fixture.js"></script>
 		<script src="/node_modules/wct-mocha/wct-mocha.js"></script>
 		<script src="/node_modules/sinon/pkg/sinon.js"></script>
+		<script src="/node_modules/sinon-chai/lib/sinon-chai.js"></script>
+		<script type="module" src="/node_modules/fetch-mock/es5/client-bundle.js"></script>
 
 	<script type="module" src="../../../siren-parser/global.js"></script>
 
 	<!-- For IE11 -->
 	<script src="../../../lie/dist/lie.polyfill.min.js"></script>
 	<script src="../../../whatwg-fetch/fetch.js"></script>
-
-	<script type="module" src="./SirenActionTestComponent.js"></script>
 </head>
 
 <body>
-	<test-fixture id="basic">
-		<template>
-			<siren-action-test-component></siren-action-test-component>
-		</template>
-	</test-fixture>
 	<script type="module" src="./SirenActionTest.js"></script>
 </body>
 
