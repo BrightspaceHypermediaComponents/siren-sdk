@@ -155,8 +155,7 @@ export class OrganizationEntity extends Entity {
 
 	onImageChange(onChange) {
 		const image = this.imageEntity();
-		const imageHref = image && image.href;
-		imageHref && this._subEntity(SimpleEntity, imageHref, onChange);
+		this._subEntity(SimpleEntity, image, onChange);
 	}
 
 	onNotificationsChange(onChange) {
