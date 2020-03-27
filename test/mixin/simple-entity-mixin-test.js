@@ -1,10 +1,12 @@
 import 'd2l-fetch/d2l-fetch.js';
 import { html, fixture, expect } from '@open-wc/testing';
+import { AsyncStateEvent } from '@brightspace-ui/core/helpers/asyncStateEvent.js';
 
 window.D2L.Siren.WhitelistBehavior._testMode(true);
 
 async function load(el, href) {
 	let loaded;
+	const asyncStateEventType = (new AsyncStateEvent()).type;
 	const loading = new Promise(function(resolve) {
 		loaded = resolve;
 	});
@@ -12,11 +14,11 @@ async function load(el, href) {
 	async function wait(e) {
 		const promise = e.detail.promise;
 		await promise;
-		el.removeEventListener('pending-state', wait);
+		el.removeEventListener(asyncStateEventType, wait);
 		loaded();
 	}
 
-	el.addEventListener('pending-state', wait);
+	el.addEventListener(asyncStateEventType, wait);
 	el.href = href;
 
 	await loading;
