@@ -139,8 +139,4 @@ describe('SirenAction', () => {
 			expect(fetchMock.called()).to.be.true;
 		});
 	});
-
-	describe('enqueue action', () => {
-
-	});
 });
