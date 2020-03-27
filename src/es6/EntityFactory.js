@@ -3,7 +3,7 @@ import 'd2l-polymer-siren-behaviors/store/entity-store.js';
 /**
  * This creates and fetch a new entity. Whenever the entity changes onChange is called.
  * @param {Function} entityType The type of the entity. For example OrganizationEntity
- * @param {String} href Href of the entity to be created
+ * @param {Object|String} href Siren Link or Href of the entity to be created
  * @param {String|Token|Null} token JWT Token for brightspace | a function that returns a JWT token for brightspace | null (defaults to cookie authentication in a browser)
  * @param {Function} onChange Callback function that accepts an {entityType} to be called when entity changes. If there are errors onChange is called with (null, error)
  * @param {Object} entity (Optional) Entity that has already been fetched.
