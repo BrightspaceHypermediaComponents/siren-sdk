@@ -84,6 +84,7 @@ class EntityListener {
 	}
 
 	_validate(href, onChange, entity) {
+		href = href && href.href || href;
 		const entityIsGood = !entity || (entity.hasLinkByRel('self')  && entity.getLinkByRel('self').href === href);
 
 		// token can be empty.
