@@ -103,27 +103,38 @@ export class Entity extends EntitySirenProperties {
 	 * @param {*} onChange callback function that accepts an {entityType} to be called when subentity changes.
 	 */
 	_subEntityByEntity(entityType, entity, onChange) {
-		if (entity.href) {
-			return this._subEntityByHref(entityType, entity.href, onChange);
-		} else if (!entity || !entity.hasLinkByRel('self')) {
+		if (!entity) {
 			return;
 		}
 
-		const href = entity.getLinkByRel('self').href;
+		const isEmbeddedLink = !!(entity.href);
+		const hasSelfLink = entity.hasLinkByRel && entity.hasLinkByRel('self');
+
+		if (!isEmbeddedLink && !hasSelfLink) {
+			return;
+		}
+
+		const link = isEmbeddedLink
+			? entity
+			: entity.getLinkByRel('self');
+
+		const seedEntity = isEmbeddedLink
+			? undefined
+			: entity;
 
 		// Clean up if that href has already been added.
-		if (this._subEntities.has(href)) {
-			dispose(this._subEntities.get(href));
+		if (this._subEntities.has(link.href)) {
+			dispose(this._subEntities.get(link.href));
 		}
 		this._subEntitiesLoadStatus.push(new Promise((resolve) => {
-			entityFactory(entityType, href, this._token, (entity) => {
-				this._subEntities.set(href, entity);
+			entityFactory(entityType, link, this._token, (entity) => {
+				this._subEntities.set(link.href, entity);
 				onChange(entity);
 				Promise.all(entity._subEntitiesLoadStatus).then(() => {
 					resolve && resolve();
 					resolve = null;
 				});
-			}, entity);
+			}, seedEntity);
 		}));
 	}
 }
