@@ -83,11 +83,7 @@ export const EntityMixinLit = superclass => class extends superclass {
 				pendingResolve = resolve;
 			});
 
-			const pendingEvent = new CustomEvent('pending-state', {
-				composed: true,
-				bubbles: true,
-				detail: { promise: pendingPromise }
-			});
+			const pendingEvent = new AsyncStateEvent(pendingPromise);
 			this.dispatchEvent(pendingEvent);
 
 			entityFactory(this._entityType, this.href, this.token, entity => {
