@@ -173,6 +173,20 @@ export class AssignmentEntity extends Entity {
 		return this._entity.getLinksByRel(Rels.rubric);
 	}
 
+	canEditAssignmentType() {
+		debugger;
+
+		if (!this._entity) {
+			return false;
+		}
+
+		const subEntity = this._entity.getSubEntityByRel(Rels.Assignments.folderType);
+		if (!subEntity) {
+			return false;
+		}
+
+		return subEntity.hasActionByName(Actions.assignments.setToGroup) && subEntity.hasActionByName(Actions.assignments.setToIndividual)
+	}
 	/**
 	 * @returns {string} Name of the selected group category for the assignment type
 	 */
@@ -348,6 +362,11 @@ export class AssignmentEntity extends Entity {
 		await performSirenAction(this._token, action, fields);
 	}
 
+	_getReadOnlySubmissionTypeOptions() {
+		const submissionType = this._entity.properties.submissionType;
+		return submissionType ? [submissionType] : [];
+	}
+
 	/**
 	 * @returns {object} Submission type of the assignment (including type value and type title)
 	 */
@@ -363,13 +382,17 @@ export class AssignmentEntity extends Entity {
 	 * @returns {Array} Set of submission type options for this assignment
 	 */
 	submissionTypeOptions() {
-		if (!this.canEditSubmissionType()) {
+		if (!this._entity) {
 			return [];
 		}
 
 		const action = this._entity.getActionByName(Actions.assignments.updateSubmissionType);
+		if (!action) {
+			return this._getReadOnlySubmissionTypeOptions();
+		}
+
 		if (!action.hasFieldByName('submissionType')) {
-			return [];
+			return this._getReadOnlySubmissionTypeOptions();
 		}
 
 		return action.getFieldByName('submissionType').value;
@@ -414,6 +437,11 @@ export class AssignmentEntity extends Entity {
 		await performSirenAction(this._token, action, fields);
 	}
 
+
+	_getReadOnlyCompletionTypeOptions() {
+		const completionType = this._entity.properties.completionType;
+		return completionType ? [completionType] : [];
+	}
 	/**
 	 * @returns {object} Completion type of the assignment (including type value and type title)
 	 */
@@ -434,8 +462,12 @@ export class AssignmentEntity extends Entity {
 		}
 
 		const action = this._entity.getActionByName(Actions.assignments.updateCompletionType);
+		if(!action) {
+			return this._getReadOnlyCompletionTypeOptions();
+		}
+
 		if (!action.hasFieldByName('completionType')) {
-			return [];
+			return this._getReadOnlyCompletionTypeOptions();
 		}
 
 		return action.getFieldByName('completionType').value;
@@ -646,24 +678,13 @@ export class AssignmentEntity extends Entity {
 			[this.name(), assignment.name],
 			[this.instructionsEditorHtml(), assignment.instructions],
 			[this.submissionType() && String(this.submissionType().value), assignment.submissionType],
-			[this.completionType() && String(this.completionType().value), assignment.completionType],
-			[this.isAnonymousMarkingEnabled(), assignment.isAnonymous],
-			[this.getAvailableAnnotationTools(), assignment.annotationToolsAvailable],
-			[this.isIndividualAssignmentType(), assignment.isIndividualAssignmentType]
+			[this.completionType() && this.completionType().value, assignment.completionType]
 		];
 		for (const [left, right] of diffs) {
 			if (left !== right) {
 				return false;
 			}
 		}
-
-		if (!assignment.isIndividualAssignmentType && !this.isGroupAssignmentTypeDisabled()) {
-			const selected = this.getAssignmentTypeGroupCategoryOptions().find(x => x.selected);
-			if (String(selected && selected.value) !== assignment.groupTypeId) {
-				return false;
-			}
-		}
-
 		return true;
 	}
 
