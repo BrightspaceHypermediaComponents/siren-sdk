@@ -202,6 +202,22 @@ export class AssignmentEntity extends Entity {
 	}
 
 	/**
+	 * @returns {bool} If the assignment has submissions
+	 */
+	assignmentHasSubmissions() {
+		if (!this._entity) {
+			return false;
+		}
+
+		const subEntity = this._entity.getSubEntityByRel(Rels.Assignments.folderType);
+		if (!subEntity) {
+			return false;
+		}
+
+		return subEntity.hasClass(Classes.assignments.assignmentType.hasSubmissions);
+	}
+
+	/**
 	 * @returns {bool} If the assignment type "group assignment" can be set
 	 */
 	isGroupAssignmentTypeDisabled() {
