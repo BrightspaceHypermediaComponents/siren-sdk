@@ -194,7 +194,6 @@ export class AssignmentEntity extends Entity {
 		if (!this._entity) {
 			return false;
 		}
-		
 		return this._entity.getActionByName(Actions.assignments.setToGroup) && this._entity.getActionByName(Actions.assignments.setToIndividual) ;
 	}
 
