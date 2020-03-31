@@ -170,6 +170,42 @@ export const editableAssignment = {
 				}
 			]
 		},
+		{
+			'class': [
+				'files-submission-limit'
+			],
+			'rel': [
+				'https://assignments.api.brightspace.com/rels/files-submission-limit'
+			],
+			'properties': {
+				'limit': 'unlimited'
+			},
+			'actions': [
+				{
+					'href': 'https://f5aa43d7-c082-485c-84f5-4808147fe98a.assignments.api.dev.brightspace.com/123065/folders/7',
+					'name': 'update-files-submission-limit',
+					'method': 'PATCH',
+					'fields': [
+						{
+							'type': 'radio',
+							'name': 'filesSubmissionLimit',
+							'value': [
+								{
+									'title': 'Unlimited',
+									'value': 'unlimited',
+									'selected': true
+								},
+								{
+									'title': 'OneFilePerSubmission',
+									'value': 'one',
+									'selected': false
+								}
+							]
+						}
+					]
+				}
+			]
+		},
 	],
 	'actions': [
 		{
