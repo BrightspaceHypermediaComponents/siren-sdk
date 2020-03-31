@@ -518,9 +518,8 @@ export class AssignmentEntity extends Entity {
 			return;
 		}
 
-		const filesSubmissionLimitMap = { 'unlimited': 0, 'one': 1 };
 		const fields = [
-			{ name: 'filesSubmissionLimit', value: filesSubmissionLimitMap[filesSubmissionLimit] }
+			{ name: 'filesSubmissionLimit', value: filesSubmissionLimit }
 		];
 		await performSirenAction(this._token, action, fields);
 	}
@@ -671,11 +670,10 @@ export class AssignmentEntity extends Entity {
 			fields.push({ name: 'submissionType', value: assignment.submissionType });
 		}
 
-		const filesSubmissionLimitMap = { 'unlimited': 0, 'one': 1 };
 		if (typeof assignment.filesSubmissionLimit !== 'undefined' &&
 			assignment.filesSubmissionLimit !== this.filesSubmissionLimit() &&
 				this.canEditFilesSubmissionLimit()) {
-			fields.push({ name: 'filesSubmissionLimit', value: filesSubmissionLimitMap[assignment.filesSubmissionLimit] });
+			fields.push({ name: 'filesSubmissionLimit', value: assignment.filesSubmissionLimit });
 		}
 
 		if (typeof assignment.completionType !== 'undefined' &&

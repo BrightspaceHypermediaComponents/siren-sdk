@@ -197,7 +197,7 @@ export const editableAssignment = {
 								},
 								{
 									'title': 'OneFilePerSubmission',
-									'value': 'one',
+									'value': 'onefilepersubmission',
 									'selected': false
 								}
 							]

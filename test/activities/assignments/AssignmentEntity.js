@@ -152,7 +152,7 @@ describe('AssignmentEntity', () => {
 		it('set files per submission', async() => {
 			fetchMock.patchOnce('https://f5aa43d7-c082-485c-84f5-4808147fe98a.assignments.api.dev.brightspace.com/123065/folders/7', editableEntity);
 			var assignmentEntity = new AssignmentEntity(editableEntity);
-			await assignmentEntity.setFilesSubmissionLimit('one');
+			await assignmentEntity.setFilesSubmissionLimit('onefilepersubmission');
 			expect(fetchMock.called()).to.be.true;
 		});
 
