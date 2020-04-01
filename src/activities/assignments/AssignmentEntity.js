@@ -194,7 +194,7 @@ export class AssignmentEntity extends Entity {
 		if (!this._entity) {
 			return false;
 		}
-		return !this._entity.hasActionByName(Actions.assignments.setToGroup) && 
+		return !this._entity.hasActionByName(Actions.assignments.setToGroup) &&
 			!this._entity.hasActionByName(Actions.assignments.setToIndividual) ;
 	}
 
@@ -363,7 +363,7 @@ export class AssignmentEntity extends Entity {
 
 	_getReadOnlySubmissionTypeOptions() {
 		if (!this._entity) {
-			return []
+			return [];
 		}
 
 		const currentSubmissionType = this._entity.properties.submissionType;
