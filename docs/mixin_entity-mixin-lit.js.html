@@ -19,11 +19,6 @@
 
     <h1 class="page-title">Source: mixin/entity-mixin-lit.js</h1>
 
-    
-
-
-
-    
     <section>
         <article>
             <pre class="prettyprint source linenums"><code>import { entityFactory, dispose } from '../es6/EntityFactory.js';
@@ -88,11 +83,7 @@ export const EntityMixinLit = superclass => class extends superclass {
 				pendingResolve = resolve;
 			});
 
-			const pendingEvent = new CustomEvent('d2l-pending-state', {
-				composed: true,
-				bubbles: true,
-				detail: { promise: pendingPromise }
-			});
+			const pendingEvent = new AsyncStateEvent(pendingPromise);
 			this.dispatchEvent(pendingEvent);
 
 			entityFactory(this._entityType, this.href, this.token, entity => {

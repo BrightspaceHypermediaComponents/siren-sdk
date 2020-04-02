@@ -1,4 +1,5 @@
 import { entityFactory, dispose } from '../es6/EntityFactory.js';
+import { AsyncStateEvent } from '@brightspace-ui/core/helpers/asyncStateEvent.js';
 
 export const EntityMixinLit = superclass => class extends superclass {
 
@@ -60,11 +61,7 @@ export const EntityMixinLit = superclass => class extends superclass {
 				pendingResolve = resolve;
 			});
 
-			const pendingEvent = new CustomEvent('d2l-pending-state', {
-				composed: true,
-				bubbles: true,
-				detail: { promise: pendingPromise }
-			});
+			const pendingEvent = new AsyncStateEvent(pendingPromise);
 			this.dispatchEvent(pendingEvent);
 
 			entityFactory(this._entityType, this.href, this.token, entity => {
