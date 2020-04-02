@@ -194,8 +194,13 @@ export class AssignmentEntity extends Entity {
 		if (!this._entity) {
 			return false;
 		}
-		return !this._entity.hasActionByName(Actions.assignments.setToGroup) &&
-			!this._entity.hasActionByName(Actions.assignments.setToIndividual) ;
+
+		const subEntity = this._entity.getSubEntityByRel(Rels.Assignments.folderType);
+		if (!subEntity) {
+			return false;
+		}
+		return !subEntity.hasActionByName(Actions.assignments.setToGroup) &&
+			!subEntity.hasActionByName(Actions.assignments.setToIndividual) ;
 	}
 
 	/**
