@@ -489,6 +489,40 @@ export class AssignmentEntity extends Entity {
 		await performSirenAction(this._token, action, fields);
 	}
 
+	filesSubmissionLimit() {
+		const subEntity = this._entity && this._entity.getSubEntityByRel(Rels.Assignments.filesSubmissionLimit);
+
+		if (!subEntity || !subEntity.properties) {
+			return;
+		}
+
+		return subEntity.properties.limit;
+	}
+
+	canEditFilesSubmissionLimit() {
+		const subEntity = this._entity && this._entity.getSubEntityByRel(Rels.Assignments.filesSubmissionLimit);
+		return subEntity && subEntity.hasActionByName(Actions.assignments.updateFilesSubmissionLimit);
+	}
+
+	async setFilesSubmissionLimit(filesSubmissionLimit) {
+		const subEntity = this._entity && this._entity.getSubEntityByRel(Rels.Assignments.filesSubmissionLimit);
+		const action = this.canEditFilesSubmissionLimit() && subEntity && subEntity.getActionByName(Actions.assignments.updateFilesSubmissionLimit);
+		if (!action) {
+			return;
+		}
+
+		const fieldValue = action.getFieldByName('filesSubmissionLimit').value.find(v => {
+			return v.value === filesSubmissionLimit;
+		});
+		if (!fieldValue) {
+			return;
+		}
+
+		const fields = [
+			{ name: 'filesSubmissionLimit', value: filesSubmissionLimit }
+		];
+		await performSirenAction(this._token, action, fields);
+	}
 	/**
 	 * @returns {bool} Whether or not annotations are enabled for the assignment entity
 	 */
@@ -636,6 +670,12 @@ export class AssignmentEntity extends Entity {
 			fields.push({ name: 'submissionType', value: assignment.submissionType });
 		}
 
+		if (typeof assignment.filesSubmissionLimit !== 'undefined' &&
+			assignment.filesSubmissionLimit !== this.filesSubmissionLimit() &&
+				this.canEditFilesSubmissionLimit()) {
+			fields.push({ name: 'filesSubmissionLimit', value: assignment.filesSubmissionLimit });
+		}
+
 		if (typeof assignment.completionType !== 'undefined' &&
 				assignment.completionType !== this.completionType() &&
 				this.canEditCompletionType()) {
@@ -665,7 +705,8 @@ export class AssignmentEntity extends Entity {
 			[this.completionType() && String(this.completionType().value), assignment.completionType],
 			[this.isAnonymousMarkingEnabled(), assignment.isAnonymous],
 			[this.getAvailableAnnotationTools(), assignment.annotationToolsAvailable],
-			[this.isIndividualAssignmentType(), assignment.isIndividualAssignmentType]
+			[this.isIndividualAssignmentType(), assignment.isIndividualAssignmentType],
+			[this.filesSubmissionLimit(), assignment.filesSubmissionLimit]
 		];
 		for (const [left, right] of diffs) {
 			if (left !== right) {

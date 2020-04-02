@@ -49,7 +49,8 @@ describe('AssignmentEntity', () => {
 				isAnonymous: false,
 				annotationToolsAvailable: true,
 				isIndividualAssignmentType: false,
-				groupTypeId: '314'
+				groupTypeId: '314',
+				filesSubmissionLimit: 'unlimited'
 			})).to.be.true;
 		});
 
@@ -62,7 +63,8 @@ describe('AssignmentEntity', () => {
 				completionType: undefined,
 				isAnonymous: false,
 				annotationToolsAvailable: true,
-				isIndividualAssignmentType: true
+				isIndividualAssignmentType: true,
+				filesSubmissionLimit: 'unlimited'
 			})).to.be.false;
 		});
 	});
@@ -136,5 +138,23 @@ describe('AssignmentEntity', () => {
 			await assignmentEntity.delete();
 			expect(fetchMock.called()).to.be.true;
 		});
+	});
+
+	describe('FilesPerSubmission', () => {
+		it('Can Edit FilesPerSubmission', () => {
+			var assignmentEntity = new AssignmentEntity(editableEntity);
+			expect(assignmentEntity.canEditFilesSubmissionLimit()).to.be.true;
+		});
+		it('equals to unlimited', () => {
+			var assignmentEntity = new AssignmentEntity(editableEntity);
+			expect(assignmentEntity.filesSubmissionLimit()).to.equal('unlimited');
+		});
+		it('set files per submission', async() => {
+			fetchMock.patchOnce('https://f5aa43d7-c082-485c-84f5-4808147fe98a.assignments.api.dev.brightspace.com/123065/folders/7', editableEntity);
+			var assignmentEntity = new AssignmentEntity(editableEntity);
+			await assignmentEntity.setFilesSubmissionLimit('onefilepersubmission');
+			expect(fetchMock.called()).to.be.true;
+		});
+
 	});
 });

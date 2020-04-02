@@ -83,7 +83,8 @@ export const Rels = {
 		attachments: 'https://assignments.api.brightspace.com/rels/attachments',
 		annotations: 'https://assignments.api.brightspace.com/rels/annotations',
 		folderType: 'https://assignments.api.brightspace.com/rels/folder-type',
-		groupsHomepage: 'https://assignments.api.brightspace.com/rels/groups-homepage'
+		groupsHomepage: 'https://assignments.api.brightspace.com/rels/groups-homepage',
+		filesSubmissionLimit: 'https://assignments.api.brightspace.com/rels/files-submission-limit'
 	},
 	// Awards
 	Awards: {
@@ -429,7 +430,8 @@ export const Actions = {
 		updateCompletionType: 'update-completion-type',
 		updateSubmissionType: 'update-submission-type',
 		updateAnnotationToolsAvailability: 'update-annotation-tools-availability',
-		update: 'quick-create-folder'
+		update: 'quick-create-folder',
+		updateFilesSubmissionLimit: 'update-files-submission-limit'
 	},
 	notifications: {
 		getCarrierClass: 'get-carrier',
