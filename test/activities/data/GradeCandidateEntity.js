@@ -130,6 +130,88 @@ export const testData = {
 					'href': 'http://vlx1-mdulat.desire2learn.d2l:44444/d2l/api/hm/grades/organizations/6609/grades/6064'
 				}
 			]
+		},
+		newGradeCandidateWithCategory: {
+			'class': [
+				'new-grade-candidate'
+			],
+			'rel': [
+				'item'
+			],
+			'actions': [
+				{
+					'href': 'https://9caa9c10-0175-4c56-84e5-fc2bca4d8a52.activities.api.proddev.d2l/activities/6606_2000_4/usages/6609',
+					'name': 'save',
+					'method': 'PATCH',
+					'fields': [
+						{
+							'type': 'text',
+							'name': 'gradeName',
+							'value': ''
+						},
+						{
+							'type': 'number',
+							'name': 'scoreOutOf',
+							'value': ''
+						},
+						{
+							'type': 'hidden',
+							'name': 'replaceGradeItem',
+							'value': true
+						},
+						{
+							'type': 'hidden',
+							'name': 'categoryId',
+							'value': '5002'
+						}
+					]
+				}
+			],
+			'links': [
+				{
+					'rel': [
+						'https://grades.api.brightspace.com/rels/grade-category'
+					],
+					'href': 'https://9caa9c10-0175-4c56-84e5-fc2bca4d8a52.grades.api.proddev.d2l/organizations/6609/grade-categories/5002'
+				}
+			]
+		},
+		newGradeCandidateWithoutCategory: {
+			'class': [
+				'new-grade-candidate'
+			],
+			'rel': [
+				'item'
+			],
+			'actions': [
+				{
+					'href': 'https://9caa9c10-0175-4c56-84e5-fc2bca4d8a52.activities.api.proddev.d2l/activities/6606_2000_4/usages/6609',
+					'name': 'save',
+					'method': 'PATCH',
+					'fields': [
+						{
+							'type': 'text',
+							'name': 'gradeName',
+							'value': ''
+						},
+						{
+							'type': 'number',
+							'name': 'scoreOutOf',
+							'value': ''
+						},
+						{
+							'type': 'hidden',
+							'name': 'replaceGradeItem',
+							'value': true
+						},
+						{
+							'type': 'hidden',
+							'name': 'categoryId',
+							'value': ''
+						}
+					]
+				}
+			]
 		}
 	}
 };

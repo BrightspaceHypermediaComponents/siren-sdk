@@ -29,6 +29,10 @@ describe('GradeCandidateEntity', () => {
 			expect(entity.isCategory()).to.be.false;
 		});
 
+		it('is not a new grade candidate', () => {
+			expect(entity.isNewGradeCandidate()).to.be.false;
+		});
+
 		it('is the current association', () => {
 			expect(entity.isCurrentAssociation()).to.be.true;
 		});
@@ -68,6 +72,10 @@ describe('GradeCandidateEntity', () => {
 
 		it('is not a category', () => {
 			expect(entity.isCategory()).to.be.false;
+		});
+
+		it('is not a new grade candidate', () => {
+			expect(entity.isNewGradeCandidate()).to.be.false;
 		});
 
 		it('is not the current association', () => {
@@ -115,6 +123,82 @@ describe('GradeCandidateEntity', () => {
 		});
 
 		it('skips associating as it does not hve the associate action', async() => {
+			await entity.associateGrade();
+			expect(fetchMock.done());
+		});
+	});
+
+	describe('New Grade Candidate with Category', () => {
+		let entity;
+
+		beforeEach(() => {
+			const entityJson = window.D2L.Hypermedia.Siren.Parse(testData.gradeCandidateEntity.newGradeCandidateWithCategory);
+			entity = new GradeCandidateEntity(entityJson);
+		});
+
+		it('gets href', () => {
+			expect(entity.href()).to.equal('https://9caa9c10-0175-4c56-84e5-fc2bca4d8a52.grades.api.proddev.d2l/organizations/6609/grade-categories/5002');
+		});
+
+		it('gets getGradeCandidates', () => {
+			expect(entity.getGradeCandidates()).to.be.an('array').that.is.empty;
+		});
+
+		it('is not a category', () => {
+			expect(entity.isCategory()).to.be.false;
+		});
+
+		it('is a new grade candidate', () => {
+			expect(entity.isNewGradeCandidate()).to.be.true;
+		});
+
+		it('is not the current association', () => {
+			expect(entity.isCurrentAssociation()).to.be.false;
+		});
+
+		it('can not associate to grade', () => {
+			expect(entity.canAssociateGrade()).to.be.false;
+		});
+
+		it('skips associating as it does not have the associate action', async() => {
+			await entity.associateGrade();
+			expect(fetchMock.done());
+		});
+	});
+
+	describe('New Grade Candidate without Category', () => {
+		let entity;
+
+		beforeEach(() => {
+			const entityJson = window.D2L.Hypermedia.Siren.Parse(testData.gradeCandidateEntity.newGradeCandidateWithoutCategory);
+			entity = new GradeCandidateEntity(entityJson);
+		});
+
+		it('gets href', () => {
+			expect(entity.href()).to.be.undefined;
+		});
+
+		it('gets getGradeCandidates', () => {
+			expect(entity.getGradeCandidates()).to.be.an('array').that.is.empty;
+		});
+
+		it('is not a category', () => {
+			expect(entity.isCategory()).to.be.false;
+		});
+
+		it('is a new grade candidate', () => {
+			expect(entity.isNewGradeCandidate()).to.be.true;
+		});
+
+		it('is not the current association', () => {
+			expect(entity.isCurrentAssociation()).to.be.false;
+		});
+
+		it('can not associate to grade', () => {
+			expect(entity.canAssociateGrade()).to.be.false;
+		});
+
+		it('skips associating as it does not have the associate action', async() => {
 			await entity.associateGrade();
 			expect(fetchMock.done());
 		});

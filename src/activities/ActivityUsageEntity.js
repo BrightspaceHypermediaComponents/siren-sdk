@@ -66,7 +66,7 @@ export class ActivityUsageEntity extends Entity {
 		return this._entity.getLinkByRel(Rels.Activities.gradeCandidates).href;
 	}
 
-		/**
+	/**
 	 * @returns {string} URL of the new grade association candidates with the activity usage, if present
 	 */
 	newGradeCandidatesHref() {
