@@ -66,6 +66,17 @@ export class ActivityUsageEntity extends Entity {
 		return this._entity.getLinkByRel(Rels.Activities.gradeCandidates).href;
 	}
 
+		/**
+	 * @returns {string} URL of the new grade association candidates with the activity usage, if present
+	 */
+	newGradeCandidatesHref() {
+		if (!this._entity || !this._entity.hasLinkByRel(Rels.Activities.newGradeAssociation)) {
+			return;
+		}
+
+		return this._entity.getLinkByRel(Rels.Activities.newGradeAssociation).href;
+	}
+
 	/**
 	 * @returns {bool} Whether the release conditions dialog opener sub entity is present.
 	 */
