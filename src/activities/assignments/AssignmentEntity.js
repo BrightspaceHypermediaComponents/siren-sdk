@@ -194,11 +194,13 @@ export class AssignmentEntity extends Entity {
 		if (!this._entity) {
 			return false;
 		}
+
 		const subEntity = this._entity.getSubEntityByRel(Rels.Assignments.folderType);
 		if (!subEntity) {
 			return false;
 		}
-		return subEntity.hasClass(Classes.assignments.assignmentType.readOnly);
+		return !subEntity.hasActionByName(Actions.assignments.setToGroup) &&
+			!subEntity.hasActionByName(Actions.assignments.setToIndividual) ;
 	}
 
 	/**
@@ -364,6 +366,15 @@ export class AssignmentEntity extends Entity {
 		await performSirenAction(this._token, action, fields);
 	}
 
+	_getReadOnlySubmissionTypeOptions() {
+		if (!this._entity) {
+			return [];
+		}
+
+		const currentSubmissionType = this._entity.properties.submissionType;
+		return currentSubmissionType ? [currentSubmissionType] : [];
+	}
+
 	/**
 	 * @returns {object} Submission type of the assignment (including type value and type title)
 	 */
@@ -379,13 +390,17 @@ export class AssignmentEntity extends Entity {
 	 * @returns {Array} Set of submission type options for this assignment
 	 */
 	submissionTypeOptions() {
-		if (!this.canEditSubmissionType()) {
+		if (!this._entity) {
 			return [];
 		}
 
 		const action = this._entity.getActionByName(Actions.assignments.updateSubmissionType);
+		if (!action) {
+			return this._getReadOnlySubmissionTypeOptions();
+		}
+
 		if (!action.hasFieldByName('submissionType')) {
-			return [];
+			return this._getReadOnlySubmissionTypeOptions();
 		}
 
 		return action.getFieldByName('submissionType').value;

@@ -220,7 +220,6 @@ export const Classes = {
 		assignmentType: {
 			individual: 'individual',
 			noGroupType: 'no-group-type',
-			readOnly: 'read-only',
 			hasSubmissions: 'has-submissions'
 		},
 		attachment: 'attachment',
