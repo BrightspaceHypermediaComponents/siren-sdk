@@ -63,7 +63,8 @@ export const Rels = {
 		activityHomepage: 'https://activities.api.brightspace.com/rels/activity-homepage',
 		scoreOutOf: 'https://activities.api.brightspace.com/rels/score-out-of',
 		gradeCandidates: 'https://activities.api.brightspace.com/rels/grade-candidates',
-		associations: 'https://activities.api.brightspace.com/rels/associations'
+		associations: 'https://activities.api.brightspace.com/rels/associations',
+		newGradeAssociation: 'https://activities.api.brightspace.com/rels/new-grade-association'
 	},
 	Conditions: {
 		conditions: 'https://conditions.api.brightspace.com/rels/conditions',
@@ -300,7 +301,8 @@ export const Classes = {
 		userGrade: 'user-grade',
 		userGrades: 'user-grades',
 		weighted: 'weighted',
-		points: 'points'
+		points: 'points',
+		newGradeCandidate: 'new-grade-candidate'
 	},
 	organizations: {
 		courseOffering: 'course-offering',

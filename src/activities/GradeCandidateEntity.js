@@ -11,16 +11,16 @@ export class GradeCandidateEntity extends Entity {
 	 */
 	href() {
 		const entity = this._entity;
-
 		if (!this._entity) {
 			return;
 		}
 
-		if (this.isCategory() && entity.hasLinkByRel(Rels.Grades.category)) {
+		const canHaveCategoryLink = this.isCategory() || this.isNewGradeCandidate();
+		if (canHaveCategoryLink && entity.hasLinkByRel(Rels.Grades.category)) {
 			return entity.getLinkByRel(Rels.Grades.category).href;
 		}
 
-		if (!this.isCategory() && entity.hasLinkByRel(Rels.Grades.grade)) {
+		if (!canHaveCategoryLink && entity.hasLinkByRel(Rels.Grades.grade)) {
 			return entity.getLinkByRel(Rels.Grades.grade).href;
 		}
 	}
@@ -37,6 +37,13 @@ export class GradeCandidateEntity extends Entity {
 	 */
 	isCategory() {
 		return this._entity && this._entity.hasClass(Classes.grades.category);
+	}
+
+	/**
+	 * @returns {bool} True if candidate is a new grade candidate
+	 */
+	isNewGradeCandidate() {
+		return this._entity && this._entity.hasClass(Classes.grades.newGradeCandidate);
 	}
 
 	/**
