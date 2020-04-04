@@ -417,6 +417,7 @@ export const Actions = {
 		},
 		associateGrade: 'associate-grade',
 		associateNewGrade: 'associate-new-grade',
+		save: 'save'
 	},
 	assignments: {
 		assign: 'assign',
