@@ -61,6 +61,13 @@ export class GradeCandidateEntity extends Entity {
 	}
 
 	/**
+	 * @returns {object} Returns the save action if it is present on the grade candidate
+	 */
+	getSaveAction() {
+		return this._entity && this._entity.getActionByName(Actions.activities.save);
+	}
+
+	/**
 	 * Calls the Siren action to associate this grade with the activity
 	 */
 	async associateGrade() {

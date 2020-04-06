@@ -41,6 +41,10 @@ describe('GradeCandidateEntity', () => {
 			expect(entity.canAssociateGrade()).to.be.true;
 		});
 
+		it('does not have a save action', () => {
+			expect(entity.getSaveAction()).to.be.undefined;
+		});
+
 		it('returns a promise when associating grade', async() => {
 			fetchMock.postOnce('https://9caa9c10-0175-4c56-84e5-fc2bca4d8a52.activities.api.proddev.d2l/activities/6606_2000_11/usages/6609/associate-grade', entityJson);
 
@@ -86,6 +90,10 @@ describe('GradeCandidateEntity', () => {
 			expect(entity.canAssociateGrade()).to.be.false;
 		});
 
+		it('does not have a save action', () => {
+			expect(entity.getSaveAction()).to.be.undefined;
+		});
+
 		it('skips associating as it does not have the associate action', async() => {
 			await entity.associateGrade();
 			expect(fetchMock.done());
@@ -120,6 +128,10 @@ describe('GradeCandidateEntity', () => {
 
 		it('can associate grade', () => {
 			expect(entity.canAssociateGrade()).to.be.false;
+		});
+
+		it('does not have a save action', () => {
+			expect(entity.getSaveAction()).to.be.undefined;
 		});
 
 		it('skips associating as it does not hve the associate action', async() => {
@@ -160,6 +172,10 @@ describe('GradeCandidateEntity', () => {
 			expect(entity.canAssociateGrade()).to.be.false;
 		});
 
+		it('has a save action', () => {
+			expect(entity.getSaveAction()).to.be.an('object');
+		});
+
 		it('skips associating as it does not have the associate action', async() => {
 			await entity.associateGrade();
 			expect(fetchMock.done());
@@ -196,6 +212,10 @@ describe('GradeCandidateEntity', () => {
 
 		it('can not associate to grade', () => {
 			expect(entity.canAssociateGrade()).to.be.false;
+		});
+
+		it('has a save action', () => {
+			expect(entity.getSaveAction()).to.be.an('object');
 		});
 
 		it('skips associating as it does not have the associate action', async() => {
