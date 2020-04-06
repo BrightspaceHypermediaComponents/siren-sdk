@@ -1,4 +1,3 @@
-import { Actions } from '../hypermedia-constants';
 import { Entity } from '../es6/Entity';
 
 /**
