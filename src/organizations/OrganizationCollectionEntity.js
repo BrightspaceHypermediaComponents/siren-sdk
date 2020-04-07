@@ -113,7 +113,8 @@ export class OrganizationCollectionEntity extends Entity {
 		const entity = await performSirenAction(
 			this._token,
 			searchAction,
-			fields
+			fields,
+			true
 		);
 		const link = entity && entity.getLinkByRel('self');
 		return link && link.href;
@@ -133,7 +134,8 @@ export class OrganizationCollectionEntity extends Entity {
 		const entity = await performSirenAction(
 			this._token,
 			createOrgUnitAction,
-			fields
+			fields,
+			true
 		);
 		return new OrganizationEntity(entity, this._token);
 	}
