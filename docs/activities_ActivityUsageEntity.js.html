@@ -31,7 +31,7 @@ import { Actions, Classes, Rels } from '../hypermedia-constants';
 import { OrganizationEntity } from '../organizations/OrganizationEntity.js';
 import { UserActivityUsageEntity } from '../enrollments/UserActivityUsageEntity.js';
 import { ActivityUsageCollectionEntity } from './ActivityUsageCollectionEntity.js';
-import { performSirenAction } from '../es6/SirenAction.js';
+import { performSirenAction, performSirenActions } from '../es6/SirenAction.js';
 
 /**
  * ActivityUsageEntity class representation of a d2l activity usage.
@@ -81,6 +81,64 @@ export class ActivityUsageEntity extends Entity {
 		}
 
 		return this._entity.getLinkByRel(Rels.Activities.activityCollection).href;
+	}
+
+	/**
+	 * @returns {string} URL of the grade-candidates collection associated with the activity usage, if present
+	 */
+	gradeCandidatesHref() {
+		if (!this._entity || !this._entity.hasLinkByRel(Rels.Activities.gradeCandidates)) {
+			return;
+		}
+
+		return this._entity.getLinkByRel(Rels.Activities.gradeCandidates).href;
+	}
+
+	/**
+	 * @returns {string} URL of the new grade association candidates with the activity usage, if present
+	 */
+	newGradeCandidatesHref() {
+		if (!this._entity || !this._entity.hasLinkByRel(Rels.Activities.newGradeAssociation)) {
+			return;
+		}
+
+		return this._entity.getLinkByRel(Rels.Activities.newGradeAssociation).href;
+	}
+
+	/**
+	 * @returns {bool} Whether the release conditions dialog opener sub entity is present.
+	 */
+	canEditReleaseConditions() {
+
+		if (!this._entity) {
+			return false;
+		}
+
+		return this._entity.hasSubEntityByRel(Rels.Activities.releaseConditionsDialogOpener);
+	}
+
+	/**
+	 * @returns {string} Url of the MVC release conditions dialog.
+	 */
+	editReleaseConditionsUrl() {
+
+		const entity = this._entity.getSubEntityByRel(Rels.Activities.releaseConditionsDialogOpener);
+		return entity ? entity.properties.url : undefined;
+	}
+
+	/** @returns {string} Href of the related conditions entity */
+	conditionsHref() {
+
+		if (!this._entity) {
+			return null;
+		}
+
+		const link = this._entity.getLinkByRel(Rels.Conditions.conditions);
+		if (!link) {
+			return null;
+		}
+
+		return link.href;
 	}
 
 	/**
@@ -134,7 +192,7 @@ export class ActivityUsageEntity extends Entity {
 	 * @param {string} dateValue Date string to set as the due date, or empty string to clear the due date
 	 */
 	async setDueDate(dateValue) {
-		await this._setDate(dateValue, Classes.dates.startDate, 'dueDate');
+		await this._setDate(dateValue, Classes.dates.dueDate, 'dueDate');
 	}
 
 	/**
@@ -183,15 +241,119 @@ export class ActivityUsageEntity extends Entity {
 		await this._setDate(dateValue, Classes.dates.endDate, 'endDate');
 	}
 
+	/**
+	 * @returns {bool} Whether or not the edit dates action is present on the activity usage entity (for saving start, end, and due date together)
+	 */
+	canEditDates() {
+		const datesEntity = this._getDateSubEntity('dates');
+		return datesEntity &amp;&amp; datesEntity.hasActionByName(Actions.activities.update);
+	}
+
+	/**
+	 * Validates range/order of start date, due date, and end date against each other
+	 * @param {object} dates Dates object containing start, due, and end date, or empty strings to clear
+	 */
+	async validateDates(dates) {
+		if (!dates) return;
+		if (!this._hasDatesChanged(dates.startDate, dates.dueDate, dates.endDate)) return;
+
+		const datesActionAndFields = this._generateDatesAction(dates.startDate, dates.dueDate, dates.endDate, true);
+		if (datesActionAndFields) {
+			await performSirenAction(this._token, datesActionAndFields.action, datesActionAndFields.fields);
+		}
+	}
+
+	/**
+	 * Updates start date, due date and end date together to the dates specified
+	 * @param {object} dates Dates object containing start, due, and end date, or empty strings to clear
+	 */
+	async saveDates(dates, deferSave) {
+		if (!dates) return;
+		if (!this._hasDatesChanged(dates.startDate, dates.dueDate, dates.endDate)) return;
+
+		const datesActionAndFields = this._generateDatesAction(dates.startDate, dates.dueDate, dates.endDate, false);
+		if (!datesActionAndFields) return;
+		if (deferSave) {
+			return datesActionAndFields;
+		} else {
+			await performSirenAction(this._token, datesActionAndFields.action, datesActionAndFields.fields);
+		}
+	}
+
+	_generateDatesAction(startDate, dueDate, endDate, validateOnly) {
+		let action;
+		const datesEntity = this._getDateSubEntity('dates');
+		if (datesEntity) {
+			action = datesEntity.getActionByName(Actions.activities.update);
+		}
+
+		if (!action) {
+			return;
+		}
+
+		const startDateValue = this._getDateValue(startDate, this.startDate());
+		const dueDateValue = this._getDateValue(dueDate, this.dueDate());
+		const endDateValue = this._getDateValue(endDate, this.endDate());
+
+		const fields = [
+			{ name: 'startDate', value: startDateValue },
+			{ name: 'dueDate', value: dueDateValue },
+			{ name: 'endDate', value: endDateValue }
+		];
+
+		if (validateOnly) {
+			fields.push({ name: 'validateOnly', value: true });
+		}
+
+		return { action, fields };
+	}
+
+	_hasDateChanged(newDate, oldDate = '') {
+		return typeof newDate !== 'undefined' &amp;&amp; newDate !== oldDate;
+	}
+
+	_hasDatesChanged(startDate, dueDate, endDate) {
+		return this._hasDateChanged(startDate, this.startDate())
+			|| this._hasDateChanged(dueDate, this.dueDate())
+			|| this._hasDateChanged(endDate, this.endDate());
+	}
+
+	_getDateValue(primaryDate, secondaryDate) {
+		if (typeof primaryDate !== 'undefined') {
+			return primaryDate;
+		}
+
+		if (secondaryDate) {
+			return secondaryDate;
+		}
+
+		return '';
+	}
+
 	_getDateSubEntity(dateClass) {
 		return this._entity
 			&amp;&amp; this._entity.getSubEntityByClass(dateClass);
 	}
 
-	_canEditDate(dateClass) {
-		const date = this._getDateSubEntity(dateClass);
-		return (date &amp;&amp; date.hasActionByName(Actions.activities.update))
-			|| this._entity.hasActionByName(Actions.activities.startAddNew);
+	async _canEditDate(dateClass) {
+
+		const dateEntity = this._getDateSubEntity(dateClass);
+		if (dateEntity &amp;&amp; dateEntity.hasActionByName(Actions.activities.update)) {
+			return true;
+		}
+
+		const addNewAction = this._entity.getActionByName(Actions.activities.startAddNew);
+		if (!addNewAction) {
+			return false;
+		}
+
+		const addNewEntity = await performSirenAction(this._token, addNewAction);
+
+		if (addNewEntity &amp;&amp; addNewEntity.hasSubEntityByClass(dateClass)) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	async _setDate(dateValue, dateClass, dateField) {
@@ -238,7 +400,7 @@ export class ActivityUsageEntity extends Entity {
 	 * @param {bool} isDraft The draft state to bet set for the activity usage entity
 	 */
 	async setDraftStatus(isDraft) {
-		if (!this.canEditDraft()) {
+		if (!this.canEditDraft() || typeof isDraft === 'undefined' || isDraft === this.isDraft()) {
 			return;
 		}
 
@@ -260,6 +422,251 @@ export class ActivityUsageEntity extends Entity {
 	isPublished() {
 		return this._entity &amp;&amp; this._entity.hasClass(Classes.activities.draftPublishedEntity) &amp;&amp; this._entity.hasClass(Classes.activities.published);
 	}
+
+	/**
+	 * @returns {string} Score out of value of the activity usage
+	 */
+	scoreOutOf() {
+		const action = this._getScoreOutOfAction();
+		if (action &amp;&amp; action.hasFieldByName('scoreOutOf')) {
+			return action.getFieldByName('scoreOutOf').value;
+		}
+		const scoreOutOfEntity = this._getScoreOutOfEntity();
+		return scoreOutOfEntity ? scoreOutOfEntity.properties.scoreOutOf : undefined;
+	}
+
+	/**
+	 * @returns {string} True if the activity usage is associated with a grade item, False otherwise
+	 */
+	inGrades() {
+		const action = this._getScoreOutOfAction();
+		if (action &amp;&amp; action.hasFieldByName('inGrades')) {
+			return action.getFieldByName('inGrades').value;
+		}
+		const scoreOutOfEntity = this._getScoreOutOfEntity();
+		return scoreOutOfEntity ? scoreOutOfEntity.properties.inGrades : undefined;
+	}
+
+	/**
+	 * @returns {string} Grade type of the grade item associated with the activity usage
+	 */
+	gradeType() {
+		const action = this._getScoreOutOfAction();
+		if (action &amp;&amp; action.hasFieldByName('gradeType')) {
+			const gradeTypes = action.getFieldByName('gradeType').value.filter(x => x.selected);
+			if (gradeTypes.length > 0) {
+				return gradeTypes[0].title;
+			}
+		}
+		const scoreOutOfEntity = this._getScoreOutOfEntity();
+		return scoreOutOfEntity ? scoreOutOfEntity.properties.gradeType : undefined;
+	}
+
+	/**
+	 * @returns {string} URL of the grade associated with the activity usage, if present
+	 */
+	gradeHref() {
+		if (!this._entity || !this._entity.hasLinkByRel(Rels.Grades.grade)) {
+			return;
+		}
+
+		return this._entity.getLinkByRel(Rels.Grades.grade).href;
+	}
+
+	/**
+	 * Updates the score out of value of the activity usage entity
+	 * @param {number} score The numerical score value to bet set for the activity usage entity
+	 * @param {boolean} inGrades True if a grade item should be associated with this activity usage
+	 */
+	async setScoreOutOf(score, inGrades) {
+		if (!this.canEditScoreOutOf()) {
+			return;
+		}
+
+		const fields = [{ name: 'scoreOutOf', value: score }];
+
+		if (this.canEditGrades()) {
+			fields.push({ name: 'inGrades', value: inGrades });
+			fields.push({ name: 'gradeType', value: 'Numeric' });
+		}
+		await performSirenAction(this._token, this._getScoreOutOfAction(), fields);
+	}
+
+	/**
+	 * Removes the grade association with the activity usage entity
+	 */
+	async removeFromGrades() {
+		if (!this.canEditScoreOutOf()) {
+			return;
+		}
+
+		const fields = [{ name: 'inGrades', value: false }];
+		await performSirenAction(this._token, this._getScoreOutOfAction(), fields);
+	}
+
+	/**
+	 * Creates a new grade item and adds it as a grade association with the activity usage entity
+	 */
+	async addToGrades() {
+		if (!this.canEditScoreOutOf()) {
+			return;
+		}
+
+		const fields = [
+			{ name: 'inGrades', value: true },
+			{ name: 'gradeType', value: 'Numeric' }
+		];
+		await performSirenAction(this._token, this._getScoreOutOfAction(), fields);
+	}
+
+	/**
+	 * Updates the score out of value of the activity usage entity to ungraded and removes any grade association
+	 */
+	async setUngraded() {
+		if (!this.canEditScoreOutOf()) {
+			return;
+		}
+
+		const fields = [
+			{ name: 'inGrades', value: false },
+			{ name: 'scoreOutOf', value: '' }
+		];
+		await performSirenAction(this._token, this._getScoreOutOfAction(), fields);
+	}
+
+	/**
+	 * @returns {bool} Whether or not the update score out of action is present on the score-out-of subentity of the activity usage entity
+	 */
+	canEditScoreOutOf() {
+		const scoreOutOfEntity = this._getScoreOutOfEntity();
+		return scoreOutOfEntity
+			&amp;&amp; scoreOutOfEntity.hasActionByName(Actions.activities.scoreOutOf.update);
+	}
+
+	/**
+	 * @returns {bool} Whether or not the inGrades property is present on the score-out-of subentity of the activity usage entity
+	 */
+	canSeeGrades() {
+		const scoreOutOfEntity = this._getScoreOutOfEntity();
+		return scoreOutOfEntity
+			&amp;&amp; scoreOutOfEntity.properties.hasOwnProperty('inGrades');
+	}
+
+	/**
+	 * @returns {bool} Whether or not the inGrades field is present on the update action of the score-out-of subentity of the activity usage entity
+	 */
+	canEditGrades() {
+		const scoreOutOfAction = this._getScoreOutOfAction();
+		return scoreOutOfAction
+			&amp;&amp; scoreOutOfAction.hasFieldByName('inGrades');
+	}
+
+	_getScoreOutOfEntity() {
+		return this._entity
+			&amp;&amp; this._entity.getSubEntityByRel(Rels.Activities.scoreOutOf);
+	}
+
+	_getScoreOutOfAction() {
+		const scoreOutOfEntity = this._getScoreOutOfEntity();
+		return scoreOutOfEntity
+			&amp;&amp; scoreOutOfEntity.getActionByName(Actions.activities.scoreOutOf.update);
+	}
+
+	async validate(activity) {
+		await this.validateDates(activity.dates);
+	}
+
+	async _associateGrade(scoreAndGrade, deferSave) {
+		if (!scoreAndGrade) {
+			return;
+		}
+
+		const associatedGrade = scoreAndGrade.associatedGrade;
+		const createNewGradeItem = scoreAndGrade.inGrades &amp;&amp; !associatedGrade &amp;&amp; scoreAndGrade.associateNewGradeAction;
+		const associateToExistingGrade = scoreAndGrade.inGrades &amp;&amp; associatedGrade &amp;&amp; associatedGrade.canAssociateGrade() &amp;&amp; this.gradeHref() !== associatedGrade.href();
+		if (createNewGradeItem) {
+			const associateGradeActionAndFields = this._generateAssociateNewGradeAction(scoreAndGrade);
+			if (!associateGradeActionAndFields) return;
+			if (deferSave) {
+				return associateGradeActionAndFields;
+			} else {
+				await performSirenAction(this._token, associateGradeActionAndFields.action, associateGradeActionAndFields.fields);
+			}
+		} else if (associateToExistingGrade) {
+			await associatedGrade.associateGrade();
+		}
+	}
+
+	_generateAssociateNewGradeAction(scoreAndGrade) {
+		const action = scoreAndGrade.associateNewGradeAction;
+		if (!action || !this.canEditGrades()) {
+			return;
+		}
+
+		const fields = [
+			{ name: 'gradeName', value: scoreAndGrade.newGradeName },
+			{ name: 'scoreOutOf', value: scoreAndGrade.scoreOutOf }
+		];
+
+		return { action, fields };
+	}
+
+	_shouldSetScoreOutOf(scoreAndGrade) {
+		if (!scoreAndGrade) {
+			return;
+		}
+
+		const associatedGrade = scoreAndGrade.associatedGrade;
+		const associateToExistingGrade = scoreAndGrade.inGrades &amp;&amp; associatedGrade &amp;&amp; associatedGrade.canAssociateGrade() &amp;&amp; this.gradeHref() !== associatedGrade.href();
+
+		return associateToExistingGrade
+			|| scoreAndGrade.scoreOutOf !== this.scoreOutOf().toString()
+			|| scoreAndGrade.inGrades !== this.inGrades();
+	}
+
+	async save(activity) {
+		if (!activity) return;
+
+		await this.setDraftStatus(activity.isDraft);
+
+		const dateActionAndFields = await this.saveDates(activity.dates, true);
+		const associateGradeActionAndFields = await this._associateGrade(activity.scoreAndGrade, true);
+		const sirenActions = [dateActionAndFields, associateGradeActionAndFields];
+		await performSirenActions(this._token, sirenActions);
+
+		if (this._shouldSetScoreOutOf(activity.scoreAndGrade)) {
+			await this.setScoreOutOf(activity.scoreAndGrade.scoreOutOf, activity.scoreAndGrade.inGrades);
+		}
+	}
+
+	equals(activity) {
+		const diffs = [
+			[this.dueDate(), activity.dates.dueDate],
+			[this.startDate(), activity.dates.startDate],
+			[this.endDate(), activity.dates.endDate],
+			[this.isDraft(), activity.isDraft],
+			[`${this.scoreOutOf()}`, activity.scoreAndGrade.scoreOutOf],
+			[this.inGrades(), activity.scoreAndGrade.inGrades]
+		];
+
+		for (const [left, right] of diffs) {
+			if (left !== right) {
+				return false;
+			}
+		}
+		return true;
+	}
+	/**
+	 * @returns {string} The href to the associations collection.
+	 */
+	getRubricAssociationsHref() {
+		if (!this._entity || !this._entity.hasLinkByRel(Rels.Activities.associations)) {
+			return;
+		}
+
+		return this._entity.getLinkByRel(Rels.Activities.associations).href;
+
+	}
 }
 </code></pre>
         </article>
@@ -271,13 +678,13 @@ export class ActivityUsageEntity extends Entity {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="ActivityUsageCollectionEntity.html">ActivityUsageCollectionEntity</a></li><li><a href="AlertsEntity.html">AlertsEntity</a></li><li><a href="AssignmentActivityUsageEntity.html">AssignmentActivityUsageEntity</a></li><li><a href="AssignmentEntity.html">AssignmentEntity</a></li><li><a href="ConsortiumRootEntity.html">ConsortiumRootEntity</a></li><li><a href="ConsortiumRootEntityEntity.html">Entity</a></li><li><a href="ConsortiumTokenCollectionEntity.html">ConsortiumTokenCollectionEntity</a></li><li><a href="ConsortiumTokenCollectionEntityEntity.html">Entity</a></li><li><a href="ConsortiumTokenEntity.html">ConsortiumTokenEntity</a></li><li><a href="ConsortiumTokenEntityEntity.html">Entity</a></li><li><a href="EnrollmentCollectionEntity.html">EnrollmentCollectionEntity</a></li><li><a href="EnrollmentEntity.html">EnrollmentEntity</a></li><li><a href="Entity.html">Entity</a></li><li><a href="EntityListener.html">EntityListener</a></li><li><a href="NotificationCollectionEntity.html">NotificationCollectionEntity</a></li><li><a href="NotificationEntity.html">NotificationEntity</a></li><li><a href="OrganizationAvailabilityEntity.html">OrganizationAvailabilityEntity</a></li><li><a href="OrganizationAvailabilitySetEntity.html">OrganizationAvailabilitySetEntity</a></li><li><a href="OrganizationEntity.html">OrganizationEntity</a></li><li><a href="PresentationEntity.html">PresentationEntity</a></li><li><a href="SimpleEntity.html">SimpleEntity</a></li><li><a href="StateTree.html">StateTree</a></li><li><a href="UserActivityUsageEntity.html">UserActivityUsageEntity</a></li></ul><h3>Global</h3><ul><li><a href="global.html#_entity">_entity</a></li><li><a href="global.html#_setEntityType">_setEntityType</a></li><li><a href="global.html#dispose">dispose</a></li><li><a href="global.html#entityFactory">entityFactory</a></li><li><a href="global.html#href">href</a></li><li><a href="global.html#interalEntityMixin">interalEntityMixin</a></li><li><a href="global.html#specializationRel">specializationRel</a></li><li><a href="global.html#token">token</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="ActionCollectionEntity.html">ActionCollectionEntity</a></li><li><a href="ActivityGradeEntity.html">ActivityGradeEntity</a></li><li><a href="ActivityUsageCollectionEntity.html">ActivityUsageCollectionEntity</a></li><li><a href="AlertsEntity.html">AlertsEntity</a></li><li><a href="AssignmentActivityUsageEntity.html">AssignmentActivityUsageEntity</a></li><li><a href="AssignmentEntity.html">AssignmentEntity</a></li><li><a href="AssociationCollectionEntity.html">AssociationCollectionEntity</a></li><li><a href="AssociationEntity.html">AssociationEntity</a></li><li><a href="AttachmentCollectionEntity.html">AttachmentCollectionEntity</a></li><li><a href="AttachmentEntity.html">AttachmentEntity</a></li><li><a href="ConsortiumRootEntity.html">ConsortiumRootEntity</a></li><li><a href="ConsortiumRootEntityEntity.html">Entity</a></li><li><a href="ConsortiumTokenCollectionEntity.html">ConsortiumTokenCollectionEntity</a></li><li><a href="ConsortiumTokenCollectionEntityEntity.html">Entity</a></li><li><a href="ConsortiumTokenEntity.html">ConsortiumTokenEntity</a></li><li><a href="ConsortiumTokenEntityEntity.html">Entity</a></li><li><a href="EnrollmentCollectionEntity.html">EnrollmentCollectionEntity</a></li><li><a href="EnrollmentEntity.html">EnrollmentEntity</a></li><li><a href="Entity.html">Entity</a></li><li><a href="EntityListener.html">EntityListener</a></li><li><a href="EntitySirenProperties.html">EntitySirenProperties</a></li><li><a href="FilePreviewLocationEntity.html">FilePreviewLocationEntity</a></li><li><a href="FilesHomeEntity.html">FilesHomeEntity</a></li><li><a href="GradeCandidateCollectionEntity.html">GradeCandidateCollectionEntity</a></li><li><a href="GradeCandidateEntity.html">GradeCandidateEntity</a></li><li><a href="GradeCategoryEntity.html">GradeCategoryEntity</a></li><li><a href="GradeEntity.html">GradeEntity</a></li><li><a href="LegacyConditions.html">LegacyConditions</a></li><li><a href="NotificationCollectionEntity.html">NotificationCollectionEntity</a></li><li><a href="NotificationEntity.html">NotificationEntity</a></li><li><a href="OrganizationAvailabilityEntity.html">OrganizationAvailabilityEntity</a></li><li><a href="OrganizationAvailabilitySetEntity.html">OrganizationAvailabilitySetEntity</a></li><li><a href="OrganizationCollectionEntity.html">OrganizationCollectionEntity</a></li><li><a href="OrganizationEntity.html">OrganizationEntity</a></li><li><a href="PresentationEntity.html">PresentationEntity</a></li><li><a href="SelflessEntity.html">SelflessEntity</a></li><li><a href="SimpleEntity.html">SimpleEntity</a></li><li><a href="StateTree.html">StateTree</a></li><li><a href="UserActivityUsageEntity.html">UserActivityUsageEntity</a></li></ul><h3>Global</h3><ul><li><a href="global.html#_entity">_entity</a></li><li><a href="global.html#_setEntityType">_setEntityType</a></li><li><a href="global.html#dispose">dispose</a></li><li><a href="global.html#entityFactory">entityFactory</a></li><li><a href="global.html#href">href</a></li><li><a href="global.html#interalEntityMixin">interalEntityMixin</a></li><li><a href="global.html#performSirenActions">performSirenActions</a></li><li><a href="global.html#specializationRel">specializationRel</a></li><li><a href="global.html#token">token</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Thu Nov 28 2019 13:31:41 GMT-0500 (Eastern Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.4</a> on Thu Apr 09 2020 10:57:15 GMT-0400 (Eastern Daylight Time)
 </footer>
 
 <script> prettyPrint(); </script>
