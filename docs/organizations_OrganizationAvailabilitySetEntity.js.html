@@ -26,11 +26,10 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>'use strict';
-
-import { Entity } from '../es6/Entity.js';
-import { Rels, Classes, Actions } from '../hypermedia-constants';
+            <pre class="prettyprint source linenums"><code>import { Entity } from '../es6/Entity.js';
 import { OrganizationEntity } from './OrganizationEntity.js';
+import { performSirenAction } from '../es6/SirenAction.js';
+import { Rels, Classes, Actions } from '../hypermedia-constants';
 
 /**
  * OrganizationAvailabilitySetEntity class representation of a d2l OrgUnitAvailabilitySet.
@@ -44,8 +43,10 @@ export class OrganizationAvailabilitySetEntity extends Entity {
 		return this._entity.getSubEntitiesByClass(Classes.organizationAvailability.orgUnitAvailability);
 	}
 
-	getEntitiesExcludingCurrentOrgUnit() {
-		return this._getAvailabilityEntities().filter(e => !e.hasClass(Classes.organizationAvailability.current));
+	getAvailabilityHrefs() {
+		return this._getAvailabilityEntities()
+			.filter(e => !e.hasClass(Classes.organizationAvailability.current))
+			.map(e => e.href);
 	}
 
 	getOrganizationHref() {
@@ -57,12 +58,42 @@ export class OrganizationAvailabilitySetEntity extends Entity {
 	canAddAvailability() {
 		return this._entity
 			&amp;&amp; this._entity.hasActionByName(Actions.organizations.createExplicitAvailabilityItem)
-			&amp;&amp; this._entity.hasActionByName(Actions.organizations.createInheritedAvailabilityItem);
+			&amp;&amp; this._entity.hasActionByName(Actions.organizations.createInheritedAvailabilityItem)
+			&amp;&amp; this._entity.hasActionByName(Actions.organizations.createCurrentOrgUnitAvailabilityItem);
 	}
 
 	onOrganizationChange(onChange) {
 		const organizationHref = this.getOrganizationHref();
 		organizationHref &amp;&amp; this._subEntity(OrganizationEntity, organizationHref, onChange);
+	}
+
+	addExplicit(explicitOrgUnitId) {
+		const action = this.canAddAvailability() &amp;&amp; this.getActionByName(Actions.organizations.createExplicitAvailabilityItem);
+		if (!action) {
+			return;
+		}
+		const fields = [{ name: 'explicitOrgUnitId', value: explicitOrgUnitId }];
+		return performSirenAction(this._token, action, fields);
+	}
+
+	addInherit(ancestorOrgUnitId, descendantOrgUnitTypeId) {
+		const action = this.canAddAvailability() &amp;&amp; this._entity.getActionByName(Actions.organizations.createInheritedAvailabilityItem);
+		if (!action) {
+			return;
+		}
+		const fields = [{ name: 'ancestorOrgUnitId', value: ancestorOrgUnitId }];
+		if (descendantOrgUnitTypeId) {
+			fields.push({ name: 'descendantOrgUnitTypeId', value: descendantOrgUnitTypeId });
+		}
+		return performSirenAction(this._token, action, fields);
+	}
+
+	addCurrentOrgUnit() {
+		const action = this.canAddAvailability() &amp;&amp; this.getActionByName(Actions.organizations.createCurrentOrgUnitAvailabilityItem);
+		if (!action) {
+			return;
+		}
+		return performSirenAction(this._token, action);
 	}
 }
 </code></pre>
@@ -75,13 +106,13 @@ export class OrganizationAvailabilitySetEntity extends Entity {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="ActivityUsageCollectionEntity.html">ActivityUsageCollectionEntity</a></li><li><a href="AlertsEntity.html">AlertsEntity</a></li><li><a href="AssignmentActivityUsageEntity.html">AssignmentActivityUsageEntity</a></li><li><a href="AssignmentEntity.html">AssignmentEntity</a></li><li><a href="ConsortiumRootEntity.html">ConsortiumRootEntity</a></li><li><a href="ConsortiumRootEntityEntity.html">Entity</a></li><li><a href="ConsortiumTokenCollectionEntity.html">ConsortiumTokenCollectionEntity</a></li><li><a href="ConsortiumTokenCollectionEntityEntity.html">Entity</a></li><li><a href="ConsortiumTokenEntity.html">ConsortiumTokenEntity</a></li><li><a href="ConsortiumTokenEntityEntity.html">Entity</a></li><li><a href="EnrollmentCollectionEntity.html">EnrollmentCollectionEntity</a></li><li><a href="EnrollmentEntity.html">EnrollmentEntity</a></li><li><a href="Entity.html">Entity</a></li><li><a href="EntityListener.html">EntityListener</a></li><li><a href="NotificationCollectionEntity.html">NotificationCollectionEntity</a></li><li><a href="NotificationEntity.html">NotificationEntity</a></li><li><a href="OrganizationAvailabilityEntity.html">OrganizationAvailabilityEntity</a></li><li><a href="OrganizationAvailabilitySetEntity.html">OrganizationAvailabilitySetEntity</a></li><li><a href="OrganizationEntity.html">OrganizationEntity</a></li><li><a href="PresentationEntity.html">PresentationEntity</a></li><li><a href="SimpleEntity.html">SimpleEntity</a></li><li><a href="StateTree.html">StateTree</a></li><li><a href="UserActivityUsageEntity.html">UserActivityUsageEntity</a></li></ul><h3>Global</h3><ul><li><a href="global.html#_entity">_entity</a></li><li><a href="global.html#_setEntityType">_setEntityType</a></li><li><a href="global.html#dispose">dispose</a></li><li><a href="global.html#entityFactory">entityFactory</a></li><li><a href="global.html#href">href</a></li><li><a href="global.html#interalEntityMixin">interalEntityMixin</a></li><li><a href="global.html#specializationRel">specializationRel</a></li><li><a href="global.html#token">token</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="ActionCollectionEntity.html">ActionCollectionEntity</a></li><li><a href="ActivityGradeEntity.html">ActivityGradeEntity</a></li><li><a href="ActivityUsageCollectionEntity.html">ActivityUsageCollectionEntity</a></li><li><a href="AlertsEntity.html">AlertsEntity</a></li><li><a href="AssignmentActivityUsageEntity.html">AssignmentActivityUsageEntity</a></li><li><a href="AssignmentEntity.html">AssignmentEntity</a></li><li><a href="AssociationCollectionEntity.html">AssociationCollectionEntity</a></li><li><a href="AssociationEntity.html">AssociationEntity</a></li><li><a href="AttachmentCollectionEntity.html">AttachmentCollectionEntity</a></li><li><a href="AttachmentEntity.html">AttachmentEntity</a></li><li><a href="ConsortiumRootEntity.html">ConsortiumRootEntity</a></li><li><a href="ConsortiumRootEntityEntity.html">Entity</a></li><li><a href="ConsortiumTokenCollectionEntity.html">ConsortiumTokenCollectionEntity</a></li><li><a href="ConsortiumTokenCollectionEntityEntity.html">Entity</a></li><li><a href="ConsortiumTokenEntity.html">ConsortiumTokenEntity</a></li><li><a href="ConsortiumTokenEntityEntity.html">Entity</a></li><li><a href="EnrollmentCollectionEntity.html">EnrollmentCollectionEntity</a></li><li><a href="EnrollmentEntity.html">EnrollmentEntity</a></li><li><a href="Entity.html">Entity</a></li><li><a href="EntityListener.html">EntityListener</a></li><li><a href="EntitySirenProperties.html">EntitySirenProperties</a></li><li><a href="FilePreviewLocationEntity.html">FilePreviewLocationEntity</a></li><li><a href="FilesHomeEntity.html">FilesHomeEntity</a></li><li><a href="GradeCandidateCollectionEntity.html">GradeCandidateCollectionEntity</a></li><li><a href="GradeCandidateEntity.html">GradeCandidateEntity</a></li><li><a href="GradeCategoryEntity.html">GradeCategoryEntity</a></li><li><a href="GradeEntity.html">GradeEntity</a></li><li><a href="LegacyConditions.html">LegacyConditions</a></li><li><a href="NotificationCollectionEntity.html">NotificationCollectionEntity</a></li><li><a href="NotificationEntity.html">NotificationEntity</a></li><li><a href="OrganizationAvailabilityEntity.html">OrganizationAvailabilityEntity</a></li><li><a href="OrganizationAvailabilitySetEntity.html">OrganizationAvailabilitySetEntity</a></li><li><a href="OrganizationCollectionEntity.html">OrganizationCollectionEntity</a></li><li><a href="OrganizationEntity.html">OrganizationEntity</a></li><li><a href="PresentationEntity.html">PresentationEntity</a></li><li><a href="SelflessEntity.html">SelflessEntity</a></li><li><a href="SimpleEntity.html">SimpleEntity</a></li><li><a href="StateTree.html">StateTree</a></li><li><a href="UserActivityUsageEntity.html">UserActivityUsageEntity</a></li></ul><h3>Global</h3><ul><li><a href="global.html#_entity">_entity</a></li><li><a href="global.html#_setEntityType">_setEntityType</a></li><li><a href="global.html#dispose">dispose</a></li><li><a href="global.html#entityFactory">entityFactory</a></li><li><a href="global.html#href">href</a></li><li><a href="global.html#interalEntityMixin">interalEntityMixin</a></li><li><a href="global.html#performSirenActions">performSirenActions</a></li><li><a href="global.html#specializationRel">specializationRel</a></li><li><a href="global.html#token">token</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Fri Nov 15 2019 14:51:27 GMT-0800 (Pacific Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.4</a> on Thu Apr 09 2020 10:57:15 GMT-0400 (Eastern Daylight Time)
 </footer>
 
 <script> prettyPrint(); </script>

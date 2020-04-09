@@ -26,14 +26,12 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>'use strict';
-
-import 'd2l-polymer-siren-behaviors/store/entity-store.js';
+            <pre class="prettyprint source linenums"><code>import 'd2l-polymer-siren-behaviors/store/entity-store.js';
 
 /**
  * This creates and fetch a new entity. Whenever the entity changes onChange is called.
  * @param {Function} entityType The type of the entity. For example OrganizationEntity
- * @param {String} href Href of the entity to be created
+ * @param {Object|String} href Siren Link or Href of the entity to be created
  * @param {String|Token|Null} token JWT Token for brightspace | a function that returns a JWT token for brightspace | null (defaults to cookie authentication in a browser)
  * @param {Function} onChange Callback function that accepts an {entityType} to be called when entity changes. If there are errors onChange is called with (null, error)
  * @param {Object} entity (Optional) Entity that has already been fetched.
@@ -51,8 +49,12 @@ export function entityFactory(entityType, href, token, onChange, entity) {
 	entityListener.add(href, token, onChangeWrapped, entity);
 }
 
-export function updateEntity(href, token) {
-	window.D2L.Siren.EntityStore.fetch(href, token, true);
+export function updateEntity(href, token, entity) {
+	if (entity) {
+		window.D2L.Siren.EntityStore.update(href, token, entity);
+	} else {
+		window.D2L.Siren.EntityStore.fetch(href, token, true);
+	}
 }
 
 /**
@@ -110,6 +112,7 @@ class EntityListener {
 	}
 
 	_validate(href, onChange, entity) {
+		href = href &amp;&amp; href.href || href;
 		const entityIsGood = !entity || (entity.hasLinkByRel('self')  &amp;&amp; entity.getLinkByRel('self').href === href);
 
 		// token can be empty.
@@ -126,13 +129,13 @@ class EntityListener {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="ActivityUsageCollectionEntity.html">ActivityUsageCollectionEntity</a></li><li><a href="AlertsEntity.html">AlertsEntity</a></li><li><a href="AssignmentActivityUsageEntity.html">AssignmentActivityUsageEntity</a></li><li><a href="AssignmentEntity.html">AssignmentEntity</a></li><li><a href="ConsortiumRootEntity.html">ConsortiumRootEntity</a></li><li><a href="ConsortiumRootEntityEntity.html">Entity</a></li><li><a href="ConsortiumTokenCollectionEntity.html">ConsortiumTokenCollectionEntity</a></li><li><a href="ConsortiumTokenCollectionEntityEntity.html">Entity</a></li><li><a href="ConsortiumTokenEntity.html">ConsortiumTokenEntity</a></li><li><a href="ConsortiumTokenEntityEntity.html">Entity</a></li><li><a href="EnrollmentCollectionEntity.html">EnrollmentCollectionEntity</a></li><li><a href="EnrollmentEntity.html">EnrollmentEntity</a></li><li><a href="Entity.html">Entity</a></li><li><a href="EntityListener.html">EntityListener</a></li><li><a href="NotificationCollectionEntity.html">NotificationCollectionEntity</a></li><li><a href="NotificationEntity.html">NotificationEntity</a></li><li><a href="OrganizationAvailabilityEntity.html">OrganizationAvailabilityEntity</a></li><li><a href="OrganizationAvailabilitySetEntity.html">OrganizationAvailabilitySetEntity</a></li><li><a href="OrganizationEntity.html">OrganizationEntity</a></li><li><a href="PresentationEntity.html">PresentationEntity</a></li><li><a href="SimpleEntity.html">SimpleEntity</a></li><li><a href="StateTree.html">StateTree</a></li><li><a href="UserActivityUsageEntity.html">UserActivityUsageEntity</a></li></ul><h3>Global</h3><ul><li><a href="global.html#_entity">_entity</a></li><li><a href="global.html#_setEntityType">_setEntityType</a></li><li><a href="global.html#dispose">dispose</a></li><li><a href="global.html#entityFactory">entityFactory</a></li><li><a href="global.html#href">href</a></li><li><a href="global.html#interalEntityMixin">interalEntityMixin</a></li><li><a href="global.html#specializationRel">specializationRel</a></li><li><a href="global.html#token">token</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="ActionCollectionEntity.html">ActionCollectionEntity</a></li><li><a href="ActivityGradeEntity.html">ActivityGradeEntity</a></li><li><a href="ActivityUsageCollectionEntity.html">ActivityUsageCollectionEntity</a></li><li><a href="AlertsEntity.html">AlertsEntity</a></li><li><a href="AssignmentActivityUsageEntity.html">AssignmentActivityUsageEntity</a></li><li><a href="AssignmentEntity.html">AssignmentEntity</a></li><li><a href="AssociationCollectionEntity.html">AssociationCollectionEntity</a></li><li><a href="AssociationEntity.html">AssociationEntity</a></li><li><a href="AttachmentCollectionEntity.html">AttachmentCollectionEntity</a></li><li><a href="AttachmentEntity.html">AttachmentEntity</a></li><li><a href="ConsortiumRootEntity.html">ConsortiumRootEntity</a></li><li><a href="ConsortiumRootEntityEntity.html">Entity</a></li><li><a href="ConsortiumTokenCollectionEntity.html">ConsortiumTokenCollectionEntity</a></li><li><a href="ConsortiumTokenCollectionEntityEntity.html">Entity</a></li><li><a href="ConsortiumTokenEntity.html">ConsortiumTokenEntity</a></li><li><a href="ConsortiumTokenEntityEntity.html">Entity</a></li><li><a href="EnrollmentCollectionEntity.html">EnrollmentCollectionEntity</a></li><li><a href="EnrollmentEntity.html">EnrollmentEntity</a></li><li><a href="Entity.html">Entity</a></li><li><a href="EntityListener.html">EntityListener</a></li><li><a href="EntitySirenProperties.html">EntitySirenProperties</a></li><li><a href="FilePreviewLocationEntity.html">FilePreviewLocationEntity</a></li><li><a href="FilesHomeEntity.html">FilesHomeEntity</a></li><li><a href="GradeCandidateCollectionEntity.html">GradeCandidateCollectionEntity</a></li><li><a href="GradeCandidateEntity.html">GradeCandidateEntity</a></li><li><a href="GradeCategoryEntity.html">GradeCategoryEntity</a></li><li><a href="GradeEntity.html">GradeEntity</a></li><li><a href="LegacyConditions.html">LegacyConditions</a></li><li><a href="NotificationCollectionEntity.html">NotificationCollectionEntity</a></li><li><a href="NotificationEntity.html">NotificationEntity</a></li><li><a href="OrganizationAvailabilityEntity.html">OrganizationAvailabilityEntity</a></li><li><a href="OrganizationAvailabilitySetEntity.html">OrganizationAvailabilitySetEntity</a></li><li><a href="OrganizationCollectionEntity.html">OrganizationCollectionEntity</a></li><li><a href="OrganizationEntity.html">OrganizationEntity</a></li><li><a href="PresentationEntity.html">PresentationEntity</a></li><li><a href="SelflessEntity.html">SelflessEntity</a></li><li><a href="SimpleEntity.html">SimpleEntity</a></li><li><a href="StateTree.html">StateTree</a></li><li><a href="UserActivityUsageEntity.html">UserActivityUsageEntity</a></li></ul><h3>Global</h3><ul><li><a href="global.html#_entity">_entity</a></li><li><a href="global.html#_setEntityType">_setEntityType</a></li><li><a href="global.html#dispose">dispose</a></li><li><a href="global.html#entityFactory">entityFactory</a></li><li><a href="global.html#href">href</a></li><li><a href="global.html#interalEntityMixin">interalEntityMixin</a></li><li><a href="global.html#performSirenActions">performSirenActions</a></li><li><a href="global.html#specializationRel">specializationRel</a></li><li><a href="global.html#token">token</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Fri Nov 15 2019 14:51:27 GMT-0800 (Pacific Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.4</a> on Thu Apr 09 2020 10:57:15 GMT-0400 (Eastern Daylight Time)
 </footer>
 
 <script> prettyPrint(); </script>
