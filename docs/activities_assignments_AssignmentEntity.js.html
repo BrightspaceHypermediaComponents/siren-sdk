@@ -26,11 +26,13 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>'use strict';
-
-import { Entity } from '../../es6/Entity';
-import { Actions, Rels } from '../../hypermedia-constants';
+            <pre class="prettyprint source linenums"><code>import { Entity } from '../../es6/Entity';
+import { Actions, Rels, Classes } from '../../hypermedia-constants';
 import { performSirenAction } from '../../es6/SirenAction';
+
+const actions = {
+	delete: 'delete-folder'
+};
 
 /**
  * AssignmentEntity class representation of a d2l Assignment.
@@ -154,6 +156,254 @@ export class AssignmentEntity extends Entity {
 	}
 
 	/**
+	 * @returns {bool} Whether the turnitin dialog opener sub entity is present.
+	 */
+	canEditTurnitin() {
+
+		if (!this._entity) {
+			return false;
+		}
+
+		return this._entity.hasSubEntityByRel(Rels.Assignments.turnitinDialogOpener);
+	}
+
+	/**
+	 * @returns {string} Url of the legacy turnitin dialog.
+	 */
+	editTurnitinUrl() {
+
+		const entity = this._entity.getSubEntityByRel(Rels.Assignments.turnitinDialogOpener);
+		return entity ? entity.properties.url : undefined;
+	}
+
+	/** @returns {bool} Whether originality check is enabled */
+	isOriginalityCheckEnabled() {
+
+		const entity = this._entity.getSubEntityByRel(Rels.Assignments.turnitinDialogOpener);
+		return entity ? Boolean(entity.properties.isOriginalityCheckEnabled) : false;
+	}
+
+	/** @returns {bool} Whether grade mark is enabled */
+	isGradeMarkEnabled() {
+
+		const entity = this._entity.getSubEntityByRel(Rels.Assignments.turnitinDialogOpener);
+		return entity ? Boolean(entity.properties.isGradeMarkEnabled) : false;
+	}
+
+	/**
+	 * @returns {Array} The list of associated rubrics
+	 */
+	getRubrics() {
+		if (!this._entity) {
+			return [];
+		}
+
+		return this._entity.getLinksByRel(Rels.rubric);
+	}
+
+	/**
+	 * @returns {string} Name of the selected group category for the assignment type
+	 */
+	getAssignmentTypeSelectedGroupCategoryName() {
+		if (!this._entity) {
+			return null;
+		}
+		const subEntity = this._entity.getSubEntityByRel(Rels.Assignments.folderType);
+		if (!subEntity || !subEntity.properties || !subEntity.properties.groupName) {
+			return null;
+		}
+		return subEntity.properties.groupName;
+	}
+
+	/**
+	 * @returns {bool} If the assignment type cannot be changed
+	 */
+	isAssignmentTypeReadOnly() {
+		if (!this._entity) {
+			return false;
+		}
+
+		const subEntity = this._entity.getSubEntityByRel(Rels.Assignments.folderType);
+		if (!subEntity) {
+			return false;
+		}
+		return !subEntity.hasActionByName(Actions.assignments.setToGroup) &amp;&amp;
+			!subEntity.hasActionByName(Actions.assignments.setToIndividual) ;
+	}
+
+	/**
+	 * @returns {bool} If the assignment has submissions
+	 */
+	assignmentHasSubmissions() {
+		if (!this._entity) {
+			return false;
+		}
+
+		const subEntity = this._entity.getSubEntityByRel(Rels.Assignments.folderType);
+		if (!subEntity) {
+			return false;
+		}
+
+		return subEntity.hasClass(Classes.assignments.assignmentType.hasSubmissions);
+	}
+
+	/**
+	 * @returns {bool} If the assignment type "group assignment" can be set
+	 */
+	isGroupAssignmentTypeDisabled() {
+		if (!this._entity) {
+			return false;
+		}
+		const subEntity = this._entity.getSubEntityByRel(Rels.Assignments.folderType);
+		if (!subEntity) {
+			return false;
+		}
+		return subEntity.hasClass(Classes.assignments.assignmentType.noGroupType);
+	}
+
+	/**
+	 * @returns {string} The additional information related to the assignment type
+	 */
+	getAssignmentTypeInformationText() {
+		if (!this._entity) {
+			return null;
+		}
+		const subEntity = this._entity.getSubEntityByRel(Rels.Assignments.folderType);
+		if (!subEntity || !subEntity.properties || !subEntity.properties.informationText) {
+			return null;
+		}
+		return subEntity.properties.informationText;
+	}
+
+	/**
+	 * @returns {bool} If the assignment type is set to individual assignment
+	 */
+	isIndividualAssignmentType() {
+		if (!this._entity) {
+			return false;
+		}
+		const subEntity = this._entity.getSubEntityByRel(Rels.Assignments.folderType);
+		if (!subEntity) {
+			return false;
+		}
+		return subEntity.hasClass(Classes.assignments.assignmentType.individual);
+	}
+
+	/**
+	 * @returns {Array} The list of group categories for group assignment type
+	 */
+	getAssignmentTypeGroupCategoryOptions() {
+		if (!this._entity) {
+			return [];
+		}
+		const subEntity = this._entity.getSubEntityByRel(Rels.Assignments.folderType);
+		if (!subEntity) {
+			return [];
+		}
+		const action = subEntity.getActionByName(Actions.assignments.setToGroup);
+		if (!action || !action.hasFieldByName('groupTypeId')) {
+			return [];
+		}
+		return action.getFieldByName('groupTypeId').value;
+	}
+
+	/**
+	 * @returns {String} The groups homepage link
+	 */
+	getGroupsHomepageLink() {
+		if (!this._entity) {
+			return null;
+		}
+		const subEntity = this._entity.getSubEntityByRel(Rels.Assignments.folderType);
+		if (!subEntity) {
+			return null;
+		}
+		const groupHomepageSubEntity = subEntity.getSubEntityByRel(Rels.Assignments.groupsHomepage);
+		if (!groupHomepageSubEntity || !groupHomepageSubEntity.properties || !groupHomepageSubEntity.properties.url) {
+			return null;
+		}
+		return groupHomepageSubEntity.properties.url;
+	}
+
+	/**
+	 * Sets the assignment type to group using a default group category
+	 */
+	async setToGroupAssignmentType() {
+		if (!this._entity) {
+			return;
+		}
+		const subEntity = this._entity.getSubEntityByRel(Rels.Assignments.folderType);
+		if (!subEntity) {
+			return;
+		}
+		const action = subEntity.getActionByName(Actions.assignments.setToGroup);
+		if (!action) {
+			return;
+		}
+
+		const defaultGroupTypeId = action.fields[0].value[0].value;
+
+		const fields = [
+			{ name: 'groupTypeId', value: defaultGroupTypeId },
+			{ name: 'folderType', value: 1 }
+		];
+		await performSirenAction(this._token, action, fields);
+	}
+
+	/**
+	 * Sets the assignment type to group with a specific group
+	 * @param {number} groupTypeId id of the group category
+	 */
+	async setAssignmentTypeGroupCategory(groupTypeId) {
+		if (!this._entity) {
+			return;
+		}
+		const subEntity = this._entity.getSubEntityByRel(Rels.Assignments.folderType);
+		if (!subEntity) {
+			return;
+		}
+		const action = subEntity.getActionByName(Actions.assignments.setToGroup);
+		if (!action) {
+			return;
+		}
+
+		const fields = [
+			{ name: 'groupTypeId', value: groupTypeId },
+			{ name: 'folderType', value: 1 }
+		];
+		await performSirenAction(this._token, action, fields);
+	}
+
+	/**
+	 * Sets the assignment type to individual
+	 */
+	async setToIndividualAssignmentType() {
+		if (!this._entity) {
+			return;
+		}
+		const subEntity = this._entity.getSubEntityByRel(Rels.Assignments.folderType);
+		if (!subEntity) {
+			return;
+		}
+		const action = subEntity.getActionByName(Actions.assignments.setToIndividual);
+		if (!action) {
+			return;
+		}
+
+		const fields = action.fields;
+		await performSirenAction(this._token, action, fields);
+	}
+
+	_getReadOnlySubmissionTypeOptions() {
+		if (!this._entity) {
+			return [];
+		}
+
+		const currentSubmissionType = this._entity.properties.submissionType;
+		return currentSubmissionType ? [currentSubmissionType] : [];
+	}
+
+	/**
 	 * @returns {object} Submission type of the assignment (including type value and type title)
 	 */
 	submissionType() {
@@ -168,13 +418,17 @@ export class AssignmentEntity extends Entity {
 	 * @returns {Array} Set of submission type options for this assignment
 	 */
 	submissionTypeOptions() {
-		if (!this.canEditSubmissionType()) {
+		if (!this._entity) {
 			return [];
 		}
 
 		const action = this._entity.getActionByName(Actions.assignments.updateSubmissionType);
+		if (!action) {
+			return this._getReadOnlySubmissionTypeOptions();
+		}
+
 		if (!action.hasFieldByName('submissionType')) {
-			return [];
+			return this._getReadOnlySubmissionTypeOptions();
 		}
 
 		return action.getFieldByName('submissionType').value;
@@ -231,6 +485,22 @@ export class AssignmentEntity extends Entity {
 	}
 
 	/**
+	 * @returns {Array} Set of all possible completion type options
+	 */
+	allCompletionTypeOptions() {
+		if (!this.canEditCompletionType()) {
+			return [];
+		}
+
+		const action = this._entity.getActionByName(Actions.assignments.updateCompletionType);
+		if (!action.hasFieldByName('completionType')) {
+			return [];
+		}
+
+		return action.getFieldByName('completionType').value;
+	}
+
+	/**
 	 * @returns {bool} Whether or not the edit completion type action is present on the assignment entity
 	 */
 	canEditCompletionType() {
@@ -261,6 +531,256 @@ export class AssignmentEntity extends Entity {
 		];
 		await performSirenAction(this._token, action, fields);
 	}
+
+	filesSubmissionLimit() {
+		const subEntity = this._entity &amp;&amp; this._entity.getSubEntityByRel(Rels.Assignments.filesSubmissionLimit);
+
+		if (!subEntity || !subEntity.properties) {
+			return;
+		}
+
+		return subEntity.properties.limit;
+	}
+
+	canEditFilesSubmissionLimit() {
+		const subEntity = this._entity &amp;&amp; this._entity.getSubEntityByRel(Rels.Assignments.filesSubmissionLimit);
+		return subEntity &amp;&amp; subEntity.hasActionByName(Actions.assignments.updateFilesSubmissionLimit);
+	}
+
+	async setFilesSubmissionLimit(filesSubmissionLimit) {
+		const subEntity = this._entity &amp;&amp; this._entity.getSubEntityByRel(Rels.Assignments.filesSubmissionLimit);
+		const action = this.canEditFilesSubmissionLimit() &amp;&amp; subEntity &amp;&amp; subEntity.getActionByName(Actions.assignments.updateFilesSubmissionLimit);
+		if (!action) {
+			return;
+		}
+
+		const fieldValue = action.getFieldByName('filesSubmissionLimit').value.find(v => {
+			return v.value === filesSubmissionLimit;
+		});
+		if (!fieldValue) {
+			return;
+		}
+
+		const fields = [
+			{ name: 'filesSubmissionLimit', value: filesSubmissionLimit }
+		];
+		await performSirenAction(this._token, action, fields);
+	}
+	/**
+	 * @returns {bool} Whether or not annotations are enabled for the assignment entity
+	 */
+	getAvailableAnnotationTools() {
+		const annotationsEntity = this._entity.getSubEntityByRel(Rels.Assignments.annotations);
+		return annotationsEntity &amp;&amp; annotationsEntity.hasClass(Classes.assignments.annotationEnabled);
+	}
+
+	/** @returns {bool} Whether anonymous marking is available */
+	isAnonymousMarkingAvailable() {
+		if (!this._entity) return false;
+		const subEntity = this._entity.getSubEntityByRel(Rels.Assignments.anonymousMarking);
+		return !!subEntity;
+	}
+
+	/** @returns {bool} Whether anonymous marking is enabled */
+	isAnonymousMarkingEnabled() {
+		if (!this._entity) return false;
+		const subEntity = this._entity.getSubEntityByRel(Rels.Assignments.anonymousMarking);
+		if (!subEntity) return false;
+		return subEntity.hasClass('checked');
+	}
+
+	/** @returns {bool} Whether anonymous marking can be edited */
+	canEditAnonymousMarking() {
+		if (!this._entity) return false;
+		const subEntity = this._entity.getSubEntityByRel(Rels.Assignments.anonymousMarking);
+		if (!subEntity) return false;
+		return subEntity.hasActionByName(Actions.assignments.anonymousMarking.updateAnonymousMarking);
+	}
+
+	/** @returns {string} Help text when anonymous marking cannot be edited */
+	getAnonymousMarkingHelpText() {
+		if (!this._entity) return null;
+		const subEntity = this._entity.getSubEntityByRel(Rels.Assignments.anonymousMarking);
+		if (!subEntity) return null;
+		return subEntity.title || null;
+	}
+
+	/**
+	 * Sets anonymous marking
+	 * @param {bool} isAnonymous Whether anonymous marking is enabled
+	 */
+	async setAnonymousMarking(isAnonymous) {
+		if (!this._entity) return;
+		const subEntity = this._entity.getSubEntityByRel(Rels.Assignments.anonymousMarking);
+		if (!subEntity) return;
+		const action = subEntity.getActionByName(Actions.assignments.anonymousMarking.updateAnonymousMarking);
+		if (!action) return;
+		const fields = [ { name: 'isAnonymous', value: isAnonymous } ];
+		await performSirenAction(this._token, action, fields);
+	}
+
+	/**
+	 * @returns {bool} Whether or not the user can see and set annotation availability for the assignment entity
+	 */
+	canSeeAnnotations() {
+		const annotationsEntity = this._entity.getSubEntityByRel(Rels.Assignments.annotations);
+		return annotationsEntity &amp;&amp; annotationsEntity.hasActionByName(Actions.assignments.updateAnnotationToolsAvailability);
+	}
+
+	/**
+	 * Set the status of whether annotation tools are available or not for the assignment entity
+	 * @param {bool} isAvailable Annotation availability - this is the value that the annotation availability of the assignment will be set to
+	 */
+	async setAnnotationToolsAvailability(isAvailable) {
+		isAvailable = Boolean(isAvailable);
+
+		const annotationsEntity = this._entity.getSubEntityByRel(Rels.Assignments.annotations);
+
+		const action = this.canSeeAnnotations() &amp;&amp; annotationsEntity &amp;&amp; annotationsEntity.getActionByName(Actions.assignments.updateAnnotationToolsAvailability);
+		if (!action) {
+			return;
+		}
+
+		const fields = [
+			{ name: 'annotationToolsAvailability', value: isAvailable }
+		];
+		await performSirenAction(this._token, action, fields);
+	}
+
+	/**
+	 * @returns {string} URL of the assignment's attachments collection
+	 */
+	attachmentsCollectionHref() {
+		if (!this._entity || !this._entity.hasLinkByRel(Rels.Assignments.attachments)) {
+			return;
+		}
+
+		return this._entity.getLinkByRel(Rels.Assignments.attachments).href;
+	}
+
+	canSave() {
+		return this._entity &amp;&amp; this._entity.hasActionByName(Actions.assignments.update);
+	}
+
+	async save(assignment) {
+		const action = this.canSave() &amp;&amp; this._entity.getActionByName(Actions.assignments.update);
+		if (!action) {
+			return;
+		}
+
+		// TODO - Need to force PATCH on this API now. The backend just delegates the PATCH call to the PUT
+		// implementation with the correct semantics for unprovided fields
+		action.method = 'PATCH';
+
+		const fields = [];
+
+		if (typeof assignment.name !== 'undefined' &amp;&amp; assignment.name !== this.name() &amp;&amp; this.canEditName()) {
+			fields.push({ name: 'name', value: assignment.name });
+		}
+
+		if (typeof assignment.instructions !== 'undefined' &amp;&amp;
+				assignment.instructions !== this.instructionsEditorHtml() &amp;&amp;
+				this.canEditInstructions()) {
+			fields.push({ name: 'instructions', value: assignment.instructions });
+		}
+
+		const shouldSaveAnonymousMarking =
+			typeof assignment.isAnonymous !== 'undefined' &amp;&amp;
+			assignment.isAnonymous !== this.isAnonymousMarkingEnabled() &amp;&amp;
+			this.canEditAnonymousMarking();
+
+		if (shouldSaveAnonymousMarking) {
+
+			fields.push({ name: 'isAnonymous', value: assignment.isAnonymous });
+		}
+
+		const shouldSaveAnnotations =
+			typeof assignment.annotationToolsAvailable !== 'undefined' &amp;&amp;
+			assignment.annotationToolsAvailable !== this.getAvailableAnnotationTools() &amp;&amp;
+			this.canSeeAnnotations();
+
+		if (shouldSaveAnnotations) {
+
+			fields.push({
+				name: 'annotationToolsAvailability',
+				value: assignment.annotationToolsAvailable
+			});
+		}
+
+		if (typeof assignment.submissionType !== 'undefined' &amp;&amp;
+				assignment.submissionType !== this.submissionType() &amp;&amp;
+				this.canEditSubmissionType()) {
+			fields.push({ name: 'submissionType', value: assignment.submissionType });
+		}
+
+		if (typeof assignment.filesSubmissionLimit !== 'undefined' &amp;&amp;
+			assignment.filesSubmissionLimit !== this.filesSubmissionLimit() &amp;&amp;
+				this.canEditFilesSubmissionLimit()) {
+			fields.push({ name: 'filesSubmissionLimit', value: assignment.filesSubmissionLimit });
+		}
+
+		if (typeof assignment.completionType !== 'undefined' &amp;&amp;
+				assignment.completionType !== this.completionType() &amp;&amp;
+				this.canEditCompletionType()) {
+			fields.push({ name: 'completionType', value: assignment.completionType });
+		}
+
+		if (typeof assignment.isIndividualAssignmentType !== 'undefined' &amp;&amp; !this.isAssignmentTypeReadOnly()) {
+			if (assignment.isIndividualAssignmentType) {
+				fields.push({ name: 'groupTypeId', value: null });
+				fields.push({ name: 'folderType', value: 2 });
+			} else if (!assignment.isIndividualAssignmentType &amp;&amp; !this.isGroupAssignmentTypeDisabled()) {
+				fields.push({ name: 'groupTypeId', value: assignment.groupTypeId });
+				fields.push({ name: 'folderType', value: 1 });
+			}
+		}
+
+		if (fields.length > 0) {
+			await performSirenAction(this._token, action, fields);
+		}
+	}
+
+	equals(assignment) {
+		const diffs = [
+			[this.name(), assignment.name],
+			[this.instructionsEditorHtml(), assignment.instructions],
+			[this.submissionType() &amp;&amp; String(this.submissionType().value), assignment.submissionType],
+			[this.completionType() &amp;&amp; String(this.completionType().value), assignment.completionType],
+			[this.isAnonymousMarkingEnabled(), assignment.isAnonymous],
+			[this.getAvailableAnnotationTools(), assignment.annotationToolsAvailable],
+			[this.isIndividualAssignmentType(), assignment.isIndividualAssignmentType],
+			[this.filesSubmissionLimit(), assignment.filesSubmissionLimit]
+		];
+		for (const [left, right] of diffs) {
+			if (left !== right) {
+				return false;
+			}
+		}
+
+		if (!assignment.isIndividualAssignmentType &amp;&amp; !this.isGroupAssignmentTypeDisabled()) {
+			const selected = this.getAssignmentTypeGroupCategoryOptions().find(x => x.selected);
+			if (String(selected &amp;&amp; selected.value) !== assignment.groupTypeId) {
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	canDelete() {
+		return this._entity.hasActionByName(actions.delete);
+	}
+
+	async delete() {
+		const action = this.canDelete() &amp;&amp; this._entity.getActionByName(actions.delete);
+		if (!action) {
+			return;
+		}
+
+		await performSirenAction(this._token, action).then(() => {
+			this.dispose();
+		});
+	}
 }
 </code></pre>
         </article>
@@ -272,13 +792,13 @@ export class AssignmentEntity extends Entity {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="ActivityUsageCollectionEntity.html">ActivityUsageCollectionEntity</a></li><li><a href="AlertsEntity.html">AlertsEntity</a></li><li><a href="AssignmentActivityUsageEntity.html">AssignmentActivityUsageEntity</a></li><li><a href="AssignmentEntity.html">AssignmentEntity</a></li><li><a href="ConsortiumRootEntity.html">ConsortiumRootEntity</a></li><li><a href="ConsortiumRootEntityEntity.html">Entity</a></li><li><a href="ConsortiumTokenCollectionEntity.html">ConsortiumTokenCollectionEntity</a></li><li><a href="ConsortiumTokenCollectionEntityEntity.html">Entity</a></li><li><a href="ConsortiumTokenEntity.html">ConsortiumTokenEntity</a></li><li><a href="ConsortiumTokenEntityEntity.html">Entity</a></li><li><a href="EnrollmentCollectionEntity.html">EnrollmentCollectionEntity</a></li><li><a href="EnrollmentEntity.html">EnrollmentEntity</a></li><li><a href="Entity.html">Entity</a></li><li><a href="EntityListener.html">EntityListener</a></li><li><a href="NotificationCollectionEntity.html">NotificationCollectionEntity</a></li><li><a href="NotificationEntity.html">NotificationEntity</a></li><li><a href="OrganizationAvailabilityEntity.html">OrganizationAvailabilityEntity</a></li><li><a href="OrganizationAvailabilitySetEntity.html">OrganizationAvailabilitySetEntity</a></li><li><a href="OrganizationEntity.html">OrganizationEntity</a></li><li><a href="PresentationEntity.html">PresentationEntity</a></li><li><a href="SimpleEntity.html">SimpleEntity</a></li><li><a href="StateTree.html">StateTree</a></li><li><a href="UserActivityUsageEntity.html">UserActivityUsageEntity</a></li></ul><h3>Global</h3><ul><li><a href="global.html#_entity">_entity</a></li><li><a href="global.html#_setEntityType">_setEntityType</a></li><li><a href="global.html#dispose">dispose</a></li><li><a href="global.html#entityFactory">entityFactory</a></li><li><a href="global.html#href">href</a></li><li><a href="global.html#interalEntityMixin">interalEntityMixin</a></li><li><a href="global.html#specializationRel">specializationRel</a></li><li><a href="global.html#token">token</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="ActionCollectionEntity.html">ActionCollectionEntity</a></li><li><a href="ActivityGradeEntity.html">ActivityGradeEntity</a></li><li><a href="ActivityUsageCollectionEntity.html">ActivityUsageCollectionEntity</a></li><li><a href="AlertsEntity.html">AlertsEntity</a></li><li><a href="AssignmentActivityUsageEntity.html">AssignmentActivityUsageEntity</a></li><li><a href="AssignmentEntity.html">AssignmentEntity</a></li><li><a href="AssociationCollectionEntity.html">AssociationCollectionEntity</a></li><li><a href="AssociationEntity.html">AssociationEntity</a></li><li><a href="AttachmentCollectionEntity.html">AttachmentCollectionEntity</a></li><li><a href="AttachmentEntity.html">AttachmentEntity</a></li><li><a href="ConsortiumRootEntity.html">ConsortiumRootEntity</a></li><li><a href="ConsortiumRootEntityEntity.html">Entity</a></li><li><a href="ConsortiumTokenCollectionEntity.html">ConsortiumTokenCollectionEntity</a></li><li><a href="ConsortiumTokenCollectionEntityEntity.html">Entity</a></li><li><a href="ConsortiumTokenEntity.html">ConsortiumTokenEntity</a></li><li><a href="ConsortiumTokenEntityEntity.html">Entity</a></li><li><a href="EnrollmentCollectionEntity.html">EnrollmentCollectionEntity</a></li><li><a href="EnrollmentEntity.html">EnrollmentEntity</a></li><li><a href="Entity.html">Entity</a></li><li><a href="EntityListener.html">EntityListener</a></li><li><a href="EntitySirenProperties.html">EntitySirenProperties</a></li><li><a href="FilePreviewLocationEntity.html">FilePreviewLocationEntity</a></li><li><a href="FilesHomeEntity.html">FilesHomeEntity</a></li><li><a href="GradeCandidateCollectionEntity.html">GradeCandidateCollectionEntity</a></li><li><a href="GradeCandidateEntity.html">GradeCandidateEntity</a></li><li><a href="GradeCategoryEntity.html">GradeCategoryEntity</a></li><li><a href="GradeEntity.html">GradeEntity</a></li><li><a href="LegacyConditions.html">LegacyConditions</a></li><li><a href="NotificationCollectionEntity.html">NotificationCollectionEntity</a></li><li><a href="NotificationEntity.html">NotificationEntity</a></li><li><a href="OrganizationAvailabilityEntity.html">OrganizationAvailabilityEntity</a></li><li><a href="OrganizationAvailabilitySetEntity.html">OrganizationAvailabilitySetEntity</a></li><li><a href="OrganizationCollectionEntity.html">OrganizationCollectionEntity</a></li><li><a href="OrganizationEntity.html">OrganizationEntity</a></li><li><a href="PresentationEntity.html">PresentationEntity</a></li><li><a href="SelflessEntity.html">SelflessEntity</a></li><li><a href="SimpleEntity.html">SimpleEntity</a></li><li><a href="StateTree.html">StateTree</a></li><li><a href="UserActivityUsageEntity.html">UserActivityUsageEntity</a></li></ul><h3>Global</h3><ul><li><a href="global.html#_entity">_entity</a></li><li><a href="global.html#_setEntityType">_setEntityType</a></li><li><a href="global.html#dispose">dispose</a></li><li><a href="global.html#entityFactory">entityFactory</a></li><li><a href="global.html#href">href</a></li><li><a href="global.html#interalEntityMixin">interalEntityMixin</a></li><li><a href="global.html#performSirenActions">performSirenActions</a></li><li><a href="global.html#specializationRel">specializationRel</a></li><li><a href="global.html#token">token</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Fri Nov 15 2019 14:51:27 GMT-0800 (Pacific Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.4</a> on Thu Apr 09 2020 10:57:15 GMT-0400 (Eastern Daylight Time)
 </footer>
 
 <script> prettyPrint(); </script>
