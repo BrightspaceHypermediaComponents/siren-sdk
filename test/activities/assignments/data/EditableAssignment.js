@@ -206,6 +206,50 @@ export const editableAssignment = {
 				}
 			]
 		},
+		{
+			'class': [
+				'submissions-rule'
+			],
+			'rel': [
+				'https://assignments.api.brightspace.com/rels/submissions-rule'
+			],
+			'properties': {
+				'rule': {
+					'title': 'All submissions are kept',
+					'value': 'keepall'
+				}
+			},
+			'actions': [
+				{
+					'href': 'https://f5aa43d7-c082-485c-84f5-4808147fe98a.assignments.api.dev.brightspace.com/123065/folders/7',
+					'name': 'update-submissions-rule',
+					'method': 'PATCH',
+					'fields': [
+						{
+							'type': 'radio',
+							'name': 'submissionsRule',
+							'value': [
+								{
+									'title': 'All submissions are kept',
+									'value': 'keepall',
+									'selected': true
+								},
+								{
+									'title': 'Only one submission allowed',
+									'value': 'onlyone',
+									'selected': false
+								},
+								{
+									'title': 'Only the most recent submission is kept',
+									'value': 'overwritesubmissions',
+									'selected': false
+								}
+							]
+						}
+					]
+				}
+			]
+		},
 	],
 	'actions': [
 		{

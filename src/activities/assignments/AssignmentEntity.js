@@ -504,6 +504,61 @@ export class AssignmentEntity extends Entity {
 		await performSirenAction(this._token, action, fields);
 	}
 
+	_submissionsRuleField() {
+		const subEntity = this._entity && this._entity.getSubEntityByRel(Rels.Assignments.submissionsRule);
+
+		if (!subEntity || !subEntity.properties) {
+			return;
+		}
+
+		return subEntity.properties.rule;
+	}
+
+	submissionsRule() {
+		const field = this._submissionsRuleField();
+		return field && field.value;
+	}
+
+	canEditSubmissionsRule() {
+		const subEntity = this._entity && this._entity.getSubEntityByRel(Rels.Assignments.submissionsRule);
+		return subEntity && subEntity.hasActionByName(Actions.assignments.updateSubmissionsRule);
+	}
+
+	async setSubmissionsRule(submissionsRule) {
+		const subEntity = this._entity && this._entity.getSubEntityByRel(Rels.Assignments.submissionsRule);
+		const action = this.canEditSubmissionsRule() && subEntity && subEntity.getActionByName(Actions.assignments.updateSubmissionsRule);
+		if (!action) {
+			return;
+		}
+
+		const fieldValue = action.getFieldByName('submissionsRule').value.find(v => {
+			return v.value === submissionsRule;
+		});
+		if (!fieldValue) {
+			return;
+		}
+
+		const fields = [
+			{ name: 'submissionsRule', value: submissionsRule }
+		];
+		await performSirenAction(this._token, action, fields);
+	}
+
+	getSubmissionsRuleOptions() {
+		if (!this._entity) {
+			return [];
+		}
+
+		// readOnly
+		if (!this.canEditSubmissionsRule()) {
+			return this._submissionsRuleField() ? [this._submissionsRuleField()] : [];
+		}
+
+		const subEntity = this._entity && this._entity.getSubEntityByRel(Rels.Assignments.submissionsRule);
+		const action = this.canEditSubmissionsRule() && subEntity && subEntity.getActionByName(Actions.assignments.updateSubmissionsRule);
+		return action.getFieldByName('submissionsRule').value;
+	}
+
 	filesSubmissionLimit() {
 		const subEntity = this._entity && this._entity.getSubEntityByRel(Rels.Assignments.filesSubmissionLimit);
 
@@ -691,6 +746,12 @@ export class AssignmentEntity extends Entity {
 			fields.push({ name: 'filesSubmissionLimit', value: assignment.filesSubmissionLimit });
 		}
 
+		if (typeof assignment.submissionsRule !== 'undefined' &&
+				assignment.filesSubmissionLimit !== this.submissionsRule() &&
+				this.canEditSubmissionsRule()) {
+			fields.push({ name: 'submissionsRule', value: assignment.submissionsRule });
+		}
+
 		if (typeof assignment.completionType !== 'undefined' &&
 				assignment.completionType !== this.completionType() &&
 				this.canEditCompletionType()) {
@@ -720,9 +781,14 @@ export class AssignmentEntity extends Entity {
 			[this.completionType() && String(this.completionType().value), assignment.completionType],
 			[this.isAnonymousMarkingEnabled(), assignment.isAnonymous],
 			[this.getAvailableAnnotationTools(), assignment.annotationToolsAvailable],
-			[this.isIndividualAssignmentType(), assignment.isIndividualAssignmentType],
-			[this.filesSubmissionLimit(), assignment.filesSubmissionLimit]
+			[this.isIndividualAssignmentType(), assignment.isIndividualAssignmentType]
 		];
+		if (assignment.hasOwnProperty('filesSubmissionLimit')) {
+			diffs.push([this.filesSubmissionLimit(), assignment.filesSubmissionLimit]);
+		}
+		if (assignment.hasOwnProperty('submissionsRule')) {
+			diffs.push([this.submissionsRule(), assignment.submissionsRule]);
+		}
 		for (const [left, right] of diffs) {
 			if (left !== right) {
 				return false;
