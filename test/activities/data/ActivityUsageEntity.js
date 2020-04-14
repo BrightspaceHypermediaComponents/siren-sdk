@@ -185,6 +185,12 @@ export const testData = {
 					'https://activities.api.brightspace.com/rels/grade-candidates'
 				],
 				'href': 'http://vlx1-mdulat.desire2learn.d2l:44444/d2l/api/hm/activities/activities/6606_2000_31/usages/6609/grade-candidates'
+			},
+			{
+				'rel': [
+					'https://alignments.api.brightspace.com/rels/alignments'
+				],
+				'href': 'http://vlx1-mdulat.desire2learn.d2l:44444/d2l/api/hm/alignments/activity-usage/6609?ActivityBatchId=6606_2000_31'
 			}
 		],
 		'actions': [

@@ -48,6 +48,10 @@ describe('ActivityUsageEntity', () => {
 		it('can get release conditions url', () => {
 			expect(entity.editReleaseConditionsUrl()).to.equal('/d2l/le/conditionalRelease/6609/dialog/dropboxes/31/openDialog');
 		});
+
+		it('can get alignments url', () => {
+			expect(entity.alignmentsHref()).to.equal('http://vlx1-mdulat.desire2learn.d2l:44444/d2l/api/hm/alignments/activity-usage/6609?ActivityBatchId=6606_2000_31');
+		});
 	});
 
 	describe('Functionality', () => {

@@ -637,6 +637,13 @@ export class ActivityUsageEntity extends Entity {
 		}
 
 		return this._entity.getLinkByRel(Rels.Activities.associations).href;
+	}
 
+	alignmentsHref() {
+		if (!this._entity || !this._entity.hasLinkByRel(Rels.Alignments.alignments)) {
+			return;
+		}
+
+		return this._entity.getLinkByRel(Rels.Alignments.alignments).href;
 	}
 }
