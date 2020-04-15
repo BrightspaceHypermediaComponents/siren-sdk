@@ -157,4 +157,22 @@ describe('AssignmentEntity', () => {
 		});
 
 	});
+
+	describe('SubmissionsRule', () => {
+		it('Can Edit SubmissionsRule', () => {
+			var assignmentEntity = new AssignmentEntity(editableEntity);
+			expect(assignmentEntity.canEditSubmissionsRule()).to.be.true;
+		});
+		it('equals to keepall', () => {
+			var assignmentEntity = new AssignmentEntity(editableEntity);
+			expect(assignmentEntity.submissionsRule()).to.equal('keepall');
+		});
+		it('set files per submission', async() => {
+			fetchMock.patchOnce('https://f5aa43d7-c082-485c-84f5-4808147fe98a.assignments.api.dev.brightspace.com/123065/folders/7', editableEntity);
+			var assignmentEntity = new AssignmentEntity(editableEntity);
+			await assignmentEntity.setSubmissionsRule('onlyone');
+			expect(fetchMock.called()).to.be.true;
+		});
+
+	});
 });
