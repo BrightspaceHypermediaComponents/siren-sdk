@@ -747,7 +747,7 @@ export class AssignmentEntity extends Entity {
 		}
 
 		if (typeof assignment.submissionsRule !== 'undefined' &&
-				assignment.filesSubmissionLimit !== this.submissionsRule() &&
+				assignment.submissionsRule !== this.submissionsRule() &&
 				this.canEditSubmissionsRule()) {
 			fields.push({ name: 'submissionsRule', value: assignment.submissionsRule });
 		}
