@@ -27,7 +27,7 @@ export class OrganizationCollectionEntity extends Entity {
 		return this._entity.getSubEntitiesByRel(rels.organization);
 	}
 
-	discoverCourses() {
+	activities() {
 		if (!this._entity) {
 			return;
 		}
