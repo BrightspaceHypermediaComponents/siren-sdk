@@ -3,7 +3,8 @@ import { OrganizationEntity } from './OrganizationEntity';
 import { performSirenAction } from '../es6/SirenAction.js';
 
 const rels = {
-	organization: 'https://api.brightspace.com/rels/organization'
+	organization: 'https://api.brightspace.com/rels/organization',
+	discover: 'https://discovery.brightspace.com'
 };
 
 const actions = {
@@ -24,6 +25,13 @@ export class OrganizationCollectionEntity extends Entity {
 			return;
 		}
 		return this._entity.getSubEntitiesByRel(rels.organization);
+	}
+
+	activities() {
+		if (!this._entity) {
+			return;
+		}
+		return this._entity.getSubEntitiesByRel(rels.discover);
 	}
 
 	onOrganizationsChange(onChange) {
