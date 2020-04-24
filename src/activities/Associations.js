@@ -30,10 +30,23 @@ export class AssociationCollectionEntity extends Entity {
 
 		const associations = this._entity.getSubEntitiesByRel('item');
 
-		return associations.filter(
-			a => a.hasClass(Classes.associations.singleAssociation)
-			|| a.hasClass(Classes.associations.potentialAssociation)
-		);
+		return associations
+			.filter(
+				a => a.hasClass(Classes.associations.singleAssociation)
+				|| a.hasClass(Classes.associations.potentialAssociation)
+			);
+
+	}
+
+	getPotentialAssociations() {
+		if (!this._entity) {
+			return [];
+		}
+
+		const associations = this._entity.getSubEntitiesByRel('item');
+
+		return associations
+			.filter(a => a.hasClass(Classes.associations.potentialAssociation));
 
 	}
 
@@ -65,6 +78,36 @@ export class AssociationCollectionEntity extends Entity {
 		const action = this._entity.getActionByName(Actions.associations.createPotentialAssociation);
 
 		return await performSirenAction(this._token, action, fields);
+	}
+
+	async startDeferredAssociations() {
+		if (!this._entity || !this._entity.hasActionByName(Actions.associations.startDeferredAssociations)) {
+			return;
+		}
+
+		const action = this._entity.getActionByName(Actions.associations.startDeferredAssociations);
+
+		return await performSirenAction(this._token, action);
+	}
+
+	async applyDeferredAssociations() {
+		if (!this._entity || !this._entity.hasActionByName(Actions.associations.applyDeferredAssociations)) {
+			return;
+		}
+
+		const action = this._entity.getActionByName(Actions.associations.applyDeferredAssociations);
+
+		return await performSirenAction(this._token, action);
+	}
+
+	async cancelDeferredAssociations() {
+		if (!this._entity || !this._entity.hasActionByName(Actions.associations.cancelDeferredAssociations)) {
+			return;
+		}
+
+		const action = this._entity.getActionByName(Actions.associations.cancelDeferredAssociations);
+
+		return await performSirenAction(this._token, action);
 	}
 
 }

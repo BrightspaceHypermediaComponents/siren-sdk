@@ -1,10 +1,10 @@
 import { Entity } from '../es6/Entity.js';
 import { Actions, Classes, Rels } from '../hypermedia-constants';
 import { performSirenAction } from '../es6/SirenAction';
+
 /**
  * Association class representation of an association.
  */
-
 export class AssociationEntity extends Entity {
 
 	/**
@@ -41,24 +41,26 @@ export class AssociationEntity extends Entity {
 	/**
 	 * Deletes the association
 	 */
-	async deleteAssociation() {
-		if (!this._entity || !this._entity.hasActionByName(Actions.associations.deleteAssociation)) {
+	async deleteAssociation({ defer = false }) {
+		const actionName = defer ? Actions.associations.deleteAssociationDeferred : Actions.associations.deleteAssociation;
+		if (!this._entity || !this._entity.hasActionByName(actionName)) {
 			return;
 		}
 
-		const action = this._entity.getActionByName(Actions.associations.deleteAssociation);
+		const action = this._entity.getActionByName(actionName);
 		await performSirenAction(this._token, action);
 	}
 
 	/**
 	 * Create the association
 	 */
-	async createAssociation() {
-		if (!this._entity || !this._entity.hasActionByName(Actions.associations.createAssociation)) {
+	async createAssociation({ defer = false }) {
+		const actionName = defer ? Actions.associations.createAssociationDeferred : Actions.associations.createAssociation;
+		if (!this._entity || !this._entity.hasActionByName(actionName)) {
 			return;
 		}
 
-		const action = this._entity.getActionByName(Actions.associations.createAssociation);
+		const action = this._entity.getActionByName(actionName);
 		await performSirenAction(this._token, action);
 	}
 
