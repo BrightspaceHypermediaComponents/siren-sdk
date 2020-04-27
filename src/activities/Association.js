@@ -1,4 +1,6 @@
 import { Entity } from '../es6/Entity.js';
+import { entityFactory } from '../es6/EntityFactory.js';
+import { SimpleEntity } from '../es6/SimpleEntity.js';
 import { Actions, Classes, Rels } from '../hypermedia-constants';
 import { performSirenAction } from '../es6/SirenAction';
 /**
@@ -17,6 +19,15 @@ export class AssociationEntity extends Entity {
 
 		return this._entity.getLinkByRel(Rels.Rubrics.rubric).href;
 
+	}
+
+	getItem(onChange) {
+		const href = this.getRubricLink();
+		if (!href) {
+			return;
+		}
+
+		entityFactory(SimpleEntity, href, this._token, onChange);
 	}
 
 	/**

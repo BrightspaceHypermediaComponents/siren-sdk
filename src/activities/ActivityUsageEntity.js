@@ -1,8 +1,10 @@
 import { Entity } from '../es6/Entity.js';
+import { entityFactory } from '../es6/EntityFactory.js';
 import { Actions, Classes, Rels } from '../hypermedia-constants';
 import { OrganizationEntity } from '../organizations/OrganizationEntity.js';
 import { UserActivityUsageEntity } from '../enrollments/UserActivityUsageEntity.js';
 import { ActivityUsageCollectionEntity } from './ActivityUsageCollectionEntity.js';
+import { AssociationCollectionEntity } from './Associations';
 import { performSirenAction, performSirenActions } from '../es6/SirenAction.js';
 
 /**
@@ -637,6 +639,27 @@ export class ActivityUsageEntity extends Entity {
 		}
 
 		return this._entity.getLinkByRel(Rels.Activities.associations).href;
+	}
+
+	getAssociationsHref(type) {
+		if (!this._entity || !this._entity.hasLinkByRel(Rels.Activities.associations)) {
+			return;
+		}
+
+		const href = this._entity.getLinkByRel(Rels.Activities.associations).href;
+		const url = new URL(href);
+		if (type) {
+			url.searchParams.append('type', type);
+		}
+		return url.href;
+	}
+
+	getAssociations(type, onChange) {
+		const href = this.getAssociationsHref(type);
+		if (!href) {
+			return;
+		}
+		entityFactory(AssociationCollectionEntity, href, this._token, onChange);
 	}
 
 	alignmentsHref() {
