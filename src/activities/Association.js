@@ -41,7 +41,7 @@ export class AssociationEntity extends Entity {
 	/**
 	 * Deletes the association
 	 */
-	async deleteAssociation({ defer = false }) {
+	async deleteAssociation({ defer = false } = {}) {
 		const actionName = defer ? Actions.associations.deleteAssociationDeferred : Actions.associations.deleteAssociation;
 		if (!this._entity || !this._entity.hasActionByName(actionName)) {
 			return;
@@ -54,7 +54,7 @@ export class AssociationEntity extends Entity {
 	/**
 	 * Create the association
 	 */
-	async createAssociation({ defer = false }) {
+	async createAssociation({ defer = false } = {}) {
 		const actionName = defer ? Actions.associations.createAssociationDeferred : Actions.associations.createAssociation;
 		if (!this._entity || !this._entity.hasActionByName(actionName)) {
 			return;
