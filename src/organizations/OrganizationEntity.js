@@ -40,8 +40,20 @@ export class OrganizationEntity extends Entity {
 		return this._entity && this._entity.properties && this._entity.properties.endDate;
 	}
 
+	isAfterEndDate() {
+		var nowDate = Date.now();
+		var endDate = Date.parse(this.endDate());
+		return endDate ? endDate <= nowDate : null;
+	}
+
 	startDate() {
 		return this._entity && this._entity.properties && this._entity.properties.startDate;
+	}
+
+	isBeforeStartDate() {
+		var nowDate = Date.now();
+		var startDate = Date.parse(this.startDate());
+		return startDate ? startDate > nowDate : null;
 	}
 
 	isActive() {
@@ -80,8 +92,8 @@ export class OrganizationEntity extends Entity {
 		const dateTime = {
 			type: dateType,
 			date: date,
-			beforeStartDate: startDate ? startDate > nowDate : null,
-			afterEndDate: endDate ? endDate <= nowDate : null
+			beforeStartDate: startDate ? startDate > nowDate : null,  // To delete, use isBeforeStartDate()
+			afterEndDate: endDate ? endDate <= nowDate : null         // To delete, use isAfterEndDate()
 		};
 		return dateTime;
 	}
