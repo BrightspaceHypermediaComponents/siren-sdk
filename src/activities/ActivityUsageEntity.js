@@ -124,6 +124,14 @@ export class ActivityUsageEntity extends Entity {
 		return this._entity.getLinkByRel(Rels.IANA.edit).href;
 	}
 
+	competenciesHref() {
+		if (!this._entity || !this._entity.hasLinkByRel(Rels.Alignments.legacyCompetencies)) {
+			return;
+		}
+
+		return this._entity.getLinkByRel(Rels.Alignments.legacyCompetencies).href;
+	}
+
 	onOrganizationChange(onChange) {
 		const organizationHref = this.organizationHref();
 		organizationHref && this._subEntity(OrganizationEntity, organizationHref, onChange);
