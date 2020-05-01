@@ -52,6 +52,10 @@ describe('ActivityUsageEntity', () => {
 		it('can get alignments url', () => {
 			expect(entity.alignmentsHref()).to.equal('http://vlx1-mdulat.desire2learn.d2l:44444/d2l/api/hm/alignments/activity-usage/6609?ActivityBatchId=6606_2000_31');
 		});
+
+		it('can get legacy competencies url', () => {
+			expect(entity.competenciesHref()).to.equal('http://vlx1-mdulat.desire2learn.d2l:44444/d2l/api/hm/alignments/activity-usage/6606/legacy-competencies?ActivityBatchId=6606_2000_7');
+		});
 	});
 
 	describe('Functionality', () => {
