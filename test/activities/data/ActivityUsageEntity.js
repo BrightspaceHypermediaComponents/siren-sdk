@@ -191,6 +191,12 @@ export const testData = {
 					'https://alignments.api.brightspace.com/rels/alignments'
 				],
 				'href': 'http://vlx1-mdulat.desire2learn.d2l:44444/d2l/api/hm/alignments/activity-usage/6609?ActivityBatchId=6606_2000_31'
+			},
+			{
+				'rel': [
+					'https://alignments.api.brightspace.com/rels/legacy-competencies'
+				],
+				'href': 'http://vlx1-mdulat.desire2learn.d2l:44444/d2l/api/hm/alignments/activity-usage/6606/legacy-competencies?ActivityBatchId=6606_2000_7'
 			}
 		],
 		'actions': [

@@ -174,7 +174,8 @@ export const Rels = {
 		survey: 'https://surveys.api.brightspace.com/rels/survey'
 	},
 	Alignments: {
-		alignments: 'https://alignments.api.brightspace.com/rels/alignments'
+		alignments: 'https://alignments.api.brightspace.com/rels/alignments',
+		legacyCompetencies: 'https://alignments.api.brightspace.com/rels/legacy-competencies'
 	},
 	Outcomes: {
 		intents: 'https://outcomes.api.brightspace.com/rels/intents',
