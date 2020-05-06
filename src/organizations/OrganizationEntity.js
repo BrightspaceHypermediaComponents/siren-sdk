@@ -91,9 +91,7 @@ export class OrganizationEntity extends Entity {
 
 		const dateTime = {
 			type: dateType,
-			date: date,
-			beforeStartDate: startDate ? startDate > nowDate : null,  // To delete, use isBeforeStartDate()
-			afterEndDate: endDate ? endDate <= nowDate : null         // To delete, use isAfterEndDate()
+			date: date
 		};
 		return dateTime;
 	}
