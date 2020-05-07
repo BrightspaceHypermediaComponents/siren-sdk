@@ -13,6 +13,10 @@ describe('CompetenciesEntity', () => {
 		expect(entity.associatedCount()).to.equal(123);
 	});
 
+	it('has unevaluated count', () => {
+		expect(entity.associatedCount()).to.equal(54);
+	});
+
 	it('has dialog url property', () => {
 		expect(entity.dialogUrl()).to.equal('/d2l/lms/dropbox/dialogs/modify/folder_newedit_activities.d2l?ou=132730&db=1152');
 	});

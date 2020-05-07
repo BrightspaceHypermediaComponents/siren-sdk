@@ -5,6 +5,7 @@ export const testData = {
 		],
 		'properties': {
 			'associatedCount': 123,
+			'unevaluatedCount': 54,
 			'dialogUrl': '/d2l/lms/dropbox/dialogs/modify/folder_newedit_activities.d2l?ou=132730&db=1152'
 		},
 		'links': [
