@@ -30,6 +30,10 @@ export class AssociationEntity extends Entity {
 		return this._entity.hasClass(Classes.associations.singleAssociation);
 	}
 
+	canDeleteAssociation() {
+		return this._entity && this._entity.hasActionByName(Actions.associations.deleteAssociation);
+	}
+
 	/**
 	 * Deletes the association
 	 */
