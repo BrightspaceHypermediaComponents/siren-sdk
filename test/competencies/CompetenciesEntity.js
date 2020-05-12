@@ -1,4 +1,4 @@
-import { AlignmentsCollectionEntity } from '../../src/alignments/AlignmentsCollectionEntity.js';
+import { CompetenciesEntity } from '../../src/competencies/CompetenciesEntity.js';
 import { testData } from './data/CompetenciesEntity.js';
 
 describe('CompetenciesEntity', () => {
@@ -6,11 +6,15 @@ describe('CompetenciesEntity', () => {
 
 	beforeEach(() => {
 		entityJson = window.D2L.Hypermedia.Siren.Parse(testData.competenciesEntity);
-		entity = new AlignmentsCollectionEntity(entityJson);
+		entity = new CompetenciesEntity(entityJson);
 	});
 
 	it('has associated count', () => {
 		expect(entity.associatedCount()).to.equal(123);
+	});
+
+	it('has unevaluated count', () => {
+		expect(entity.unevaluatedCount()).to.equal(54);
 	});
 
 	it('has dialog url property', () => {
