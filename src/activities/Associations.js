@@ -45,6 +45,14 @@ export class AssociationCollectionEntity extends Entity {
 		return this._entity.hasActionByName(Actions.associations.createPotentialAssociation);
 	}
 
+	canCreateAssociation() {
+		if (!this._entity) {
+			return false;
+		}
+
+		return this._entity.hasActionByName(Actions.associations.createAssociation);
+	}
+
 	async createPotentialAssociation() {
 		if (!this._entity || !this._entity.hasActionByName(Actions.associations.createPotentialAssociation)) {
 			return;
