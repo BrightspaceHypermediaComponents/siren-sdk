@@ -778,11 +778,13 @@ export class AssignmentEntity extends Entity {
 			[this.name(), assignment.name],
 			[this.instructionsEditorHtml(), assignment.instructions],
 			[this.submissionType() && String(this.submissionType().value), assignment.submissionType],
-			[this.completionType() && String(this.completionType().value), assignment.completionType],
 			[this.isAnonymousMarkingEnabled(), assignment.isAnonymous],
 			[this.getAvailableAnnotationTools(), assignment.annotationToolsAvailable],
 			[this.isIndividualAssignmentType(), assignment.isIndividualAssignmentType]
 		];
+		if (assignment.hasOwnProperty('completionType')) {
+			diffs.push([this.completionType() && String(this.completionType().value), assignment.completionType]);
+		}
 		if (assignment.hasOwnProperty('filesSubmissionLimit')) {
 			diffs.push([this.filesSubmissionLimit(), assignment.filesSubmissionLimit]);
 		}
