@@ -456,6 +456,18 @@ export class AssignmentEntity extends Entity {
 		return this._entity.properties.completionType;
 	}
 
+	completionTypeValue() {
+		if (!this._entity) {
+			return;
+		}
+
+		const completionType = this.completionType();
+		if (completionType) {
+			return String(completionType.value);
+		}
+		return String(0);
+	}
+
 	/**
 	 * @returns {Array} Set of all possible completion type options
 	 */
@@ -783,7 +795,7 @@ export class AssignmentEntity extends Entity {
 			[this.isIndividualAssignmentType(), assignment.isIndividualAssignmentType]
 		];
 		if (assignment.hasOwnProperty('completionType')) {
-			diffs.push([this.completionType() && String(this.completionType().value), assignment.completionType]);
+			diffs.push([this.completionTypeValue(), assignment.completionType]);
 		}
 		if (assignment.hasOwnProperty('filesSubmissionLimit')) {
 			diffs.push([this.filesSubmissionLimit(), assignment.filesSubmissionLimit]);

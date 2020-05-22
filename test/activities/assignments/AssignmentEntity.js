@@ -45,7 +45,7 @@ describe('AssignmentEntity', () => {
 				name: 'Extra Special Assignment',
 				instructions: '<p>These are your instructions</p>',
 				submissionType: undefined,
-				completionType: undefined,
+				completionType: String(0),
 				isAnonymous: false,
 				annotationToolsAvailable: true,
 				isIndividualAssignmentType: false,
@@ -54,13 +54,13 @@ describe('AssignmentEntity', () => {
 			})).to.be.true;
 		});
 
-		it('return false when equal', () => {
+		it('return false when not equal', () => {
 			var assignmentEntity = new AssignmentEntity(editableEntity);
 			expect(assignmentEntity.equals({
 				name: 'Extra Special Assignment',
 				instructions: '<p>These are your instructions</p>',
 				submissionType: undefined,
-				completionType: undefined,
+				completionType: String(0),
 				isAnonymous: false,
 				annotationToolsAvailable: true,
 				isIndividualAssignmentType: true,
