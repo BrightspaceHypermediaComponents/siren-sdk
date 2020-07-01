@@ -62,6 +62,11 @@ export const testData = {
 					'href': 'http://vlx0-efurniss.desire2learn.d2l:44479/d2l/api/hm/alignments/activity-usage/6609/update?ActivityBatchId=6606_2000_3',
 					'name': 'start-update-alignments',
 					'method': 'POST'
+				},
+				{
+					'href': 'http://vlx0-efurniss.desire2learn.d2l:44479/d2l/api/hm/alignments/activity-usage/6609/update?ActivityBatchId=6606_2000_3',
+					'name': 'submit',
+					'method': 'POST'
 				}
 			]
 		},
