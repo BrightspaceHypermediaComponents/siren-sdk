@@ -17,6 +17,10 @@ describe('AlignmentsCollectionEntity', () => {
 		it('can update alignments', () => {
 			expect(entity.canUpdateAlignments()).to.be.true;
 		});
+
+		it('has submit action', () => {
+			expect(entity.hasSubmitAction()).to.be.true;
+		});
 	});
 
 	describe('readonly', () => {
@@ -31,6 +35,10 @@ describe('AlignmentsCollectionEntity', () => {
 
 		it('can not update alignments', () => {
 			expect(entity.canUpdateAlignments()).to.be.false;
+		});
+
+		it('does not have submit action', () => {
+			expect(entity.hasSubmitAction()).to.be.false;
 		});
 	});
 

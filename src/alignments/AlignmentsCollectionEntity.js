@@ -15,6 +15,10 @@ export class AlignmentsCollectionEntity extends Entity {
 		return this._entity && this._entity.hasActionByName(Actions.alignments.startUpdateAlignments);
 	}
 
+	hasSubmitAction() {
+		return this._entity && this._entity.hasActionByName(Actions.alignments.submit);
+	}
+
 	save() {
 		const submitAction = this._entity.getActionByName(Actions.alignments.submit);
 		return submitAction && performSirenAction(this._token, submitAction);
