@@ -113,6 +113,21 @@ export class ActivityUsageEntity extends Entity {
 		return link.href;
 	}
 
+	/** @returns {string} Href of the related special access entity */
+	specialAccessHref() {
+
+		if (!this._entity) {
+			return null;
+		}
+
+		const link = this._entity.getLinkByRel(Rels.Activities.specialAccess);
+		if (!link) {
+			return null;
+		}
+
+		return link.href;
+	}
+
 	/**
 	 * @returns {string} URL to edit the activity usage, if present
 	 */
