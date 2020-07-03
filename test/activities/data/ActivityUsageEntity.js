@@ -209,6 +209,12 @@ export const testData = {
 					'https://activities.api.brightspace.com/rels/direct-associations'
 				],
 				'href': 'http://vlx1-mdulat.desire2learn.d2l:44444/d2l/api/hm/activities/activities/6606_2000_31/usages/6609/associations?direct=1'
+			},
+			{
+				'rel': [
+					'https://activities.api.brightspace.com/rels/special-access'
+				],
+				'href': 'http://vlx1-mdulat.desire2learn.d2l:44444/d2l/api/hm/activities/activities/6606_2000_31/usages/6609/special-access'
 			}
 		],
 		'actions': [
@@ -401,6 +407,12 @@ export const testData = {
 					'https://activities.api.brightspace.com/rels/grade-candidates'
 				],
 				'href': 'http://vlx1-mdulat.desire2learn.d2l:44444/d2l/api/hm/activities/activities/6606_2000_31/usages/6609/grade-candidates'
+			},
+			{
+				'rel': [
+					'https://activities.api.brightspace.com/rels/special-access'
+				],
+				'href': 'http://vlx1-mdulat.desire2learn.d2l:44444/d2l/api/hm/activities/activities/6606_2000_31/usages/6609/special-access'
 			}
 		],
 		'actions': [

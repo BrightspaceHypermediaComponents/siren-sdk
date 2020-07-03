@@ -65,7 +65,8 @@ export const Rels = {
 		gradeCandidates: 'https://activities.api.brightspace.com/rels/grade-candidates',
 		associations: 'https://activities.api.brightspace.com/rels/associations',
 		directAssociations: 'https://activities.api.brightspace.com/rels/direct-associations',
-		newGradeAssociation: 'https://activities.api.brightspace.com/rels/new-grade-association'
+		newGradeAssociation: 'https://activities.api.brightspace.com/rels/new-grade-association',
+		specialAccess: 'https://activities.api.brightspace.com/rels/special-access'
 	},
 	Conditions: {
 		conditions: 'https://conditions.api.brightspace.com/rels/conditions',

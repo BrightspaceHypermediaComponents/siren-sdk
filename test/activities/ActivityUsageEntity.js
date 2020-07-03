@@ -64,6 +64,10 @@ describe('ActivityUsageEntity', () => {
 		it('can get direct associations url', () => {
 			expect(entity.getDirectRubricAssociationsHref()).to.equal('http://vlx1-mdulat.desire2learn.d2l:44444/d2l/api/hm/activities/activities/6606_2000_31/usages/6609/associations?direct=1');
 		});
+
+		it('can get special access url', () => {
+			expect(entity.specialAccessHref()).to.equal('http://vlx1-mdulat.desire2learn.d2l:44444/d2l/api/hm/activities/activities/6606_2000_31/usages/6609/special-access');
+		});
 	});
 
 	describe('Functionality', () => {
