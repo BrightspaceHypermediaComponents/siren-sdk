@@ -113,10 +113,19 @@ export class AttachmentCollectionEntity extends Entity {
 	}
 
 	async _addFileAttachment(action, fileSystemType, fileId) {
-		const fields = [
+		let fields = [
 			{ name: 'fileSystemType', value: fileSystemType },
 			{ name: 'fileId', value: fileId }
 		];
+		if (action.hasFieldByName('value')) {
+			fields = [
+				{
+					name: 'value',
+					value: JSON.stringify({ FileSystemType: fileSystemType, FileId: fileId})
+				}
+			];
+		}
+
 		await performSirenAction(this._token, action, fields);
 	}
 
