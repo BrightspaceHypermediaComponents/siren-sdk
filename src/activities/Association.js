@@ -30,6 +30,14 @@ export class AssociationEntity extends Entity {
 		return this._entity.hasClass(Classes.associations.singleAssociation);
 	}
 
+	isDefaultScoringRubricAssociation() {
+		if (!this._entity) {
+			return false;
+		}
+
+		return this._entity.hasClass(Classes.associations.defaultScoringRubricAssociation);
+	}
+
 	canDeleteAssociation() {
 		if (!this._entity) {
 			return false;

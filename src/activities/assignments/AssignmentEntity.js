@@ -163,6 +163,13 @@ export class AssignmentEntity extends Entity {
 	}
 
 	/**
+	 * @returns {bool} Whether or not the edit default scoring rubric action is present on the assignment entity
+	 */
+	canEditDefaultScoringRubric() {
+		return this._entity && this._entity.hasActionByName(Actions.assignments.updateDefaultScoringRubric);
+	}
+
+	/**
 	 * @returns {Array} The list of associated rubrics
 	 */
 	getRubrics() {
@@ -171,6 +178,17 @@ export class AssignmentEntity extends Entity {
 		}
 
 		return this._entity.getLinksByRel(Rels.rubric);
+	}
+
+	/**
+	 * @returns {string} The default scoring rubric ID
+	 */
+	getDefaultScoringRubric() {
+		if (!this._entity) {
+			return null;
+		}
+
+		return this._entity.properties.defaultScoringRubricId;
 	}
 
 	/**
@@ -780,6 +798,15 @@ export class AssignmentEntity extends Entity {
 			}
 		}
 
+		console.log('siren: ', typeof assignment.defaultScoringRubricId !== undefined, assignment.defaultGroupTypeId !== this.getDefaultScoringRubric(), this.canEditDefaultScoringRubric())
+
+		if (typeof assignment.defaultScoringRubricId !== undefined && 
+			assignment.defaultGroupTypeId !== this.getDefaultScoringRubric() &&
+			this.canEditDefaultScoringRubric()) {
+				fields.push({ name: 'defaultScoringRubricId', value: 3 });
+		}
+
+		console.log('fields: ', fields)
 		if (fields.length > 0) {
 			await performSirenAction(this._token, action, fields);
 		}
@@ -792,7 +819,8 @@ export class AssignmentEntity extends Entity {
 			[this.submissionType() && String(this.submissionType().value), assignment.submissionType],
 			[this.isAnonymousMarkingEnabled(), assignment.isAnonymous],
 			[this.getAvailableAnnotationTools(), assignment.annotationToolsAvailable],
-			[this.isIndividualAssignmentType(), assignment.isIndividualAssignmentType]
+			[this.isIndividualAssignmentType(), assignment.isIndividualAssignmentType],
+			[this.getDefaultScoringRubric(), assignment.defaultScoringRubricId]
 		];
 		if (assignment.hasOwnProperty('completionType')) {
 			diffs.push([this.completionTypeValue(), assignment.completionType]);

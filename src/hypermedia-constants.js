@@ -242,7 +242,8 @@ export const Classes = {
 	},
 	associations: {
 		singleAssociation: 'single-association',
-		potentialAssociation: 'potential-association'
+		potentialAssociation: 'potential-association',
+		defaultScoringRubricAssociation: 'default-scoring-rubric-association'
 	},
 	awards: {
 		available: 'available',
@@ -436,7 +437,8 @@ export const Actions = {
 		updateSubmissionType: 'update-submission-type',
 		updateAnnotationToolsAvailability: 'update-annotation-tools-availability',
 		update: 'quick-create-folder',
-		updateFilesSubmissionLimit: 'update-files-submission-limit'
+		updateFilesSubmissionLimit: 'update-files-submission-limit',
+		updateDefaultScoringRubric: 'update-default-scoring-rubric'
 	},
 	notifications: {
 		getCarrierClass: 'get-carrier',
