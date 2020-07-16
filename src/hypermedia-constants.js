@@ -242,8 +242,7 @@ export const Classes = {
 	},
 	associations: {
 		singleAssociation: 'single-association',
-		potentialAssociation: 'potential-association',
-		defaultScoringRubricAssociation: 'default-scoring-rubric-association'
+		potentialAssociation: 'potential-association'
 	},
 	awards: {
 		available: 'available',
