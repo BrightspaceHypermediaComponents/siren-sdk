@@ -798,7 +798,7 @@ export class AssignmentEntity extends Entity {
 			}
 		}
 
-		if (typeof assignment.defaultScoringRubricId !== undefined &&
+		if (typeof assignment.defaultScoringRubricId !== 'undefined' &&
 			assignment.defaultScoringRubricId !== this.getDefaultScoringRubric() &&
 			this.canEditDefaultScoringRubric()) {
 			fields.push({ name: 'defaultScoringRubricId', value: assignment.defaultScoringRubricId });
