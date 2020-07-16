@@ -798,15 +798,12 @@ export class AssignmentEntity extends Entity {
 			}
 		}
 
-		console.log('siren: ', typeof assignment.defaultScoringRubricId !== undefined, assignment.defaultGroupTypeId !== this.getDefaultScoringRubric(), this.canEditDefaultScoringRubric())
-
 		if (typeof assignment.defaultScoringRubricId !== undefined && 
 			assignment.defaultGroupTypeId !== this.getDefaultScoringRubric() &&
 			this.canEditDefaultScoringRubric()) {
-				fields.push({ name: 'defaultScoringRubricId', value: 3 });
+				fields.push({ name: 'defaultScoringRubricId_DoNotUse', value: assignment.defaultScoringRubricId });
 		}
 
-		console.log('fields: ', fields)
 		if (fields.length > 0) {
 			await performSirenAction(this._token, action, fields);
 		}
