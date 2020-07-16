@@ -188,7 +188,13 @@ export class AssignmentEntity extends Entity {
 			return null;
 		}
 
-		return this._entity.properties.defaultScoringRubricId;
+		const defaultScoringRubricId = this._entity.properties.defaultScoringRubricId;
+
+		if (!defaultScoringRubricId) {
+			return '-1';
+		}
+
+		return String(defaultScoringRubricId);
 	}
 
 	/**
