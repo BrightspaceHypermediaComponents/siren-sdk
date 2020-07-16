@@ -799,9 +799,9 @@ export class AssignmentEntity extends Entity {
 		}
 
 		if (typeof assignment.defaultScoringRubricId !== undefined && 
-			assignment.defaultGroupTypeId !== this.getDefaultScoringRubric() &&
+			assignment.defaultScoringRubricId !== this.getDefaultScoringRubric() &&
 			this.canEditDefaultScoringRubric()) {
-				fields.push({ name: 'defaultScoringRubricId_DoNotUse', value: assignment.defaultScoringRubricId });
+				fields.push({ name: 'defaultScoringRubricId', value: assignment.defaultScoringRubricId });
 		}
 
 		if (fields.length > 0) {
