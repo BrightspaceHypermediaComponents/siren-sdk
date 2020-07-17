@@ -50,7 +50,8 @@ describe('AssignmentEntity', () => {
 				annotationToolsAvailable: true,
 				isIndividualAssignmentType: false,
 				groupTypeId: '314',
-				filesSubmissionLimit: 'unlimited'
+				filesSubmissionLimit: 'unlimited',
+				defaultScoringRubricId: '-1'
 			})).to.be.true;
 		});
 
