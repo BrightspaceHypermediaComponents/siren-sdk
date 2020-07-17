@@ -190,7 +190,7 @@ export class AssignmentEntity extends Entity {
 
 		const defaultScoringRubricId = this._entity.properties.defaultScoringRubricId;
 
-		if (defaultScoringRubricId === undefined || defaultScoringRubricId === null) {
+		if (!defaultScoringRubricId) {
 			return '-1';
 		}
 
