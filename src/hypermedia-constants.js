@@ -88,7 +88,8 @@ export const Rels = {
 		folderType: 'https://assignments.api.brightspace.com/rels/folder-type',
 		groupsHomepage: 'https://assignments.api.brightspace.com/rels/groups-homepage',
 		filesSubmissionLimit: 'https://assignments.api.brightspace.com/rels/files-submission-limit',
-		submissionsRule: 'https://assignments.api.brightspace.com/rels/submissions-rule'
+		submissionsRule: 'https://assignments.api.brightspace.com/rels/submissions-rule',
+		notificationEmail: 'https://assignments.api.brightspace.com/rels/notification-email'
 	},
 	// Awards
 	Awards: {
