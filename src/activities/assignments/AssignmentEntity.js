@@ -629,6 +629,17 @@ export class AssignmentEntity extends Entity {
 		];
 		await performSirenAction(this._token, action, fields);
 	}
+
+	hasSubmissions() {
+		const subEntity = this._entity && this._entity.getSubEntityByRel(Rels.Assignments.submissionMetrics);
+
+		if (!subEntity || !subEntity.properties || !subEntity.properties.totalUsersWithSubmissions) {
+			return false;
+		}
+
+		return subEntity.properties.totalUsersWithSubmissions > 0;
+	}
+
 	/**
 	 * @returns {bool} Whether or not annotations are enabled for the assignment entity
 	 */
