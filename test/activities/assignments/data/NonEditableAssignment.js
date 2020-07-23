@@ -5,6 +5,20 @@ export const nonEditableAssignment = {
 	'properties': {
 		'name': 'Extra Special Assignment',
 	},
+	'entities': [
+		{
+			'class': [
+				'submission-metrics'
+			],
+			'rel': [
+				'https://assignments.api.brightspace.com/rels/submission-metrics'
+			],
+			'properties': {
+				'totalUsers': 280,
+				'totalUsersWithSubmissions': 0
+			}
+		}
+	],
 	'links': [
 		{
 			'rel': [

@@ -250,6 +250,18 @@ export const editableAssignment = {
 				}
 			]
 		},
+		{
+			'class': [
+				'submission-metrics'
+			],
+			'rel': [
+				'https://assignments.api.brightspace.com/rels/submission-metrics'
+			],
+			'properties': {
+				'totalUsers': 280,
+				'totalUsersWithSubmissions': 1
+			}
+		}
 	],
 	'actions': [
 		{

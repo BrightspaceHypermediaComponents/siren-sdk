@@ -176,4 +176,15 @@ describe('AssignmentEntity', () => {
 		});
 
 	});
+
+	describe('HasSubmissions', () => {
+		it('HasSubmissions is true when there are submissions', () => {
+			var assignmentEntity = new AssignmentEntity(editableEntity);
+			expect(assignmentEntity.hasSubmissions()).to.be.true;
+		});
+		it('HasSubmissions is false when there are no submissions', () => {
+			var assignmentEntity = new AssignmentEntity(nonEditableEntity);
+			expect(assignmentEntity.hasSubmissions()).to.be.false;
+		});
+	});
 });
