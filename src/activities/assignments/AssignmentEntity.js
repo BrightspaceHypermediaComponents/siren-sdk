@@ -560,6 +560,14 @@ export class AssignmentEntity extends Entity {
 		return subEntity && subEntity.hasActionByName(Actions.assignments.updateSubmissionsRule);
 	}
 
+	notificationEmail() {
+		const subEntity = this._entity && this._entity.getSubEntityByRel(Rels.Assignments.notificationEmail);
+		if (!subEntity || !subEntity.properties) {
+			return;
+		}
+		const props = subEntity.properties;
+		return props && props.email;
+	}
 	async setSubmissionsRule(submissionsRule) {
 		const subEntity = this._entity && this._entity.getSubEntityByRel(Rels.Assignments.submissionsRule);
 		const action = this.canEditSubmissionsRule() && subEntity && subEntity.getActionByName(Actions.assignments.updateSubmissionsRule);
@@ -810,6 +818,10 @@ export class AssignmentEntity extends Entity {
 			fields.push({ name: 'defaultScoringRubricId', value: assignment.defaultScoringRubricId });
 		}
 
+		if (typeof assignment.notificationEmail !== 'undefined') {
+			fields.push({ name: 'notificationEmail', value: assignment.notificationEmail });
+		}
+
 		if (fields.length > 0) {
 			await performSirenAction(this._token, action, fields);
 		}
@@ -833,6 +845,9 @@ export class AssignmentEntity extends Entity {
 		}
 		if (assignment.hasOwnProperty('submissionsRule')) {
 			diffs.push([this.submissionsRule(), assignment.submissionsRule]);
+		}
+		if (assignment.hasOwnProperty('notificationEmail')) {
+			diffs.push([this.notificationEmail(), assignment.notificationEmail]);
 		}
 		for (const [left, right] of diffs) {
 			if (left !== right) {
