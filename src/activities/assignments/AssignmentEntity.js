@@ -840,7 +840,7 @@ export class AssignmentEntity extends Entity {
 			}
 		}
 
-		if (!assignment.isIndividualAssignmentType && !this.isGroupAssignmentTypeDisabled()) {
+		if (!this.isAssignmentTypeReadOnly() && !assignment.isIndividualAssignmentType && !this.isGroupAssignmentTypeDisabled()) {
 			const selected = this.getAssignmentTypeGroupCategoryOptions().find(x => x.selected);
 			if (String(selected && selected.value) !== assignment.groupTypeId) {
 				return false;
