@@ -176,4 +176,17 @@ describe('AssignmentEntity', () => {
 		});
 
 	});
+	describe('NotificationEmail', () => {
+		it('read notificaiton email', () => {
+			var assignmentEntity = new AssignmentEntity(editableEntity);
+			expect(assignmentEntity.notificationEmail()).to.equal('test@d2l.com');
+		});
+		it('set notificaiton email', async() => {
+			fetchMock.patchOnce('https://f5aa43d7-c082-485c-84f5-4808147fe98a.assignments.api.dev.brightspace.com/123065/folders/7', editableEntity);
+			var assignmentEntity = new AssignmentEntity(editableEntity);
+			await assignmentEntity.setNotificationEmail('test1@d2l.com');
+			expect(fetchMock.called()).to.be.true;
+		});
+
+	});
 });

@@ -438,7 +438,8 @@ export const Actions = {
 		updateAnnotationToolsAvailability: 'update-annotation-tools-availability',
 		update: 'quick-create-folder',
 		updateFilesSubmissionLimit: 'update-files-submission-limit',
-		updateDefaultScoringRubric: 'update-default-scoring-rubric'
+		updateDefaultScoringRubric: 'update-default-scoring-rubric',
+		updateNotificationEmail: 'update-notification-email'
 	},
 	notifications: {
 		getCarrierClass: 'get-carrier',
