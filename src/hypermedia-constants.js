@@ -88,7 +88,8 @@ export const Rels = {
 		folderType: 'https://assignments.api.brightspace.com/rels/folder-type',
 		groupsHomepage: 'https://assignments.api.brightspace.com/rels/groups-homepage',
 		filesSubmissionLimit: 'https://assignments.api.brightspace.com/rels/files-submission-limit',
-		submissionsRule: 'https://assignments.api.brightspace.com/rels/submissions-rule'
+		submissionsRule: 'https://assignments.api.brightspace.com/rels/submissions-rule',
+		notificationEmail: 'https://assignments.api.brightspace.com/rels/notification-email'
 	},
 	// Awards
 	Awards: {
@@ -437,7 +438,8 @@ export const Actions = {
 		updateAnnotationToolsAvailability: 'update-annotation-tools-availability',
 		update: 'quick-create-folder',
 		updateFilesSubmissionLimit: 'update-files-submission-limit',
-		updateDefaultScoringRubric: 'update-default-scoring-rubric'
+		updateDefaultScoringRubric: 'update-default-scoring-rubric',
+		updateNotificationEmail: 'update-notification-email'
 	},
 	notifications: {
 		getCarrierClass: 'get-carrier',
