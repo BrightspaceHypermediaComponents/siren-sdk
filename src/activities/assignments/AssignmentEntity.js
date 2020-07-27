@@ -568,6 +568,19 @@ export class AssignmentEntity extends Entity {
 		const props = subEntity.properties;
 		return props && props.email;
 	}
+
+	async setNotificationEmail(notificationEmail) {
+		const subEntity = this._entity && this._entity.getSubEntityByRel(Rels.Assignments.notificationEmail);
+		const action = subEntity && subEntity.getActionByName(Actions.assignments.updateNotificationEmail);
+		if (!action) {
+			return;
+		}
+		const fields = [
+			{ name: 'notificationEmail', value: notificationEmail }
+		];
+		await performSirenAction(this._token, action, fields);
+	}
+
 	async setSubmissionsRule(submissionsRule) {
 		const subEntity = this._entity && this._entity.getSubEntityByRel(Rels.Assignments.submissionsRule);
 		const action = this.canEditSubmissionsRule() && subEntity && subEntity.getActionByName(Actions.assignments.updateSubmissionsRule);

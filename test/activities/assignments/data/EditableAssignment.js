@@ -250,6 +250,31 @@ export const editableAssignment = {
 				}
 			]
 		},
+		{
+			'class': [
+				'notification-email'
+			],
+			'rel': [
+				'https://assignments.api.brightspace.com/rels/notification-email'
+			],
+			'properties': {
+				'email': 'test@d2l.com'
+			},
+			'actions': [
+				{
+					'href': 'https://f5aa43d7-c082-485c-84f5-4808147fe98a.assignments.api.dev.brightspace.com/123065/folders/7',
+					'name': 'update-notification-email',
+					'method': 'PATCH',
+					'fields': [
+						{
+							'type': 'text',
+							'name': 'notificationEmail',
+							'value': 'test@d2l.com'
+						}
+					]
+				}
+			]
+		},
 	],
 	'actions': [
 		{
