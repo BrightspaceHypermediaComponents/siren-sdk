@@ -845,11 +845,13 @@ export class AssignmentEntity extends Entity {
 			[this.name(), assignment.name],
 			[this.instructionsEditorHtml(), assignment.instructions],
 			[this.submissionType() && String(this.submissionType().value), assignment.submissionType],
-			[this.isAnonymousMarkingEnabled(), assignment.isAnonymous],
 			[this.getAvailableAnnotationTools(), assignment.annotationToolsAvailable],
 			[this.isIndividualAssignmentType(), assignment.isIndividualAssignmentType],
 			[this.getDefaultScoringRubric(), assignment.defaultScoringRubricId]
 		];
+		if (assignment.hasOwnProperty('isAnonymous')) {
+			diffs.push([this.isAnonymousMarkingEnabled(), assignment.isAnonymous]);
+		}
 		if (assignment.hasOwnProperty('completionType')) {
 			diffs.push([this.completionTypeValue(), assignment.completionType]);
 		}

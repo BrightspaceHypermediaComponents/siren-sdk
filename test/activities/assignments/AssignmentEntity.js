@@ -68,6 +68,19 @@ describe('AssignmentEntity', () => {
 				filesSubmissionLimit: 'unlimited'
 			})).to.be.false;
 		});
+
+		it('ignores props that are not set', () => {
+			var assignmentEntity = new AssignmentEntity(editableEntity);
+			expect(assignmentEntity.equals({
+				name: 'Extra Special Assignment',
+				instructions: '<p>These are your instructions</p>',
+				submissionType: undefined,
+				annotationToolsAvailable: true,
+				isIndividualAssignmentType: false,
+				groupTypeId: '314',
+				defaultScoringRubricId: '-1'
+			})).to.be.true;
+		});
 	});
 
 	describe('Saves', () => {
