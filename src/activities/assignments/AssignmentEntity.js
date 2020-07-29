@@ -560,27 +560,6 @@ export class AssignmentEntity extends Entity {
 		return subEntity && subEntity.hasActionByName(Actions.assignments.updateSubmissionsRule);
 	}
 
-	notificationEmail() {
-		const subEntity = this._entity && this._entity.getSubEntityByRel(Rels.Assignments.notificationEmail);
-		if (!subEntity || !subEntity.properties) {
-			return;
-		}
-		const props = subEntity.properties;
-		return props && props.email;
-	}
-
-	async setNotificationEmail(notificationEmail) {
-		const subEntity = this._entity && this._entity.getSubEntityByRel(Rels.Assignments.notificationEmail);
-		const action = subEntity && subEntity.getActionByName(Actions.assignments.updateNotificationEmail);
-		if (!action) {
-			return;
-		}
-		const fields = [
-			{ name: 'notificationEmail', value: notificationEmail }
-		];
-		await performSirenAction(this._token, action, fields);
-	}
-
 	async setSubmissionsRule(submissionsRule) {
 		const subEntity = this._entity && this._entity.getSubEntityByRel(Rels.Assignments.submissionsRule);
 		const action = this.canEditSubmissionsRule() && subEntity && subEntity.getActionByName(Actions.assignments.updateSubmissionsRule);
@@ -650,6 +629,33 @@ export class AssignmentEntity extends Entity {
 		];
 		await performSirenAction(this._token, action, fields);
 	}
+
+	notificationEmail() {
+		const subEntity = this._entity && this._entity.getSubEntityByRel(Rels.Assignments.notificationEmail);
+		if (!subEntity || !subEntity.properties) {
+			return;
+		}
+		const props = subEntity.properties;
+		return props && props.email;
+	}
+
+	canEditNotificationEmail() {
+		const subEntity = this._entity && this._entity.getSubEntityByRel(Rels.Assignments.notificationEmail);
+		return subEntity && subEntity.hasActionByName(Actions.assignments.updateNotificationEmail);
+	}
+
+	async setNotificationEmail(notificationEmail) {
+		const subEntity = this._entity && this._entity.getSubEntityByRel(Rels.Assignments.notificationEmail);
+		const action = this.canEditNotificationEmail() && subEntity && subEntity.getActionByName(Actions.assignments.updateNotificationEmail);
+		if (!action) {
+			return;
+		}
+		const fields = [
+			{ name: 'notificationEmail', value: notificationEmail }
+		];
+		await performSirenAction(this._token, action, fields);
+	}
+
 	/**
 	 * @returns {bool} Whether or not annotations are enabled for the assignment entity
 	 */
