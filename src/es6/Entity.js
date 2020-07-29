@@ -127,9 +127,9 @@ export class Entity extends EntitySirenProperties {
 			dispose(this._subEntities.get(link.href));
 		}
 		this._subEntitiesLoadStatus.push(new Promise((resolve) => {
-			entityFactory(entityType, link, this._token, (entity) => {
+			entityFactory(entityType, link, this._token, (entity, error) => {
 				this._subEntities.set(link.href, entity);
-				onChange(entity);
+				onChange(entity, error);
 				Promise.all(entity._subEntitiesLoadStatus).then(() => {
 					resolve && resolve();
 					resolve = null;
