@@ -193,6 +193,10 @@ describe('ActivityUsageEntity', () => {
 					expect(entity.gradeType()).to.equal('Points');
 				});
 
+				it('gets numeric gradeType title', () => {
+					expect(entity.numericGradeTypeTitle()).to.equal('Points');
+				});
+
 				it('can edit score out of', () => {
 					expect(entity.canEditScoreOutOf()).to.be.true;
 				});
@@ -230,6 +234,10 @@ describe('ActivityUsageEntity', () => {
 
 				it('gets gradeType', () => {
 					expect(readonlyEntity.gradeType()).to.equal('Points');
+				});
+
+				it('gets numeric gradeType title', () => {
+					expect(entity.numericGradeTypeTitle()).to.equal('Points');
 				});
 
 				it('can edit score out of', () => {

@@ -458,6 +458,21 @@ export class ActivityUsageEntity extends Entity {
 	}
 
 	/**
+	 * @returns {string} Grade type title for the numeric grade type.
+	 */
+	numericGradeTypeTitle() {
+		const action = this._getScoreOutOfAction();
+		if (action && action.hasFieldByName('gradeType')) {
+			const numericGradeType = action.getFieldByName('gradeType').value.find(x => x.value === 'Numeric');
+			if (numericGradeType) {
+				return numericGradeType.title;
+			}
+		}
+		const scoreOutOfEntity = this._getScoreOutOfEntity();
+		return scoreOutOfEntity ? scoreOutOfEntity.properties.gradeType : undefined;
+	}
+
+	/**
 	 * @returns {string} URL of the grade associated with the activity usage, if present
 	 */
 	gradeHref() {
