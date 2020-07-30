@@ -468,8 +468,8 @@ export class ActivityUsageEntity extends Entity {
 				return numericGradeType.title;
 			}
 		}
-		const scoreOutOfEntity = this._getScoreOutOfEntity();
-		return scoreOutOfEntity ? scoreOutOfEntity.properties.gradeType : undefined;
+
+		return '';
 	}
 
 	/**
