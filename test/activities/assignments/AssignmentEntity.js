@@ -190,6 +190,10 @@ describe('AssignmentEntity', () => {
 
 	});
 	describe('NotificationEmail', () => {
+		it('Can Edit notificaiton email', () => {
+			var assignmentEntity = new AssignmentEntity(editableEntity);
+			expect(assignmentEntity.canEditNotificationEmail()).to.be.true;
+		});
 		it('read notificaiton email', () => {
 			var assignmentEntity = new AssignmentEntity(editableEntity);
 			expect(assignmentEntity.notificationEmail()).to.equal('test@d2l.com');
