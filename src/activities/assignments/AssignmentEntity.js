@@ -712,7 +712,7 @@ export class AssignmentEntity extends Entity {
 	/**
 	 * @returns {bool} Whether or not the user can see and set annotation availability for the assignment entity
 	 */
-	canEditAnnotations() {
+	canSeeAnnotations() {
 		const annotationsEntity = this._entity.getSubEntityByRel(Rels.Assignments.annotations);
 		return annotationsEntity && annotationsEntity.hasActionByName(Actions.assignments.updateAnnotationToolsAvailability);
 	}
@@ -726,7 +726,7 @@ export class AssignmentEntity extends Entity {
 
 		const annotationsEntity = this._entity.getSubEntityByRel(Rels.Assignments.annotations);
 
-		const action = this.canEditAnnotations() && annotationsEntity && annotationsEntity.getActionByName(Actions.assignments.updateAnnotationToolsAvailability);
+		const action = this.canSeeAnnotations() && annotationsEntity && annotationsEntity.getActionByName(Actions.assignments.updateAnnotationToolsAvailability);
 		if (!action) {
 			return;
 		}
@@ -787,7 +787,7 @@ export class AssignmentEntity extends Entity {
 		const shouldSaveAnnotations =
 			typeof assignment.annotationToolsAvailable !== 'undefined' &&
 			assignment.annotationToolsAvailable !== this.getAvailableAnnotationTools() &&
-			this.canEditAnnotations();
+			this.canSeeAnnotations();
 
 		if (shouldSaveAnnotations) {
 

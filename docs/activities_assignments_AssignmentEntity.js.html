@@ -19,11 +19,11 @@
 
     <h1 class="page-title">Source: activities/assignments/AssignmentEntity.js</h1>
 
+    
 
 
 
-
-
+    
     <section>
         <article>
             <pre class="prettyprint source linenums"><code>import { Entity } from '../../es6/Entity';
@@ -622,7 +622,7 @@ export class AssignmentEntity extends Entity {
 	/**
 	 * @returns {bool} Whether or not the user can see and set annotation availability for the assignment entity
 	 */
-	canEditAnnotations() {
+	canSeeAnnotations() {
 		const annotationsEntity = this._entity.getSubEntityByRel(Rels.Assignments.annotations);
 		return annotationsEntity &amp;&amp; annotationsEntity.hasActionByName(Actions.assignments.updateAnnotationToolsAvailability);
 	}
@@ -636,7 +636,7 @@ export class AssignmentEntity extends Entity {
 
 		const annotationsEntity = this._entity.getSubEntityByRel(Rels.Assignments.annotations);
 
-		const action = this.canEditAnnotations() &amp;&amp; annotationsEntity &amp;&amp; annotationsEntity.getActionByName(Actions.assignments.updateAnnotationToolsAvailability);
+		const action = this.canSeeAnnotations() &amp;&amp; annotationsEntity &amp;&amp; annotationsEntity.getActionByName(Actions.assignments.updateAnnotationToolsAvailability);
 		if (!action) {
 			return;
 		}
@@ -697,7 +697,7 @@ export class AssignmentEntity extends Entity {
 		const shouldSaveAnnotations =
 			typeof assignment.annotationToolsAvailable !== 'undefined' &amp;&amp;
 			assignment.annotationToolsAvailable !== this.getAvailableAnnotationTools() &amp;&amp;
-			this.canEditAnnotations();
+			this.canSeeAnnotations();
 
 		if (shouldSaveAnnotations) {
 
