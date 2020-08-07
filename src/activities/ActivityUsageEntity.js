@@ -592,9 +592,7 @@ export class ActivityUsageEntity extends Entity {
 		}
 
 		const associatedGrade = scoreAndGrade.associatedGrade;
-		const createNewGradeItem = scoreAndGrade.inGrades && !associatedGrade && scoreAndGrade.associateNewGradeAction;
-		const associateToExistingGrade = scoreAndGrade.inGrades && associatedGrade && associatedGrade.canAssociateGrade() && this.gradeHref() !== associatedGrade.href();
-		if (createNewGradeItem) {
+		if (this._shouldCreateAssociationToNewGrade(scoreAndGrade)) {
 			const associateGradeActionAndFields = this._generateAssociateNewGradeAction(scoreAndGrade);
 			if (!associateGradeActionAndFields) return;
 			if (deferSave) {
@@ -602,9 +600,20 @@ export class ActivityUsageEntity extends Entity {
 			} else {
 				await performSirenAction(this._token, associateGradeActionAndFields.action, associateGradeActionAndFields.fields);
 			}
-		} else if (associateToExistingGrade) {
+		} else if (this._shouldCreateAssociationToExistingGrade(scoreAndGrade)) {
 			await associatedGrade.associateGrade();
 		}
+	}
+
+	_shouldCreateAssociationToExistingGrade(scoreAndGrade) {
+		if (!scoreAndGrade) return;
+		const associatedGrade = scoreAndGrade.associatedGrade;
+		return scoreAndGrade.inGrades && associatedGrade && associatedGrade.canAssociateGrade() && this.gradeHref() !== associatedGrade.href();
+	}
+
+	_shouldCreateAssociationToNewGrade(scoreAndGrade) {
+		if (!scoreAndGrade) return;
+		return scoreAndGrade.inGrades && !scoreAndGrade.associatedGrade && scoreAndGrade.associateNewGradeAction;
 	}
 
 	_generateAssociateNewGradeAction(scoreAndGrade) {
@@ -626,12 +635,10 @@ export class ActivityUsageEntity extends Entity {
 			return;
 		}
 
-		const associatedGrade = scoreAndGrade.associatedGrade;
-		const associateToExistingGrade = scoreAndGrade.inGrades && associatedGrade && associatedGrade.canAssociateGrade() && this.gradeHref() !== associatedGrade.href();
-
-		return associateToExistingGrade
+		return !this._shouldCreateAssociationToNewGrade(scoreAndGrade) &&
+			(this._shouldCreateAssociationToExistingGrade(scoreAndGrade)
 			|| scoreAndGrade.scoreOutOf !== this.scoreOutOf().toString()
-			|| scoreAndGrade.inGrades !== this.inGrades();
+			|| scoreAndGrade.inGrades !== this.inGrades());
 	}
 
 	async save(activity) {
