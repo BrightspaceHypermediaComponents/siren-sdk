@@ -15,7 +15,7 @@ export class CollectionFiltersEntity extends Entity {
 		return this._entity.hasEntityByClass(filterClass);
 	}
 
-	async getFiltersEntityByClass(filterClass) {
+	async getFiltersEntityByClass_singleUse(filterClass) {
 		const entity = this._entity.getSubEntityByClass(filterClass);
 		let entityFetched = false;
 		const entityPromise = new Promise((resolve, reject) => {
@@ -27,9 +27,7 @@ export class CollectionFiltersEntity extends Entity {
 			})
 		});
 
-		const x = await entityPromise;
-		console.log('LLLLLLLLentityLLLLLLLL', entity, x);
-		return x;
+		return await entityPromise;
 	}
 
 	async applyFilters(filter) {
@@ -37,7 +35,7 @@ export class CollectionFiltersEntity extends Entity {
 		if (!action) {
 			return;
 		}
-		console.log('ACTION', action)
 		return await performSirenAction(this._token, action);
 	}
 }
+
