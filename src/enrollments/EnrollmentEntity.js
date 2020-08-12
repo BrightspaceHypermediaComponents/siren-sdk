@@ -2,6 +2,7 @@ import { Entity } from '../es6/Entity.js';
 import { Actions, Rels } from '../hypermedia-constants';
 import { OrganizationEntity } from '../organizations/OrganizationEntity';
 import { UserActivityUsageEntity  } from './UserActivityUsageEntity.js';
+import { UserEntity  } from '../users/UserEntity.js';
 
 export const classes = {
 	pinned: 'pinned',
@@ -22,6 +23,14 @@ export class EnrollmentEntity extends Entity {
 
 	enrollments() {
 		return this._entity && this._entity.getSubEntities('https://api.brightspace.com/rels/enrollment');
+	}
+
+	userUrl() {
+		if (!this._entity || !this._entity.hasLinkByRel(Rels.user)) {
+			return;
+		}
+
+		return this._entity.getLinkByRel(Rels.user).href;
 	}
 
 	userActivityUsageUrl() {
@@ -54,5 +63,10 @@ export class EnrollmentEntity extends Entity {
 	onUserActivityUsageChange(onChange) {
 		const userActivityUsageUrl = this.userActivityUsageUrl();
 		userActivityUsageUrl && this._subEntity(UserActivityUsageEntity, userActivityUsageUrl, onChange);
+	}
+
+	onUserChange(onChange) {
+		const userUrl = this.userUrl();
+		userUrl && this._subEntity(UserEntity, userUrl, onChange);
 	}
 }

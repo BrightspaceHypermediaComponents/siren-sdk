@@ -493,5 +493,9 @@ export const Actions = {
 	},
 	files: {
 		filePreviewLocation: 'file-preview-location'
-	}
+	},
+	filters: {
+		addFilter: 'add-filter',
+		removeFilter: 'remove-filter',
+	},
 };
