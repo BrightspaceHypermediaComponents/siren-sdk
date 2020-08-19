@@ -75,12 +75,4 @@ export class EnrollmentCollectionEntity extends Entity {
 	onEnrollmentEntityChange(url, OnChange) {
 		url && this._subEntity(EnrollmentEntity, url, OnChange);
 	}
-
-	hasFiltersLink() {
-		return this._entity.hasLinkByRel(Rels.filters);
-	}
-
-	getFiltersLink() {
-		return this._entity.getLinkByRel(Rels.filters).href;
-	}
 }
