@@ -33,7 +33,7 @@ export class FilterEntity extends Entity {
 	}
 
 	async applyFilters() {
-		const action = this._entity.getActionByName('apply');
+		const action = this._entity.getActionByName(Actions.filters.applyFilters);
 		if (!action) {
 			return;
 		}

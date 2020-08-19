@@ -497,5 +497,6 @@ export const Actions = {
 	filters: {
 		addFilter: 'add-filter',
 		removeFilter: 'remove-filter',
+		apply: 'apply',
 	},
 };

@@ -1,5 +1,5 @@
 import { Entity } from '../es6/Entity.js';
-import { FilterEntity } from './filter';
+import { FilterEntity } from './FilterEntity';
 
 /**
  * EnrollmentEntity class representation of a d2l enrollment. TODO ACTUAL
