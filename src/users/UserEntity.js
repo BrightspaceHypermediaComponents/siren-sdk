@@ -1,6 +1,9 @@
 import { Entity } from '../es6/Entity.js';
-import { Rels, Actions } from '../hypermedia-constants';
+import { Rels } from '../hypermedia-constants';
 
+/**
+ * UserEntity class representation of a d2l user.
+ */
 export class UserEntity extends Entity {
 	_getName(rel) {
 		if (!this._entity.hasSubEntityByRel(rel)) {
