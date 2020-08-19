@@ -493,5 +493,5 @@ export const Actions = {
 	},
 	files: {
 		filePreviewLocation: 'file-preview-location'
-	},
+	}
 };
