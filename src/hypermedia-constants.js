@@ -489,12 +489,9 @@ export const Actions = {
 	associations: {
 		deleteAssociation: 'delete-association',
 		createAssociation: 'create-association',
-		deleteAssociationDeferred: 'delete-association-deferred',
-		createAssociationDeferred: 'create-association-deferred',
 		createPotentialAssociation: 'create-potential-association',
-		startDeferredAssociations: 'start-deferred-associations',
-		applyDeferredAssociations: 'apply-deferred-associations',
-		cancelDeferredAssociations: 'cancel-deferred-associations'
+		deleteAssociationDeferred: 'delete-deferred-association',
+		createAssociationDeferred: 'create-deferred-association'
 	},
 	files: {
 		filePreviewLocation: 'file-preview-location'

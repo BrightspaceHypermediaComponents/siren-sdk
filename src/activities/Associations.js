@@ -80,35 +80,5 @@ export class AssociationCollectionEntity extends Entity {
 		return await performSirenAction(this._token, action, fields);
 	}
 
-	async startDeferredAssociations() {
-		if (!this._entity || !this._entity.hasActionByName(Actions.associations.startDeferredAssociations)) {
-			return;
-		}
-
-		const action = this._entity.getActionByName(Actions.associations.startDeferredAssociations);
-
-		return await performSirenAction(this._token, action);
-	}
-
-	async applyDeferredAssociations() {
-		if (!this._entity || !this._entity.hasActionByName(Actions.associations.applyDeferredAssociations)) {
-			return;
-		}
-
-		const action = this._entity.getActionByName(Actions.associations.applyDeferredAssociations);
-
-		return await performSirenAction(this._token, action);
-	}
-
-	async cancelDeferredAssociations() {
-		if (!this._entity || !this._entity.hasActionByName(Actions.associations.cancelDeferredAssociations)) {
-			return;
-		}
-
-		const action = this._entity.getActionByName(Actions.associations.cancelDeferredAssociations);
-
-		return await performSirenAction(this._token, action);
-	}
-
 }
 export const Associations = AssociationCollectionEntity;
