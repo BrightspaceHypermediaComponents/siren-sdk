@@ -635,12 +635,7 @@ export class ActivityUsageEntity extends Entity {
 			return;
 		}
 
-		let isCreatingAssociationToNewGrade = this._shouldCreateAssociationToNewGrade(scoreAndGrade);
-
-		// Required override for 20.20.9 for BG (green ui / blue server) reasons. Remove for 20.20.10 release.
-		isCreatingAssociationToNewGrade = isCreatingAssociationToNewGrade && !this.scoreOutOf();
-
-		return !isCreatingAssociationToNewGrade &&
+		return !this._shouldCreateAssociationToNewGrade(scoreAndGrade) &&
 			(this._shouldCreateAssociationToExistingGrade(scoreAndGrade)
 			|| scoreAndGrade.scoreOutOf !== this.scoreOutOf().toString()
 			|| scoreAndGrade.inGrades !== this.inGrades());
