@@ -3,7 +3,8 @@ import { Actions, Rels, Classes } from '../../hypermedia-constants';
 import { performSirenAction } from '../../es6/SirenAction';
 
 const actions = {
-	delete: 'delete-folder'
+	delete: 'delete-folder',
+	cancel: 'cancel-folder'
 };
 
 /**
@@ -892,6 +893,21 @@ export class AssignmentEntity extends Entity {
 
 	async delete() {
 		const action = this.canDelete() && this._entity.getActionByName(actions.delete);
+		if (!action) {
+			return;
+		}
+
+		await performSirenAction(this._token, action).then(() => {
+			this.dispose();
+		});
+	}
+
+	canCancelCreate() {
+		return this._entity.hasActionByName(actions.cancel);
+	}
+
+	async cancelCreate() {
+		const action = this.canCancelCreate() && this._entity.getActionByName(actions.cancel);
 		if (!action) {
 			return;
 		}
