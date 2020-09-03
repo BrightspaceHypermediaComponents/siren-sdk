@@ -154,6 +154,16 @@ describe('AssignmentEntity', () => {
 		});
 	});
 
+	describe('Cancel Create', () => {
+		it('Cancel Creating assignment', async() => {
+			fetchMock.deleteOnce('https://f5aa43d7-c082-485c-84f5-4808147fe98a.assignments.api.dev.brightspace.com/123065/folders/7?isCancel=1', editableEntity);
+
+			var assignmentEntity = new AssignmentEntity(editableEntity);
+
+			await assignmentEntity.cancelCreate();
+			expect(fetchMock.called()).to.be.true;
+		});
+	});
 	describe('FilesPerSubmission', () => {
 		it('Can Edit FilesPerSubmission', () => {
 			var assignmentEntity = new AssignmentEntity(editableEntity);
