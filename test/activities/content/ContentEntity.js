@@ -9,9 +9,9 @@ describe('ContentEntity', () => {
 	});
 
 	describe('Basic loading', () => {
-		it('reads name', () => {
+		it('reads title', () => {
 			var contentEntity = new ContentEntity(editableEntity);
-			expect(contentEntity.name()).to.equal('Test Content Name');
+			expect(contentEntity.title()).to.equal('Test Content Title');
 		});
 	});
 });

@@ -3,7 +3,7 @@ export const editableContent = {
 		'content-activity'
 	],
 	'properties': {
-		'title': 'Test Content Name'
+		'title': 'Test Content Title'
 	},
 	'entities': [],
 	'rel': []
