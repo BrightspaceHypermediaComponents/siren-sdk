@@ -5,7 +5,7 @@ import { Entity } from '../../es6/Entity';
  */
 export class ContentEntity extends Entity {
 	/**
-	 * @returns {string} Name of the assignment
+	 * @returns {string} Name of the content item
 	 */
 	name() {
 		return this._entity && this._entity.properties && this._entity.properties.name;
