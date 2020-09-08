@@ -1,9 +1,9 @@
 export const editableContent = {
 	'class': [
-		'content'
+		'content-activity'
 	],
 	'properties': {
-		'name': 'Extra Special Content'
+		'title': 'Test Content Name'
 	},
 	'entities': [],
 	'rel': []
