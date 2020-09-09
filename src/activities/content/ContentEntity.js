@@ -1,0 +1,13 @@
+import { Entity } from '../../es6/Entity';
+
+/**
+ * ContentEntity class representation of a d2l content entity.
+ */
+export class ContentEntity extends Entity {
+	/**
+	 * @returns {string} Title of the content item
+	 */
+	title() {
+		return this._entity && this._entity.properties && this._entity.properties.title;
+	}
+}
