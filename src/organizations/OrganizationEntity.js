@@ -41,7 +41,7 @@ export class OrganizationEntity extends Entity {
 		return this._entity && this._entity.properties && this._entity.properties.endDate;
 	}
 
-	get isCompletionTracked(){
+	get isCompletionTracked() {
 		if (this._entity && this._entity.hasActionByName('track-completion')) {
 			return true;
 		} else if (this._entity && this._entity.hasActionByName('do-not-track-completion')) {
@@ -50,7 +50,7 @@ export class OrganizationEntity extends Entity {
 		return undefined;
 	}
 
-	get isProgressDisplayed(){
+	get isProgressDisplayed() {
 		if (this._entity && this._entity.hasActionByName('display-progress')) {
 			return true;
 		} else if (this._entity && this._entity.hasActionByName('do-not-display-progress')) {
@@ -236,7 +236,6 @@ export class OrganizationEntity extends Entity {
 		if (!this._entity || !this._entity.hasLinkByRel(rel)) {
 			return;
 		}
-
 		return this._entity.getLinkByRel(rel).href;
 	}
 
