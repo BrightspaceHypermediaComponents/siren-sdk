@@ -41,6 +41,24 @@ export class OrganizationEntity extends Entity {
 		return this._entity && this._entity.properties && this._entity.properties.endDate;
 	}
 
+	get isCompletionTracked(){
+		if (this._entity && this._entity.hasActionByName('track-completion')) {
+			return true;
+		} else if (this._entity && this._entity.hasActionByName('do-not-track-completion')) {
+			return false;
+		}
+		return undefined;
+	}
+
+	get isProgressDisplayed(){
+		if (this._entity && this._entity.hasActionByName('display-progress')) {
+			return true;
+		} else if (this._entity && this._entity.hasActionByName('do-not-display-progress')) {
+			return false;
+		}
+		return undefined;
+	}
+
 	isAfterEndDate() {
 		var nowDate = Date.now();
 		var endDate = Date.parse(this.endDate());
@@ -222,18 +240,18 @@ export class OrganizationEntity extends Entity {
 		return this._entity.getLinkByRel(rel).href;
 	}
 
-	getCompletionAction(isNotTracked) {
-		let actionName = 'do-not-track-completion';
-		if (isNotTracked) {
-			actionName = 'track-completion';
+	getCompletionAction(isTracked) {
+		let actionName = 'track-completion';
+		if (isTracked) {
+			actionName = 'do-not-track-completion';
 		}
 		return this._entity.getActionByName(actionName);
 	}
 
-	getDisplayAction(isNotDisplayed) {
-		let actionName = 'do-not-diplay-progress';
-		if (isNotDisplayed) {
-			actionName = 'display-progress';
+	getDisplayAction(isDisplayed) {
+		let actionName = 'diplay-progress';
+		if (isDisplayed) {
+			actionName = 'do-not-display-progress';
 		}
 		return this._entity.getActionByName(actionName);
 	}
