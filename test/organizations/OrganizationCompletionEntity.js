@@ -32,8 +32,8 @@ describe('OrganizationEntity', () => {
 			expect(noTrackingDisplay.isProgressDisplayed).to.be.false;
 		});
 		it('actions missing', () => {
-			expect(noTrackingDisplay.isCompletionTracking).to.be.undefined;
-			expect(noTrackingDisplay.isProgressDisplayed).to.be.undefined;
+			expect(noActions.isCompletionTracking).to.be.undefined;
+			expect(noActions.isProgressDisplayed).to.be.undefined;
 		});
 	});
 
