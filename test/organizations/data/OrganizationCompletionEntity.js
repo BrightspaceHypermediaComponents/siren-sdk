@@ -1,227 +1,227 @@
 export const testData = {
 	trackingNoDisplay: {
-		"class": [
-			"active",
-			"course-offering",
-			"completion-tracked"
+		'class': [
+			'active',
+			'course-offering',
+			'completion-tracked'
 		],
-		"properties": {
-			"name": "Course Name",
-			"code": "SCI100",
-			"startDate": "2100-01-01T00:00:00.000Z",
-			"endDate": null,
-			"isActive": false
+		'properties': {
+			'name': 'Course Name',
+			'code': 'SCI100',
+			'startDate': '2100-01-01T00:00:00.000Z',
+			'endDate': null,
+			'isActive': false
 		},
-		"entities": [
+		'entities': [
 			{
-				"class": [
-					"course-image"
+				'class': [
+					'course-image'
 				],
-				"rel": [
-					"https://api.brightspace.com/rels/organization-image"
+				'rel': [
+					'https://api.brightspace.com/rels/organization-image'
 				],
-				"href": "../data/image.json"
+				'href': '../data/image.json'
 			},
 			{
-				"class": [
-					"relatvie-uri"
+				'class': [
+					'relatvie-uri'
 				],
-				"rel": [
-					"https://api.brightspace.com/rels/organization-image"
+				'rel': [
+					'https://api.brightspace.com/rels/organization-image'
 				]
 			}
 		],
-		"links": [
+		'links': [
 			{
-				"rel": [
-					"self"
+				'rel': [
+					'self'
 				],
-				"href": "../data/organization-future.json"
+				'href': '../data/organization-future.json'
 			},
 			{
-				"rel": [
-					"https://api.brightspace.com/rels/parent-semester"
+				'rel': [
+					'https://api.brightspace.com/rels/parent-semester'
 				],
-				"href": "../data/semester.json"
+				'href': '../data/semester.json'
 			}
 		],
-		"actions": [
+		'actions': [
 			{
-				"href": "../completion/tracking.json",
-				"name": "do-not-track-completion",
-				"method": "PUT"
+				'href': '../completion/tracking.json',
+				'name': 'do-not-track-completion',
+				'method': 'PUT'
 			},
 			{
-				"href": "../completion/tracking.json",
-				"name": "display-progress",
-				"method": "PUT"
+				'href': '../completion/tracking.json',
+				'name': 'display-progress',
+				'method': 'PUT'
 			}
 		]
 	},
 	trackingAndDisplay: {
-		"class": [
-			"active",
-			"course-offering",
-			"completion-tracked",
-			"display-progress"
+		'class': [
+			'active',
+			'course-offering',
+			'completion-tracked',
+			'display-progress'
 		],
-		"properties": {
-			"name": "Course Name",
-			"code": "SCI100",
-			"startDate": "2100-01-01T00:00:00.000Z",
-			"endDate": null,
-			"isActive": false
+		'properties': {
+			'name': 'Course Name',
+			'code': 'SCI100',
+			'startDate': '2100-01-01T00:00:00.000Z',
+			'endDate': null,
+			'isActive': false
 		},
-		"entities": [
+		'entities': [
 			{
-				"class": [
-					"course-image"
+				'class': [
+					'course-image'
 				],
-				"rel": [
-					"https://api.brightspace.com/rels/organization-image"
+				'rel': [
+					'https://api.brightspace.com/rels/organization-image'
 				],
-				"href": "../data/image.json"
+				'href': '../data/image.json'
 			},
 			{
-				"class": [
-					"relatvie-uri"
+				'class': [
+					'relatvie-uri'
 				],
-				"rel": [
-					"https://api.brightspace.com/rels/organization-image"
+				'rel': [
+					'https://api.brightspace.com/rels/organization-image'
 				]
 			}
 		],
-		"links": [
+		'links': [
 			{
-				"rel": [
-					"self"
+				'rel': [
+					'self'
 				],
-				"href": "../data/organization-future.json"
+				'href': '../data/organization-future.json'
 			},
 			{
-				"rel": [
-					"https://api.brightspace.com/rels/parent-semester"
+				'rel': [
+					'https://api.brightspace.com/rels/parent-semester'
 				],
-				"href": "../data/semester.json"
+				'href': '../data/semester.json'
 			}
 		],
-		"actions": [
+		'actions': [
 			{
-				"href": "../completion/tracking.json",
-				"name": "do-not-track-completion",
-				"method": "PUT"
+				'href': '../completion/tracking.json',
+				'name': 'do-not-track-completion',
+				'method': 'PUT'
 			},
 			{
-				"href": "../completion/tracking.json",
-				"name": "do-not-display-progress",
-				"method": "PUT"
+				'href': '../completion/tracking.json',
+				'name': 'do-not-display-progress',
+				'method': 'PUT'
 			}
 		]
 	},
 	noTracking: {
-		"class": [
-			"active",
-			"course-offering"
+		'class': [
+			'active',
+			'course-offering'
 		],
-		"properties": {
-			"name": "Course Name",
-			"code": "SCI100",
-			"startDate": "2100-01-01T00:00:00.000Z",
-			"endDate": null,
-			"isActive": false
+		'properties': {
+			'name': 'Course Name',
+			'code': 'SCI100',
+			'startDate': '2100-01-01T00:00:00.000Z',
+			'endDate': null,
+			'isActive': false
 		},
-		"entities": [
+		'entities': [
 			{
-				"class": [
-					"course-image"
+				'class': [
+					'course-image'
 				],
-				"rel": [
-					"https://api.brightspace.com/rels/organization-image"
+				'rel': [
+					'https://api.brightspace.com/rels/organization-image'
 				],
-				"href": "../data/image.json"
+				'href': '../data/image.json'
 			},
 			{
-				"class": [
-					"relatvie-uri"
+				'class': [
+					'relatvie-uri'
 				],
-				"rel": [
-					"https://api.brightspace.com/rels/organization-image"
+				'rel': [
+					'https://api.brightspace.com/rels/organization-image'
 				]
 			}
 		],
-		"links": [
+		'links': [
 			{
-				"rel": [
-					"self"
+				'rel': [
+					'self'
 				],
-				"href": "../data/organization-future.json"
+				'href': '../data/organization-future.json'
 			},
 			{
-				"rel": [
-					"https://api.brightspace.com/rels/parent-semester"
+				'rel': [
+					'https://api.brightspace.com/rels/parent-semester'
 				],
-				"href": "../data/semester.json"
+				'href': '../data/semester.json'
 			}
 		],
-		"actions": [
+		'actions': [
 			{
-				"href": "../completion/tracking.json",
-				"name": "track-completion",
-				"method": "PUT"
+				'href': '../completion/tracking.json',
+				'name': 'track-completion',
+				'method': 'PUT'
 			},
 			{
-				"href": "../completion/tracking.json",
-				"name": "display-progress",
-				"method": "PUT"
+				'href': '../completion/tracking.json',
+				'name': 'display-progress',
+				'method': 'PUT'
 			}
 		]
 	},
 	noActions: {
-		"class": [
-			"active",
-			"course-offering"
+		'class': [
+			'active',
+			'course-offering'
 		],
-		"properties": {
-			"name": "Course Name",
-			"code": "SCI100",
-			"startDate": "2100-01-01T00:00:00.000Z",
-			"endDate": null,
-			"isActive": false
+		'properties': {
+			'name': 'Course Name',
+			'code': 'SCI100',
+			'startDate': '2100-01-01T00:00:00.000Z',
+			'endDate': null,
+			'isActive': false
 		},
-		"entities": [
+		'entities': [
 			{
-				"class": [
-					"course-image"
+				'class': [
+					'course-image'
 				],
-				"rel": [
-					"https://api.brightspace.com/rels/organization-image"
+				'rel': [
+					'https://api.brightspace.com/rels/organization-image'
 				],
-				"href": "../data/image.json"
+				'href': '../data/image.json'
 			},
 			{
-				"class": [
-					"relatvie-uri"
+				'class': [
+					'relatvie-uri'
 				],
-				"rel": [
-					"https://api.brightspace.com/rels/organization-image"
+				'rel': [
+					'https://api.brightspace.com/rels/organization-image'
 				]
 			}
 		],
-		"links": [
+		'links': [
 			{
-				"rel": [
-					"self"
+				'rel': [
+					'self'
 				],
-				"href": "../data/organization-future.json"
+				'href': '../data/organization-future.json'
 			},
 			{
-				"rel": [
-					"https://api.brightspace.com/rels/parent-semester"
+				'rel': [
+					'https://api.brightspace.com/rels/parent-semester'
 				],
-				"href": "../data/semester.json"
+				'href': '../data/semester.json'
 			}
 		],
-		"actions": [
+		'actions': [
 		]
 	}
 };
