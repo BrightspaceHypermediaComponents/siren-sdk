@@ -1,11 +1,12 @@
+import { Rels, Classes, Actions } from '../hypermedia-constants';
+import { ActivityUsageEntity } from '../activities/ActivityUsageEntity.js';
 import { Entity } from '../es6/Entity.js';
 import { SimpleEntity } from '../es6/SimpleEntity.js';
-import { AlertsEntity } from './AlertsEntity.js';
-import { Rels, Classes, Actions } from '../hypermedia-constants';
+import { performSirenAction } from '../es6/SirenAction';
 import { NotificationCollectionEntity } from '../notifications/NotificationCollectionEntity';
 import { SequenceEntity } from '../sequences/SequenceEntity.js';
-import { ActivityUsageEntity } from '../activities/ActivityUsageEntity.js';
-import { performSirenAction } from '../es6/SirenAction';
+
+import { AlertsEntity } from './AlertsEntity.js';
 
 export const classes = {
 	active: 'active',
@@ -219,5 +220,21 @@ export class OrganizationEntity extends Entity {
 		}
 
 		return this._entity.getLinkByRel(rel).href;
+	}
+
+	getCompletionAction(isNotTracked) {
+		let actionName = 'do-not-track-completion';
+		if (isNotTracked) {
+			actionName = 'track-completion';
+		}
+		return this._entity.getActionByName(actionName);
+	}
+
+	getDisplayAction(isNotDisplayed) {
+		let actionName = 'do-not-diplay-progress';
+		if (isNotDisplayed) {
+			actionName = 'display-progress';
+		}
+		return this._entity.getActionByName(actionName);
 	}
 }
