@@ -239,13 +239,23 @@ export class OrganizationEntity extends Entity {
 		return this._entity.getLinkByRel(rel).href;
 	}
 
-	getCompletionAction(nowTracked) {
-		const actionName = nowTracked ? 'track-completion' : 'do-not-track-completion';
+	_getCompletionAction(enabled) {
+		const actionName = enabled ? 'track-completion' : 'do-not-track-completion';
 		return this._entity.getActionByName(actionName);
 	}
 
-	getDisplayAction(nowDisplayed) {
-		const actionName = nowDisplayed ? 'display-progress' : 'do-not-display-progress';
+	_getDisplayAction(enabled) {
+		const actionName = enabled ? 'display-progress' : 'do-not-display-progress';
 		return this._entity.getActionByName(actionName);
+	}
+
+	async updateCompletionTracking(enabled) {
+		const action = this._getCompletionAction(enabled);
+		return performSirenAction(this._token, action, action._fields, false);
+	}
+
+	async updateDisplayProgress(enabled) {
+		const action = this._getDisplayAction(enabled);
+		return performSirenAction(this._token, action, action._fields, false);
 	}
 }

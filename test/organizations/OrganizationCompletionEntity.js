@@ -38,39 +38,39 @@ describe('OrganizationEntityCompletions', () => {
 
 	describe('organization get completion action', () => {
 		it('tracking, no display', () => {
-			expect(trackingNoDisplay.getCompletionAction(true)).to.be.undefined;
-			expect(trackingNoDisplay.getCompletionAction(false).name).to.equal('do-not-track-completion');
+			expect(trackingNoDisplay._getCompletionAction(true)).to.be.undefined;
+			expect(trackingNoDisplay._getCompletionAction(false).name).to.equal('do-not-track-completion');
 		});
 		it('tracking with display', () => {
-			expect(trackingAndDisplay.getCompletionAction(true)).to.be.undefined;
-			expect(trackingAndDisplay.getCompletionAction(false).name).to.equal('do-not-track-completion');
+			expect(trackingAndDisplay._getCompletionAction(true)).to.be.undefined;
+			expect(trackingAndDisplay._getCompletionAction(false).name).to.equal('do-not-track-completion');
 		});
 		it('no tracking, no display', () => {
-			expect(noTrackingDisplay.getCompletionAction(true).name).to.equal('track-completion');
-			expect(noTrackingDisplay.getCompletionAction(false)).to.be.undefined;
+			expect(noTrackingDisplay._getCompletionAction(true).name).to.equal('track-completion');
+			expect(noTrackingDisplay._getCompletionAction(false)).to.be.undefined;
 		});
 		it('no actions', () => {
-			expect(noActions.getCompletionAction(true)).to.be.undefined;
-			expect(noActions.getCompletionAction(false)).to.be.undefined;
+			expect(noActions._getCompletionAction(true)).to.be.undefined;
+			expect(noActions._getCompletionAction(false)).to.be.undefined;
 		});
 	});
 
 	describe('organization get display action', () => {
 		it('tracking, no display', () => {
-			expect(trackingNoDisplay.getDisplayAction(true).name).to.equal('display-progress');
-			expect(trackingNoDisplay.getDisplayAction(false)).to.be.undefined;
+			expect(trackingNoDisplay._getDisplayAction(true).name).to.equal('display-progress');
+			expect(trackingNoDisplay._getDisplayAction(false)).to.be.undefined;
 		});
 		it('tracking with display', () => {
-			expect(trackingAndDisplay.getDisplayAction(true)).to.be.undefined;
-			expect(trackingAndDisplay.getDisplayAction(false).name).to.equal('do-not-display-progress');
+			expect(trackingAndDisplay._getDisplayAction(true)).to.be.undefined;
+			expect(trackingAndDisplay._getDisplayAction(false).name).to.equal('do-not-display-progress');
 		});
 		it('no tracking, no display', () => {
-			expect(noTrackingDisplay.getDisplayAction(true).name).to.equal('display-progress');
-			expect(noTrackingDisplay.getDisplayAction(false)).to.be.undefined;
+			expect(noTrackingDisplay._getDisplayAction(true).name).to.equal('display-progress');
+			expect(noTrackingDisplay._getDisplayAction(false)).to.be.undefined;
 		});
 		it('no actions', () => {
-			expect(noActions.getDisplayAction(true)).to.be.undefined;
-			expect(noActions.getDisplayAction(false)).to.be.undefined;
+			expect(noActions._getDisplayAction(true)).to.be.undefined;
+			expect(noActions._getDisplayAction(false)).to.be.undefined;
 		});
 	});
 });
