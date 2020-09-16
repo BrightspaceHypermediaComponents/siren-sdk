@@ -43,18 +43,18 @@ export class OrganizationEntity extends Entity {
 
 	get isCompletionTracked() {
 		if (this._entity && this._entity.hasActionByName('track-completion')) {
-			return true;
-		} else if (this._entity && this._entity.hasActionByName('do-not-track-completion')) {
 			return false;
+		} else if (this._entity && this._entity.hasActionByName('do-not-track-completion')) {
+			return true;
 		}
 		return undefined;
 	}
 
 	get isProgressDisplayed() {
 		if (this._entity && this._entity.hasActionByName('display-progress')) {
-			return true;
-		} else if (this._entity && this._entity.hasActionByName('do-not-display-progress')) {
 			return false;
+		} else if (this._entity && this._entity.hasActionByName('do-not-display-progress')) {
+			return true;
 		}
 		return undefined;
 	}

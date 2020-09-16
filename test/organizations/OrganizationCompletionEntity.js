@@ -17,22 +17,21 @@ describe('OrganizationEntityCompletions', () => {
 		const noActionsJson = window.D2L.Hypermedia.Siren.Parse(testData.noActions);
 		noActions = new OrganizationEntity(noActionsJson);
 	});
-
 	describe('properties working', () => {
 		it('tracking, no display', () => {
-			expect(trackingNoDisplay.isCompletionTracking).to.be.true;
+			expect(trackingNoDisplay.isCompletionTracked).to.be.true;
 			expect(trackingNoDisplay.isProgressDisplayed).to.be.false;
 		});
 		it('tracking with display', () => {
-			expect(trackingAndDisplay.isCompletionTracking).to.be.true;
+			expect(trackingAndDisplay.isCompletionTracked).to.be.true;
 			expect(trackingAndDisplay.isProgressDisplayed).to.be.true;
 		});
 		it('no tracking, no display', () => {
-			expect(noTrackingDisplay.isCompletionTracking).to.be.false;
+			expect(noTrackingDisplay.isCompletionTracked).to.be.false;
 			expect(noTrackingDisplay.isProgressDisplayed).to.be.false;
 		});
 		it('actions missing', () => {
-			expect(noActions.isCompletionTracking).to.be.undefined;
+			expect(noActions.isCompletionTracked).to.be.undefined;
 			expect(noActions.isProgressDisplayed).to.be.undefined;
 		});
 	});
