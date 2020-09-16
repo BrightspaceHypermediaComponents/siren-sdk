@@ -37,11 +37,40 @@ describe('OrganizationEntityCompletions', () => {
 	});
 
 	describe('organization get completion action', () => {
+		it('tracking, no display', () => {
+			expect(trackingNoDisplay.getCompletionAction(true)).to.be.undefined;
+			expect(trackingNoDisplay.getCompletionAction(false).name).to.equal('do-not-track-completion');
+		});
+		it('tracking with display', () => {
+			expect(trackingAndDisplay.getCompletionAction(true)).to.be.undefined;
+			expect(trackingAndDisplay.getCompletionAction(false).name).to.equal('do-not-track-completion');
+		});
+		it('no tracking, no display', () => {
+			expect(noTrackingDisplay.getCompletionAction(true).name).to.equal('track-completion');
+			expect(noTrackingDisplay.getCompletionAction(false)).to.be.undefined;
+		});
+		it('no actions', () => {
+			expect(noActions.getCompletionAction(true)).to.be.undefined;
+			expect(noActions.getCompletionAction(false)).to.be.undefined;
+		});
 	});
 
 	describe('organization get display action', () => {
-	});
-
-	describe('properties matching actions', () => {
+		it('tracking, no display', () => {
+			expect(trackingNoDisplay.getDisplayAction(true).name).to.equal('display-progress');
+			expect(trackingNoDisplay.getDisplayAction(false)).to.be.undefined;
+		});
+		it('tracking with display', () => {
+			expect(trackingAndDisplay.getDisplayAction(true)).to.be.undefined;
+			expect(trackingAndDisplay.getDisplayAction(false).name).to.equal('do-not-display-progress');
+		});
+		it('no tracking, no display', () => {
+			expect(noTrackingDisplay.getDisplayAction(true).name).to.equal('display-progress');
+			expect(noTrackingDisplay.getDisplayAction(false)).to.be.undefined;
+		});
+		it('no actions', () => {
+			expect(noActions.getDisplayAction(true)).to.be.undefined;
+			expect(noActions.getDisplayAction(false)).to.be.undefined;
+		});
 	});
 });

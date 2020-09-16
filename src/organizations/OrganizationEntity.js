@@ -125,7 +125,7 @@ export class OrganizationEntity extends Entity {
 
 	sequenceLink() {
 		return this._entity && this._entity.hasLinkByRel('https://api.brightspace.com/rels/sequence') &&
-		this._entity.getLinkByRel('https://api.brightspace.com/rels/sequence').href;
+			this._entity.getLinkByRel('https://api.brightspace.com/rels/sequence').href;
 	}
 
 	organizationHomepageUrl() {
@@ -239,19 +239,13 @@ export class OrganizationEntity extends Entity {
 		return this._entity.getLinkByRel(rel).href;
 	}
 
-	getCompletionAction(isTracked) {
-		let actionName = 'track-completion';
-		if (isTracked) {
-			actionName = 'do-not-track-completion';
-		}
+	getCompletionAction(nowTracked) {
+		const actionName = nowTracked ? 'track-completion' : 'do-not-track-completion';
 		return this._entity.getActionByName(actionName);
 	}
 
-	getDisplayAction(isDisplayed) {
-		let actionName = 'diplay-progress';
-		if (isDisplayed) {
-			actionName = 'do-not-display-progress';
-		}
+	getDisplayAction(nowDisplayed) {
+		const actionName = nowDisplayed ? 'display-progress' : 'do-not-display-progress';
 		return this._entity.getActionByName(actionName);
 	}
 }
