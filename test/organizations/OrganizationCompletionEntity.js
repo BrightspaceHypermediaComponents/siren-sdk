@@ -1,21 +1,21 @@
-import { OrganizationAvailabilityEntity } from '../../src/organizations/OrganizationEntity.js';
+import { OrganizationEntity } from '../../src/organizations/OrganizationEntity.js';
 import { testData } from './data/OrganizationCompletionEntity.js';
 
-describe('OrganizationEntity', () => {
+describe('OrganizationEntityCompletions', () => {
 	let trackingNoDisplay, trackingAndDisplay, noTrackingDisplay, noActions;
 
 	beforeEach(() => {
 		const trackingNoDisplayJson = window.D2L.Hypermedia.Siren.Parse(testData.trackingNoDisplay);
-		trackingNoDisplay = new OrganizationAvailabilityEntity(trackingNoDisplayJson);
+		trackingNoDisplay = new OrganizationEntity(trackingNoDisplayJson);
 
 		const trackingAndDisplayJson = window.D2L.Hypermedia.Siren.Parse(testData.trackingAndDisplay);
-		trackingAndDisplay = new OrganizationAvailabilityEntity(trackingAndDisplayJson);
+		trackingAndDisplay = new OrganizationEntity(trackingAndDisplayJson);
 
 		const noTrackingJson = window.D2L.Hypermedia.Siren.Parse(testData.noTracking);
-		noTrackingDisplay = new OrganizationAvailabilityEntity(noTrackingJson);
+		noTrackingDisplay = new OrganizationEntity(noTrackingJson);
 
 		const noActionsJson = window.D2L.Hypermedia.Siren.Parse(testData.noActions);
-		noActions = new OrganizationAvailabilityEntity(noActionsJson);
+		noActions = new OrganizationEntity(noActionsJson);
 	});
 
 	describe('properties working', () => {
