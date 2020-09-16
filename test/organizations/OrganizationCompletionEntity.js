@@ -73,4 +73,124 @@ describe('OrganizationEntityCompletions', () => {
 			expect(noActions._getDisplayAction(false)).to.be.undefined;
 		});
 	});
+
+	describe('update actions', () => {
+		let sandbox, trackingSpy, displaySpy, display;
+
+		beforeEach(() => {
+			sandbox = sinon.sandbox.create();
+			display = trackingNoDisplay;
+			trackingSpy = sandbox.spy(display, 'updateCompletionTracking');
+			displaySpy = sandbox.spy(display, 'updateDisplayProgress');
+		});
+
+		afterEach(() => {
+			sandbox.restore();
+		});
+
+		describe('tracking completion, not tracking display', () => {
+			it('correct parameters', () => {
+				display.updateCompletionTracking(false);
+				display.updateDisplayProgress(true);
+				expect(trackingSpy.returnValues[0]).to.be.a('promise');
+				expect(displaySpy.returnValues[0]).to.be.a('promise');
+			});
+			it('incorrect parameters', () => {
+				display.updateCompletionTracking(true);
+				display.updateDisplayProgress(false);
+				expect(trackingSpy.returnValues[0]).to.be.undefined;
+				expect(displaySpy.returnValues[0]).to.be.undefined;
+			});
+		});
+	});
+
+	describe('update actions', () => {
+		let sandbox, trackingSpy, displaySpy, display;
+
+		beforeEach(() => {
+			sandbox = sinon.sandbox.create();
+			display = trackingAndDisplay;
+			trackingSpy = sandbox.spy(display, 'updateCompletionTracking');
+			displaySpy = sandbox.spy(display, 'updateDisplayProgress');
+		});
+
+		afterEach(() => {
+			sandbox.restore();
+		});
+
+		describe('tracking completion, tracking display', () => {
+			it('correct parameters', () => {
+				display.updateCompletionTracking(false);
+				display.updateDisplayProgress(false);
+				expect(trackingSpy.returnValues[0]).to.be.a('promise');
+				expect(displaySpy.returnValues[0]).to.be.a('promise');
+			});
+			it('incorrect parameters', () => {
+				display.updateCompletionTracking(true);
+				display.updateDisplayProgress(true);
+				expect(trackingSpy.returnValues[0]).to.be.undefined;
+				expect(displaySpy.returnValues[0]).to.be.undefined;
+			});
+		});
+	});
+
+	describe('update actions', () => {
+		let sandbox, trackingSpy, displaySpy, display;
+
+		beforeEach(() => {
+			sandbox = sinon.sandbox.create();
+			display = noTrackingDisplay;
+			trackingSpy = sandbox.spy(display, 'updateCompletionTracking');
+			displaySpy = sandbox.spy(display, 'updateDisplayProgress');
+		});
+
+		afterEach(() => {
+			sandbox.restore();
+		});
+
+		describe('not tracking completion, not tracking display', () => {
+			it('correct parameters', () => {
+				display.updateCompletionTracking(true);
+				display.updateDisplayProgress(true);
+				expect(trackingSpy.returnValues[0]).to.be.a('promise');
+				expect(displaySpy.returnValues[0]).to.be.a('promise');
+			});
+			it('incorrect parameters', () => {
+				display.updateCompletionTracking(false);
+				display.updateDisplayProgress(false);
+				expect(trackingSpy.returnValues[0]).to.be.undefined;
+				expect(displaySpy.returnValues[0]).to.be.undefined;
+			});
+		});
+	});
+
+	describe('update actions', () => {
+		let sandbox, trackingSpy, displaySpy, display;
+
+		beforeEach(() => {
+			sandbox = sinon.sandbox.create();
+			display = noActions;
+			trackingSpy = sandbox.spy(display, 'updateCompletionTracking');
+			displaySpy = sandbox.spy(display, 'updateDisplayProgress');
+		});
+
+		afterEach(() => {
+			sandbox.restore();
+		});
+
+		describe('actions missing', () => {
+			it('true parameters', () => {
+				display.updateCompletionTracking(true);
+				display.updateDisplayProgress(true);
+				expect(trackingSpy.returnValues[0]).to.be.undefined;
+				expect(displaySpy.returnValues[0]).to.be.undefined;
+			});
+			it('false parameters', () => {
+				display.updateCompletionTracking(false);
+				display.updateDisplayProgress(false);
+				expect(trackingSpy.returnValues[0]).to.be.undefined;
+				expect(displaySpy.returnValues[0]).to.be.undefined;
+			});
+		});
+	});
 });

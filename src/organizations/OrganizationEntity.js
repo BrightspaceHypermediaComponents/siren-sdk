@@ -249,13 +249,17 @@ export class OrganizationEntity extends Entity {
 		return this._entity.getActionByName(actionName);
 	}
 
-	async updateCompletionTracking(enabled) {
+	updateCompletionTracking(enabled) {
 		const action = this._getCompletionAction(enabled);
-		return performSirenAction(this._token, action, action._fields, false);
+		if (action) {
+			return performSirenAction(this._token, action, action.fields, false);
+		}
 	}
 
-	async updateDisplayProgress(enabled) {
+	updateDisplayProgress(enabled) {
 		const action = this._getDisplayAction(enabled);
-		return performSirenAction(this._token, action, action._fields, false);
+		if (action) {
+			return performSirenAction(this._token, action, action.fields, false);
+		}
 	}
 }

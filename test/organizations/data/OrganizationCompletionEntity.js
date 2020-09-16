@@ -49,12 +49,14 @@ export const testData = {
 			{
 				'href': '../completion/tracking.json',
 				'name': 'do-not-track-completion',
-				'method': 'PUT'
+				'method': 'PUT',
+				'fields': [{'type': 'hidden', 'name': 'track', 'value': false}]
 			},
 			{
 				'href': '../completion/tracking.json',
 				'name': 'display-progress',
-				'method': 'PUT'
+				'method': 'PUT',
+				'fields': [{'type': 'hidden', 'name': 'enable', 'value': true}]
 			}
 		]
 	},
@@ -109,12 +111,14 @@ export const testData = {
 			{
 				'href': '../completion/tracking.json',
 				'name': 'do-not-track-completion',
-				'method': 'PUT'
+				'method': 'PUT',
+				'fields': [{'type': 'hidden', 'name': 'track', 'value': false}]
 			},
 			{
 				'href': '../completion/tracking.json',
 				'name': 'do-not-display-progress',
-				'method': 'PUT'
+				'method': 'PUT',
+				'fields': [{'type': 'hidden', 'name': 'enable', 'value': false}]
 			}
 		]
 	},
@@ -167,12 +171,14 @@ export const testData = {
 			{
 				'href': '../completion/tracking.json',
 				'name': 'track-completion',
-				'method': 'PUT'
+				'method': 'PUT',
+				'fields': [{'type': 'hidden', 'name': 'track', 'value': true}]
 			},
 			{
 				'href': '../completion/tracking.json',
 				'name': 'display-progress',
-				'method': 'PUT'
+				'method': 'PUT',
+				'fields': [{'type': 'hidden', 'name': 'enable', 'value': true}]
 			}
 		]
 	},
