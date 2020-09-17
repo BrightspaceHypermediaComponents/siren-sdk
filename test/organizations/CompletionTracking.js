@@ -1,5 +1,6 @@
 import { OrganizationEntity } from '../../src/organizations/OrganizationEntity.js';
-import { testData } from './data/OrganizationCompletionEntity.js';
+
+import { testData } from './data/CompletionTracking.js';
 
 describe('OrganizationEntityCompletions', () => {
 	let trackingNoDisplay, trackingAndDisplay, noTrackingDisplay, noActions;
