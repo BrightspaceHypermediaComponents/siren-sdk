@@ -1,12 +1,12 @@
-import { Rels, Classes, Actions } from '../hypermedia-constants';
-import { ActivityUsageEntity } from '../activities/ActivityUsageEntity.js';
-import { Entity } from '../es6/Entity.js';
-import { SimpleEntity } from '../es6/SimpleEntity.js';
-import { performSirenAction } from '../es6/SirenAction';
-import { NotificationCollectionEntity } from '../notifications/NotificationCollectionEntity';
-import { SequenceEntity } from '../sequences/SequenceEntity.js';
 
+import { Actions, Classes, Rels } from '../hypermedia-constants';
+import { ActivityUsageEntity } from '../activities/ActivityUsageEntity.js';
 import { AlertsEntity } from './AlertsEntity.js';
+import { Entity } from '../es6/Entity.js';
+import { NotificationCollectionEntity } from '../notifications/NotificationCollectionEntity';
+import { performSirenAction } from '../es6/SirenAction';
+import { SequenceEntity } from '../sequences/SequenceEntity.js';
+import { SimpleEntity } from '../es6/SimpleEntity.js';
 
 export const classes = {
 	active: 'active',
