@@ -19,63 +19,33 @@ describe('OrganizationEntityCompletions', () => {
 		noActions = new OrganizationEntity(noActionsJson);
 	});
 	describe('properties working', () => {
-		it('tracking, no display', () => {
-			expect(trackingNoDisplay.isCompletionTracked).to.be.true;
+		it('tracking, no display, completion', () => {
 			expect(trackingNoDisplay.isProgressDisplayed).to.be.false;
 		});
-		it('tracking with display', () => {
+		it('tracking, no display, progress', () => {
+			expect(trackingNoDisplay.isProgressDisplayed).to.be.false;
+		});
+		it('tracking with display, completion', () => {
 			expect(trackingAndDisplay.isCompletionTracked).to.be.true;
+		});
+		it('tracking with display, progress', () => {
 			expect(trackingAndDisplay.isProgressDisplayed).to.be.true;
 		});
-		it('no tracking, no display', () => {
+		it('no tracking, no display, completion', () => {
 			expect(noTrackingDisplay.isCompletionTracked).to.be.false;
-			expect(noTrackingDisplay.isProgressDisplayed).to.be.false;
 		});
-		it('actions missing', () => {
+		it('no tracking, no display, progress', () => {
+			expect(noTrackingDisplay.isCompletionTracked).to.be.false;
+		});
+		it('actions missing, completion', () => {
 			expect(noActions.isCompletionTracked).to.be.undefined;
+		});
+		it('actions missing, progress', () => {
 			expect(noActions.isProgressDisplayed).to.be.undefined;
 		});
 	});
 
-	describe('organization get completion action', () => {
-		it('tracking, no display', () => {
-			expect(trackingNoDisplay._getCompletionAction(true)).to.be.undefined;
-			expect(trackingNoDisplay._getCompletionAction(false).name).to.equal('do-not-track-completion');
-		});
-		it('tracking with display', () => {
-			expect(trackingAndDisplay._getCompletionAction(true)).to.be.undefined;
-			expect(trackingAndDisplay._getCompletionAction(false).name).to.equal('do-not-track-completion');
-		});
-		it('no tracking, no display', () => {
-			expect(noTrackingDisplay._getCompletionAction(true).name).to.equal('track-completion');
-			expect(noTrackingDisplay._getCompletionAction(false)).to.be.undefined;
-		});
-		it('no actions', () => {
-			expect(noActions._getCompletionAction(true)).to.be.undefined;
-			expect(noActions._getCompletionAction(false)).to.be.undefined;
-		});
-	});
-
-	describe('organization get display action', () => {
-		it('tracking, no display', () => {
-			expect(trackingNoDisplay._getDisplayAction(true).name).to.equal('display-progress');
-			expect(trackingNoDisplay._getDisplayAction(false)).to.be.undefined;
-		});
-		it('tracking with display', () => {
-			expect(trackingAndDisplay._getDisplayAction(true)).to.be.undefined;
-			expect(trackingAndDisplay._getDisplayAction(false).name).to.equal('do-not-display-progress');
-		});
-		it('no tracking, no display', () => {
-			expect(noTrackingDisplay._getDisplayAction(true).name).to.equal('display-progress');
-			expect(noTrackingDisplay._getDisplayAction(false)).to.be.undefined;
-		});
-		it('no actions', () => {
-			expect(noActions._getDisplayAction(true)).to.be.undefined;
-			expect(noActions._getDisplayAction(false)).to.be.undefined;
-		});
-	});
-
-	describe('update actions', () => {
+	describe('update actions, tracking completion, not tracking display', () => {
 		let sandbox, trackingSpy, displaySpy, display;
 
 		beforeEach(() => {
@@ -89,23 +59,25 @@ describe('OrganizationEntityCompletions', () => {
 			sandbox.restore();
 		});
 
-		describe('tracking completion, not tracking display', () => {
-			it('correct parameters', () => {
-				display.updateCompletionTracking(false);
-				display.updateDisplayProgress(true);
-				expect(trackingSpy.returnValues[0]).to.be.a('promise');
-				expect(displaySpy.returnValues[0]).to.be.a('promise');
-			});
-			it('incorrect parameters', () => {
-				display.updateCompletionTracking(true);
-				display.updateDisplayProgress(false);
-				expect(trackingSpy.returnValues[0]).to.be.undefined;
-				expect(displaySpy.returnValues[0]).to.be.undefined;
-			});
+		it('correct completion parameter', () => {
+			display.updateCompletionTracking(false);
+			expect(trackingSpy.returnValues[0]).to.be.a('promise');
+		});
+		it('correct progress parameter', () => {
+			display.updateDisplayProgress(true);
+			expect(displaySpy.returnValues[0]).to.be.a('promise');
+		});
+		it('incorrect parameters', () => {
+			display.updateCompletionTracking(true);
+			expect(trackingSpy.returnValues[0]).to.be.undefined;
+		});
+		it('incorrect parameters', () => {
+			display.updateDisplayProgress(false);
+			expect(trackingSpy.returnValues[0]).to.be.undefined;
 		});
 	});
 
-	describe('update actions', () => {
+	describe('update actions, tracking completion, tracking display', () => {
 		let sandbox, trackingSpy, displaySpy, display;
 
 		beforeEach(() => {
@@ -119,23 +91,25 @@ describe('OrganizationEntityCompletions', () => {
 			sandbox.restore();
 		});
 
-		describe('tracking completion, tracking display', () => {
-			it('correct parameters', () => {
-				display.updateCompletionTracking(false);
-				display.updateDisplayProgress(false);
-				expect(trackingSpy.returnValues[0]).to.be.a('promise');
-				expect(displaySpy.returnValues[0]).to.be.a('promise');
-			});
-			it('incorrect parameters', () => {
-				display.updateCompletionTracking(true);
-				display.updateDisplayProgress(true);
-				expect(trackingSpy.returnValues[0]).to.be.undefined;
-				expect(displaySpy.returnValues[0]).to.be.undefined;
-			});
+		it('correct completion parameter', () => {
+			display.updateCompletionTracking(false);
+			expect(trackingSpy.returnValues[0]).to.be.a('promise');
+		});
+		it('correct progress parameter', () => {
+			display.updateDisplayProgress(false);
+			expect(displaySpy.returnValues[0]).to.be.a('promise');
+		});
+		it('incorrect parameters', () => {
+			display.updateCompletionTracking(true);
+			expect(trackingSpy.returnValues[0]).to.be.undefined;
+		});
+		it('incorrect parameters', () => {
+			display.updateDisplayProgress(true);
+			expect(trackingSpy.returnValues[0]).to.be.undefined;
 		});
 	});
 
-	describe('update actions', () => {
+	describe('update actions, not tracking completion, not tracking display', () => {
 		let sandbox, trackingSpy, displaySpy, display;
 
 		beforeEach(() => {
@@ -149,23 +123,25 @@ describe('OrganizationEntityCompletions', () => {
 			sandbox.restore();
 		});
 
-		describe('not tracking completion, not tracking display', () => {
-			it('correct parameters', () => {
-				display.updateCompletionTracking(true);
-				display.updateDisplayProgress(true);
-				expect(trackingSpy.returnValues[0]).to.be.a('promise');
-				expect(displaySpy.returnValues[0]).to.be.a('promise');
-			});
-			it('incorrect parameters', () => {
-				display.updateCompletionTracking(false);
-				display.updateDisplayProgress(false);
-				expect(trackingSpy.returnValues[0]).to.be.undefined;
-				expect(displaySpy.returnValues[0]).to.be.undefined;
-			});
+		it('correct completion parameter', () => {
+			display.updateCompletionTracking(true);
+			expect(trackingSpy.returnValues[0]).to.be.a('promise');
+		});
+		it('correct progress parameter', () => {
+			display.updateDisplayProgress(true);
+			expect(displaySpy.returnValues[0]).to.be.a('promise');
+		});
+		it('incorrect parameters', () => {
+			display.updateCompletionTracking(false);
+			expect(trackingSpy.returnValues[0]).to.be.undefined;
+		});
+		it('incorrect parameters', () => {
+			display.updateDisplayProgress(false);
+			expect(trackingSpy.returnValues[0]).to.be.undefined;
 		});
 	});
 
-	describe('update actions', () => {
+	describe('update actions, actions missing', () => {
 		let sandbox, trackingSpy, displaySpy, display;
 
 		beforeEach(() => {
@@ -179,19 +155,21 @@ describe('OrganizationEntityCompletions', () => {
 			sandbox.restore();
 		});
 
-		describe('actions missing', () => {
-			it('true parameters', () => {
-				display.updateCompletionTracking(true);
-				display.updateDisplayProgress(true);
-				expect(trackingSpy.returnValues[0]).to.be.undefined;
-				expect(displaySpy.returnValues[0]).to.be.undefined;
-			});
-			it('false parameters', () => {
-				display.updateCompletionTracking(false);
-				display.updateDisplayProgress(false);
-				expect(trackingSpy.returnValues[0]).to.be.undefined;
-				expect(displaySpy.returnValues[0]).to.be.undefined;
-			});
+		it('true completion parameter', () => {
+			display.updateCompletionTracking(true);
+			expect(trackingSpy.returnValues[0]).to.be.undefined;
+		});
+		it('true progress parameter', () => {
+			display.updateDisplayProgress(true);
+			expect(displaySpy.returnValues[0]).to.be.undefined;
+		});
+		it('false parameters', () => {
+			display.updateCompletionTracking(false);
+			expect(trackingSpy.returnValues[0]).to.be.undefined;
+		});
+		it('false parameters', () => {
+			display.updateDisplayProgress(false);
+			expect(trackingSpy.returnValues[0]).to.be.undefined;
 		});
 	});
 });
