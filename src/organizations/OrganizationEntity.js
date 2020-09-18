@@ -1,12 +1,13 @@
 
 import { Actions, Classes, Rels } from '../hypermedia-constants';
 import { ActivityUsageEntity } from '../activities/ActivityUsageEntity.js';
-import { AlertsEntity } from './AlertsEntity.js';
 import { Entity } from '../es6/Entity.js';
-import { NotificationCollectionEntity } from '../notifications/NotificationCollectionEntity';
-import { performSirenAction } from '../es6/SirenAction';
-import { SequenceEntity } from '../sequences/SequenceEntity.js';
 import { SimpleEntity } from '../es6/SimpleEntity.js';
+import { performSirenAction } from '../es6/SirenAction';
+import { NotificationCollectionEntity } from '../notifications/NotificationCollectionEntity';
+import { SequenceEntity } from '../sequences/SequenceEntity.js';
+
+import { AlertsEntity } from './AlertsEntity.js';
 
 export const classes = {
 	active: 'active',
@@ -21,7 +22,11 @@ export const rels = {
 };
 
 const actions = {
-	delete: 'delete'
+	delete: 'delete',
+	trackCompletion: 'track-completion',
+	doNotTrackCompeltion: 'do-not-track-completion',
+	displayProgress: 'display-progress',
+	doNotDisplayProgress: 'do-not-display-progress'
 };
 
 /**
@@ -42,18 +47,18 @@ export class OrganizationEntity extends Entity {
 	}
 
 	get isCompletionTracked() {
-		if (this._entity && this._entity.hasActionByName('track-completion')) {
+		if (this._entity && this._entity.hasActionByName(actions.trackCompletion)) {
 			return false;
-		} else if (this._entity && this._entity.hasActionByName('do-not-track-completion')) {
+		} else if (this._entity && this._entity.hasActionByName(action.doNotTrackCompeltion)) {
 			return true;
 		}
 		return undefined;
 	}
 
 	get isProgressDisplayed() {
-		if (this._entity && this._entity.hasActionByName('display-progress')) {
+		if (this._entity && this._entity.hasActionByName(actions.displayProgress)) {
 			return false;
-		} else if (this._entity && this._entity.hasActionByName('do-not-display-progress')) {
+		} else if (this._entity && this._entity.hasActionByName(actions.doNotDisplayProgress)) {
 			return true;
 		}
 		return undefined;
@@ -240,12 +245,12 @@ export class OrganizationEntity extends Entity {
 	}
 
 	_getCompletionAction(enabled) {
-		const actionName = enabled ? 'track-completion' : 'do-not-track-completion';
+		const actionName = enabled ? actions.trackCompletion : actions.doNotTrackCompeltion;
 		return this._entity.getActionByName(actionName);
 	}
 
 	_getDisplayAction(enabled) {
-		const actionName = enabled ? 'display-progress' : 'do-not-display-progress';
+		const actionName = enabled ? actions.displayProgress : actions.doNotDisplayProgress;
 		return this._entity.getActionByName(actionName);
 	}
 
@@ -254,6 +259,7 @@ export class OrganizationEntity extends Entity {
 		if (action) {
 			return performSirenAction(this._token, action, action.fields, false);
 		}
+		return Promise.resolve(undefined);
 	}
 
 	updateDisplayProgress(enabled) {
@@ -261,5 +267,6 @@ export class OrganizationEntity extends Entity {
 		if (action) {
 			return performSirenAction(this._token, action, action.fields, false);
 		}
+		return Promise.resolve(undefined);
 	}
 }
