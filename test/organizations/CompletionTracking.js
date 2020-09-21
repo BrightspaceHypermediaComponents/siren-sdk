@@ -2,7 +2,7 @@ import { OrganizationEntity } from '../../src/organizations/OrganizationEntity.j
 
 import { testData } from './data/CompletionTracking.js';
 
-describe('OrganizationEntityCompletions', () => {
+describe('Completion tracking', () => {
 	let trackingNoDisplay, trackingAndDisplay, noTrackingDisplay, noActions;
 
 	beforeEach(() => {
@@ -45,7 +45,7 @@ describe('OrganizationEntityCompletions', () => {
 		});
 	});
 
-	describe('update actions, tracking completion, not tracking display', () => {
+	describe('update actions, tracking completion, no display', () => {
 		let sandbox, trackingSpy, displaySpy, display;
 
 		beforeEach(() => {
@@ -67,13 +67,13 @@ describe('OrganizationEntityCompletions', () => {
 			display.updateDisplayProgress(true);
 			expect(displaySpy.returnValues[0]).to.be.a('promise');
 		});
-		it('incorrect parameters', () => {
+		it('incorrect completion parameter', () => {
 			display.updateCompletionTracking(true);
-			expect(trackingSpy.returnValues[0]).to.be.undefined;
+			expect(trackingSpy.returnValues[0]).to.be.a('promise');
 		});
-		it('incorrect parameters', () => {
+		it('incorrect progress parameters', () => {
 			display.updateDisplayProgress(false);
-			expect(trackingSpy.returnValues[0]).to.be.undefined;
+			expect(displaySpy.returnValues[0]).to.be.a('promise');
 		});
 	});
 
@@ -99,17 +99,17 @@ describe('OrganizationEntityCompletions', () => {
 			display.updateDisplayProgress(false);
 			expect(displaySpy.returnValues[0]).to.be.a('promise');
 		});
-		it('incorrect parameters', () => {
+		it('incorrect completion parameter', () => {
 			display.updateCompletionTracking(true);
-			expect(trackingSpy.returnValues[0]).to.be.undefined;
+			expect(trackingSpy.returnValues[0]).to.be.a('promise');
 		});
-		it('incorrect parameters', () => {
+		it('incorrect progress parameter', () => {
 			display.updateDisplayProgress(true);
-			expect(trackingSpy.returnValues[0]).to.be.undefined;
+			expect(displaySpy.returnValues[0]).to.be.a('promise');
 		});
 	});
 
-	describe('update actions, not tracking completion, not tracking display', () => {
+	describe('update actions, not tracking completion, no display', () => {
 		let sandbox, trackingSpy, displaySpy, display;
 
 		beforeEach(() => {
@@ -131,13 +131,13 @@ describe('OrganizationEntityCompletions', () => {
 			display.updateDisplayProgress(true);
 			expect(displaySpy.returnValues[0]).to.be.a('promise');
 		});
-		it('incorrect parameters', () => {
+		it('incorrect completion parameter', () => {
 			display.updateCompletionTracking(false);
-			expect(trackingSpy.returnValues[0]).to.be.undefined;
+			expect(trackingSpy.returnValues[0]).to.be.a('promise');
 		});
-		it('incorrect parameters', () => {
+		it('incorrect progress parameter', () => {
 			display.updateDisplayProgress(false);
-			expect(trackingSpy.returnValues[0]).to.be.undefined;
+			expect(displaySpy.returnValues[0]).to.be.a('promise');
 		});
 	});
 
@@ -157,19 +157,19 @@ describe('OrganizationEntityCompletions', () => {
 
 		it('true completion parameter', () => {
 			display.updateCompletionTracking(true);
-			expect(trackingSpy.returnValues[0]).to.be.undefined;
+			expect(trackingSpy.returnValues[0]).to.be.a('promise');
 		});
 		it('true progress parameter', () => {
 			display.updateDisplayProgress(true);
-			expect(displaySpy.returnValues[0]).to.be.undefined;
+			expect(displaySpy.returnValues[0]).to.be.a('promise');
 		});
 		it('false parameters', () => {
 			display.updateCompletionTracking(false);
-			expect(trackingSpy.returnValues[0]).to.be.undefined;
+			expect(trackingSpy.returnValues[0]).to.be.a('promise');
 		});
 		it('false parameters', () => {
 			display.updateDisplayProgress(false);
-			expect(trackingSpy.returnValues[0]).to.be.undefined;
+			expect(displaySpy.returnValues[0]).to.be.a('promise');
 		});
 	});
 });

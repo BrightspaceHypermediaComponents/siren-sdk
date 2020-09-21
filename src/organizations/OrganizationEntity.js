@@ -49,7 +49,7 @@ export class OrganizationEntity extends Entity {
 	get isCompletionTracked() {
 		if (this._entity && this._entity.hasActionByName(actions.trackCompletion)) {
 			return false;
-		} else if (this._entity && this._entity.hasActionByName(action.doNotTrackCompeltion)) {
+		} else if (this._entity && this._entity.hasActionByName(actions.doNotTrackCompeltion)) {
 			return true;
 		}
 		return undefined;
@@ -219,7 +219,6 @@ export class OrganizationEntity extends Entity {
 		if (!this._entity || !this._entity.hasLinkByRel(Rels.parentSemester)) {
 			return;
 		}
-
 		return this._entity.getLinkByRel(Rels.parentSemester).href;
 	}
 
