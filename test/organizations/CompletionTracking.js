@@ -1,6 +1,6 @@
 /* global fetchMock */
 
-//import { getFormData } from '../utility/test-helpers.js';
+import { getFormData } from '../utility/test-helpers.js';
 import { OrganizationEntity } from '../../src/organizations/OrganizationEntity.js';
 
 import { testData } from './data/CompletionTracking.js';
@@ -196,6 +196,10 @@ describe('Completion tracking', () => {
 				expect(fetchMock.called()).to.be.true;
 				const call = await fetchMock.lastCall();
 				expect(call[0]).to.be.equal('http://api.x.io/do/not/track/completion');
+				const form = await getFormData(call.request);
+				if (!form.notSupported) {
+					expect(form.get('track')).to.equal('false');
+				}
 			});
 
 			it('track completion', async() => {
@@ -206,6 +210,10 @@ describe('Completion tracking', () => {
 				expect(fetchMock.called()).to.be.true;
 				const call = await fetchMock.lastCall();
 				expect(call[0]).to.be.equal('http://api.x.io/track/completion');
+				const form = await getFormData(call.request);
+				if (!form.notSupported) {
+					expect(form.get('track')).to.equal('true');
+				}
 			});
 
 			it('do not display progress', async() => {
@@ -216,6 +224,10 @@ describe('Completion tracking', () => {
 				expect(fetchMock.called()).to.be.true;
 				const call = await fetchMock.lastCall();
 				expect(call[0]).to.be.equal('http://api.x.io/do/not/display/progress');
+				const form = await getFormData(call.request);
+				if (!form.notSupported) {
+					expect(form.get('enable')).to.equal('false');
+				}
 			});
 
 			it('display progress', async() => {
@@ -226,6 +238,10 @@ describe('Completion tracking', () => {
 				expect(fetchMock.called()).to.be.true;
 				const call = await fetchMock.lastCall();
 				expect(call[0]).to.be.equal('http://api.x.io/display/progress');
+				const form = await getFormData(call.request);
+				if (!form.notSupported) {
+					expect(form.get('enable')).to.equal('true');
+				}
 			});
 		});
 
