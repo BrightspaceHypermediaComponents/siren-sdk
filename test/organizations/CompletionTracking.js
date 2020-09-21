@@ -1,3 +1,6 @@
+/* global fetchMock */
+
+//import { getFormData } from '../utility/test-helpers.js';
 import { OrganizationEntity } from '../../src/organizations/OrganizationEntity.js';
 
 import { testData } from './data/CompletionTracking.js';
@@ -170,6 +173,90 @@ describe('Completion tracking', () => {
 		it('false parameters', () => {
 			display.updateDisplayProgress(false);
 			expect(displaySpy.returnValues[0]).to.be.a('promise');
+		});
+	});
+
+	describe('checking update calls', () => {
+		beforeEach(() => {
+			fetchMock.put('http://api.x.io/do/not/track/completion', {});
+			fetchMock.put('http://api.x.io/track/completion', {});
+			fetchMock.put('http://api.x.io/do/not/display/progress', {});
+			fetchMock.put('http://api.x.io/display/progress', {});
+		});
+		afterEach(() => {
+			fetchMock.reset();
+		});
+
+		describe('correct parameters', () => {
+			it('do not track completion', async() => {
+				const display = trackingNoDisplay;
+
+				await display.updateCompletionTracking(false);
+
+				expect(fetchMock.called()).to.be.true;
+				const call = await fetchMock.lastCall();
+				expect(call[0]).to.be.equal('http://api.x.io/do/not/track/completion');
+			});
+
+			it('track completion', async() => {
+				const display = noTrackingDisplay;
+
+				await display.updateCompletionTracking(true);
+
+				expect(fetchMock.called()).to.be.true;
+				const call = await fetchMock.lastCall();
+				expect(call[0]).to.be.equal('http://api.x.io/track/completion');
+			});
+
+			it('do not display progress', async() => {
+				const display = trackingAndDisplay;
+
+				await display.updateDisplayProgress(false);
+
+				expect(fetchMock.called()).to.be.true;
+				const call = await fetchMock.lastCall();
+				expect(call[0]).to.be.equal('http://api.x.io/do/not/display/progress');
+			});
+
+			it('display progress', async() => {
+				const display = noTrackingDisplay;
+
+				await display.updateDisplayProgress(true);
+
+				expect(fetchMock.called()).to.be.true;
+				const call = await fetchMock.lastCall();
+				expect(call[0]).to.be.equal('http://api.x.io/display/progress');
+			});
+		});
+
+		describe('incorrect parameters', () => {
+			it('do not track completion', async() => {
+				const display = trackingNoDisplay;
+
+				await display.updateCompletionTracking(true);
+				expect(fetchMock.called()).to.be.false;
+			});
+
+			it('track completion', async() => {
+				const display = noTrackingDisplay;
+
+				await display.updateCompletionTracking(false);
+				expect(fetchMock.called()).to.be.false;
+			});
+
+			it('do not display progress', async() => {
+				const display = trackingAndDisplay;
+
+				await display.updateDisplayProgress(true);
+				expect(fetchMock.called()).to.be.false;
+			});
+
+			it('display progress', async() => {
+				const display = noTrackingDisplay;
+
+				await display.updateDisplayProgress(false);
+				expect(fetchMock.called()).to.be.false;
+			});
 		});
 	});
 });
