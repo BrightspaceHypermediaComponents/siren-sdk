@@ -78,6 +78,8 @@ describe('Completion tracking', () => {
 				checkFetchCalls(true, false, false, false);
 				const calls = fetchMock.calls();
 				expect(calls.length).to.be.equal(1);
+				const form = await getFormData(calls[0].request);
+				expect(form.get('track')).to.equal('false')
 			});
 
 			it('track completion', async() => {
