@@ -1,6 +1,6 @@
 /* global fetchMock */
 
-import { getFormData } from '../utility/test-helpers.js';
+//import { getFormData } from '../utility/test-helpers.js';
 import { OrganizationEntity } from '../../src/organizations/OrganizationEntity.js';
 
 import { testData } from './data/CompletionTracking.js';
@@ -48,229 +48,235 @@ describe('Completion tracking', () => {
 		});
 	});
 
-	describe('update actions, tracking completion, no display', () => {
-		let sandbox, trackingSpy, displaySpy, display;
+	// describe('update actions, tracking completion, no display', () => {
+	// 	let sandbox, trackingSpy, displaySpy, organization;
 
-		beforeEach(() => {
-			sandbox = sinon.sandbox.create();
-			display = trackingNoDisplay;
-			trackingSpy = sandbox.spy(display, 'updateCompletionTracking');
-			displaySpy = sandbox.spy(display, 'updateDisplayProgress');
-		});
+	// 	beforeEach(() => {
+	// 		sandbox = sinon.sandbox.create();
+	// 		organization = trackingNoDisplay;
+	// 		trackingSpy = sandbox.spy(organization, 'updateCompletionTracking');
+	// 		displaySpy = sandbox.spy(organization, 'updateDisplayProgress');
+	// 	});
 
-		afterEach(() => {
-			sandbox.restore();
-		});
+	// 	afterEach(() => {
+	// 		sandbox.restore();
+	// 	});
 
-		it('correct completion parameter', () => {
-			display.updateCompletionTracking(false);
-			expect(trackingSpy.returnValues[0]).to.be.a('promise');
-		});
-		it('correct progress parameter', () => {
-			display.updateDisplayProgress(true);
-			expect(displaySpy.returnValues[0]).to.be.a('promise');
-		});
-		it('incorrect completion parameter', () => {
-			display.updateCompletionTracking(true);
-			expect(trackingSpy.returnValues[0]).to.be.a('promise');
-		});
-		it('incorrect progress parameters', () => {
-			display.updateDisplayProgress(false);
-			expect(displaySpy.returnValues[0]).to.be.a('promise');
-		});
-	});
+	// 	it('correct completion parameter', () => {
+	// 		organization.updateCompletionTracking(false);
+	// 		expect(trackingSpy.returnValues[0]).to.be.a('promise');
+	// 	});
+	// 	it('correct progress parameter', () => {
+	// 		organization.updateDisplayProgress(true);
+	// 		expect(displaySpy.returnValues[0]).to.be.a('promise');
+	// 	});
+	// 	it('incorrect completion parameter', () => {
+	// 		organization.updateCompletionTracking(true);
+	// 		expect(trackingSpy.returnValues[0]).to.be.a('promise');
+	// 	});
+	// 	it('incorrect progress parameters', () => {
+	// 		organization.updateDisplayProgress(false);
+	// 		expect(displaySpy.returnValues[0]).to.be.a('promise');
+	// 	});
+	// });
 
-	describe('update actions, tracking completion, tracking display', () => {
-		let sandbox, trackingSpy, displaySpy, display;
+	// describe('update actions, tracking completion, tracking display', () => {
+	// 	let sandbox, trackingSpy, displaySpy, organization;
 
-		beforeEach(() => {
-			sandbox = sinon.sandbox.create();
-			display = trackingAndDisplay;
-			trackingSpy = sandbox.spy(display, 'updateCompletionTracking');
-			displaySpy = sandbox.spy(display, 'updateDisplayProgress');
-		});
+	// 	beforeEach(() => {
+	// 		sandbox = sinon.sandbox.create();
+	// 		organization = trackingAndDisplay;
+	// 		trackingSpy = sandbox.spy(organization, 'updateCompletionTracking');
+	// 		displaySpy = sandbox.spy(organization, 'updateDisplayProgress');
+	// 	});
 
-		afterEach(() => {
-			sandbox.restore();
-		});
+	// 	afterEach(() => {
+	// 		sandbox.restore();
+	// 	});
 
-		it('correct completion parameter', () => {
-			display.updateCompletionTracking(false);
-			expect(trackingSpy.returnValues[0]).to.be.a('promise');
-		});
-		it('correct progress parameter', () => {
-			display.updateDisplayProgress(false);
-			expect(displaySpy.returnValues[0]).to.be.a('promise');
-		});
-		it('incorrect completion parameter', () => {
-			display.updateCompletionTracking(true);
-			expect(trackingSpy.returnValues[0]).to.be.a('promise');
-		});
-		it('incorrect progress parameter', () => {
-			display.updateDisplayProgress(true);
-			expect(displaySpy.returnValues[0]).to.be.a('promise');
-		});
-	});
+	// 	it('correct completion parameter', () => {
+	// 		organization.updateCompletionTracking(false);
+	// 		expect(trackingSpy.returnValues[0]).to.be.a('promise');
+	// 	});
+	// 	it('correct progress parameter', () => {
+	// 		organization.updateDisplayProgress(false);
+	// 		expect(displaySpy.returnValues[0]).to.be.a('promise');
+	// 	});
+	// 	it('incorrect completion parameter', () => {
+	// 		organization.updateCompletionTracking(true);
+	// 		expect(trackingSpy.returnValues[0]).to.be.a('promise');
+	// 	});
+	// 	it('incorrect progress parameter', () => {
+	// 		organization.updateDisplayProgress(true);
+	// 		expect(displaySpy.returnValues[0]).to.be.a('promise');
+	// 	});
+	// });
 
-	describe('update actions, not tracking completion, no display', () => {
-		let sandbox, trackingSpy, displaySpy, display;
+	// describe('update actions, not tracking completion, no display', () => {
+	// 	let sandbox, trackingSpy, displaySpy, organization;
 
-		beforeEach(() => {
-			sandbox = sinon.sandbox.create();
-			display = noTrackingDisplay;
-			trackingSpy = sandbox.spy(display, 'updateCompletionTracking');
-			displaySpy = sandbox.spy(display, 'updateDisplayProgress');
-		});
+	// 	beforeEach(() => {
+	// 		sandbox = sinon.sandbox.create();
+	// 		organization = noTrackingDisplay;
+	// 		trackingSpy = sandbox.spy(organization, 'updateCompletionTracking');
+	// 		displaySpy = sandbox.spy(organization, 'updateDisplayProgress');
+	// 	});
 
-		afterEach(() => {
-			sandbox.restore();
-		});
+	// 	afterEach(() => {
+	// 		sandbox.restore();
+	// 	});
 
-		it('correct completion parameter', () => {
-			display.updateCompletionTracking(true);
-			expect(trackingSpy.returnValues[0]).to.be.a('promise');
-		});
-		it('correct progress parameter', () => {
-			display.updateDisplayProgress(true);
-			expect(displaySpy.returnValues[0]).to.be.a('promise');
-		});
-		it('incorrect completion parameter', () => {
-			display.updateCompletionTracking(false);
-			expect(trackingSpy.returnValues[0]).to.be.a('promise');
-		});
-		it('incorrect progress parameter', () => {
-			display.updateDisplayProgress(false);
-			expect(displaySpy.returnValues[0]).to.be.a('promise');
-		});
-	});
+	// 	it('correct completion parameter', () => {
+	// 		organization.updateCompletionTracking(true);
+	// 		expect(trackingSpy.returnValues[0]).to.be.a('promise');
+	// 	});
+	// 	it('correct progress parameter', async() => {
+	// 		await organization.updateDisplayProgress(true);
+	// 		//const resp = displaySpy.returnValues[0];
+	// 		//expect(resp).to.equal(undefined);
+	// 	});
+	// 	it('incorrect completion parameter', () => {
+	// 		organization.updateCompletionTracking(false);
+	// 		expect(trackingSpy.returnValues[0]).to.be.a('promise');
+	// 	});
+	// 	it('incorrect progress parameter', async() => {
+	// 		await organization.updateDisplayProgress(false);
+	// 		const resp = displaySpy.returnValues[0];
+	// 		expect(resp[0]).to.equal(undefined);
+	// 	});
+	// });
 
-	describe('update actions, actions missing', () => {
-		let sandbox, trackingSpy, displaySpy, display;
+	// describe('update actions, actions missing', () => {
+	// 	let sandbox, trackingSpy, displaySpy, organization;
 
-		beforeEach(() => {
-			sandbox = sinon.sandbox.create();
-			display = noActions;
-			trackingSpy = sandbox.spy(display, 'updateCompletionTracking');
-			displaySpy = sandbox.spy(display, 'updateDisplayProgress');
-		});
+	// 	beforeEach(() => {
+	// 		sandbox = sinon.sandbox.create();
+	// 		organization = noActions;
+	// 		trackingSpy = sandbox.spy(organization, 'updateCompletionTracking');
+	// 		displaySpy = sandbox.spy(organization, 'updateDisplayProgress');
+	// 	});
 
-		afterEach(() => {
-			sandbox.restore();
-		});
+	// 	afterEach(() => {
+	// 		sandbox.restore();
+	// 	});
 
-		it('true completion parameter', () => {
-			display.updateCompletionTracking(true);
-			expect(trackingSpy.returnValues[0]).to.be.a('promise');
-		});
-		it('true progress parameter', () => {
-			display.updateDisplayProgress(true);
-			expect(displaySpy.returnValues[0]).to.be.a('promise');
-		});
-		it('false parameters', () => {
-			display.updateCompletionTracking(false);
-			expect(trackingSpy.returnValues[0]).to.be.a('promise');
-		});
-		it('false parameters', () => {
-			display.updateDisplayProgress(false);
-			expect(displaySpy.returnValues[0]).to.be.a('promise');
-		});
-	});
+	// 	it('true completion parameter', async() => {
+	// 		await organization.updateCompletionTracking(true);
+	// 		const resp = trackingSpy.returnValues[0];
+	// 		expect(resp[0]).to.equal(undefined);
+	// 	});
+	// 	it('true progress parameter', async() => {
+	// 		await organization.updateDisplayProgress(true);
+	// 		const resp = displaySpy.returnValues[0];
+	// 		expect(resp[0]).to.equal(undefined);
+	// 	});
+	// 	it('false parameters', () => {
+	// 		organization.updateCompletionTracking(false);
+	// 		const resp = trackingSpy.returnValues[0];
+	// 		expect(resp[0]).to.equal(undefined);
+	// 	});
+	// 	it('false parameters', () => {
+	// 		organization.updateDisplayProgress(false);
+	// 		const resp = displaySpy.returnValues[0];
+	// 		expect(resp[0]).to.equal(undefined);
+	// 	});
+	// });
+
+	function checkFetchCalls(doNotTrack, track, doNotDisplay, displayed) {
+		expect(fetchMock.called('http://api.x.io/do/not/track/completion')).to.equal(doNotTrack);
+		expect(fetchMock.called('http://api.x.io/track/completion')).to.equal(track);
+		expect(fetchMock.called('http://api.x.io/do/not/display/progress')).to.equal(doNotDisplay);
+		expect(fetchMock.called('http://api.x.io/display/progress')).to.equal(displayed);
+	}
+
+	function setupMock() {
+		fetchMock.put('http://api.x.io/do/not/track/completion', {});
+		fetchMock.put('http://api.x.io/track/completion', {});
+		fetchMock.put('http://api.x.io/do/not/display/progress', {});
+		fetchMock.put('http://api.x.io/display/progress', {});
+	}
 
 	describe('checking update calls', () => {
-		beforeEach(() => {
-			fetchMock.put('http://api.x.io/do/not/track/completion', {});
-			fetchMock.put('http://api.x.io/track/completion', {});
-			fetchMock.put('http://api.x.io/do/not/display/progress', {});
-			fetchMock.put('http://api.x.io/display/progress', {});
-		});
+
 		afterEach(() => {
 			fetchMock.reset();
 		});
 
 		describe('correct parameters', () => {
 			it('do not track completion', async() => {
-				const display = trackingNoDisplay;
+				const organization = trackingNoDisplay;
+				setupMock();
 
-				await display.updateCompletionTracking(false);
-
-				expect(fetchMock.called()).to.be.true;
-				const call = await fetchMock.lastCall();
-				expect(call[0]).to.be.equal('http://api.x.io/do/not/track/completion');
-				const form = await getFormData(call.request);
-				if (!form.notSupported) {
-					expect(form.get('track')).to.equal('false');
-				}
+				const resp = await organization.updateCompletionTracking(false);
+				checkFetchCalls(true, false, false, false);
+				expect(resp).to.be.a('object');
 			});
 
 			it('track completion', async() => {
-				const display = noTrackingDisplay;
+				const organization = noTrackingDisplay;
+				setupMock();
 
-				await display.updateCompletionTracking(true);
+				const resp = await organization.updateCompletionTracking(true);
 
-				expect(fetchMock.called()).to.be.true;
-				const call = await fetchMock.lastCall();
-				expect(call[0]).to.be.equal('http://api.x.io/track/completion');
-				const form = await getFormData(call.request);
-				if (!form.notSupported) {
-					expect(form.get('track')).to.equal('true');
-				}
+				checkFetchCalls(false, true, false, false);
+				expect(resp).to.be.a('object');
 			});
 
 			it('do not display progress', async() => {
-				const display = trackingAndDisplay;
+				const organization = trackingAndDisplay;
+				setupMock();
 
-				await display.updateDisplayProgress(false);
+				const resp = await organization.updateDisplayProgress(false);
 
-				expect(fetchMock.called()).to.be.true;
-				const call = await fetchMock.lastCall();
-				expect(call[0]).to.be.equal('http://api.x.io/do/not/display/progress');
-				const form = await getFormData(call.request);
-				if (!form.notSupported) {
-					expect(form.get('enable')).to.equal('false');
-				}
+				checkFetchCalls(false, false, true, false);
+				expect(resp).to.be.a('object');
 			});
 
 			it('display progress', async() => {
-				const display = noTrackingDisplay;
+				const organization = noTrackingDisplay;
+				setupMock();
 
-				await display.updateDisplayProgress(true);
+				const resp = await organization.updateDisplayProgress(true);
 
-				expect(fetchMock.called()).to.be.true;
-				const call = await fetchMock.lastCall();
-				expect(call[0]).to.be.equal('http://api.x.io/display/progress');
-				const form = await getFormData(call.request);
-				if (!form.notSupported) {
-					expect(form.get('enable')).to.equal('true');
-				}
+				checkFetchCalls(false, false, false, true);
+				expect(resp).to.be.a('object');
 			});
 		});
 
 		describe('incorrect parameters', () => {
 			it('do not track completion', async() => {
-				const display = trackingNoDisplay;
+				const organization = trackingNoDisplay;
+				setupMock();
 
-				await display.updateCompletionTracking(true);
+				const resp = await organization.updateCompletionTracking(true);
+				expect(resp).to.be.equal(undefined);
 				expect(fetchMock.called()).to.be.false;
 			});
 
 			it('track completion', async() => {
-				const display = noTrackingDisplay;
+				const organization = noTrackingDisplay;
+				setupMock();
 
-				await display.updateCompletionTracking(false);
+				const resp = await organization.updateCompletionTracking(false);
+				expect(resp).to.be.equal(undefined);
 				expect(fetchMock.called()).to.be.false;
 			});
 
 			it('do not display progress', async() => {
-				const display = trackingAndDisplay;
+				const organization = trackingAndDisplay;
+				setupMock();
 
-				await display.updateDisplayProgress(true);
+				const resp = await organization.updateDisplayProgress(true);
+				expect(resp).to.be.equal(undefined);
 				expect(fetchMock.called()).to.be.false;
 			});
 
 			it('display progress', async() => {
-				const display = noTrackingDisplay;
+				const organization = noTrackingDisplay;
+				setupMock();
 
-				await display.updateDisplayProgress(false);
+				const resp = await organization.updateDisplayProgress(false);
+				expect(resp).to.be.equal(undefined);
 				expect(fetchMock.called()).to.be.false;
 			});
 		});
