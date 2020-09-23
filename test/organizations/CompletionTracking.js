@@ -48,76 +48,58 @@ describe('Completion tracking', () => {
 		});
 	});
 
-	function checkFetchCalls(doNotTrack, track, doNotDisplay, displayed) {
-		expect(fetchMock.called('http://api.x.io/do/not/track/completion')).to.equal(doNotTrack);
-		expect(fetchMock.called('http://api.x.io/track/completion')).to.equal(track);
-		expect(fetchMock.called('http://api.x.io/do/not/display/progress')).to.equal(doNotDisplay);
-		expect(fetchMock.called('http://api.x.io/display/progress')).to.equal(displayed);
-	}
-
-	function setupMock() {
-		fetchMock.put('http://api.x.io/do/not/track/completion', {});
-		fetchMock.put('http://api.x.io/track/completion', {});
-		fetchMock.put('http://api.x.io/do/not/display/progress', {});
-		fetchMock.put('http://api.x.io/display/progress', {});
-	}
-
 	describe('checking update calls', () => {
+
+		beforeEach(() => {
+			fetchMock.put('http://api.x.io/do/not/track/completion', {});
+			fetchMock.put('http://api.x.io/track/completion', {});
+			fetchMock.put('http://api.x.io/do/not/display/progress', {});
+			fetchMock.put('http://api.x.io/display/progress', {});
+		});
 
 		afterEach(() => {
 			fetchMock.reset();
 		});
 
-		describe('correct parameters', () => {
-			it('do not track completion', async() => {
-				const organization = trackingNoDisplay;
-				setupMock();
+		describe('Entity has matching siren action', () => {
 
-				const resp = await organization.updateCompletionTracking(false);
-				expect(resp).to.be.a('object');
-				checkFetchCalls(true, false, false, false);
+			async function validateApiCalls(actionResult, url, formFieldName, formFieldValue) {
+				expect(actionResult).to.be.a('object');
+				expect(fetchMock.called(url)).to.be.true;
 				const calls = fetchMock.calls();
 				expect(calls.length).to.be.equal(1);
 				const form = await getFormData(calls[0].request);
-				expect(form.get('track')).to.equal('false');
+				expect(form.get(formFieldName)).to.equal(formFieldValue);
+			}
+
+			it('do not track completion', async() => {
+				const organization = trackingNoDisplay;
+				const resp = await organization.updateCompletionTracking(false);
+				await validateApiCalls(resp, 'http://api.x.io/do/not/track/completion', 'track', 'false');
 			});
 
 			it('track completion', async() => {
 				const organization = noTrackingDisplay;
-				setupMock();
-
 				const resp = await organization.updateCompletionTracking(true);
-
-				checkFetchCalls(false, true, false, false);
-				expect(resp).to.be.a('object');
+				await validateApiCalls(resp, 'http://api.x.io/track/completion', 'track', 'true');
 			});
 
 			it('do not display progress', async() => {
 				const organization = trackingAndDisplay;
-				setupMock();
-
 				const resp = await organization.updateDisplayProgress(false);
-
-				checkFetchCalls(false, false, true, false);
-				expect(resp).to.be.a('object');
+				await validateApiCalls(resp, 'http://api.x.io/do/not/display/progress', 'enable', 'false');
 			});
 
 			it('display progress', async() => {
-				const organization = noTrackingDisplay;
-				setupMock();
-
+				const organization = trackingNoDisplay;
 				const resp = await organization.updateDisplayProgress(true);
-
-				checkFetchCalls(false, false, false, true);
-				expect(resp).to.be.a('object');
+				await validateApiCalls(resp, 'http://api.x.io/display/progress', 'enable', 'true');
 			});
 		});
 
-		describe('incorrect parameters', () => {
+		describe('Entity does not have matching siren action', () => {
 			it('do not track completion', async() => {
 				const organization = trackingNoDisplay;
-				setupMock();
-
 				const resp = await organization.updateCompletionTracking(true);
 				expect(resp).to.be.equal(undefined);
 				expect(fetchMock.called()).to.be.false;
@@ -125,8 +107,6 @@ describe('Completion tracking', () => {
 
 			it('track completion', async() => {
 				const organization = noTrackingDisplay;
-				setupMock();
-
 				const resp = await organization.updateCompletionTracking(false);
 				expect(resp).to.be.equal(undefined);
 				expect(fetchMock.called()).to.be.false;
@@ -134,8 +114,6 @@ describe('Completion tracking', () => {
 
 			it('do not display progress', async() => {
 				const organization = trackingAndDisplay;
-				setupMock();
-
 				const resp = await organization.updateDisplayProgress(true);
 				expect(resp).to.be.equal(undefined);
 				expect(fetchMock.called()).to.be.false;
@@ -143,8 +121,6 @@ describe('Completion tracking', () => {
 
 			it('display progress', async() => {
 				const organization = noTrackingDisplay;
-				setupMock();
-
 				const resp = await organization.updateDisplayProgress(false);
 				expect(resp).to.be.equal(undefined);
 				expect(fetchMock.called()).to.be.false;
