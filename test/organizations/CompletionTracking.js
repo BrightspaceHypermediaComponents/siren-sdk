@@ -1,6 +1,6 @@
 /* global fetchMock */
 
-//import { getFormData } from '../utility/test-helpers.js';
+import { getFormData } from '../utility/test-helpers.js';
 import { OrganizationEntity } from '../../src/organizations/OrganizationEntity.js';
 
 import { testData } from './data/CompletionTracking.js';
@@ -79,7 +79,7 @@ describe('Completion tracking', () => {
 				const calls = fetchMock.calls();
 				expect(calls.length).to.be.equal(1);
 				const form = await getFormData(calls[0].request);
-				expect(form.get('track')).to.equal('false')
+				expect(form.get('track')).to.equal('false');
 			});
 
 			it('track completion', async() => {
