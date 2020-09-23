@@ -69,7 +69,10 @@ describe('Completion tracking', () => {
 				const calls = fetchMock.calls();
 				expect(calls.length).to.be.equal(1);
 				const form = await getFormData(calls[0].request);
-				expect(form.get(formFieldName)).to.equal(formFieldValue);
+				if (!form.notSupported) {
+					// safari has limitation. cannot validate form data.
+					expect(form.get(formFieldName)).to.equal(formFieldValue);
+				}
 			}
 
 			it('do not track completion', async() => {
