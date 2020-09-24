@@ -23,28 +23,28 @@ describe('Completion tracking', () => {
 	});
 	describe('properties working', () => {
 		it('tracking, no display, completion', () => {
-			expect(trackingNoDisplay.isProgressDisplayed).to.be.false;
+			expect(trackingNoDisplay.isProgressDisplayed()).to.be.false;
 		});
 		it('tracking, no display, progress', () => {
-			expect(trackingNoDisplay.isProgressDisplayed).to.be.false;
+			expect(trackingNoDisplay.isProgressDisplayed()).to.be.false;
 		});
 		it('tracking with display, completion', () => {
-			expect(trackingAndDisplay.isCompletionTracked).to.be.true;
+			expect(trackingAndDisplay.isCompletionTracked()).to.be.true;
 		});
 		it('tracking with display, progress', () => {
-			expect(trackingAndDisplay.isProgressDisplayed).to.be.true;
+			expect(trackingAndDisplay.isProgressDisplayed()).to.be.true;
 		});
 		it('no tracking, no display, completion', () => {
-			expect(noTrackingDisplay.isCompletionTracked).to.be.false;
+			expect(noTrackingDisplay.isCompletionTracked()).to.be.false;
 		});
 		it('no tracking, no display, progress', () => {
-			expect(noTrackingDisplay.isCompletionTracked).to.be.false;
+			expect(noTrackingDisplay.isCompletionTracked()).to.be.false;
 		});
 		it('actions missing, completion', () => {
-			expect(noActions.isCompletionTracked).to.be.undefined;
+			expect(noActions.isCompletionTracked()).to.be.undefined;
 		});
 		it('actions missing, progress', () => {
-			expect(noActions.isProgressDisplayed).to.be.undefined;
+			expect(noActions.isProgressDisplayed()).to.be.undefined;
 		});
 	});
 
