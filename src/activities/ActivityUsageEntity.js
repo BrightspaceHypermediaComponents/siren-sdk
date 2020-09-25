@@ -635,9 +635,11 @@ export class ActivityUsageEntity extends Entity {
 			return;
 		}
 
+		const scoreOutOf = this.scoreOutOf() ? this.scoreOutOf().toString() : undefined;
+
 		return !this._shouldCreateAssociationToNewGrade(scoreAndGrade) &&
 			(this._shouldCreateAssociationToExistingGrade(scoreAndGrade)
-			|| scoreAndGrade.scoreOutOf !== this.scoreOutOf()?.toString()
+			|| scoreAndGrade.scoreOutOf !== scoreOutOf
 			|| scoreAndGrade.inGrades !== this.inGrades());
 	}
 
