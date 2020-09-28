@@ -1,11 +1,13 @@
+
+import { Actions, Classes, Rels } from '../hypermedia-constants';
+import { ActivityUsageEntity } from '../activities/ActivityUsageEntity.js';
 import { Entity } from '../es6/Entity.js';
 import { SimpleEntity } from '../es6/SimpleEntity.js';
-import { AlertsEntity } from './AlertsEntity.js';
-import { Rels, Classes, Actions } from '../hypermedia-constants';
+import { performSirenAction } from '../es6/SirenAction';
 import { NotificationCollectionEntity } from '../notifications/NotificationCollectionEntity';
 import { SequenceEntity } from '../sequences/SequenceEntity.js';
-import { ActivityUsageEntity } from '../activities/ActivityUsageEntity.js';
-import { performSirenAction } from '../es6/SirenAction';
+
+import { AlertsEntity } from './AlertsEntity.js';
 
 export const classes = {
 	active: 'active',
@@ -20,7 +22,11 @@ export const rels = {
 };
 
 const actions = {
-	delete: 'delete'
+	delete: 'delete',
+	trackCompletion: 'track-completion',
+	doNotTrackCompeltion: 'do-not-track-completion',
+	displayProgress: 'display-progress',
+	doNotDisplayProgress: 'do-not-display-progress'
 };
 
 /**
@@ -38,6 +44,24 @@ export class OrganizationEntity extends Entity {
 
 	endDate() {
 		return this._entity && this._entity.properties && this._entity.properties.endDate;
+	}
+
+	isCompletionTracked() {
+		if (this._entity && this._entity.hasActionByName(actions.trackCompletion)) {
+			return false;
+		} else if (this._entity && this._entity.hasActionByName(actions.doNotTrackCompeltion)) {
+			return true;
+		}
+		return undefined;
+	}
+
+	isProgressDisplayed() {
+		if (this._entity && this._entity.hasActionByName(actions.displayProgress)) {
+			return false;
+		} else if (this._entity && this._entity.hasActionByName(actions.doNotDisplayProgress)) {
+			return true;
+		}
+		return undefined;
 	}
 
 	isAfterEndDate() {
@@ -106,7 +130,7 @@ export class OrganizationEntity extends Entity {
 
 	sequenceLink() {
 		return this._entity && this._entity.hasLinkByRel('https://api.brightspace.com/rels/sequence') &&
-		this._entity.getLinkByRel('https://api.brightspace.com/rels/sequence').href;
+			this._entity.getLinkByRel('https://api.brightspace.com/rels/sequence').href;
 	}
 
 	organizationHomepageUrl() {
@@ -195,7 +219,6 @@ export class OrganizationEntity extends Entity {
 		if (!this._entity || !this._entity.hasLinkByRel(Rels.parentSemester)) {
 			return;
 		}
-
 		return this._entity.getLinkByRel(Rels.parentSemester).href;
 	}
 
@@ -217,7 +240,32 @@ export class OrganizationEntity extends Entity {
 		if (!this._entity || !this._entity.hasLinkByRel(rel)) {
 			return;
 		}
-
 		return this._entity.getLinkByRel(rel).href;
+	}
+
+	_getCompletionAction(enabled) {
+		const actionName = enabled ? actions.trackCompletion : actions.doNotTrackCompeltion;
+		return this._entity.getActionByName(actionName);
+	}
+
+	_getDisplayAction(enabled) {
+		const actionName = enabled ? actions.displayProgress : actions.doNotDisplayProgress;
+		return this._entity.getActionByName(actionName);
+	}
+
+	updateCompletionTracking(enabled) {
+		const action = this._getCompletionAction(enabled);
+		if (action) {
+			return performSirenAction(this._token, action, action.fields, false);
+		}
+		return Promise.resolve(undefined);
+	}
+
+	updateDisplayProgress(enabled) {
+		const action = this._getDisplayAction(enabled);
+		if (action) {
+			return performSirenAction(this._token, action, action.fields, false);
+		}
+		return Promise.resolve(undefined);
 	}
 }
