@@ -493,5 +493,8 @@ export const Actions = {
 	},
 	files: {
 		filePreviewLocation: 'file-preview-location'
-	}
+	},
+	quizzes: {
+		updateName: 'update-name',
+	},
 };
