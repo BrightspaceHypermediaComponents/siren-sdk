@@ -20,7 +20,6 @@ describe('QuizEntity', () => {
 		it('reads name', () => {
 			var quizEntity = new QuizEntity(nonEditableEntity);
 			expect(quizEntity.name()).to.equal('Whafadfsdfdgreat quiz');
-			throw Error('Noo way');
 		});
 	});
 
