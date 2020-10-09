@@ -19,7 +19,7 @@ describe('QuizEntity', () => {
 	describe('Basic loading', () => {
 		it('reads name', () => {
 			var quizEntity = new QuizEntity(nonEditableEntity);
-			expect(quizEntity.name()).to.equal('Whafadfsdfdgreat quiz');
+			expect(quizEntity.name()).to.equal('What a great quiz');
 		});
 	});
 
