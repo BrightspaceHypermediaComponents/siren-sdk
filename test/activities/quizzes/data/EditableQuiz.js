@@ -10,7 +10,7 @@ export const editableQuiz = {
 			'class': [
 				'required'
 			],
-			'href': 'https://f5aa43d7-c082-485c-84f5-4808147fe98a.assignments.api.dev.brightspace.com/123060/folders/7',
+			'href': 'https://f5aa43d7-c082-485c-84f5-4808147fe98a.quizzes.api.dev.brightspace.com/123060/folders/7',
 			'name': 'update-name',
 			'method': 'PATCH',
 			'fields': [
