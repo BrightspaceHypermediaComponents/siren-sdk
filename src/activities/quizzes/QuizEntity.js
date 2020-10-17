@@ -33,4 +33,17 @@ export class QuizEntity extends Entity {
 		const fields = [{ name: 'name', value: name }];
 		await performSirenAction(this._token, action, fields);
 	}
+
+	equals(quiz) {
+		const diffs = [
+			[this.name(), quiz.name]
+		];
+
+		for (const [left, right] of diffs) {
+			if (left !== right) {
+				return false;
+			}
+		}
+		return true;
+	}
 }
