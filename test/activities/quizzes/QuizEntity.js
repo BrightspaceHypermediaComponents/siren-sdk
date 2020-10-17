@@ -36,4 +36,20 @@ describe('QuizEntity', () => {
 			expect(quizEntity.canEditName()).to.be.false;
 		});
 	});
+
+	describe('Equals', () => {
+		it('return true when equal', () => {
+			var quizEntity = new QuizEntity(editableEntity);
+			expect(quizEntity.equals({
+				name: 'What a great quiz',
+			})).to.be.true;
+		});
+
+		it('return false when not equal', () => {
+			var quizEntity = new QuizEntity(editableEntity);
+			expect(quizEntity.equals({
+				name: 'This is a terrible quiz',
+			})).to.be.false;
+		});
+	});
 });
