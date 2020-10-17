@@ -664,7 +664,7 @@ export class ActivityUsageEntity extends Entity {
 			[this.startDate(), activity.dates.startDate],
 			[this.endDate(), activity.dates.endDate],
 			[this.isDraft(), activity.isDraft],
-			[`${this.scoreOutOf()}`, activity.scoreAndGrade.scoreOutOf],
+			[`${this.scoreOutOf()}`, activity.scoreAndGrade.scoreOutOf || 'undefined'], // this.scoreOutOf defaults to 'undefined' in the case that it dooesn't exist on the activity
 			[this.inGrades(), activity.scoreAndGrade.inGrades]
 		];
 
