@@ -183,7 +183,7 @@ export class ActivityUsageEntity extends Entity {
 	}
 
 	/**
- 	 * Updates the due date of the activity usage entity to the date specified
+	   * Updates the due date of the activity usage entity to the date specified
 	 * @param {string} dateValue Date string to set as the due date, or empty string to clear the due date
 	 */
 	async setDueDate(dateValue) {
@@ -206,7 +206,7 @@ export class ActivityUsageEntity extends Entity {
 	}
 
 	/**
- 	 * Updates the start date of the activity usage entity to the date specified
+	   * Updates the start date of the activity usage entity to the date specified
 	 * @param {string} dateValue Date string to set as the start date, or empty string to clear the start date
 	 */
 	async setStartDate(dateValue) {
@@ -229,7 +229,7 @@ export class ActivityUsageEntity extends Entity {
 	}
 
 	/**
- 	 * Updates the end date of the activity usage entity to the date specified
+	   * Updates the end date of the activity usage entity to the date specified
 	 * @param {string} dateValue Date string to set as the end date, or empty string to clear the end date
 	 */
 	async setEndDate(dateValue) {
@@ -639,8 +639,8 @@ export class ActivityUsageEntity extends Entity {
 
 		return !this._shouldCreateAssociationToNewGrade(scoreAndGrade) &&
 			(this._shouldCreateAssociationToExistingGrade(scoreAndGrade)
-			|| scoreAndGrade.scoreOutOf !== scoreOutOf
-			|| scoreAndGrade.inGrades !== this.inGrades());
+				|| scoreAndGrade.scoreOutOf !== scoreOutOf
+				|| scoreAndGrade.inGrades !== this.inGrades());
 	}
 
 	async save(activity) {
@@ -664,9 +664,15 @@ export class ActivityUsageEntity extends Entity {
 			[this.startDate(), activity.dates.startDate],
 			[this.endDate(), activity.dates.endDate],
 			[this.isDraft(), activity.isDraft],
-			[`${this.scoreOutOf()}`, activity.scoreAndGrade.scoreOutOf],
 			[this.inGrades(), activity.scoreAndGrade.inGrades]
 		];
+
+		const scoreOutOf = `${this.scoreOutOf()}`;
+
+		// For activities that don't use scoreOutOf, this.scoreOutOf() is initialized to undefined whereas for those that do it initializes to ''
+		if (scoreOutOf !== 'undefined') {
+			diffs.push([scoreOutOf, activity.scoreAndGrade.scoreOutOf]);
+		}
 
 		for (const [left, right] of diffs) {
 			if (left !== right) {
