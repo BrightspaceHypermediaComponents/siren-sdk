@@ -6,18 +6,11 @@ import { Rels } from '../../hypermedia-constants';
  */
 export class ContentEntity extends Entity {
 	/**
-	 * @returns {string} Title of the content item
-	 */
-	title() {
-		return this._entity && this._entity.properties && this._entity.properties.title;
-	}
-
-	/**
 	 * @returns {string} content-module link
 	 */
 	getModuleHref() {
 		return this._entity
 			&& this._entity.hasLinkByRel(Rels.Content.moduleEntity)
-			&& this._entity.getLinkByRel(Rels.Content.moduleEntity);
+			&& this._entity.getLinkByRel(Rels.Content.moduleEntity).href;
 	}
 }

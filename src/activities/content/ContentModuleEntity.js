@@ -10,15 +10,15 @@ export class ContentModuleEntity extends Entity {
 	/**
 	 * @returns {string} Description html of the content-module item
 	 */
-	descriptionHtml() {
+	descriptionRichText() {
 		if (!this._entity) {
 			return null;
 		}
-		const subEntity = this._entity.getSubEntitiesByClass(Classes.content.description);
-		if (!subEntity || !subEntity.properties || !subEntity.properties.html) {
+		const subEntity = this._entity.getSubEntitiesByClass(Classes.content.description)[0];
+		if (!subEntity || !subEntity.properties) {
 			return null;
 		}
-		return subEntity.properties.html;
+		return subEntity.properties.html || '';
 	}
 
 	/**
@@ -28,11 +28,11 @@ export class ContentModuleEntity extends Entity {
 		if (!this._entity) {
 			return null;
 		}
-		const subEntity = this._entity.getSubEntitiesByClass(Classes.content.description);
-		if (!subEntity || !subEntity.properties || !subEntity.properties.text) {
+		const subEntity = this._entity.getSubEntitiesByClass(Classes.content.description)[0];
+		if (!subEntity || !subEntity.properties) {
 			return null;
 		}
-		return subEntity.properties.text;
+		return subEntity.properties.text || '';
 	}
 
 	/**
@@ -40,6 +40,23 @@ export class ContentModuleEntity extends Entity {
 	 */
 	title() {
 		return this._entity && this._entity.properties && this._entity.properties.title;
+	}
+
+	/**
+	 * Updates the module to have the given description
+	 * @param {string} title rich text description to set on the module
+	 */
+	async setModuleDescription(richText) {
+		if (!this._entity) {
+			return;
+		}
+		const action = this._entity.getActionByName(Actions.content.updateDescription);
+		if (!action) {
+			return;
+		}
+
+		const fields = [{ name: 'html', value: richText }];
+		await performSirenAction(this._token, action, fields);
 	}
 
 	/**
