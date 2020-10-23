@@ -55,7 +55,7 @@ export class ContentModuleEntity extends Entity {
 			return;
 		}
 
-		const fields = [{ name: 'html', value: richText }];
+		const fields = [{ name: 'description', value: richText }];
 		await performSirenAction(this._token, action, fields);
 	}
 
