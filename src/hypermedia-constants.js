@@ -266,7 +266,8 @@ export const Classes = {
 		content: 'content',
 		sequencedActivity: 'sequenced-activity',
 		topic: 'topic',
-		module: 'module'
+		module: 'module',
+		description: 'description'
 	},
 	courseImage: {
 		courseImage: 'course-image',
