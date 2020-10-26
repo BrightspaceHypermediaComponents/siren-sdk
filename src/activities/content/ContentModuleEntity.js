@@ -75,4 +75,21 @@ export class ContentModuleEntity extends Entity {
 		const fields = [{ name: 'title', value: title }];
 		await performSirenAction(this._token, action, fields);
 	}
+
+	/**
+	 * Checks if content module properties passed in match what is currently stored
+	 * @param {object} contentModule Object containing module specific properties
+	 */
+	equals(contentModule) {
+		const diffs = [
+			[this.title(), contentModule.title],
+			[this.descriptionRichText(), contentModule.descriptionRichText]
+		];
+		for (const [left, right] of diffs) {
+			if (left !== right) {
+				return false;
+			}
+		}
+		return true;
+	}
 }
