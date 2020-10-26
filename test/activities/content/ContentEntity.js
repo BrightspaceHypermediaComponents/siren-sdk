@@ -1,17 +1,15 @@
 import { ContentEntity } from '../../../src/activities/content/ContentEntity.js';
-import { editableContent } from './data/EditableContent.js';
+import { contentEntityData } from './data/TestContentEntity.js';
 
 describe('ContentEntity', () => {
-	let editableEntity;
+	let contentData;
 
 	beforeEach(() => {
-		editableEntity = window.D2L.Hypermedia.Siren.Parse(editableContent);
+		contentData = window.D2L.Hypermedia.Siren.Parse(contentEntityData);
 	});
 
-	describe('Basic loading', () => {
-		it('reads title', () => {
-			var contentEntity = new ContentEntity(editableEntity);
-			expect(contentEntity.title()).to.equal('Test Content Title');
-		});
+	it('gets content-module href', () => {
+		var contentEntity = new ContentEntity(contentData);
+		expect(contentEntity.getModuleHref()).to.equal('https://fake-tenant-id.modules.api.proddev.d2l/6613/modules/12345');
 	});
 });
