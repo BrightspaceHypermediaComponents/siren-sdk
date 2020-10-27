@@ -1,25 +1,59 @@
+/* global fetchMock */
+
 import { ContentModuleEntity } from '../../../src/activities/content/ContentModuleEntity.js';
 import { contentModuleData } from './data/TestContentModuleEntity.js';
+import { getFormData } from '../../utility/test-helpers.js';
 
 describe('ContentModuleEntity', () => {
 	let moduleData;
+	let contentModuleEntity;
 
 	beforeEach(() => {
 		moduleData = window.D2L.Hypermedia.Siren.Parse(contentModuleData);
+		contentModuleEntity = new ContentModuleEntity(moduleData);
 	});
 
-	it('reads title', () => {
-		var contentModuleEntity = new ContentModuleEntity(moduleData);
-		expect(contentModuleEntity.title()).to.equal('Test Content Module Title');
+	afterEach(() => {
+		fetchMock.reset();
 	});
 
-	it('reads rich text description', () => {
-		var contentModuleEntity = new ContentModuleEntity(moduleData);
-		expect(contentModuleEntity.descriptionRichText()).to.equal('<p>description text</p>');
+	describe('Reads properties', () => {
+		it('reads title', () => {
+			expect(contentModuleEntity.title()).to.equal('Test Content Module Title');
+		});
+
+		it('reads rich text description', () => {
+			expect(contentModuleEntity.descriptionRichText()).to.equal('<p>description text</p>');
+		});
+
+		it('reads text description', () => {
+			expect(contentModuleEntity.descriptionText()).to.equal('description text');
+		});
 	});
 
-	it('reads text description', () => {
-		var contentModuleEntity = new ContentModuleEntity(moduleData);
-		expect(contentModuleEntity.descriptionText()).to.equal('description text');
+	describe('Saves', () => {
+		it('saves title', async() => {
+			fetchMock.patchOnce('https://fake-tenant-id.modules.api.proddev.d2l/6613/modules/12345', moduleData);
+
+			await contentModuleEntity.setModuleTitle('New Title');
+
+			const form = await getFormData(fetchMock.lastCall().request);
+			if (!form.notSupported) {
+				expect(form.get('title')).to.equal('New Title');
+			}
+			expect(fetchMock.called()).to.be.true;
+		});
+
+		it('saves description', async() => {
+			fetchMock.patchOnce('https://fake-tenant-id.modules.api.proddev.d2l/6613/modules/12345', moduleData);
+
+			await contentModuleEntity.setModuleDescription('<p>New description</p>');
+
+			const form = await getFormData(fetchMock.lastCall().request);
+			if (!form.notSupported) {
+				expect(form.get('description')).to.equal('<p>New description</p>');
+			}
+			expect(fetchMock.called()).to.be.true;
+		});
 	});
 });
