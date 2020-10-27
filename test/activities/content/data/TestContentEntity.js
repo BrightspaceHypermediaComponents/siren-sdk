@@ -1,7 +1,8 @@
 export const contentEntityData = {
 	'class': [
 		'activity-usage',
-		'content-activity'
+		'content-activity',
+		'module'
 	],
 	'properties': {
 		'title': 'Test Content Title'
