@@ -61,6 +61,14 @@ export class QuizEntity extends Entity {
 		await performSirenAction(this._token, action, fields);
 	}
 
+	/**
+ * @returns {bool} Whether or not hints are enabled for the quiz entity
+ */
+	getHintsToolEnabled() {
+		const hintsEntity = this._entity.getSubEntityByRel(Rels.Quizzes.hints);
+		return hintsEntity && hintsEntity.hasClass(Classes.quizzes.hintsEnabled);
+	}
+
 	equals(quiz) {
 		const diffs = [
 			[this.name(), quiz.name]
