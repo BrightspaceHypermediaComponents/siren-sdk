@@ -71,7 +71,8 @@ export class QuizEntity extends Entity {
 
 	equals(quiz) {
 		const diffs = [
-			[this.name(), quiz.name]
+			[this.name(), quiz.name],
+			[this.canEditHints(), quiz.allowHints]
 		];
 
 		for (const [left, right] of diffs) {
