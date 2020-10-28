@@ -140,7 +140,8 @@ export const Rels = {
 	},
 	// Quizzes API sub-domain rels
 	Quizzes: {
-		description: 'https://quizzes.api.brightspace.com/rels/description'
+		description: 'https://quizzes.api.brightspace.com/rels/description',
+		hints: 'https://quizzes.api.brightspace.com/rels/has-hints'
 	},
 	// Themes API sub-domain rels
 	Themes: {
@@ -322,7 +323,9 @@ export const Classes = {
 	},
 	quizzes: {
 		quiz: 'quiz',
-		description: 'description'
+		description: 'description',
+		hints: 'has-hints',
+		hintsEnabled: 'enabled'
 	},
 	text: {
 		richtext: 'richtext'
@@ -496,5 +499,6 @@ export const Actions = {
 	},
 	quizzes: {
 		updateName: 'update-name',
+		updateHints: 'update-hints',
 	},
 };
