@@ -41,6 +41,26 @@ export class QuizEntity extends Entity {
 		return hintsEntity && hintsEntity.hasActionByName(Actions.quizzes.updateHints);
 	}
 
+	/**
+	 * Set the status of whether annotation tools are available or not for the assignment entity
+	 * @param {bool} isAvailable Annotation availability - this is the value that the annotation availability of the assignment will be set to
+	 */
+	async setHintsEnabled(isEnabled) {
+		isEnabled = Boolean(isEnabled);
+
+		const hintsEntity = this._entity.getSubEntityByRel(Rels.Quizzes.hints);
+
+		const action = this.canEditHints() && hintsEntity && hintsEntity.getActionByName(Actions.quizzes.updateHints);
+		if (!action) {
+			return;
+		}
+
+		const fields = [
+			{ name: 'hasHints', value: isEnabled }
+		];
+		await performSirenAction(this._token, action, fields);
+	}
+
 	equals(quiz) {
 		const diffs = [
 			[this.name(), quiz.name]
