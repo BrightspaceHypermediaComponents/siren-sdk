@@ -1,5 +1,5 @@
 import { Entity } from '../../es6/Entity';
-import { Actions } from '../../hypermedia-constants';
+import { Actions, Rels, Classes } from '../../hypermedia-constants';
 import { performSirenAction } from '../../es6/SirenAction';
 
 /**
@@ -32,6 +32,13 @@ export class QuizEntity extends Entity {
 
 		const fields = [{ name: 'name', value: name }];
 		await performSirenAction(this._token, action, fields);
+	}
+	/**
+	 * @returns {bool} Whether or not the user can set hints availability for the quiz entity
+	 */
+	canEditHints() {
+		const hintsEntity = this._entity.getSubEntityByRel(Rels.Quizzes.hints);
+		return hintsEntity && hintsEntity.hasActionByName(Actions.quizzes.updateHints);
 	}
 
 	equals(quiz) {
