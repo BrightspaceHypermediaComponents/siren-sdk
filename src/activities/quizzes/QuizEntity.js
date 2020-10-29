@@ -49,14 +49,13 @@ export class QuizEntity extends Entity {
 		isEnabled = Boolean(isEnabled);
 
 		const hintsEntity = this._entity.getSubEntityByRel(Rels.Quizzes.hints);
-
 		const action = this.canEditHints() && hintsEntity && hintsEntity.getActionByName(Actions.quizzes.updateHints);
+
 		if (!action) {
 			return;
 		}
-
 		const fields = [
-			{ name: 'hasHints', value: isEnabled }
+			{ name: 'allowHints', value: isEnabled }
 		];
 		await performSirenAction(this._token, action, fields);
 	}
