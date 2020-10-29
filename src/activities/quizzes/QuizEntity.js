@@ -1,6 +1,6 @@
 import { Entity } from '../../es6/Entity';
 import { Actions, Rels, Classes } from '../../hypermedia-constants';
-import { performSirenAction } from '../../es6/SirenAction';
+import { performSirenAction, performSirenActions } from '../../es6/SirenAction';
 
 /**
  * QuizEntity class representation of a d2l Quiz.
@@ -66,6 +66,55 @@ export class QuizEntity extends Entity {
 	getHintsToolEnabled() {
 		const hintsEntity = this._entity.getSubEntityByRel(Rels.Quizzes.hints);
 		return hintsEntity && hintsEntity.hasClass(Classes.quizzes.hintsEnabled);
+	}
+
+	async save(quiz) {
+		if (!quiz) return;
+
+		// const updateNameAction = this._formatUpdateNameAction(quiz);
+		const updateHintsAction = this._formatUpdateHintsAction(quiz);
+
+		const sirenActions = [updateHintsAction];
+
+		await performSirenActions(this._token, sirenActions);
+
+	}
+
+	_formatUpdateHintsAction(quiz) {
+		if (!quiz) return;
+		if (!this._hasHintsChanged(quiz.allowHints)) return;
+
+		const hintsAction = this._generateHintsActions(quiz.allowHints);
+
+		return hintsAction;
+	}
+
+	_generateHintsActions(allowHints) {
+		let action;
+		const hintsEntity = this._entity.getSubEntityByRel(Rels.Quizzes.hints);
+
+		if (hintsEntity) {
+			action = hintsEntity.getActionByName(Actions.quizzes.updateHints);
+		}
+
+		if (!action) {
+			return;
+		}
+
+		const fields = [
+			{ name: 'allowHints', value: allowHints },
+		];
+
+		return { action, fields };
+
+	}
+
+	_hasHintsChanged(allowHints) {
+		return allowHints !== this.getHintsToolEnabled();
+	}
+
+	_hasNameChanged(name) {
+		return name === this.name();
 	}
 
 	equals(quiz) {
