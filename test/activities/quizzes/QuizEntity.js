@@ -42,6 +42,7 @@ describe('QuizEntity', () => {
 			var quizEntity = new QuizEntity(editableEntity);
 			expect(quizEntity.equals({
 				name: 'What a great quiz',
+				allowHints: true
 			})).to.be.true;
 		});
 
@@ -49,7 +50,32 @@ describe('QuizEntity', () => {
 			var quizEntity = new QuizEntity(editableEntity);
 			expect(quizEntity.equals({
 				name: 'This is a terrible quiz',
+				allowHints: undefined
 			})).to.be.false;
+		});
+	});
+
+	describe('save', () => {
+		it('skips save if not dirty', async() => {
+			var quizEntity = new QuizEntity(editableEntity);
+
+			await quizEntity.save({
+				name: 'What a great quiz',
+				allowHints: true
+			});
+
+			expect(fetchMock.done());
+		});
+
+		it('skips save if not editable', async() => {
+			var quizEntity = new QuizEntity(nonEditableEntity);
+
+			await quizEntity.save({
+				name: 'What a great quiz',
+				allowHints: true
+			});
+
+			expect(fetchMock.done());
 		});
 	});
 });
