@@ -70,8 +70,8 @@ export class QuizEntity extends Entity {
 
 	async save(quiz) {
 		if (!quiz) return;
-		const updateNameAction = this._generateUpdateNameAction(quiz);
-		const updateHintsAction = this._generateUpdateHintsAction(quiz);
+		const updateNameAction = this._formatUpdateNameAction(quiz);
+		const updateHintsAction = this._formatUpdateHintsAction(quiz);
 
 		const sirenActions = [updateNameAction, updateHintsAction];
 
@@ -79,7 +79,7 @@ export class QuizEntity extends Entity {
 
 	}
 
-	_generateUpdateHintsAction(quiz) {
+	_formatUpdateHintsAction(quiz) {
 		if (!quiz) return;
 		if (!this._hasHintsChanged(quiz.allowHints)) return;
 
@@ -108,7 +108,7 @@ export class QuizEntity extends Entity {
 
 	}
 
-	_generateUpdateNameAction(quiz) {
+	_formatUpdateNameAction(quiz) {
 		const { name } = quiz || {};
 
 		if (!name) return;
