@@ -70,11 +70,10 @@ export class QuizEntity extends Entity {
 
 	async save(quiz) {
 		if (!quiz) return;
-
-		// const updateNameAction = this._formatUpdateNameAction(quiz);
+		const updateNameAction = this._generateUpdateNameAction(quiz);
 		const updateHintsAction = this._formatUpdateHintsAction(quiz);
 
-		const sirenActions = [updateHintsAction];
+		const sirenActions = [updateNameAction, updateHintsAction];
 
 		await performSirenActions(this._token, sirenActions);
 
@@ -84,12 +83,12 @@ export class QuizEntity extends Entity {
 		if (!quiz) return;
 		if (!this._hasHintsChanged(quiz.allowHints)) return;
 
-		const hintsAction = this._generateHintsActions(quiz.allowHints);
+		const hintsAction = this._generateHintsAction(quiz.allowHints);
 
 		return hintsAction;
 	}
 
-	_generateHintsActions(allowHints) {
+	_generateHintsAction(allowHints) {
 		let action;
 		const hintsEntity = this._entity.getSubEntityByRel(Rels.Quizzes.hints);
 
@@ -109,12 +108,31 @@ export class QuizEntity extends Entity {
 
 	}
 
+	_generateUpdateNameAction(quiz) {
+		const { name } = quiz || {};
+
+		if (!name) return;
+		if (!this._hasNameChanged(name)) return;
+
+		const action = this._entity.getActionByName(Actions.quizzes.updateName);
+
+		if (!action) {
+			return;
+		}
+
+		const fields = [
+			{ name: 'name', value: name },
+		];
+
+		return { action, fields };
+	}
+
 	_hasHintsChanged(allowHints) {
 		return allowHints !== this.getHintsToolEnabled();
 	}
 
 	_hasNameChanged(name) {
-		return name === this.name();
+		return name !== this.name();
 	}
 
 	equals(quiz) {
