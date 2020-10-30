@@ -103,7 +103,9 @@ export const Rels = {
 		checklist: 'https://checklists.api.brightspace.com/rels/checklist',
 		checklistItem: 'https://checklists.api.brightspace.com/rels/checklist-item'
 	},
-	Content: {},
+	Content: {
+		moduleEntity: 'https://modules.api.brightspace.com/rels/content-module'
+	},
 	// Parents API sub-domain rels
 	Parents: {
 		allChildren: 'https://parents.api.brightspace.com/rels/all-my-children'
@@ -265,7 +267,8 @@ export const Classes = {
 		content: 'content',
 		sequencedActivity: 'sequenced-activity',
 		topic: 'topic',
-		module: 'module'
+		module: 'module',
+		description: 'description'
 	},
 	courseImage: {
 		courseImage: 'course-image',
@@ -443,6 +446,10 @@ export const Actions = {
 		updateFilesSubmissionLimit: 'update-files-submission-limit',
 		updateDefaultScoringRubric: 'update-default-scoring-rubric',
 		updateNotificationEmail: 'update-notification-email'
+	},
+	content: {
+		updateTitle: 'update-title',
+		updateDescription: 'update-description'
 	},
 	notifications: {
 		getCarrierClass: 'get-carrier',
