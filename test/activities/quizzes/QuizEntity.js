@@ -42,6 +42,7 @@ describe('QuizEntity', () => {
 			var quizEntity = new QuizEntity(editableEntity);
 			expect(quizEntity.equals({
 				name: 'What a great quiz',
+				allowHints: true
 			})).to.be.true;
 		});
 
@@ -49,7 +50,32 @@ describe('QuizEntity', () => {
 			var quizEntity = new QuizEntity(editableEntity);
 			expect(quizEntity.equals({
 				name: 'This is a terrible quiz',
+				allowHints: undefined
 			})).to.be.false;
+		});
+	});
+
+	describe('canEditHints', () => {
+		it('returns true when hints are editable', () => {
+			var quizEntity = new QuizEntity(editableEntity);
+			expect(quizEntity.canEditHints()).to.be.true;
+		});
+
+		it('returns false when hints are not editable', () => {
+			var quizEntity = new QuizEntity(nonEditableEntity);
+			expect(quizEntity.canEditHints()).to.be.false;
+		});
+	});
+
+	describe('getHintsToolEnabled', () => {
+		it('returns true when hints are enabled', () => {
+			var quizEntity = new QuizEntity(editableEntity);
+			expect(quizEntity.getHintsToolEnabled()).to.be.true;
+		});
+
+		it('returns false when hints are not enabled', () => {
+			var quizEntity = new QuizEntity(nonEditableEntity);
+			expect(quizEntity.getHintsToolEnabled()).to.be.false;
 		});
 	});
 });
