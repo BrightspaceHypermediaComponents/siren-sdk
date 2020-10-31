@@ -60,6 +60,11 @@ export class QuizEntity extends Entity {
 
 	}
 
+	/**
+	 * Checks if quiz hints has changed and if so returns the appropriate action/fields to update
+	 * @param {object} quiz the quiz that's being modified
+	 */
+
 	_formatUpdateHintsAction(quiz) {
 		if (!quiz) return;
 		if (!this._hasHintsChanged(quiz.allowHints)) return;
@@ -68,6 +73,11 @@ export class QuizEntity extends Entity {
 
 		return hintsAction;
 	}
+
+	/**
+	 * Returns an update hints action if one exists
+	 * @param {bool} allowHints Whether or not the quiz has allowed hints
+	 */
 
 	_generateHintsAction(allowHints) {
 		let action;
@@ -88,6 +98,11 @@ export class QuizEntity extends Entity {
 		return { action, fields };
 
 	}
+
+	/**
+	 * Checks if quiz name has changed and if so returns the appropriate action/fields to update
+	 * @param {object} quiz the quiz that's being modified
+	 */
 
 	_formatUpdateNameAction(quiz) {
 		const { name } = quiz || {};
