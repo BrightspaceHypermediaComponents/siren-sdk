@@ -3,6 +3,7 @@
 import { QuizEntity } from '../../../src/activities/quizzes/QuizEntity.js';
 import { nonEditableQuiz } from './data/NoneditableQuiz';
 import { editableQuiz } from './data/EditableQuiz.js';
+import { getFormData } from '../../utility/test-helpers.js';
 
 describe('QuizEntity', () => {
 	var editableEntity, nonEditableEntity;
@@ -76,6 +77,49 @@ describe('QuizEntity', () => {
 		it('returns false when hints are not enabled', () => {
 			var quizEntity = new QuizEntity(nonEditableEntity);
 			expect(quizEntity.getHintsToolEnabled()).to.be.false;
+		});
+	});
+
+	describe('save', () => {
+		it('saves name and hints', async() => {
+			fetchMock.patchOnce('https://afe99802-9130-4320-a770-8d138b941e74.quizzes.api.proddev.d2l/6606/quizzes/22', editableEntity);
+
+			var quizEntity = new QuizEntity(editableEntity);
+
+			await quizEntity.save({
+				name: 'New name',
+				allowHints: false
+			});
+
+			const form = await getFormData(fetchMock.lastCall().request);
+			if (!form.notSupported) {
+				expect(form.get('name')).to.equal('New name');
+				expect(form.get('allowHints')).to.equal('false');
+
+			}
+			expect(fetchMock.called()).to.be.true;
+		});
+
+		it('skips save if not dirty', async() => {
+			var quizEntity = new QuizEntity(editableEntity);
+
+			await quizEntity.save({
+				name: 'What a great quiz',
+				allowHints: true
+			});
+
+			expect(fetchMock.done());
+		});
+
+		it('skips save if not editable', async() => {
+			var quizEntity = new QuizEntity(nonEditableEntity);
+
+			await quizEntity.save({
+				name: 'What a great quiz',
+				allowHints: true
+			});
+
+			expect(fetchMock.done());
 		});
 	});
 });
