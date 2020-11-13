@@ -328,7 +328,7 @@ export const Classes = {
 		quiz: 'quiz',
 		description: 'description',
 		hints: 'has-hints',
-		hintsEnabled: 'enabled'
+		checked: 'checked'
 	},
 	text: {
 		richtext: 'richtext'
