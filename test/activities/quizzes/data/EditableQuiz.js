@@ -58,7 +58,7 @@ export const editableQuiz = {
 			],
 			'class': [
 				'has-hints',
-				'enabled'
+				'checked'
 			],
 			'actions': [
 				{
