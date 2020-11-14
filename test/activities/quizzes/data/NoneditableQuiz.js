@@ -40,7 +40,7 @@ export const nonEditableQuiz = {
 			],
 			'class': [
 				'has-hints',
-				'disabled'
+				'unchecked'
 			],
 		}
 	]

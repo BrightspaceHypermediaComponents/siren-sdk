@@ -42,11 +42,11 @@ export class QuizEntity extends Entity {
 	}
 
 	/**
- * @returns {bool} Whether or not hints are enabled for the quiz entity
+ * @returns {bool} Whether or not hints are allowed for the quiz entity
  */
 	getHintsToolEnabled() {
 		const hintsEntity = this._entity.getSubEntityByRel(Rels.Quizzes.hints);
-		return hintsEntity && hintsEntity.hasClass(Classes.quizzes.hintsEnabled);
+		return hintsEntity && hintsEntity.hasClass(Classes.quizzes.checked);
 	}
 
 	async save(quiz) {
