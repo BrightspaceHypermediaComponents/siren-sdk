@@ -88,7 +88,9 @@ export class ContentModuleEntity extends Entity {
 			return;
 		}
 
-		await performSirenAction(this._token, action, null);
+		await performSirenAction(this._token, action).then(() => {
+			this.dispose();
+		});
 	}
 
 	/**
