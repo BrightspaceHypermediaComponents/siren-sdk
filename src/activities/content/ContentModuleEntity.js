@@ -77,6 +77,21 @@ export class ContentModuleEntity extends Entity {
 	}
 
 	/**
+	 * Deletes the module
+	 */
+	async deleteModule() {
+		if (!this._entity) {
+			return;
+		}
+		const action = this._entity.getActionByName(Actions.content.deleteModule);
+		if (!action) {
+			return;
+		}
+
+		await performSirenAction(this._token, action, null);
+	}
+
+	/**
 	 * Checks if content module properties passed in match what is currently stored
 	 * @param {object} contentModule Object containing module specific properties
 	 */

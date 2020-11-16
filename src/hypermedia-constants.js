@@ -449,7 +449,8 @@ export const Actions = {
 	},
 	content: {
 		updateTitle: 'update-title',
-		updateDescription: 'update-description'
+		updateDescription: 'update-description',
+		deleteModule: 'delete-module'
 	},
 	notifications: {
 		getCarrierClass: 'get-carrier',

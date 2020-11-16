@@ -57,7 +57,7 @@ describe('ContentModuleEntity', () => {
 		});
 	});
 
-	describe('Saves', () => {
+	describe('Actions', () => {
 		it('saves title', async() => {
 			fetchMock.patchOnce('https://fake-tenant-id.modules.api.proddev.d2l/6613/modules/12345', moduleData);
 
@@ -79,6 +79,12 @@ describe('ContentModuleEntity', () => {
 			if (!form.notSupported) {
 				expect(form.get('description')).to.equal('<p>New description</p>');
 			}
+			expect(fetchMock.called()).to.be.true;
+		});
+
+		it('deletes module', async() => {
+			fetchMock.deleteOnce('https://fake-tenant-id.modules.api.proddev.d2l/6613/modules/12345', moduleData);
+			await contentModuleEntity.deleteModule();
 			expect(fetchMock.called()).to.be.true;
 		});
 	});
