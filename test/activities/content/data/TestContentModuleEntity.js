@@ -25,6 +25,11 @@ export const contentModuleData = {
 					'value': '<p>description text</p>'
 				}
 			]
+		},
+		{
+			'href': 'https://fake-tenant-id.modules.api.proddev.d2l/6613/modules/12345',
+			'name': 'delete-module',
+			'method': 'DELETE'
 		}
 	],
 	'class': [
