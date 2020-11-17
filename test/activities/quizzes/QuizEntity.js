@@ -24,27 +24,14 @@ describe('QuizEntity', () => {
 		});
 	});
 
-	describe('Editable', () => {
-		it('sets canEditName to true', () => {
-			var quizEntity = new QuizEntity(editableEntity);
-			expect(quizEntity.canEditName()).to.be.true;
-		});
-	});
-
-	describe('Non Editable', () => {
-		it('sets canEditName to false', () => {
-			var quizEntity = new QuizEntity(nonEditableEntity);
-			expect(quizEntity.canEditName()).to.be.false;
-		});
-	});
-
 	describe('Equals', () => {
 		var modifiedEntity;
 
 		beforeEach(() => {
 			modifiedEntity = {
 				name: 'What a great quiz',
-				allowHints: true
+				allowHints: true,
+				disableRightClick: true
 			};
 		});
 
@@ -64,49 +51,99 @@ describe('QuizEntity', () => {
 			modifiedEntity.allowHints = false;
 			expect(quizEntity.equals(modifiedEntity)).to.be.false;
 		});
-	});
 
-	describe('canEditHints', () => {
-		it('returns true when hints are editable', () => {
+		it('return false when disable right click not equal', () => {
 			var quizEntity = new QuizEntity(editableEntity);
-			expect(quizEntity.canEditHints()).to.be.true;
-		});
-
-		it('returns false when hints are not editable', () => {
-			var quizEntity = new QuizEntity(nonEditableEntity);
-			expect(quizEntity.canEditHints()).to.be.false;
+			modifiedEntity.disableRightClick = false;
+			expect(quizEntity.equals(modifiedEntity)).to.be.false;
 		});
 	});
 
-	describe('getHintsToolEnabled', () => {
-		it('returns true when hints are enabled', () => {
-			var quizEntity = new QuizEntity(editableEntity);
-			expect(quizEntity.getHintsToolEnabled()).to.be.true;
+	describe('name', () => {
+		describe('canEditName', () => {
+			it('returns true when name is editable', () => {
+				var quizEntity = new QuizEntity(editableEntity);
+				expect(quizEntity.canEditName()).to.be.true;
+			});
+
+			it('returns false when name is not editable', () => {
+				var quizEntity = new QuizEntity(nonEditableEntity);
+				expect(quizEntity.canEditName()).to.be.false;
+			});
+		});
+	});
+
+	describe('hints', () => {
+		describe('canEditHints', () => {
+			it('returns true when hints are editable', () => {
+				var quizEntity = new QuizEntity(editableEntity);
+				expect(quizEntity.canEditHints()).to.be.true;
+			});
+
+			it('returns false when hints are not editable', () => {
+				var quizEntity = new QuizEntity(nonEditableEntity);
+				expect(quizEntity.canEditHints()).to.be.false;
+			});
 		});
 
-		it('returns false when hints are not enabled', () => {
-			var quizEntity = new QuizEntity(nonEditableEntity);
-			expect(quizEntity.getHintsToolEnabled()).to.be.false;
+		describe('getHintsToolEnabled', () => {
+			it('returns true when hints are enabled', () => {
+				var quizEntity = new QuizEntity(editableEntity);
+				expect(quizEntity.getHintsToolEnabled()).to.be.true;
+			});
+
+			it('returns false when hints are not enabled', () => {
+				var quizEntity = new QuizEntity(nonEditableEntity);
+				expect(quizEntity.getHintsToolEnabled()).to.be.false;
+			});
+		});
+	});
+
+	describe('disableRightClick', () => {
+		describe('canEditDisableRightClick', () => {
+			it('returns true when disable right click is editable', () => {
+				var quizEntity = new QuizEntity(editableEntity);
+				expect(quizEntity.canEditDisableRightClick()).to.be.true;
+			});
+
+			it('returns false when disable right click is not editable', () => {
+				var quizEntity = new QuizEntity(nonEditableEntity);
+				expect(quizEntity.canEditDisableRightClick()).to.be.false;
+			});
+		});
+
+		describe('isDisableRightClickEnabled', () => {
+			it('returns true when isDisableRightClick is true', () => {
+				var quizEntity = new QuizEntity(editableEntity);
+				expect(quizEntity.isDisableRightClickEnabled()).to.be.true;
+			});
+
+			it('returns false when isDisableRightClick is false', () => {
+				var quizEntity = new QuizEntity(nonEditableEntity);
+				expect(quizEntity.isDisableRightClickEnabled()).to.be.false;
+			});
 		});
 	});
 
 	describe('save', () => {
-		it('saves name and hints', async() => {
+		it('saves', async() => {
 			fetchMock.patchOnce('https://afe99802-9130-4320-a770-8d138b941e74.quizzes.api.proddev.d2l/6606/quizzes/22', editableEntity);
 
 			var quizEntity = new QuizEntity(editableEntity);
 
 			await quizEntity.save({
 				name: 'New name',
-				allowHints: false
+				allowHints: false,
+				disableRightClick: false
 			});
 
 			const form = await getFormData(fetchMock.lastCall().request);
 			if (!form.notSupported) {
 				expect(form.get('name')).to.equal('New name');
 				expect(form.get('allowHints')).to.equal('false');
-
+				expect(form.get('disableRightClick')).to.equal('false');
 			}
+
 			expect(fetchMock.called()).to.be.true;
 		});
 
@@ -115,7 +152,8 @@ describe('QuizEntity', () => {
 
 			await quizEntity.save({
 				name: 'What a great quiz',
-				allowHints: true
+				allowHints: true,
+				disableRightClick: true
 			});
 
 			expect(fetchMock.done());
@@ -126,7 +164,8 @@ describe('QuizEntity', () => {
 
 			await quizEntity.save({
 				name: 'What a great quiz',
-				allowHints: true
+				allowHints: true,
+				disableRightClick: true
 			});
 
 			expect(fetchMock.done());

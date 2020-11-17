@@ -42,6 +42,15 @@ export const nonEditableQuiz = {
 				'has-hints',
 				'unchecked'
 			],
+		},
+		{
+			'class': [
+				'disable-right-click',
+				'unchecked'
+			],
+			'rel': [
+				'https://quizzes.api.brightspace.com/rels/disable-right-click'
+			]
 		}
 	]
 };

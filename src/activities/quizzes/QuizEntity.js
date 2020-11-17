@@ -33,6 +33,7 @@ export class QuizEntity extends Entity {
 		const fields = [{ name: 'name', value: name }];
 		await performSirenAction(this._token, action, fields);
 	}
+
 	/**
 	 * @returns {bool} Whether or not the user can set hints availability for the quiz entity
 	 */
@@ -42,22 +43,38 @@ export class QuizEntity extends Entity {
 	}
 
 	/**
- * @returns {bool} Whether or not hints are allowed for the quiz entity
- */
+	 * @returns {bool} Whether or not hints are allowed for the quiz entity
+	 */
 	getHintsToolEnabled() {
 		const hintsEntity = this._entity.getSubEntityByRel(Rels.Quizzes.hints);
 		return hintsEntity && hintsEntity.hasClass(Classes.quizzes.checked);
 	}
 
+	/**
+	 * @returns {bool} Whether or not the user can edit the Disable Right Click quiz entity property
+	 */
+	canEditDisableRightClick() {
+		const entity = this._entity.getSubEntityByRel(Rels.Quizzes.disableRightClick);
+		return entity && entity.hasActionByName(Actions.quizzes.updateDisableRightClick);
+	}
+
+	/**
+	 * @returns {bool} Is Disable Right Click checked for the quiz entity
+	 */
+	isDisableRightClickEnabled() {
+		const entity = this._entity.getSubEntityByRel(Rels.Quizzes.disableRightClick);
+		return entity && entity.hasClass(Classes.quizzes.checked);
+	}
+
 	async save(quiz) {
 		if (!quiz) return;
-		const updateNameAction = this._formatUpdateNameAction(quiz);
-		const updateHintsAction = this._formatUpdateHintsAction(quiz);
+		const updateNameAction = this.canEditName() ? this._formatUpdateNameAction(quiz) : null;
+		const updateHintsAction = this.canEditHints() ? this._formatUpdateHintsAction(quiz) : null;
+		const updateDisableRightClickAction = this.canEditDisableRightClick() ? this._formatUpdateDisableRightClickAction(quiz) : null;
 
-		const sirenActions = [updateNameAction, updateHintsAction];
+		const sirenActions = [updateNameAction, updateHintsAction, updateDisableRightClickAction];
 
 		await performSirenActions(this._token, sirenActions);
-
 	}
 
 	/**
@@ -123,6 +140,28 @@ export class QuizEntity extends Entity {
 		return { action, fields };
 	}
 
+	/**
+	 * Checks if quiz disable right click has changed and if so returns the appropriate action/fields to update
+	 * @param {object} quiz the quiz that's being modified
+	 */
+
+	_formatUpdateDisableRightClickAction(quiz) {
+		if (!quiz) return;
+		if (!this._hasDisableRightClickChanged(quiz.disableRightClick)) return;
+
+		const entity = this._entity.getSubEntityByRel(Rels.Quizzes.disableRightClick);
+		if (!entity) return;
+
+		const action = entity.getActionByName(Actions.quizzes.updateDisableRightClick);
+		if (!action) return;
+
+		const fields = [
+			{ name: 'disableRightClick', value: quiz.disableRightClick },
+		];
+
+		return { action, fields };
+	}
+
 	_hasHintsChanged(allowHints) {
 		return allowHints !== this.getHintsToolEnabled();
 	}
@@ -131,10 +170,15 @@ export class QuizEntity extends Entity {
 		return name !== this.name();
 	}
 
+	_hasDisableRightClickChanged(disableRightClick) {
+		return disableRightClick !== this.isDisableRightClickEnabled();
+	}
+
 	equals(quiz) {
 		const diffs = [
 			[this.name(), quiz.name],
-			[this.getHintsToolEnabled(), quiz.allowHints]
+			[this.getHintsToolEnabled(), quiz.allowHints],
+			[this.isDisableRightClickEnabled(), quiz.disableRightClick]
 		];
 
 		for (const [left, right] of diffs) {
