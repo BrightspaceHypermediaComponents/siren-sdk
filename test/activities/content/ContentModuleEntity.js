@@ -82,7 +82,7 @@ describe('ContentModuleEntity', () => {
 			expect(fetchMock.called()).to.be.true;
 		});
 
-		it('deletes module', async() => {
+		it('performs delete request', async() => {
 			fetchMock.deleteOnce('https://fake-tenant-id.modules.api.proddev.d2l/6613/modules/12345', moduleData);
 			await contentModuleEntity.deleteModule();
 			expect(fetchMock.called()).to.be.true;
