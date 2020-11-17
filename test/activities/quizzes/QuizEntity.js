@@ -39,20 +39,30 @@ describe('QuizEntity', () => {
 	});
 
 	describe('Equals', () => {
-		it('return true when equal', () => {
-			var quizEntity = new QuizEntity(editableEntity);
-			expect(quizEntity.equals({
+		var modifiedEntity;
+
+		beforeEach(() => {
+			modifiedEntity = {
 				name: 'What a great quiz',
 				allowHints: true
-			})).to.be.true;
+			};
 		});
 
-		it('return false when not equal', () => {
+		it('return true when equal', () => {
 			var quizEntity = new QuizEntity(editableEntity);
-			expect(quizEntity.equals({
-				name: 'This is a terrible quiz',
-				allowHints: undefined
-			})).to.be.false;
+			expect(quizEntity.equals(modifiedEntity)).to.be.true;
+		});
+
+		it('return false when name not equal', () => {
+			var quizEntity = new QuizEntity(editableEntity);
+			modifiedEntity.name = 'This is a terrible quiz';
+			expect(quizEntity.equals(modifiedEntity)).to.be.false;
+		});
+
+		it('return false when hints not equal', () => {
+			var quizEntity = new QuizEntity(editableEntity);
+			modifiedEntity.allowHints = false;
+			expect(quizEntity.equals(modifiedEntity)).to.be.false;
 		});
 	});
 
