@@ -707,4 +707,12 @@ export class ActivityUsageEntity extends Entity {
 
 		return this._entity.getLinkByRel(Rels.Alignments.alignments).href;
 	}
+
+	alignmentsHierarchicalHref() {
+		if (!this._entity || !this._entity.hasLinkByRel(Rels.Alignments.alignmentsHierarchical)) {
+			return;
+		}
+
+		return this._entity.getLinkByRel(Rels.Alignments.alignmentsHierarchical).href;
+	}
 }

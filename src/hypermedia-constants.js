@@ -181,6 +181,7 @@ export const Rels = {
 	},
 	Alignments: {
 		alignments: 'https://alignments.api.brightspace.com/rels/alignments',
+		alignmentsHierarchical: 'https://alignments.api.brightspace.com/rels/activity-alignments-hierarchical',
 		legacyCompetencies: 'https://alignments.api.brightspace.com/rels/legacy-competencies'
 	},
 	Outcomes: {
@@ -491,7 +492,8 @@ export const Actions = {
 		startUpdateAlignments: 'start-update-alignments',
 		select: 'select',
 		deselect: 'deselect',
-		submit: 'submit'
+		submit: 'submit',
+		saveAlignments: 'save-alignments'
 	},
 	outcomes: {
 		select: 'select'
