@@ -138,6 +138,18 @@ describe('QuizEntity', () => {
 				expect(quizEntity.canEditPassword()).to.be.false;
 			});
 		});
+
+		describe('password', () => {
+			it('can read password from an editable entity', () => {
+				var quizEntity = new QuizEntity(editableEntity);
+				expect(quizEntity.password()).to.equal('hello');
+			});
+
+			it('can read password from a non-editable entity', () => {
+				var quizEntity = new QuizEntity(nonEditableEntity);
+				expect(quizEntity.password()).to.equal('hello');
+			});
+		});
 	});
 
 	describe('save', () => {
