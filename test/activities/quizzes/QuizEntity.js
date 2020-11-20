@@ -31,7 +31,8 @@ describe('QuizEntity', () => {
 			modifiedEntity = {
 				name: 'What a great quiz',
 				allowHints: true,
-				disableRightClick: true
+				disableRightClick: true,
+				password: 'hello'
 			};
 		});
 
@@ -125,6 +126,32 @@ describe('QuizEntity', () => {
 		});
 	});
 
+	describe('passwords', () => {
+		describe('canEditPassword', () => {
+			it('returns true when password is editable', () => {
+				var quizEntity = new QuizEntity(editableEntity);
+				expect(quizEntity.canEditPassword()).to.be.true;
+			});
+
+			it('returns false when password is not editable', () => {
+				var quizEntity = new QuizEntity(nonEditableEntity);
+				expect(quizEntity.canEditPassword()).to.be.false;
+			});
+		});
+
+		describe('password', () => {
+			it('can read password from an editable entity', () => {
+				var quizEntity = new QuizEntity(editableEntity);
+				expect(quizEntity.password()).to.equal('hello');
+			});
+
+			it('can read password from a non-editable entity', () => {
+				var quizEntity = new QuizEntity(nonEditableEntity);
+				expect(quizEntity.password()).to.equal('hello');
+			});
+		});
+	});
+
 	describe('save', () => {
 		it('saves', async() => {
 			fetchMock.patchOnce('https://afe99802-9130-4320-a770-8d138b941e74.quizzes.api.proddev.d2l/6606/quizzes/22', editableEntity);
@@ -134,7 +161,8 @@ describe('QuizEntity', () => {
 			await quizEntity.save({
 				name: 'New name',
 				allowHints: false,
-				disableRightClick: false
+				disableRightClick: false,
+				password: 'super-secret'
 			});
 
 			const form = await getFormData(fetchMock.lastCall().request);
@@ -142,6 +170,7 @@ describe('QuizEntity', () => {
 				expect(form.get('name')).to.equal('New name');
 				expect(form.get('allowHints')).to.equal('false');
 				expect(form.get('disableRightClick')).to.equal('false');
+				expect(form.get('password')).to.equal('super-secret');
 			}
 
 			expect(fetchMock.called()).to.be.true;
@@ -153,7 +182,8 @@ describe('QuizEntity', () => {
 			await quizEntity.save({
 				name: 'What a great quiz',
 				allowHints: true,
-				disableRightClick: true
+				disableRightClick: true,
+				password: 'hello'
 			});
 
 			expect(fetchMock.done());
@@ -165,7 +195,8 @@ describe('QuizEntity', () => {
 			await quizEntity.save({
 				name: 'What a great quiz',
 				allowHints: true,
-				disableRightClick: true
+				disableRightClick: true,
+				password: 'hello'
 			});
 
 			expect(fetchMock.done());

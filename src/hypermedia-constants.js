@@ -144,7 +144,8 @@ export const Rels = {
 	Quizzes: {
 		description: 'https://quizzes.api.brightspace.com/rels/description',
 		hints: 'https://quizzes.api.brightspace.com/rels/has-hints',
-		disableRightClick: 'https://quizzes.api.brightspace.com/rels/disable-right-click'
+		disableRightClick: 'https://quizzes.api.brightspace.com/rels/disable-right-click',
+		password: 'https://quizzes.api.brightspace.com/rels/quiz-password'
 	},
 	// Themes API sub-domain rels
 	Themes: {
@@ -331,7 +332,8 @@ export const Classes = {
 		description: 'description',
 		hints: 'has-hints',
 		disableRightClick: 'disable-right-click',
-		checked: 'checked'
+		checked: 'checked',
+		password: 'password'
 	},
 	text: {
 		richtext: 'richtext'
@@ -512,6 +514,7 @@ export const Actions = {
 	quizzes: {
 		updateName: 'update-name',
 		updateHints: 'update-hints',
-		updateDisableRightClick: 'update-disable-right-click'
+		updateDisableRightClick: 'update-disable-right-click',
+		updatePassword: 'update-quiz-password'
 	},
 };
