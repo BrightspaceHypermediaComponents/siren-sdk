@@ -51,6 +51,17 @@ export const nonEditableQuiz = {
 			'rel': [
 				'https://quizzes.api.brightspace.com/rels/disable-right-click'
 			]
+		},
+		{
+			'class': [
+				'quiz-password'
+			],
+			'rel': [
+				'https://quizzes.api.brightspace.com/rels/quiz-password'
+			],
+			'properties': {
+				'password': 'hello'
+			},
 		}
 	]
 };

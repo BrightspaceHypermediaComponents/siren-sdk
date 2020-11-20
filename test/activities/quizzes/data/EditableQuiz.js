@@ -98,6 +98,31 @@ export const editableQuiz = {
 					]
 				}
 			]
+		},
+		{
+			'class': [
+				'quiz-password'
+			],
+			'rel': [
+				'https://quizzes.api.brightspace.com/rels/quiz-password'
+			],
+			'properties': {
+				'password': 'hello'
+			},
+			'actions': [
+				{
+					'href': 'https://afe99802-9130-4320-a770-8d138b941e74.quizzes.api.proddev.d2l/6606/quizzes/22',
+					'name': 'update-quiz-password',
+					'method': 'PATCH',
+					'fields': [
+						{
+							'type': 'password',
+							'name': 'password',
+							'value': 'hello'
+						}
+					]
+				}
+			]
 		}
 	]
 };
