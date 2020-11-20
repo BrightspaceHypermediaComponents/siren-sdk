@@ -35,6 +35,27 @@ export class QuizEntity extends Entity {
 	}
 
 	/**
+	 * @returns {string} quiz password
+	 */
+
+	password() {
+		const entity = this._entity.getSubEntityByRel(Rels.Quizzes.password);
+		if (entity && entity.properties && entity.properties.password) {
+			return entity.properties.password;
+		}
+
+		return '';
+	}
+
+	/**
+	 * @returns {bool} Whether or not the user can set a password for a quiz entity
+	*/
+	canEditPassword() {
+		const passwordEntity = this._entity.getSubEntityByRel(Rels.Quizzes.password);
+		return passwordEntity && passwordEntity.hasActionByName(Actions.quizzes.updatePassword);
+	}
+
+	/**
 	 * @returns {bool} Whether or not the user can set hints availability for the quiz entity
 	 */
 	canEditHints() {
@@ -71,9 +92,9 @@ export class QuizEntity extends Entity {
 		const updateNameAction = this.canEditName() ? this._formatUpdateNameAction(quiz) : null;
 		const updateHintsAction = this.canEditHints() ? this._formatUpdateHintsAction(quiz) : null;
 		const updateDisableRightClickAction = this.canEditDisableRightClick() ? this._formatUpdateDisableRightClickAction(quiz) : null;
+		const updatePasswordAction = this.canEditPassword() ? this._formatUpdatePasswordAction(quiz) : null;
 
-		const sirenActions = [updateNameAction, updateHintsAction, updateDisableRightClickAction];
-
+		const sirenActions = [updateNameAction, updateHintsAction, updateDisableRightClickAction, updatePasswordAction];
 		await performSirenActions(this._token, sirenActions);
 	}
 
@@ -162,6 +183,28 @@ export class QuizEntity extends Entity {
 		return { action, fields };
 	}
 
+	/**
+	 * Checks if quiz password has changed and if so returns the appropriate action/fields to update
+	 * @param {object} quiz the quiz that's being modified
+	*/
+
+	_formatUpdatePasswordAction(quiz) {
+		if (!quiz) return;
+		if (!this._hasPasswordChanged(quiz.password)) return;
+
+		const entity = this._entity.getSubEntityByRel(Rels.Quizzes.password);
+		if (!entity) return;
+
+		const action = entity.getActionByName(Actions.quizzes.updatePassword);
+		if (!action) return;
+
+		const fields = [
+			{ name: 'password', value: quiz.password },
+		];
+
+		return { action, fields };
+	}
+
 	_hasHintsChanged(allowHints) {
 		return allowHints !== this.getHintsToolEnabled();
 	}
@@ -174,11 +217,16 @@ export class QuizEntity extends Entity {
 		return disableRightClick !== this.isDisableRightClickEnabled();
 	}
 
+	_hasPasswordChanged(password) {
+		return password !== this.password();
+	}
+
 	equals(quiz) {
 		const diffs = [
 			[this.name(), quiz.name],
 			[this.getHintsToolEnabled(), quiz.allowHints],
-			[this.isDisableRightClickEnabled(), quiz.disableRightClick]
+			[this.isDisableRightClickEnabled(), quiz.disableRightClick],
+			[this.password(), quiz.password]
 		];
 
 		for (const [left, right] of diffs) {
