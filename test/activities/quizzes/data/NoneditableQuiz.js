@@ -54,6 +54,15 @@ export const nonEditableQuiz = {
 		},
 		{
 			'class': [
+				'disable-pager-access',
+				'unchecked'
+			],
+			'rel': [
+				'https://quizzes.api.brightspace.com/rels/disable-pager-access'
+			],
+		},
+		{
+			'class': [
 				'quiz-password'
 			],
 			'rel': [

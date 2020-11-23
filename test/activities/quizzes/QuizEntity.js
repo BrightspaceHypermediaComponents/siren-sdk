@@ -32,6 +32,7 @@ describe('QuizEntity', () => {
 				name: 'What a great quiz',
 				allowHints: true,
 				disableRightClick: true,
+				disablePagerAndAlerts: true,
 				password: 'hello'
 			};
 		});
@@ -139,7 +140,7 @@ describe('QuizEntity', () => {
 			});
 		});
 
-		describe('isdisablePagerAndAlertsEnabled', () => {
+		describe('isDisablePagerAndAlertsEnabled', () => {
 			it('returns true when isDisablePagerAndAlertsEnabled is true', () => {
 				var quizEntity = new QuizEntity(editableEntity);
 				expect(quizEntity.isDisablePagerAndAlertsEnabled()).to.be.true;
@@ -188,6 +189,7 @@ describe('QuizEntity', () => {
 				name: 'New name',
 				allowHints: false,
 				disableRightClick: false,
+				disablePagerAndAlerts: true,
 				password: 'super-secret'
 			});
 
@@ -196,6 +198,7 @@ describe('QuizEntity', () => {
 				expect(form.get('name')).to.equal('New name');
 				expect(form.get('allowHints')).to.equal('false');
 				expect(form.get('disableRightClick')).to.equal('false');
+				expect(form.get('disablePagerAndAlerts')).to.equal('true');
 				expect(form.get('password')).to.equal('super-secret');
 			}
 
@@ -209,6 +212,7 @@ describe('QuizEntity', () => {
 				name: 'What a great quiz',
 				allowHints: true,
 				disableRightClick: true,
+				disablePagerAndAlerts: true,
 				password: 'hello'
 			});
 
@@ -222,6 +226,7 @@ describe('QuizEntity', () => {
 				name: 'What a great quiz',
 				allowHints: true,
 				disableRightClick: true,
+				disablePagerAndAlerts: true,
 				password: 'hello'
 			});
 
