@@ -207,7 +207,7 @@ export class QuizEntity extends Entity {
 
 	_formatUpdateDisablePagerAndAlerts(quiz) {
 		if (!quiz) return;
-		if (!this._hasDisablePagerAndAlerts(quiz.disablePagerAndAlerts)) return;
+		if (!this._hasDisablePagerAndAlertsChanged(quiz.disablePagerAndAlerts)) return;
 
 		const entity = this._entity.getSubEntityByRel(Rels.Quizzes.disablePagerAndAlerts);
 		if (!entity) return;
@@ -256,7 +256,7 @@ export class QuizEntity extends Entity {
 		return disableRightClick !== this.isDisableRightClickEnabled();
 	}
 
-	_hasDisablePagerAndAlerts(disablePagerAndAlerts) {
+	_hasDisablePagerAndAlertsChanged(disablePagerAndAlerts) {
 		return disablePagerAndAlerts !== this.isDisablePagerAndAlertsEnabled();
 	}
 
