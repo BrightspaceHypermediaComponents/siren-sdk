@@ -126,6 +126,32 @@ describe('QuizEntity', () => {
 		});
 	});
 
+	describe('disablePagerAndAlerts', () => {
+		describe('canEditDisablePagerAndAlerts', () => {
+			it('returns true when disable pager and alerts is editable', () => {
+				var quizEntity = new QuizEntity(editableEntity);
+				expect(quizEntity.canEditDisablePagerAndAlerts()).to.be.true;
+			});
+
+			it('returns false when disable pager and alerts is not editable', () => {
+				var quizEntity = new QuizEntity(nonEditableEntity);
+				expect(quizEntity.canEditDisablePagerAndAlerts()).to.be.false;
+			});
+		});
+
+		describe('isdisablePagerAndAlertsEnabled', () => {
+			it('returns true when isDisablePagerAndAlertsEnabled is true', () => {
+				var quizEntity = new QuizEntity(editableEntity);
+				expect(quizEntity.isDisablePagerAndAlertsEnabled()).to.be.true;
+			});
+
+			it('returns false when isDisablePagerAndAlertsEnabled is false', () => {
+				var quizEntity = new QuizEntity(nonEditableEntity);
+				expect(quizEntity.isDisablePagerAndAlertsEnabled()).to.be.false;
+			});
+		});
+	});
+
 	describe('passwords', () => {
 		describe('canEditPassword', () => {
 			it('returns true when password is editable', () => {
