@@ -10,7 +10,7 @@ jobs:
       - name: Install dependencies
         run: npm install
       - name: Lint
-        run: npm run lint
+        run: npm run test:lint
       - name: Unit Tests (SauceLabs)
         run: npm run test:polymer:sauce
         env:
