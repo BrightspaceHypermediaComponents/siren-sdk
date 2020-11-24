@@ -145,6 +145,7 @@ export const Rels = {
 		description: 'https://quizzes.api.brightspace.com/rels/description',
 		hints: 'https://quizzes.api.brightspace.com/rels/has-hints',
 		disableRightClick: 'https://quizzes.api.brightspace.com/rels/disable-right-click',
+		disablePagerAndAlerts: 'https://quizzes.api.brightspace.com/rels/disable-pager-access',
 		password: 'https://quizzes.api.brightspace.com/rels/quiz-password'
 	},
 	// Themes API sub-domain rels
@@ -332,6 +333,7 @@ export const Classes = {
 		description: 'description',
 		hints: 'has-hints',
 		disableRightClick: 'disable-right-click',
+		disablePagerAndAlerts: 'disable-pager-access',
 		checked: 'checked',
 		password: 'password'
 	},
@@ -515,6 +517,7 @@ export const Actions = {
 		updateName: 'update-name',
 		updateHints: 'update-hints',
 		updateDisableRightClick: 'update-disable-right-click',
+		updateDisablePagerAndAlerts: 'update-disable-pager-access',
 		updatePassword: 'update-quiz-password'
 	},
 };

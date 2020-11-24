@@ -32,6 +32,7 @@ describe('QuizEntity', () => {
 				name: 'What a great quiz',
 				allowHints: true,
 				disableRightClick: true,
+				disablePagerAndAlerts: true,
 				password: 'hello'
 			};
 		});
@@ -126,6 +127,32 @@ describe('QuizEntity', () => {
 		});
 	});
 
+	describe('disablePagerAndAlerts', () => {
+		describe('canEditDisablePagerAndAlerts', () => {
+			it('returns true when disable pager and alerts is editable', () => {
+				var quizEntity = new QuizEntity(editableEntity);
+				expect(quizEntity.canEditDisablePagerAndAlerts()).to.be.true;
+			});
+
+			it('returns false when disable pager and alerts is not editable', () => {
+				var quizEntity = new QuizEntity(nonEditableEntity);
+				expect(quizEntity.canEditDisablePagerAndAlerts()).to.be.false;
+			});
+		});
+
+		describe('isDisablePagerAndAlertsEnabled', () => {
+			it('returns true when isDisablePagerAndAlertsEnabled is true', () => {
+				var quizEntity = new QuizEntity(editableEntity);
+				expect(quizEntity.isDisablePagerAndAlertsEnabled()).to.be.true;
+			});
+
+			it('returns false when isDisablePagerAndAlertsEnabled is false', () => {
+				var quizEntity = new QuizEntity(nonEditableEntity);
+				expect(quizEntity.isDisablePagerAndAlertsEnabled()).to.be.false;
+			});
+		});
+	});
+
 	describe('passwords', () => {
 		describe('canEditPassword', () => {
 			it('returns true when password is editable', () => {
@@ -162,6 +189,7 @@ describe('QuizEntity', () => {
 				name: 'New name',
 				allowHints: false,
 				disableRightClick: false,
+				disablePagerAndAlerts: false,
 				password: 'super-secret'
 			});
 
@@ -170,6 +198,7 @@ describe('QuizEntity', () => {
 				expect(form.get('name')).to.equal('New name');
 				expect(form.get('allowHints')).to.equal('false');
 				expect(form.get('disableRightClick')).to.equal('false');
+				expect(form.get('disablePagerAndAlerts')).to.equal('false');
 				expect(form.get('password')).to.equal('super-secret');
 			}
 
@@ -183,6 +212,7 @@ describe('QuizEntity', () => {
 				name: 'What a great quiz',
 				allowHints: true,
 				disableRightClick: true,
+				disablePagerAndAlerts: true,
 				password: 'hello'
 			});
 
@@ -196,6 +226,7 @@ describe('QuizEntity', () => {
 				name: 'What a great quiz',
 				allowHints: true,
 				disableRightClick: true,
+				disablePagerAndAlerts: true,
 				password: 'hello'
 			});
 

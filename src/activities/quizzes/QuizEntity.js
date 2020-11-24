@@ -87,14 +87,31 @@ export class QuizEntity extends Entity {
 		return entity && entity.hasClass(Classes.quizzes.checked);
 	}
 
+	/**
+	 * @returns {bool} Whether or not the user can edit the Disable Pager and Alerts quiz entity property
+	 */
+	canEditDisablePagerAndAlerts() {
+		const entity = this._entity.getSubEntityByRel(Rels.Quizzes.disablePagerAndAlerts);
+		return entity && entity.hasActionByName(Actions.quizzes.updateDisablePagerAndAlerts);
+	}
+
+	/**
+	 * @returns {bool} Is Disable Pager and Alerts checked for the quiz entity
+	 */
+	isDisablePagerAndAlertsEnabled() {
+		const entity = this._entity.getSubEntityByRel(Rels.Quizzes.disablePagerAndAlerts);
+		return entity && entity.hasClass(Classes.quizzes.checked);
+	}
+
 	async save(quiz) {
 		if (!quiz) return;
 		const updateNameAction = this.canEditName() ? this._formatUpdateNameAction(quiz) : null;
 		const updateHintsAction = this.canEditHints() ? this._formatUpdateHintsAction(quiz) : null;
 		const updateDisableRightClickAction = this.canEditDisableRightClick() ? this._formatUpdateDisableRightClickAction(quiz) : null;
+		const updateDisablePagerAndAlerts = this.canEditDisablePagerAndAlerts() ? this._formatUpdateDisablePagerAndAlerts(quiz) : null;
 		const updatePasswordAction = this.canEditPassword() ? this._formatUpdatePasswordAction(quiz) : null;
 
-		const sirenActions = [updateNameAction, updateHintsAction, updateDisableRightClickAction, updatePasswordAction];
+		const sirenActions = [updateNameAction, updateHintsAction, updateDisableRightClickAction, updateDisablePagerAndAlerts, updatePasswordAction];
 		await performSirenActions(this._token, sirenActions);
 	}
 
@@ -184,6 +201,28 @@ export class QuizEntity extends Entity {
 	}
 
 	/**
+	 * Checks if quiz disable pager and alerts has changed and if so returns the appropriate action/fields to update
+	 * @param {object} quiz the quiz that's being modified
+	 */
+
+	_formatUpdateDisablePagerAndAlerts(quiz) {
+		if (!quiz) return;
+		if (!this._hasDisablePagerAndAlertsChanged(quiz.disablePagerAndAlerts)) return;
+
+		const entity = this._entity.getSubEntityByRel(Rels.Quizzes.disablePagerAndAlerts);
+		if (!entity) return;
+
+		const action = entity.getActionByName(Actions.quizzes.updateDisablePagerAndAlerts);
+		if (!action) return;
+
+		const fields = [
+			{ name: 'disablePagerAndAlerts', value: quiz.disablePagerAndAlerts },
+		];
+
+		return { action, fields };
+	}
+
+	/**
 	 * Checks if quiz password has changed and if so returns the appropriate action/fields to update
 	 * @param {object} quiz the quiz that's being modified
 	*/
@@ -217,6 +256,10 @@ export class QuizEntity extends Entity {
 		return disableRightClick !== this.isDisableRightClickEnabled();
 	}
 
+	_hasDisablePagerAndAlertsChanged(disablePagerAndAlerts) {
+		return disablePagerAndAlerts !== this.isDisablePagerAndAlertsEnabled();
+	}
+
 	_hasPasswordChanged(password) {
 		return password !== this.password();
 	}
@@ -226,6 +269,7 @@ export class QuizEntity extends Entity {
 			[this.name(), quiz.name],
 			[this.getHintsToolEnabled(), quiz.allowHints],
 			[this.isDisableRightClickEnabled(), quiz.disableRightClick],
+			[this.isDisablePagerAndAlertsEnabled(), quiz.disablePagerAndAlerts],
 			[this.password(), quiz.password]
 		];
 

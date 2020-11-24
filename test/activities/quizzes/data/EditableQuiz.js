@@ -101,6 +101,29 @@ export const editableQuiz = {
 		},
 		{
 			'class': [
+				'disable-pager-access',
+				'checked'
+			],
+			'rel': [
+				'https://quizzes.api.brightspace.com/rels/disable-pager-access'
+			],
+			'actions': [
+				{
+					'href': 'https://afe99802-9130-4320-a770-8d138b941e74.quizzes.api.proddev.d2l/6606/quizzes/22',
+					'name': 'update-disable-pager-access',
+					'method': 'PATCH',
+					'fields': [
+						{
+							'type': 'checkbox',
+							'name': 'disablePagerAccess',
+							'value': true
+						}
+					]
+				}
+			]
+		},
+		{
+			'class': [
 				'quiz-password'
 			],
 			'rel': [
