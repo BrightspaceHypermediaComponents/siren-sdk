@@ -189,7 +189,7 @@ describe('QuizEntity', () => {
 				name: 'New name',
 				allowHints: false,
 				disableRightClick: false,
-				disablePagerAndAlerts: true,
+				disablePagerAndAlerts: false,
 				password: 'super-secret'
 			});
 
@@ -198,7 +198,7 @@ describe('QuizEntity', () => {
 				expect(form.get('name')).to.equal('New name');
 				expect(form.get('allowHints')).to.equal('false');
 				expect(form.get('disableRightClick')).to.equal('false');
-				expect(form.get('disablePagerAndAlerts')).to.equal('true');
+				expect(form.get('disablePagerAndAlerts')).to.equal('false');
 				expect(form.get('password')).to.equal('super-secret');
 			}
 
