@@ -102,7 +102,7 @@ export const editableQuiz = {
 		{
 			'class': [
 				'disable-pager-access',
-				'unchecked'
+				'checked'
 			],
 			'rel': [
 				'https://quizzes.api.brightspace.com/rels/disable-pager-access'
