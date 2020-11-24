@@ -103,6 +103,26 @@ export class QuizEntity extends Entity {
 		return entity && entity.hasClass(Classes.quizzes.checked);
 	}
 
+	/**
+	 * @returns {bool} Whether or not the user can edit the Notification Email property
+	 */
+	canEditNotificationEmail() {
+		const entity = this._entity.getSubEntityByRel(Rels.Quizzes.notificationEmail);
+		return entity && entity.hasActionByName(Actions.quizzes.updateNotificationEmail);
+	}
+
+	/**
+	 * @returns {bool} Notification Email of the quiz entity
+	 */
+	notificationEmail() {
+		const entity = this._entity.getSubEntityByRel(Rels.Quizzes.notificationEmail);
+		if (!entity || !entity.properties) {
+			return;
+		}
+		const props = entity.properties;
+		return props && props.email;
+	}
+
 	async save(quiz) {
 		if (!quiz) return;
 		const updateNameAction = this.canEditName() ? this._formatUpdateNameAction(quiz) : null;
@@ -110,8 +130,16 @@ export class QuizEntity extends Entity {
 		const updateDisableRightClickAction = this.canEditDisableRightClick() ? this._formatUpdateDisableRightClickAction(quiz) : null;
 		const updateDisablePagerAndAlerts = this.canEditDisablePagerAndAlerts() ? this._formatUpdateDisablePagerAndAlerts(quiz) : null;
 		const updatePasswordAction = this.canEditPassword() ? this._formatUpdatePasswordAction(quiz) : null;
+		const updateNotificationEmail = this.canEditNotificationEmail() ? this._formatNotificationEmailAction(quiz) : null;
 
-		const sirenActions = [updateNameAction, updateHintsAction, updateDisableRightClickAction, updateDisablePagerAndAlerts, updatePasswordAction];
+		const sirenActions = [
+			updateNameAction,
+			updateHintsAction,
+			updateDisableRightClickAction,
+			updateDisablePagerAndAlerts,
+			updatePasswordAction,
+			updateNotificationEmail
+		];
 		await performSirenActions(this._token, sirenActions);
 	}
 
@@ -244,6 +272,27 @@ export class QuizEntity extends Entity {
 		return { action, fields };
 	}
 
+	/**
+	 * Checks if notification email has changed and if so returns the appropriate action/fields to update
+	 * @param {object} quiz the quiz that's being modified
+	*/
+	_formatNotificationEmailAction(quiz) {
+		if (!quiz) return;
+		if (!this._hasNotificationEmailChanged(quiz.notificationEmail)) return;
+
+		const entity = this._entity.getSubEntityByRel(Rels.Quizzes.notificationEmail);
+		if (!entity) return;
+
+		const action = entity.getActionByName(Actions.quizzes.notificationEmail);
+		if (!action) return;
+
+		const fields = [
+			{ name: 'notificationEmail', value: quiz.notificationEmail },
+		];
+
+		return { action, fields };
+	}
+
 	_hasHintsChanged(allowHints) {
 		return allowHints !== this.getHintsToolEnabled();
 	}
@@ -264,13 +313,18 @@ export class QuizEntity extends Entity {
 		return password !== this.password();
 	}
 
+	_hasNotificationEmailChanged(notificationEmail) {
+		return notificationEmail !== this.notificationEmail();
+	}
+
 	equals(quiz) {
 		const diffs = [
 			[this.name(), quiz.name],
 			[this.getHintsToolEnabled(), quiz.allowHints],
 			[this.isDisableRightClickEnabled(), quiz.disableRightClick],
 			[this.isDisablePagerAndAlertsEnabled(), quiz.disablePagerAndAlerts],
-			[this.password(), quiz.password]
+			[this.password(), quiz.password],
+			[this.notificationEmail(), quiz.notificationEmail]
 		];
 
 		for (const [left, right] of diffs) {
