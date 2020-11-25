@@ -71,6 +71,17 @@ export const nonEditableQuiz = {
 			'properties': {
 				'password': 'hello'
 			},
+		},
+		{
+			'class': [
+				'notification-email'
+			],
+			'rel': [
+				'https://quizzes.api.brightspace.com/rels/notification-email'
+			],
+			'properties': {
+				'email': 'moose@d2l.com'
+			},
 		}
 	]
 };

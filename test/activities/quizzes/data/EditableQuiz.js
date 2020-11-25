@@ -146,6 +146,31 @@ export const editableQuiz = {
 					]
 				}
 			]
+		},
+		{
+			'class': [
+				'notification-email'
+			],
+			'rel': [
+				'https://quizzes.api.brightspace.com/rels/notification-email'
+			],
+			'properties': {
+				'email': 'moose@d2l.com'
+			},
+			'actions': [
+				{
+					'href': 'https://afe99802-9130-4320-a770-8d138b941e74.quizzes.api.proddev.d2l/6606/quizzes/22',
+					'name': 'update-notification-email',
+					'method': 'PATCH',
+					'fields': [
+						{
+							'type': 'text',
+							'name': 'notificationEmail',
+							'value': 'moose@d2l.com'
+						}
+					]
+				}
+			]
 		}
 	]
 };

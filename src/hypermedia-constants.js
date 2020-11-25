@@ -146,7 +146,8 @@ export const Rels = {
 		hints: 'https://quizzes.api.brightspace.com/rels/has-hints',
 		disableRightClick: 'https://quizzes.api.brightspace.com/rels/disable-right-click',
 		disablePagerAndAlerts: 'https://quizzes.api.brightspace.com/rels/disable-pager-access',
-		password: 'https://quizzes.api.brightspace.com/rels/quiz-password'
+		password: 'https://quizzes.api.brightspace.com/rels/quiz-password',
+		notificationEmail: 'https://quizzes.api.brightspace.com/rels/notification-email'
 	},
 	// Themes API sub-domain rels
 	Themes: {
@@ -335,7 +336,8 @@ export const Classes = {
 		disableRightClick: 'disable-right-click',
 		disablePagerAndAlerts: 'disable-pager-access',
 		checked: 'checked',
-		password: 'password'
+		password: 'password',
+		notificationEmail: 'notificationEmail'
 	},
 	text: {
 		richtext: 'richtext'
@@ -518,6 +520,7 @@ export const Actions = {
 		updateHints: 'update-hints',
 		updateDisableRightClick: 'update-disable-right-click',
 		updateDisablePagerAndAlerts: 'update-disable-pager-access',
-		updatePassword: 'update-quiz-password'
+		updatePassword: 'update-quiz-password',
+		updateNotificationEmail: 'update-notification-email'
 	},
 };

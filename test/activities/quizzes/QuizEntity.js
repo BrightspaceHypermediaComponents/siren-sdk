@@ -33,30 +33,37 @@ describe('QuizEntity', () => {
 				allowHints: true,
 				disableRightClick: true,
 				disablePagerAndAlerts: true,
-				password: 'hello'
+				password: 'hello',
+				notificationEmail: 'moose@d2l.com'
 			};
 		});
 
-		it('return true when equal', () => {
+		it('returns true when equal', () => {
 			var quizEntity = new QuizEntity(editableEntity);
 			expect(quizEntity.equals(modifiedEntity)).to.be.true;
 		});
 
-		it('return false when name not equal', () => {
+		it('returns false when name not equal', () => {
 			var quizEntity = new QuizEntity(editableEntity);
 			modifiedEntity.name = 'This is a terrible quiz';
 			expect(quizEntity.equals(modifiedEntity)).to.be.false;
 		});
 
-		it('return false when hints not equal', () => {
+		it('returns false when hints not equal', () => {
 			var quizEntity = new QuizEntity(editableEntity);
 			modifiedEntity.allowHints = false;
 			expect(quizEntity.equals(modifiedEntity)).to.be.false;
 		});
 
-		it('return false when disable right click not equal', () => {
+		it('returns false when disable right click not equal', () => {
 			var quizEntity = new QuizEntity(editableEntity);
 			modifiedEntity.disableRightClick = false;
+			expect(quizEntity.equals(modifiedEntity)).to.be.false;
+		});
+
+		it('returns false when notificationEmail not equal', () => {
+			var quizEntity = new QuizEntity(editableEntity);
+			modifiedEntity.notificationEmail = 'wrong-email';
 			expect(quizEntity.equals(modifiedEntity)).to.be.false;
 		});
 	});
@@ -179,6 +186,32 @@ describe('QuizEntity', () => {
 		});
 	});
 
+	describe('notificationEmail', () => {
+		describe('canEditNotificationEmail', () => {
+			it('returns true when notificationEmail is editable', () => {
+				var quizEntity = new QuizEntity(editableEntity);
+				expect(quizEntity.canEditNotificationEmail()).to.be.true;
+			});
+
+			it('returns false when notificationEmail is not editable', () => {
+				var quizEntity = new QuizEntity(nonEditableEntity);
+				expect(quizEntity.canEditNotificationEmail()).to.be.false;
+			});
+		});
+
+		describe('notificationEmail', () => {
+			it('can read notificationEmail from an editable entity', () => {
+				var quizEntity = new QuizEntity(editableEntity);
+				expect(quizEntity.notificationEmail()).to.equal('moose@d2l.com');
+			});
+
+			it('can read notificationEmail from a non-editable entity', () => {
+				var quizEntity = new QuizEntity(nonEditableEntity);
+				expect(quizEntity.notificationEmail()).to.equal('moose@d2l.com');
+			});
+		});
+	});
+
 	describe('save', () => {
 		it('saves', async() => {
 			fetchMock.patchOnce('https://afe99802-9130-4320-a770-8d138b941e74.quizzes.api.proddev.d2l/6606/quizzes/22', editableEntity);
@@ -190,7 +223,8 @@ describe('QuizEntity', () => {
 				allowHints: false,
 				disableRightClick: false,
 				disablePagerAndAlerts: false,
-				password: 'super-secret'
+				password: 'super-secret',
+				notificationEmail: 'modifiedMoose@d2l.com'
 			});
 
 			const form = await getFormData(fetchMock.lastCall().request);
@@ -200,6 +234,7 @@ describe('QuizEntity', () => {
 				expect(form.get('disableRightClick')).to.equal('false');
 				expect(form.get('disablePagerAndAlerts')).to.equal('false');
 				expect(form.get('password')).to.equal('super-secret');
+				expect(form.get('notificationEmail')).to.equal('modifiedMoose@d2l.com');
 			}
 
 			expect(fetchMock.called()).to.be.true;
@@ -213,7 +248,8 @@ describe('QuizEntity', () => {
 				allowHints: true,
 				disableRightClick: true,
 				disablePagerAndAlerts: true,
-				password: 'hello'
+				password: 'hello',
+				notificationEmail: 'moose@d2l.com'
 			});
 
 			expect(fetchMock.done());
@@ -223,11 +259,12 @@ describe('QuizEntity', () => {
 			var quizEntity = new QuizEntity(nonEditableEntity);
 
 			await quizEntity.save({
-				name: 'What a great quiz',
-				allowHints: true,
-				disableRightClick: true,
-				disablePagerAndAlerts: true,
-				password: 'hello'
+				name: 'some-name',
+				allowHints: false,
+				disableRightClick: false,
+				disablePagerAndAlerts: false,
+				password: 'super-secret',
+				notificationEmail: 'modifiedMoose@d2l.com'
 			});
 
 			expect(fetchMock.done());
