@@ -1,6 +1,6 @@
 {
   "name": "siren-sdk",
-  "version": "1.10.100",
+  "version": "1.10.101",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -34,7 +34,6 @@
     "eslint-config-brightspace": "^0.4.0",
     "eslint-plugin-html": "^4.0.1",
     "fetch-mock": "^8.3.2",
-    "frau-ci": "^1.40.0",
     "jsdoc": "^3.5.5",
     "lie": "^3.3.0",
     "lit-element": "^2",
