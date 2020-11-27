@@ -301,7 +301,7 @@ export class QuizEntity extends Entity {
 		const entity = this._entity.getSubEntityByRel(Rels.Quizzes.notificationEmail);
 		if (!entity) return;
 
-		const action = entity.getActionByName(Actions.quizzes.notificationEmail);
+		const action = entity.getActionByName(Actions.quizzes.updateNotificationEmail);
 		if (!action) return;
 
 		const fields = [
