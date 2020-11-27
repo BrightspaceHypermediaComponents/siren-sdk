@@ -323,7 +323,7 @@ export class QuizEntity extends Entity {
 		const entity = this._entity.getSubEntityByRel(Rels.Quizzes.preventMovingBackwards);
 		if (!entity) return;
 
-		const action = entity.getActionByName(Actions.quizzes.preventMovingBackwards);
+		const action = entity.getActionByName(Actions.quizzes.updatePreventMovingBackwards);
 		if (!action) return;
 
 		const fields = [
