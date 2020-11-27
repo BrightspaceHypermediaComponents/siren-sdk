@@ -171,6 +171,29 @@ export const editableQuiz = {
 					]
 				}
 			]
+		},
+		{
+			'class': [
+				'prevent-moving-backwards',
+				'checked'
+			],
+			'rel': [
+				'https://quizzes.api.brightspace.com/rels/prevent-moving-backwards'
+			],
+			'actions': [
+				{
+					'href': 'https://afe99802-9130-4320-a770-8d138b941e74.quizzes.api.proddev.d2l/6606/quizzes/22',
+					'name': 'update-prevent-moving-backwards',
+					'method': 'PATCH',
+					'fields': [
+						{
+							'type': 'checkbox',
+							'name': 'preventMovingBackwards',
+							'value': true
+						}
+					]
+				}
+			]
 		}
 	]
 };
