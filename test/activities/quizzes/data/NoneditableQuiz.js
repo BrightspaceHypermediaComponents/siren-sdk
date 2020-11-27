@@ -36,6 +36,15 @@ export const nonEditableQuiz = {
 	'entities': [
 		{
 			'rel': [
+				'https://quizzes.api.brightspace.com/rels/shuffle'
+			],
+			'class': [
+				'shuffle',
+				'unchecked'
+			],
+		},
+		{
+			'rel': [
 				'https://quizzes.api.brightspace.com/rels/has-hints'
 			],
 			'class': [

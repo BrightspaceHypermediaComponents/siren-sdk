@@ -143,6 +143,7 @@ export const Rels = {
 	// Quizzes API sub-domain rels
 	Quizzes: {
 		description: 'https://quizzes.api.brightspace.com/rels/description',
+		shuffle: 'https://quizzes.api.brightspace.com/rels/shuffle',
 		hints: 'https://quizzes.api.brightspace.com/rels/has-hints',
 		disableRightClick: 'https://quizzes.api.brightspace.com/rels/disable-right-click',
 		disablePagerAndAlerts: 'https://quizzes.api.brightspace.com/rels/disable-pager-access',
@@ -333,6 +334,7 @@ export const Classes = {
 	quizzes: {
 		quiz: 'quiz',
 		description: 'description',
+		shuffle: 'shuffle',
 		hints: 'has-hints',
 		disableRightClick: 'disable-right-click',
 		disablePagerAndAlerts: 'disable-pager-access',
@@ -518,6 +520,7 @@ export const Actions = {
 	},
 	quizzes: {
 		updateName: 'update-name',
+		updateShuffle: 'update-shuffle',
 		updateHints: 'update-hints',
 		updateDisableRightClick: 'update-disable-right-click',
 		updateDisablePagerAndAlerts: 'update-disable-pager-access',
