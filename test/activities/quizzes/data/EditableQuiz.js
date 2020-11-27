@@ -53,6 +53,29 @@ export const editableQuiz = {
 	],
 	'entities': [
 		{
+			'class': [
+				'shuffle',
+				'checked'
+			],
+			'rel': [
+				'https://quizzes.api.brightspace.com/rels/shuffle'
+			],
+			'actions': [
+				{
+					'href': 'https://afe99802-9130-4320-a770-8d138b941e74.quizzes.api.proddev.d2l/6606/quizzes/22',
+					'name': 'update-shuffle',
+					'method': 'PATCH',
+					'fields': [
+						{
+							'type': 'checkbox',
+							'name': 'shuffle',
+							'value': true
+						}
+					]
+				}
+			]
+		},
+		{
 			'rel': [
 				'https://quizzes.api.brightspace.com/rels/has-hints'
 			],

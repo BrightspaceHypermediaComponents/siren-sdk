@@ -30,6 +30,7 @@ describe('QuizEntity', () => {
 		beforeEach(() => {
 			modifiedEntity = {
 				name: 'What a great quiz',
+				shuffle: true,
 				allowHints: true,
 				disableRightClick: true,
 				disablePagerAndAlerts: true,
@@ -46,6 +47,12 @@ describe('QuizEntity', () => {
 		it('returns false when name not equal', () => {
 			var quizEntity = new QuizEntity(editableEntity);
 			modifiedEntity.name = 'This is a terrible quiz';
+			expect(quizEntity.equals(modifiedEntity)).to.be.false;
+		});
+
+		it('returns false when shuffle not equal', () => {
+			var quizEntity = new QuizEntity(editableEntity);
+			modifiedEntity.shuffle = false;
 			expect(quizEntity.equals(modifiedEntity)).to.be.false;
 		});
 
@@ -82,6 +89,32 @@ describe('QuizEntity', () => {
 		});
 	});
 
+	describe('shuffle', () => {
+		describe('canEditShuffle', () => {
+			it('returns true when shuffle is editable', () => {
+				var quizEntity = new QuizEntity(editableEntity);
+				expect(quizEntity.canEditShuffle()).to.be.true;
+			});
+
+			it('returns false when shuffle is not editable', () => {
+				var quizEntity = new QuizEntity(nonEditableEntity);
+				expect(quizEntity.canEditShuffle()).to.be.false;
+			});
+		});
+
+		describe('isShuffleEnabled', () => {
+			it('returns true when isShuffleEnabled is true', () => {
+				var quizEntity = new QuizEntity(editableEntity);
+				expect(quizEntity.isShuffleEnabled()).to.be.true;
+			});
+
+			it('returns false when isShuffleEnabled is false', () => {
+				var quizEntity = new QuizEntity(nonEditableEntity);
+				expect(quizEntity.isShuffleEnabled()).to.be.false;
+			});
+		});
+	});
+
 	describe('hints', () => {
 		describe('canEditHints', () => {
 			it('returns true when hints are editable', () => {
@@ -110,7 +143,7 @@ describe('QuizEntity', () => {
 
 	describe('disableRightClick', () => {
 		describe('canEditDisableRightClick', () => {
-			it('returns true when disable right click is editable', () => {
+			it('returns true when shuffle is editable', () => {
 				var quizEntity = new QuizEntity(editableEntity);
 				expect(quizEntity.canEditDisableRightClick()).to.be.true;
 			});
@@ -220,6 +253,7 @@ describe('QuizEntity', () => {
 
 			await quizEntity.save({
 				name: 'New name',
+				shuffle: false,
 				allowHints: false,
 				disableRightClick: false,
 				disablePagerAndAlerts: false,
@@ -230,6 +264,7 @@ describe('QuizEntity', () => {
 			const form = await getFormData(fetchMock.lastCall().request);
 			if (!form.notSupported) {
 				expect(form.get('name')).to.equal('New name');
+				expect(form.get('shuffle')).to.equal('false');
 				expect(form.get('allowHints')).to.equal('false');
 				expect(form.get('disableRightClick')).to.equal('false');
 				expect(form.get('disablePagerAndAlerts')).to.equal('false');
@@ -245,6 +280,7 @@ describe('QuizEntity', () => {
 
 			await quizEntity.save({
 				name: 'What a great quiz',
+				shuffle: true,
 				allowHints: true,
 				disableRightClick: true,
 				disablePagerAndAlerts: true,
@@ -260,6 +296,7 @@ describe('QuizEntity', () => {
 
 			await quizEntity.save({
 				name: 'some-name',
+				shuffle: false,
 				allowHints: false,
 				disableRightClick: false,
 				disablePagerAndAlerts: false,
