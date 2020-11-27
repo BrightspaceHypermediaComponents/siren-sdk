@@ -34,7 +34,8 @@ describe('QuizEntity', () => {
 				disableRightClick: true,
 				disablePagerAndAlerts: true,
 				password: 'hello',
-				notificationEmail: 'moose@d2l.com'
+				notificationEmail: 'moose@d2l.com',
+				preventMovingBackwards: true
 			};
 		});
 
@@ -64,6 +65,12 @@ describe('QuizEntity', () => {
 		it('returns false when notificationEmail not equal', () => {
 			var quizEntity = new QuizEntity(editableEntity);
 			modifiedEntity.notificationEmail = 'wrong-email';
+			expect(quizEntity.equals(modifiedEntity)).to.be.false;
+		});
+
+		it('returns false when preventMovingBackwards is not equal', () => {
+			var quizEntity = new QuizEntity(editableEntity);
+			modifiedEntity.preventMovingBackwards = false;
 			expect(quizEntity.equals(modifiedEntity)).to.be.false;
 		});
 	});
@@ -212,6 +219,32 @@ describe('QuizEntity', () => {
 		});
 	});
 
+	describe('preventMovingBackwards', () => {
+		describe('canEditPreventMovingBackwards', () => {
+			it('returns true when prevent moving backwards is editable', () => {
+				var quizEntity = new QuizEntity(editableEntity);
+				expect(quizEntity.canEditPreventMovingBackwards()).to.be.true;
+			});
+
+			it('returns false when prevent moving backwards is not editable', () => {
+				var quizEntity = new QuizEntity(nonEditableEntity);
+				expect(quizEntity.canEditPreventMovingBackwards()).to.be.false;
+			});
+		});
+
+		describe('isPreventMovingBackwardsEnabled', () => {
+			it('returns true when isPreventMovingBackwardsEnabled is true', () => {
+				var quizEntity = new QuizEntity(editableEntity);
+				expect(quizEntity.isPreventMovingBackwardsEnabled()).to.be.true;
+			});
+
+			it('returns false when isPreventMovingBackwardsEnabled is false', () => {
+				var quizEntity = new QuizEntity(nonEditableEntity);
+				expect(quizEntity.isPreventMovingBackwardsEnabled()).to.be.false;
+			});
+		});
+	});
+
 	describe('save', () => {
 		it('saves', async() => {
 			fetchMock.patchOnce('https://afe99802-9130-4320-a770-8d138b941e74.quizzes.api.proddev.d2l/6606/quizzes/22', editableEntity);
@@ -224,7 +257,8 @@ describe('QuizEntity', () => {
 				disableRightClick: false,
 				disablePagerAndAlerts: false,
 				password: 'super-secret',
-				notificationEmail: 'modifiedMoose@d2l.com'
+				notificationEmail: 'modifiedMoose@d2l.com',
+				preventMovingBackwards: false
 			});
 
 			const form = await getFormData(fetchMock.lastCall().request);
@@ -235,6 +269,7 @@ describe('QuizEntity', () => {
 				expect(form.get('disablePagerAndAlerts')).to.equal('false');
 				expect(form.get('password')).to.equal('super-secret');
 				expect(form.get('notificationEmail')).to.equal('modifiedMoose@d2l.com');
+				expect(form.get('preventMovingBackwards')).to.equal('false');
 			}
 
 			expect(fetchMock.called()).to.be.true;
@@ -249,7 +284,8 @@ describe('QuizEntity', () => {
 				disableRightClick: true,
 				disablePagerAndAlerts: true,
 				password: 'hello',
-				notificationEmail: 'moose@d2l.com'
+				notificationEmail: 'moose@d2l.com',
+				preventMovingBackwards: true,
 			});
 
 			expect(fetchMock.done());
@@ -264,7 +300,8 @@ describe('QuizEntity', () => {
 				disableRightClick: false,
 				disablePagerAndAlerts: false,
 				password: 'super-secret',
-				notificationEmail: 'modifiedMoose@d2l.com'
+				notificationEmail: 'modifiedMoose@d2l.com',
+				preventMovingBackwards: false,
 			});
 
 			expect(fetchMock.done());
