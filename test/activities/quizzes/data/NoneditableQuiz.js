@@ -91,6 +91,15 @@ export const nonEditableQuiz = {
 			'properties': {
 				'email': 'moose@d2l.com'
 			},
-		}
+		},
+		{
+			'class': [
+				'prevent-moving-backwards',
+				'unchecked'
+			],
+			'rel': [
+				'https://quizzes.api.brightspace.com/rels/prevent-moving-backwards'
+			],
+		},
 	]
 };

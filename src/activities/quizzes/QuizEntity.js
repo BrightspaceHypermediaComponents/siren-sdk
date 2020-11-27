@@ -139,6 +139,22 @@ export class QuizEntity extends Entity {
 		return props && props.email;
 	}
 
+	/**
+	 * @returns {bool} Whether or not the user can edit the preventMovingBackwards property
+	 */
+	canEditPreventMovingBackwards() {
+		const entity = this._entity.getSubEntityByRel(Rels.Quizzes.preventMovingBackwards);
+		return entity && entity.hasActionByName(Actions.quizzes.updatePreventMovingBackwards);
+	}
+
+	/**
+	 * @returns {bool} Is prevent moving backwards checked for the quiz entity
+	 */
+	isPreventMovingBackwardsEnabled() {
+		const entity = this._entity.getSubEntityByRel(Rels.Quizzes.preventMovingBackwards);
+		return entity && entity.hasClass(Classes.quizzes.checked);
+	}
+
 	async save(quiz) {
 		if (!quiz) return;
 		const updateNameAction = this.canEditName() ? this._formatUpdateNameAction(quiz) : null;
@@ -148,6 +164,7 @@ export class QuizEntity extends Entity {
 		const updateDisablePagerAndAlerts = this.canEditDisablePagerAndAlerts() ? this._formatUpdateDisablePagerAndAlerts(quiz) : null;
 		const updatePasswordAction = this.canEditPassword() ? this._formatUpdatePasswordAction(quiz) : null;
 		const updateNotificationEmail = this.canEditNotificationEmail() ? this._formatNotificationEmailAction(quiz) : null;
+		const updatePreventMovingBackwards = this.canEditPreventMovingBackwards() ? this._formatUpdatePreventMovingBackwards(quiz) : null;
 
 		const sirenActions = [
 			updateNameAction,
@@ -156,7 +173,8 @@ export class QuizEntity extends Entity {
 			updateDisableRightClickAction,
 			updateDisablePagerAndAlerts,
 			updatePasswordAction,
-			updateNotificationEmail
+			updateNotificationEmail,
+			updatePreventMovingBackwards
 		];
 		await performSirenActions(this._token, sirenActions);
 	}
@@ -323,11 +341,33 @@ export class QuizEntity extends Entity {
 		const entity = this._entity.getSubEntityByRel(Rels.Quizzes.notificationEmail);
 		if (!entity) return;
 
-		const action = entity.getActionByName(Actions.quizzes.notificationEmail);
+		const action = entity.getActionByName(Actions.quizzes.updateNotificationEmail);
 		if (!action) return;
 
 		const fields = [
 			{ name: 'notificationEmail', value: quiz.notificationEmail },
+		];
+
+		return { action, fields };
+	}
+
+	/**
+	 * Checks if quiz prevent moving backwards has changed and if so returns the appropriate action/fields to update
+	 * @param {object} quiz the quiz that's being modified
+	 */
+
+	_formatUpdatePreventMovingBackwards(quiz) {
+		if (!quiz) return;
+		if (!this._hasPreventMovingBackwardsChanged(quiz.preventMovingBackwards)) return;
+
+		const entity = this._entity.getSubEntityByRel(Rels.Quizzes.preventMovingBackwards);
+		if (!entity) return;
+
+		const action = entity.getActionByName(Actions.quizzes.updatePreventMovingBackwards);
+		if (!action) return;
+
+		const fields = [
+			{ name: 'preventMovingBackwards', value: quiz.preventMovingBackwards },
 		];
 
 		return { action, fields };
@@ -361,6 +401,10 @@ export class QuizEntity extends Entity {
 		return notificationEmail !== this.notificationEmail();
 	}
 
+	_hasPreventMovingBackwardsChanged(preventMovingBackwards) {
+		return preventMovingBackwards !== this.isPreventMovingBackwardsEnabled();
+	}
+
 	equals(quiz) {
 		const diffs = [
 			[this.name(), quiz.name],
@@ -369,7 +413,8 @@ export class QuizEntity extends Entity {
 			[this.isDisableRightClickEnabled(), quiz.disableRightClick],
 			[this.isDisablePagerAndAlertsEnabled(), quiz.disablePagerAndAlerts],
 			[this.password(), quiz.password],
-			[this.notificationEmail(), quiz.notificationEmail]
+			[this.notificationEmail(), quiz.notificationEmail],
+			[this.isPreventMovingBackwardsEnabled(), quiz.preventMovingBackwards]
 		];
 
 		for (const [left, right] of diffs) {
