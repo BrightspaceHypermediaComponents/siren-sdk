@@ -224,6 +224,11 @@ export class QuizEntity extends Entity {
 		return { action, fields };
 	}
 
+	/**
+	 * Checks if quiz shuffle (questions) has changed and if so returns the appropriate action/fields to update
+	 * @param {object} quiz the quiz that's being modified
+	 */
+
 	_formatShuffleAction(quiz) {
 		if (!quiz) return;
 		if (!this._hasShuffleChanged(quiz.shuffle)) return;

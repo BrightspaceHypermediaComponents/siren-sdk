@@ -143,7 +143,7 @@ describe('QuizEntity', () => {
 
 	describe('disableRightClick', () => {
 		describe('canEditDisableRightClick', () => {
-			it('returns true when shuffle is editable', () => {
+			it('returns true when disable right click is editable', () => {
 				var quizEntity = new QuizEntity(editableEntity);
 				expect(quizEntity.canEditDisableRightClick()).to.be.true;
 			});
