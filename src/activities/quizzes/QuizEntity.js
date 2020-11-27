@@ -48,8 +48,24 @@ export class QuizEntity extends Entity {
 	}
 
 	/**
+	 * @returns {bool} Whether or not the user can edit the Shuffle quiz entity property
+	 */
+	canEditShuffle() {
+		const entity = this._entity.getSubEntityByRel(Rels.Quizzes.shuffle);
+		return entity && entity.hasActionByName(Actions.quizzes.updateShuffle);
+	}
+
+	/**
+	 * @returns {bool} Is Shuffle checked for the quiz entity
+	 */
+	isShuffleEnabled() {
+		const entity = this._entity.getSubEntityByRel(Rels.Quizzes.shuffle);
+		return entity && entity.hasClass(Classes.quizzes.checked);
+	}
+
+	/**
 	 * @returns {bool} Whether or not the user can set a password for a quiz entity
-	*/
+	 */
 	canEditPassword() {
 		const passwordEntity = this._entity.getSubEntityByRel(Rels.Quizzes.password);
 		return passwordEntity && passwordEntity.hasActionByName(Actions.quizzes.updatePassword);
@@ -126,6 +142,7 @@ export class QuizEntity extends Entity {
 	async save(quiz) {
 		if (!quiz) return;
 		const updateNameAction = this.canEditName() ? this._formatUpdateNameAction(quiz) : null;
+		const updateShuffleAction = this.canEditShuffle() ? this._formatShuffleAction(quiz) : null;
 		const updateHintsAction = this.canEditHints() ? this._formatUpdateHintsAction(quiz) : null;
 		const updateDisableRightClickAction = this.canEditDisableRightClick() ? this._formatUpdateDisableRightClickAction(quiz) : null;
 		const updateDisablePagerAndAlerts = this.canEditDisablePagerAndAlerts() ? this._formatUpdateDisablePagerAndAlerts(quiz) : null;
@@ -134,6 +151,7 @@ export class QuizEntity extends Entity {
 
 		const sirenActions = [
 			updateNameAction,
+			updateShuffleAction,
 			updateHintsAction,
 			updateDisableRightClickAction,
 			updateDisablePagerAndAlerts,
@@ -201,6 +219,23 @@ export class QuizEntity extends Entity {
 
 		const fields = [
 			{ name: 'name', value: name },
+		];
+
+		return { action, fields };
+	}
+
+	_formatShuffleAction(quiz) {
+		if (!quiz) return;
+		if (!this._hasShuffleChanged(quiz.shuffle)) return;
+
+		const entity = this._entity.getSubEntityByRel(Rels.Quizzes.shuffle);
+		if (!entity) return;
+
+		const action = entity.getActionByName(Actions.quizzes.updateShuffle);
+		if (!action) return;
+
+		const fields = [
+			{ name: 'shuffle', value: quiz.shuffle },
 		];
 
 		return { action, fields };
@@ -301,6 +336,10 @@ export class QuizEntity extends Entity {
 		return name !== this.name();
 	}
 
+	_hasShuffleChanged(shuffle) {
+		return shuffle !== this.isShuffleEnabled();
+	}
+
 	_hasDisableRightClickChanged(disableRightClick) {
 		return disableRightClick !== this.isDisableRightClickEnabled();
 	}
@@ -320,6 +359,7 @@ export class QuizEntity extends Entity {
 	equals(quiz) {
 		const diffs = [
 			[this.name(), quiz.name],
+			[this.isShuffleEnabled(), quiz.shuffle],
 			[this.getHintsToolEnabled(), quiz.allowHints],
 			[this.isDisableRightClickEnabled(), quiz.disableRightClick],
 			[this.isDisablePagerAndAlertsEnabled(), quiz.disablePagerAndAlerts],
