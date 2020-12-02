@@ -344,4 +344,18 @@ describe('QuizEntity', () => {
 			expect(fetchMock.done());
 		});
 	});
+
+	describe('previewHref', () => {
+		const testPreviewHref = 'http://test.desire2learn.d2l/d2l/lms/quizzing/user/quiz_summary.d2l?ou=6606&qi=46&isprv=1&fromQB=1&bp=1';
+
+		it('can read previewHref from an editable entity', () => {
+			var quizEntity = new QuizEntity(editableEntity);
+			expect(quizEntity.previewHref()).to.equal(testPreviewHref);
+		});
+
+		it('can read previewHref from a non-editable entity', () => {
+			var quizEntity = new QuizEntity(nonEditableEntity);
+			expect(quizEntity.previewHref()).to.equal(testPreviewHref);
+		});
+	});
 });
