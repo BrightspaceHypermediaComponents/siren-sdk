@@ -35,6 +35,20 @@ export class QuizEntity extends Entity {
 	}
 
 	/**
+	 * @returns {string} quiz preview href
+	*/
+
+	previewHref() {
+		if (!this._entity) {
+			return;
+		}
+
+		if (this._entity.hasLinkByRel('preview')) {
+			return this._entity.getLinkByRel('preview').href;
+		}
+	}
+
+	/**
 	 * @returns {string} quiz password
 	 */
 

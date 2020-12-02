@@ -40,6 +40,13 @@ export const editableQuiz = {
 		},
 		{
 			'rel': [
+				'preview'
+			],
+			'type': 'text/html',
+			'href': 'http://test.desire2learn.d2l/d2l/lms/quizzing/user/quiz_summary.d2l?ou=6606&qi=46&isprv=1&fromQB=1&bp=1'
+		},
+		{
+			'rel': [
 				'https://api.brightspace.com/rels/organization'
 			],
 			'href': 'https://afe99802-9130-4320-a770-8d138b941e74.organizations.api.proddev.d2l/6606'
