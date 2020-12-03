@@ -43,8 +43,8 @@ export class QuizEntity extends Entity {
 			return;
 		}
 
-		if (this._entity.hasLinkByRel('preview')) {
-			return this._entity.getLinkByRel('preview').href;
+		if (this._entity.hasLinkByRel(Rels.IANA.preview)) {
+			return this._entity.getLinkByRel(Rels.IANA.preview).href;
 		}
 	}
 
@@ -57,7 +57,7 @@ export class QuizEntity extends Entity {
 			return false;
 		}
 
-		return this._entity.hasLinkByRel('preview');
+		return this._entity.hasLinkByRel(Rels.IANA.preview);
 	}
 
 	/**
