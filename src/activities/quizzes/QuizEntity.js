@@ -49,6 +49,18 @@ export class QuizEntity extends Entity {
 	}
 
 	/**
+	 * @returns {bool} Whether or not the user can preview a quiz
+	*/
+
+	canPreviewQuiz() {
+		if (!this._entity) {
+			return false;
+		}
+
+		return this._entity.hasLinkByRel('preview');
+	}
+
+	/**
 	 * @returns {string} quiz password
 	 */
 

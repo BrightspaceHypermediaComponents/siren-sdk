@@ -345,17 +345,31 @@ describe('QuizEntity', () => {
 		});
 	});
 
-	describe('previewHref', () => {
-		const testPreviewHref = 'http://test.desire2learn.d2l/d2l/lms/quizzing/user/quiz_summary.d2l?ou=6606&qi=46&isprv=1&fromQB=1&bp=1';
+	describe('previewQuiz', () => {
+		describe('previewHref', () => {
+			const testPreviewHref = 'http://test.desire2learn.d2l/d2l/lms/quizzing/user/quiz_summary.d2l?ou=6606&qi=46&isprv=1&fromQB=1&bp=1';
+			it('can read previewHref from an editable entity', () => {
+				var quizEntity = new QuizEntity(editableEntity);
+				expect(quizEntity.previewHref()).to.equal(testPreviewHref);
+			});
 
-		it('can read previewHref from an editable entity', () => {
-			var quizEntity = new QuizEntity(editableEntity);
-			expect(quizEntity.previewHref()).to.equal(testPreviewHref);
+			it('returns undefined if previewHref is not available', () => {
+				var quizEntity = new QuizEntity(nonEditableEntity);
+				expect(quizEntity.previewHref()).to.be.undefined;
+			});
 		});
 
-		it('can read previewHref from a non-editable entity', () => {
-			var quizEntity = new QuizEntity(nonEditableEntity);
-			expect(quizEntity.previewHref()).to.equal(testPreviewHref);
+		describe('canPreviewQuiz', () => {
+			it('returns true when quiz preview is available', () => {
+				var quizEntity = new QuizEntity(editableEntity);
+				expect(quizEntity.canPreviewQuiz()).to.be.true;
+			});
+
+			it('returns false when quiz preview is not available', () => {
+				var quizEntity = new QuizEntity(nonEditableEntity);
+				expect(quizEntity.canPreviewQuiz()).to.be.false;
+			});
 		});
+
 	});
 });
