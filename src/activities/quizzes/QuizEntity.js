@@ -181,6 +181,22 @@ export class QuizEntity extends Entity {
 		return entity && entity.hasClass(Classes.quizzes.checked);
 	}
 
+	/**
+	 * @returns {bool} Whether or not the user can edit the autoSetGraded property
+	 */
+	canEditAutoSetGraded() {
+		const entity = this._entity.getSubEntityByRel(Rels.Quizzes.autoSetGraded);
+		return entity && entity.hasActionByName(Actions.quizzes.updateAutoSetGraded);
+	}
+
+	/**
+	 * @returns {bool} Is AutoSetGraded checked for the quiz entity
+	 */
+	isAutoSetGradedEnabled() {
+		const entity = this._entity.getSubEntityByRel(Rels.Quizzes.autoSetGraded);
+		return entity && entity.hasClass(Classes.quizzes.checked);
+	}
+
 	async save(quiz) {
 		if (!quiz) return;
 		const updateNameAction = this.canEditName() ? this._formatUpdateNameAction(quiz) : null;
@@ -191,6 +207,7 @@ export class QuizEntity extends Entity {
 		const updatePasswordAction = this.canEditPassword() ? this._formatUpdatePasswordAction(quiz) : null;
 		const updateNotificationEmail = this.canEditNotificationEmail() ? this._formatNotificationEmailAction(quiz) : null;
 		const updatePreventMovingBackwards = this.canEditPreventMovingBackwards() ? this._formatUpdatePreventMovingBackwards(quiz) : null;
+		const updateAutoSetGradedAction = this.canEditAutoSetGraded() ? this._formatUpdateAutoSetGraded(quiz) : null;
 
 		const sirenActions = [
 			updateNameAction,
@@ -200,7 +217,8 @@ export class QuizEntity extends Entity {
 			updateDisablePagerAndAlerts,
 			updatePasswordAction,
 			updateNotificationEmail,
-			updatePreventMovingBackwards
+			updatePreventMovingBackwards,
+			updateAutoSetGradedAction
 		];
 		await performSirenActions(this._token, sirenActions);
 	}
@@ -399,6 +417,23 @@ export class QuizEntity extends Entity {
 		return { action, fields };
 	}
 
+	_formatUpdateAutoSetGraded(quiz) {
+		if (!quiz) return;
+		if (!this._hasAutoSetGradedChanged(quiz.autoSetGraded)) return;
+
+		const entity = this._entity.getSubEntityByRel(Rels.Quizzes.autoSetGraded);
+		if (!entity) return;
+
+		const action = entity.getActionByName(Actions.quizzes.updateAutoSetGraded);
+		if (!action) return;
+
+		const fields = [
+			{ name: 'autoSetGraded', value: quiz.autoSetGraded },
+		];
+
+		return { action, fields };
+	}
+
 	_hasHintsChanged(allowHints) {
 		return allowHints !== this.getHintsToolEnabled();
 	}
@@ -431,6 +466,10 @@ export class QuizEntity extends Entity {
 		return preventMovingBackwards !== this.isPreventMovingBackwardsEnabled();
 	}
 
+	_hasAutoSetGradedChanged(autoSetGraded) {
+		return autoSetGraded !== this.isAutoSetGradedEnabled();
+	}
+
 	equals(quiz) {
 		const diffs = [
 			[this.name(), quiz.name],
@@ -440,7 +479,8 @@ export class QuizEntity extends Entity {
 			[this.isDisablePagerAndAlertsEnabled(), quiz.disablePagerAndAlerts],
 			[this.password(), quiz.password],
 			[this.notificationEmail(), quiz.notificationEmail],
-			[this.isPreventMovingBackwardsEnabled(), quiz.preventMovingBackwards]
+			[this.isPreventMovingBackwardsEnabled(), quiz.preventMovingBackwards],
+			[this.isAutoSetGradedEnabled(), quiz.autoSetGraded]
 		];
 
 		for (const [left, right] of diffs) {

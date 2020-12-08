@@ -224,6 +224,29 @@ export const editableQuiz = {
 					]
 				}
 			]
+		},
+		{
+			'class': [
+				'auto-set-graded',
+				'checked'
+			],
+			'rel': [
+				'https://quizzes.api.brightspace.com/rels/auto-set-graded'
+			],
+			'actions': [
+				{
+					'href': 'https://afe99802-9130-4320-a770-8d138b941e74.quizzes.api.proddev.d2l/6606/quizzes/22',
+					'name': 'update-auto-set-graded',
+					'method': 'PATCH',
+					'fields': [
+						{
+							'type': 'checkbox',
+							'name': 'autoSetGraded',
+							'value': true
+						}
+					]
+				}
+			]
 		}
 	]
 };

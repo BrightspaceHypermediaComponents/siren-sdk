@@ -36,7 +36,8 @@ describe('QuizEntity', () => {
 				disablePagerAndAlerts: true,
 				password: 'hello',
 				notificationEmail: 'moose@d2l.com',
-				preventMovingBackwards: true
+				preventMovingBackwards: true,
+				autoSetGraded: true
 			};
 		});
 
@@ -78,6 +79,12 @@ describe('QuizEntity', () => {
 		it('returns false when preventMovingBackwards is not equal', () => {
 			var quizEntity = new QuizEntity(editableEntity);
 			modifiedEntity.preventMovingBackwards = false;
+			expect(quizEntity.equals(modifiedEntity)).to.be.false;
+		});
+
+		it('returns false when autoSetGraded not equal', () => {
+			var quizEntity = new QuizEntity(editableEntity);
+			modifiedEntity.autoSetGraded = false;
 			expect(quizEntity.equals(modifiedEntity)).to.be.false;
 		});
 	});
@@ -292,7 +299,8 @@ describe('QuizEntity', () => {
 				disablePagerAndAlerts: false,
 				password: 'super-secret',
 				notificationEmail: 'modifiedMoose@d2l.com',
-				preventMovingBackwards: false
+				preventMovingBackwards: false,
+				autoSetGraded: false
 			});
 
 			const form = await getFormData(fetchMock.lastCall().request);
@@ -305,6 +313,7 @@ describe('QuizEntity', () => {
 				expect(form.get('password')).to.equal('super-secret');
 				expect(form.get('notificationEmail')).to.equal('modifiedMoose@d2l.com');
 				expect(form.get('preventMovingBackwards')).to.equal('false');
+				expect(form.get('autoSetGraded')).to.equal('false');
 			}
 
 			expect(fetchMock.called()).to.be.true;
@@ -322,6 +331,7 @@ describe('QuizEntity', () => {
 				password: 'hello',
 				notificationEmail: 'moose@d2l.com',
 				preventMovingBackwards: true,
+				autoSetGraded: true
 			});
 
 			expect(fetchMock.done());
@@ -339,6 +349,7 @@ describe('QuizEntity', () => {
 				password: 'super-secret',
 				notificationEmail: 'modifiedMoose@d2l.com',
 				preventMovingBackwards: false,
+				autoSetGraded: false
 			});
 
 			expect(fetchMock.done());
@@ -371,5 +382,31 @@ describe('QuizEntity', () => {
 			});
 		});
 
+	});
+
+	describe('autoSetGraded', () => {
+		describe('canEditAutoSetGraded', () => {
+			it('returns true when auto set graded is editable', () => {
+				var quizEntity = new QuizEntity(editableEntity);
+				expect(quizEntity.canEditAutoSetGraded()).to.be.true;
+			});
+
+			it('returns false when auto set graded is not editable', () => {
+				var quizEntity = new QuizEntity(nonEditableEntity);
+				expect(quizEntity.canEditAutoSetGraded()).to.be.false;
+			});
+		});
+
+		describe('isAutoSetGradedEnabled', () => {
+			it('returns true when isAutoSetGraded is true', () => {
+				var quizEntity = new QuizEntity(editableEntity);
+				expect(quizEntity.isAutoSetGradedEnabled()).to.be.true;
+			});
+
+			it('returns false when isAutoSetGraded is false', () => {
+				var quizEntity = new QuizEntity(nonEditableEntity);
+				expect(quizEntity.isAutoSetGradedEnabled()).to.be.false;
+			});
+		});
 	});
 });
