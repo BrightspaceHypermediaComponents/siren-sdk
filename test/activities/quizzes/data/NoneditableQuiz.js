@@ -101,5 +101,14 @@ export const nonEditableQuiz = {
 				'https://quizzes.api.brightspace.com/rels/prevent-moving-backwards'
 			],
 		},
+		{
+			'class': [
+				'auto-set-graded',
+				'unchecked'
+			],
+			'rel': [
+				'https://quizzes.api.brightspace.com/rels/auto-set-graded'
+			],
+		},
 	]
 };
