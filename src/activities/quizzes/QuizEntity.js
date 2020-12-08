@@ -209,8 +209,6 @@ export class QuizEntity extends Entity {
 		const updatePreventMovingBackwards = this.canEditPreventMovingBackwards() ? this._formatUpdatePreventMovingBackwards(quiz) : null;
 		const updateAutoSetGradedAction = this.canEditAutoSetGraded() ? this._formatUpdateAutoSetGraded(quiz) : null;
 
-		// debugger;
-
 		const sirenActions = [
 			updateNameAction,
 			updateShuffleAction,
