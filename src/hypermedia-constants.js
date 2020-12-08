@@ -149,7 +149,8 @@ export const Rels = {
 		disablePagerAndAlerts: 'https://quizzes.api.brightspace.com/rels/disable-pager-access',
 		password: 'https://quizzes.api.brightspace.com/rels/quiz-password',
 		notificationEmail: 'https://quizzes.api.brightspace.com/rels/notification-email',
-		preventMovingBackwards: 'https://quizzes.api.brightspace.com/rels/prevent-moving-backwards'
+		preventMovingBackwards: 'https://quizzes.api.brightspace.com/rels/prevent-moving-backwards',
+		autoSetGraded: 'https://quizzes.api.brightspace.com/rels/auto-set-graded'
 	},
 	// Themes API sub-domain rels
 	Themes: {
@@ -341,7 +342,8 @@ export const Classes = {
 		disablePagerAndAlerts: 'disable-pager-access',
 		checked: 'checked',
 		password: 'password',
-		notificationEmail: 'notificationEmail'
+		notificationEmail: 'notificationEmail',
+		autoSetGraded: 'auto-set-graded'
 	},
 	text: {
 		richtext: 'richtext'
@@ -527,6 +529,7 @@ export const Actions = {
 		updateDisablePagerAndAlerts: 'update-disable-pager-access',
 		updatePassword: 'update-quiz-password',
 		updateNotificationEmail: 'update-notification-email',
-		updatePreventMovingBackwards: 'update-prevent-moving-backwards'
+		updatePreventMovingBackwards: 'update-prevent-moving-backwards',
+		updateAutoSetGraded: 'update-auto-set-graded'
 	},
 };
