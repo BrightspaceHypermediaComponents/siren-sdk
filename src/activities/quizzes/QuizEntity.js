@@ -490,4 +490,19 @@ export class QuizEntity extends Entity {
 		}
 		return true;
 	}
+
+	canDelete() {
+		return this._entity.hasActionByName(Actions.quizzes.delete);
+	}
+
+	async delete() {
+		const action = this.canDelete() && this._entity.getActionByName(Actions.quizzes.delete);
+		if (!action) {
+			return;
+		}
+
+		await performSirenAction(this._token, action).then(() => {
+			this.dispose();
+		});
+	}
 }

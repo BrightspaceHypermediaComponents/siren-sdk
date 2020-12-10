@@ -22,7 +22,13 @@ export const editableQuiz = {
 					'value': 'Untitled'
 				}
 			]
-		}
+		},
+		{
+			'title': 'Delete a quiz',
+			'href': 'https://afe99802-9130-4320-a770-8d138b941e74.quizzes.api.proddev.d2l/6606/quizzes/22',
+			'name': 'delete-quiz',
+			'method': 'DELETE'
+		},
 	],
 	'links': [
 		{
