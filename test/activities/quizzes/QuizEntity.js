@@ -364,7 +364,6 @@ describe('QuizEntity', () => {
 
 			await quizEntity.delete();
 			expect(fetchMock.called()).to.be.true;
-			});
 		});
 
 		it('cannot delete quiz', async() => {
