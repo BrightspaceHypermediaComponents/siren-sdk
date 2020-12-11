@@ -356,6 +356,23 @@ describe('QuizEntity', () => {
 		});
 	});
 
+	describe('delete', () => {
+		it('delete quiz', async() => {
+			fetchMock.deleteOnce('https://afe99802-9130-4320-a770-8d138b941e74.quizzes.api.proddev.d2l/6606/quizzes/22', editableEntity);
+
+			var quizEntity = new QuizEntity(editableEntity);
+
+			await quizEntity.delete();
+			expect(fetchMock.called()).to.be.true;
+		});
+
+		it('cannot delete quiz', async() => {
+			var quizEntity = new QuizEntity(nonEditableEntity);
+			await quizEntity.delete();
+			expect(fetchMock.done());
+		});
+	});
+
 	describe('previewQuiz', () => {
 		describe('previewHref', () => {
 			const testPreviewHref = 'http://test.desire2learn.d2l/d2l/lms/quizzing/user/quiz_summary.d2l?ou=6606&qi=46&isprv=1&fromQB=1&bp=1';

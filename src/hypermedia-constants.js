@@ -530,6 +530,7 @@ export const Actions = {
 		updatePassword: 'update-quiz-password',
 		updateNotificationEmail: 'update-notification-email',
 		updatePreventMovingBackwards: 'update-prevent-moving-backwards',
-		updateAutoSetGraded: 'update-auto-set-graded'
+		updateAutoSetGraded: 'update-auto-set-graded',
+		delete: 'delete-quiz'
 	},
 };
