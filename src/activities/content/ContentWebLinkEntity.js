@@ -106,7 +106,7 @@ export class ContentWebLinkEntity extends Entity {
 			return;
 		}
 
-		const fields = [{ url: 'url', value: url }];
+		const fields = [{ name: 'url', value: url }];
 		await performSirenAction(this._token, action, fields);
 	}
 
@@ -123,7 +123,7 @@ export class ContentWebLinkEntity extends Entity {
 			return;
 		}
 
-		const fields = [{ isExternalResource: 'isExternalResource', value: isExternalResource }];
+		const fields = [{ name: 'isExternalResource', value: isExternalResource }];
 		await performSirenAction(this._token, action, fields);
 	}
 
@@ -149,8 +149,8 @@ export class ContentWebLinkEntity extends Entity {
 	 */
 	equals(contentWebLink) {
 		const diffs = [
-			[this.title(), contentModule.title],
-			[this.descriptionRichText(), contentModule.descriptionRichText],
+			[this.title(), contentWebLink.title],
+			[this.descriptionRichText(), contentWebLink.descriptionRichText],
 			[this.url(), contentWebLink.url],
 			[this.isExternalResource(), contentWebLink.isExternalResource]
 		];

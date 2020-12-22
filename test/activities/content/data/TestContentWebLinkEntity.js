@@ -53,7 +53,7 @@ export const contentWebLinkData = {
 		},
 		{
 			'href': 'https://fake-tenant-id.weblinks.api.proddev.d2l/6613/weblinks/12345',
-			'name': 'delete-weblink',
+			'name': 'delete-webLink',
 			'method': 'DELETE'
 		}
 	],
