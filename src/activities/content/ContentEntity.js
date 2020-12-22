@@ -22,10 +22,10 @@ export class ContentEntity extends Entity {
 			return null;
 		} else if (this._entity.hasClass(CONTENT_TYPES.module)) {
 			return CONTENT_TYPES.module;
+		} else if (this._entity.hasClass(CONTENT_TYPES.weblink)) {
+			return CONTENT_TYPES.weblink;
 		} else if (this._entity.hasClass(CONTENT_TYPES.topic)) {
 			return CONTENT_TYPES.topic;
-		}  else if (this._entity.hasClass(CONTENT_TYPES.weblink)) {
-			return CONTENT_TYPES.weblink;
 		} else {
 			return null;
 		}
