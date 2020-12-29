@@ -1,6 +1,7 @@
 import { Entity } from '../../es6/Entity';
-import { Actions, Classes } from '../../hypermedia-constants';
+import { Actions } from '../../hypermedia-constants';
 import { performSirenAction } from '../../es6/SirenAction';
+import ContentHelperFunctions from './ContentHelperFunctions.js';
 
 /**
  * ContentModuleEntity class representation of a d2l content-module entity.
@@ -11,28 +12,22 @@ export class ContentModuleEntity extends Entity {
 	 * @returns {string} Description html of the content-module item
 	 */
 	descriptionRichText() {
-		if (!this._entity) {
+		const descriptionSubEntity = ContentHelperFunctions.getDescriptionSubEntity(this._entity);
+		if (!descriptionSubEntity) {
 			return null;
 		}
-		const subEntity = this._entity.getSubEntitiesByClass(Classes.content.description)[0];
-		if (!subEntity || !subEntity.properties) {
-			return null;
-		}
-		return subEntity.properties.html || '';
+		return descriptionSubEntity.properties.html || '';
 	}
 
 	/**
 	 * @returns {string} Description text of the content-module item
 	 */
 	descriptionText() {
-		if (!this._entity) {
+		const descriptionSubEntity = ContentHelperFunctions.getDescriptionSubEntity(this._entity);
+		if (!descriptionSubEntity) {
 			return null;
 		}
-		const subEntity = this._entity.getSubEntitiesByClass(Classes.content.description)[0];
-		if (!subEntity || !subEntity.properties) {
-			return null;
-		}
-		return subEntity.properties.text || '';
+		return descriptionSubEntity.properties.text || '';
 	}
 
 	/**
@@ -83,7 +78,7 @@ export class ContentModuleEntity extends Entity {
 		if (!this._entity) {
 			return;
 		}
-		const action = this._entity.getActionByName(Actions.content.deleteModule);
+		const action = this._entity.getActionByName(Actions.module.deleteModule);
 		if (!action) {
 			return;
 		}

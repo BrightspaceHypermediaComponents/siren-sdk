@@ -1,6 +1,7 @@
 import { Entity } from '../../es6/Entity';
 import { Actions, Classes } from '../../hypermedia-constants';
 import { performSirenAction } from '../../es6/SirenAction';
+import ContentHelperFunctions from './ContentHelperFunctions.js';
 
 /**
  * ContentWebLinkEntity class representation of a d2l content-weblink entity.
@@ -11,28 +12,22 @@ export class ContentWebLinkEntity extends Entity {
 	 * @returns {string} Description html of the content-weblink item
 	 */
 	descriptionRichText() {
-		if (!this._entity) {
+		const descriptionSubEntity = ContentHelperFunctions.getDescriptionSubEntity(this._entity);
+		if (!descriptionSubEntity) {
 			return null;
 		}
-		const subEntity = this._entity.getSubEntitiesByClass(Classes.content.description)[0];
-		if (!subEntity || !subEntity.properties) {
-			return null;
-		}
-		return subEntity.properties.html || '';
+		return descriptionSubEntity.properties.html || '';
 	}
 
 	/**
 	 * @returns {string} Description text of the content-weblink item
 	 */
 	descriptionText() {
-		if (!this._entity) {
+		const descriptionSubEntity = ContentHelperFunctions.getDescriptionSubEntity(this._entity);
+		if (!descriptionSubEntity) {
 			return null;
 		}
-		const subEntity = this._entity.getSubEntitiesByClass(Classes.content.description)[0];
-		if (!subEntity || !subEntity.properties) {
-			return null;
-		}
-		return subEntity.properties.text || '';
+		return descriptionSubEntity.properties.text || '';
 	}
 
 	/**
@@ -40,9 +35,9 @@ export class ContentWebLinkEntity extends Entity {
 	 */
 	isExternalResource() {
 		if (!this._entity) {
-			return null;
+			return false;
 		}
-		return this._entity.hasClass(Classes.content.externalResource);
+		return this._entity.hasClass(Classes.webLink.externalResource);
 	}
 
 	/**
@@ -61,7 +56,7 @@ export class ContentWebLinkEntity extends Entity {
 
 	/**
 	 * Updates the web link to have the given description
-	 * @param {string} title rich text description to set on the web link
+	 * @param {string} richText rich text description to set on the web link
 	 */
 	async setWebLinkDescription(richText) {
 		if (!this._entity) {
@@ -101,7 +96,7 @@ export class ContentWebLinkEntity extends Entity {
 		if (!this._entity) {
 			return;
 		}
-		const action = this._entity.getActionByName(Actions.content.updateUrl);
+		const action = this._entity.getActionByName(Actions.webLink.updateUrl);
 		if (!action) {
 			return;
 		}
@@ -118,7 +113,7 @@ export class ContentWebLinkEntity extends Entity {
 		if (!this._entity) {
 			return;
 		}
-		const action = this._entity.getActionByName(Actions.content.updateExternalResource);
+		const action = this._entity.getActionByName(Actions.webLink.updateExternalResource);
 		if (!action) {
 			return;
 		}
@@ -134,7 +129,7 @@ export class ContentWebLinkEntity extends Entity {
 		if (!this._entity) {
 			return;
 		}
-		const action = this._entity.getActionByName(Actions.content.deleteWeblink);
+		const action = this._entity.getActionByName(Actions.webLink.deleteWeblink);
 		if (!action) {
 			return;
 		}

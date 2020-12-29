@@ -276,10 +276,9 @@ export const Classes = {
 	content: {
 		content: 'content',
 		sequencedActivity: 'sequenced-activity',
-		topic: 'topic',
-		module: 'module',
-		description: 'description',
-		weblink: 'weblink',
+		description: 'description'
+	},
+	webLink: {
 		externalResource: 'external-resource'
 	},
 	courseImage: {
@@ -468,9 +467,13 @@ export const Actions = {
 	content: {
 		updateTitle: 'update-title',
 		updateDescription: 'update-description',
+	},
+	module: {
+		deleteModule: 'delete-module'
+	},
+	webLink: {
 		updateUrl: 'update-url',
 		updateExternalResource: 'update-external-resource',
-		deleteModule: 'delete-module',
 		deleteWeblink: 'delete-webLink'
 	},
 	notifications: {

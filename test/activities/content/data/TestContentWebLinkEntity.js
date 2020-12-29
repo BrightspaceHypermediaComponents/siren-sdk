@@ -59,7 +59,7 @@ export const contentWebLinkData = {
 	],
 	'class': [
 		'describable-entity',
-		'weblink',
+		'topic',
 		'external-resource'
 	],
 	'properties': {

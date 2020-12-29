@@ -3,7 +3,7 @@ import { ContentWebLinkEntity } from '../../../src/activities/content/ContentWeb
 import { contentWebLinkData } from './data/TestContentWebLinkEntity.js';
 import { getFormData } from '../../utility/test-helpers.js';
 
-describe('ContentModuleEntity', () => {
+describe('ContentWebLinkEntity', () => {
 	let webLinkData;
 	let contentWebLinkEntity;
 
