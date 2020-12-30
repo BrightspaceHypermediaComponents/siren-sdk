@@ -145,7 +145,6 @@ export class ContentWebLinkEntity extends Entity {
 	equals(contentWebLink) {
 		const diffs = [
 			[this.title(), contentWebLink.title],
-			[this.descriptionRichText(), contentWebLink.descriptionRichText],
 			[this.url(), contentWebLink.url],
 			[this.isExternalResource(), contentWebLink.isExternalResource]
 		];
