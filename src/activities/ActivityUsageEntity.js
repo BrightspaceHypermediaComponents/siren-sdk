@@ -139,6 +139,17 @@ export class ActivityUsageEntity extends Entity {
 		return this._entity.getLinkByRel(Rels.IANA.edit).href;
 	}
 
+	/**
+	 * @returns {string} URL to create the activity usage, if present
+	 */
+	createFormHref() {
+		if (!this._entity || !this._entity.hasLinkByRel(Rels.IANA.createForm)) {
+			return;
+		}
+
+		return this._entity.getLinkByRel(Rels.IANA.createForm).href;
+	}
+
 	competenciesHref() {
 		if (!this._entity || !this._entity.hasLinkByRel(Rels.Alignments.legacyCompetencies)) {
 			return;
