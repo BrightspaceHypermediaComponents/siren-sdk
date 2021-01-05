@@ -9,7 +9,7 @@ import ContentHelperFunctions from './ContentHelperFunctions.js';
 export class ContentModuleEntity extends Entity {
 
 	/**
-	 * @returns {string} Description html of the content-module item
+	 * @returns {string|null} Description html of the content-module item
 	 */
 	descriptionRichText() {
 		const descriptionSubEntity = ContentHelperFunctions.getDescriptionSubEntity(this._entity);
@@ -20,7 +20,7 @@ export class ContentModuleEntity extends Entity {
 	}
 
 	/**
-	 * @returns {string} Description text of the content-module item
+	 * @returns {string|null} Description text of the content-module item
 	 */
 	descriptionText() {
 		const descriptionSubEntity = ContentHelperFunctions.getDescriptionSubEntity(this._entity);
@@ -39,7 +39,7 @@ export class ContentModuleEntity extends Entity {
 
 	/**
 	 * Updates the module to have the given description
-	 * @param {string} title rich text description to set on the module
+	 * @param {string} richText description to set on the module
 	 */
 	async setModuleDescription(richText) {
 		if (!this._entity) {

@@ -9,7 +9,7 @@ import ContentHelperFunctions from './ContentHelperFunctions.js';
 export class ContentWebLinkEntity extends Entity {
 
 	/**
-	 * @returns {string} Description html of the content-weblink item
+	 * @returns {string|null} Description html of the content-weblink item
 	 */
 	descriptionRichText() {
 		const descriptionSubEntity = ContentHelperFunctions.getDescriptionSubEntity(this._entity);
@@ -20,7 +20,7 @@ export class ContentWebLinkEntity extends Entity {
 	}
 
 	/**
-	 * @returns {string} Description text of the content-weblink item
+	 * @returns {string|null} Description text of the content-weblink item
 	 */
 	descriptionText() {
 		const descriptionSubEntity = ContentHelperFunctions.getDescriptionSubEntity(this._entity);

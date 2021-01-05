@@ -14,7 +14,7 @@ export const CONTENT_TYPES = {
 export class ContentEntity extends Entity {
 
 	/**
-	 * @returns {string} content type
+	 * @returns {string|null} content type
 	 */
 	getEntityType() {
 		// TODO - add more specific entity types to the activity-usage class array
