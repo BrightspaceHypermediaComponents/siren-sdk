@@ -76,7 +76,7 @@ describe('ActivityUsageEntity', () => {
 
 	describe('read only loading', () => {
 		it('create-form url returns blank', () => {
-			expect(readonlyEntity.createFormHref()).to.be.null;
+			expect(readonlyEntity.createFormHref()).to.be.undefined;
 		});
 	});
 
