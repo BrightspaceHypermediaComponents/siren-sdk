@@ -138,6 +138,13 @@ export const testData = {
 			},
 			{
 				'rel': [
+					'https://activities.api.brightspace.com/rels/activity-usage',
+					'create-form'
+				],
+				'href': 'http://vlx1-mdulat.desire2learn.d2l:44444/d2l/api/hm/activities/activities/6606_2000_31/usages/6609?mode=creating'
+			},
+			{
+				'rel': [
 					'https://activities.api.brightspace.com/rels/user-activity-usage',
 					'https://activities.api.brightspace.com/rels/my-activity-usage'
 				],

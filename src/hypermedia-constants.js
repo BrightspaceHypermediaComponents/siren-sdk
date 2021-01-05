@@ -205,7 +205,8 @@ export const Rels = {
 	},
 	IANA: {
 		edit: 'edit',
-		preview: 'preview'
+		preview: 'preview',
+		createForm: 'create-form'
 	}
 };
 
