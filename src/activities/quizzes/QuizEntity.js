@@ -505,4 +505,63 @@ export class QuizEntity extends Entity {
 			this.dispose();
 		});
 	}
+
+	_canCheckout() {
+		return this._entity && this._entity.hasActionByName(Actions.quizzes.checkout);
+	}
+
+	_canFork() {
+		return this._entity && this._entity.hasActionByName(Actions.quizzes.fork);
+	}
+
+	_canMerge() {
+		return this._entity && this._entity.hasActionByName(Actions.quizzes.merge);
+	}
+
+	_canCheckin() {
+		return this._entity && this._entity.hasActionByName(Actions.quizzes.checkin);
+	}
+
+	/**
+	 * Checkout quiz working copy
+	 */
+	async checkout() {
+		if (this._canCheckout()) {
+			const action = this.getActionByName(Actions.quizzes.checkout);
+
+			// This fields is a workaround for an issue where query parameters are not added properly: https://github.com/Brightspace/polymer-siren-behaviors/issues/42
+			const fields = [];
+			await performSirenAction(this._token, action, fields);
+		}
+	}
+
+	/**
+	 * Fork quiz working copy
+	 */
+	async fork() {
+		if (this._canFork()) {
+			const action = this.getActionByName(Actions.quizzes.fork);
+			await performSirenAction(this._token, action);
+		}
+	}
+
+	/**
+	 * Merge quiz working copy
+	 */
+	async merge() {
+		if (this._canMerge()) {
+			const action = this.getActionByName(Actions.quizzes.merge);
+			await performSirenAction(this._token, action);
+		}
+	}
+
+	/**
+	 * Checkin quiz working copy
+	 */
+	async checkin() {
+		if (this._canCheckin()) {
+			const action = this.getActionByName(Actions.quizzes.checkin);
+			await performSirenAction(this._token, action);
+		}
+	}
 }

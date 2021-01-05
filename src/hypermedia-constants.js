@@ -531,6 +531,10 @@ export const Actions = {
 		updateNotificationEmail: 'update-notification-email',
 		updatePreventMovingBackwards: 'update-prevent-moving-backwards',
 		updateAutoSetGraded: 'update-auto-set-graded',
-		delete: 'delete-quiz'
+		delete: 'delete-quiz',
+		checkout: 'checkout',
+		fork: 'fork',
+		merge: 'merge',
+		checkin: 'checkin'
 	},
 };
