@@ -68,6 +68,16 @@ describe('ActivityUsageEntity', () => {
 		it('can get special access url', () => {
 			expect(entity.specialAccessHref()).to.equal('http://vlx1-mdulat.desire2learn.d2l:44444/d2l/api/hm/activities/activities/6606_2000_31/usages/6609/special-access');
 		});
+
+		it('can get create-form url', () => {
+			expect(entity.createFormHref()).to.equal('http://vlx1-mdulat.desire2learn.d2l:44444/d2l/api/hm/activities/activities/6606_2000_31/usages/6609?mode=creating');
+		});
+	});
+
+	describe('read only loading', () => {
+		it('create-form url returns blank', () => {
+			expect(readonlyEntity.createFormHref()).to.be.null;
+		});
 	});
 
 	describe('Functionality', () => {
