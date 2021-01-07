@@ -507,19 +507,19 @@ export class QuizEntity extends Entity {
 	}
 
 	_canCheckout() {
-		return this._entity && this._entity.hasActionByName(Actions.quizzes.checkout);
+		return this._entity && this._entity.hasActionByName(Actions.workingCopy.checkout);
 	}
 
 	_canFork() {
-		return this._entity && this._entity.hasActionByName(Actions.quizzes.fork);
+		return this._entity && this._entity.hasActionByName(Actions.workingCopy.fork);
 	}
 
 	_canMerge() {
-		return this._entity && this._entity.hasActionByName(Actions.quizzes.merge);
+		return this._entity && this._entity.hasActionByName(Actions.workingCopy.merge);
 	}
 
 	_canCheckin() {
-		return this._entity && this._entity.hasActionByName(Actions.quizzes.checkin);
+		return this._entity && this._entity.hasActionByName(Actions.workingCopy.checkin);
 	}
 
 	/**
@@ -527,7 +527,7 @@ export class QuizEntity extends Entity {
 	 */
 	async checkout() {
 		if (this._canCheckout()) {
-			const action = this.getActionByName(Actions.quizzes.checkout);
+			const action = this.getActionByName(Actions.workingCopy.checkout);
 
 			// This fields is a workaround for an issue where query parameters are not added properly: https://github.com/Brightspace/polymer-siren-behaviors/issues/42
 			const fields = [];
@@ -540,7 +540,7 @@ export class QuizEntity extends Entity {
 	 */
 	async fork() {
 		if (this._canFork()) {
-			const action = this.getActionByName(Actions.quizzes.fork);
+			const action = this.getActionByName(Actions.workingCopy.fork);
 			await performSirenAction(this._token, action);
 		}
 	}
@@ -550,7 +550,7 @@ export class QuizEntity extends Entity {
 	 */
 	async merge() {
 		if (this._canMerge()) {
-			const action = this.getActionByName(Actions.quizzes.merge);
+			const action = this.getActionByName(Actions.workingCopy.merge);
 			await performSirenAction(this._token, action);
 		}
 	}
@@ -560,7 +560,7 @@ export class QuizEntity extends Entity {
 	 */
 	async checkin() {
 		if (this._canCheckin()) {
-			const action = this.getActionByName(Actions.quizzes.checkin);
+			const action = this.getActionByName(Actions.workingCopy.checkin);
 			await performSirenAction(this._token, action);
 		}
 	}
