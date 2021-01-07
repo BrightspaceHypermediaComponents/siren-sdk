@@ -505,4 +505,83 @@ export class QuizEntity extends Entity {
 			this.dispose();
 		});
 	}
+
+	_getDescriptionEntity() {
+		return this._entity
+			&& this._entity.hasSubEntityByRel(Rels.Quizzes.description)
+			&& this._entity.getSubEntityByRel(Rels.Quizzes.description);
+	}
+
+	/**
+	 * @returns {string} Quiz discription in plaintext (HTML stripped)
+	 */
+	descriptionPlaintext() {
+		const descriptionEntity = this._getDescriptionEntity();
+		return descriptionEntity
+			&& descriptionEntity.properties
+			&& descriptionEntity.properties.text;
+	}
+
+	/**
+	 * @returns {string} Quiz description in HTML
+	 */
+	descriptionHtml() {
+		const descriptionEntity = this._getDescriptionEntity();
+		return descriptionEntity
+			&& descriptionEntity.properties
+			&& descriptionEntity.properties.html;
+	}
+
+	/**
+	 * @returns {string} Quiz description formatted to be used with a d2l-html-editor
+	 */
+	descriptionEditorHtml() {
+		const descriptionEntity = this._getDescriptionEntity();
+		if (!descriptionEntity) {
+			return;
+		}
+
+		const updateDescriptionAction = descriptionEntity.getActionByName(Actions.quizzes.updateDescription);
+		return updateDescriptionAction
+			&& updateDescriptionAction.hasFieldByName('description')
+			&& updateDescriptionAction.getFieldByName('description').value;
+	}
+
+	/**
+	 * @returns {bool} Whether or not the edit description action is present on the quiz entity
+	 */
+	canEditDescription() {
+		const descriptionEntity = this._getDescriptionEntity();
+		return descriptionEntity
+			&& descriptionEntity.hasActionByName(Actions.quizzes.updateDescription);
+	}
+
+	/**
+	 * Updates the quiz to have the given description
+	 * @param {string} description Description to set on the assignment
+	 */
+	async setDescription(description) {
+		const descriptionEntity = this.canEditDescription() && this._getDescriptionEntity();
+		if (!descriptionEntity) {
+			return;
+		}
+
+		const action = descriptionEntity.getActionByName(Actions.quizzes.updateDescription);
+		if (!action) {
+			return;
+		}
+
+		const fields = [{ name: 'description', value: description }];
+		await performSirenAction(this._token, action, fields);
+	}
+
+	/**
+	 * @returns {object} Richtext editor config for the quiz description; for use with d2l-html-editor
+	 */
+	descriptionRichTextEditorConfig() {
+		const descriptionEntity = this._getDescriptionEntity();
+		return descriptionEntity
+			&& descriptionEntity.getSubEntityByRel(Rels.richTextEditorConfig);
+	}
+
 }
