@@ -543,4 +543,10 @@ export const Actions = {
 		updateAutoSetGraded: 'update-auto-set-graded',
 		delete: 'delete-quiz'
 	},
+	workingCopy: {
+		checkout: 'checkout',
+		fork: 'fork',
+		merge: 'merge',
+		checkin: 'checkin'
+	}
 };
