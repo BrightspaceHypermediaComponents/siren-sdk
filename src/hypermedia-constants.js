@@ -545,4 +545,10 @@ export const Actions = {
 		delete: 'delete-quiz',
 		updateAttemptsAllowed: 'update-attempts'
 	},
+	workingCopy: {
+		checkout: 'checkout',
+		fork: 'fork',
+		merge: 'merge',
+		checkin: 'checkin'
+	}
 };
