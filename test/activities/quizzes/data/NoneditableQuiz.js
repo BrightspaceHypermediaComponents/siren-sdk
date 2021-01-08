@@ -110,5 +110,16 @@ export const nonEditableQuiz = {
 				'https://quizzes.api.brightspace.com/rels/auto-set-graded'
 			],
 		},
+		{
+			'class': [
+				'attempts'
+			],
+			'rel': [
+				'https://quizzes.api.brightspace.com/rels/attempts'
+			],
+			'properties': {
+				'attempts': 3
+			},
+		}
 	]
 };

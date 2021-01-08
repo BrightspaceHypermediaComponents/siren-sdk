@@ -253,6 +253,31 @@ export const editableQuiz = {
 					]
 				}
 			]
+		},
+		{
+			'class': [
+				'attempts'
+			],
+			'rel': [
+				'https://quizzes.api.brightspace.com/rels/attempts'
+			],
+			'properties': {
+				'attempts': 3
+			},
+			'actions': [
+				{
+					'href': 'https://afe99802-9130-4320-a770-8d138b941e74.quizzes.api.proddev.d2l/6606/quizzes/16',
+					'name': 'update-attempts',
+					'method': 'PATCH',
+					'fields': [
+						{
+							'type': 'number',
+							'name': 'attemptsAllowed',
+							'value': 3
+						}
+					]
+				}
+			]
 		}
 	]
 };

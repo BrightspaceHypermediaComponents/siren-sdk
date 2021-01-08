@@ -37,7 +37,8 @@ describe('QuizEntity', () => {
 				password: 'hello',
 				notificationEmail: 'moose@d2l.com',
 				preventMovingBackwards: true,
-				autoSetGraded: true
+				autoSetGraded: true,
+				attempts: 3
 			};
 		});
 
@@ -85,6 +86,12 @@ describe('QuizEntity', () => {
 		it('returns false when autoSetGraded not equal', () => {
 			var quizEntity = new QuizEntity(editableEntity);
 			modifiedEntity.autoSetGraded = false;
+			expect(quizEntity.equals(modifiedEntity)).to.be.false;
+		});
+
+		it('returns false when attempts not equal', () => {
+			var quizEntity = new QuizEntity(editableEntity);
+			modifiedEntity.attempts = 3000;
 			expect(quizEntity.equals(modifiedEntity)).to.be.false;
 		});
 	});
@@ -423,6 +430,32 @@ describe('QuizEntity', () => {
 			it('returns false when isAutoSetGraded is false', () => {
 				var quizEntity = new QuizEntity(nonEditableEntity);
 				expect(quizEntity.isAutoSetGradedEnabled()).to.be.false;
+			});
+		});
+	});
+
+	describe('attempts', () => {
+		describe('canUpdateAttemptsAllowed', () => {
+			it('returns true when attempts allowed is editable', () => {
+				var quizEntity = new QuizEntity(editableEntity);
+				expect(quizEntity.canUpdateAttemptsAllowed()).to.be.true;
+			});
+
+			it('returns false when password is not editable', () => {
+				var quizEntity = new QuizEntity(nonEditableEntity);
+				expect(quizEntity.canUpdateAttemptsAllowed()).to.be.false;
+			});
+		});
+
+		describe('attempts', () => {
+			it('can read number of attempts allowed from an editable entity', () => {
+				var quizEntity = new QuizEntity(editableEntity);
+				expect(quizEntity.attemptsAllowed()).to.equal(3);
+			});
+
+			it('can read number of attempts allowed  from a non-editable entity', () => {
+				var quizEntity = new QuizEntity(nonEditableEntity);
+				expect(quizEntity.attemptsAllowed()).to.equal(3);
 			});
 		});
 	});
