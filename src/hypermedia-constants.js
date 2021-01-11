@@ -543,7 +543,8 @@ export const Actions = {
 		updatePreventMovingBackwards: 'update-prevent-moving-backwards',
 		updateAutoSetGraded: 'update-auto-set-graded',
 		delete: 'delete-quiz',
-		updateAttemptsAllowed: 'update-attempts'
+		updateAttemptsAllowed: 'update-attempts',
+		updateDescription: 'update-description'
 	},
 	workingCopy: {
 		checkout: 'checkout',

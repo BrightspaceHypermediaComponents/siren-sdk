@@ -50,7 +50,8 @@ describe('QuizEntity', () => {
 				notificationEmail: 'moose@d2l.com',
 				preventMovingBackwards: true,
 				autoSetGraded: true,
-				attempts: attempts
+				attempts: attempts,
+				description: 'The Second quiz ever'
 			};
 		});
 
@@ -104,6 +105,12 @@ describe('QuizEntity', () => {
 		it('returns false when attempts allowed not equal', () => {
 			var quizEntity = new QuizEntity(editableEntity);
 			modifiedEntity.attempts = {'attempts': 'wrong attempts subentity'};
+			expect(quizEntity.equals(modifiedEntity)).to.be.false;
+		});
+
+		it('returns false when description not equal', () => {
+			var quizEntity = new QuizEntity(editableEntity);
+			modifiedEntity.description = 'New Description!';
 			expect(quizEntity.equals(modifiedEntity)).to.be.false;
 		});
 	});
@@ -304,6 +311,20 @@ describe('QuizEntity', () => {
 		});
 	});
 
+	describe('description', () => {
+		describe('canEditDescription', () => {
+			it('returns true when description is editable', () => {
+				var quizEntity = new QuizEntity(editableEntity);
+				expect(quizEntity.canEditDescription()).to.be.true;
+			});
+
+			it('returns false when description are not editable', () => {
+				var quizEntity = new QuizEntity(nonEditableEntity);
+				expect(quizEntity.canEditDescription()).to.be.false;
+			});
+		});
+	});
+
 	describe('save', () => {
 		it('saves', async() => {
 			fetchMock.patchOnce('https://afe99802-9130-4320-a770-8d138b941e74.quizzes.api.proddev.d2l/6606/quizzes/22', editableEntity);
@@ -319,7 +340,8 @@ describe('QuizEntity', () => {
 				password: 'super-secret',
 				notificationEmail: 'modifiedMoose@d2l.com',
 				preventMovingBackwards: false,
-				autoSetGraded: false
+				autoSetGraded: false,
+				description: 'New description'
 			});
 
 			const form = await getFormData(fetchMock.lastCall().request);
@@ -333,6 +355,7 @@ describe('QuizEntity', () => {
 				expect(form.get('notificationEmail')).to.equal('modifiedMoose@d2l.com');
 				expect(form.get('preventMovingBackwards')).to.equal('false');
 				expect(form.get('autoSetGraded')).to.equal('false');
+				expect(form.get('description')).to.equal('New description');
 			}
 
 			expect(fetchMock.called()).to.be.true;
@@ -350,7 +373,8 @@ describe('QuizEntity', () => {
 				password: 'hello',
 				notificationEmail: 'moose@d2l.com',
 				preventMovingBackwards: true,
-				autoSetGraded: true
+				autoSetGraded: true,
+				description: 'The Second quiz ever'
 			});
 
 			expect(fetchMock.done());
@@ -368,7 +392,8 @@ describe('QuizEntity', () => {
 				password: 'super-secret',
 				notificationEmail: 'modifiedMoose@d2l.com',
 				preventMovingBackwards: false,
-				autoSetGraded: false
+				autoSetGraded: false,
+				description: 'New and improved Description!'
 			});
 
 			expect(fetchMock.done());

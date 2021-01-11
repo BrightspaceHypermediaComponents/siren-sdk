@@ -267,6 +267,58 @@ export const editableQuiz = {
 				'https://quizzes.api.brightspace.com/rels/attempts'
 			],
 			'href': 'https://tenantId.quizzes.api.dev.brightspace.com/123170/quizzes/1391/attempts'
-		}
+		},
+		{
+			'class':[
+				'richtext',
+				'description',
+				'description-is-displayed'
+			],
+			'rel':[
+				'item',
+				'https://quizzes.api.brightspace.com/rels/description'
+			],
+			'properties':{
+				'text':'The Second quiz ever',
+				'html':'The Second quiz ever'
+			},
+			'entities':[
+				{
+					'class':[
+						'richtext-editor-config'
+					],
+					'rel':[
+						'https://api.brightspace.com/rels/richtext-editor-config'
+					],
+					'properties':{
+						'orgUnit':{
+							'OrgId':'6606',
+							'OrgUnitId':'6609'
+						},
+						'd2l_filter':{
+							'endpoint':'/d2l/lp/htmleditor/converttoabsolute?ou=6609'
+						},
+						'd2l_isf':{
+							'endpoint':'/d2l/common/dialogs/isf/selectItem.d2l?ou=6609&filterMode=Strict'
+						}
+					}
+				}
+			],
+			'actions':[
+				{
+					'type':'application/x-www-form-urlencoded',
+					'href':'https://afe99802-9130-4320-a770-8d138b941e74.quizzes.api.proddev.d2l/6606/quizzes/22',
+					'name':'update-description',
+					'method':'PATCH',
+					'fields':[
+						{
+							'type':'text',
+							'name':'description',
+							'value':'The Second quiz ever'
+						}
+					]
+				}
+			]
+		},
 	]
 };
