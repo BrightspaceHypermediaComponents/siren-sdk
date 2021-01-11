@@ -541,7 +541,8 @@ export const Actions = {
 		updateNotificationEmail: 'update-notification-email',
 		updatePreventMovingBackwards: 'update-prevent-moving-backwards',
 		updateAutoSetGraded: 'update-auto-set-graded',
-		delete: 'delete-quiz'
+		delete: 'delete-quiz',
+		updateDescription: 'update-description'
 	},
 	workingCopy: {
 		checkout: 'checkout',

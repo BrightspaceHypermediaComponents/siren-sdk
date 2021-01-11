@@ -110,5 +110,42 @@ export const nonEditableQuiz = {
 				'https://quizzes.api.brightspace.com/rels/auto-set-graded'
 			],
 		},
+		{
+			'class': [
+				'richtext',
+				'description',
+				'description-is-displayed'
+			],
+			'rel': [
+				'item',
+				'https://quizzes.api.brightspace.com/rels/description'
+			],
+			'properties': {
+				'text': 'The Second quiz ever',
+				'html': 'The Second quiz ever'
+			},
+			'entities': [
+				{
+					'class': [
+						'richtext-editor-config'
+					],
+					'rel': [
+						'https://api.brightspace.com/rels/richtext-editor-config'
+					],
+					'properties': {
+						'orgUnit': {
+							'OrgId': '6606',
+							'OrgUnitId': '6609'
+						},
+						'd2l_filter': {
+							'endpoint': '/d2l/lp/htmleditor/converttoabsolute?ou=6609'
+						},
+						'd2l_isf': {
+							'endpoint': '/d2l/common/dialogs/isf/selectItem.d2l?ou=6609&filterMode=Strict'
+						}
+					}
+				}
+			]
+		}
 	]
 };
