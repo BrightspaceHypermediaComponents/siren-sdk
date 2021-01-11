@@ -481,7 +481,7 @@ export class QuizEntity extends Entity {
 			[this.notificationEmail(), quiz.notificationEmail],
 			[this.isPreventMovingBackwardsEnabled(), quiz.preventMovingBackwards],
 			[this.isAutoSetGradedEnabled(), quiz.autoSetGraded],
-			[JSON.stringify(this.attempts()), JSON.stringify(quiz.attempts)]
+			[JSON.stringify(this.attemptsLink()), JSON.stringify(quiz.attempts)]
 		];
 
 		for (const [left, right] of diffs) {
@@ -507,7 +507,7 @@ export class QuizEntity extends Entity {
 		});
 	}
 
-	attempts() {
+	attemptsLink() {
 		return this._entity.getSubEntityByRel(Rels.Quizzes.attempts);
 	}
 

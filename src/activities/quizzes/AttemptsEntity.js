@@ -37,9 +37,7 @@ export class AttemptsEntity extends Entity {
 		if (!quiz) return;
 		if (!this._hasAttemptsAllowedChanged(quiz.attemptsAllowed)) return;
 
-		const attemptsAction = this._generateAttemptsAllowedAction(quiz.attemptsAllowed);
-
-		return attemptsAction;
+		return this._generateAttemptsAllowedAction(quiz.attemptsAllowed);
 	}
 
 	_hasAttemptsAllowedChanged(attemptsAllowed) {
