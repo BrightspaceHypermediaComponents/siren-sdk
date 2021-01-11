@@ -535,7 +535,6 @@ export class QuizEntity extends Entity {
 		return { action, fields };
 	}
 
-
 	_hasHintsChanged(allowHints) {
 		return allowHints !== this.getHintsToolEnabled();
 	}
