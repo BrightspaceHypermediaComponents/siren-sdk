@@ -29,15 +29,6 @@ describe('QuizEntity', () => {
 
 	describe('Equals', () => {
 		var modifiedEntity;
-		const attempts = {
-			'rel': [
-				'https://quizzes.api.brightspace.com/rels/attempts'
-			],
-			'href': 'https://tenantId.quizzes.api.dev.brightspace.com/123170/quizzes/1391/attempts',
-			'class': [
-				'attempts'
-			],
-		};
 
 		beforeEach(() => {
 			modifiedEntity = {
@@ -50,7 +41,6 @@ describe('QuizEntity', () => {
 				notificationEmail: 'moose@d2l.com',
 				preventMovingBackwards: true,
 				autoSetGraded: true,
-				attempts: attempts,
 				description: 'The Second quiz ever'
 			};
 		});
@@ -99,12 +89,6 @@ describe('QuizEntity', () => {
 		it('returns false when autoSetGraded not equal', () => {
 			var quizEntity = new QuizEntity(editableEntity);
 			modifiedEntity.autoSetGraded = false;
-			expect(quizEntity.equals(modifiedEntity)).to.be.false;
-		});
-
-		it('returns false when attempts allowed not equal', () => {
-			var quizEntity = new QuizEntity(editableEntity);
-			modifiedEntity.attempts = {'attempts': 'wrong attempts subentity'};
 			expect(quizEntity.equals(modifiedEntity)).to.be.false;
 		});
 

@@ -586,7 +586,6 @@ export class QuizEntity extends Entity {
 			[this.notificationEmail(), quiz.notificationEmail],
 			[this.isPreventMovingBackwardsEnabled(), quiz.preventMovingBackwards],
 			[this.isAutoSetGradedEnabled(), quiz.autoSetGraded],
-			[JSON.stringify(this.attemptsLink()), JSON.stringify(quiz.attempts)],
 			[this.descriptionEditorHtml(), quiz.description]
 		];
 
