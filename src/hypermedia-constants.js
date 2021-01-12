@@ -151,7 +151,8 @@ export const Rels = {
 		password: 'https://quizzes.api.brightspace.com/rels/quiz-password',
 		notificationEmail: 'https://quizzes.api.brightspace.com/rels/notification-email',
 		preventMovingBackwards: 'https://quizzes.api.brightspace.com/rels/prevent-moving-backwards',
-		autoSetGraded: 'https://quizzes.api.brightspace.com/rels/auto-set-graded'
+		autoSetGraded: 'https://quizzes.api.brightspace.com/rels/auto-set-graded',
+		attempts: 'https://quizzes.api.brightspace.com/rels/attempts'
 	},
 	// Themes API sub-domain rels
 	Themes: {
@@ -542,6 +543,7 @@ export const Actions = {
 		updatePreventMovingBackwards: 'update-prevent-moving-backwards',
 		updateAutoSetGraded: 'update-auto-set-graded',
 		delete: 'delete-quiz',
+		updateAttemptsAllowed: 'update-attempts',
 		updateDescription: 'update-description'
 	},
 	workingCopy: {

@@ -612,6 +612,10 @@ export class QuizEntity extends Entity {
 		});
 	}
 
+	attemptsLink() {
+		return this._entity.getSubEntityByRel(Rels.Quizzes.attempts);
+	}
+
 	_getDescriptionEntity() {
 		return this._entity
 			&& this._entity.hasSubEntityByRel(Rels.Quizzes.description)
