@@ -8,7 +8,7 @@ Options for getting started:
 
 * [Download the latest release](../../releases).
 * Clone the repo: `git clone https://github.com/BrightspaceHypermediaComponents/siren-sdk.git`.
-* Install with [npm](https://www.npmjs.com/): `npm install siren-sdk`
+* Install with [npm](https://www.npmjs.com/): `npm install siren-sdk`.
 
 ## Versioning & Releasing
 
