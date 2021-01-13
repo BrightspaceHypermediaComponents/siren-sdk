@@ -354,7 +354,8 @@ export const Classes = {
 			recommended: 'recommended',
 			enforced: 'enforced',
 			continueWorking: 'continueworking',
-			showClock: 'show-clock'
+			showClock: 'show-clock',
+			automaticZero: 'automatic-zero'
 		}
 	},
 	text: {
