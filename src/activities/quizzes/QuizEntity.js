@@ -1,7 +1,6 @@
 import { Entity } from '../../es6/Entity';
 import { Actions, Rels, Classes } from '../../hypermedia-constants';
 import { performSirenAction, performSirenActions } from '../../es6/SirenAction';
-import { QuizTimingEntity } from './timing/QuizTimingEntity';
 
 /**
  * QuizEntity class representation of a d2l Quiz.
