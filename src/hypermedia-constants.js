@@ -154,7 +154,8 @@ export const Rels = {
 		autoSetGraded: 'https://quizzes.api.brightspace.com/rels/auto-set-graded',
 		timing: 'https://quizzes.api.brightspace.com/rels/timing',
 		timingType: 'https://quizzes.api.brightspace.com/rels/timing-type',
-		timingLateType: 'https://quizzes.api.brightspace.com/rels/timing-late-type'
+		timingLateType: 'https://quizzes.api.brightspace.com/rels/timing-late-type',
+		attempts: 'https://quizzes.api.brightspace.com/rels/attempts'
 	},
 	// Themes API sub-domain rels
 	Themes: {
@@ -553,6 +554,7 @@ export const Actions = {
 		updateAutoSetGraded: 'update-auto-set-graded',
 		delete: 'delete-quiz',
 		updateDescription: 'update-description',
+		updateAttemptsAllowed: 'update-attempts',
 		timing: {
 			updateType: 'update-timing-type',
 			updateTimeLimit: 'update-timing-time-limit',
