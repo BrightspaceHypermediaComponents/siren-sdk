@@ -21,8 +21,12 @@ export class QuizTimingEntity extends Entity {
 		return field.value;
 	}
 
+	isTimingEnforced() {
+		return this._entity && this._entity.hasSubEntityByClass(Classes.quizzes.timing.enforced);
+	}
+
 	submissionLateType() {
-		const entity = this._entity && this._entity.getSubEntityByClass(Classes.quizzes.timing.enforced);
+		const entity = this.getEnforcedTimingSubEntity();
 		if (!entity) return;
 		const action = entity.getActionByName(Actions.quizzes.timing.updateLateTypeId);
 		if (!action) return;
@@ -30,14 +34,29 @@ export class QuizTimingEntity extends Entity {
 		if (!field) return;
 		return field.value;
 	}
-	enforcedTimeProperties() {
-		const entity = this._entity && this._entity.getSubEntityByClass(Classes.quizzes.timing.enforced);
+
+	getEnforcedTimingSubEntity() {
+		return this._entity && this._entity.getSubEntityByClass(Classes.quizzes.timing.enforced);
+	}
+
+	getRecommendedTimingSubEntity() {
+		return this._entity && this._entity.getSubEntityByClass(Classes.quizzes.timing.recommended);
+	}
+
+	enforcedTimeLimit() {
+		const entity = this.getEnforcedTimingSubEntity();
 		if (!entity) return;
-		return entity.properties;
+		return entity.properties && entity.properties.timeLimit;
+	}
+
+	enforcedGraceLimit() {
+		const entity = this.getEnforcedTimingSubEntity();
+		if (!entity) return;
+		return entity.properties && entity.properties.graceLimit;
 	}
 
 	extendedDeadlineOptions() {
-		const entity = this._entity && this._entity.getSubEntityByClass(Classes.quizzes.timing.enforced);
+		const entity = this.getEnforcedTimingSubEntity();
 		if (!entity) return;
 		const subEntity = entity.getSubEntityByClass(Classes.quizzes.timing.automaticZero);
 		if (!subEntity) return;
@@ -49,19 +68,25 @@ export class QuizTimingEntity extends Entity {
 	}
 
 	showClock() {
-		const entity = this._entity && this._entity.getSubEntityByClass(Classes.quizzes.timing.recommended);
+		const entity = this.getRecommendedTimingSubEntity();
+		if (!entity) return;
+		return entity.hasClass(Classes.quizzes.timing.showClock);
+	}
+
+	showClockTitle() {
+		const entity = this.getRecommendedTimingSubEntity();
 		if (!entity) return;
 		const action = entity.getActionByName('update-timing-has-timer');
 		if (!action) return;
 		const field = action.getFieldByName('hasTimer');
 		if (!field) return;
-		return field;
+		return field.title;
 	}
 
-	recommendedTimeProperties() {
-		const entity = this._entity && this._entity.getSubEntityByClass(Classes.quizzes.timing.recommended);
+	recommendedTimeLimit() {
+		const entity = this.getRecommendedTimingSubEntity();
 		if (!entity) return;
-		return entity.properties;
+		return entity.properties && entity.properties.timeLimit;
 	}
 
 	async setTimingType(data) {
