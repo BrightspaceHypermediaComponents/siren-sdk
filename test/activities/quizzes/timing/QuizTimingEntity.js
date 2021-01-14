@@ -57,4 +57,10 @@ describe('QuizTimingEntity', () => {
 			expect(entity.showClockTitle()).to.equal('Show clock');
 		});
 	});
+	describe('automatic zero', () => {
+		it('return true extended deadline automatic zero is selected', () => {
+			var entity = new QuizTimingEntity(enforcedTimingEntity);
+			expect(entity.isAutomaticZero()).to.be.true;
+		});
+	});
 });

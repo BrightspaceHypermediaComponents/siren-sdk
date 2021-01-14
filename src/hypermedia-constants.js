@@ -560,8 +560,8 @@ export const Actions = {
 			updateTimeLimit: 'update-timing-time-limit',
 			updateLateTypeId: 'update-timing-late-type-id',
 			updateHasTimer: 'update-timing-has-timer',
-			updateEnforcedTimeLimitGracePeriod: 'update-enforced-time-limit-grace-period',
-			updateTimingLateData: 'update-timing-late-data'
+			updateTimingLateData: 'update-timing-late-data',
+			updateTimingGraceLimit: 'update-timing-grace-limit'
 		}
 	},
 	workingCopy: {

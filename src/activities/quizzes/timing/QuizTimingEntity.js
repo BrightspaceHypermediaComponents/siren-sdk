@@ -67,6 +67,12 @@ export class QuizTimingEntity extends Entity {
 		return field.value;
 	}
 
+	isAutomaticZero() {
+		const entity = this.getEnforcedTimingSubEntity();
+		if (!entity) return;
+		return entity.hasSubEntityByClass('automatic-zero');
+	}
+
 	showClock() {
 		const entity = this.getRecommendedTimingSubEntity();
 		if (!entity) return;
@@ -89,12 +95,57 @@ export class QuizTimingEntity extends Entity {
 		return entity.properties && entity.properties.timeLimit;
 	}
 
+	async setExtendedDeadline(data) {
+		if (!this.canEditTiming()) return;
+		const entity = this.getEnforcedTimingSubEntity();
+		if (!entity) return;
+		const subEntity = entity.getSubEntityByClass('automatic-zero');
+		const action = subEntity.getActionByName(Actions.quizzes.timing.updateTimingLateData);
+		const fields = [
+			{ name: 'submissionLateData', value: data }
+		];
+		await performSirenAction(this._token, action, fields);
+	}
+
+	async setGracePeriod(data) {
+		if (!this.canEditTiming()) return;
+		const entity = this.getEnforcedTimingSubEntity();
+		if (!entity) return;
+		const action = entity.getActionByName(Actions.quizzes.timing.updateTimingGraceLimit);
+		const fields = [
+			{ name: 'graceLimit', value: data }
+		];
+		await performSirenAction(this._token, action, fields);
+	}
+
+	async setTimeLimit(data) {
+		if (!this.canEditTiming()) return;
+		var entity;
+		this.isTimingEnforced() ? entity = this.getRecommendedTimingSubEntity() : entity = this.getRecommendedTimingSubEntity();
+		if (!entity) return;
+		const action = entity.getActionByName(Actions.quizzes.timing.updateTimeLimit);
+		const fields = [
+			{ name: 'timeLimit', value: data }
+		];
+		await performSirenAction(this._token, action, fields);
+	}
 	async setTimingType(data) {
 		if (!this.canEditTiming()) return;
-
 		const action = this._entity.getActionByName(Actions.quizzes.timing.updateType);
 		const fields = [
 			{ name: 'timingType', value: data }
+		];
+		await performSirenAction(this._token, action, fields);
+	}
+
+	async setExceededTimeLimitBehaviour(data) {
+		if (!this.canEditTiming()) return;
+
+		const entity = this.getEnforcedTimingSubEntity();
+		if (!entity) return;
+		const action = entity.getActionByName(Actions.quizzes.timing.updateLateTypeId);
+		const fields = [
+			{ name: 'submissionLateTypeId', value: data }
 		];
 		await performSirenAction(this._token, action, fields);
 	}
