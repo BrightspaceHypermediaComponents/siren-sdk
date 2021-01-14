@@ -154,6 +154,9 @@ export const Rels = {
 		notificationEmail: 'https://quizzes.api.brightspace.com/rels/notification-email',
 		preventMovingBackwards: 'https://quizzes.api.brightspace.com/rels/prevent-moving-backwards',
 		autoSetGraded: 'https://quizzes.api.brightspace.com/rels/auto-set-graded',
+		timing: 'https://quizzes.api.brightspace.com/rels/timing',
+		timingType: 'https://quizzes.api.brightspace.com/rels/timing-type',
+		timingLateType: 'https://quizzes.api.brightspace.com/rels/timing-late-type',
 		attempts: 'https://quizzes.api.brightspace.com/rels/attempts'
 	},
 	// Themes API sub-domain rels
@@ -350,7 +353,14 @@ export const Classes = {
 		checked: 'checked',
 		password: 'password',
 		notificationEmail: 'notificationEmail',
-		autoSetGraded: 'auto-set-graded'
+		autoSetGraded: 'auto-set-graded',
+		timing: {
+			recommended: 'recommended',
+			enforced: 'enforced',
+			continueWorking: 'continueworking',
+			showClock: 'show-clock',
+			automaticZero: 'automatic-zero'
+		}
 	},
 	text: {
 		richtext: 'richtext'
@@ -547,8 +557,16 @@ export const Actions = {
 		updatePreventMovingBackwards: 'update-prevent-moving-backwards',
 		updateAutoSetGraded: 'update-auto-set-graded',
 		delete: 'delete-quiz',
+		updateDescription: 'update-description',
 		updateAttemptsAllowed: 'update-attempts',
-		updateDescription: 'update-description'
+		timing: {
+			updateType: 'update-timing-type',
+			updateTimeLimit: 'update-timing-time-limit',
+			updateLateTypeId: 'update-timing-late-type-id',
+			updateHasTimer: 'update-timing-has-timer',
+			updateEnforcedTimeLimitGracePeriod: 'update-enforced-time-limit-grace-period',
+			updateTimingLateData: 'update-timing-late-data'
+		}
 	},
 	workingCopy: {
 		checkout: 'checkout',

@@ -269,6 +269,17 @@ export class QuizEntity extends Entity {
 			&& descriptionEntity.getSubEntityByRel(Rels.richTextEditorConfig);
 	}
 
+	/**
+	 * @returns {string} Timing Href of the quiz entity, if present
+	*/
+	timingHref() {
+		if (!this._entity || !this._entity.hasSubEntityByRel(Rels.Quizzes.timing)) {
+			return;
+		}
+
+		return this._entity.getSubEntityByRel(Rels.Quizzes.timing).href;
+	}
+
 	async save(quiz) {
 		if (!quiz) return;
 		const updateNameAction = this.canEditName() ? this._formatUpdateNameAction(quiz) : null;
