@@ -22,7 +22,7 @@ export const enforcedQuizTiming = {
 			],
 			'name': 'update-timing-type',
 			'method': 'PATCH',
-			'href': 'quizzes/{quizId}/timing?workingCopyId=<forkId>'
+			'href': 'https://afe99802-9130-4320-a770-8d138b941e74.quizzes.api.proddev.d2l/6606/quizzes/22/timing?workingCopyId=1234'
 		}
 	],
 	'properties': {
@@ -46,7 +46,7 @@ export const enforcedQuizTiming = {
 							'max': 9999
 						}
 					],
-					'href': 'quizzes/{quizId}/timing?workingCopyId=<forkId>',
+					'href': 'https://afe99802-9130-4320-a770-8d138b941e74.quizzes.api.proddev.d2l/6606/quizzes/22/timing?workingCopyId=1234',
 					'method': 'PATCH',
 					'name': 'update-timing-time-limit'
 				},
@@ -74,7 +74,7 @@ export const enforcedQuizTiming = {
 							]
 						}
 					],
-					'href': 'quizzes/{quizId}/timing?workingCopyId=<forkId>',
+					'href': 'https://afe99802-9130-4320-a770-8d138b941e74.quizzes.api.proddev.d2l/6606/quizzes/22/timing?workingCopyId=1234',
 					'method': 'PATCH',
 					'name': 'update-timing-late-type-id'
 				},
@@ -89,7 +89,7 @@ export const enforcedQuizTiming = {
 							'title': 'Grace Period'
 						}
 					],
-					'href': 'quizzes/{quizId}/timing?workingCopyId=<forkId>',
+					'href': 'https://afe99802-9130-4320-a770-8d138b941e74.quizzes.api.proddev.d2l/6606/quizzes/22/timing?workingCopyId=1234',
 					'method': 'PATCH',
 					'name': 'update-timing-grace-limit'
 				}
@@ -140,7 +140,7 @@ export const enforcedQuizTiming = {
 									]
 								}
 							],
-							'href': 'quizzes/{quizId}/timing?workingCopyId=<forkId>',
+							'href': 'https://afe99802-9130-4320-a770-8d138b941e74.quizzes.api.proddev.d2l/6606/quizzes/22/timing?workingCopyId=1234',
 							'method': 'PATCH',
 							'name': 'update-timing-late-data'
 						}
@@ -175,7 +175,7 @@ export const enforcedQuizTiming = {
 	'links': [
 		{
 			'rel': [ 'self' ],
-			'href': 'quizzes/{quizId}/timing?workingCopyId=<parentId>'
+			'href': 'https://afe99802-9130-4320-a770-8d138b941e74.quizzes.api.proddev.d2l/6606/quizzes/22/timing?workingCopyId=1234'
 		}
 	]
 };
