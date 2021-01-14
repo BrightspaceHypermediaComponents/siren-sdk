@@ -354,7 +354,6 @@ export const Classes = {
 		timing: {
 			recommended: 'recommended',
 			enforced: 'enforced',
-			continueWorking: 'continueworking',
 			showClock: 'show-clock',
 			automaticZero: 'automatic-zero'
 		}
@@ -560,7 +559,7 @@ export const Actions = {
 			updateTimeLimit: 'update-timing-time-limit',
 			updateLateTypeId: 'update-timing-late-type-id',
 			updateHasTimer: 'update-timing-has-timer',
-			updateEnforcedTimeLimitGracePeriod: 'update-enforced-time-limit-grace-period',
+			updateTimingGraceLimit: 'update-timing-grace-limit',
 			updateTimingLateData: 'update-timing-late-data'
 		}
 	},

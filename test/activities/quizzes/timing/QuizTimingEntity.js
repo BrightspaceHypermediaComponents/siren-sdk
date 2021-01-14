@@ -52,9 +52,5 @@ describe('QuizTimingEntity', () => {
 			var entity = new QuizTimingEntity(recommendedTimingEntity);
 			expect(entity.showClock()).to.be.true;
 		});
-		it('can read Show clock label', () => {
-			var entity = new QuizTimingEntity(recommendedTimingEntity);
-			expect(entity.showClockTitle()).to.equal('Show clock');
-		});
 	});
 });
