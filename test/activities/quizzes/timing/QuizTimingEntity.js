@@ -26,7 +26,8 @@ describe('QuizTimingEntity', () => {
 			var entity = new QuizTimingEntity(enforcedTimingEntity);
 			expect(entity.isTimingEnforced()).to.be.true;
 		});
-		it('returns true when timing is recommended ', () => {
+		it('returns false when timing is recommended ', () => {
+
 			var entity = new QuizTimingEntity(recommendedTimingEntity);
 			expect(entity.isTimingEnforced()).to.be.false;
 		});
