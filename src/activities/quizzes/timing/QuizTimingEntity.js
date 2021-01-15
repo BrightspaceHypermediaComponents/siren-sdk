@@ -13,6 +13,20 @@ export class QuizTimingEntity extends Entity {
 		return this._entity && this._entity.hasActionByName(Actions.quizzes.timing.updateType);
 	}
 
+	canEditExtendedDeadline() {
+		const entity = this.getAutomaticZeroSubEntity();
+		return entity && entity.hasActionByName(Actions.quizzes.timing.updateTimingLateData);
+	}
+
+	canEditGracePeriod() {
+		const entity = this.getEnforcedTimingSubEntity();
+		return entity && entity.hasActionByName(Actions.quizzes.timing.updateTimingGraceLimit);
+	}
+
+	canEditExceededTimeLimitBehaviour() {
+		const entity = this.getEnforcedTimingSubEntity();
+		return entity && entity.hasActionByName(Actions.quizzes.timing.updateLateTypeId);
+	}
 	timingTypes() {
 		const action = this._entity && this._entity.getActionByName(Actions.quizzes.timing.updateType);
 		if (!action) return;
@@ -43,6 +57,11 @@ export class QuizTimingEntity extends Entity {
 		return this._entity && this._entity.getSubEntityByClass(Classes.quizzes.timing.recommended);
 	}
 
+	getAutomaticZeroSubEntity() {
+		const entity = this.getEnforcedTimingSubEntity();
+		if (!entity) return;
+		return entity.getSubEntityByClass(Classes.quizzes.timing.automaticZero);
+	}
 	enforcedTimeLimit() {
 		const entity = this.getEnforcedTimingSubEntity();
 		if (!entity) return;
@@ -56,11 +75,9 @@ export class QuizTimingEntity extends Entity {
 	}
 
 	extendedDeadlineOptions() {
-		const entity = this.getEnforcedTimingSubEntity();
+		const entity = this.getAutomaticZeroSubEntity();
 		if (!entity) return;
-		const subEntity = entity.getSubEntityByClass(Classes.quizzes.timing.automaticZero);
-		if (!subEntity) return;
-		const action = subEntity.getActionByName(Actions.quizzes.timing.updateTimingLateData);
+		const action = entity.getActionByName(Actions.quizzes.timing.updateTimingLateData);
 		if (!action) return;
 		const field = action.getFieldByName('submissionLateData');
 		if (!field) return;
@@ -70,7 +87,7 @@ export class QuizTimingEntity extends Entity {
 	isAutomaticZero() {
 		const entity = this.getEnforcedTimingSubEntity();
 		if (!entity) return;
-		return entity.hasSubEntityByClass('automatic-zero');
+		return entity.hasSubEntityByClass(Classes.quizzes.timing.automaticZero);
 	}
 
 	showClock() {
@@ -86,11 +103,10 @@ export class QuizTimingEntity extends Entity {
 	}
 
 	async setExtendedDeadline(data) {
-		if (!this.canEditTiming()) return;
-		const entity = this.getEnforcedTimingSubEntity();
+		if (!this.canEditExtendedDeadline()) return;
+		const entity = this.getAutomaticZeroSubEntity();
 		if (!entity) return;
-		const subEntity = entity.getSubEntityByClass('automatic-zero');
-		const action = subEntity.getActionByName(Actions.quizzes.timing.updateTimingLateData);
+		const action = entity.getActionByName(Actions.quizzes.timing.updateTimingLateData);
 		const fields = [
 			{ name: 'submissionLateData', value: data }
 		];
@@ -98,7 +114,7 @@ export class QuizTimingEntity extends Entity {
 	}
 
 	async setGracePeriod(data) {
-		if (!this.canEditTiming()) return;
+		if (!this.canEditGracePeriod()) return;
 		const entity = this.getEnforcedTimingSubEntity();
 		if (!entity) return;
 		const action = entity.getActionByName(Actions.quizzes.timing.updateTimingGraceLimit);
@@ -109,10 +125,10 @@ export class QuizTimingEntity extends Entity {
 	}
 
 	async setTimeLimit(data) {
-		if (!this.canEditTiming()) return;
 		var entity;
 		this.isTimingEnforced() ? entity = this.getRecommendedTimingSubEntity() : entity = this.getRecommendedTimingSubEntity();
 		if (!entity) return;
+		if (!entity.hasActionByName(Actions.quizzes.timing.updateTimeLimit)) return;
 		const action = entity.getActionByName(Actions.quizzes.timing.updateTimeLimit);
 		const fields = [
 			{ name: 'timeLimit', value: data }
@@ -129,8 +145,7 @@ export class QuizTimingEntity extends Entity {
 	}
 
 	async setExceededTimeLimitBehaviour(data) {
-		if (!this.canEditTiming()) return;
-
+		if (!this.canEditExceededTimeLimitBehaviour()) return;
 		const entity = this.getEnforcedTimingSubEntity();
 		if (!entity) return;
 		const action = entity.getActionByName(Actions.quizzes.timing.updateLateTypeId);
