@@ -1,6 +1,6 @@
 {
   "name": "siren-sdk",
-  "version": "1.20.0",
+  "version": "1.21.0",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -15,9 +15,9 @@
   "author": "",
   "license": "Apache-2.0",
   "dependencies": {
-    "@brightspace-ui/core": "^1.111.0",
+    "@brightspace-ui/core": "^1",
     "@polymer/polymer": "^3.0.0",
-    "d2l-polymer-siren-behaviors": "github:Brightspace/polymer-siren-behaviors#semver:^1"
+    "d2l-polymer-siren-behaviors": "Brightspace/polymer-siren-behaviors#semver:^1"
   },
   "devDependencies": {
     "@babel/polyfill": "^7.0.0",
@@ -30,7 +30,6 @@
     "@webcomponents/webcomponentsjs": "^2.2.1",
     "babel-eslint": "^10.0.1",
     "chai": "^4.2.0",
-    "d2l-fetch": "github:Brightspace/d2l-fetch#semver:^2",
     "eslint": "^4.15.0",
     "eslint-config-brightspace": "^0.4.0",
     "eslint-plugin-html": "^4.0.1",
@@ -42,6 +41,7 @@
     "polymer-cli": "^1.9.1",
     "sinon": "^7.5.0",
     "wct-mocha": "^1.0.1",
-    "whatwg-fetch": "^2.0.0"
+    "whatwg-fetch": "^2.0.0",
+    "d2l-fetch": "Brightspace/d2l-fetch.git#semver:^2"
   }
 }
