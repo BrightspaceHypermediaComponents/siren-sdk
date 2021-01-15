@@ -79,16 +79,6 @@ export class QuizTimingEntity extends Entity {
 		return entity.hasClass(Classes.quizzes.timing.showClock);
 	}
 
-	showClockTitle() {
-		const entity = this.getRecommendedTimingSubEntity();
-		if (!entity) return;
-		const action = entity.getActionByName('update-timing-has-timer');
-		if (!action) return;
-		const field = action.getFieldByName('hasTimer');
-		if (!field) return;
-		return field.title;
-	}
-
 	recommendedTimeLimit() {
 		const entity = this.getRecommendedTimingSubEntity();
 		if (!entity) return;

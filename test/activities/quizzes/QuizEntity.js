@@ -455,6 +455,21 @@ describe('QuizEntity', () => {
 		});
 	});
 
+	describe('timing href', () => {
+		const href = 'https://afe99802-9130-4320-a770-8d138b941e74.quizzes.api.proddev.d2l/6606/quizzes/22/timing?workingCopyId=1234';
+		describe('timingHref', () => {
+			it('can read timing href when quiz is editable', () => {
+				var quizEntity = new QuizEntity(editableEntity);
+				expect(quizEntity.timingHref()).to.equal(href);
+			});
+
+			it('can read timing href when quiz is not editable', () => {
+				var quizEntity = new QuizEntity(nonEditableEntity);
+				expect(quizEntity.timingHref()).to.equal(href);
+			});
+		});
+	});
+
 	describe('checkout', () => {
 		it('can checkout quiz working copy', async() => {
 			fetchMock.getOnce('https://afe99802-9130-4320-a770-8d138b941e74.quizzes.api.proddev.d2l/6606/quizzes/22?', workingCopyEntity);

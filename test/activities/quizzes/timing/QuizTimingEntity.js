@@ -26,7 +26,7 @@ describe('QuizTimingEntity', () => {
 			var entity = new QuizTimingEntity(enforcedTimingEntity);
 			expect(entity.isTimingEnforced()).to.be.true;
 		});
-		it('returns true when timing is recommended ', () => {
+		it('returns false when timing is recommended ', () => {
 			var entity = new QuizTimingEntity(recommendedTimingEntity);
 			expect(entity.isTimingEnforced()).to.be.false;
 		});
@@ -52,11 +52,8 @@ describe('QuizTimingEntity', () => {
 			var entity = new QuizTimingEntity(recommendedTimingEntity);
 			expect(entity.showClock()).to.be.true;
 		});
-		it('can read Show clock label', () => {
-			var entity = new QuizTimingEntity(recommendedTimingEntity);
-			expect(entity.showClockTitle()).to.equal('Show clock');
-		});
 	});
+
 	describe('automatic zero', () => {
 		it('return true extended deadline automatic zero is selected', () => {
 			var entity = new QuizTimingEntity(enforcedTimingEntity);

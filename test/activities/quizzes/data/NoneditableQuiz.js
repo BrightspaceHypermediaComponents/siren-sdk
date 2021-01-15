@@ -155,6 +155,10 @@ export const nonEditableQuiz = {
 					}
 				}
 			]
+		},		{
+			'class': [],
+			'rel': ['https://quizzes.api.brightspace.com/rels/timing'],
+			'href': 'https://afe99802-9130-4320-a770-8d138b941e74.quizzes.api.proddev.d2l/6606/quizzes/22/timing?workingCopyId=1234'
 		}
 	]
 };
