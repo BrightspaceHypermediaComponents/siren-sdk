@@ -111,7 +111,7 @@ export class QuizTimingEntity extends Entity {
 	async setTimeLimit(data) {
 		if (!this.canEditTiming()) return;
 		var entity;
-		this.isTimingEnforced() ? entity = this.getRecommendedTimingSubEntity() : entity = this.getRecommendedTimingSubEntity();
+		entity = this.isTimingEnforced() ? this.getEnforcedTimingSubEntity() : this.getRecommendedTimingSubEntity() ;
 		if (!entity) return;
 		const action = entity.getActionByName(Actions.quizzes.timing.updateTimeLimit);
 		const fields = [
