@@ -47,6 +47,8 @@ export const Rels = {
 	Activities: {
 		myActivities: 'https://activities.api.brightspace.com/rels/my-activities',
 		myActivitiesEmpty: 'https://activities.api.brightspace.com/rels/my-activities#empty',
+		myOrganizationActivities: 'https://activities.api.brightspace.com/rels/my-organization-activities',
+		myOrganizationActivitiesEmpty: 'https://activities.api.brightspace.com/rels/my-organization-activities#empty',
 		activityCollection: 'https://activities.api.brightspace.com/rels/activity-collection',
 		activityUsage: 'https://activities.api.brightspace.com/rels/activity-usage',
 		myActivityUsage: 'https://activities.api.brightspace.com/rels/my-activity-usage',
