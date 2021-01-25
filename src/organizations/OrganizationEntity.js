@@ -123,7 +123,7 @@ export class OrganizationEntity extends Entity {
 	description() {
 		let description = this._entity && this._entity.properties && this._entity.properties.description;
 		if (description) {
-			description = description.replace(/<br\s*\/?>/gi, '\n');
+			description = description.replace(/<br\s*\/?>/gi, '\r\n');
 			description = description.replace(/<[^>]*>/g, '');
 		}
 		return description;
