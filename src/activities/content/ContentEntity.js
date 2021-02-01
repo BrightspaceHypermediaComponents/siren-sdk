@@ -3,9 +3,10 @@ import { Rels } from '../../hypermedia-constants';
 import ContentHelperFunctions from './ContentHelperFunctions.js';
 
 export const CONTENT_TYPES = {
+	ltilink: 'ltilink',
 	module: 'module',
 	topic: 'topic',
-	weblink: 'weblink'
+	weblink: 'weblink',
 };
 
 /**
@@ -25,6 +26,8 @@ export class ContentEntity extends Entity {
 			return CONTENT_TYPES.module;
 		} else if (this._entity.hasLinkByRel(Rels.Content.weblinkEntity)) {
 			return CONTENT_TYPES.weblink;
+		} else if (this._entity.hasLinkByRel(Rels.Content.ltilinkEntity)) {
+			return CONTENT_TYPES.ltilink;
 		} else if (this._entity.hasClass(CONTENT_TYPES.topic)) {
 			return CONTENT_TYPES.topic;
 		} else {
@@ -44,5 +47,12 @@ export class ContentEntity extends Entity {
 	 */
 	getWebLinkHref() {
 		return ContentHelperFunctions.getHrefFromRel(Rels.Content.weblinkEntity, this._entity);
+	}
+
+	/**
+	 * @returns {string} content-ltilink link
+	 */
+	getLTILinkHref() {
+		return ContentHelperFunctions.getHrefFromRel(Rels.Content.ltilinkEntity, this._entity);
 	}
 }
