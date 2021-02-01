@@ -104,7 +104,7 @@ describe('ContentLTILinkEntity', () => {
 		});
 
 		it('saves description', async() => {
-			fetchMock.patchOnce('https://fake-tenant-id.weblinks.api.proddev.d2l/6613/ltilinks/12345', webLinkData);
+			fetchMock.patchOnce('https://fake-tenant-id.weblinks.api.proddev.d2l/6613/ltilinks/12345', ltiLinkData);
 
 			await contentLTILinkEntity.setLTILinkDescription('<p>New description</p>');
 
@@ -116,7 +116,7 @@ describe('ContentLTILinkEntity', () => {
 		});
 
 		it('saves isExternalResource', async() => {
-			fetchMock.putOnce('https://fake-tenant-id.weblinks.api.proddev.d2l/6613/ltilinks/12345/external', webLinkData);
+			fetchMock.putOnce('https://fake-tenant-id.weblinks.api.proddev.d2l/6613/ltilinks/12345/external', ltiLinkData);
 
 			await contentLTILinkEntity.setLTILinkExternalResource(false);
 
@@ -128,7 +128,7 @@ describe('ContentLTILinkEntity', () => {
 		});
 
 		it('performs delete request', async() => {
-			fetchMock.deleteOnce('https://fake-tenant-id.weblinks.api.proddev.d2l/6613/ltilinks/12345', webLinkData);
+			fetchMock.deleteOnce('https://fake-tenant-id.weblinks.api.proddev.d2l/6613/ltilinks/12345', ltiLinkData);
 			await contentLTILinkEntity.deleteLTILink();
 			expect(fetchMock.called()).to.be.true;
 		});
