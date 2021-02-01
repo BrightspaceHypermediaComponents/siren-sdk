@@ -122,8 +122,7 @@ export const nonEditableQuiz = {
 		{
 			'class': [
 				'richtext',
-				'description',
-				'description-is-displayed'
+				'description'
 			],
 			'rel': [
 				'item',
