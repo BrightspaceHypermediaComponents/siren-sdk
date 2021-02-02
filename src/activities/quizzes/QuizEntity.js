@@ -270,6 +270,14 @@ export class QuizEntity extends Entity {
 	}
 
 	/**
+	 * @returns {bool} Description is displayed for the quiz entity
+	 */
+	descriptionIsDisplayed() {
+		const descriptionEntity = this._getDescriptionEntity();
+		return descriptionEntity && descriptionEntity.hasClass(Classes.quizzes.descriptionIsDisplayed);
+	}
+
+	/**
 	 * @returns {string} Timing Href of the quiz entity, if present
 	*/
 	timingHref() {
