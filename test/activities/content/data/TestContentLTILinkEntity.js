@@ -1,4 +1,4 @@
-export const contentWebLinkData = {
+export const contentLTILinkData = {
 	'actions': [
 		{
 			'href': 'https://fake-tenant-id.weblinks.api.proddev.d2l/6613/ltilinks/12345',
@@ -40,7 +40,7 @@ export const contentWebLinkData = {
 		},
 		{
 			'href': 'https://fake-tenant-id.weblinks.api.proddev.d2l/6613/ltilinks/12345',
-			'name': 'delete-webLink',
+			'name': 'delete-ltiLink',
 			'method': 'DELETE'
 		}
 	],

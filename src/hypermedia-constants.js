@@ -493,7 +493,7 @@ export const Actions = {
 		updateUrl: 'update-url',
 		updateExternalResource: 'update-external-resource',
 		deleteWeblink: 'delete-webLink',
-		deleteLTILink: 'delete-ltilink',
+		deleteLTIlink: 'delete-ltiLink',
 	},
 	notifications: {
 		getCarrierClass: 'get-carrier',
