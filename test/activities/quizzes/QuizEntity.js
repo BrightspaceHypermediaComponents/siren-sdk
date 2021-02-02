@@ -307,6 +307,17 @@ describe('QuizEntity', () => {
 				expect(quizEntity.canEditDescription()).to.be.false;
 			});
 		});
+		describe('descriptionIsDisplayed', () => {
+			it('returns true when descriptionIsDisplayed is true', () => {
+				var quizEntity = new QuizEntity(editableEntity);
+				expect(quizEntity.descriptionIsDisplayed()).to.be.true;
+			});
+
+			it('returns false when descriptionIsDisplayed is false', () => {
+				var quizEntity = new QuizEntity(nonEditableEntity);
+				expect(quizEntity.descriptionIsDisplayed()).to.be.false;
+			});
+		});
 	});
 
 	describe('save', () => {
