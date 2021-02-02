@@ -1,7 +1,7 @@
 export const contentLTILinkData = {
 	'actions': [
 		{
-			'href': 'https://fake-tenant-id.weblinks.api.proddev.d2l/6613/ltilinks/12345',
+			'href': 'https://fake-tenant-id.ltilinks.api.proddev.d2l/6613/ltilinks/12345',
 			'name': 'update-title',
 			'method': 'PATCH',
 			'fields': [
@@ -14,7 +14,7 @@ export const contentLTILinkData = {
 			]
 		},
 		{
-			'href': 'https://fake-tenant-id.weblinks.api.proddev.d2l/6613/ltilinks/12345',
+			'href': 'https://fake-tenant-id.ltilinks.api.proddev.d2l/6613/ltilinks/12345',
 			'name': 'update-description',
 			'method': 'PATCH',
 			'fields': [
@@ -27,7 +27,7 @@ export const contentLTILinkData = {
 			]
 		},
 		{
-			'href': 'https://fake-tenant-id.weblinks.api.proddev.d2l/6613/ltilinks/12345/external',
+			'href': 'https://fake-tenant-id.ltilinks.api.proddev.d2l/6613/ltilinks/12345/external',
 			'name': 'update-external-resource',
 			'method': 'PUT',
 			'fields': [
@@ -39,7 +39,7 @@ export const contentLTILinkData = {
 			]
 		},
 		{
-			'href': 'https://fake-tenant-id.weblinks.api.proddev.d2l/6613/ltilinks/12345',
+			'href': 'https://fake-tenant-id.ltilinks.api.proddev.d2l/6613/ltilinks/12345',
 			'name': 'delete-ltiLink',
 			'method': 'DELETE'
 		}

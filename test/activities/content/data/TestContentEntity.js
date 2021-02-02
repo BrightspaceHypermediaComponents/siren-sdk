@@ -42,8 +42,8 @@ export const contentLTILinkEntityData = {
 		'title': 'Test LTI Link Title'
 	},
 	'links': [{
-		'href': 'https://fake-tenant-id.weblinks.api.proddev.d2l/6613/ltilinks/12345',
-		'rel': ['https://weblinks.api.brightspace.com/rels/content-ltilink']
+		'href': 'https://fake-tenant-id.ltilinks.api.proddev.d2l/6613/ltilinks/12345',
+		'rel': ['https://ltilinks.api.brightspace.com/rels/content-ltilink']
 	}],
 	'entities': [],
 	'rel': []
