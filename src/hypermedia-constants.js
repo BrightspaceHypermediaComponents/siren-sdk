@@ -348,6 +348,7 @@ export const Classes = {
 	quizzes: {
 		quiz: 'quiz',
 		description: 'description',
+		descriptionIsDisplayed: 'description-is-displayed',
 		shuffle: 'shuffle',
 		hints: 'has-hints',
 		disableRightClick: 'disable-right-click',
