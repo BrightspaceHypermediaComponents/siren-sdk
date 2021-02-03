@@ -537,7 +537,7 @@ export class QuizEntity extends Entity {
 
 		if (typeof description === 'undefined') return;
 
-		if (!this._hasDescriptionChanged(description)) return;
+		if (!this._hasDescriptionChanged(description) && this.descriptionIsDisplayed()) return;
 
 		const descriptionEntity = this._getDescriptionEntity();
 
