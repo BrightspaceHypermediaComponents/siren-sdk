@@ -26,8 +26,7 @@
 				{
 					"browserName": "microsoftedge",
 					"platform": "Windows 10",
-					"version": "",
-					"maxDuration": 900
+					"version": ""
 				}
 			]
 		}
