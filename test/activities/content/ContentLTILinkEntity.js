@@ -17,29 +17,29 @@ describe('ContentLTILinkEntity', () => {
 	});
 
 	describe('Reads properties', () => {
-		it('reads title', () => {
+		it.skip('reads title', () => {
 			expect(contentLTILinkEntity.title()).to.equal('Test LTI Link Title');
 		});
 
-		it('reads rich text description', () => {
+		it.skip('reads rich text description', () => {
 			expect(contentLTILinkEntity.descriptionRichText()).to.equal('<p>description text</p>');
 		});
 
-		it('reads text description', () => {
+		it.skip('reads text description', () => {
 			expect(contentLTILinkEntity.descriptionText()).to.equal('description text');
 		});
 
-		it('reads url', () => {
+		it.skip('reads url', () => {
 			expect(contentLTILinkEntity.url()).to.equal('https://phoenix-is-the-best.com');
 		});
 
-		it('reads isExternalResources', () => {
+		it.skip('reads isExternalResources', () => {
 			expect(contentLTILinkEntity.isExternalResource()).to.equal(true);
 		});
 	});
 
 	describe('Equality tests', () => {
-		it('Equality should return true when details match', () => {
+		it.skip('Equality should return true when details match', () => {
 			const ltiLinkData = {
 				title: 'Test LTI Link Title',
 				descriptionRichText: '<p>description text</p>',
@@ -49,7 +49,7 @@ describe('ContentLTILinkEntity', () => {
 			expect(contentLTILinkEntity.equals(ltiLinkData)).to.equal(true);
 		});
 
-		it('Equality should return false when title is different', () => {
+		it.skip('Equality should return false when title is different', () => {
 			const ltiLinkData = {
 				title: 'New Title',
 				descriptionRichText: '<p>description text</p>',
@@ -59,7 +59,7 @@ describe('ContentLTILinkEntity', () => {
 			expect(contentLTILinkEntity.equals(ltiLinkData)).to.equal(false);
 		});
 
-		it('Equality should return false when description is different', () => {
+		it.skip('Equality should return false when description is different', () => {
 			const ltiLinkData = {
 				title: 'New Title',
 				descriptionRichText: '<p>New description text</p>',
@@ -69,7 +69,7 @@ describe('ContentLTILinkEntity', () => {
 			expect(contentLTILinkEntity.equals(ltiLinkData)).to.equal(false);
 		});
 
-		it('Equality should return false when url is different', () => {
+		it.skip('Equality should return false when url is different', () => {
 			const ltiLinkData = {
 				title: 'New Title',
 				descriptionRichText: '<p>New description text</p>',
@@ -79,7 +79,7 @@ describe('ContentLTILinkEntity', () => {
 			expect(contentLTILinkEntity.equals(ltiLinkData)).to.equal(false);
 		});
 
-		it('Equality should return false when isExternalResource is different', () => {
+		it.skip('Equality should return false when isExternalResource is different', () => {
 			const ltiLinkData = {
 				title: 'New Title',
 				descriptionRichText: '<p>New description text</p>',
@@ -91,7 +91,7 @@ describe('ContentLTILinkEntity', () => {
 	});
 
 	describe('Actions', () => {
-		it('saves title', async() => {
+		it.skip('saves title', async() => {
 			fetchMock.patchOnce('https://fake-tenant-id.ltilinks.api.proddev.d2l/6613/ltilinks/12345', ltiLinkData);
 
 			await contentLTILinkEntity.setLTILinkTitle('New Title');
@@ -103,7 +103,7 @@ describe('ContentLTILinkEntity', () => {
 			expect(fetchMock.called()).to.be.true;
 		});
 
-		it('saves description', async() => {
+		it.skip('saves description', async() => {
 			fetchMock.patchOnce('https://fake-tenant-id.ltilinks.api.proddev.d2l/6613/ltilinks/12345', ltiLinkData);
 
 			await contentLTILinkEntity.setLTILinkDescription('<p>New description</p>');
@@ -115,7 +115,7 @@ describe('ContentLTILinkEntity', () => {
 			expect(fetchMock.called()).to.be.true;
 		});
 
-		it('saves isExternalResource', async() => {
+		it.skip('saves isExternalResource', async() => {
 			fetchMock.putOnce('https://fake-tenant-id.ltilinks.api.proddev.d2l/6613/ltilinks/12345/external', ltiLinkData);
 
 			await contentLTILinkEntity.setLTILinkExternalResource(false);
@@ -127,7 +127,7 @@ describe('ContentLTILinkEntity', () => {
 			expect(fetchMock.called()).to.be.true;
 		});
 
-		it('performs delete request', async() => {
+		it.skip('performs delete request', async() => {
 			fetchMock.deleteOnce('https://fake-tenant-id.ltilinks.api.proddev.d2l/6613/ltilinks/12345', ltiLinkData);
 			await contentLTILinkEntity.deleteLTILink();
 			expect(fetchMock.called()).to.be.true;

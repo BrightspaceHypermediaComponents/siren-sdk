@@ -46,11 +46,11 @@ describe('LTI Link ContentEntity', () => {
 		contentEntity = new ContentEntity(contentData);
 	});
 
-	it('gets LTI link entity type', () => {
+	it.skip('gets LTI link entity type', () => {
 		expect(contentEntity.getEntityType()).to.equal(CONTENT_TYPES.ltilink);
 	});
 
-	it('gets content-ltilink href', () => {
+	it.skip('gets content-ltilink href', () => {
 		expect(contentEntity.getLTILinkHref()).to.equal('https://fake-tenant-id.ltilinks.api.proddev.d2l/6613/ltilinks/12345');
 	});
 });
