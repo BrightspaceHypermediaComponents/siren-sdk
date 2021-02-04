@@ -1,5 +1,5 @@
 import { ContentEntity, CONTENT_TYPES } from '../../../src/activities/content/ContentEntity.js';
-import { contentModuleEntityData, contentWebLinkEntityData } from './data/TestContentEntity.js';
+import { contentModuleEntityData, contentWebLinkEntityData, contentLTILinkEntityData } from './data/TestContentEntity.js';
 
 describe('Module ContentEntity', () => {
 	let contentData;
@@ -34,5 +34,23 @@ describe('Web Link ContentEntity', () => {
 
 	it('gets content-weblink href', () => {
 		expect(contentEntity.getWebLinkHref()).to.equal('https://fake-tenant-id.weblinks.api.proddev.d2l/6613/weblinks/12345');
+	});
+});
+
+describe('LTI Link ContentEntity', () => {
+	let contentData;
+	let contentEntity;
+
+	beforeEach(() => {
+		contentData = window.D2L.Hypermedia.Siren.Parse(contentLTILinkEntityData);
+		contentEntity = new ContentEntity(contentData);
+	});
+
+	it('gets LTI link entity type', () => {
+		expect(contentEntity.getEntityType()).to.equal(CONTENT_TYPES.ltilink);
+	});
+
+	it('gets content-ltilink href', () => {
+		expect(contentEntity.getLTILinkHref()).to.equal('https://fake-tenant-id.ltilinks.api.proddev.d2l/6613/ltilinks/12345');
 	});
 });
