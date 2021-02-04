@@ -102,6 +102,30 @@ export class QuizTimingEntity extends Entity {
 		return entity.properties && entity.properties.timeLimit;
 	}
 
+	minRecommendedTimeLimit() {
+		const entity = this.getRecommendedTimingSubEntity();
+		if (!entity) return;
+		const action = entity.getActionByName(Actions.quizzes.timing.updateTimeLimit);
+		if (!action) return;
+		const field = action.getFieldByName('timeLimit');
+		if (!field) return;
+		return field.min;
+	}
+
+	maxRecommendedTimeLimit() {
+		const field = this.getRecommendedTimeLimitField();
+		if (!field) return;
+		return field.max;
+	}
+
+	getRecommendedTimeLimitField() {
+		const entity = this.getRecommendedTimingSubEntity();
+		if (!entity) return;
+		const action = entity.getActionByName(Actions.quizzes.timing.updateTimeLimit);
+		if (!action) return;
+		return action.getFieldByName('timeLimit');
+	}
+
 	async setExtendedDeadline(data) {
 		if (!this.canEditExtendedDeadline()) return;
 		const entity = this.getAutomaticZeroSubEntity();
