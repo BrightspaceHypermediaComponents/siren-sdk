@@ -48,7 +48,7 @@ export class QuizIpRestrictionsEntity extends Entity {
 	 * @returns {object} Returns IP range sub entity
 	 */
 
-	getIpRestrictionSubEntity(id) {
+	_getIpRestriction(id) {
 		const ipRestrictionEntities = this._entity && this._entity.getSubEntitiesByClass(Classes.quizzes.ip.range);
 
 		if (!ipRestrictionEntities || !ipRestrictionEntities.length) {
@@ -93,7 +93,7 @@ export class QuizIpRestrictionsEntity extends Entity {
 	async deleteIpRestriction(id) {
 		if (!this.canEditIpRestrictions()) return;
 
-		const entity = this.getIpRestrictionSubEntity(id);
+		const entity = this._getIpRestriction(id);
 
 		if (!entity) return;
 
@@ -113,7 +113,7 @@ export class QuizIpRestrictionsEntity extends Entity {
 
 		const { start, end } = restriction;
 
-		const entity = this.getIpRestrictionSubEntity(restriction.id);
+		const entity = this._getIpRestriction(restriction.id);
 
 		if (!entity) {
 			return;
