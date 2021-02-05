@@ -83,6 +83,12 @@ describe('QuizTimingEntity', () => {
 				expect(entity.showClock()).to.be.true;
 			});
 		});
+		describe('canEditShowClock', () => {
+			it('return true when can edit showClock', () => {
+				var entity = new QuizTimingEntity(recommendedTimingEntity);
+				expect(entity.canEditShowClock()).to.be.true;
+			});
+		});
 	});
 	describe('automatic zero', () => {
 		describe('isAutomaticZero', () => {
