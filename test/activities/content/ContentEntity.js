@@ -51,6 +51,6 @@ describe('LTI Link ContentEntity', () => {
 	});
 
 	it('gets content-ltilink href', () => {
-		expect(contentEntity.getLTILinkHref()).to.equal('https://fake-tenant-id.ltilinks.api.proddev.d2l/6613/ltilinks/12345');
+		expect(contentEntity.getLTILinkHref()).to.equal('https://fake-tenant-id.weblinks.api.proddev.d2l/6613/ltilinks/12345');
 	});
 });
