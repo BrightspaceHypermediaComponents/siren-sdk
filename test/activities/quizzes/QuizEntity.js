@@ -440,6 +440,16 @@ describe('QuizEntity', () => {
 
 	});
 
+	describe('ipRestrictions', () => {
+		describe('ipRestrictionsHref', () => {
+			const expectedHref = 'https://afe99802-9130-4320-a770-8d138b941e74.quizzes.api.proddev.d2l/6606/quizzes/39/ip';
+			it('can read ipRestrictionsHref from an entity', () => {
+				var quizEntity = new QuizEntity(editableEntity);
+				expect(quizEntity.ipRestrictionsHref()).to.equal(expectedHref);
+			});
+		});
+	});
+
 	describe('autoSetGraded', () => {
 		describe('canEditAutoSetGraded', () => {
 			it('returns true when auto set graded is editable', () => {
