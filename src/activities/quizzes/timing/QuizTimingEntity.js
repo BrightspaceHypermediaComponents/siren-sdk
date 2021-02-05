@@ -27,6 +27,12 @@ export class QuizTimingEntity extends Entity {
 		const entity = this.getEnforcedTimingSubEntity();
 		return entity && entity.hasActionByName(Actions.quizzes.timing.updateLateTypeId);
 	}
+
+	canEditShowClock() {
+		const entity = this.getRecommendedTimingSubEntity();
+		return entity && entity.hasActionByName(Actions.quizzes.timing.updateHasTimer);
+	}
+
 	timingTypes() {
 		const action = this._entity && this._entity.getActionByName(Actions.quizzes.timing.updateType);
 		if (!action) return;
@@ -151,6 +157,16 @@ export class QuizTimingEntity extends Entity {
 		const action = entity.getActionByName(Actions.quizzes.timing.updateLateTypeId);
 		const fields = [
 			{ name: 'submissionLateTypeId', value: data }
+		];
+		await performSirenAction(this._token, action, fields);
+	}
+	async toggleShowClock(data) {
+		if (!this.canEditShowClock()) return;
+		const entity = this.getRecommendedTimingSubEntity();
+		if (!entity) return;
+		const action = entity.getActionByName(Actions.quizzes.timing.updateHasTimer);
+		const fields = [
+			{ name: 'hasTimer', value: data }
 		];
 		await performSirenAction(this._token, action, fields);
 	}
