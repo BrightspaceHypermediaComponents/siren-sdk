@@ -295,7 +295,6 @@ export class QuizEntity extends Entity {
 		if (!this._entity || !this._entity.hasSubEntityByClass(Classes.quizzes.ip.restrictions)) {
 			return;
 		}
-		// debugger;
 		return this._entity.getSubEntityByClass(Classes.quizzes.ip.restrictions).href;
 	}
 
