@@ -109,7 +109,8 @@ export const Rels = {
 	},
 	Content: {
 		moduleEntity: 'https://modules.api.brightspace.com/rels/content-module',
-		weblinkEntity: 'https://weblinks.api.brightspace.com/rels/content-weblink'
+		weblinkEntity: 'https://weblinks.api.brightspace.com/rels/content-weblink',
+		ltilinkEntity: 'https://weblinks.api.brightspace.com/rels/content-ltilink'
 	},
 	// Parents API sub-domain rels
 	Parents: {
@@ -492,7 +493,8 @@ export const Actions = {
 	webLink: {
 		updateUrl: 'update-url',
 		updateExternalResource: 'update-external-resource',
-		deleteWeblink: 'delete-webLink'
+		deleteWeblink: 'delete-webLink',
+		deleteLTIlink: 'delete-ltiLink',
 	},
 	notifications: {
 		getCarrierClass: 'get-carrier',
