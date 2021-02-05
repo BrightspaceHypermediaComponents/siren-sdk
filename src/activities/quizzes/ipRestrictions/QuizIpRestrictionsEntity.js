@@ -33,15 +33,13 @@ export class QuizIpRestrictionsEntity extends Entity {
 			return [{ start: '', end: '' }];
 		}
 
-		return ipRestrictionEntities.map(({ properties }) => {
+		return ipRestrictionEntities.map(({ properties }, index) => {
 
-			const { start, end, oldStart, oldEnd } = properties;
-
+			const { start, end } = properties;
 			return {
 				start,
 				end,
-				oldStart,
-				oldEnd
+				id: index
 			};
 		});
 	}
@@ -50,8 +48,20 @@ export class QuizIpRestrictionsEntity extends Entity {
 	 * @returns {object} Returns IP range sub entity
 	 */
 
-	getIpRangeSubEntity() {
-		return this._entity && this._entity.getSubEntityByClass(Classes.quizzes.ip.range);
+	getIpRestrictionSubEntity(id) {
+		const ipRestrictionEntities = this._entity && this._entity.getSubEntitiesByClass(Classes.quizzes.ip.range);
+
+		if (!ipRestrictionEntities || !ipRestrictionEntities.length) {
+			return;
+		}
+
+		const entity = ipRestrictionEntities[id];
+
+		if (!entity) {
+			return;
+		}
+
+		return entity;
 	}
 
 	/**
@@ -63,20 +73,13 @@ export class QuizIpRestrictionsEntity extends Entity {
 	async addIpRestriction(restriction) {
 		if (!this.canEditIpRestrictions()) return;
 
-		const { start, end, oldStart, oldEnd } = restriction;
+		const { start, end } = restriction;
 
 		const action = this._entity.getActionByName(Actions.quizzes.ipRestrictions.add);
 		const fields = [
 			{ name: IP_START_FIELD, value: start },
 			{ name: IP_END_FIELD, value: end }
 		];
-
-		if (oldStart && oldEnd) {
-			fields.push(
-				{ name: 'oldStart', value: oldStart },
-				{ name: 'oldEnd', value: oldEnd }
-			);
-		}
 
 		await performSirenAction(this._token, action, fields);
 	}
@@ -87,10 +90,36 @@ export class QuizIpRestrictionsEntity extends Entity {
 	 * @returns {null}
 	*/
 
-	async deleteIpRestriction(start, end) {
+	async deleteIpRestriction(id) {
 		if (!this.canEditIpRestrictions()) return;
 
-		const action = this._entity.getActionByName(Actions.quizzes.ipRestrictions.delete);
+		const entity = this.getIpRestrictionSubEntity(id);
+
+		if (!entity) return;
+
+		const action = entity.getActionByName(Actions.quizzes.ipRestrictions.delete);
+		const fields = [
+			{ name: IP_START_FIELD, value: entity.properties.start },
+			{ name: IP_END_FIELD, value: entity.properties.end }
+		];
+
+		await performSirenAction(this._token, action, fields);
+	}
+
+	async updateIpRestriction(restriction) {
+		if (!this.canEditIpRestrictions()) {
+			return;
+		}
+
+		const { start, end } = restriction;
+
+		const entity = this.getIpRestrictionSubEntity(restriction.id);
+
+		if (!entity) {
+			return;
+		}
+
+		const action = entity.getActionByName(Actions.quizzes.ipRestrictions.update);
 		const fields = [
 			{ name: IP_START_FIELD, value: start },
 			{ name: IP_END_FIELD, value: end }
