@@ -562,6 +562,7 @@ export const Actions = {
 		updateAutoSetGraded: 'update-auto-set-graded',
 		delete: 'delete-quiz',
 		updateDescription: 'update-description',
+		updateHeader: 'update-header',
 		updateAttemptsAllowed: 'update-attempts',
 		timing: {
 			updateType: 'update-timing-type',
