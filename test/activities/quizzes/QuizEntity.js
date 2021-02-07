@@ -41,7 +41,8 @@ describe('QuizEntity', () => {
 				notificationEmail: 'moose@d2l.com',
 				preventMovingBackwards: true,
 				autoSetGraded: true,
-				description: 'The Second quiz ever'
+				description: 'The Second quiz ever',
+				header: 'Top of the quiz to ya!'
 			};
 		});
 
@@ -95,6 +96,12 @@ describe('QuizEntity', () => {
 		it('returns false when description not equal', () => {
 			var quizEntity = new QuizEntity(editableEntity);
 			modifiedEntity.description = 'New Description!';
+			expect(quizEntity.equals(modifiedEntity)).to.be.false;
+		});
+
+		it('returns false when header not equal', () => {
+			var quizEntity = new QuizEntity(editableEntity);
+			modifiedEntity.header = 'New Header!';
 			expect(quizEntity.equals(modifiedEntity)).to.be.false;
 		});
 	});
@@ -320,6 +327,30 @@ describe('QuizEntity', () => {
 		});
 	});
 
+	describe('header', () => {
+		describe('canEditHeader', () => {
+			it('returns true when header is editable', () => {
+				var quizEntity = new QuizEntity(editableEntity);
+				expect(quizEntity.canEditHeader()).to.be.true;
+			});
+
+			it('returns false when header are not editable', () => {
+				var quizEntity = new QuizEntity(nonEditableEntity);
+				expect(quizEntity.canEditHeader()).to.be.false;
+			});
+		});
+		describe('headerIsDisplayed', () => {
+			it('returns true when headerIsDisplayed is true', () => {
+				var quizEntity = new QuizEntity(editableEntity);
+				expect(quizEntity.headerIsDisplayed()).to.be.true;
+			});
+
+			it('returns false when headerIsDisplayed is false', () => {
+				var quizEntity = new QuizEntity(nonEditableEntity);
+				expect(quizEntity.headerIsDisplayed()).to.be.false;
+			});
+		});
+	});
 	describe('save', () => {
 		it('saves', async() => {
 			fetchMock.patchOnce('https://afe99802-9130-4320-a770-8d138b941e74.quizzes.api.proddev.d2l/6606/quizzes/22', editableEntity);
@@ -336,7 +367,8 @@ describe('QuizEntity', () => {
 				notificationEmail: 'modifiedMoose@d2l.com',
 				preventMovingBackwards: false,
 				autoSetGraded: false,
-				description: 'New description'
+				description: 'New description',
+				header: 'New header'
 			});
 
 			const form = await getFormData(fetchMock.lastCall().request);
@@ -351,6 +383,7 @@ describe('QuizEntity', () => {
 				expect(form.get('preventMovingBackwards')).to.equal('false');
 				expect(form.get('autoSetGraded')).to.equal('false');
 				expect(form.get('description')).to.equal('New description');
+				expect(form.get('header')).to.equal('New header');
 			}
 
 			expect(fetchMock.called()).to.be.true;
@@ -369,7 +402,8 @@ describe('QuizEntity', () => {
 				notificationEmail: 'moose@d2l.com',
 				preventMovingBackwards: true,
 				autoSetGraded: true,
-				description: 'The Second quiz ever'
+				description: 'The Second quiz ever',
+				header: 'Top of the quiz to ya!'
 			});
 
 			expect(fetchMock.done());
@@ -388,7 +422,8 @@ describe('QuizEntity', () => {
 				notificationEmail: 'modifiedMoose@d2l.com',
 				preventMovingBackwards: false,
 				autoSetGraded: false,
-				description: 'New and improved Description!'
+				description: 'New and improved Description!',
+				header: 'Even better Header!'
 			});
 
 			expect(fetchMock.done());
