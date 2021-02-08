@@ -288,6 +288,16 @@ export class QuizEntity extends Entity {
 		return this._entity.getSubEntityByRel(Rels.Quizzes.timing).href;
 	}
 
+	/**
+	 * @returns {string} Ip restrictions Href of the quiz entity, if present
+	*/
+	ipRestrictionsHref() {
+		if (!this._entity || !this._entity.hasSubEntityByClass(Classes.quizzes.ip.restrictions)) {
+			return;
+		}
+		return this._entity.getSubEntityByClass(Classes.quizzes.ip.restrictions).href;
+	}
+
 	async save(quiz) {
 		if (!quiz) return;
 		const updateNameAction = this.canEditName() ? this._formatUpdateNameAction(quiz) : null;
