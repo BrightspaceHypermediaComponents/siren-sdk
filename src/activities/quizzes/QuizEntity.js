@@ -760,7 +760,7 @@ export class QuizEntity extends Entity {
 		return this._entity
 			&& this._entity.hasSubEntityByRel(Rels.Quizzes.header)
 			&& this._entity.getSubEntityByRel(Rels.Quizzes.header);
-	}	
+	}
 
 	_canCheckout() {
 		return this._entity && this._entity.hasActionByName(Actions.workingCopy.checkout);
