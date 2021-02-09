@@ -51,7 +51,7 @@ describe('QuizTimingEntity', () => {
 			});
 		});
 		describe('maxEnforcedTimeLimit', () => {
-			it('can read min enforced time limit', () => {
+			it('can read max enforced time limit', () => {
 				var entity = new QuizTimingEntity(enforcedTimingEntity);
 				expect(entity.maxEnforcedTimeLimit()).to.equal(9999);
 			});
@@ -63,7 +63,7 @@ describe('QuizTimingEntity', () => {
 			});
 		});
 		describe('maxEnforcedGraceLimit', () => {
-			it('can read min enforced grace limit', () => {
+			it('can read max enforced grace limit', () => {
 				var entity = new QuizTimingEntity(enforcedTimingEntity);
 				expect(entity.maxEnforcedGraceLimit()).to.equal(999999999999999);
 			});
@@ -87,7 +87,7 @@ describe('QuizTimingEntity', () => {
 			});
 		});
 		describe('maxRecommendedTimeLimit', () => {
-			it('can read min recommended time limit', () => {
+			it('can read max recommended time limit', () => {
 				var entity = new QuizTimingEntity(recommendedTimingEntity);
 				expect(entity.maxRecommendedTimeLimit()).to.equal(9999);
 			});
