@@ -149,6 +149,7 @@ export const Rels = {
 	// Quizzes API sub-domain rels
 	Quizzes: {
 		description: 'https://quizzes.api.brightspace.com/rels/description',
+		header: 'https://quizzes.api.brightspace.com/rels/header',
 		shuffle: 'https://quizzes.api.brightspace.com/rels/shuffle',
 		hints: 'https://quizzes.api.brightspace.com/rels/has-hints',
 		disableRightClick: 'https://quizzes.api.brightspace.com/rels/disable-right-click',
@@ -350,6 +351,8 @@ export const Classes = {
 		quiz: 'quiz',
 		description: 'description',
 		descriptionIsDisplayed: 'description-is-displayed',
+		header: 'header',
+		headerIsDisplayed: 'header-is-displayed',
 		shuffle: 'shuffle',
 		hints: 'has-hints',
 		disableRightClick: 'disable-right-click',
