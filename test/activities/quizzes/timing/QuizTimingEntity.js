@@ -6,8 +6,6 @@ describe('QuizTimingEntity', () => {
 	var enforcedTimingEntity, recommendedTimingEntity;
 
 	beforeEach(() => {
-		// eslint-disable-next-line no-debugger
-		debugger;
 		enforcedTimingEntity = window.D2L.Hypermedia.Siren.Parse(enforcedQuizTiming);
 		recommendedTimingEntity = window.D2L.Hypermedia.Siren.Parse(recommendedQuizTiming);
 	});
