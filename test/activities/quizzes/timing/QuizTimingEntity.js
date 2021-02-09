@@ -46,6 +46,36 @@ describe('QuizTimingEntity', () => {
 				expect(entity.enforcedGraceLimit().value).to.equal(5);
 			});
 		});
+		describe('minEnforcedTimeLimit', () => {
+			it('can read min enforced time limit', () => {
+				var entity = new QuizTimingEntity(enforcedTimingEntity);
+				expect(entity.minEnforcedTimeLimit()).to.equal(1);
+			});
+		});
+		describe('maxEnforcedTimeLimit', () => {
+			it('can read min enforced time limit', () => {
+				var entity = new QuizTimingEntity(enforcedTimingEntity);
+				expect(entity.maxEnforcedTimeLimit()).to.equal(9999);
+			});
+		});
+		describe('minEnforcedGraceLimit', () => {
+			it('can read min enforced grace limit', () => {
+				var entity = new QuizTimingEntity(enforcedTimingEntity);
+				expect(entity.minEnforcedGraceLimit()).to.equal(1);
+			});
+		});
+		describe('maxEnforcedGraceLimit', () => {
+			it('can read min enforced grace limit', () => {
+				var entity = new QuizTimingEntity(enforcedTimingEntity);
+				expect(entity.maxEnforcedGraceLimit()).to.equal(999999999999999);
+			});
+		});
+		describe('canEditGracePeriod', () => {
+			it('return true when can edit grace period', () => {
+				var entity = new QuizTimingEntity(enforcedTimingEntity);
+				expect(entity.canEditGracePeriod()).to.be.true;
+			});
+		});
 		describe('recommendedTimeLimit', () => {
 			it('can read recommended time limit', () => {
 				var entity = new QuizTimingEntity(recommendedTimingEntity);
@@ -54,27 +84,14 @@ describe('QuizTimingEntity', () => {
 		});
 		describe('minRecommendedTimeLimit', () => {
 			it('can read min recommended time limit', () => {
-				// eslint-disable-next-line no-debugger
-				debugger;
 				var entity = new QuizTimingEntity(recommendedTimingEntity);
-				// eslint-disable-next-line quotes
-				// eslint-disable-next-line no-console
-				console.log('ENTITY', entity);
-				// eslint-disable-next-line no-debugger
-				debugger;
 				expect(entity.minRecommendedTimeLimit()).to.equal(1);
 			});
 		});
-		// describe('maxRecommendedTimeLimit', () => {
-		// 	it('can read min recommended time limit', () => {
-		// 		var entity = new QuizTimingEntity(recommendedTimingEntity);
-		// 		expect(entity.minRecommendedTimeLimit()).to.equal(9999);
-		// 	});
-		// });
-		describe('canEditGracePeriod', () => {
-			it('return true when can edit grace period', () => {
-				var entity = new QuizTimingEntity(enforcedTimingEntity);
-				expect(entity.canEditGracePeriod()).to.be.true;
+		describe('maxRecommendedTimeLimit', () => {
+			it('can read min recommended time limit', () => {
+				var entity = new QuizTimingEntity(recommendedTimingEntity);
+				expect(entity.maxRecommendedTimeLimit()).to.equal(9999);
 			});
 		});
 	});
