@@ -98,12 +98,8 @@ export class QuizIpRestrictionsEntity extends Entity {
 		if (!entity) return;
 
 		const action = entity.getActionByName(Actions.quizzes.ipRestrictions.delete);
-		const fields = [
-			{ name: IP_START_FIELD, value: entity.properties.start },
-			{ name: IP_END_FIELD, value: entity.properties.end }
-		];
 
-		await performSirenAction(this._token, action, fields);
+		await performSirenAction(this._token, action);
 	}
 
 	async updateIpRestriction(restriction) {
