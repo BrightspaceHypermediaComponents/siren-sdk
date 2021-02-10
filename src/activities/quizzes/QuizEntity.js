@@ -278,6 +278,85 @@ export class QuizEntity extends Entity {
 	}
 
 	/**
+	 * @returns {string} Quiz header in plaintext (HTML stripped)
+	 */
+	headerPlaintext() {
+		const headerEntity = this._getHeaderEntity();
+		return headerEntity
+			&& headerEntity.properties
+			&& headerEntity.properties.text;
+	}
+
+	/**
+	 * @returns {string} Quiz header in HTML
+	 */
+	headerHtml() {
+		const headerEntity = this._getHeaderEntity();
+		return headerEntity
+			&& headerEntity.properties
+			&& headerEntity.properties.html;
+	}
+
+	/**
+	 * @returns {string} Quiz header formatted to be used with a d2l-html-editor
+	 */
+	headerEditorHtml() {
+		const headerEntity = this._getHeaderEntity();
+		if (!headerEntity) {
+			return;
+		}
+
+		const updateHeaderAction = headerEntity.getActionByName(Actions.quizzes.updateHeader);
+		return updateHeaderAction
+			&& updateHeaderAction.hasFieldByName('header')
+			&& updateHeaderAction.getFieldByName('header').value;
+	}
+
+	/**
+	 * @returns {bool} Whether or not the edit header action is present on the quiz entity
+	 */
+	canEditHeader() {
+		const headerEntity = this._getHeaderEntity();
+		return headerEntity
+			&& headerEntity.hasActionByName(Actions.quizzes.updateHeader);
+	}
+
+	/**
+	 * Updates the quiz to have the given header
+	 * @param {string} header Header to set on the assignment
+	 */
+	async setHeader(header) {
+		const headerEntity = this.canEditHeader() && this._getHeaderEntity();
+		if (!headerEntity) {
+			return;
+		}
+
+		const action = headerEntity.getActionByName(Actions.quizzes.updateHeader);
+		if (!action) {
+			return;
+		}
+
+		const fields = [{ name: 'header', value: header }];
+		await performSirenAction(this._token, action, fields);
+	}
+
+	/**
+	 * @returns {object} Richtext editor config for the quiz header; for use with d2l-html-editor
+	 */
+	headerRichTextEditorConfig() {
+		const headerEntity = this._getHeaderEntity();
+		return headerEntity
+			&& headerEntity.getSubEntityByRel(Rels.richTextEditorConfig);
+	}
+
+	/**
+	 * @returns {bool} Header is displayed for the quiz entity
+	 */
+	headerIsDisplayed() {
+		const headerEntity = this._getHeaderEntity();
+		return headerEntity && headerEntity.hasClass(Classes.quizzes.headerIsDisplayed);
+	}
+	/**
 	 * @returns {string} Timing Href of the quiz entity, if present
 	*/
 	timingHref() {
@@ -310,6 +389,7 @@ export class QuizEntity extends Entity {
 		const updatePreventMovingBackwards = this.canEditPreventMovingBackwards() ? this._formatUpdatePreventMovingBackwards(quiz) : null;
 		const updateAutoSetGradedAction = this.canEditAutoSetGraded() ? this._formatUpdateAutoSetGraded(quiz) : null;
 		const updateDescriptionAction = this.canEditDescription() ? this._formatUpdateDescriptionAction(quiz) : null;
+		const updateHeaderAction = this.canEditHeader() ? this._formatUpdateHeaderAction(quiz) : null;
 
 		const sirenActions = [
 			updateNameAction,
@@ -321,7 +401,8 @@ export class QuizEntity extends Entity {
 			updateNotificationEmail,
 			updatePreventMovingBackwards,
 			updateAutoSetGradedAction,
-			updateDescriptionAction
+			updateDescriptionAction,
+			updateHeaderAction
 		];
 		await performSirenActions(this._token, sirenActions);
 	}
@@ -565,6 +646,34 @@ export class QuizEntity extends Entity {
 		return { action, fields };
 	}
 
+	/**
+	 * Checks if quiz header has changed and if so returns the appropriate action/fields to update
+	 * @param {object} quiz the quiz that's being modified
+	 */
+
+	_formatUpdateHeaderAction(quiz) {
+		const { header } = quiz || {};
+
+		if (typeof header === 'undefined') return;
+
+		if (!this._hasHeaderChanged(header) && this.headerIsDisplayed()) return;
+
+		const headerEntity = this._getHeaderEntity();
+
+		if (!headerEntity) return;
+
+		const action = headerEntity.getActionByName(Actions.quizzes.updateHeader);
+
+		if (!action) {
+			return;
+		}
+
+		const fields = [
+			{ name: 'header', value: header },
+		];
+		return { action, fields };
+	}
+
 	_hasHintsChanged(allowHints) {
 		return allowHints !== this.getHintsToolEnabled();
 	}
@@ -605,6 +714,10 @@ export class QuizEntity extends Entity {
 		return description !== this.descriptionEditorHtml();
 	}
 
+	_hasHeaderChanged(header) {
+		return header !== this.headerEditorHtml();
+	}
+
 	equals(quiz) {
 		const diffs = [
 			[this.name(), quiz.name],
@@ -616,7 +729,8 @@ export class QuizEntity extends Entity {
 			[this.notificationEmail(), quiz.notificationEmail],
 			[this.isPreventMovingBackwardsEnabled(), quiz.preventMovingBackwards],
 			[this.isAutoSetGradedEnabled(), quiz.autoSetGraded],
-			[this.descriptionEditorHtml(), quiz.description]
+			[this.descriptionEditorHtml(), quiz.description],
+			[this.headerEditorHtml(), quiz.header]
 		];
 
 		for (const [left, right] of diffs) {
@@ -650,6 +764,12 @@ export class QuizEntity extends Entity {
 		return this._entity
 			&& this._entity.hasSubEntityByRel(Rels.Quizzes.description)
 			&& this._entity.getSubEntityByRel(Rels.Quizzes.description);
+	}
+
+	_getHeaderEntity() {
+		return this._entity
+			&& this._entity.hasSubEntityByRel(Rels.Quizzes.header)
+			&& this._entity.getSubEntityByRel(Rels.Quizzes.header);
 	}
 
 	_canCheckout() {

@@ -154,7 +154,44 @@ export const nonEditableQuiz = {
 					}
 				}
 			]
-		},		{
+		},
+		{
+			'class': [
+				'richtext',
+				'header'
+			],
+			'rel': [
+				'item',
+				'https://quizzes.api.brightspace.com/rels/header'
+			],
+			'properties': {
+				'text': 'Top of the quiz to ya!',
+				'html': 'Top of the quiz to ya!'
+			},
+			'entities': [
+				{
+					'class': [
+						'richtext-editor-config'
+					],
+					'rel': [
+						'https://api.brightspace.com/rels/richtext-editor-config'
+					],
+					'properties': {
+						'orgUnit': {
+							'OrgId': '6606',
+							'OrgUnitId': '6609'
+						},
+						'd2l_filter': {
+							'endpoint': '/d2l/lp/htmleditor/converttoabsolute?ou=6609'
+						},
+						'd2l_isf': {
+							'endpoint': '/d2l/common/dialogs/isf/selectItem.d2l?ou=6609&filterMode=Strict'
+						}
+					}
+				}
+			]
+		},
+		{
 			'class': [],
 			'rel': ['https://quizzes.api.brightspace.com/rels/timing'],
 			'href': 'https://afe99802-9130-4320-a770-8d138b941e74.quizzes.api.proddev.d2l/6606/quizzes/22/timing?workingCopyId=1234'
