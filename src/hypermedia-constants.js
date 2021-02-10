@@ -161,7 +161,8 @@ export const Rels = {
 		timing: 'https://quizzes.api.brightspace.com/rels/timing',
 		timingType: 'https://quizzes.api.brightspace.com/rels/timing-type',
 		timingLateType: 'https://quizzes.api.brightspace.com/rels/timing-late-type',
-		attempts: 'https://quizzes.api.brightspace.com/rels/attempts'
+		attempts: 'https://quizzes.api.brightspace.com/rels/attempts',
+		ipRestrictions: 'https://quizzes.api.brightspace.com/rels/ip'
 	},
 	// Themes API sub-domain rels
 	Themes: {
@@ -366,6 +367,10 @@ export const Classes = {
 			enforced: 'enforced',
 			showClock: 'show-clock',
 			automaticZero: 'automatic-zero'
+		},
+		ip: {
+			restrictions: 'ip-restrictions',
+			range: 'ip-range'
 		}
 	},
 	text: {
@@ -574,6 +579,11 @@ export const Actions = {
 			updateHasTimer: 'update-timing-has-timer',
 			updateTimingGraceLimit: 'update-timing-grace-limit',
 			updateTimingLateData: 'update-timing-late-data'
+		},
+		ipRestrictions: {
+			update: 'update',
+			delete: 'delete',
+			add: 'add'
 		}
 	},
 	workingCopy: {
