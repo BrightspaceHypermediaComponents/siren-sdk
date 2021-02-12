@@ -44,7 +44,7 @@ const nonEditableEnforcedSubEntity = {
 	'class': ['enforced', 'uselatelimit'],
 	'entities': [
 		{
-			'class': ['automatic-zero'],
+			'class': ['uselatelimit'],
 			'properties': {
 				'submissionLateData': {
 					'title': 'Extended Deadline',
@@ -59,7 +59,7 @@ const nonEditableEnforcedSubEntity = {
 			'title': 'Time Limit',
 			'value': 120
 		},
-		'lateTypeId': {
+		'submissionLateTypeId': {
 			'title': 'After the grace period, flag the quiz attempt as exceeded time limit, and allow the student to continue working. Quiz attempt will be automatically scored as zero after an extended deadline.'
 		},
 		'graceLimit': {

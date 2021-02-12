@@ -171,7 +171,7 @@ const editableEnforcedSubEntity = {
 	],
 	'entities': [
 		{
-			'class': ['automatic-zero'],
+			'class': ['uselatelimit'],
 			'actions': [
 				{
 					'fields': [

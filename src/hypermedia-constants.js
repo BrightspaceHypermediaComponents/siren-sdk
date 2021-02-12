@@ -366,7 +366,7 @@ export const Classes = {
 			recommended: 'recommended',
 			enforced: 'enforced',
 			showClock: 'show-clock',
-			automaticZero: 'automatic-zero'
+			automaticZero: 'uselatelimit'
 		},
 		ip: {
 			restrictions: 'ip-restrictions',
