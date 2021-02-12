@@ -2,7 +2,6 @@
 
 import { QuizEntity } from '../../../src/activities/quizzes/QuizEntity.js';
 import { editableQuiz } from './data/EditableQuiz.js';
-import { forkedWorkingCopyQuiz } from './data/ForkedWorkingCopyQuiz.js';
 import { getFormData } from '../../utility/test-helpers.js';
 import { nonEditableQuiz } from './data/NoneditableQuiz';
 import { workingCopyQuiz } from './data/WorkingCopyQuiz';
@@ -527,120 +526,46 @@ describe('QuizEntity', () => {
 		});
 	});
 
-	describe('checkout', () => {
-		it('can checkout quiz working copy', async() => {
-			fetchMock.getOnce('https://afe99802-9130-4320-a770-8d138b941e74.quizzes.api.proddev.d2l/6606/quizzes/22?', workingCopyEntity);
+	describe('working copy actions', async() => {
+		describe('checkout', () => {
+			it('can checkout quiz working copy', async() => {
+				fetchMock.getOnce('https://afe99802-9130-4320-a770-8d138b941e74.quizzes.api.proddev.d2l/6606/quizzes/22?', workingCopyEntity);
 
-			var quizEntity = new QuizEntity(editableEntity);
-
-			await quizEntity.checkout();
-			expect(fetchMock.called()).to.be.true;
-		});
-
-		it('cannot checkout if already a working copy', async() => {
-			var quizEntity = new QuizEntity(workingCopyEntity);
-			await quizEntity.checkout();
-			expect(fetchMock.done());
-		});
-
-		it('cannot checkout', async() => {
-			var quizEntity = new QuizEntity(nonEditableEntity);
-			await quizEntity.checkout();
-			expect(fetchMock.done());
-		});
-	});
-
-	describe('working copy actions', () => {
-		var forkedWorkingCopyEntity;
-
-		beforeEach(() => {
-			forkedWorkingCopyEntity = window.D2L.Hypermedia.Siren.Parse(forkedWorkingCopyQuiz);
-		});
-
-		describe('fork', () => {
-			it('can fork quiz', async() => {
-				fetchMock.postOnce('https://afe99802-9130-4320-a770-8d138b941e74.quizzes.api.proddev.d2l/6606/quizzes/22', forkedWorkingCopyEntity);
-
-				var quizEntity = new QuizEntity(workingCopyEntity);
-
-				await quizEntity.fork();
-				expect(fetchMock.called()).to.be.true;
-			});
-
-			it('can fork quiz from forked entity', async() => {
-				fetchMock.postOnce('https://afe99802-9130-4320-a770-8d138b941e74.quizzes.api.proddev.d2l/6606/quizzes/22', forkedWorkingCopyEntity);
-
-				var quizEntity = new QuizEntity(forkedWorkingCopyEntity);
-
-				await quizEntity.fork();
-				expect(fetchMock.called()).to.be.true;
-			});
-
-			it('cannot fork from non working copy entity', async() => {
 				var quizEntity = new QuizEntity(editableEntity);
-				await quizEntity.fork();
-				expect(fetchMock.done());
-			});
 
-			it('cannot fork from non editable entity', async() => {
-				var quizEntity = new QuizEntity(nonEditableEntity);
-				await quizEntity.fork();
-				expect(fetchMock.done());
-			});
-		});
-
-		describe('merge', () => {
-			it('can merge quiz', async() => {
-				fetchMock.postOnce('https://afe99802-9130-4320-a770-8d138b941e74.quizzes.api.proddev.d2l/6606/quizzes/22', workingCopyEntity);
-
-				var quizEntity = new QuizEntity(forkedWorkingCopyEntity);
-
-				await quizEntity.merge();
+				await quizEntity.checkout();
 				expect(fetchMock.called()).to.be.true;
 			});
 
-			it('cannot merge quiz from root working copy entity', async() => {
+			it('cannot checkout if already a working copy', async() => {
 				var quizEntity = new QuizEntity(workingCopyEntity);
-				await quizEntity.merge();
+				await quizEntity.checkout();
 				expect(fetchMock.done());
 			});
 
-			it('cannot merge from non working copy entity', async() => {
-				var quizEntity = new QuizEntity(editableEntity);
-				await quizEntity.merge();
-				expect(fetchMock.done());
-			});
-
-			it('cannot merge from non editable entity', async() => {
+			it('cannot checkout a non editable entity', async() => {
 				var quizEntity = new QuizEntity(nonEditableEntity);
-				await quizEntity.merge();
+				await quizEntity.checkout();
 				expect(fetchMock.done());
 			});
 		});
 
 		describe('checkin', () => {
-			it('can checkin quiz', async() => {
+			it('can checkin a working copy', async() => {
 				fetchMock.postOnce('https://afe99802-9130-4320-a770-8d138b941e74.quizzes.api.proddev.d2l/6606/quizzes/22', editableEntity);
 
 				var quizEntity = new QuizEntity(workingCopyEntity);
-
 				await quizEntity.checkin();
 				expect(fetchMock.called()).to.be.true;
 			});
 
-			it('cannot checkin quiz from forked entity', async() => {
-				var quizEntity = new QuizEntity(forkedWorkingCopyEntity);
-				await quizEntity.checkin();
-				expect(fetchMock.done());
-			});
-
-			it('cannot checkin quiz from non working copy entity', async() => {
+			it('cannot checkin a non working copy', async() => {
 				var quizEntity = new QuizEntity(editableEntity);
 				await quizEntity.checkin();
 				expect(fetchMock.done());
 			});
 
-			it('cannot checkin from non editable entity', async() => {
+			it('cannot checkin a non editable entity', async() => {
 				var quizEntity = new QuizEntity(nonEditableEntity);
 				await quizEntity.checkin();
 				expect(fetchMock.done());
