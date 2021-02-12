@@ -529,7 +529,7 @@ describe('QuizEntity', () => {
 	describe('working copy actions', async() => {
 		describe('checkout', () => {
 			it('can checkout quiz working copy', async() => {
-				fetchMock.getOnce('https://afe99802-9130-4320-a770-8d138b941e74.quizzes.api.proddev.d2l/6606/quizzes/22?', workingCopyEntity);
+				fetchMock.postOnce('https://afe99802-9130-4320-a770-8d138b941e74.quizzes.api.proddev.d2l/6606/quizzes/22', workingCopyEntity);
 
 				var quizEntity = new QuizEntity(editableEntity);
 
