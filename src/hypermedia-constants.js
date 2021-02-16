@@ -588,8 +588,6 @@ export const Actions = {
 	},
 	workingCopy: {
 		checkout: 'checkout',
-		fork: 'fork',
-		merge: 'merge',
 		checkin: 'checkin'
 	}
 };

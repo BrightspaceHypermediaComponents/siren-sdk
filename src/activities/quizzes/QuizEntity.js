@@ -780,27 +780,12 @@ export class QuizEntity extends Entity {
 		return this._entity && this._entity.hasActionByName(Actions.workingCopy.checkin);
 	}
 
-	/** TEMPORARY
-	 * @returns {string} URL for checking out the working copy of a quiz
-	 */
-	getCheckoutHref() {
-		if (this._canCheckout()) {
-			const action = this.getActionByName(Actions.workingCopy.checkout);
-			return action.href;
-		}
-	}
-
 	/**
 	 * Checkout quiz working copy
 	 */
 	async checkout() {
 		if (this._canCheckout()) {
 			const action = this.getActionByName(Actions.workingCopy.checkout);
-			const entity = await performSirenAction(this._token, action);
-			if (!entity) return;
-			return new QuizEntity(entity, this._token);
-		} else if (this._entity && this._entity.hasActionByName(Actions.workingCopy.fork)) { // temporary. this else if will be removed when we update the api
-			const action = this.getActionByName(Actions.workingCopy.fork);
 			const entity = await performSirenAction(this._token, action);
 			if (!entity) return;
 			return new QuizEntity(entity, this._token);
@@ -813,11 +798,6 @@ export class QuizEntity extends Entity {
 	async checkin() {
 		if (this._canCheckin()) {
 			const action = this.getActionByName(Actions.workingCopy.checkin);
-			const entity = await performSirenAction(this._token, action);
-			if (!entity) return;
-			return new QuizEntity(entity, this._token);
-		} else if (this._entity && this._entity.hasActionByName(Actions.workingCopy.merge)) { // temporary. this else if will be removed when we update the api
-			const action = this.getActionByName(Actions.workingCopy.merge);
 			const entity = await performSirenAction(this._token, action);
 			if (!entity) return;
 			return new QuizEntity(entity, this._token);
