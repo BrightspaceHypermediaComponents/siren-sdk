@@ -1,75 +1,3 @@
-export const recommendedQuizTiming = {
-	'class': ['recommended'],
-	'actions': [
-		{
-			'fields': [
-				{
-					'name': 'timingType',
-					'type': 'radio',
-					'value': [
-						{
-							'selected': true,
-							'title': 'Recommended Time Limit',
-							'value': 'recommended'
-						},
-						{
-							'selected': false,
-							'title': 'Enforced Time Limit',
-							'value': 'enforced'
-						}
-					]
-				}
-			],
-			'name': 'update-timing-type',
-			'method': 'PATCH',
-			'href': 'quizzes/{quizId}/timing?workingCopyId=<forkId>'
-		}
-	],
-	'entities': editableTimingSubentities
-};
-
-export const enforcedQuizTiming = {
-	'class': ['enforced'],
-	'actions': [
-		{
-			'fields': [
-				{
-					'name': 'timingType',
-					'type': 'radio',
-					'value': [
-						{
-							'selected': false,
-							'title': 'Recommended Time Limit',
-							'value': 'recommended'
-						},
-						{
-							'selected': true,
-							'title': 'Enforced Time Limit',
-							'value': 'enforced'
-						}
-					]
-				}
-			],
-			'name': 'update-timing-type',
-			'method': 'PATCH',
-			'href': 'https://afe99802-9130-4320-a770-8d138b941e74.quizzes.api.proddev.d2l/6606/quizzes/22/timing?workingCopyId=1234'
-		}
-	],
-	'entities': editableTimingSubentities,
-	'rel':['https://quizzes.api.brightspace.com/rels/timing'],
-	'links': [
-		{
-			'rel': [ 'self' ],
-			'href': 'https://afe99802-9130-4320-a770-8d138b941e74.quizzes.api.proddev.d2l/6606/quizzes/22/timing?workingCopyId=1234'
-		}
-	]
-};
-
-const editableTimingSubentities = [
-	editableRecommendedSubEntity,
-	editableEnforcedSubEntity
-];
-
 const editableRecommendedSubEntity = {
 	'class': ['recommended', 'show-clock'],
 	'actions': [
@@ -240,4 +168,76 @@ const editableEnforcedSubEntity = {
 		}
 	},
 	'rel':['https://quizzes.api.brightspace.com/rels/timing-type']
+};
+
+const editableTimingSubentities = [
+	editableRecommendedSubEntity,
+	editableEnforcedSubEntity
+];
+
+export const recommendedQuizTiming = {
+	'class': ['recommended'],
+	'actions': [
+		{
+			'fields': [
+				{
+					'name': 'timingType',
+					'type': 'radio',
+					'value': [
+						{
+							'selected': true,
+							'title': 'Recommended Time Limit',
+							'value': 'recommended'
+						},
+						{
+							'selected': false,
+							'title': 'Enforced Time Limit',
+							'value': 'enforced'
+						}
+					]
+				}
+			],
+			'name': 'update-timing-type',
+			'method': 'PATCH',
+			'href': 'quizzes/{quizId}/timing?workingCopyId=<forkId>'
+		}
+	],
+	'entities': editableTimingSubentities
+};
+
+export const enforcedQuizTiming = {
+	'class': ['enforced'],
+	'actions': [
+		{
+			'fields': [
+				{
+					'name': 'timingType',
+					'type': 'radio',
+					'value': [
+						{
+							'selected': false,
+							'title': 'Recommended Time Limit',
+							'value': 'recommended'
+						},
+						{
+							'selected': true,
+							'title': 'Enforced Time Limit',
+							'value': 'enforced'
+						}
+					]
+				}
+			],
+			'name': 'update-timing-type',
+			'method': 'PATCH',
+			'href': 'https://afe99802-9130-4320-a770-8d138b941e74.quizzes.api.proddev.d2l/6606/quizzes/22/timing?workingCopyId=1234'
+		}
+	],
+	'entities': editableTimingSubentities,
+	'rel':['https://quizzes.api.brightspace.com/rels/timing'],
+	'links': [
+		{
+			'rel': [ 'self' ],
+			'href': 'https://afe99802-9130-4320-a770-8d138b941e74.quizzes.api.proddev.d2l/6606/quizzes/22/timing?workingCopyId=1234'
+		}
+	]
 };

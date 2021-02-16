@@ -1,35 +1,3 @@
-export const nonEditableRecommendedQuizTiming = {
-	'class': ['recommended'],
-	'properties': {
-		'timingType': {
-			'title': 'Recommended Time Limit'
-		}
-	},
-	'entities': nonEditableTimingSubentities
-};
-
-export const nonEditableEnforcedQuizTiming = {
-	'class': ['enforced'],
-	'properties': {
-		'timingType': {
-			'title': 'Enforced Time Limit'
-		}
-	},
-	'entities': nonEditableTimingSubentities,
-	'rel':['https://quizzes.api.brightspace.com/rels/timing'],
-	'links': [
-		{
-			'rel': [ 'self' ],
-			'href': 'https://afe99802-9130-4320-a770-8d138b941e74.quizzes.api.proddev.d2l/6606/quizzes/22/timing?workingCopyId=1234'
-		}
-	]
-};
-
-const nonEditableTimingSubentities = [
-	nonEditableRecommendedSubEntity,
-	nonEditableEnforcedSubEntity
-];
-
 const nonEditableRecommendedSubEntity = [
 	{
 		'class': ['recommended', 'show-clock'],
@@ -68,4 +36,36 @@ const nonEditableEnforcedSubEntity = {
 		}
 	},
 	'rel':['https://quizzes.api.brightspace.com/rels/timing-type']
+};
+
+const nonEditableTimingSubentities = [
+	nonEditableRecommendedSubEntity,
+	nonEditableEnforcedSubEntity
+];
+
+export const nonEditableRecommendedQuizTiming = {
+	'class': ['recommended'],
+	'properties': {
+		'timingType': {
+			'title': 'Recommended Time Limit'
+		}
+	},
+	'entities': nonEditableTimingSubentities
+};
+
+export const nonEditableEnforcedQuizTiming = {
+	'class': ['enforced'],
+	'properties': {
+		'timingType': {
+			'title': 'Enforced Time Limit'
+		}
+	},
+	'entities': nonEditableTimingSubentities,
+	'rel':['https://quizzes.api.brightspace.com/rels/timing'],
+	'links': [
+		{
+			'rel': [ 'self' ],
+			'href': 'https://afe99802-9130-4320-a770-8d138b941e74.quizzes.api.proddev.d2l/6606/quizzes/22/timing?workingCopyId=1234'
+		}
+	]
 };
