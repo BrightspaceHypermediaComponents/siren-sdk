@@ -11,7 +11,7 @@ const editableRecommendedSubEntity = {
 					'max': 9999
 				}
 			],
-			'href': 'quizzes/{quizId}/timing?workingCopyId=<forkId>',
+			'href': 'quizzes/{quizId}/timing?workingCopyId=<workingCopyId>',
 			'method': 'PATCH',
 			'name': 'update-timing-time-limit'
 		},
@@ -26,13 +26,14 @@ const editableRecommendedSubEntity = {
 			],
 			'name': 'update-timing-has-timer',
 			'method': 'PATCH',
-			'href': 'quizzes/{quizId}/timing?workingCopyId=<forkId>'
+			'href': 'quizzes/{quizId}/timing?workingCopyId=<workingCopyId>'
 		}
 	],
 	'properties': {
 		'timeLimit': 120
 	},
-	'rel':['https://quizzes.api.brightspace.com/rels/timing-type']
+	'rel': ['https://quizzes.api.brightspace.com/rels/timing-type'],
+	'title': 'Recommended Time Limit'
 };
 
 const editableEnforcedSubEntity = {
@@ -88,7 +89,7 @@ const editableEnforcedSubEntity = {
 					'name': 'graceLimit',
 					'value': 5,
 					'min': 1,
-					'max': 999999999999999,
+					'max': 2147483647,
 					'title': 'Grace Period'
 				}
 			],
@@ -167,7 +168,8 @@ const editableEnforcedSubEntity = {
 			'value': 5
 		}
 	},
-	'rel':['https://quizzes.api.brightspace.com/rels/timing-type']
+	'rel': ['https://quizzes.api.brightspace.com/rels/timing-type'],
+	'title': 'Enforced Time Limit'
 };
 
 const editableTimingSubentities = [
@@ -199,10 +201,17 @@ export const recommendedQuizTiming = {
 			],
 			'name': 'update-timing-type',
 			'method': 'PATCH',
-			'href': 'quizzes/{quizId}/timing?workingCopyId=<forkId>'
+			'href': 'quizzes/{quizId}/timing?workingCopyId=<workingCopyId>'
 		}
 	],
-	'entities': editableTimingSubentities
+	'entities': editableTimingSubentities,
+	'rel': ['https://quizzes.api.brightspace.com/rels/timing'],
+	'links': [
+		{
+			'rel': ['self'],
+			'href': 'https://afe99802-9130-4320-a770-8d138b941e74.quizzes.api.proddev.d2l/6606/quizzes/22/timing'
+		}
+	]
 };
 
 export const enforcedQuizTiming = {
@@ -229,15 +238,15 @@ export const enforcedQuizTiming = {
 			],
 			'name': 'update-timing-type',
 			'method': 'PATCH',
-			'href': 'https://afe99802-9130-4320-a770-8d138b941e74.quizzes.api.proddev.d2l/6606/quizzes/22/timing?workingCopyId=1234'
+			'href': 'https://afe99802-9130-4320-a770-8d138b941e74.quizzes.api.proddev.d2l/6606/quizzes/22/timing'
 		}
 	],
 	'entities': editableTimingSubentities,
-	'rel':['https://quizzes.api.brightspace.com/rels/timing'],
+	'rel': ['https://quizzes.api.brightspace.com/rels/timing'],
 	'links': [
 		{
-			'rel': [ 'self' ],
-			'href': 'https://afe99802-9130-4320-a770-8d138b941e74.quizzes.api.proddev.d2l/6606/quizzes/22/timing?workingCopyId=1234'
+			'rel': ['self'],
+			'href': 'https://afe99802-9130-4320-a770-8d138b941e74.quizzes.api.proddev.d2l/6606/quizzes/22/timing'
 		}
 	]
 };

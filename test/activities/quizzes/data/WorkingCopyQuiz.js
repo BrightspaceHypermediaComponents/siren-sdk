@@ -21,15 +21,8 @@ export const workingCopyQuiz = {
 		},
 		{
 			'name': 'checkin',
-			'href': 'https://afe99802-9130-4320-a770-8d138b941e74.quizzes.api.proddev.d2l/6606/quizzes/22',
-			'method': 'POST',
-			'fields': [
-				{
-					'name': 'workingCopyId',
-					'type': 'text',
-					'value': '12345'
-				}
-			]
+			'href': 'https://afe99802-9130-4320-a770-8d138b941e74.quizzes.api.proddev.d2l/6606/quizzes/22?workingCopyId=12345',
+			'method': 'POST'
 		}
 	],
 	'links': [

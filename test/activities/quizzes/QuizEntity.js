@@ -512,7 +512,7 @@ describe('QuizEntity', () => {
 	});
 
 	describe('timing href', () => {
-		const href = 'https://afe99802-9130-4320-a770-8d138b941e74.quizzes.api.proddev.d2l/6606/quizzes/22/timing?workingCopyId=1234';
+		const href = 'https://afe99802-9130-4320-a770-8d138b941e74.quizzes.api.proddev.d2l/6606/quizzes/22/timing';
 		describe('timingHref', () => {
 			it('can read timing href when quiz is editable', () => {
 				var quizEntity = new QuizEntity(editableEntity);
@@ -537,10 +537,11 @@ describe('QuizEntity', () => {
 				expect(fetchMock.called()).to.be.true;
 			});
 
-			it('cannot checkout if already a working copy', async() => {
+			it('can checkout if already a working copy', async() => {
+				fetchMock.postOnce('https://afe99802-9130-4320-a770-8d138b941e74.quizzes.api.proddev.d2l/6606/quizzes/22', workingCopyEntity);
 				var quizEntity = new QuizEntity(workingCopyEntity);
 				await quizEntity.checkout();
-				expect(fetchMock.done());
+				expect(fetchMock.called()).to.be.true;
 			});
 
 			it('cannot checkout a non editable entity', async() => {
@@ -552,7 +553,7 @@ describe('QuizEntity', () => {
 
 		describe('checkin', () => {
 			it('can checkin a working copy', async() => {
-				fetchMock.postOnce('https://afe99802-9130-4320-a770-8d138b941e74.quizzes.api.proddev.d2l/6606/quizzes/22', editableEntity);
+				fetchMock.postOnce('https://afe99802-9130-4320-a770-8d138b941e74.quizzes.api.proddev.d2l/6606/quizzes/22?workingCopyId=12345', editableEntity);
 
 				var quizEntity = new QuizEntity(workingCopyEntity);
 				await quizEntity.checkin();

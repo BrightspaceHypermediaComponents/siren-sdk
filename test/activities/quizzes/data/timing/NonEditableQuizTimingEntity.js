@@ -1,12 +1,11 @@
-const nonEditableRecommendedSubEntity = [
-	{
-		'class': ['recommended', 'show-clock'],
-		'properties': {
-			'timeLimit': 120
-		},
-		'rel':['https://quizzes.api.brightspace.com/rels/timing-type']
-	}
-];
+const nonEditableRecommendedSubEntity = {
+	'class': ['recommended', 'show-clock'],
+	'properties': {
+		'timeLimit': 120
+	},
+	'rel': ['https://quizzes.api.brightspace.com/rels/timing-type'],
+	'title': 'Recommended Time Limit'
+};
 
 const nonEditableEnforcedSubEntity = {
 	'class': ['enforced', 'uselatelimit'],
@@ -27,15 +26,16 @@ const nonEditableEnforcedSubEntity = {
 			'title': 'Time Limit',
 			'value': 120
 		},
-		'submissionLateTypeId': {
-			'title': 'After the grace period, flag the quiz attempt as exceeded time limit, and allow the student to continue working. Quiz attempt will be automatically scored as zero after an extended deadline.'
-		},
 		'graceLimit': {
 			'title': 'Grace Period',
 			'value': 5
+		},
+		'submissionLateTypeId': {
+			'title': 'After the grace period, flag the quiz attempt as exceeded time limit, and allow the student to continue working. Quiz attempt will be automatically scored as zero after an extended deadline.'
 		}
 	},
-	'rel':['https://quizzes.api.brightspace.com/rels/timing-type']
+	'rel': ['https://quizzes.api.brightspace.com/rels/timing-type'],
+	'title': 'Enforced Time Limit'
 };
 
 const nonEditableTimingSubentities = [
@@ -45,27 +45,24 @@ const nonEditableTimingSubentities = [
 
 export const nonEditableRecommendedQuizTiming = {
 	'class': ['recommended'],
-	'properties': {
-		'timingType': {
-			'title': 'Recommended Time Limit'
+	'entities': nonEditableTimingSubentities,
+	'rel': ['https://quizzes.api.brightspace.com/rels/timing'],
+	'links': [
+		{
+			'rel': ['self'],
+			'href': 'https://afe99802-9130-4320-a770-8d138b941e74.quizzes.api.proddev.d2l/6606/quizzes/22/timing'
 		}
-	},
-	'entities': nonEditableTimingSubentities
+	]
 };
 
 export const nonEditableEnforcedQuizTiming = {
 	'class': ['enforced'],
-	'properties': {
-		'timingType': {
-			'title': 'Enforced Time Limit'
-		}
-	},
 	'entities': nonEditableTimingSubentities,
-	'rel':['https://quizzes.api.brightspace.com/rels/timing'],
+	'rel': ['https://quizzes.api.brightspace.com/rels/timing'],
 	'links': [
 		{
-			'rel': [ 'self' ],
-			'href': 'https://afe99802-9130-4320-a770-8d138b941e74.quizzes.api.proddev.d2l/6606/quizzes/22/timing?workingCopyId=1234'
+			'rel': ['self'],
+			'href': 'https://afe99802-9130-4320-a770-8d138b941e74.quizzes.api.proddev.d2l/6606/quizzes/22/timing'
 		}
 	]
 };

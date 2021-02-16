@@ -81,7 +81,7 @@ describe('QuizTimingEntity', () => {
 		describe('maxEnforcedGraceLimit', () => {
 			it('can read max enforced grace limit', () => {
 				var entity = new QuizTimingEntity(enforcedTimingEntity);
-				expect(entity.maxEnforcedGraceLimit()).to.equal(999999999999999);
+				expect(entity.maxEnforcedGraceLimit()).to.equal(2147483647);
 			});
 		});
 		describe('canEditGracePeriod', () => {
