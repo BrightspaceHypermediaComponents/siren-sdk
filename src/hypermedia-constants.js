@@ -366,7 +366,7 @@ export const Classes = {
 			recommended: 'recommended',
 			enforced: 'enforced',
 			showClock: 'show-clock',
-			automaticZero: 'automatic-zero'
+			automaticZero: 'uselatelimit'
 		},
 		ip: {
 			restrictions: 'ip-restrictions',
@@ -588,8 +588,6 @@ export const Actions = {
 	},
 	workingCopy: {
 		checkout: 'checkout',
-		fork: 'fork',
-		merge: 'merge',
 		checkin: 'checkin'
 	}
 };

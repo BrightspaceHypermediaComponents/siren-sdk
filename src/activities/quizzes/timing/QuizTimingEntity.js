@@ -42,7 +42,7 @@ export class QuizTimingEntity extends Entity {
 	}
 
 	isTimingEnforced() {
-		return this._entity && this._entity.hasSubEntityByClass(Classes.quizzes.timing.enforced);
+		return this.hasClass(Classes.quizzes.timing.enforced);
 	}
 
 	submissionLateType() {

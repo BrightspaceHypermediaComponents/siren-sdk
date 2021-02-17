@@ -1,13 +1,15 @@
-import { enforcedQuizTiming } from '../data/timing/EnforcedQuizTimingEntity';
-import { recommendedQuizTiming } from '../data/timing/RecommendedQuizTimingEntity';
+import { recommendedQuizTiming, enforcedQuizTiming } from '../data/timing/EditableQuizTimingEntity';
+import { nonEditableRecommendedQuizTiming, nonEditableEnforcedQuizTiming } from '../data/timing/NonEditableQuizTimingEntity';
 import { QuizTimingEntity } from '../../../../src/activities/quizzes/timing/QuizTimingEntity.js';
 
 describe('QuizTimingEntity', () => {
-	var enforcedTimingEntity, recommendedTimingEntity;
+	var enforcedTimingEntity, recommendedTimingEntity, nonEditableEnforcedTimingEntity, nonEditableRecommendedTimingEntity;
 
 	beforeEach(() => {
 		enforcedTimingEntity = window.D2L.Hypermedia.Siren.Parse(enforcedQuizTiming);
 		recommendedTimingEntity = window.D2L.Hypermedia.Siren.Parse(recommendedQuizTiming);
+		nonEditableEnforcedTimingEntity = window.D2L.Hypermedia.Siren.Parse(nonEditableEnforcedQuizTiming);
+		nonEditableRecommendedTimingEntity = window.D2L.Hypermedia.Siren.Parse(nonEditableRecommendedQuizTiming);
 	});
 
 	describe('timing', () => {
@@ -21,13 +23,27 @@ describe('QuizTimingEntity', () => {
 				expect(entity.canEditTiming()).to.be.true;
 			});
 		});
+		describe('cannotEditTiming', () => {
+			it('returns false when enforced timing entity cannot be edited', () => {
+				var entity = new QuizTimingEntity(nonEditableEnforcedTimingEntity);
+				expect(entity.canEditTiming()).to.be.false;
+			});
+			it('returns false when recommended timing entity cannot be edited', () => {
+				var entity = new QuizTimingEntity(nonEditableRecommendedTimingEntity);
+				expect(entity.canEditTiming()).to.be.false;
+			});
+		});
 		describe('isTimingEnforced', () => {
-			it('returns true when timing is enforced ', () => {
+			it('returns true when timing is enforced', () => {
 				var entity = new QuizTimingEntity(enforcedTimingEntity);
 				expect(entity.isTimingEnforced()).to.be.true;
+				entity = new QuizTimingEntity(nonEditableEnforcedTimingEntity);
+				expect(entity.isTimingEnforced()).to.be.true;
 			});
-			it('returns false when timing is recommended ', () => {
+			it('returns false when timing is recommended', () => {
 				var entity = new QuizTimingEntity(recommendedTimingEntity);
+				expect(entity.isTimingEnforced()).to.be.false;
+				entity = new QuizTimingEntity(nonEditableRecommendedTimingEntity);
 				expect(entity.isTimingEnforced()).to.be.false;
 			});
 		});
@@ -65,7 +81,7 @@ describe('QuizTimingEntity', () => {
 		describe('maxEnforcedGraceLimit', () => {
 			it('can read max enforced grace limit', () => {
 				var entity = new QuizTimingEntity(enforcedTimingEntity);
-				expect(entity.maxEnforcedGraceLimit()).to.equal(999999999999999);
+				expect(entity.maxEnforcedGraceLimit()).to.equal(2147483647);
 			});
 		});
 		describe('canEditGracePeriod', () => {
@@ -77,7 +93,7 @@ describe('QuizTimingEntity', () => {
 		describe('recommendedTimeLimit', () => {
 			it('can read recommended time limit', () => {
 				var entity = new QuizTimingEntity(recommendedTimingEntity);
-				expect(entity.recommendedTimeLimit()).to.equal(120);
+				expect(entity.recommendedTimeLimit().value).to.equal(120);
 			});
 		});
 		describe('minRecommendedTimeLimit', () => {
@@ -96,39 +112,54 @@ describe('QuizTimingEntity', () => {
 
 	describe('extended deadline', () => {
 		describe('canEditExtendedDeadline', () => {
-			it('return true when can edit extended deadline', () => {
+			it('returns true when can edit extended deadline', () => {
 				var entity = new QuizTimingEntity(enforcedTimingEntity);
 				expect(entity.canEditExtendedDeadline()).to.be.true;
+			});
+			it('returns true when cannot edit extended deadline', () => {
+				var entity = new QuizTimingEntity(nonEditableEnforcedTimingEntity);
+				expect(entity.canEditExtendedDeadline()).to.be.false;
 			});
 		});
 	});
 
 	describe('exceeded time limit', () => {
 		describe('canEditExceededTimeLimitBehaviour', () => {
-			it('return true when can edit exceeded time limit behaviour', () => {
+			it('returns true when can edit exceeded time limit behaviour', () => {
 				var entity = new QuizTimingEntity(enforcedTimingEntity);
 				expect(entity.canEditExceededTimeLimitBehaviour()).to.be.true;
+			});
+			it('returns false when cannot edit exceeded time limit behaviour', () => {
+				var entity = new QuizTimingEntity(nonEditableEnforcedTimingEntity);
+				expect(entity.canEditExceededTimeLimitBehaviour()).to.be.false;
 			});
 		});
 	});
 
 	describe('show clock', () => {
 		describe('showClock', () => {
-			it('return true when showClock is checked', () => {
+			it('returns true when showClock is checked', () => {
 				var entity = new QuizTimingEntity(recommendedTimingEntity);
+				expect(entity.showClock()).to.be.true;
+				entity = new QuizTimingEntity(nonEditableRecommendedTimingEntity);
 				expect(entity.showClock()).to.be.true;
 			});
 		});
 		describe('canEditShowClock', () => {
-			it('return true when can edit showClock', () => {
+			it('returns true when can edit showClock', () => {
 				var entity = new QuizTimingEntity(recommendedTimingEntity);
 				expect(entity.canEditShowClock()).to.be.true;
 			});
+			it('returns false when cannot edit showClock', () => {
+				var entity = new QuizTimingEntity(nonEditableRecommendedTimingEntity);
+				expect(entity.canEditShowClock()).to.be.false;
+			});
 		});
 	});
+
 	describe('automatic zero', () => {
 		describe('isAutomaticZero', () => {
-			it('return true extended deadline automatic zero is selected', () => {
+			it('returns true extended deadline automatic zero is selected', () => {
 				var entity = new QuizTimingEntity(enforcedTimingEntity);
 				expect(entity.isAutomaticZero()).to.be.true;
 			});
