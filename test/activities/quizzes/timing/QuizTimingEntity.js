@@ -43,7 +43,7 @@ describe('QuizTimingEntity', () => {
 			it('returns false when timing is recommended', () => {
 				var entity = new QuizTimingEntity(recommendedTimingEntity);
 				expect(entity.isTimingEnforced()).to.be.false;
-				entity = new QuizTimingEntity(nonEditableRecommendedQuizTiming);
+				entity = new QuizTimingEntity(nonEditableRecommendedTimingEntity);
 				expect(entity.isTimingEnforced()).to.be.false;
 			});
 		});
@@ -93,7 +93,7 @@ describe('QuizTimingEntity', () => {
 		describe('recommendedTimeLimit', () => {
 			it('can read recommended time limit', () => {
 				var entity = new QuizTimingEntity(recommendedTimingEntity);
-				expect(entity.recommendedTimeLimit()).to.equal(120);
+				expect(entity.recommendedTimeLimit().value).to.equal(120);
 			});
 		});
 		describe('minRecommendedTimeLimit', () => {

@@ -1,7 +1,9 @@
 const nonEditableRecommendedSubEntity = {
 	'class': ['recommended', 'show-clock'],
 	'properties': {
-		'timeLimit': 120
+		'timeLimit': {
+			value: 120
+		}
 	},
 	'rel': ['https://quizzes.api.brightspace.com/rels/timing-type'],
 	'title': 'Recommended Time Limit'
