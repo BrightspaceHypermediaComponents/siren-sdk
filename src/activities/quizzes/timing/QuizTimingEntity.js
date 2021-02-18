@@ -93,7 +93,7 @@ export class QuizTimingEntity extends Entity {
 	isAutomaticZero() {
 		const entity = this.getEnforcedTimingSubEntity();
 		if (!entity) return;
-		return entity.hasSubEntityByClass(Classes.quizzes.timing.automaticZero);
+		return entity.hasClass(Classes.quizzes.timing.automaticZero);
 	}
 
 	showClock() {
