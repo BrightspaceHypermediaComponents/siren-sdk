@@ -573,4 +573,21 @@ describe('QuizEntity', () => {
 			});
 		});
 	});
+
+	describe('isBaseQuiz', () => {
+		it('is a base quiz when it is a non working copy base quiz', async() => {
+			var quizEntity = new QuizEntity(editableEntity);
+			expect(quizEntity.isBaseQuiz()).to.be.true;
+		});
+
+		it('is not a base quiz if it is a working copy', async() => {
+			var quizEntity = new QuizEntity(workingCopyEntity);
+			expect(quizEntity.isBaseQuiz()).to.be.false;
+		});
+
+		it('is a base quiz when is is a non editable entity', async() => {
+			var quizEntity = new QuizEntity(nonEditableEntity);
+			expect(quizEntity.isBaseQuiz()).to.be.true;
+		});
+	});
 });

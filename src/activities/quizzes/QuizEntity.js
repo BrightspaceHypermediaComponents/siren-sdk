@@ -803,4 +803,12 @@ export class QuizEntity extends Entity {
 			return new QuizEntity(entity, this._token);
 		}
 	}
+
+	isBaseQuiz() {
+		if (this._canCheckout()) {
+			const action = this.getActionByName(Actions.workingCopy.checkout);
+			return !action.hasFieldByName('parentWorkingCopyId');
+		}
+		return true;
+	}
 }
