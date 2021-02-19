@@ -41,8 +41,10 @@ export class QuizTimingEntity extends Entity {
 		return field.value;
 	}
 
-	isTimingEnforced() {
-		return this.hasClass(Classes.quizzes.timing.enforced);
+	isTimingEnforced(data) {
+		const enforcedClass = Classes.quizzes.timing.enforced;
+		if (data) return data === enforcedClass;
+		return this.hasClass(enforcedClass);
 	}
 
 	submissionLateType() {
@@ -90,10 +92,12 @@ export class QuizTimingEntity extends Entity {
 		return field.value;
 	}
 
-	isAutomaticZero() {
+	isAutomaticZero(data) {
+		const automaticZeroClass = Classes.quizzes.timing.automaticZero;
+		if (data) return data === automaticZeroClass;
 		const entity = this.getEnforcedTimingSubEntity();
 		if (!entity) return;
-		return entity.hasSubEntityByClass(Classes.quizzes.timing.automaticZero);
+		return entity.hasClass(automaticZeroClass);
 	}
 
 	showClock() {

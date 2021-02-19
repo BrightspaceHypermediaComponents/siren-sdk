@@ -1,6 +1,7 @@
 import { recommendedQuizTiming, enforcedQuizTiming } from '../data/timing/EditableQuizTimingEntity';
 import { nonEditableRecommendedQuizTiming, nonEditableEnforcedQuizTiming } from '../data/timing/NonEditableQuizTimingEntity';
 import { QuizTimingEntity } from '../../../../src/activities/quizzes/timing/QuizTimingEntity.js';
+import { Classes } from '../../../../src/hypermedia-constants.js';
 
 describe('QuizTimingEntity', () => {
 	var enforcedTimingEntity, recommendedTimingEntity, nonEditableEnforcedTimingEntity, nonEditableRecommendedTimingEntity;
@@ -45,6 +46,14 @@ describe('QuizTimingEntity', () => {
 				expect(entity.isTimingEnforced()).to.be.false;
 				entity = new QuizTimingEntity(nonEditableRecommendedTimingEntity);
 				expect(entity.isTimingEnforced()).to.be.false;
+			});
+			it('returns true when passed a value matching enforced class', () => {
+				var entity = new QuizTimingEntity(recommendedTimingEntity);
+				expect(entity.isTimingEnforced(Classes.quizzes.timing.enforced)).to.be.true;
+			});
+			it('returns false when passed a value not matching enforced class', () => {
+				var entity = new QuizTimingEntity(enforcedTimingEntity);
+				expect(entity.isTimingEnforced('not an enforced class')).to.be.false;
 			});
 		});
 	});
@@ -162,6 +171,14 @@ describe('QuizTimingEntity', () => {
 			it('returns true extended deadline automatic zero is selected', () => {
 				var entity = new QuizTimingEntity(enforcedTimingEntity);
 				expect(entity.isAutomaticZero()).to.be.true;
+			});
+			it('returns true if passed value matching automatic zero class', () => {
+				var entity = new QuizTimingEntity(enforcedTimingEntity);
+				expect(entity.isAutomaticZero(Classes.quizzes.timing.automaticZero)).to.be.true;
+			});
+			it('returns false if passed value not matching automatic zero class', () => {
+				var entity = new QuizTimingEntity(enforcedTimingEntity);
+				expect(entity.isAutomaticZero('not true')).to.be.false;
 			});
 		});
 	});
