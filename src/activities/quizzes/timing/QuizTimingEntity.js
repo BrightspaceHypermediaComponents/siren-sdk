@@ -224,7 +224,7 @@ export class QuizTimingEntity extends Entity {
 		];
 		await performSirenAction(this._token, action, fields);
 	}
-	async toggleShowClock(data) {
+	async setShowClock(data) {
 		if (!this.canEditShowClock()) return;
 		const entity = this.getRecommendedTimingSubEntity();
 		if (!entity) return;
