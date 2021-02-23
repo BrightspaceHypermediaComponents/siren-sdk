@@ -212,9 +212,10 @@ export class QuizEntity extends Entity {
 	 */
 	descriptionHtml() {
 		const descriptionEntity = this._getDescriptionEntity();
-		return descriptionEntity
-			&& descriptionEntity.properties
-			&& descriptionEntity.properties.html;
+		if (!descriptionEntity || !descriptionEntity.properties || !descriptionEntity.properties.html) {
+			return;
+		}
+		return descriptionEntity.properties.html;
 	}
 
 	/**
@@ -292,9 +293,10 @@ export class QuizEntity extends Entity {
 	 */
 	headerHtml() {
 		const headerEntity = this._getHeaderEntity();
-		return headerEntity
-			&& headerEntity.properties
-			&& headerEntity.properties.html;
+		if (!headerEntity || !headerEntity.properties || !headerEntity.properties.html) {
+			return;
+		}
+		return headerEntity.properties.html;
 	}
 
 	/**
@@ -776,7 +778,7 @@ export class QuizEntity extends Entity {
 		return this._entity && this._entity.hasActionByName(Actions.workingCopy.checkout);
 	}
 
-	_canCheckin() {
+	canCheckin() {
 		return this._entity && this._entity.hasActionByName(Actions.workingCopy.checkin);
 	}
 
@@ -796,7 +798,7 @@ export class QuizEntity extends Entity {
 	 * Checkin quiz working copy
 	 */
 	async checkin() {
-		if (this._canCheckin()) {
+		if (this.canCheckin()) {
 			const action = this.getActionByName(Actions.workingCopy.checkin);
 			const entity = await performSirenAction(this._token, action);
 			if (!entity) return;
