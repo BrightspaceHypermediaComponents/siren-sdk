@@ -180,7 +180,10 @@ export class QuizTimingEntity extends Entity {
 		const fields = [
 			{ name: 'submissionLateData', value: data }
 		];
-		await performSirenAction(this._token, action, fields);
+
+		const returnedEntity = await performSirenAction(this._token, action, fields);
+		if (!returnedEntity) return;
+		return new QuizTimingEntity(returnedEntity, this._token);
 	}
 
 	async setGracePeriod(data) {
@@ -191,7 +194,10 @@ export class QuizTimingEntity extends Entity {
 		const fields = [
 			{ name: 'graceLimit', value: data }
 		];
-		await performSirenAction(this._token, action, fields);
+
+		const returnedEntity = await performSirenAction(this._token, action, fields);
+		if (!returnedEntity) return;
+		return new QuizTimingEntity(returnedEntity, this._token);
 	}
 
 	async setTimeLimit(data) {
@@ -203,15 +209,22 @@ export class QuizTimingEntity extends Entity {
 		const fields = [
 			{ name: 'timeLimit', value: data }
 		];
-		await performSirenAction(this._token, action, fields);
+
+		const returnedEntity = await performSirenAction(this._token, action, fields);
+		if (!returnedEntity) return;
+		return new QuizTimingEntity(returnedEntity, this._token);
 	}
+
 	async setTimingType(data) {
 		if (!this.canEditTiming()) return;
 		const action = this._entity.getActionByName(Actions.quizzes.timing.updateType);
 		const fields = [
 			{ name: 'timingType', value: data }
 		];
-		await performSirenAction(this._token, action, fields);
+
+		const returnedEntity = await performSirenAction(this._token, action, fields);
+		if (!returnedEntity) return;
+		return new QuizTimingEntity(returnedEntity, this._token);
 	}
 
 	async setExceededTimeLimitBehaviour(data) {
@@ -222,8 +235,12 @@ export class QuizTimingEntity extends Entity {
 		const fields = [
 			{ name: 'submissionLateTypeId', value: data }
 		];
-		await performSirenAction(this._token, action, fields);
+
+		const returnedEntity = await performSirenAction(this._token, action, fields);
+		if (!returnedEntity) return;
+		return new QuizTimingEntity(returnedEntity, this._token);
 	}
+
 	async setShowClock(data) {
 		if (!this.canEditShowClock()) return;
 		const entity = this.getRecommendedTimingSubEntity();
@@ -232,6 +249,9 @@ export class QuizTimingEntity extends Entity {
 		const fields = [
 			{ name: 'hasTimer', value: data }
 		];
-		await performSirenAction(this._token, action, fields);
+
+		const returnedEntity = await performSirenAction(this._token, action, fields);
+		if (!returnedEntity) return;
+		return new QuizTimingEntity(returnedEntity, this._token);
 	}
 }
