@@ -279,6 +279,14 @@ export class QuizEntity extends Entity {
 	}
 
 	/**
+	 * @returns {bool} Introduction is appended to the description for the quiz entity
+	 */
+	introIsAppendedToDescription() {
+		const descriptionEntity = this._getDescriptionEntity();
+		return descriptionEntity && descriptionEntity.hasClass(Classes.quizzes.introIsAppendedToDescription);
+	}
+
+	/**
 	 * @returns {string} Quiz header in plaintext (HTML stripped)
 	 */
 	headerPlaintext() {
