@@ -635,10 +635,11 @@ export class QuizEntity extends Entity {
 
 	_formatUpdateDescriptionAction(quiz) {
 		const { description } = quiz || {};
+		const hasDescriptionChanged = this.introIsAppendedToDescription() || this._hasDescriptionChanged(description);
 
 		if (typeof description === 'undefined') return;
 
-		if (!this._hasDescriptionChanged(description) && this.descriptionIsDisplayed()) return;
+		if (!hasDescriptionChanged && this.descriptionIsDisplayed()) return;
 
 		const descriptionEntity = this._getDescriptionEntity();
 
