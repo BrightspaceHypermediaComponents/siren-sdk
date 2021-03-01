@@ -3,10 +3,11 @@ import { Rels } from '../../hypermedia-constants';
 import ContentHelperFunctions from './ContentHelperFunctions.js';
 
 export const CONTENT_TYPES = {
+	htmlFile: 'htmlFile',
 	ltilink: 'ltilink',
 	module: 'module',
 	topic: 'topic',
-	weblink: 'weblink',
+	weblink: 'weblink'
 };
 
 /**
@@ -28,7 +29,10 @@ export class ContentEntity extends Entity {
 			return CONTENT_TYPES.weblink;
 		} else if (this._entity.hasLinkByRel(Rels.Content.ltilinkEntity)) {
 			return CONTENT_TYPES.ltilink;
+		} else if (this._entity.hasLinkByRel(Rels.Content.htmlFileEntity)) {
+			return CONTENT_TYPES.htmlFile;
 		} else if (this._entity.hasClass(CONTENT_TYPES.topic)) {
+			// TODO: this can likely be deleted?
 			return CONTENT_TYPES.topic;
 		} else {
 			return null;
@@ -54,5 +58,12 @@ export class ContentEntity extends Entity {
 	 */
 	getLTILinkHref() {
 		return ContentHelperFunctions.getHrefFromRel(Rels.Content.ltilinkEntity, this._entity);
+	}
+
+	/**
+	 * @returns {string} content-htmlfile link
+	 */
+	getHTMLFileHref() {
+		return ContentHelperFunctions.getHrefFromRel(Rels.Content.htmlFileEntity, this._entity);
 	}
 }

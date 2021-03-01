@@ -110,7 +110,8 @@ export const Rels = {
 	Content: {
 		moduleEntity: 'https://modules.api.brightspace.com/rels/content-module',
 		weblinkEntity: 'https://weblinks.api.brightspace.com/rels/content-weblink',
-		ltilinkEntity: 'https://weblinks.api.brightspace.com/rels/content-ltilink'
+		ltilinkEntity: 'https://weblinks.api.brightspace.com/rels/content-ltilink',
+		htmlFileEntity: 'todo: get this'
 	},
 	// Parents API sub-domain rels
 	Parents: {
