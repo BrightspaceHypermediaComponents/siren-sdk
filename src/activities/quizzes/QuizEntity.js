@@ -373,10 +373,10 @@ export class QuizEntity extends Entity {
 	 * @returns {string} Ip restrictions Href of the quiz entity, if present
 	*/
 	ipRestrictionsHref() {
-		if (!this._entity || !this._entity.hasSubEntityByClass(Classes.quizzes.ip.restrictions)) {
+		if (!this._entity || !this._entity.hasSubEntityByRel(Rels.Quizzes.ipRestrictions)) {
 			return;
 		}
-		return this._entity.getSubEntityByClass(Classes.quizzes.ip.restrictions).href;
+		return this._entity.getSubEntityByRel(Rels.Quizzes.ipRestrictions).href;
 	}
 
 	async save(quiz) {
