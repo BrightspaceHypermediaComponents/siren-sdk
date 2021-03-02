@@ -32,7 +32,6 @@ export class ContentEntity extends Entity {
 		} else if (this._entity.hasLinkByRel(Rels.Content.htmlFileEntity)) {
 			return CONTENT_TYPES.htmlFile;
 		} else if (this._entity.hasClass(CONTENT_TYPES.topic)) {
-			// TODO: this can likely be deleted?
 			return CONTENT_TYPES.topic;
 		} else {
 			return null;
