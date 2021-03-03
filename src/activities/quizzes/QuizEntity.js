@@ -809,7 +809,12 @@ export class QuizEntity extends Entity {
 	async checkin() {
 		if (this.canCheckin()) {
 			const action = this.getActionByName(Actions.workingCopy.checkin);
-			const entity = await performSirenAction(this._token, action);
+			let entity;
+			try {
+				entity = await performSirenAction(this._token, action);
+			} catch (e) {
+				return Promise.reject(e);
+			}
 			if (!entity) return;
 			return new QuizEntity(entity, this._token);
 		}
