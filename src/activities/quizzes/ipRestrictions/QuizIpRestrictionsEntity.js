@@ -81,7 +81,14 @@ export class QuizIpRestrictionsEntity extends Entity {
 			{ name: IP_END_FIELD, value: end }
 		];
 
-		await performSirenAction(this._token, action, fields);
+		const res = await performSirenAction(this._token, action, fields);
+
+		if (res) {
+			this._entity = res;
+
+			const updatedIps = this._entity.getSubEntitiesByClass(Classes.quizzes.ip.range);
+			return updatedIps.findIndex(({ properties }) => properties.start === start && properties.end === end);
+		}
 	}
 
 	/**
