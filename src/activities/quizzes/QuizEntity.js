@@ -279,6 +279,14 @@ export class QuizEntity extends Entity {
 	}
 
 	/**
+	 * @returns {bool} Introduction is appended to the description for the quiz entity
+	 */
+	introIsAppendedToDescription() {
+		const descriptionEntity = this._getDescriptionEntity();
+		return descriptionEntity && descriptionEntity.hasClass(Classes.quizzes.introIsAppendedToDescription);
+	}
+
+	/**
 	 * @returns {string} Quiz header in plaintext (HTML stripped)
 	 */
 	headerPlaintext() {
@@ -627,10 +635,11 @@ export class QuizEntity extends Entity {
 
 	_formatUpdateDescriptionAction(quiz) {
 		const { description } = quiz || {};
+		const hasDescriptionChanged = this.introIsAppendedToDescription() || this._hasDescriptionChanged(description);
 
 		if (typeof description === 'undefined') return;
 
-		if (!this._hasDescriptionChanged(description) && this.descriptionIsDisplayed()) return;
+		if (!hasDescriptionChanged && this.descriptionIsDisplayed()) return;
 
 		const descriptionEntity = this._getDescriptionEntity();
 
@@ -800,7 +809,12 @@ export class QuizEntity extends Entity {
 	async checkin() {
 		if (this.canCheckin()) {
 			const action = this.getActionByName(Actions.workingCopy.checkin);
-			const entity = await performSirenAction(this._token, action);
+			let entity;
+			try {
+				entity = await performSirenAction(this._token, action);
+			} catch (e) {
+				return Promise.reject(e);
+			}
 			if (!entity) return;
 			return new QuizEntity(entity, this._token);
 		}
