@@ -146,6 +146,10 @@ const _performSirenAction = function(action, fields, tokenValue) {
 				if (!entity) {
 					return window.D2L.Siren.EntityStore.remove(url.href, token);
 				}
+				const selfLink = entity.getLinkByRel('self');
+				if (selfLink && selfLink.href !== url.href) {
+					return window.D2L.Siren.EntityStore.update(selfLink.href, token, entity);
+				}
 				return window.D2L.Siren.EntityStore.update(url.href, token, entity);
 			});
 		});

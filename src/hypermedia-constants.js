@@ -352,6 +352,7 @@ export const Classes = {
 		quiz: 'quiz',
 		description: 'description',
 		descriptionIsDisplayed: 'description-is-displayed',
+		introIsAppendedToDescription: 'intro-is-appended-to-description',
 		header: 'header',
 		headerIsDisplayed: 'header-is-displayed',
 		shuffle: 'shuffle',
