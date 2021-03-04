@@ -1,12 +1,12 @@
-import { Entity } from '../../es6/Entity';
-import { Actions } from '../../hypermedia-constants';
-import { performSirenAction } from '../../es6/SirenAction';
+import { Entity } from '../../../es6/Entity';
+import { Actions } from '../../../hypermedia-constants';
+import { performSirenAction } from '../../../es6/SirenAction';
 
 /**
  * AttemptsEntity class representation of a d2l Quiz Attempt.
 */
 
-export class AttemptsEntity extends Entity {
+export class QuizAttemptsEntity extends Entity {
 
 	/**
 	 * @returns {number} number of quiz attempts allowed
@@ -18,6 +18,18 @@ export class AttemptsEntity extends Entity {
 		}
 
 		return null;
+	}
+
+	/**
+	 * @returns {object} quiz attempts allowed options
+	 */
+
+	attemptsAllowedOptions() {
+		const action = this._entity && this._entity.getActionByName(Actions.quizzes.updateAttemptsAllowed);
+		if (!action) return;
+		const field = action.getFieldByName('attemptsAllowed');
+		if (!field) return;
+		return field.value;
 	}
 
 	/**
