@@ -1,4 +1,4 @@
-export const attemptsEntity = {
+export const quizAttemptsEntity = {
 	'class': [
 		'attempts'
 	],
