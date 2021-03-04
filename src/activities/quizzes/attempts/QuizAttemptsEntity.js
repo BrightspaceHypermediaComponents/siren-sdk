@@ -25,7 +25,7 @@ export class QuizAttemptsEntity extends Entity {
 	 */
 
 	attemptsAllowedOptions() {
-		const action = this._entity && this._entity.getActionByName(Actions.quizzes.updateAttemptsAllowed);
+		const action = this._entity && this._entity.getActionByName(Actions.quizzes.attempts.updateAttemptsAllowed);
 		if (!action) return;
 		const field = action.getFieldByName('attemptsAllowed');
 		if (!field) return;
@@ -37,7 +37,7 @@ export class QuizAttemptsEntity extends Entity {
 	 */
 
 	canUpdateAttemptsAllowed() {
-		return this._entity.hasActionByName(Actions.quizzes.updateAttemptsAllowed);
+		return this._entity.hasActionByName(Actions.quizzes.attempts.updateAttemptsAllowed);
 	}
 
 	/**
@@ -69,31 +69,20 @@ export class QuizAttemptsEntity extends Entity {
 		return field.value;
 	}
 
-	/**
-	 * Checks if quiz attempts has changed and if so returns the appropriate action/fields to update
-	 * @param {object} quiz the quiz that's being modified
-	 */
-
-	_formatUpdateAttemptsAction(quiz) {
-		if (!quiz) return;
-		if (!this._hasAttemptsAllowedChanged(quiz.attemptsAllowed)) return;
-
-		return this._generateAttemptsAllowedAction(quiz.attemptsAllowed);
-	}
-
 	_hasAttemptsAllowedChanged(attemptsAllowed) {
 		return attemptsAllowed !== this.attemptsAllowed();
 	}
 
 	async setAttemptsAllowed(attemptsAllowed) {
+		if (!attemptsAllowed || !this._hasAttemptsAllowedChanged(attemptsAllowed)) return;
 		if (!this.canUpdateAttemptsAllowed()) {
 			return;
 		}
-		const attemptsAction = this._formatUpdateAttemptsAction({attemptsAllowed: attemptsAllowed});
-		if (!attemptsAction) {
+		const {action, fields } = this._generateAttemptsAllowedAction(attemptsAllowed);
+		if (!action) {
 			return;
 		}
-		await performSirenAction(this._token, attemptsAction);
+		await performSirenAction(this._token, action, fields);
 	}
 
 	/**
@@ -108,7 +97,7 @@ export class QuizAttemptsEntity extends Entity {
 		}
 
 		if (this._entity) {
-			action = this._entity.getActionByName(Actions.quizzes.updateAttemptsAllowed);
+			action = this._entity.getActionByName(Actions.quizzes.attempts.updateAttemptsAllowed);
 		}
 
 		if (!action) {
