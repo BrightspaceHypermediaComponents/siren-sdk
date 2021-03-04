@@ -1,5 +1,5 @@
 import { Entity } from '../../../es6/Entity';
-import { Actions } from '../../../hypermedia-constants';
+import { Actions, Classes } from '../../../hypermedia-constants';
 import { performSirenAction } from '../../../es6/SirenAction';
 
 /**
@@ -41,6 +41,35 @@ export class QuizAttemptsEntity extends Entity {
 	}
 
 	/**
+	 * @returns {object} quiz overall grade calculation type sub-entity
+	 */
+	getOverallGradeCalculationSubEntity() {
+		return this._entity && this._entity.getSubEntityByClass(Classes.quizzes.attempts.overallGradeCalculationType);
+	}
+
+	/**
+	 * @returns {string} quiz overall grade calculation type
+	 */
+	overallGradeCalculationType() {
+		const entity = this.getOverallGradeCalculationSubEntity();
+		if (!entity) return;
+		return entity.properties.overallGradeCalculationType;
+	}
+
+	/**
+	 * @returns {object} quiz overall grade calculation options
+	 */
+	overallGradeCalculationOptions() {
+		const entity = this.getOverallGradeCalculationSubEntity();
+		if (!entity) return;
+		const action = entity.getActionByName(Actions.quizzes.attempts.updateOverallGradeCalculationType);
+		if (!action) return;
+		const field = action.getFieldByName('overallGradeCalculationType');
+		if (!field) return;
+		return field.value;
+	}
+
+	/**
 	 * Checks if quiz attempts has changed and if so returns the appropriate action/fields to update
 	 * @param {object} quiz the quiz that's being modified
 	 */
@@ -56,7 +85,7 @@ export class QuizAttemptsEntity extends Entity {
 		return attemptsAllowed !== this.attemptsAllowed();
 	}
 
-	async updateAttempts(attemptsAllowed) {
+	async setAttemptsAllowed(attemptsAllowed) {
 		if (!this.canUpdateAttemptsAllowed()) {
 			return;
 		}

@@ -369,8 +369,8 @@ export const Classes = {
 			automaticZero: 'uselatelimit'
 		},
 		attempts: {
-			overallGradeCalculation: 'overall-grade-calculation-type',
-			retakeInccorectOnly: 'retake-incorrect-only'
+			overallGradeCalculationType: 'overall-grade-calculation-type',
+			retakeIncorrectOnly: 'retake-incorrect-only'
 		},
 		ip: {
 			restrictions: 'ip-restrictions',
