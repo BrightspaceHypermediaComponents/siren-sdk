@@ -576,7 +576,6 @@ export const Actions = {
 		delete: 'delete-quiz',
 		updateDescription: 'update-description',
 		updateHeader: 'update-header',
-		updateAttemptsAllowed: 'update-attempts',
 		timing: {
 			updateType: 'update-timing-type',
 			updateTimeLimit: 'update-timing-time-limit',
@@ -586,6 +585,7 @@ export const Actions = {
 			updateTimingLateData: 'update-timing-late-data'
 		},
 		attempts: {
+			updateAttemptsAllowed: 'update-attempts',
 			updateOverallGradeCalculationType: 'update-overall-grade-calculation-type',
 			updateRetakeIncorrectOnly: 'update-retake-incorrect-only'
 		},
