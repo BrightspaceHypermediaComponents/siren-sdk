@@ -35,10 +35,10 @@ export class QuizIpRestrictionsEntity extends Entity {
 
 		return ipRestrictionEntities.map(({ properties }, index) => {
 
-			const { start = '', end = '' } = properties;
+			const { start, end } = properties;
 			return {
-				start,
-				end,
+				start: start || '',
+				end: end || '',
 				id: index
 			};
 		});
@@ -65,6 +65,18 @@ export class QuizIpRestrictionsEntity extends Entity {
 	}
 
 	/**
+	 * Checks if a given restriction exists in siren's local state which implies it has already been persisted
+	 * @param {object} restriction The restriction to test
+	 * @returns {boolean} Whether or not the restriction has already been persisted
+	*/
+
+	_hasRestrictionBeenPersisted(restriction) {
+		const persistedRestrictions = this.getIpRestrictions();
+
+		return persistedRestrictions.find(({ start, end }) => restriction.start === start && restriction.end === end);
+	}
+
+	/**
 	 * @param {string} start IP range start
 	 * @param {string} end IP range end
 	 * @returns {null}
@@ -72,6 +84,7 @@ export class QuizIpRestrictionsEntity extends Entity {
 
 	async addIpRestriction(restriction) {
 		if (!this.canEditIpRestrictions()) return;
+		if (this._hasRestrictionBeenPersisted(restriction)) return;
 
 		const { start, end } = restriction;
 
@@ -103,9 +116,8 @@ export class QuizIpRestrictionsEntity extends Entity {
 	}
 
 	async updateIpRestriction(restriction) {
-		if (!this.canEditIpRestrictions()) {
-			return;
-		}
+		if (!this.canEditIpRestrictions()) return;
+		if (this._hasRestrictionBeenPersisted(restriction)) return;
 
 		const { start, end } = restriction;
 
