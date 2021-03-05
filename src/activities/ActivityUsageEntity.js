@@ -440,6 +440,13 @@ export class ActivityUsageEntity extends Entity {
 		const scoreOutOfEntity = this._getScoreOutOfEntity();
 		return scoreOutOfEntity && scoreOutOfEntity.properties ? scoreOutOfEntity.properties.scoreOutOf : undefined;
 	}
+	/**
+	 * @returns {string} Href for linked score-out-of sub-entity
+	 */
+	scoreOutOfHref() {
+		const scoreOutOfEntity = this._getScoreOutOfEntity();
+		return scoreOutOfEntity && scoreOutOfEntity.href;
+	}
 
 	/**
 	 * @returns {string} True if the activity usage is associated with a grade item, False otherwise
