@@ -378,6 +378,17 @@ export class QuizEntity extends Entity {
 	}
 
 	/**
+	 * @returns {string} Attempts Href of the quiz entity, if present
+	*/
+	attemptsHref() {
+		if (!this._entity || !this._entity.hasSubEntityByRel(Rels.Quizzes.attempts)) {
+			return;
+		}
+
+		return this._entity.getSubEntityByRel(Rels.Quizzes.attempts).href;
+	}
+
+	/**
 	 * @returns {string} Ip restrictions Href of the quiz entity, if present
 	*/
 	ipRestrictionsHref() {
