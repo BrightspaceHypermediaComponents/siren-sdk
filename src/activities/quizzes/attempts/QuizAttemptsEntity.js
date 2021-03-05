@@ -83,18 +83,6 @@ export class QuizAttemptsEntity extends Entity {
 		return attemptsAllowed !== this.attemptsAllowed();
 	}
 
-	async setAttemptsAllowed(attemptsAllowed) {
-		if (!attemptsAllowed || !this._hasAttemptsAllowedChanged(attemptsAllowed)) return;
-		if (!this.canUpdateAttemptsAllowed()) {
-			return;
-		}
-		const {action, fields} = this._generateAttemptsAllowedAction(attemptsAllowed);
-		if (!action) {
-			return;
-		}
-		await performSirenAction(this._token, action, fields);
-	}
-
 	/**
 	 * Returns an update attempts action if one exists
 	 * @param {number} attemptsAllowed number of attempts allowed
@@ -122,4 +110,58 @@ export class QuizAttemptsEntity extends Entity {
 
 	}
 
+	async setAttemptsAllowed(attemptsAllowed) {
+		if (!attemptsAllowed || !this._hasAttemptsAllowedChanged(attemptsAllowed)) return;
+		if (!this.canUpdateAttemptsAllowed()) {
+			return;
+		}
+		const {action, fields} = this._generateAttemptsAllowedAction(attemptsAllowed);
+		if (!action) {
+			return;
+		}
+		await performSirenAction(this._token, action, fields);
+	}
+
+	_hasOverallGradeCalculationTypeChanged(calculationType) {
+		return calculationType !== this.overallGradeCalculationType();
+	}
+
+	/**
+	 * Returns an update overall grade calculation type action if one exists
+	 * @param {string} calculationType number of attempts allowed
+	 */
+
+	_generateOverallGradeCalculationTypeAction(calculationType) {
+		let action;
+		if (!this.canUpdatecalculationType()) {
+			return;
+		}
+
+		if (this._entity) {
+			action = this._entity.getActionByName(Actions.quizzes.attempts.updatecalculationType);
+		}
+
+		if (!action) {
+			return;
+		}
+
+		const fields = [
+			{ name: 'overallGradeCalculationType', value: calculationType },
+		];
+
+		return { action, fields };
+
+	}
+
+	async setOverallGradeCalculationType(calculationType) {
+		if (!calculationType || !this._hasOverallGradeCalculationTypeChanged(calculationType)) return;
+		if (!this.canUpdateOverallGradeCalculation()) {
+			return;
+		}
+		const {action, fields} = this._generateOverallGradeCalculationTypeAction(calculationType);
+		if (!action) {
+			return;
+		}
+		await performSirenAction(this._token, action, fields);
+	}
 }
