@@ -119,7 +119,7 @@ export class QuizAttemptsEntity extends Entity {
 
 	_generateOverallGradeCalculationTypeAction(calculationType) {
 		if (!this._entity) return;
-		const action = this._entity.getActionByName(Actions.quizzes.attempts.updatecalculationType);
+		const action = this._entity.getActionByName(Actions.quizzes.attempts.updateOverallGradeCalculationType);
 		if (!action) return;
 		const fields = [
 			{ name: 'overallGradeCalculationType', value: calculationType },
