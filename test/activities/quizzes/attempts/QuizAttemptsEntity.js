@@ -2,7 +2,7 @@ import { quizAttemptsEntity } from '../data/attempts/EditableEntity.js';
 import { nonEditableAttemptsEntity } from '../data/attempts/NonEditableEntity.js';
 import { QuizAttemptsEntity } from '../../../../src/activities/quizzes/attempts/QuizAttemptsEntity.js';
 
-describe('attempts', () => {
+describe('attempts allowed', () => {
 	let editableEntity, nonEditableEntity;
 
 	beforeEach(() => {
@@ -22,15 +22,15 @@ describe('attempts', () => {
 		});
 	});
 
-	describe('attempts', () => {
+	describe('attemptsAllowed', () => {
 		it('can read number of attempts allowed', () => {
 			const entity = new QuizAttemptsEntity(editableEntity);
 			expect(entity.attemptsAllowed()).to.equal('3');
 		});
 	});
 
-	describe('attempts', () => {
-		it('can read number of attempts allowed', () => {
+	describe('attemptsAllowedOptions', () => {
+		it('can read all the options for attempts allowed', () => {
 			const entity = new QuizAttemptsEntity(editableEntity);
 			const attemptOptions = entity.attemptsAllowedOptions();
 			expect(attemptOptions).to.be.an('array');
@@ -59,7 +59,15 @@ describe('overall grade calculation', () => {
 		});
 	});
 
-	describe('attempts', () => {
+	describe('overallGradeCalculationType', () => {
+		it('can read overall grade calculation type title and value', () => {
+			const entity = new QuizAttemptsEntity(editableEntity);
+			expect(entity.overallGradeCalculationType().title).to.equal('Lowest Attempt');
+			expect(entity.overallGradeCalculationType().value).to.equal('lowest');
+		});
+	});
+
+	describe('overallGradeCalculationOptions', () => {
 		it('can read overall grade calculation options', () => {
 			const entity = new QuizAttemptsEntity(editableEntity);
 			expect(entity.overallGradeCalculationOptions().length).to.equal(5);
