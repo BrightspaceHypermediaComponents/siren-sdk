@@ -47,7 +47,7 @@ export class QuizAttemptsEntity extends Entity {
 	canUpdateOverallGradeCalculation() {
 		const entity = this.getOverallGradeCalculationSubEntity();
 		if (!entity) return;
-		return this._entity.hasActionByName(Actions.quizzes.attempts.updateOverallGradeCalculationType);
+		return entity.hasActionByName(Actions.quizzes.attempts.updateOverallGradeCalculationType);
 	}
 
 	/**

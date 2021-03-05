@@ -1,6 +1,6 @@
-import { quizAttemptsEntity } from '../data/attempts/QuizAttemptsEntity.js';
+import { quizAttemptsEntity } from '../data/attempts/EditableEntity.js';
+import { nonEditableEntity } from '../data/attempts/NonEditableEntity.js';
 import { QuizAttemptsEntity } from '../../../../src/activities/quizzes/attempts/QuizAttemptsEntity.js';
-import { expect } from 'chai';
 
 describe('attempts', () => {
 	let entityJson;
@@ -43,16 +43,14 @@ describe('overall grade calculation', () => {
 	describe('canUpdateOverallGradeCalculation', () => {
 		it('returns true when overall grade calculation is editable', () => {
 			const entity = new QuizAttemptsEntity(entityJson);
-			const subentity = entity.getOverallGradeCalculationSubEntity();
-			expect(subentity.canUpdateOverallGradeCalculation()).to.be.true;
+			expect(entity.canUpdateOverallGradeCalculation()).to.be.true;
 		});
 	});
 
 	describe('attempts', () => {
 		it('can read overall grade calculation options', () => {
 			const entity = new QuizAttemptsEntity(entityJson);
-			const subentity = entity.getOverallGradeCalculationSubEntity();
-			expect(subentity.overallGradeCalculationOptions().length).to.equal(5);
+			expect(entity.overallGradeCalculationOptions().length).to.equal(5);
 		});
 	});
 });
