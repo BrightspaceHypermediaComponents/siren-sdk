@@ -52,7 +52,7 @@ describe('overall grade calculation', () => {
 		it('can read overall grade calculation options', () => {
 			const entity = new QuizAttemptsEntity(entityJson);
 			const subentity = entity.getOverallGradeCalculationSubEntity();
-			expect(subentity.overallGradeCalculationOptions()).length.to.equal(5);
+			expect(subentity.overallGradeCalculationOptions().length).to.equal(5);
 		});
 	});
 });

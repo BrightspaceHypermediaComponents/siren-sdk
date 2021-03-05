@@ -47,7 +47,7 @@ export class QuizAttemptsEntity extends Entity {
 	canUpdateOverallGradeCalculation() {
 		const entity = this.getOverallGradeCalculationSubEntity();
 		if (!entity) return;
-		return this._entity.hasActionByName(Actions.quizzes.attempts.overallGradeCalculationOptions);
+		return this._entity.hasActionByName(Actions.quizzes.attempts.updateOverallGradeCalculationType);
 	}
 
 	/**
@@ -88,7 +88,7 @@ export class QuizAttemptsEntity extends Entity {
 		if (!this.canUpdateAttemptsAllowed()) {
 			return;
 		}
-		const {action, fields } = this._generateAttemptsAllowedAction(attemptsAllowed);
+		const {action, fields} = this._generateAttemptsAllowedAction(attemptsAllowed);
 		if (!action) {
 			return;
 		}
