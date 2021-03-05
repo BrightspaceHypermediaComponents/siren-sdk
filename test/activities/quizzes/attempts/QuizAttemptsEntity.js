@@ -2,7 +2,7 @@ import { quizAttemptsEntity } from '../data/attempts/QuizAttemptsEntity.js';
 import { QuizAttemptsEntity } from '../../../../src/activities/quizzes/attempts/QuizAttemptsEntity.js';
 
 describe('attempts', () => {
-	var entityJson;
+	let entityJson;
 
 	beforeEach(() => {
 		entityJson = window.D2L.Hypermedia.Siren.Parse(quizAttemptsEntity);
@@ -10,15 +10,39 @@ describe('attempts', () => {
 
 	describe('canUpdateAttemptsAllowed', () => {
 		it('returns true when attempts allowed is editable', () => {
-			var entity = new QuizAttemptsEntity(entityJson);
+			const entity = new QuizAttemptsEntity(entityJson);
 			expect(entity.canUpdateAttemptsAllowed()).to.be.true;
 		});
 	});
 
 	describe('attempts', () => {
 		it('can read number of attempts allowed', () => {
-			var entity = new QuizAttemptsEntity(entityJson);
+			const entity = new QuizAttemptsEntity(entityJson);
 			expect(entity.attemptsAllowed()).to.equal(3);
+		});
+	});
+});
+
+describe('overall grade calculation', () => {
+	let entityJson;
+
+	beforeEach(() => {
+		entityJson = window.D2L.Hypermedia.Siren.Parse(quizAttemptsEntity);
+	});
+
+	describe('canUpdateOverallGradeCalculation', () => {
+		it('returns true when overall grade calculation is editable', () => {
+			const entity = new QuizAttemptsEntity(entityJson);
+			const subentity = entity.getOverallGradeCalculationSubEntity();
+			expect(subentity.canUpdateOverallGradeCalculation()).to.be.true;
+		});
+	});
+
+	describe('attempts', () => {
+		it('can read overall grade calculation options', () => {
+			const entity = new QuizAttemptsEntity(entityJson);
+			const subentity = entity.getOverallGradeCalculationSubEntity();
+			expect(subentity.overallGradeCalculationOptions()).to.equal(11);
 		});
 	});
 });
