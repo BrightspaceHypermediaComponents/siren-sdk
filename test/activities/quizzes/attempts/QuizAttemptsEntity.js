@@ -1,5 +1,6 @@
 import { quizAttemptsEntity } from '../data/attempts/QuizAttemptsEntity.js';
 import { QuizAttemptsEntity } from '../../../../src/activities/quizzes/attempts/QuizAttemptsEntity.js';
+import { expect } from 'chai';
 
 describe('attempts', () => {
 	let entityJson;
@@ -18,14 +19,16 @@ describe('attempts', () => {
 	describe('attempts', () => {
 		it('can read number of attempts allowed', () => {
 			const entity = new QuizAttemptsEntity(entityJson);
-			expect(entity.attemptsAllowed()).to.equal(3);
+			expect(entity.attemptsAllowed()).to.equal('3');
 		});
 	});
 
 	describe('attempts', () => {
 		it('can read number of attempts allowed', () => {
 			const entity = new QuizAttemptsEntity(entityJson);
-			expect(entity.attemptsAllowedOptions()).length.to.equal(11);
+			const attemptOptions = entity.attemptsAllowedOptions();
+			expect(attemptOptions).to.be.an('array');
+			expect(attemptOptions.length).to.equal(11);
 		});
 	});
 });
