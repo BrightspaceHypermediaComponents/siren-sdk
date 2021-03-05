@@ -35,7 +35,7 @@ export class QuizIpRestrictionsEntity extends Entity {
 
 		return ipRestrictionEntities.map(({ properties }, index) => {
 
-			const { start, end } = properties;
+			const { start = '', end = '' } = properties;
 			return {
 				start,
 				end,

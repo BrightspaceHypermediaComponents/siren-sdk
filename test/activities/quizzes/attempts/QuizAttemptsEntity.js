@@ -21,6 +21,13 @@ describe('attempts', () => {
 			expect(entity.attemptsAllowed()).to.equal(3);
 		});
 	});
+
+	describe('attempts', () => {
+		it('can read number of attempts allowed', () => {
+			const entity = new QuizAttemptsEntity(entityJson);
+			expect(entity.attemptsAllowedOptions()).length.to.equal(11);
+		});
+	});
 });
 
 describe('overall grade calculation', () => {
@@ -42,7 +49,7 @@ describe('overall grade calculation', () => {
 		it('can read overall grade calculation options', () => {
 			const entity = new QuizAttemptsEntity(entityJson);
 			const subentity = entity.getOverallGradeCalculationSubEntity();
-			expect(subentity.overallGradeCalculationOptions()).to.equal(11);
+			expect(subentity.overallGradeCalculationOptions()).length.to.equal(5);
 		});
 	});
 });
