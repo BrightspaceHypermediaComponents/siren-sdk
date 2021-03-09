@@ -99,10 +99,10 @@ export class QuizAttemptsEntity extends Entity {
 	/**
 	 * @returns {bool} is quiz retake incorrect only
 	 */
-	retakeIncorrectOnly() {
+	isRetakeIncorrectOnly() {
 		const entity = this.getRetakeIncorrectOnlySubEntity();
 		if (!entity) return;
-		return entity.hasClass(Classes.quizzes.retakeIncorrectOnly) && entity.hasClass('checked');
+		return entity.hasClass(Classes.quizzes.attempts.retakeIncorrectOnly) && entity.hasClass(Classes.quizzes.checked);
 	}
 
 	_hasAttemptsAllowedChanged(attemptsAllowed) {
@@ -132,6 +132,7 @@ export class QuizAttemptsEntity extends Entity {
 		const {action, fields} = this._generateAttemptsAllowedAction(attemptsAllowed) || {};
 		if (!action) return;
 		const returnedEntity = await performSirenAction(this._token, action, fields);
+		if (!returnedEntity) return;
 		return new QuizAttemptsEntity(returnedEntity);
 	}
 
@@ -162,11 +163,12 @@ export class QuizAttemptsEntity extends Entity {
 		const {action, fields} = this._generateOverallGradeCalculationTypeAction(calculationType) || {};
 		if (!action) return;
 		const returnedEntity = await performSirenAction(this._token, action, fields);
+		if (!returnedEntity) return;
 		return new QuizAttemptsEntity(returnedEntity);
 	}
 
 	_hasRetakeIncorrectOnlyChanged(retakeIncorrectOnly) {
-		return retakeIncorrectOnly !== this.retakeIncorrectOnly();
+		return retakeIncorrectOnly !== this.isRetakeIncorrectOnly();
 	}
 
 	/**
@@ -192,6 +194,7 @@ export class QuizAttemptsEntity extends Entity {
 		const {action, fields} = this._generateRetakeIncorrectOnlyAction(retakeIncorrectOnly) || {};
 		if (!action) return;
 		const returnedEntity = await performSirenAction(this._token, action, fields);
+		if (!returnedEntity) return;
 		return new QuizAttemptsEntity(returnedEntity);
 	}
 }
