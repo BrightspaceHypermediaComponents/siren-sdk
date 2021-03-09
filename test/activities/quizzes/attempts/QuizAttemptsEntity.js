@@ -74,3 +74,36 @@ describe('overall grade calculation', () => {
 		});
 	});
 });
+
+describe('retake incorrect only', () => {
+	let editableEntity, nonEditableEntity;
+
+	beforeEach(() => {
+		editableEntity = window.D2L.Hypermedia.Siren.Parse(quizAttemptsEntity);
+		nonEditableEntity = window.D2L.Hypermedia.Siren.Parse(nonEditableAttemptsEntity);
+	});
+
+	describe('canUpdateRetakeIncorrectOnly', () => {
+		it('returns true when retake incorrect only is editable', () => {
+			const entity = new QuizAttemptsEntity(editableEntity);
+			expect(entity.canUpdateRetakeIncorrectOnly()).to.be.true;
+		});
+
+		it('returns false when retake incorrect only is uneditable', () => {
+			const entity = new QuizAttemptsEntity(nonEditableEntity);
+			expect(entity.canUpdateRetakeIncorrectOnly()).to.be.false;
+		});
+	});
+
+	describe('retakeIncorrectOnly', () => {
+		it('can read boolean value of retakeIncorrectOnly', () => {
+			const entity = new QuizAttemptsEntity(editableEntity);
+			expect(entity.retakeIncorrectOnly()).to.be.true;
+		});
+
+		it('can read boolean value of retakeIncorrectOnly when not editable', () => {
+			const entity = new QuizAttemptsEntity(nonEditableEntity);
+			expect(entity.retakeIncorrectOnly()).to.be.true;
+		});
+	});
+});
