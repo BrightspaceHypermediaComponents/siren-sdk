@@ -279,6 +279,16 @@ export class QuizEntity extends Entity {
 	}
 
 	/**
+	 * @returns {bool} Description is initially empty for the quiz entity
+	 */
+	originalDescriptionIsEmpty() {
+		const descriptionEntity = this._getDescriptionEntity();
+		return descriptionEntity
+			&& descriptionEntity.properties
+			&& !descriptionEntity.properties.text;
+	}
+
+	/**
 	 * @returns {bool} Introduction is appended to the description for the quiz entity
 	 */
 	introIsAppendedToDescription() {
