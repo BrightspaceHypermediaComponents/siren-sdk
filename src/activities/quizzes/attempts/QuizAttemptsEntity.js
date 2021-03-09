@@ -51,6 +51,16 @@ export class QuizAttemptsEntity extends Entity {
 	}
 
 	/**
+	 * @returns {bool} can update retake incorrect only
+	 */
+
+	canUpdateRetakeIncorrectOnly() {
+		const entity = this.getRetakeIncorrectOnlySubEntity();
+		if (!entity) return;
+		return entity.hasActionByName(Actions.quizzes.attempts.updateRetakeIncorrectOnly);
+	}
+
+	/**
 	 * @returns {object} quiz overall grade calculation type sub-entity
 	 */
 	getOverallGradeCalculationSubEntity() {
@@ -77,6 +87,22 @@ export class QuizAttemptsEntity extends Entity {
 		const field = action.getFieldByName('overallGradeCalculationType');
 		if (!field) return;
 		return field.value;
+	}
+
+	/**
+	 * @returns {object} quiz retake incorrect only sub-entity
+	 */
+	getRetakeIncorrectOnlySubEntity() {
+		return this._entity && this._entity.getSubEntityByClass(Classes.quizzes.attempts.retakeIncorrectOnly);
+	}
+
+	/**
+	 * @returns {bool} is quiz retake incorrect only
+	 */
+	retakeIncorrectOnly() {
+		const entity = this.getRetakeIncorrectOnlySubEntity();
+		if (!entity) return;
+		return entity.properties.retakeIncorrectOnly;
 	}
 
 	_hasAttemptsAllowedChanged(attemptsAllowed) {
@@ -134,6 +160,36 @@ export class QuizAttemptsEntity extends Entity {
 		if (!calculationType || !this._hasOverallGradeCalculationTypeChanged(calculationType)) return;
 		if (!this.canUpdateOverallGradeCalculation()) return;
 		const {action, fields} = this._generateOverallGradeCalculationTypeAction(calculationType) || {};
+		if (!action) return;
+		const returnedEntity = await performSirenAction(this._token, action, fields);
+		return new QuizAttemptsEntity(returnedEntity);
+	}
+
+	_hasRetakeIncorrectOnlyChanged(retakeIncorrectOnly) {
+		return retakeIncorrectOnly !== this.retakeIncorrectOnly();
+	}
+
+	/**
+	 * Returns an update retake incorrect only action if one exists
+	 * @param {bool} retakeIncorrectOnly is quiz retake incorrect only
+	 */
+
+	_generateRetakeIncorrectOnlyAction(retakeIncorrectOnly) {
+		if (!this._entity) return;
+		const action = this._entity.getActionByName(Actions.quizzes.attempts.updateRetakeIncorrectOnly);
+		if (!action) return;
+		const fields = [
+			{ name: 'retakeIncorrectOnly', value: retakeIncorrectOnly },
+		];
+
+		return { action, fields };
+
+	}
+
+	async setRetakeIncorrectOnly(retakeIncorrectOnly) {
+		if (!retakeIncorrectOnly || !this._hasRetakeIncorrectOnlyChanged(retakeIncorrectOnly)) return;
+		if (!this.canUpdateOverallGradeCalculation()) return;
+		const {action, fields} = this._generateRetakeIncorrectOnlyAction(retakeIncorrectOnly) || {};
 		if (!action) return;
 		const returnedEntity = await performSirenAction(this._token, action, fields);
 		return new QuizAttemptsEntity(returnedEntity);
