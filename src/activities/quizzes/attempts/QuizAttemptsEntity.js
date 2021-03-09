@@ -105,7 +105,8 @@ export class QuizAttemptsEntity extends Entity {
 		if (!this.canUpdateAttemptsAllowed()) return;
 		const {action, fields} = this._generateAttemptsAllowedAction(attemptsAllowed) || {};
 		if (!action) return;
-		await performSirenAction(this._token, action, fields);
+		const returnedEntity = await performSirenAction(this._token, action, fields);
+		return new QuizAttemptsEntity(returnedEntity);
 	}
 
 	_hasOverallGradeCalculationTypeChanged(calculationType) {
@@ -134,6 +135,7 @@ export class QuizAttemptsEntity extends Entity {
 		if (!this.canUpdateOverallGradeCalculation()) return;
 		const {action, fields} = this._generateOverallGradeCalculationTypeAction(calculationType) || {};
 		if (!action) return;
-		await performSirenAction(this._token, action, fields);
+		const returnedEntity = await performSirenAction(this._token, action, fields);
+		return new QuizAttemptsEntity(returnedEntity);
 	}
 }
