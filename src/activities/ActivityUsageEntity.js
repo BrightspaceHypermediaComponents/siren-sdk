@@ -443,10 +443,6 @@ export class ActivityUsageEntity extends Entity {
 	/**
 	 * @returns {string} Href for linked score-out-of sub-entity
 	 */
-	scoreOutOfHref() {
-		const scoreOutOfEntity = this._getScoreOutOfEntity();
-		return scoreOutOfEntity && scoreOutOfEntity.href;
-	}
 
 	/**
 	 * @returns {string} True if the activity usage is associated with a grade item, False otherwise
@@ -590,14 +586,20 @@ export class ActivityUsageEntity extends Entity {
 	}
 
 	_getScoreOutOfEntity() {
-		return this._entity
-			&& this._entity.getSubEntityByRel(Rels.Activities.scoreOutOf);
+		return this._linkedScoreOutOfEntity || (this._entity && this._entity.getSubEntityByRel(Rels.Activities.scoreOutOf));
 	}
 
 	_getScoreOutOfAction() {
 		const scoreOutOfEntity = this._getScoreOutOfEntity();
 		return scoreOutOfEntity
 			&& scoreOutOfEntity.getActionByName && scoreOutOfEntity.getActionByName(Actions.activities.scoreOutOf.update);
+	}
+
+	async fetchLinkedScoreOutOfEntity(fetcher) {
+		const scoreOutOfSubEntity = this._entity && this._entity.getSubEntityByRel(Rels.Activities.scoreOutOf);
+		if (scoreOutOfSubEntity.href) {
+			this._linkedScoreOutOfEntity = await fetcher(scoreOutOfSubEntity.href, this.token);
+		}
 	}
 
 	async validate(activity) {
