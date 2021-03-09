@@ -101,7 +101,7 @@ describe('retake incorrect only', () => {
 			expect(entity.retakeIncorrectOnly()).to.be.true;
 		});
 
-		it('can read boolean value of retakeIncorrectOnly when not editable', () => {
+		it('can read boolean value of retakeIncorrectOnly when attempts entity is not editable', () => {
 			const entity = new QuizAttemptsEntity(nonEditableEntity);
 			expect(entity.retakeIncorrectOnly()).to.be.true;
 		});
