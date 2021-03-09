@@ -62,7 +62,7 @@ export class ContentEntity extends Entity {
 	/**
 	 * @returns {string} content-htmlfile link
 	 */
-	getHTMLFileHref() {
+	getHtmlFileHref() {
 		return ContentHelperFunctions.getHrefFromRel(Rels.Content.htmlFileEntity, this._entity);
 	}
 }
