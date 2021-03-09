@@ -102,7 +102,7 @@ export class QuizAttemptsEntity extends Entity {
 	retakeIncorrectOnly() {
 		const entity = this.getRetakeIncorrectOnlySubEntity();
 		if (!entity) return;
-		return entity.properties.retakeIncorrectOnly;
+		return entity.hasClass(Classes.quizzes.retakeIncorrectOnly) && entity.hasClass('checked');
 	}
 
 	_hasAttemptsAllowedChanged(attemptsAllowed) {
