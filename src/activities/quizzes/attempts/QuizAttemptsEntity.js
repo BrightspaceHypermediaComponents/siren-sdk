@@ -189,7 +189,7 @@ export class QuizAttemptsEntity extends Entity {
 	}
 
 	async setRetakeIncorrectOnly(retakeIncorrectOnly) {
-		if (!retakeIncorrectOnly || !this._hasRetakeIncorrectOnlyChanged(retakeIncorrectOnly)) return;
+		if (retakeIncorrectOnly === undefined || !this._hasRetakeIncorrectOnlyChanged(retakeIncorrectOnly)) return;
 		if (!this.canUpdateRetakeIncorrectOnly()) return;
 		const {action, fields} = this._generateRetakeIncorrectOnlyAction(retakeIncorrectOnly) || {};
 		if (!action) return;
