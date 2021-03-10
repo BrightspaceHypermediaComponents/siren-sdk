@@ -177,8 +177,9 @@ export class QuizAttemptsEntity extends Entity {
 	 */
 
 	_generateRetakeIncorrectOnlyAction(retakeIncorrectOnly) {
-		if (!this._entity) return;
-		const action = this._entity.getActionByName(Actions.quizzes.attempts.updateRetakeIncorrectOnly);
+		const entity = this.getRetakeIncorrectOnlySubEntity();
+		if (!entity) return;
+		const action = entity.getActionByName(Actions.quizzes.attempts.updateRetakeIncorrectOnly);
 		if (!action) return;
 		const fields = [
 			{ name: 'retakeIncorrectOnly', value: retakeIncorrectOnly },
