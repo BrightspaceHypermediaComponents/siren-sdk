@@ -33,6 +33,37 @@ export class QuizAttemptsEntity extends Entity {
 	}
 
 	/**
+	 * @returns {string} quiz overall grade calculation type
+	 */
+	overallGradeCalculationType() {
+		const entity = this.getOverallGradeCalculationSubEntity();
+		if (!entity) return;
+		return entity.properties.overallGradeCalculationType;
+	}
+
+	/**
+	 * @returns {object} quiz overall grade calculation options
+	 */
+	overallGradeCalculationOptions() {
+		const entity = this.getOverallGradeCalculationSubEntity();
+		if (!entity) return;
+		const action = entity.getActionByName(Actions.quizzes.attempts.updateOverallGradeCalculationType);
+		if (!action) return;
+		const field = action.getFieldByName('overallGradeCalculationType');
+		if (!field) return;
+		return field.value;
+	}
+
+	/**
+	 * @returns {bool} is quiz retake incorrect only
+	 */
+	isRetakeIncorrectOnly() {
+		const entity = this.getRetakeIncorrectOnlySubEntity();
+		if (!entity) return;
+		return entity.hasClass(Classes.quizzes.attempts.retakeIncorrectOnly) && entity.hasClass(Classes.quizzes.checked);
+	}
+
+	/**
 	 * @returns {bool} can update number of quiz attempts
 	 */
 
@@ -68,41 +99,10 @@ export class QuizAttemptsEntity extends Entity {
 	}
 
 	/**
-	 * @returns {string} quiz overall grade calculation type
-	 */
-	overallGradeCalculationType() {
-		const entity = this.getOverallGradeCalculationSubEntity();
-		if (!entity) return;
-		return entity.properties.overallGradeCalculationType;
-	}
-
-	/**
-	 * @returns {object} quiz overall grade calculation options
-	 */
-	overallGradeCalculationOptions() {
-		const entity = this.getOverallGradeCalculationSubEntity();
-		if (!entity) return;
-		const action = entity.getActionByName(Actions.quizzes.attempts.updateOverallGradeCalculationType);
-		if (!action) return;
-		const field = action.getFieldByName('overallGradeCalculationType');
-		if (!field) return;
-		return field.value;
-	}
-
-	/**
 	 * @returns {object} quiz retake incorrect only sub-entity
 	 */
 	getRetakeIncorrectOnlySubEntity() {
 		return this._entity && this._entity.getSubEntityByClass(Classes.quizzes.attempts.retakeIncorrectOnly);
-	}
-
-	/**
-	 * @returns {bool} is quiz retake incorrect only
-	 */
-	isRetakeIncorrectOnly() {
-		const entity = this.getRetakeIncorrectOnlySubEntity();
-		if (!entity) return;
-		return entity.hasClass(Classes.quizzes.attempts.retakeIncorrectOnly) && entity.hasClass(Classes.quizzes.checked);
 	}
 
 	_hasAttemptsAllowedChanged(attemptsAllowed) {
@@ -126,16 +126,6 @@ export class QuizAttemptsEntity extends Entity {
 
 	}
 
-	async setAttemptsAllowed(attemptsAllowed) {
-		if (!attemptsAllowed || !this._hasAttemptsAllowedChanged(attemptsAllowed)) return;
-		if (!this.canUpdateAttemptsAllowed()) return;
-		const {action, fields} = this._generateAttemptsAllowedAction(attemptsAllowed) || {};
-		if (!action) return;
-		const returnedEntity = await performSirenAction(this._token, action, fields);
-		if (!returnedEntity) return;
-		return new QuizAttemptsEntity(returnedEntity);
-	}
-
 	_hasOverallGradeCalculationTypeChanged(calculationType) {
 		return calculationType !== this.overallGradeCalculationType();
 	}
@@ -146,8 +136,9 @@ export class QuizAttemptsEntity extends Entity {
 	 */
 
 	_generateOverallGradeCalculationTypeAction(calculationType) {
-		if (!this._entity) return;
-		const action = this._entity.getActionByName(Actions.quizzes.attempts.updateOverallGradeCalculationType);
+		const entity = this.getOverallGradeCalculationSubEntity();
+		if (!entity) return;
+		const action = entity.getActionByName(Actions.quizzes.attempts.updateOverallGradeCalculationType);
 		if (!action) return;
 		const fields = [
 			{ name: 'overallGradeCalculationType', value: calculationType },
@@ -155,16 +146,6 @@ export class QuizAttemptsEntity extends Entity {
 
 		return { action, fields };
 
-	}
-
-	async setOverallGradeCalculationType(calculationType) {
-		if (!calculationType || !this._hasOverallGradeCalculationTypeChanged(calculationType)) return;
-		if (!this.canUpdateOverallGradeCalculation()) return;
-		const {action, fields} = this._generateOverallGradeCalculationTypeAction(calculationType) || {};
-		if (!action) return;
-		const returnedEntity = await performSirenAction(this._token, action, fields);
-		if (!returnedEntity) return;
-		return new QuizAttemptsEntity(returnedEntity);
 	}
 
 	_hasRetakeIncorrectOnlyChanged(retakeIncorrectOnly) {
@@ -187,6 +168,26 @@ export class QuizAttemptsEntity extends Entity {
 
 		return { action, fields };
 
+	}
+
+	async setAttemptsAllowed(attemptsAllowed) {
+		if (!attemptsAllowed || !this._hasAttemptsAllowedChanged(attemptsAllowed)) return;
+		if (!this.canUpdateAttemptsAllowed()) return;
+		const {action, fields} = this._generateAttemptsAllowedAction(attemptsAllowed) || {};
+		if (!action) return;
+		const returnedEntity = await performSirenAction(this._token, action, fields);
+		if (!returnedEntity) return;
+		return new QuizAttemptsEntity(returnedEntity);
+	}
+
+	async setOverallGradeCalculationType(calculationType) {
+		if (!calculationType || !this._hasOverallGradeCalculationTypeChanged(calculationType)) return;
+		if (!this.canUpdateOverallGradeCalculation()) return;
+		const {action, fields} = this._generateOverallGradeCalculationTypeAction(calculationType) || {};
+		if (!action) return;
+		const returnedEntity = await performSirenAction(this._token, action, fields);
+		if (!returnedEntity) return;
+		return new QuizAttemptsEntity(returnedEntity);
 	}
 
 	async setRetakeIncorrectOnly(retakeIncorrectOnly) {
