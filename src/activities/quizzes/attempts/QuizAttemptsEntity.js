@@ -150,7 +150,6 @@ export class QuizAttemptsEntity extends Entity {
 		return { action, fields };
 	}
 
-
 	/**
 	 * Returns an update retake incorrect only action if one exists
 	 * @param {bool} retakeIncorrectOnly is quiz retake incorrect only
