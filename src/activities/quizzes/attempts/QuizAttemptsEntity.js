@@ -109,6 +109,14 @@ export class QuizAttemptsEntity extends Entity {
 		return attemptsAllowed !== this.attemptsAllowed();
 	}
 
+	_hasOverallGradeCalculationTypeChanged(calculationType) {
+		return calculationType !== this.overallGradeCalculationType();
+	}
+
+	_hasRetakeIncorrectOnlyChanged(retakeIncorrectOnly) {
+		return retakeIncorrectOnly !== this.isRetakeIncorrectOnly();
+	}
+
 	/**
 	 * Returns an update attempts action if one exists
 	 * @param {number} attemptsAllowed number of attempts allowed
@@ -123,11 +131,6 @@ export class QuizAttemptsEntity extends Entity {
 		];
 
 		return { action, fields };
-
-	}
-
-	_hasOverallGradeCalculationTypeChanged(calculationType) {
-		return calculationType !== this.overallGradeCalculationType();
 	}
 
 	/**
@@ -145,12 +148,8 @@ export class QuizAttemptsEntity extends Entity {
 		];
 
 		return { action, fields };
-
 	}
 
-	_hasRetakeIncorrectOnlyChanged(retakeIncorrectOnly) {
-		return retakeIncorrectOnly !== this.isRetakeIncorrectOnly();
-	}
 
 	/**
 	 * Returns an update retake incorrect only action if one exists
@@ -167,7 +166,6 @@ export class QuizAttemptsEntity extends Entity {
 		];
 
 		return { action, fields };
-
 	}
 
 	async setAttemptsAllowed(attemptsAllowed) {
