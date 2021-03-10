@@ -177,8 +177,9 @@ export class QuizAttemptsEntity extends Entity {
 	 */
 
 	_generateRetakeIncorrectOnlyAction(retakeIncorrectOnly) {
-		if (!this._entity) return;
-		const action = this._entity.getActionByName(Actions.quizzes.attempts.updateRetakeIncorrectOnly);
+		const entity = this.getRetakeIncorrectOnlySubEntity();
+		if (!entity) return;
+		const action = entity.getActionByName(Actions.quizzes.attempts.updateRetakeIncorrectOnly);
 		if (!action) return;
 		const fields = [
 			{ name: 'retakeIncorrectOnly', value: retakeIncorrectOnly },
@@ -189,8 +190,8 @@ export class QuizAttemptsEntity extends Entity {
 	}
 
 	async setRetakeIncorrectOnly(retakeIncorrectOnly) {
-		if (!retakeIncorrectOnly || !this._hasRetakeIncorrectOnlyChanged(retakeIncorrectOnly)) return;
-		if (!this.canUpdateOverallGradeCalculation()) return;
+		if (retakeIncorrectOnly === undefined || !this._hasRetakeIncorrectOnlyChanged(retakeIncorrectOnly)) return;
+		if (!this.canUpdateRetakeIncorrectOnly()) return;
 		const {action, fields} = this._generateRetakeIncorrectOnlyAction(retakeIncorrectOnly) || {};
 		if (!action) return;
 		const returnedEntity = await performSirenAction(this._token, action, fields);
