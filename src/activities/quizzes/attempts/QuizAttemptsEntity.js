@@ -190,7 +190,7 @@ export class QuizAttemptsEntity extends Entity {
 
 	async setRetakeIncorrectOnly(retakeIncorrectOnly) {
 		if (!retakeIncorrectOnly || !this._hasRetakeIncorrectOnlyChanged(retakeIncorrectOnly)) return;
-		if (!this.canUpdateOverallGradeCalculation()) return;
+		if (!this.canUpdateRetakeIncorrectOnly()) return;
 		const {action, fields} = this._generateRetakeIncorrectOnlyAction(retakeIncorrectOnly) || {};
 		if (!action) return;
 		const returnedEntity = await performSirenAction(this._token, action, fields);
