@@ -69,6 +69,6 @@ describe('Html File ContentEntity', () => {
 	});
 
 	it('gets content-htmlfile href', () => {
-		expect(contentEntity.getHtmlFileHref()).to.equal('https://fake-tenant-id.content.api.proddev.d2l/6613/htmlfiles/12345');
+		expect(contentEntity.getHtmlFileHref()).to.equal('https://fake-tenant-id.content.api.proddev.d2l/6613/files/html/12345');
 	});
 });

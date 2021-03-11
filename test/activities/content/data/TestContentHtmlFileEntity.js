@@ -1,7 +1,7 @@
 export const contentHtmlFileData = {
 	'actions': [
 		{
-			'href': 'https://fake-tenant-id.content.api.proddev.d2l/6613/htmlfiles/12345',
+			'href': 'https://fake-tenant-id.content.api.proddev.d2l/6613/files/html/12345',
 			'name': 'update-title',
 			'method': 'PATCH',
 			'fields': [
@@ -14,7 +14,7 @@ export const contentHtmlFileData = {
 			]
 		},
 		{
-			'href': 'https://fake-tenant-id.content.api.proddev.d2l/6613/htmlfiles/12345',
+			'href': 'https://fake-tenant-id.content.api.proddev.d2l/6613/files/html/12345',
 			'name': 'update-description',
 			'method': 'PATCH',
 			'fields': [
@@ -27,7 +27,7 @@ export const contentHtmlFileData = {
 			]
 		},
 		{
-			'href': 'https://fake-tenant-id.content.api.proddev.d2l/6613/htmlfiles/12345',
+			'href': 'https://fake-tenant-id.content.api.proddev.d2l/6613/files/html/12345',
 			'name': 'delete-htmlFile',
 			'method': 'DELETE'
 		}

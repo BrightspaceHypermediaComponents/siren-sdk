@@ -58,7 +58,7 @@ describe('ContentHtmlFileEntity', () => {
 
 	describe('Actions', () => {
 		it('saves title', async() => {
-			fetchMock.patchOnce('https://fake-tenant-id.content.api.proddev.d2l/6613/htmlfiles/12345', htmlFileData);
+			fetchMock.patchOnce('https://fake-tenant-id.content.api.proddev.d2l/6613/files/html/12345', htmlFileData);
 
 			await contentHtmlFileEntity.setHtmlFileTitle('New Title');
 
@@ -70,7 +70,7 @@ describe('ContentHtmlFileEntity', () => {
 		});
 
 		it('saves description', async() => {
-			fetchMock.patchOnce('https://fake-tenant-id.content.api.proddev.d2l/6613/htmlfiles/12345', htmlFileData);
+			fetchMock.patchOnce('https://fake-tenant-id.content.api.proddev.d2l/6613/files/html/12345', htmlFileData);
 
 			await contentHtmlFileEntity.setHtmlFileDescription('<p>New description</p>');
 
@@ -82,7 +82,7 @@ describe('ContentHtmlFileEntity', () => {
 		});
 
 		it('performs delete request', async() => {
-			fetchMock.deleteOnce('https://fake-tenant-id.content.api.proddev.d2l/6613/htmlfiles/12345', htmlFileData);
+			fetchMock.deleteOnce('https://fake-tenant-id.content.api.proddev.d2l/6613/files/html/12345', htmlFileData);
 			await contentHtmlFileEntity.deleteHtmlFile();
 			expect(fetchMock.called()).to.be.true;
 		});

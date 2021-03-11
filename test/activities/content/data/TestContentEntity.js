@@ -59,8 +59,8 @@ export const contentHtmlFileEntityData = {
 		'title': 'Test HTML File Title'
 	},
 	'links': [{
-		'href': 'https://fake-tenant-id.content.api.proddev.d2l/6613/htmlfiles/12345',
-		'rel': ['https://content.api.brightspace.com/rels/content-htmlfile']
+		'href': 'https://fake-tenant-id.content.api.proddev.d2l/6613/files/html/12345',
+		'rel': ['https://content.api.brightspace.com/rels/content-file-html']
 	}],
 	'entities': [],
 	'rel': []
