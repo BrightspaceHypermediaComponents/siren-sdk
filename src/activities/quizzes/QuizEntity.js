@@ -212,9 +212,10 @@ export class QuizEntity extends Entity {
 	 */
 	descriptionHtml() {
 		const descriptionEntity = this._getDescriptionEntity();
-		return descriptionEntity
-			&& descriptionEntity.properties
-			&& descriptionEntity.properties.html;
+		if (!descriptionEntity || !descriptionEntity.properties || !descriptionEntity.properties.html) {
+			return;
+		}
+		return descriptionEntity.properties.html;
 	}
 
 	/**
@@ -278,6 +279,24 @@ export class QuizEntity extends Entity {
 	}
 
 	/**
+	 * @returns {bool} Description is initially empty for the quiz entity
+	 */
+	originalDescriptionIsEmpty() {
+		const descriptionEntity = this._getDescriptionEntity();
+		return descriptionEntity
+			&& descriptionEntity.properties
+			&& !descriptionEntity.properties.text;
+	}
+
+	/**
+	 * @returns {bool} Introduction is appended to the description for the quiz entity
+	 */
+	introIsAppendedToDescription() {
+		const descriptionEntity = this._getDescriptionEntity();
+		return descriptionEntity && descriptionEntity.hasClass(Classes.quizzes.introIsAppendedToDescription);
+	}
+
+	/**
 	 * @returns {string} Quiz header in plaintext (HTML stripped)
 	 */
 	headerPlaintext() {
@@ -292,9 +311,10 @@ export class QuizEntity extends Entity {
 	 */
 	headerHtml() {
 		const headerEntity = this._getHeaderEntity();
-		return headerEntity
-			&& headerEntity.properties
-			&& headerEntity.properties.html;
+		if (!headerEntity || !headerEntity.properties || !headerEntity.properties.html) {
+			return;
+		}
+		return headerEntity.properties.html;
 	}
 
 	/**
@@ -368,13 +388,24 @@ export class QuizEntity extends Entity {
 	}
 
 	/**
+	 * @returns {string} Attempts Href of the quiz entity, if present
+	*/
+	attemptsHref() {
+		if (!this._entity || !this._entity.hasSubEntityByRel(Rels.Quizzes.attempts)) {
+			return;
+		}
+
+		return this._entity.getSubEntityByRel(Rels.Quizzes.attempts).href;
+	}
+
+	/**
 	 * @returns {string} Ip restrictions Href of the quiz entity, if present
 	*/
 	ipRestrictionsHref() {
-		if (!this._entity || !this._entity.hasSubEntityByClass(Classes.quizzes.ip.restrictions)) {
+		if (!this._entity || !this._entity.hasSubEntityByRel(Rels.Quizzes.ipRestrictions)) {
 			return;
 		}
-		return this._entity.getSubEntityByClass(Classes.quizzes.ip.restrictions).href;
+		return this._entity.getSubEntityByRel(Rels.Quizzes.ipRestrictions).href;
 	}
 
 	async save(quiz) {
@@ -625,10 +656,11 @@ export class QuizEntity extends Entity {
 
 	_formatUpdateDescriptionAction(quiz) {
 		const { description } = quiz || {};
+		const hasDescriptionChanged = this.introIsAppendedToDescription() || this._hasDescriptionChanged(description);
 
 		if (typeof description === 'undefined') return;
 
-		if (!this._hasDescriptionChanged(description) && this.descriptionIsDisplayed()) return;
+		if (!hasDescriptionChanged && this.descriptionIsDisplayed()) return;
 
 		const descriptionEntity = this._getDescriptionEntity();
 
@@ -776,7 +808,7 @@ export class QuizEntity extends Entity {
 		return this._entity && this._entity.hasActionByName(Actions.workingCopy.checkout);
 	}
 
-	_canCheckin() {
+	canCheckin() {
 		return this._entity && this._entity.hasActionByName(Actions.workingCopy.checkin);
 	}
 
@@ -796,9 +828,14 @@ export class QuizEntity extends Entity {
 	 * Checkin quiz working copy
 	 */
 	async checkin() {
-		if (this._canCheckin()) {
+		if (this.canCheckin()) {
 			const action = this.getActionByName(Actions.workingCopy.checkin);
-			const entity = await performSirenAction(this._token, action);
+			let entity;
+			try {
+				entity = await performSirenAction(this._token, action);
+			} catch (e) {
+				return Promise.reject(e);
+			}
 			if (!entity) return;
 			return new QuizEntity(entity, this._token);
 		}

@@ -438,8 +438,11 @@ export class ActivityUsageEntity extends Entity {
 			return action.getFieldByName('scoreOutOf').value;
 		}
 		const scoreOutOfEntity = this._getScoreOutOfEntity();
-		return scoreOutOfEntity ? scoreOutOfEntity.properties.scoreOutOf : undefined;
+		return scoreOutOfEntity && scoreOutOfEntity.properties ? scoreOutOfEntity.properties.scoreOutOf : undefined;
 	}
+	/**
+	 * @returns {string} Href for linked score-out-of sub-entity
+	 */
 
 	/**
 	 * @returns {string} True if the activity usage is associated with a grade item, False otherwise
@@ -450,7 +453,7 @@ export class ActivityUsageEntity extends Entity {
 			return action.getFieldByName('inGrades').value;
 		}
 		const scoreOutOfEntity = this._getScoreOutOfEntity();
-		return scoreOutOfEntity ? scoreOutOfEntity.properties.inGrades : undefined;
+		return scoreOutOfEntity && scoreOutOfEntity.properties ? scoreOutOfEntity.properties.inGrades : undefined;
 	}
 
 	/**
@@ -465,7 +468,7 @@ export class ActivityUsageEntity extends Entity {
 			}
 		}
 		const scoreOutOfEntity = this._getScoreOutOfEntity();
-		return scoreOutOfEntity ? scoreOutOfEntity.properties.gradeType : undefined;
+		return scoreOutOfEntity && scoreOutOfEntity.properties ? scoreOutOfEntity.properties.gradeType : undefined;
 	}
 
 	/**
@@ -560,7 +563,7 @@ export class ActivityUsageEntity extends Entity {
 	 */
 	canEditScoreOutOf() {
 		const scoreOutOfEntity = this._getScoreOutOfEntity();
-		return scoreOutOfEntity
+		return scoreOutOfEntity && scoreOutOfEntity.hasActionByName
 			&& scoreOutOfEntity.hasActionByName(Actions.activities.scoreOutOf.update);
 	}
 
@@ -569,7 +572,7 @@ export class ActivityUsageEntity extends Entity {
 	 */
 	canSeeGrades() {
 		const scoreOutOfEntity = this._getScoreOutOfEntity();
-		return scoreOutOfEntity
+		return scoreOutOfEntity && scoreOutOfEntity.properties
 			&& scoreOutOfEntity.properties.hasOwnProperty('inGrades');
 	}
 
@@ -583,14 +586,20 @@ export class ActivityUsageEntity extends Entity {
 	}
 
 	_getScoreOutOfEntity() {
-		return this._entity
-			&& this._entity.getSubEntityByRel(Rels.Activities.scoreOutOf);
+		return this._linkedScoreOutOfEntity || (this._entity && this._entity.getSubEntityByRel(Rels.Activities.scoreOutOf));
 	}
 
 	_getScoreOutOfAction() {
 		const scoreOutOfEntity = this._getScoreOutOfEntity();
 		return scoreOutOfEntity
-			&& scoreOutOfEntity.getActionByName(Actions.activities.scoreOutOf.update);
+			&& scoreOutOfEntity.getActionByName && scoreOutOfEntity.getActionByName(Actions.activities.scoreOutOf.update);
+	}
+
+	async fetchLinkedScoreOutOfEntity(fetcher) {
+		const scoreOutOfSubEntity = this._entity && this._entity.getSubEntityByRel(Rels.Activities.scoreOutOf);
+		if (scoreOutOfSubEntity.href) {
+			this._linkedScoreOutOfEntity = await fetcher(scoreOutOfSubEntity.href, this.token);
+		}
 	}
 
 	async validate(activity) {

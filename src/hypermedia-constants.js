@@ -352,6 +352,7 @@ export const Classes = {
 		quiz: 'quiz',
 		description: 'description',
 		descriptionIsDisplayed: 'description-is-displayed',
+		introIsAppendedToDescription: 'intro-is-appended-to-description',
 		header: 'header',
 		headerIsDisplayed: 'header-is-displayed',
 		shuffle: 'shuffle',
@@ -367,6 +368,10 @@ export const Classes = {
 			enforced: 'enforced',
 			showClock: 'show-clock',
 			automaticZero: 'uselatelimit'
+		},
+		attempts: {
+			overallGradeCalculationType: 'overall-grade-calculation-type',
+			retakeIncorrectOnly: 'retake-incorrect-only'
 		},
 		ip: {
 			restrictions: 'ip-restrictions',
@@ -574,7 +579,6 @@ export const Actions = {
 		delete: 'delete-quiz',
 		updateDescription: 'update-description',
 		updateHeader: 'update-header',
-		updateAttemptsAllowed: 'update-attempts',
 		timing: {
 			updateType: 'update-timing-type',
 			updateTimeLimit: 'update-timing-time-limit',
@@ -582,6 +586,11 @@ export const Actions = {
 			updateHasTimer: 'update-timing-has-timer',
 			updateTimingGraceLimit: 'update-timing-grace-limit',
 			updateTimingLateData: 'update-timing-late-data'
+		},
+		attempts: {
+			updateAttemptsAllowed: 'update-attempts',
+			updateOverallGradeCalculationType: 'update-overall-grade-calculation-type',
+			updateRetakeIncorrectOnly: 'update-retake-incorrect-only'
 		},
 		ipRestrictions: {
 			update: 'update',
