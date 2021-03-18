@@ -30,6 +30,9 @@ describe('ActivityUsageCollectionEntity', () => {
 				expect(itemEntity.activityUsageHref()).to.equal(
 					'https://activities.api.testdomain.d2l/activities/6606_3000_6/usages/6606'
 				);
+				expect(itemEntities[1].activityUsageHref()).to.equal(
+					'https://activities.api.testdomain.d2l/activities/6606_3000_4/usages/6606'
+				);
 				done();
 			});
 		});
