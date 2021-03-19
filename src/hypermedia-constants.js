@@ -236,6 +236,7 @@ export const Classes = {
 		userAssignmentActivity: 'user-assignment-activity',
 		userQuizActivity: 'user-quiz-activity',
 		userQuizAttemptActivity: 'user-quiz-attempt-activity',
+		userQuestionActivity: 'user-question-activity',
 		userContentActivity: 'user-content-activity',
 		userCourseOfferingActivity: 'user-course-offering-activity-usage',
 		userDiscussionActivity: 'user-discussion-activity',
