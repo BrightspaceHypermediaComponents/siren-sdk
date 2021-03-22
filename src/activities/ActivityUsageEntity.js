@@ -597,7 +597,7 @@ export class ActivityUsageEntity extends Entity {
 
 	async fetchLinkedScoreOutOfEntity(fetcher) {
 		const scoreOutOfSubEntity = this._entity && this._entity.getSubEntityByRel(Rels.Activities.scoreOutOf);
-		if (scoreOutOfSubEntity.href) {
+		if (scoreOutOfSubEntity && scoreOutOfSubEntity.href) {
 			this._linkedScoreOutOfEntity = await fetcher(scoreOutOfSubEntity.href, this.token);
 		}
 	}
