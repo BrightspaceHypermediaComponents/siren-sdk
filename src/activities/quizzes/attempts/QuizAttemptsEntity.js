@@ -132,7 +132,6 @@ export class QuizAttemptsEntity extends Entity {
 	 * @returns {object} quiz attempt conditions sub-entity
 	 */
 	getAttemptConditionsSubEntity() {
-		this._entity.hasSubEn
 		if (this._entity.hasSubEntityByClass(Classes.quizzes.attempts.attemptConditions) && this._entity.hasSubEntityByClass('collection')) {
 			return this._entity && this._entity.getSubEntityByClass(Classes.quizzes.attempts.attemptConditions);
 		}
