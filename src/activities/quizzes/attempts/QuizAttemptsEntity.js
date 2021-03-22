@@ -64,6 +64,16 @@ export class QuizAttemptsEntity extends Entity {
 	}
 
 	/**
+	 * @returns {object} an array of quiz attempt conditions sub-entities
+	 */
+	attemptConditions() {
+		const entity = this.getAttemptConditionsSubEntity();
+		if (!entity) return;
+		const attemptConditions = entity.getSubEntitysByClass(Classes.quizzes.attempts.attemptCondition);
+		return attemptConditions;
+	}
+
+	/**
 	 * @returns {bool} can update number of quiz attempts
 	 */
 
@@ -83,13 +93,24 @@ export class QuizAttemptsEntity extends Entity {
 
 	/**
 	 * If RIO flag is off (f16751-retake-incorrect-only), the subentity will not exist
-	 * @returns {bool} can update retake incorrect only
+	 * @returns {bool} can quiz update retake incorrect only
 	 */
 
 	canUpdateRetakeIncorrectOnly() {
 		const entity = this.getRetakeIncorrectOnlySubEntity();
 		if (!entity) return;
 		return entity.hasActionByName(Actions.quizzes.attempts.updateRetakeIncorrectOnly);
+	}
+
+	/**
+	 * @returns {bool} can update quiz attempt conditions
+	 */
+
+	canUpdateAttemptConditions() {
+		const entity = this.getAttemptConditionsSubEntity();
+		if (!entity) return;
+		const subentity = entity.getSubEntityByClass('attempt-condition'); // gets first matching sub-entity
+		return subentity.hasActionByName(Actions.quizzes.attempts.updateAttemptCondition);
 	}
 
 	/**
@@ -106,6 +127,32 @@ export class QuizAttemptsEntity extends Entity {
 		return this._entity && this._entity.getSubEntityByClass(Classes.quizzes.attempts.retakeIncorrectOnly);
 	}
 
+	/**
+	 * @returns {object} quiz attempt conditions sub-entity
+	 */
+	getAttemptConditionsSubEntity() {
+		if (this._entity.hasClass(Classes.quizzes.attempts.attemptConditions) && this._entity.hasClass('collection')) {
+			return this._entity && this._entity.getSubEntityByClass(Classes.quizzes.attempts.attemptConditions);
+		}
+
+		return null;
+	}
+
+	/**
+	 * @returns {object} a singular quiz attempt condition sub-entity
+	 */
+	getAttemptConditionSubEntity(attemptConditionNumber) {
+		entity = this.getAttemptConditionsSubEntity();
+		attemptConditionEntities = entity.getSubEntitiesByClass(Classes.quizzes.attempts.attemptCondition);
+		if (!attemptConditionEntities) return;
+		attemptConditionEntities.find((entity) => {
+			if (!entity.properties || !entity.properties.attempt) return;
+			return entity.properties.attempt === attemptConditionNumber;
+		});
+
+		return null;
+	}
+
 	_hasAttemptsAllowedChanged(attemptsAllowed) {
 		return attemptsAllowed !== this.attemptsAllowed();
 	}
@@ -116,6 +163,17 @@ export class QuizAttemptsEntity extends Entity {
 
 	_hasRetakeIncorrectOnlyChanged(retakeIncorrectOnly) {
 		return retakeIncorrectOnly !== this.isRetakeIncorrectOnly();
+	}
+
+	_hasAttemptConditionChanged(attemptCondition) {
+		entity = this.getAttemptConditionSubEntity;
+		if (!entity) return false;
+		original = entity.getAttemptCondition(attemptCondition.attempt);
+		if (!original) return false;
+		if (original.properties.min !== attemptCondition.min || original.properties.max !== attemptCondition.max) {
+			return true;
+		}
+		return false;
 	}
 
 	/**
@@ -168,6 +226,27 @@ export class QuizAttemptsEntity extends Entity {
 		return { action, fields };
 	}
 
+	/**
+	 * Returns an update attempt condition action if one exists
+	 * @param {object} attemptCondition the attempt condition {attempt: num, min: num, max: num}
+	 */
+
+	_generateAttemptConditionAction(attemptCondition) {
+		const entity = this.getAttemptConditionSubEntity(attemptCondition);
+		if (!entity) return;
+		const action = entity.getActionByName(Actions.quizzes.attempts.updateAttemptCondition);
+		if (!action) return;
+		const fields = [
+			{
+				name: 'attempt', value: attemptCondition.properies.attempt,
+				name: 'min', value: attemptCondition.properies.min,
+				name: 'max', value: attemptCondition.properies.max,
+		 	},
+		];
+
+		return { action, fields };
+	}
+
 	async setAttemptsAllowed(attemptsAllowed) {
 		if (!attemptsAllowed || !this._hasAttemptsAllowedChanged(attemptsAllowed)) return;
 		if (!this.canUpdateAttemptsAllowed()) return;
@@ -192,6 +271,16 @@ export class QuizAttemptsEntity extends Entity {
 		if (retakeIncorrectOnly === undefined || !this._hasRetakeIncorrectOnlyChanged(retakeIncorrectOnly)) return;
 		if (!this.canUpdateRetakeIncorrectOnly()) return;
 		const {action, fields} = this._generateRetakeIncorrectOnlyAction(retakeIncorrectOnly) || {};
+		if (!action) return;
+		const returnedEntity = await performSirenAction(this._token, action, fields);
+		if (!returnedEntity) return;
+		return new QuizAttemptsEntity(returnedEntity);
+	}
+
+	async setAttemptCondtion(attemptCondition) {
+		if (!attemptCondition || !this._hasAttemptConditionChanged(attemptCondition)) return;
+		if (!this.canUpdateAttemptConditions()) return;
+		const {action, fields} = this._generateAttemptConditionAction(attemptCondition) || {};
 		if (!action) return;
 		const returnedEntity = await performSirenAction(this._token, action, fields);
 		if (!returnedEntity) return;
