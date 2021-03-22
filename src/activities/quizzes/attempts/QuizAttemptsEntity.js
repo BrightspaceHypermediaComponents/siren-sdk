@@ -69,7 +69,7 @@ export class QuizAttemptsEntity extends Entity {
 	attemptConditions() {
 		const entity = this.getAttemptConditionsSubEntity();
 		if (!entity) return;
-		const attemptConditions = entity.getSubEntitysByClass(Classes.quizzes.attempts.attemptCondition);
+		const attemptConditions = entity.getSubEntitiesByClass(Classes.quizzes.attempts.attemptCondition);
 		return attemptConditions;
 	}
 
