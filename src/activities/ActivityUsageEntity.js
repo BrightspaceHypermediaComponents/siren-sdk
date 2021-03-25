@@ -595,10 +595,10 @@ export class ActivityUsageEntity extends Entity {
 			&& scoreOutOfEntity.getActionByName && scoreOutOfEntity.getActionByName(Actions.activities.scoreOutOf.update);
 	}
 
-	async fetchLinkedScoreOutOfEntity(fetcher) {
+	async fetchLinkedScoreOutOfEntity(fetcher, bypassCache) {
 		const scoreOutOfSubEntity = this._entity && this._entity.getSubEntityByRel(Rels.Activities.scoreOutOf);
-		if (scoreOutOfSubEntity.href) {
-			this._linkedScoreOutOfEntity = await fetcher(scoreOutOfSubEntity.href, this.token);
+		if (scoreOutOfSubEntity && scoreOutOfSubEntity.href) {
+			this._linkedScoreOutOfEntity = await fetcher(scoreOutOfSubEntity.href, this.token, bypassCache);
 		}
 	}
 

@@ -82,6 +82,7 @@ export class QuizAttemptsEntity extends Entity {
 	}
 
 	/**
+	 * If RIO flag is off (f16751-retake-incorrect-only), the subentity will not exist
 	 * @returns {bool} can update retake incorrect only
 	 */
 
