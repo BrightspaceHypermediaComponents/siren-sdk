@@ -147,8 +147,8 @@ export class QuizAttemptsEntity extends Entity {
 		const attemptConditionEntities = entity.getSubEntitiesByClass(Classes.quizzes.attempts.attemptCondition);
 		if (!attemptConditionEntities) return;
 		const attemptConditionEntity = attemptConditionEntities.find((entity) => {
-			if (!entity.properties || !entity.properties.attempt) return;
-			return entity.properties.attempt === attemptConditionNumber;
+			if (!entity.properties || !entity.properties.attempt) return false;
+			return entity.properties.attempt === attemptConditionNumber ? entity : false;
 		});
 		if (attemptConditionEntity) return attemptConditionEntity;
 
@@ -168,13 +168,13 @@ export class QuizAttemptsEntity extends Entity {
 	}
 
 	_hasAttemptConditionChanged(attemptCondition) {
-		const entity = this.getAttemptConditionSubEntity;
-		if (!entity) return false;
-		const original = entity.getAttemptCondition(attemptCondition.attempt);
-		if (!original) return false;
-		if (original.properties.min !== attemptCondition.min || original.properties.max !== attemptCondition.max) {
-			return true;
-		}
+		const original = this.getAttemptConditionSubEntity(attemptCondition.attempt);
+		if (!original || !original.properties) return false;
+		if (!original.properties.min && attemptCondition.min) return true;
+		if (!original.properties.max && attemptCondition.max) return true;
+		if (attemptCondition.min && original.properties.min && original.properties.min !== attemptCondition.min) return true;
+		if (attemptCondition.max && original.properties.max && original.properties.max !== attemptCondition.max) return true;
+
 		return false;
 	}
 
@@ -229,22 +229,20 @@ export class QuizAttemptsEntity extends Entity {
 	}
 
 	/**
-	 * Returns an update attempt condition action if one exists
+	 * Returns an update attempt condition action if one exists. The hidden field `attempt`
+	 * is appended from the Siren action
 	 * @param {object} attemptCondition the attempt condition {attempt: num, min: num, max: num}
 	 */
 
 	_generateAttemptConditionAction(attemptCondition) {
-		const entity = this.getAttemptConditionSubEntity(attemptCondition);
+		const entity = this.getAttemptConditionSubEntity(attemptCondition.attempt);
 		if (!entity) return;
 		const action = entity.getActionByName(Actions.quizzes.attempts.updateAttemptCondition);
 		if (!action) return;
-		const fields = [
-			{
-				'attempt': attemptCondition.properties.attempt,
-				'min': attemptCondition.properties.min,
-				'max': attemptCondition.properties.max,
-			},
-		];
+		const fields = [];
+
+		if (attemptCondition.min) fields.push({ name: 'min', value: attemptCondition.min });
+		if (attemptCondition.max) fields.push({ name: 'max', value: attemptCondition.max });
 
 		return { action, fields };
 	}
