@@ -132,11 +132,9 @@ export class QuizAttemptsEntity extends Entity {
 	 * @returns {object} quiz attempt conditions sub-entity
 	 */
 	getAttemptConditionsSubEntity() {
-		if (this._entity.hasSubEntityByClass(Classes.quizzes.attempts.attemptConditions) && this._entity.hasSubEntityByClass('collection')) {
-			return this._entity && this._entity.getSubEntityByClass(Classes.quizzes.attempts.attemptConditions);
+		if (this._entity && this._entity.hasSubEntityByClass(Classes.quizzes.attempts.attemptConditions) && this._entity.hasSubEntityByClass('collection')) {
+			return this._entity.getSubEntityByClass(Classes.quizzes.attempts.attemptConditions);
 		}
-
-		return null;
 	}
 
 	/**
@@ -148,11 +146,9 @@ export class QuizAttemptsEntity extends Entity {
 		if (!attemptConditionEntities) return;
 		const attemptConditionEntity = attemptConditionEntities.find((entity) => {
 			if (!entity.properties || !entity.properties.attempt) return false;
-			return entity.properties.attempt === attemptConditionNumber ? entity : false;
+			return entity.properties.attempt === attemptConditionNumber;
 		});
 		if (attemptConditionEntity) return attemptConditionEntity;
-
-		return null;
 	}
 
 	_hasAttemptsAllowedChanged(attemptsAllowed) {
