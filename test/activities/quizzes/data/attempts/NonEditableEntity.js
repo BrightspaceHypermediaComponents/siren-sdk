@@ -44,7 +44,12 @@ export const nonEditableAttemptsEntity = {
 					],
 					'rel': [
 						'item'
-					]
+					],
+					'properties': {
+						'attempt': 2,
+						'min': 22.300000000,
+						'max': 77.000000000
+					}
 				},
 				{
 					'class': [
@@ -52,7 +57,11 @@ export const nonEditableAttemptsEntity = {
 					],
 					'rel': [
 						'item'
-					]
+					],
+					'properties': {
+						'attempt': 3,
+						'min': 1.000000000
+					}
 				}
 			]
 		}
