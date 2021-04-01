@@ -509,8 +509,7 @@ export const Actions = {
 		deleteWeblink: 'delete-webLink',
 		deleteLTIlink: 'delete-ltiLink',
 		checkoutWebLink: 'checkout',
-		commitWebLink: 'commit',
-		cancelWebLink: 'cancel'
+		commitWebLink: 'commit'
 	},
 	notifications: {
 		getCarrierClass: 'get-carrier',

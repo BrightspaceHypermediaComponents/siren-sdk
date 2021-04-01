@@ -154,21 +154,6 @@ export class ContentWebLinkEntity extends Entity {
 	}
 
 	/**
-	 * performs a cancel action on the web link
-	 */
-	async cancelWebLink() {
-		if (!this._entity) {
-			return;
-		}
-		const action = this._entity.getActionByName(Actions.webLink.cancelWebLink);
-		if (!action) {
-			return;
-		}
-
-		return await performSirenAction(this._token, action);
-	}
-
-	/**
 	 * performs a commit action on the web link
 	 */
 	async commitWebLink() {
