@@ -735,4 +735,52 @@ export class ActivityUsageEntity extends Entity {
 
 		return this._entity.getLinkByRel(Rels.Alignments.alignmentsHierarchical).href;
 	}
+
+	/**
+	* @returns {string} URL of the associate-grade API, for managing grade association with the activity usage, using working copy, if present
+	*/
+	associateGradeHref() {
+		if (!this._entity || !this._entity.hasLinkByRel(Rels.Activities.associateGrade)) {
+			return;
+		}
+
+		return this._entity.getLinkByRel(Rels.Activities.associateGrade).href;
+	}
+
+	_canCheckout() {
+		return this._entity && this._entity.hasActionByName(Actions.workingCopy.checkout);
+	}
+
+	canCheckin() {
+		return this._entity && this._entity.hasActionByName(Actions.workingCopy.checkin);
+	}
+
+	/**
+	 * Checkout activity usage working copy
+	 */
+	async checkout() {
+		if (this._canCheckout()) {
+			const action = this.getActionByName(Actions.workingCopy.checkout);
+			const entity = await performSirenAction(this._token, action);
+			if (!entity) return;
+			return new ActivityUsageEntity(entity, this._token);
+		}
+	}
+
+	/**
+	 * Checkin activity usage working copy
+	 */
+	async checkin() {
+		if (this.canCheckin()) {
+			const action = this.getActionByName(Actions.workingCopy.checkin);
+			let entity;
+			try {
+				entity = await performSirenAction(this._token, action);
+			} catch (e) {
+				return Promise.reject(e);
+			}
+			if (!entity) return;
+			return new ActivityUsageEntity(entity, this._token);
+		}
+	}
 }
