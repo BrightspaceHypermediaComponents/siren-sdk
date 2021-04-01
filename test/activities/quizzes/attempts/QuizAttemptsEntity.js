@@ -107,3 +107,42 @@ describe('retake incorrect only', () => {
 		});
 	});
 });
+
+describe('attempt conditions', () => {
+	let editableEntity, nonEditableEntity;
+
+	beforeEach(() => {
+		editableEntity = window.D2L.Hypermedia.Siren.Parse(quizAttemptsEntity);
+		nonEditableEntity = window.D2L.Hypermedia.Siren.Parse(nonEditableAttemptsEntity);
+	});
+
+	describe('canUpdateAttemptConditions', () => {
+		it('returns true when attempt conditions are editable', () => {
+			const entity = new QuizAttemptsEntity(editableEntity);
+			expect(entity.canUpdateAttemptConditions()).to.be.true;
+		});
+
+		it('returns false when attempt conditions are uneditable', () => {
+			const entity = new QuizAttemptsEntity(nonEditableEntity);
+			expect(entity.canUpdateAttemptConditions()).to.be.false;
+		});
+	});
+
+	describe('attemptConditions', () => {
+		it('can read attempt conditions', () => {
+			const entity = new QuizAttemptsEntity(editableEntity);
+			expect(entity.attemptConditions().length).to.equal(2);
+			const attemptConditionEntity = entity.getAttemptConditionSubEntity(2);
+			expect(attemptConditionEntity.properties.min).to.equal(22.3);
+			expect(attemptConditionEntity.properties.max).to.equal(77.0);
+		});
+
+		it('can read attempt conditions when attempts entity is not editable', () => {
+			const entity = new QuizAttemptsEntity(nonEditableEntity);
+			expect(entity.attemptConditions().length).to.equal(2);
+			const attemptConditionEntity = entity.getAttemptConditionSubEntity(2);
+			expect(attemptConditionEntity.properties.min).to.equal(22.3);
+			expect(attemptConditionEntity.properties.max).to.equal(77.0);
+		});
+	});
+});

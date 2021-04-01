@@ -371,7 +371,9 @@ export const Classes = {
 		},
 		attempts: {
 			overallGradeCalculationType: 'overall-grade-calculation-type',
-			retakeIncorrectOnly: 'retake-incorrect-only'
+			retakeIncorrectOnly: 'retake-incorrect-only',
+			attemptConditions: 'attempt-conditions',
+			attemptCondition: 'attempt-condition'
 		},
 		ip: {
 			restrictions: 'ip-restrictions',
@@ -589,7 +591,8 @@ export const Actions = {
 		attempts: {
 			updateAttemptsAllowed: 'update-attempts',
 			updateOverallGradeCalculationType: 'update-overall-grade-calculation-type',
-			updateRetakeIncorrectOnly: 'update-retake-incorrect-only'
+			updateRetakeIncorrectOnly: 'update-retake-incorrect-only',
+			updateAttemptCondition: 'update-condition'
 		},
 		ipRestrictions: {
 			update: 'update',

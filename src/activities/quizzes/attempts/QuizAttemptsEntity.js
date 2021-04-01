@@ -64,6 +64,16 @@ export class QuizAttemptsEntity extends Entity {
 	}
 
 	/**
+	 * @returns {object} an array of quiz attempt conditions sub-entities
+	 */
+	attemptConditions() {
+		const entity = this.getAttemptConditionsSubEntity();
+		if (!entity) return;
+		const attemptConditions = entity.getSubEntitiesByClass(Classes.quizzes.attempts.attemptCondition);
+		return attemptConditions;
+	}
+
+	/**
 	 * @returns {bool} can update number of quiz attempts
 	 */
 
@@ -83,13 +93,25 @@ export class QuizAttemptsEntity extends Entity {
 
 	/**
 	 * If RIO flag is off (f16751-retake-incorrect-only), the subentity will not exist
-	 * @returns {bool} can update retake incorrect only
+	 * @returns {bool} can quiz update retake incorrect only
 	 */
 
 	canUpdateRetakeIncorrectOnly() {
 		const entity = this.getRetakeIncorrectOnlySubEntity();
 		if (!entity) return;
 		return entity.hasActionByName(Actions.quizzes.attempts.updateRetakeIncorrectOnly);
+	}
+
+	/**
+	 * @returns {bool} can update quiz attempt conditions
+	 */
+
+	canUpdateAttemptConditions() {
+		const entity = this.getAttemptConditionsSubEntity();
+		if (!entity) return;
+		const subentity = entity.getSubEntityByClass(Classes.quizzes.attempts.attemptCondition); // gets first matching sub-entity
+		if (!subentity) return;
+		return subentity.hasActionByName(Actions.quizzes.attempts.updateAttemptCondition);
 	}
 
 	/**
@@ -106,6 +128,29 @@ export class QuizAttemptsEntity extends Entity {
 		return this._entity && this._entity.getSubEntityByClass(Classes.quizzes.attempts.retakeIncorrectOnly);
 	}
 
+	/**
+	 * @returns {object} quiz attempt conditions sub-entity
+	 */
+	getAttemptConditionsSubEntity() {
+		if (this._entity && this._entity.hasSubEntityByClass(Classes.quizzes.attempts.attemptConditions) && this._entity.hasSubEntityByClass('collection')) {
+			return this._entity.getSubEntityByClass(Classes.quizzes.attempts.attemptConditions);
+		}
+	}
+
+	/**
+	 * @returns {object} a singular quiz attempt condition sub-entity
+	 */
+	getAttemptConditionSubEntity(attemptConditionNumber) {
+		const entity = this.getAttemptConditionsSubEntity();
+		const attemptConditionEntities = entity.getSubEntitiesByClass(Classes.quizzes.attempts.attemptCondition);
+		if (!attemptConditionEntities) return;
+		const attemptConditionEntity = attemptConditionEntities.find((entity) => {
+			if (!entity.properties || !entity.properties.attempt) return false;
+			return entity.properties.attempt === attemptConditionNumber;
+		});
+		if (attemptConditionEntity) return attemptConditionEntity;
+	}
+
 	_hasAttemptsAllowedChanged(attemptsAllowed) {
 		return attemptsAllowed !== this.attemptsAllowed();
 	}
@@ -116,6 +161,18 @@ export class QuizAttemptsEntity extends Entity {
 
 	_hasRetakeIncorrectOnlyChanged(retakeIncorrectOnly) {
 		return retakeIncorrectOnly !== this.isRetakeIncorrectOnly();
+	}
+
+	_hasAttemptConditionChanged(attemptCondition) {
+		const original = this.getAttemptConditionSubEntity(attemptCondition.attempt);
+		if (!original || !original.properties) return false;
+		if (!original.properties.min && attemptCondition.min) return true;
+		if (!original.properties.max && attemptCondition.max) return true;
+		// when `min` or `max` has a value of `undefined` we are deleting the original value for `min` or `max`
+		if ('min' in attemptCondition && original.properties.min && original.properties.min !== attemptCondition.min) return true;
+		if ('max' in attemptCondition && original.properties.max && original.properties.max !== attemptCondition.max) return true;
+
+		return false;
 	}
 
 	/**
@@ -168,6 +225,25 @@ export class QuizAttemptsEntity extends Entity {
 		return { action, fields };
 	}
 
+	/**
+	 * Returns an update attempt condition action if one exists. The hidden field `attempt`
+	 * is appended from the Siren action
+	 * @param {object} attemptCondition the attempt condition {attempt: num, min: num, max: num}
+	 */
+
+	_generateAttemptConditionAction(attemptCondition) {
+		const entity = this.getAttemptConditionSubEntity(attemptCondition.attempt);
+		if (!entity) return;
+		const action = entity.getActionByName(Actions.quizzes.attempts.updateAttemptCondition);
+		if (!action) return;
+		const fields = [];
+
+		if (attemptCondition.min) fields.push({ name: 'min', value: attemptCondition.min });
+		if (attemptCondition.max) fields.push({ name: 'max', value: attemptCondition.max });
+
+		return { action, fields };
+	}
+
 	async setAttemptsAllowed(attemptsAllowed) {
 		if (!attemptsAllowed || !this._hasAttemptsAllowedChanged(attemptsAllowed)) return;
 		if (!this.canUpdateAttemptsAllowed()) return;
@@ -192,6 +268,16 @@ export class QuizAttemptsEntity extends Entity {
 		if (retakeIncorrectOnly === undefined || !this._hasRetakeIncorrectOnlyChanged(retakeIncorrectOnly)) return;
 		if (!this.canUpdateRetakeIncorrectOnly()) return;
 		const {action, fields} = this._generateRetakeIncorrectOnlyAction(retakeIncorrectOnly) || {};
+		if (!action) return;
+		const returnedEntity = await performSirenAction(this._token, action, fields);
+		if (!returnedEntity) return;
+		return new QuizAttemptsEntity(returnedEntity);
+	}
+
+	async setAttemptCondition(attemptCondition) {
+		if (!attemptCondition || !this._hasAttemptConditionChanged(attemptCondition)) return;
+		if (!this.canUpdateAttemptConditions()) return;
+		const {action, fields} = this._generateAttemptConditionAction(attemptCondition) || {};
 		if (!action) return;
 		const returnedEntity = await performSirenAction(this._token, action, fields);
 		if (!returnedEntity) return;

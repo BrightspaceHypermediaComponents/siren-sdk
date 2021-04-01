@@ -99,9 +99,14 @@ export const quizAttemptsEntity = {
 					'rel': [
 						'item'
 					],
+					'properties': {
+						'attempt': 2,
+						'min': 22.300000000,
+						'max': 77.000000000
+					},
 					'actions': [
 						{
-							'href': 'https://tenantId.quizzes.api.dev.brightspace.com/123170/quizzes/1391/attempts',
+							'href': 'http://d2l-emrpmn6qaxs.desire2learn.d2l:44444/d2l/api/hm/quizzes/6606/quizzes/16/attempts?workingCopyId=17cb1a4e-ca23-4def-88bb-88cf7b349c7c',
 							'name': 'update-condition',
 							'method': 'PATCH',
 							'fields': [
@@ -112,11 +117,13 @@ export const quizAttemptsEntity = {
 								},
 								{
 									'type': 'number',
-									'name': 'min'
+									'name': 'min',
+									'value': 22.300000000
 								},
 								{
 									'type': 'number',
-									'name': 'max'
+									'name': 'max',
+									'value': 77.000000000
 								}
 							]
 						}
@@ -129,6 +136,10 @@ export const quizAttemptsEntity = {
 					'rel': [
 						'item'
 					],
+					'properties': {
+						'attempt': 3,
+						'min': 1.000000000
+					},
 					'actions': [
 						{
 							'href': 'https://tenantId.quizzes.api.dev.brightspace.com/123170/quizzes/1391/attempts',
@@ -142,7 +153,8 @@ export const quizAttemptsEntity = {
 								},
 								{
 									'type': 'number',
-									'name': 'min'
+									'name': 'min',
+									'value': 1.000000000
 								},
 								{
 									'type': 'number',
