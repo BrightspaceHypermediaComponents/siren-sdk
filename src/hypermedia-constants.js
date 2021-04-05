@@ -511,6 +511,8 @@ export const Actions = {
 		updateExternalResource: 'update-external-resource',
 		deleteWeblink: 'delete-webLink',
 		deleteLTIlink: 'delete-ltiLink',
+		checkoutWebLink: 'checkout',
+		commitWebLink: 'commit'
 	},
 	notifications: {
 		getCarrierClass: 'get-carrier',

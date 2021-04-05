@@ -68,7 +68,7 @@ export class ContentWebLinkEntity extends Entity {
 		}
 
 		const fields = [{ name: 'description', value: richText }];
-		await performSirenAction(this._token, action, fields);
+		return await performSirenAction(this._token, action, fields);
 	}
 
 	/**
@@ -85,7 +85,7 @@ export class ContentWebLinkEntity extends Entity {
 		}
 
 		const fields = [{ name: 'title', value: title }];
-		await performSirenAction(this._token, action, fields);
+		return await performSirenAction(this._token, action, fields);
 	}
 
 	/**
@@ -102,7 +102,7 @@ export class ContentWebLinkEntity extends Entity {
 		}
 
 		const fields = [{ name: 'url', value: url }];
-		await performSirenAction(this._token, action, fields);
+		return await performSirenAction(this._token, action, fields);
 	}
 
 	/**
@@ -119,7 +119,7 @@ export class ContentWebLinkEntity extends Entity {
 		}
 
 		const fields = [{ name: 'isExternalResource', value: isExternalResource }];
-		await performSirenAction(this._token, action, fields);
+		return await performSirenAction(this._token, action, fields);
 	}
 
 	/**
@@ -136,6 +136,36 @@ export class ContentWebLinkEntity extends Entity {
 
 		await performSirenAction(this._token, action);
 		this.dispose();
+	}
+
+	/**
+	 * performs a checkout action on the web link
+	 */
+	async checkoutWebLink() {
+		if (!this._entity) {
+			return;
+		}
+		const action = this._entity.getActionByName(Actions.webLink.checkoutWebLink);
+		if (!action) {
+			return;
+		}
+
+		return await performSirenAction(this._token, action);
+	}
+
+	/**
+	 * performs a commit action on the web link
+	 */
+	async commitWebLink() {
+		if (!this._entity) {
+			return;
+		}
+		const action = this._entity.getActionByName(Actions.webLink.commitWebLink);
+		if (!action) {
+			return;
+		}
+
+		return await performSirenAction(this._token, action);
 	}
 
 	/**
