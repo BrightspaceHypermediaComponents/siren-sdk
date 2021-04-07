@@ -13,10 +13,10 @@ export class ContentModuleEntity extends Entity {
 	 */
 	descriptionRichText() {
 		const descriptionSubEntity = ContentHelperFunctions.getDescriptionSubEntity(this._entity);
-		if (!descriptionSubEntity) {
+		if (!descriptionSubEntity || !descriptionSubEntity.properties.html) {
 			return null;
 		}
-		return descriptionSubEntity.properties.html || '';
+		return descriptionSubEntity.properties.html;
 	}
 
 	/**
@@ -24,14 +24,14 @@ export class ContentModuleEntity extends Entity {
 	 */
 	descriptionText() {
 		const descriptionSubEntity = ContentHelperFunctions.getDescriptionSubEntity(this._entity);
-		if (!descriptionSubEntity) {
+		if (!descriptionSubEntity || !descriptionSubEntity.properties.text) {
 			return null;
 		}
-		return descriptionSubEntity.properties.text || '';
+		return descriptionSubEntity.properties.text;
 	}
 
 	/**
-	 * @returns {string} Title of the content-module item
+	 * @returns {string|undefined} Title of the content-module item
 	 */
 	title() {
 		return this._entity && this._entity.properties && this._entity.properties.title;
