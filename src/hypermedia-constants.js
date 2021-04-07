@@ -70,7 +70,8 @@ export const Rels = {
 		associations: 'https://activities.api.brightspace.com/rels/associations',
 		directAssociations: 'https://activities.api.brightspace.com/rels/direct-associations',
 		newGradeAssociation: 'https://activities.api.brightspace.com/rels/new-grade-association',
-		specialAccess: 'https://activities.api.brightspace.com/rels/special-access'
+		specialAccess: 'https://activities.api.brightspace.com/rels/special-access',
+		associateGrade: 'https://activities.api.brightspace.com/rels/associate-grade'
 	},
 	Conditions: {
 		conditions: 'https://conditions.api.brightspace.com/rels/conditions',
@@ -512,6 +513,8 @@ export const Actions = {
 		updateExternalResource: 'update-external-resource',
 		deleteWeblink: 'delete-webLink',
 		deleteLTIlink: 'delete-ltiLink',
+		checkoutWebLink: 'checkout',
+		commitWebLink: 'commit'
 	},
 	htmlFile: {
 		deleteHtmlFile: 'delete-htmlFile',
