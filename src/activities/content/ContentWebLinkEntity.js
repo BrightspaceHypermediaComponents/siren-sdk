@@ -139,7 +139,7 @@ export class ContentWebLinkEntity extends Entity {
 	}
 
 	/**
-	 * performs a checkout action on the web link
+	 * performs a checkout action on the web link, creating a working copy
 	 */
 	async checkoutWebLink() {
 		if (!this._entity) {
@@ -154,7 +154,7 @@ export class ContentWebLinkEntity extends Entity {
 	}
 
 	/**
-	 * performs a commit action on the web link
+	 * performs a commit action on the web link, persisting and terminating a working copy
 	 */
 	async commitWebLink() {
 		if (!this._entity) {
