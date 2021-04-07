@@ -166,11 +166,13 @@ export class QuizAttemptsEntity extends Entity {
 	_hasAttemptConditionChanged(attemptCondition) {
 		const original = this.getAttemptConditionSubEntity(attemptCondition.attempt);
 		if (!original || !original.properties) return false;
-		if (!original.properties.min && attemptCondition.min !== undefined) return true;
-		if (!original.properties.max && attemptCondition.max !== undefined) return true;
 		// when `min` or `max` has a value of `undefined` we are deleting the original value for `min` or `max`
-		if ('min' in attemptCondition && original.properties.min && original.properties.min !== attemptCondition.min) return true;
-		if ('max' in attemptCondition && original.properties.max && original.properties.max !== attemptCondition.max) return true;
+		if ('min' in attemptCondition) {
+			return (original.properties.min !== attemptCondition.min);
+		}
+		if ('max' in attemptCondition) {
+			return (original.properties.max !== attemptCondition.max);
+		}
 
 		return false;
 	}
