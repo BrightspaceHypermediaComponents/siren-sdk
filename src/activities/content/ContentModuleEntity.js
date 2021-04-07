@@ -13,10 +13,10 @@ export class ContentModuleEntity extends Entity {
 	 */
 	descriptionRichText() {
 		const descriptionSubEntity = ContentHelperFunctions.getDescriptionSubEntity(this._entity);
-		if (!descriptionSubEntity || !descriptionSubEntity.properties.html) {
+		if (!descriptionSubEntity) {
 			return null;
 		}
-		return descriptionSubEntity.properties.html;
+		return descriptionSubEntity.properties.html || '';
 	}
 
 	/**
@@ -24,10 +24,10 @@ export class ContentModuleEntity extends Entity {
 	 */
 	descriptionText() {
 		const descriptionSubEntity = ContentHelperFunctions.getDescriptionSubEntity(this._entity);
-		if (!descriptionSubEntity || !descriptionSubEntity.properties.text) {
+		if (!descriptionSubEntity) {
 			return null;
 		}
-		return descriptionSubEntity.properties.text;
+		return descriptionSubEntity.properties.text || '';
 	}
 
 	/**
