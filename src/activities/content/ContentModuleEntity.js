@@ -31,7 +31,7 @@ export class ContentModuleEntity extends Entity {
 	}
 
 	/**
-	 * @returns {string} Title of the content-module item
+	 * @returns {string|undefined} Title of the content-module item
 	 */
 	title() {
 		return this._entity && this._entity.properties && this._entity.properties.title;

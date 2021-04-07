@@ -41,14 +41,14 @@ export class ContentWebLinkEntity extends Entity {
 	}
 
 	/**
-	 * @returns {string} Title of the content-weblink item
+	 * @returns {string|undefined} Title of the content-weblink item
 	 */
 	title() {
 		return this._entity && this._entity.properties && this._entity.properties.title;
 	}
 
 	/**
-	 * @returns {string} Url of the content-weblink item
+	 * @returns {string|undefined} Url of the content-weblink item
 	 */
 	url() {
 		return this._entity && this._entity.properties && this._entity.properties.url;

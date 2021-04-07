@@ -41,14 +41,14 @@ export class ContentLTILinkEntity extends Entity {
 	}
 
 	/**
-	 * @returns {string} Title of the content-ltilink item
+	 * @returns {string|undefined} Title of the content-ltilink item
 	 */
 	title() {
 		return this._entity && this._entity.properties && this._entity.properties.title;
 	}
 
 	/**
-	 * @returns {string} Url of the content-ltilink item
+	 * @returns {string|undefined} Url of the content-ltilink item
 	 */
 	url() {
 		return this._entity && this._entity.properties && this._entity.properties.url;
