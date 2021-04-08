@@ -517,7 +517,7 @@ export const Actions = {
 		commitWebLink: 'commit'
 	},
 	htmlFile: {
-		deleteHtmlFile: 'delete-htmlFile',
+		deleteHtmlFile: 'delete-htmlfile',
 		updateHtmlContent: 'update-html-content'
 	},
 	notifications: {
