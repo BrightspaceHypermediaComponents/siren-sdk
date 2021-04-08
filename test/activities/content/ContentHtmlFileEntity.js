@@ -84,7 +84,7 @@ describe('ContentHtmlFileEntity', () => {
 		it('saves html content', async() => {
 			fetchMock.patchOnce('https://fake-tenant-id.content.api.proddev.d2l/6613/files/html/12345', htmlFileData);
 
-			await contentHtmlFileEntity.setHtmlFileContent('<!doctype html><html lang="en"><head><title>My File</title></head><body><p>This is my file</p></body></html>');
+			await contentHtmlFileEntity.setHtmlFileHtmlContent('<!doctype html><html lang="en"><head><title>My File</title></head><body><p>This is my file</p></body></html>');
 
 			const form = await getFormData(fetchMock.lastCall().request);
 			if (!form.notSupported) {

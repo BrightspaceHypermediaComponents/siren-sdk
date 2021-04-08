@@ -75,7 +75,7 @@ export class ContentHtmlFileEntity extends ContentWorkingCopyEntity {
 	 * Updates the html file content with the given html
 	 * @param {html} html to set on the html file
 	 */
-	async setHtmlFileContent(html) {
+	async setHtmlFileHtmlContent(html) {
 		if (!this._entity) {
 			return;
 		}
