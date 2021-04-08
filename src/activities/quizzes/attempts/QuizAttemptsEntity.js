@@ -166,13 +166,8 @@ export class QuizAttemptsEntity extends Entity {
 	_hasAttemptConditionChanged(attemptCondition) {
 		const original = this.getAttemptConditionSubEntity(attemptCondition.attempt);
 		if (!original || !original.properties) return false;
-		if (!original.properties.min && attemptCondition.min) return true;
-		if (!original.properties.max && attemptCondition.max) return true;
 		// when `min` or `max` has a value of `undefined` we are deleting the original value for `min` or `max`
-		if ('min' in attemptCondition && original.properties.min && original.properties.min !== attemptCondition.min) return true;
-		if ('max' in attemptCondition && original.properties.max && original.properties.max !== attemptCondition.max) return true;
-
-		return false;
+		return (original.properties.min !== attemptCondition.min) || (original.properties.max !== attemptCondition.max);
 	}
 
 	/**
@@ -238,8 +233,8 @@ export class QuizAttemptsEntity extends Entity {
 		if (!action) return;
 		const fields = [];
 
-		if (attemptCondition.min) fields.push({ name: 'min', value: attemptCondition.min });
-		if (attemptCondition.max) fields.push({ name: 'max', value: attemptCondition.max });
+		if (attemptCondition.min !== undefined) fields.push({ name: 'min', value: attemptCondition.min });
+		if (attemptCondition.max !== undefined) fields.push({ name: 'max', value: attemptCondition.max });
 
 		return { action, fields };
 	}
