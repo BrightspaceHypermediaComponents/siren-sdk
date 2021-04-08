@@ -111,6 +111,7 @@ export class ContentHtmlFileEntity extends ContentWorkingCopyEntity {
 	equals(contentHtmlFile) {
 		const diffs = [
 			[this.title(), contentHtmlFile.title],
+			[this.getFileHref(), contentHtmlFile.fileHref]
 		];
 		for (const [left, right] of diffs) {
 			if (left !== right) {

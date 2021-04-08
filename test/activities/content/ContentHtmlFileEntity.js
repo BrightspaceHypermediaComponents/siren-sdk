@@ -34,7 +34,7 @@ describe('ContentHtmlFileEntity', () => {
 		it('Equality should return true when details match', () => {
 			const htmlFileData = {
 				title: 'Test Html File Title',
-				descriptionRichText: '<p>description text</p>'
+				fileHref: 'https://fake-tenant-id.files.api.proddev.d2l/my-html-file.html/usages/6614'
 			};
 			expect(contentHtmlFileEntity.equals(htmlFileData)).to.equal(true);
 		});
@@ -42,7 +42,15 @@ describe('ContentHtmlFileEntity', () => {
 		it('Equality should return false when title is different', () => {
 			const htmlFileData = {
 				title: 'New Title',
-				descriptionRichText: '<p>description text</p>'
+				fileHref: 'https://fake-tenant-id.files.api.proddev.d2l/my-html-file.html/usages/6614'
+			};
+			expect(contentHtmlFileEntity.equals(htmlFileData)).to.equal(false);
+		});
+
+		it('Equality should return false when fileHref is different', () => {
+			const htmlFileData = {
+				title: 'Test Html File Title',
+				fileHref: 'https://fake-tenant-id.files.api.proddev.d2l/my-super-cool-html-file.html/usages/6614'
 			};
 			expect(contentHtmlFileEntity.equals(htmlFileData)).to.equal(false);
 		});
