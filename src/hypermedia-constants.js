@@ -111,7 +111,8 @@ export const Rels = {
 	Content: {
 		moduleEntity: 'https://modules.api.brightspace.com/rels/content-module',
 		weblinkEntity: 'https://weblinks.api.brightspace.com/rels/content-weblink',
-		ltilinkEntity: 'https://weblinks.api.brightspace.com/rels/content-ltilink'
+		ltilinkEntity: 'https://weblinks.api.brightspace.com/rels/content-ltilink',
+		htmlFileEntity: 'https://content.api.brightspace.com/rels/content-html-file'
 	},
 	// Parents API sub-domain rels
 	Parents: {
@@ -126,6 +127,7 @@ export const Rels = {
 	// Files API sub-domain rels
 	Files: {
 		files: 'https://files.api.brightspace.com/rels/files',
+		file: 'https://files.api.brightspace.com/rels/file'
 	},
 	// Folio API sub-domain rels
 	Folio: {
@@ -514,6 +516,10 @@ export const Actions = {
 		checkoutWebLink: 'checkout',
 		commitWebLink: 'commit'
 	},
+	htmlFile: {
+		deleteHtmlFile: 'delete-htmlfile',
+		updateHtmlContent: 'update-html-content'
+	},
 	notifications: {
 		getCarrierClass: 'get-carrier',
 		settings: {
@@ -603,6 +609,7 @@ export const Actions = {
 	},
 	workingCopy: {
 		checkout: 'checkout',
-		checkin: 'checkin'
+		checkin: 'checkin',
+		commit: 'commit'
 	}
 };
