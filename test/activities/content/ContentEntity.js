@@ -65,7 +65,7 @@ describe('Html File ContentEntity', () => {
 	});
 
 	it('gets html file entity type', () => {
-		expect(contentEntity.getEntityType()).to.equal(CONTENT_TYPES.htmlFile);
+		expect(contentEntity.getEntityType()).to.equal(CONTENT_TYPES.htmlfile);
 	});
 
 	it('gets content-htmlfile href', () => {

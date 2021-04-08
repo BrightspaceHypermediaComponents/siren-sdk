@@ -46,22 +46,6 @@ describe('ContentHtmlFileEntity', () => {
 			};
 			expect(contentHtmlFileEntity.equals(htmlFileData)).to.equal(false);
 		});
-
-		it('Equality should return true when descriptions match', () => {
-			const htmlFileData = {
-				title: 'Test Html File Title',
-				descriptionRichText: '<p>New description text</p>'
-			};
-			expect(contentHtmlFileEntity.equals(htmlFileData)).to.equal(true);
-		});
-
-		it('Equality should return false when description is different', () => {
-			const htmlFileData = {
-				title: 'Test Html File Title',
-				descriptionRichText: '<p>New description text</p>'
-			};
-			expect(contentHtmlFileEntity.equals(htmlFileData)).to.equal(false);
-		});
 	});
 
 	describe('Actions', () => {
@@ -89,6 +73,18 @@ describe('ContentHtmlFileEntity', () => {
 			expect(fetchMock.called()).to.be.true;
 		});
 
+		it('saves html content', async() => {
+			fetchMock.patchOnce('https://fake-tenant-id.content.api.proddev.d2l/6613/files/html/12345', htmlFileData);
+
+			await contentHtmlFileEntity.setHtmlFileContent('<!doctype html><html lang="en"><head><title>My File</title></head><body><p>This is my file</p></body></html>');
+
+			const form = await getFormData(fetchMock.lastCall().request);
+			if (!form.notSupported) {
+				expect(form.get('htmlContent')).to.equal('<!doctype html><html lang="en"><head><title>My File</title></head><body><p>This is my file</p></body></html>');
+			}
+			expect(fetchMock.called()).to.be.true;
+		});
+
 		it('performs delete request', async() => {
 			fetchMock.deleteOnce('https://fake-tenant-id.content.api.proddev.d2l/6613/files/html/12345', htmlFileData);
 			await contentHtmlFileEntity.deleteHtmlFile();
@@ -97,8 +93,8 @@ describe('ContentHtmlFileEntity', () => {
 	});
 
 	describe('Links', () => {
-		it('can getFilesHref', () => {
-			expect(contentHtmlFileEntity.getOrganizationHref()).to.equal('https://fake-tenant-id.files.api.proddev.d2l/my-html-file.html/usages/6614');
+		it('can get file href', () => {
+			expect(contentHtmlFileEntity.getFileHref()).to.equal('https://fake-tenant-id.files.api.proddev.d2l/my-html-file.html/usages/6614');
 		});
 	});
 });

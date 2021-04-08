@@ -1,9 +1,9 @@
 import { Entity } from '../es6/Entity';
 
 /**
- * FileLocationEntity class representation of a d2l content file entity.
+ * FileEntity class representation of a d2l content file entity.
  */
-export class FileLocationEntity extends Entity {
+export class FileEntity extends Entity {
 
 	/**
 	 * @returns {string} File's location

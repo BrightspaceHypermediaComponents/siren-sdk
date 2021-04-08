@@ -610,6 +610,6 @@ export const Actions = {
 	workingCopy: {
 		checkout: 'checkout',
 		checkin: 'checkin',
-		cancel: 'cancel'
+		commit: 'commit'
 	}
 };

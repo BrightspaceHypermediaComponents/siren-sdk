@@ -3,7 +3,7 @@ import { Rels } from '../../hypermedia-constants';
 import ContentHelperFunctions from './ContentHelperFunctions.js';
 
 export const CONTENT_TYPES = {
-	htmlFile: 'htmlFile',
+	htmlfile: 'htmlfile',
 	ltilink: 'ltilink',
 	module: 'module',
 	topic: 'topic',
@@ -30,7 +30,7 @@ export class ContentEntity extends Entity {
 		} else if (this._entity.hasLinkByRel(Rels.Content.ltilinkEntity)) {
 			return CONTENT_TYPES.ltilink;
 		} else if (this._entity.hasLinkByRel(Rels.Content.htmlFileEntity)) {
-			return CONTENT_TYPES.htmlFile;
+			return CONTENT_TYPES.htmlfile;
 		} else if (this._entity.hasClass(CONTENT_TYPES.topic)) {
 			return CONTENT_TYPES.topic;
 		} else {

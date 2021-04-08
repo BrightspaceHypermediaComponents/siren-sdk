@@ -31,7 +31,7 @@ export class ContentHtmlFileEntity extends ContentWorkingCopyEntity {
 	}
 
 	/**
-	 * @returns {string} Title of the content-htmlFile item
+	 * @returns {string|undefined} Title of the content-htmlFile item
 	 */
 	title() {
 		return this._entity && this._entity.properties && this._entity.properties.title;
@@ -75,7 +75,7 @@ export class ContentHtmlFileEntity extends ContentWorkingCopyEntity {
 	 * Updates the html file content with the given html
 	 * @param {html} html to set on the html file
 	 */
-	async setHtmlFileHtml(html) {
+	async setHtmlFileContent(html) {
 		if (!this._entity) {
 			return;
 		}
@@ -121,13 +121,9 @@ export class ContentHtmlFileEntity extends ContentWorkingCopyEntity {
 	}
 
 	/**
-	* @returns {string} Returns URL of the files home API
+	* @returns {string|undefined} Returns URL of the files home API
 	*/
-	getFilesHref() {
-		if (!this._entity || !this._entity.hasLinkByRel(Rels.Files.file)) {
-			return;
-		}
-
-		return this._entity.getLinkByRel(Rels.Files.file).href;
+	getFileHref() {
+		return ContentHelperFunctions.getHrefFromRel(Rels.Files.file, this._entity);
 	}
 }

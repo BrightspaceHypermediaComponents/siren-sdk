@@ -60,7 +60,7 @@ export const contentHtmlFileEntityData = {
 	},
 	'links': [{
 		'href': 'https://fake-tenant-id.content.api.proddev.d2l/6613/files/html/12345',
-		'rel': ['https://content.api.brightspace.com/rels/content-file-html']
+		'rel': ['https://content.api.brightspace.com/rels/content-html-file']
 	}],
 	'entities': [],
 	'rel': []

@@ -20,21 +20,6 @@ export class ContentWorkingCopyEntity extends Entity {
 	}
 
 	/**
-	 * performs a cancel action on the entity
-	 */
-	async cancel() {
-		if (!this._entity) {
-			return;
-		}
-		const action = this._entity.getActionByName(Actions.workingCopy.cancel);
-		if (!action) {
-			return;
-		}
-
-		return await performSirenAction(this._token, action);
-	}
-
-	/**
 	 * performs a commit action on the entity
 	 */
 	async commit() {

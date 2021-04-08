@@ -28,6 +28,19 @@ export const contentHtmlFileData = {
 		},
 		{
 			'href': 'https://fake-tenant-id.content.api.proddev.d2l/6613/files/html/12345',
+			'name': 'update-html-content',
+			'method': 'PATCH',
+			'fields': [
+				{
+					'class': ['required'],
+					'type': 'text',
+					'name': 'htmlContent',
+					'value': '<!doctype html><html lang="en"><head><title>My File</title></head><body><p>This is my file</p></body></html>'
+				}
+			]
+		},
+		{
+			'href': 'https://fake-tenant-id.content.api.proddev.d2l/6613/files/html/12345',
 			'name': 'delete-htmlFile',
 			'method': 'DELETE'
 		}
