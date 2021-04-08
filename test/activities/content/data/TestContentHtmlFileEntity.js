@@ -41,7 +41,7 @@ export const contentHtmlFileData = {
 		},
 		{
 			'href': 'https://fake-tenant-id.content.api.proddev.d2l/6613/files/html/12345',
-			'name': 'delete-htmlFile',
+			'name': 'delete-htmlfile',
 			'method': 'DELETE'
 		}
 	],
