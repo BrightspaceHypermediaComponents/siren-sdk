@@ -3,7 +3,7 @@ import { Classes, Actions } from '../hypermedia-constants.js';
 // import { performSirenAction } from '../es6/SirenAction';
 
 /**
- * CategoriesEntity class representation of an attachment (link or file)
+ * CategoriesEntity class representation
  */
 export class CategoriesEntity extends Entity {
 
@@ -30,7 +30,7 @@ export class CategoriesEntity extends Entity {
 			return;
 		}
 
-		return !!this._entity.getActionByName(Actions.assignments.add);
+		return this._entity.hasActionByName(Actions.assignments.add);
 	}
 
 	/**
