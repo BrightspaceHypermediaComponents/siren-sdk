@@ -479,7 +479,10 @@ export const Actions = {
 		scoreOutOf: {
 			update: 'update'
 		},
-		associateGrade: 'associate-grade',
+		associateGrade: {
+			associateGrade: 'associate-grade',
+			gradebookStatus: 'gradebook-status'
+		},
 		save: 'save',
 		filterWorkToDo: 'filter-work-to-do'
 	},
