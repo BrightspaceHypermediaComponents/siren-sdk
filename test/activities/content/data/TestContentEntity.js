@@ -49,18 +49,18 @@ export const contentLTILinkEntityData = {
 	'rel': []
 };
 
-export const contentHtmlFileEntityData = {
+export const contentFileEntityData = {
 	'class': [
 		'activity-usage',
 		'content-activity',
-		'htmlfile'
+		'content-file'
 	],
 	'properties': {
-		'title': 'Test HTML File Title'
+		'title': 'Test File Title'
 	},
 	'links': [{
-		'href': 'https://fake-tenant-id.content.api.proddev.d2l/6613/files/html/12345',
-		'rel': ['https://content.api.brightspace.com/rels/content-html-file']
+		'href': 'https://fake-tenant-id.content.api.proddev.d2l/6613/files/12345',
+		'rel': ['https://content.api.brightspace.com/rels/content-file']
 	}],
 	'entities': [],
 	'rel': []

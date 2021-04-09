@@ -3,7 +3,7 @@ import { Rels } from '../../hypermedia-constants';
 import ContentHelperFunctions from './ContentHelperFunctions.js';
 
 export const CONTENT_TYPES = {
-	htmlfile: 'htmlfile',
+	file: 'content-file',
 	ltilink: 'ltilink',
 	module: 'module',
 	topic: 'topic',
@@ -29,8 +29,8 @@ export class ContentEntity extends Entity {
 			return CONTENT_TYPES.weblink;
 		} else if (this._entity.hasLinkByRel(Rels.Content.ltilinkEntity)) {
 			return CONTENT_TYPES.ltilink;
-		} else if (this._entity.hasLinkByRel(Rels.Content.htmlFileEntity)) {
-			return CONTENT_TYPES.htmlfile;
+		} else if (this._entity.hasLinkByRel(Rels.Content.fileEntity)) {
+			return CONTENT_TYPES.file;
 		} else if (this._entity.hasClass(CONTENT_TYPES.topic)) {
 			return CONTENT_TYPES.topic;
 		} else {
@@ -60,9 +60,9 @@ export class ContentEntity extends Entity {
 	}
 
 	/**
-	 * @returns {string} content-htmlfile link
+	 * @returns {string} content-file link
 	 */
-	getHtmlFileHref() {
-		return ContentHelperFunctions.getHrefFromRel(Rels.Content.htmlFileEntity, this._entity);
+	getFileHref() {
+		return ContentHelperFunctions.getHrefFromRel(Rels.Content.fileEntity, this._entity);
 	}
 }

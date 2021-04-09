@@ -6,11 +6,11 @@ import { Entity } from '../es6/Entity';
 export class FileEntity extends Entity {
 
 	/**
-	 * @returns {string} File's location
+	 * @returns {string|null} File's location
 	 */
 	getFileLocationHref() {
 		if (!this._entity || !this._entity.hasLinkByRel('alternate')) {
-			return;
+			return null;
 		}
 
 		return this._entity.getLinkByRel('alternate').href;

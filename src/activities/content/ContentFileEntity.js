@@ -1,15 +1,19 @@
-import { Actions, Rels } from '../../hypermedia-constants.js';
+import { Actions, Rels, Classes } from '../../hypermedia-constants.js';
 import { performSirenAction } from '../../es6/SirenAction.js';
 import ContentHelperFunctions from './ContentHelperFunctions.js';
 import { ContentWorkingCopyEntity } from './ContentWorkingCopyEntity.js';
 
+export const FILE_TYPES = {
+	html: 'html',
+};
+
 /**
- * ContentHtmlFileEntity class representation of a d2l content-htmlFile entity.
+ * ContentFileEntity class representation of a d2l content-file entity.
  */
-export class ContentHtmlFileEntity extends ContentWorkingCopyEntity {
+export class ContentFileEntity extends ContentWorkingCopyEntity {
 
 	/**
-	 * @returns {string|null} Description html of the content-htmlFile item
+	 * @returns {string|null} Description html of the content-file item
 	 */
 	descriptionRichText() {
 		const descriptionSubEntity = ContentHelperFunctions.getDescriptionSubEntity(this._entity);
@@ -20,7 +24,7 @@ export class ContentHtmlFileEntity extends ContentWorkingCopyEntity {
 	}
 
 	/**
-	 * @returns {string|null} Description text of the content-htmlFile item
+	 * @returns {string|null} Description text of the content-file item
 	 */
 	descriptionText() {
 		const descriptionSubEntity = ContentHelperFunctions.getDescriptionSubEntity(this._entity);
@@ -31,17 +35,17 @@ export class ContentHtmlFileEntity extends ContentWorkingCopyEntity {
 	}
 
 	/**
-	 * @returns {string|undefined} Title of the content-htmlFile item
+	 * @returns {string|undefined} Title of the content-file item
 	 */
 	title() {
 		return this._entity && this._entity.properties && this._entity.properties.title;
 	}
 
 	/**
-	 * Updates the html file to have the given description
-	 * @param {string} richText rich text description to set on the html file
+	 * Updates the file to have the given description
+	 * @param {string} richText rich text description to set on the file
 	 */
-	async setHtmlFileDescription(richText) {
+	async setFileDescription(richText) {
 		if (!this._entity) {
 			return;
 		}
@@ -55,10 +59,10 @@ export class ContentHtmlFileEntity extends ContentWorkingCopyEntity {
 	}
 
 	/**
-	 * Updates the html file to have the given title
-	 * @param {string} title Title to set on the html file
+	 * Updates the file to have the given title
+	 * @param {string} title Title to set on the file
 	 */
-	async setHtmlFileTitle(title) {
+	async setFileTitle(title) {
 		if (!this._entity) {
 			return;
 		}
@@ -89,13 +93,13 @@ export class ContentHtmlFileEntity extends ContentWorkingCopyEntity {
 	}
 
 	/**
-	 * Deletes the html file
+	 * Deletes the file
 	 */
-	async deleteHtmlFile() {
+	async deleteFile() {
 		if (!this._entity) {
 			return;
 		}
-		const action = this._entity.getActionByName(Actions.htmlFile.deleteHtmlFile);
+		const action = this._entity.getActionByName(Actions.files.deleteFile);
 		if (!action) {
 			return;
 		}
@@ -105,13 +109,13 @@ export class ContentHtmlFileEntity extends ContentWorkingCopyEntity {
 	}
 
 	/**
-	 * Checks if content html file properties passed in match what is currently stored
-	 * @param {object} contentHtmlFile Object containing html file specific properties
+	 * Checks if content file properties passed in match what is currently stored
+	 * @param {object} contentFile Object containing file specific properties
 	 */
-	equals(contentHtmlFile) {
+	equals(contentFile) {
 		const diffs = [
-			[this.title(), contentHtmlFile.title],
-			[this.getFileHref(), contentHtmlFile.fileHref]
+			[this.title(), contentFile.title],
+			[this.getFileHref(), contentFile.fileHref]
 		];
 		for (const [left, right] of diffs) {
 			if (left !== right) {
@@ -126,5 +130,18 @@ export class ContentHtmlFileEntity extends ContentWorkingCopyEntity {
 	*/
 	getFileHref() {
 		return ContentHelperFunctions.getHrefFromRel(Rels.Files.file, this._entity);
+	}
+
+	/**
+	 * @returns {string|null} Returns the File type
+	 */
+	getFileType() {
+		if (!this._entity && !this._entity.hasLinkByClass(Classes.files.file)) {
+			return null;
+		} else if (this._entity.hasLinkByClass(Classes.files.html)) {
+			return FILE_TYPES.html;
+		} else {
+			return null;
+		}
 	}
 }

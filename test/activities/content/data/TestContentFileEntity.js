@@ -1,7 +1,7 @@
-export const contentHtmlFileData = {
+export const contentFileData = {
 	'actions': [
 		{
-			'href': 'https://fake-tenant-id.content.api.proddev.d2l/6613/files/html/12345',
+			'href': 'https://fake-tenant-id.content.api.proddev.d2l/6613/files/12345',
 			'name': 'update-title',
 			'method': 'PATCH',
 			'fields': [
@@ -9,12 +9,12 @@ export const contentHtmlFileData = {
 					'class': ['required'],
 					'type': 'text',
 					'name': 'title',
-					'value': 'Test Html File Title'
+					'value': 'Test File Title'
 				}
 			]
 		},
 		{
-			'href': 'https://fake-tenant-id.content.api.proddev.d2l/6613/files/html/12345',
+			'href': 'https://fake-tenant-id.content.api.proddev.d2l/6613/files/12345',
 			'name': 'update-description',
 			'method': 'PATCH',
 			'fields': [
@@ -40,8 +40,8 @@ export const contentHtmlFileData = {
 			]
 		},
 		{
-			'href': 'https://fake-tenant-id.content.api.proddev.d2l/6613/files/html/12345',
-			'name': 'delete-htmlfile',
+			'href': 'https://fake-tenant-id.content.api.proddev.d2l/6613/files/12345',
+			'name': 'delete-content-file',
 			'method': 'DELETE'
 		}
 	],
@@ -50,7 +50,7 @@ export const contentHtmlFileData = {
 		'topic'
 	],
 	'properties': {
-		'title': 'Test Html File Title',
+		'title': 'Test File Title',
 		'url': 'https://phoenix-is-the-best.com'
 	},
 	'entities': [{
@@ -62,8 +62,12 @@ export const contentHtmlFileData = {
 		'rel': [
 			'https://files.api.brightspace.com/rels/file'
 		],
+		'class': [
+			'file',
+			'html'
+		],
 		'type': 'application/vnd.siren+json',
-		'href': 'https://fake-tenant-id.files.api.proddev.d2l/my-html-file.html/usages/6614'
+		'href': 'https://fake-tenant-id.files.api.proddev.d2l/my-file.html/usages/6614'
 	}],
 	'rel': []
 };
