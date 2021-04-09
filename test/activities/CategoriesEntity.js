@@ -57,19 +57,21 @@ describe('CategoriesEntity', () => {
 			var categoriesEntity = new CategoriesEntity(nonEditableEntity);
 			const selected = categoriesEntity.getSelectedCategory();
 
-			expect(selected).to.be.undefined;
+			expect(selected.properties.name).to.equal(expectedCategory.name);
+			expect(selected.class.includes('selected')).to.be.true;
 		});
 
 		it('GetsSelectedCategoriesWithNoActions', () => {
 			var categoriesEntity = new CategoriesEntity(nonEditableEntity);
 			const selected = categoriesEntity.getSelectedCategory();
 
-			expect(selected).to.be.undefined;
+			expect(selected.properties.name).to.equal(expectedCategory.name);
+			expect(selected.class.includes('selected')).to.be.true;
 		});
 	});
 
 	describe('Editable', () => {
-		it('sets canEditName to true', () => {
+		it('sets canEditCategories to true', () => {
 			var categoriesEntity = new CategoriesEntity(editableEntity);
 
 			const res = categoriesEntity.canEditCategories();
@@ -78,7 +80,7 @@ describe('CategoriesEntity', () => {
 	});
 
 	describe('non editable', () => {
-		it('sets canEditName to true', () => {
+		it('sets canEditCategories to true', () => {
 			var categoriesEntity = new CategoriesEntity(nonEditableEntity);
 
 			const res = categoriesEntity.canEditCategories();

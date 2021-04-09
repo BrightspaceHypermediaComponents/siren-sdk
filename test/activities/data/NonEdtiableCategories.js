@@ -6,7 +6,8 @@ export const nonEditableCategories = {
 	'entities': [
 		{
 			'class': [
-				'category'
+				'category',
+				'selected'
 			],
 			'rel': [
 				'item'
