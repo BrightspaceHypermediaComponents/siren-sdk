@@ -270,7 +270,8 @@ export const Classes = {
 		annotationTools: 'annotations',
 		annotationEnabled: 'enabled',
 		annotationDisabled: 'disabled',
-		category: 'category'
+		category: 'category',
+		selected: 'selected'
 	},
 	associations: {
 		singleAssociation: 'single-association',
@@ -501,7 +502,8 @@ export const Actions = {
 		update: 'quick-create-folder',
 		updateFilesSubmissionLimit: 'update-files-submission-limit',
 		updateDefaultScoringRubric: 'update-default-scoring-rubric',
-		updateNotificationEmail: 'update-notification-email'
+		updateNotificationEmail: 'update-notification-email',
+		add: 'add'
 	},
 	content: {
 		updateTitle: 'update-title',
