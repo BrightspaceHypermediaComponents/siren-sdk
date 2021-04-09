@@ -1,11 +1,11 @@
 import { Entity } from '../../es6/Entity';
-import { Actions, Classes } from '../../hypermedia-constants';
+import { Actions } from '../../hypermedia-constants';
 import { performSirenAction } from '../../es6/SirenAction.js';
 
 /**
  * AssociateGrade entity of an activity.
  */
- export class AssociateGradeEntity extends Entity {
+export class AssociateGradeEntity extends Entity {
 	canEditGradebookStatus() {
 		return this._entity && this._entity.hasActionByName(Actions.activities.associateGrade.gradebookStatus);
 	}
@@ -19,4 +19,4 @@ import { performSirenAction } from '../../es6/SirenAction.js';
 
 		await performSirenAction(this._token, action, fields);
 	}
- }
+}

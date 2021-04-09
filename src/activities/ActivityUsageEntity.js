@@ -740,11 +740,11 @@ export class ActivityUsageEntity extends Entity {
 	* @returns {string} URL of the associate-grade API, for managing grade association with the activity usage, using working copy, if present
 	*/
 	associateGradeHref() {
-		if (!this._entity || !this._entity.hasLinkByRel(Rels.Activities.associateGrade)) {
+		if (!this._entity || !this._entity.hasLinkByRel(Rels.Activities.associateGrade.associateGrade)) {
 			return;
 		}
 
-		return this._entity.getLinkByRel(Rels.Activities.associateGrade).href;
+		return this._entity.getLinkByRel(Rels.Activities.associateGrade.associateGrade).href;
 	}
 
 	_canCheckout() {
