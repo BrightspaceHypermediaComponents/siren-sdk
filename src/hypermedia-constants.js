@@ -94,7 +94,8 @@ export const Rels = {
 		groupsHomepage: 'https://assignments.api.brightspace.com/rels/groups-homepage',
 		filesSubmissionLimit: 'https://assignments.api.brightspace.com/rels/files-submission-limit',
 		submissionsRule: 'https://assignments.api.brightspace.com/rels/submissions-rule',
-		notificationEmail: 'https://assignments.api.brightspace.com/rels/notification-email'
+		notificationEmail: 'https://assignments.api.brightspace.com/rels/notification-email',
+		categories: 'https://assignments.api.brightspace.com/rels/categories'
 	},
 	// Awards
 	Awards: {
@@ -268,7 +269,8 @@ export const Classes = {
 		submissionList: 'assignment-submission-list',
 		annotationTools: 'annotations',
 		annotationEnabled: 'enabled',
-		annotationDisabled: 'disabled'
+		annotationDisabled: 'disabled',
+		category: 'category'
 	},
 	associations: {
 		singleAssociation: 'single-association',
