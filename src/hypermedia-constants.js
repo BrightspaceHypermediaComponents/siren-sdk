@@ -480,6 +480,9 @@ export const Actions = {
 			update: 'update'
 		},
 		associateGrade: 'associate-grade',
+		associateGrade: {
+			gradebookStatus: 'gradebook-status'
+		},
 		save: 'save',
 		filterWorkToDo: 'filter-work-to-do'
 	},
