@@ -57,7 +57,7 @@ export class GradeCandidateEntity extends Entity {
 	 * @returns {bool} True if the associate-grade action is present on the grade candidate
 	 */
 	canAssociateGrade() {
-		return this._entity && this._entity.hasActionByName(Actions.activities.associateGrade);
+		return this._entity && this._entity.hasActionByName(Actions.activities.associateGrade.associateGrade);
 	}
 
 	/**
@@ -75,7 +75,7 @@ export class GradeCandidateEntity extends Entity {
 			return;
 		}
 
-		const action = this._entity.getActionByName(Actions.activities.associateGrade);
+		const action = this._entity.getActionByName(Actions.activities.associateGrade.associateGrade);
 		await performSirenAction(this._token, action);
 	}
 }
