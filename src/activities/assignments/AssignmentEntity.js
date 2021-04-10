@@ -323,6 +323,18 @@ export class AssignmentEntity extends Entity {
 	}
 
 	/**
+	 * @returns {String} Categories endpoint link
+	 */
+	getCategoriesLink() {
+		if (!this._entity) {
+			return;
+		}
+		const subEntity = this._entity.getSubEntityByRel(Rels.Assignments.categories);
+
+		return subEntity && subEntity.href;
+	}
+
+	/**
 	 * Sets the assignment type to group using a default group category
 	 */
 	async setToGroupAssignmentType() {
