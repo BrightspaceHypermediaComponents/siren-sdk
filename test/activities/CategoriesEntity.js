@@ -4,6 +4,7 @@ import { CategoriesEntity } from '../../src/activities/CategoriesEntity.js';
 import { nonEditableCategories } from './data/NonEdtiableCategories.js';
 import { editableCategories } from './data/EditableCategories.js';
 import { emptyCategories } from './data/EmptyCategories.js';
+import { nonSelectedCategories } from './data/NonSelectedCategories';
 
 const expectedCategory = {
 	name: 'category1',
@@ -12,12 +13,13 @@ const expectedCategory = {
 };
 
 describe('CategoriesEntity', () => {
-	var editableEntity, nonEditableEntity, emptyEntity;
+	var editableEntity, nonEditableEntity, emptyEntity, missingSelectedEntity;
 
 	beforeEach(() => {
 		nonEditableEntity = window.D2L.Hypermedia.Siren.Parse(nonEditableCategories);
 		editableEntity = window.D2L.Hypermedia.Siren.Parse(editableCategories);
 		emptyEntity = window.D2L.Hypermedia.Siren.Parse(emptyCategories);
+		missingSelectedEntity = window.D2L.Hypermedia.Siren.Parse(nonSelectedCategories);
 	});
 
 	afterEach(() => {
@@ -54,11 +56,10 @@ describe('CategoriesEntity', () => {
 		});
 
 		it('GetsSelectedCategoriesWhenNotPresent', () => {
-			var categoriesEntity = new CategoriesEntity(nonEditableEntity);
+			var categoriesEntity = new CategoriesEntity(missingSelectedEntity);
 			const selected = categoriesEntity.getSelectedCategory();
 
-			expect(selected.properties.name).to.equal(expectedCategory.name);
-			expect(selected.class.includes('selected')).to.be.true;
+			expect(selected).to.be.undefined;
 		});
 
 		it('GetsSelectedCategoriesWithNoActions', () => {
@@ -80,7 +81,7 @@ describe('CategoriesEntity', () => {
 	});
 
 	describe('non editable', () => {
-		it('sets canEditCategories to true', () => {
+		it('sets canEditCategories to false', () => {
 			var categoriesEntity = new CategoriesEntity(nonEditableEntity);
 
 			const res = categoriesEntity.canEditCategories();
