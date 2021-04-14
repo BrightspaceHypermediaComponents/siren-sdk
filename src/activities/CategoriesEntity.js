@@ -15,10 +15,10 @@ export class CategoriesEntity extends Entity {
 			return;
 		}
 
-		return this._entity.getSubEntitiesByClass(Classes.assignments.category).map((category, index) => ({
+		return this._entity.getSubEntitiesByClass(Classes.assignments.category).map((category) => ({
 			name: category.properties.name,
 			selected: category.hasClass(Classes.assignments.selected),
-			index
+			categoryId: category.properties.categoryId
 		}));
 	}
 
@@ -49,5 +49,15 @@ export class CategoriesEntity extends Entity {
 		}
 
 		return selectedCategory;
+	}
+
+	equals(data) {
+		const selectedCategory = this.getSelectedCategory();
+
+		if (!selectedCategory) {
+			return data.categoryId === selectedCategory;
+		}
+
+		return data.categoryId === this.getSelectedCategory().properties.id;
 	}
 }
