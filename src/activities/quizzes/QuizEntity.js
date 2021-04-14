@@ -376,6 +376,17 @@ export class QuizEntity extends Entity {
 		const headerEntity = this._getHeaderEntity();
 		return headerEntity && headerEntity.hasClass(Classes.quizzes.headerIsDisplayed);
 	}
+
+	/**
+	 * @returns {bool} Header is initially empty for the quiz entity
+	 */
+	originalHeaderIsEmpty() {
+		const headerEntity = this._getHeaderEntity();
+		return headerEntity
+			&& headerEntity.properties
+			&& !headerEntity.properties.text;
+	}
+
 	/**
 	 * @returns {string} Timing Href of the quiz entity, if present
 	*/
