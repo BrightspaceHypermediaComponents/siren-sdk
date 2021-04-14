@@ -382,58 +382,58 @@ export const editableQuiz = {
 				}
 			]
 		},
-        {
-            "class": [
-                "richtext",
-                "footer",
-                "footer-is-displayed"
-            ],
-            "rel": [
-                "item",
-                "https://quizzes.api.brightspace.com/rels/footer"
-            ],
-            "properties": {
-                "text": "Bottom of the quiz to ya!",
-                "html": "Bottom of the quiz to ya!"
-            },
-            "entities": [
-                {
-                    "class": [
-                        "richtext-editor-config"
-                    ],
-                    "rel": [
-                        "https://api.brightspace.com/rels/richtext-editor-config"
-                    ],
-                    "properties": {
-                        "orgUnit": {
-                            "OrgId": "6606",
-                            "OrgUnitId": "6609"
-                        },
-                        "d2l_filter": {
-                            "endpoint": "/d2l/lp/htmleditor/converttoabsolute?ou=6609"
-                        },
-                        "d2l_isf": {
-                            "endpoint": "/d2l/common/dialogs/isf/selectItem.d2l?ou=6609&filterMode=Strict"
-                        }
-                    }
-                }
-            ],
-            "actions": [
-                {
-                    "type": "application/x-www-form-urlencoded",
-                    "href": "https://afe99802-9130-4320-a770-8d138b941e74.quizzes.api.proddev.d2l/6606/quizzes/22",
-                    "name": "update-footer",
-                    "method": "PATCH",
-                    "fields": [
-                        {
-                            "type": "text",
-                            "name": "footer",
-                            "value": "Bottom of the quiz to ya!"
-                        }
-                    ]
-                }
-            ]
-        },
+		{
+			"class": [
+				"richtext",
+				"footer",
+				"footer-is-displayed"
+			],
+			"rel": [
+				"item",
+				"https://quizzes.api.brightspace.com/rels/footer"
+			],
+			"properties": {
+				"text": "Bottom of the quiz to ya!",
+				"html": "Bottom of the quiz to ya!"
+			},
+			"entities": [
+				{
+					"class": [
+						"richtext-editor-config"
+					],
+					"rel": [
+						"https://api.brightspace.com/rels/richtext-editor-config"
+					],
+					"properties": {
+						"orgUnit": {
+							"OrgId": "6606",
+							"OrgUnitId": "6609"
+						},
+						"d2l_filter": {
+							"endpoint": "/d2l/lp/htmleditor/converttoabsolute?ou=6609"
+						},
+						"d2l_isf": {
+							"endpoint": "/d2l/common/dialogs/isf/selectItem.d2l?ou=6609&filterMode=Strict"
+						}
+					}
+				}
+			],
+			"actions": [
+				{
+					"type": "application/x-www-form-urlencoded",
+					"href": "https://afe99802-9130-4320-a770-8d138b941e74.quizzes.api.proddev.d2l/6606/quizzes/22",
+					"name": "update-footer",
+					"method": "PATCH",
+					"fields": [
+						{
+							"type": "text",
+							"name": "footer",
+							"value": "Bottom of the quiz to ya!"
+						}
+					]
+				}
+			]
+		},
 		{
 			'rel': ['https://quizzes.api.brightspace.com/rels/timing'],
 			'href': 'https://afe99802-9130-4320-a770-8d138b941e74.quizzes.api.proddev.d2l/6606/quizzes/22/timing'
