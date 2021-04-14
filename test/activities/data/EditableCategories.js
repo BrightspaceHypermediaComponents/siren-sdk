@@ -13,7 +13,8 @@ export const editableCategories = {
 				'item'
 			],
 			'properties': {
-				'name': 'category1'
+				'name': 'category1',
+				'categoryId': '123'
 			},
 			'actions': [
 				{
@@ -38,7 +39,8 @@ export const editableCategories = {
 				'item'
 			],
 			'properties': {
-				'name': 'category2'
+				'name': 'category2',
+				'categoryId': '123'
 			},
 			'actions': [
 				{
@@ -63,7 +65,8 @@ export const editableCategories = {
 				'item'
 			],
 			'properties': {
-				'name': 'category3'
+				'name': 'category3',
+				'categoryId': '123'
 			},
 			'actions': [
 				{
