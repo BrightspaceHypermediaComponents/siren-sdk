@@ -65,10 +65,10 @@ describe('File ContentEntity', () => {
 	});
 
 	it('gets file entity type', () => {
-		expect(contentEntity.getEntityType()).to.equal(CONTENT_TYPES.file);
+		expect(contentEntity.getEntityType()).to.equal(CONTENT_TYPES.contentFile);
 	});
 
 	it('gets content-file href', () => {
-		expect(contentEntity.getFileHref()).to.equal('https://fake-tenant-id.content.api.proddev.d2l/6613/files/12345');
+		expect(contentEntity.getContentFileHref()).to.equal('https://fake-tenant-id.content.api.proddev.d2l/6613/files/12345');
 	});
 });

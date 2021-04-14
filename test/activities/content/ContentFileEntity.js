@@ -34,7 +34,7 @@ describe('ContentFileEntity', () => {
 		it('Equality should return true when details match', () => {
 			const fileData = {
 				title: 'Test File Title',
-				fileHref: 'https://fake-tenant-id.files.api.proddev.d2l/my-file.html/usages/6614'
+				fileHref: 'https://fake-tenant-id.files.api.proddev.d2l/my-file.file/usages/6614'
 			};
 			expect(contentFileEntity.equals(fileData)).to.equal(true);
 		});
@@ -42,7 +42,7 @@ describe('ContentFileEntity', () => {
 		it('Equality should return false when title is different', () => {
 			const fileData = {
 				title: 'New Title',
-				fileHref: 'https://fake-tenant-id.files.api.proddev.d2l/my-file.html/usages/6614'
+				fileHref: 'https://fake-tenant-id.files.api.proddev.d2l/my-file.file/usages/6614'
 			};
 			expect(contentFileEntity.equals(fileData)).to.equal(false);
 		});
@@ -50,7 +50,7 @@ describe('ContentFileEntity', () => {
 		it('Equality should return false when fileHref is different', () => {
 			const fileData = {
 				title: 'Test File Title',
-				fileHref: 'https://fake-tenant-id.files.api.proddev.d2l/my-super-cool-file.html/usages/6614'
+				fileHref: 'https://fake-tenant-id.files.api.proddev.d2l/my-super-cool-file.file/usages/6614'
 			};
 			expect(contentFileEntity.equals(fileData)).to.equal(false);
 		});
@@ -81,18 +81,6 @@ describe('ContentFileEntity', () => {
 			expect(fetchMock.called()).to.be.true;
 		});
 
-		it('saves html content', async() => {
-			fetchMock.patchOnce('https://fake-tenant-id.content.api.proddev.d2l/6613/files/html/12345', fileData);
-
-			await contentFileEntity.setHtmlFileHtmlContent('<!doctype html><html lang="en"><head><title>My File</title></head><body><p>This is my file</p></body></html>');
-
-			const form = await getFormData(fetchMock.lastCall().request);
-			if (!form.notSupported) {
-				expect(form.get('htmlContent')).to.equal('<!doctype html><html lang="en"><head><title>My File</title></head><body><p>This is my file</p></body></html>');
-			}
-			expect(fetchMock.called()).to.be.true;
-		});
-
 		it('performs delete request', async() => {
 			fetchMock.deleteOnce('https://fake-tenant-id.content.api.proddev.d2l/6613/files/12345', fileData);
 			await contentFileEntity.deleteFile();
@@ -102,7 +90,7 @@ describe('ContentFileEntity', () => {
 
 	describe('Links', () => {
 		it('can get file href', () => {
-			expect(contentFileEntity.getFileHref()).to.equal('https://fake-tenant-id.files.api.proddev.d2l/my-file.html/usages/6614');
+			expect(contentFileEntity.getFileHref()).to.equal('https://fake-tenant-id.files.api.proddev.d2l/my-file.file/usages/6614');
 		});
 
 		it('can get file type', () => {

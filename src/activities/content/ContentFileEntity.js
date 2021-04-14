@@ -76,23 +76,6 @@ export class ContentFileEntity extends ContentWorkingCopyEntity {
 	}
 
 	/**
-	 * Updates the html file content with the given html
-	 * @param {html} html to set on the html file
-	 */
-	async setHtmlFileHtmlContent(html) {
-		if (!this._entity) {
-			return;
-		}
-		const action = this._entity.getActionByName(Actions.htmlFile.updateHtmlContent);
-		if (!action) {
-			return;
-		}
-
-		const fields = [{ name: 'htmlContent', value: html }];
-		await performSirenAction(this._token, action, fields);
-	}
-
-	/**
 	 * Deletes the file
 	 */
 	async deleteFile() {
@@ -140,8 +123,8 @@ export class ContentFileEntity extends ContentWorkingCopyEntity {
 			return null;
 		} else if (this._entity.hasLinkByClass(Classes.files.html)) {
 			return FILE_TYPES.html;
-		} else {
-			return null;
 		}
+
+		return null;
 	}
 }
