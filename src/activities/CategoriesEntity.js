@@ -1,6 +1,6 @@
 import { Entity } from '../es6/Entity.js';
 import { Classes, Actions } from '../hypermedia-constants.js';
-// import { performSirenAction } from '../es6/SirenAction';
+import { performSirenAction } from '../es6/SirenAction.js';
 
 /**
  * CategoriesEntity class representation
@@ -15,11 +15,19 @@ export class CategoriesEntity extends Entity {
 			return;
 		}
 
-		return this._entity.getSubEntitiesByClass(Classes.assignments.category).map((category) => ({
-			name: category.properties.name,
-			selected: category.hasClass(Classes.assignments.selected),
-			categoryId: category.properties.categoryId
-		}));
+		return this._entity.getSubEntitiesByClass(Classes.assignments.category);
+	}
+	/**
+	 * @returns {Object} Category with a selected id
+	*/
+	_getCategoryById(categoryId) {
+		if (categoryId === undefined) return;
+
+		const categories = this.getCategories();
+
+		if (!categories || !categories.length) return;
+
+		return categories.find(category => Number(categoryId) === category.properties.categoryId);
 	}
 
 	/**
@@ -51,13 +59,28 @@ export class CategoriesEntity extends Entity {
 		return selectedCategory;
 	}
 
-	equals(data) {
+	equals(category) {
 		const selectedCategory = this.getSelectedCategory();
 
 		if (!selectedCategory) {
-			return data.categoryId === selectedCategory;
+			return category.categoryId === selectedCategory;
 		}
 
-		return data.categoryId === this.getSelectedCategory().properties.id;
+		return category.properties.categoryId === this.getSelectedCategory().properties.categoryId;
+	}
+
+	async save(category) {
+		if (!this.canEditCategories()) return;
+
+		const categoryEntity = this._getCategoryById(category.categoryId);
+
+		if (!categoryEntity) return;
+
+		const action = categoryEntity.getActionByName(Actions.assignments.categories.select);
+		if (!action) {
+			return;
+		}
+
+		await performSirenAction(this._token, action);
 	}
 }
