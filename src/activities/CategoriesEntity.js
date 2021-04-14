@@ -2,6 +2,8 @@ import { Entity } from '../es6/Entity.js';
 import { Classes, Actions } from '../hypermedia-constants.js';
 import { performSirenAction } from '../es6/SirenAction.js';
 
+const UNSET_CATEGORY_ID = '0';
+
 /**
  * CategoriesEntity class representation
  */
@@ -68,8 +70,21 @@ export class CategoriesEntity extends Entity {
 		return category.categoryId === this.getSelectedCategory().properties.categoryId;
 	}
 
+	async _sendDeselectCategoryAction() {
+		const selectedCategory = this.getSelectedCategory();
+		if (!selectedCategory) return;
+
+		const action = selectedCategory.getActionByName(Actions.assignments.categories.deselect);
+
+		return await performSirenAction(this._token, action);
+	}
+
 	async save(category) {
 		if (!this.canEditCategories()) return;
+
+		if (category.categoryId === UNSET_CATEGORY_ID) {
+			return await this._sendDeselectCategoryAction();
+		}
 
 		const categoryEntity = this._getCategoryById(category.categoryId);
 

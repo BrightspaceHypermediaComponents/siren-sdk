@@ -505,7 +505,8 @@ export const Actions = {
 		updateNotificationEmail: 'update-notification-email',
 		add: 'add',
 		categories: {
-			select: 'select'
+			select: 'select',
+			deselect: 'deselect'
 		}
 	},
 	content: {
