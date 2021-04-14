@@ -5,6 +5,7 @@ import { editableQuiz } from './data/EditableQuiz.js';
 import { getFormData } from '../../utility/test-helpers.js';
 import { nonEditableQuiz } from './data/NoneditableQuiz';
 import { workingCopyQuiz } from './data/WorkingCopyQuiz';
+import { expect } from 'chai';
 
 describe('QuizEntity', () => {
 	var editableEntity, nonEditableEntity, workingCopyEntity;
@@ -41,7 +42,8 @@ describe('QuizEntity', () => {
 				preventMovingBackwards: true,
 				autoSetGraded: true,
 				description: 'The Second quiz ever',
-				header: 'Top of the quiz to ya!'
+				header: 'Top of the quiz to ya!',
+				footer: 'Bottom of the quiz to ya!'
 			};
 		});
 
@@ -101,6 +103,12 @@ describe('QuizEntity', () => {
 		it('returns false when header not equal', () => {
 			var quizEntity = new QuizEntity(editableEntity);
 			modifiedEntity.header = 'New Header!';
+			expect(quizEntity.equals(modifiedEntity)).to.be.false;
+		});
+
+		it('returns false when footer not equal', () => {
+			var quizEntity = new QuizEntity(editableEntity);
+			modifiedEntity.footer = 'New Footer!';
 			expect(quizEntity.equals(modifiedEntity)).to.be.false;
 		});
 	});
@@ -351,6 +359,31 @@ describe('QuizEntity', () => {
 		});
 	});
 
+	describe('footer', () => {
+		describe('canEditFooter', () => {
+			it('returns true when footer is editable', () => {
+				var quizEntity = new QuizEntity(editableEntity);
+				expect(quizEntity.canEditFooter()).to.be.true;
+			});
+
+			it('returns false when footer are not editable', () => {
+				var quizEntity = new QuizEntity(nonEditableEntity);
+				expect(quizEntity.canEditFooter()).to.be.false;
+			});
+		});
+		describe('footerIsDisplayed', () => {
+			it('returns true when footerIsDisplayed is true', () => {
+				var quizEntity = new QuizEntity(editableEntity);
+				expect(quizEntity.footerIsDisplayed()).to.be.true;
+			});
+
+			it('returns false when footerIsDisplayed is false', () => {
+				var quizEntity = new QuizEntity(nonEditableEntity);
+				expect(quizEntity.footerIsDisplayed()).to.be.false;
+			});
+		});
+	});
+
 	describe('save', () => {
 		it('saves', async() => {
 			fetchMock.patchOnce('https://afe99802-9130-4320-a770-8d138b941e74.quizzes.api.proddev.d2l/6606/quizzes/22', editableEntity);
@@ -368,7 +401,8 @@ describe('QuizEntity', () => {
 				preventMovingBackwards: false,
 				autoSetGraded: false,
 				description: 'New description',
-				header: 'New header'
+				header: 'New header',
+				footer: 'New footer'
 			});
 
 			const form = await getFormData(fetchMock.lastCall().request);
@@ -384,6 +418,7 @@ describe('QuizEntity', () => {
 				expect(form.get('autoSetGraded')).to.equal('false');
 				expect(form.get('description')).to.equal('New description');
 				expect(form.get('header')).to.equal('New header');
+				expect(form.get('footer')).to.equal('New footer');
 			}
 
 			expect(fetchMock.called()).to.be.true;
@@ -403,7 +438,8 @@ describe('QuizEntity', () => {
 				preventMovingBackwards: true,
 				autoSetGraded: true,
 				description: 'The Second quiz ever',
-				header: 'Top of the quiz to ya!'
+				header: 'Top of the quiz to ya!',
+				footer: 'Bottom of the quiz to ya!'
 			});
 
 			expect(fetchMock.done());
@@ -423,7 +459,8 @@ describe('QuizEntity', () => {
 				preventMovingBackwards: false,
 				autoSetGraded: false,
 				description: 'New and improved Description!',
-				header: 'Even better Header!'
+				header: 'Even better Header!',
+				footer: 'Even better Footer!'
 			});
 
 			expect(fetchMock.done());
