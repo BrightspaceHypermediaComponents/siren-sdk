@@ -1,5 +1,5 @@
 import { Entity } from '../../es6/Entity';
-import { Actions, Classes } from '../../hypermedia-constants';
+import { Actions, Classes, Rels } from '../../hypermedia-constants';
 import { performSirenAction } from '../../es6/SirenAction';
 import ContentHelperFunctions from './ContentHelperFunctions.js';
 
@@ -38,6 +38,13 @@ export class ContentWebLinkEntity extends Entity {
 			return false;
 		}
 		return this._entity.hasClass(Classes.webLink.externalResource);
+	}
+
+	/**
+	 * @returns {string} activity usage link
+	 */
+	getActivityUsageHref() {
+		return ContentHelperFunctions.getHrefFromRel(Rels.Activities.activityUsage, this._entity);
 	}
 
 	/**
