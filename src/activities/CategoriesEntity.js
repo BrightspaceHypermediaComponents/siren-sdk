@@ -18,7 +18,7 @@ export class CategoriesEntity extends Entity {
 		return this._entity.getSubEntitiesByClass(Classes.assignments.category);
 	}
 	/**
-	 * @returns {Object} Category with a selected id
+	 * @returns {Object} Gets category with a selected id
 	*/
 	_getCategoryById(categoryId) {
 		if (categoryId === undefined) return;
@@ -61,12 +61,11 @@ export class CategoriesEntity extends Entity {
 
 	equals(category) {
 		const selectedCategory = this.getSelectedCategory();
-
 		if (!selectedCategory) {
 			return category.categoryId === selectedCategory;
 		}
 
-		return category.properties.categoryId === this.getSelectedCategory().properties.categoryId;
+		return category.categoryId === this.getSelectedCategory().properties.categoryId;
 	}
 
 	async save(category) {
