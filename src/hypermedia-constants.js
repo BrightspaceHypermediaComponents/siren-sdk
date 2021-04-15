@@ -513,7 +513,8 @@ export const Actions = {
 		add: 'add',
 		categories: {
 			select: 'select',
-			deselect: 'deselect'
+			deselect: 'deselect',
+			add: 'add'
 		}
 	},
 	content: {
