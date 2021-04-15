@@ -5,7 +5,7 @@ import { nonEditableCategories } from './data/NonEdtiableCategories.js';
 import { editableCategories } from './data/EditableCategories.js';
 import { emptyCategories } from './data/EmptyCategories.js';
 import { nonSelectedCategories } from './data/NonSelectedCategories';
-import { getFormData } from '../../utility/test-helpers.js';
+import { getFormData } from '../utility/test-helpers.js';
 
 const expectedCategory = {
 	'rel':['item'],
