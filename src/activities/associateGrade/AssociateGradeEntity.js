@@ -16,8 +16,8 @@ export class AssociateGradeEntity extends Entity {
 	}
 
 	canEditNewGrade() {
-		const newGradeEntity = this._entity && this._entity.getSubEntityByClass(Classes.activities.associateGrade.newGrade);
-		return newGradeEntity && newGradeEntity.hasActionByName(Actions.activities.associateGrade.chooseType);
+		const newGradeEntity = this._getNewGradeEntity();
+		return typeof newGradeEntity !== 'undefined' && newGradeEntity.hasActionByName(Actions.activities.associateGrade.chooseType);
 	}
 
 	async setGradebookStatus(newStatus, gradeName, maxPoints) {
