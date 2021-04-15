@@ -146,9 +146,9 @@ describe('CategoriesEntity', () => {
 		});
 
 		it('skips save if not editable', async() => {
-			var assignmentEntity = new CategoriesEntity(nonEditableEntity);
+			var categoriesEntity = new CategoriesEntity(nonEditableEntity);
 
-			await assignmentEntity.save({
+			await categoriesEntity.save({
 				categoryId: '123'
 			});
 
