@@ -94,7 +94,8 @@ export const Rels = {
 		groupsHomepage: 'https://assignments.api.brightspace.com/rels/groups-homepage',
 		filesSubmissionLimit: 'https://assignments.api.brightspace.com/rels/files-submission-limit',
 		submissionsRule: 'https://assignments.api.brightspace.com/rels/submissions-rule',
-		notificationEmail: 'https://assignments.api.brightspace.com/rels/notification-email'
+		notificationEmail: 'https://assignments.api.brightspace.com/rels/notification-email',
+		categories: 'https://assignments.api.brightspace.com/rels/categories'
 	},
 	// Awards
 	Awards: {
@@ -269,7 +270,9 @@ export const Classes = {
 		submissionList: 'assignment-submission-list',
 		annotationTools: 'annotations',
 		annotationEnabled: 'enabled',
-		annotationDisabled: 'disabled'
+		annotationDisabled: 'disabled',
+		category: 'category',
+		selected: 'selected'
 	},
 	associations: {
 		singleAssociation: 'single-association',
@@ -480,7 +483,10 @@ export const Actions = {
 		scoreOutOf: {
 			update: 'update'
 		},
-		associateGrade: 'associate-grade',
+		associateGrade: {
+			associateGrade: 'associate-grade',
+			gradebookStatus: 'gradebook-status'
+		},
 		save: 'save',
 		filterWorkToDo: 'filter-work-to-do'
 	},
@@ -500,7 +506,8 @@ export const Actions = {
 		update: 'quick-create-folder',
 		updateFilesSubmissionLimit: 'update-files-submission-limit',
 		updateDefaultScoringRubric: 'update-default-scoring-rubric',
-		updateNotificationEmail: 'update-notification-email'
+		updateNotificationEmail: 'update-notification-email',
+		add: 'add'
 	},
 	content: {
 		updateTitle: 'update-title',
