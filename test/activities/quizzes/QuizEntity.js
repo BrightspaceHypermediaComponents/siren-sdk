@@ -5,7 +5,6 @@ import { editableQuiz } from './data/EditableQuiz.js';
 import { getFormData } from '../../utility/test-helpers.js';
 import { nonEditableQuiz } from './data/NoneditableQuiz';
 import { workingCopyQuiz } from './data/WorkingCopyQuiz';
-import { expect } from 'chai';
 
 describe('QuizEntity', () => {
 	var editableEntity, nonEditableEntity, workingCopyEntity;
