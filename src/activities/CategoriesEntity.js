@@ -1,6 +1,8 @@
 import { Entity } from '../es6/Entity.js';
 import { Classes, Actions } from '../hypermedia-constants.js';
-// import { performSirenAction } from '../es6/SirenAction';
+import { performSirenAction } from '../es6/SirenAction.js';
+
+const UNSET_CATEGORY_ID = '0';
 
 /**
  * CategoriesEntity class representation
@@ -15,11 +17,19 @@ export class CategoriesEntity extends Entity {
 			return;
 		}
 
-		return this._entity.getSubEntitiesByClass(Classes.assignments.category).map((category, index) => ({
-			name: category.properties.name,
-			selected: category.hasClass(Classes.assignments.selected),
-			index
-		}));
+		return this._entity.getSubEntitiesByClass(Classes.assignments.category);
+	}
+	/**
+	 * @returns {Object} Gets category with a selected id
+	*/
+	_getCategoryById(categoryId) {
+		if (categoryId === undefined) return;
+
+		const categories = this.getCategories();
+
+		if (!categories || !categories.length) return;
+
+		return categories.find(category => Number(categoryId) === category.properties.categoryId);
 	}
 
 	/**
@@ -49,5 +59,42 @@ export class CategoriesEntity extends Entity {
 		}
 
 		return selectedCategory;
+	}
+
+	equals(category) {
+		const selectedCategory = this.getSelectedCategory();
+		if (!selectedCategory) {
+			return category.categoryId === selectedCategory;
+		}
+
+		return category.categoryId === selectedCategory.properties.categoryId;
+	}
+
+	async _sendDeselectCategoryAction() {
+		const selectedCategory = this.getSelectedCategory();
+		if (!selectedCategory) return;
+
+		const action = selectedCategory.getActionByName(Actions.assignments.categories.deselect);
+
+		return await performSirenAction(this._token, action);
+	}
+
+	async save(category) {
+		if (!this.canEditCategories()) return;
+
+		if (category.categoryId === UNSET_CATEGORY_ID) {
+			return await this._sendDeselectCategoryAction();
+		}
+
+		const categoryEntity = this._getCategoryById(category.categoryId);
+
+		if (!categoryEntity) return;
+
+		const action = categoryEntity.getActionByName(Actions.assignments.categories.select);
+		if (!action) {
+			return;
+		}
+
+		await performSirenAction(this._token, action);
 	}
 }

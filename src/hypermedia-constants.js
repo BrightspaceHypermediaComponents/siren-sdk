@@ -510,7 +510,11 @@ export const Actions = {
 		updateFilesSubmissionLimit: 'update-files-submission-limit',
 		updateDefaultScoringRubric: 'update-default-scoring-rubric',
 		updateNotificationEmail: 'update-notification-email',
-		add: 'add'
+		add: 'add',
+		categories: {
+			select: 'select',
+			deselect: 'deselect'
+		}
 	},
 	content: {
 		updateTitle: 'update-title',

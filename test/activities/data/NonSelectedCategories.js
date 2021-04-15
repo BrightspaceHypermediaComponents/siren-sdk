@@ -12,7 +12,8 @@ export const nonSelectedCategories = {
 				'item'
 			],
 			'properties': {
-				'name': 'category1'
+				'name': 'category1',
+				'categoryId': '123'
 			},
 		},
 		{
@@ -23,7 +24,8 @@ export const nonSelectedCategories = {
 				'item'
 			],
 			'properties': {
-				'name': 'category2'
+				'name': 'category2',
+				'categoryId': '123'
 			},
 		},
 	],
