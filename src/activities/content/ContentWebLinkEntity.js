@@ -41,7 +41,7 @@ export class ContentWebLinkEntity extends Entity {
 	}
 
 	/**
-	 * @returns {string} activity usage link
+	 * @returns {string|null} activity usage link
 	 */
 	getActivityUsageHref() {
 		return ContentHelperFunctions.getHrefFromRel(Rels.Activities.activityUsage, this._entity);
