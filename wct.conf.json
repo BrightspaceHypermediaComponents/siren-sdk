@@ -24,9 +24,10 @@
 					"version": ""
 				},
 				{
+          "base": "SauceLabs",
 					"browserName": "microsoftedge",
 					"platform": "Windows 10",
-					"version": ""
+					"version": "latest"
 				}
 			]
 		}
