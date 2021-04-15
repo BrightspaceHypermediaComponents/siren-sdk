@@ -45,6 +45,9 @@ export const newGradeEditable = {
 			'class': [
 				'new-grade', 'numeric'
 			],
+			'rel': [
+				'new-grade'
+			],
 			'properties': {
 				'name': 'Homework 1',
 				'maxPoints': 150
