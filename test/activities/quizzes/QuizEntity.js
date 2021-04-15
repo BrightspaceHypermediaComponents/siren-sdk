@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* global fetchMock */
 
 import { QuizEntity } from '../../../src/activities/quizzes/QuizEntity.js';
@@ -48,6 +49,9 @@ describe('QuizEntity', () => {
 
 		it('returns true when equal', () => {
 			var quizEntity = new QuizEntity(editableEntity);
+			console.log('****************************');
+			console.log('quiz entity: ' + quizEntity);
+			console.log('modifiedEntity: ' + modifiedEntity);
 			expect(quizEntity.equals(modifiedEntity)).to.be.true;
 		});
 
