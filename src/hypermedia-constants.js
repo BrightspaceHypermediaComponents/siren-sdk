@@ -155,6 +155,7 @@ export const Rels = {
 	Quizzes: {
 		description: 'https://quizzes.api.brightspace.com/rels/description',
 		header: 'https://quizzes.api.brightspace.com/rels/header',
+		footer: 'https://quizzes.api.brightspace.com/rels/footer',
 		shuffle: 'https://quizzes.api.brightspace.com/rels/shuffle',
 		hints: 'https://quizzes.api.brightspace.com/rels/has-hints',
 		disableRightClick: 'https://quizzes.api.brightspace.com/rels/disable-right-click',
@@ -362,6 +363,8 @@ export const Classes = {
 		introIsAppendedToDescription: 'intro-is-appended-to-description',
 		header: 'header',
 		headerIsDisplayed: 'header-is-displayed',
+		footer: 'footer',
+		footerIsDisplayed: 'footer-is-displayed',
 		shuffle: 'shuffle',
 		hints: 'has-hints',
 		disableRightClick: 'disable-right-click',
@@ -599,6 +602,7 @@ export const Actions = {
 		delete: 'delete-quiz',
 		updateDescription: 'update-description',
 		updateHeader: 'update-header',
+		updateFooter: 'update-footer',
 		timing: {
 			updateType: 'update-timing-type',
 			updateTimeLimit: 'update-timing-time-limit',
