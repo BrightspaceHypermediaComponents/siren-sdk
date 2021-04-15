@@ -154,7 +154,7 @@ export const Rels = {
 	Quizzes: {
 		description: 'https://quizzes.api.brightspace.com/rels/description',
 		header: 'https://quizzes.api.brightspace.com/rels/header',
-		footer: 'https//quizzes.api.brightspace.com/rels/footer',
+		footer: 'https://quizzes.api.brightspace.com/rels/footer',
 		shuffle: 'https://quizzes.api.brightspace.com/rels/shuffle',
 		hints: 'https://quizzes.api.brightspace.com/rels/has-hints',
 		disableRightClick: 'https://quizzes.api.brightspace.com/rels/disable-right-click',
