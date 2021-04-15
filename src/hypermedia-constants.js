@@ -113,7 +113,8 @@ export const Rels = {
 		moduleEntity: 'https://modules.api.brightspace.com/rels/content-module',
 		weblinkEntity: 'https://weblinks.api.brightspace.com/rels/content-weblink',
 		ltilinkEntity: 'https://weblinks.api.brightspace.com/rels/content-ltilink',
-		htmlFileEntity: 'https://content.api.brightspace.com/rels/content-html-file'
+		htmlFileEntity: 'https://content.api.brightspace.com/rels/content-html-file',
+		lessonViewPage: 'https://content.api.brightspace.com/rels/lesson-view-page'
 	},
 	// Parents API sub-domain rels
 	Parents: {
