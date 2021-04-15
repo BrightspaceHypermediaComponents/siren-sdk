@@ -67,7 +67,7 @@ export class CategoriesEntity extends Entity {
 			return category.categoryId === selectedCategory;
 		}
 
-		return category.categoryId === this.getSelectedCategory().properties.categoryId;
+		return category.categoryId === selectedCategory.properties.categoryId;
 	}
 
 	async _sendDeselectCategoryAction() {
