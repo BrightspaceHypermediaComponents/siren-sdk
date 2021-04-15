@@ -29,7 +29,7 @@ export class CategoriesEntity extends Entity {
 
 		if (!categories || !categories.length) return;
 
-		return categories.find(category => Number(categoryId) === category.properties.categoryId);
+		return categories.find(category => Number(categoryId) === Number(category.properties.categoryId));
 	}
 
 	/**
@@ -70,31 +70,49 @@ export class CategoriesEntity extends Entity {
 		return category.categoryId === selectedCategory.properties.categoryId;
 	}
 
-	async _sendDeselectCategoryAction() {
+	_generateDeselectCategoryAction() {
 		const selectedCategory = this.getSelectedCategory();
 		if (!selectedCategory) return;
 
 		const action = selectedCategory.getActionByName(Actions.assignments.categories.deselect);
 
-		return await performSirenAction(this._token, action);
+		return { action };
+	}
+
+	_generateNewCategoryAction(categoryName) {
+		const newCategoryAction = this._entity.getActionByName(Actions.assignments.categories.add);
+		if (!newCategoryAction) return;
+		const currentFields = newCategoryAction.getFieldByName('categoryName');
+		currentFields.value = categoryName;
+
+		return { action: newCategoryAction, fields: [currentFields] };
+	}
+
+	_generateSelectCategoryAction(category) {
+		const categoryEntity = this._getCategoryById(category.categoryId);
+		const selectCategoryAction = categoryEntity && categoryEntity.getActionByName(Actions.assignments.categories.select);
+
+		if (selectCategoryAction) {
+			return { action: selectCategoryAction };
+		}
 	}
 
 	async save(category) {
 		if (!this.canEditCategories()) return;
 
-		if (category.categoryId === UNSET_CATEGORY_ID) {
-			return await this._sendDeselectCategoryAction();
+		const actions = [];
+		if (category.categoryId && category.categoryId !== UNSET_CATEGORY_ID) {
+			actions.push(this._generateSelectCategoryAction(category));
 		}
 
-		const categoryEntity = this._getCategoryById(category.categoryId);
-
-		if (!categoryEntity) return;
-
-		const action = categoryEntity.getActionByName(Actions.assignments.categories.select);
-		if (!action) {
-			return;
+		if (category.categoryId && category.categoryId === UNSET_CATEGORY_ID) {
+			actions.push(this._generateDeselectCategoryAction());
 		}
 
-		await performSirenAction(this._token, action);
+		if (category.categoryName) {
+			actions.push(this._generateNewCategoryAction(category.categoryName));
+		}
+
+		await Promise.all(actions.map(({ action, fields }) => performSirenAction(this._token, action, fields)));
 	}
 }
