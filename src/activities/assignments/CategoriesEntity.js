@@ -1,6 +1,6 @@
-import { Entity } from '../es6/Entity.js';
-import { Classes, Actions } from '../hypermedia-constants.js';
-import { performSirenAction } from '../es6/SirenAction.js';
+import { Entity } from '../../es6/Entity.js';
+import { Classes, Actions } from '../../hypermedia-constants.js';
+import { performSirenAction } from '../../es6/SirenAction.js';
 
 const UNSET_CATEGORY_ID = '0';
 
@@ -100,19 +100,19 @@ export class CategoriesEntity extends Entity {
 	async save(category) {
 		if (!this.canEditCategories()) return;
 
-		const actions = [];
 		if (category.categoryId && category.categoryId !== UNSET_CATEGORY_ID) {
-			actions.push(this._generateSelectCategoryAction(category));
+			const { action, fields } = this._generateSelectCategoryAction(category);
+			return await performSirenAction(this._token, action, fields);
 		}
 
 		if (category.categoryId && category.categoryId === UNSET_CATEGORY_ID) {
-			actions.push(this._generateDeselectCategoryAction());
+			const { action, fields } = this._generateDeselectCategoryAction();
+			return await performSirenAction(this._token, action, fields);
 		}
 
 		if (category.categoryName) {
-			actions.push(this._generateNewCategoryAction(category.categoryName));
+			const { action, fields } = this._generateNewCategoryAction(category.categoryName);
+			return await performSirenAction(this._token, action, fields);
 		}
-
-		await Promise.all(actions.map(({ action, fields }) => performSirenAction(this._token, action, fields)));
 	}
 }
