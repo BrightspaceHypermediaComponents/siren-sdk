@@ -1,21 +1,21 @@
 /* global fetchMock */
 
-import { CategoriesEntity } from '../../src/activities/CategoriesEntity.js';
+import { CategoriesEntity } from '../../../src/activities/assignments/CategoriesEntity.js';
 import { nonEditableCategories } from './data/NonEdtiableCategories.js';
 import { editableCategories } from './data/EditableCategories.js';
 import { emptyCategories } from './data/EmptyCategories.js';
 import { nonSelectedCategories } from './data/NonSelectedCategories';
-// import { getFormData } from '../utility/test-helpers.js';
+import { getFormData } from '../../utility/test-helpers.js';
 
 const expectedCategory = {
 	'rel':['item'],
 	'properties':{'name':'category1', 'categoryId': '123'},
 	'class':['category', 'selected'],
-	'actions':[{'name':'update',
+	'actions':[{'name':'select',
 		'href':'https://afe99802-9130-4320-a770-8d138b941e74.assignments.api.proddev.d2l/6606/folders/13',
 		'method':'PATCH',
 		'type':'application/x-www-form-urlencoded',
-		'fields':[{'name':'categoryId', 'type':'hidden', 'value':'1000'}]}]
+		'fields':[{'name':'categoryId', 'type':'hidden', 'value':'123'}]}]
 };
 
 describe('CategoriesEntity', () => {
@@ -118,40 +118,45 @@ describe('CategoriesEntity', () => {
 		});
 	});
 
-	// describe('Saves', () => {
-	// 	it('saves categoryId', async() => {
-	// 		await fetchMock.patchOnce('https://afe99802-9130-4320-a770-8d138b941e74.assignments.api.proddev.d2l/6606/folders/13/categories', editableEntity);
+	describe('Saves', () => {
+		it('saves categoryId', async() => {
+			await fetchMock.patchOnce('https://afe99802-9130-4320-a770-8d138b941e74.assignments.api.proddev.d2l/6606/folders/13', editableEntity);
 
-	// 		var categoriesEntity = new CategoriesEntity(editableEntity);
+			var categoriesEntity = new CategoriesEntity(editableEntity);
 
-	// 		await categoriesEntity.save({
-	// 			categoryId: '123',
-	// 		});
-	// 		const form = await getFormData(fetchMock.lastCall().request);
-	// 		if (!form.notSupported) {
-	// 			expect(form.get('categoryId')).to.equal('123');
-	// 		}
-	// 		expect(fetchMock.called()).to.be.true;
-	// 	});
+			await categoriesEntity.save({
+				categoryId: '123',
+			});
+			const form = await getFormData(fetchMock.lastCall().request);
+			if (!form.notSupported) {
+				expect(form.get('categoryId')).to.equal('123');
+			}
+			expect(fetchMock.called()).to.be.true;
+		});
 
-	// 	it('skips save if not dirty', async() => {
-	// 		var categoriesEntity = new CategoriesEntity(editableEntity);
+		it('saves name', async() => {
+			await fetchMock.postOnce('https://afe99802-9130-4320-a770-8d138b941e74.assignments.api.proddev.d2l/6606/folders/13/categories', editableEntity);
 
-	// 		await categoriesEntity.save({
-	// 			categoryId: '123',
-	// 		});
+			var categoriesEntity = new CategoriesEntity(editableEntity);
 
-	// 		expect(fetchMock.done());
-	// 	});
+			await categoriesEntity.save({
+				categoryName: 'Murphys Law',
+			});
+			const form = await getFormData(fetchMock.lastCall().request);
+			if (!form.notSupported) {
+				expect(form.get('categoryName')).to.equal('Murphys Law');
+			}
+			expect(fetchMock.called()).to.be.true;
+		});
 
-	// 	it('skips save if not editable', async() => {
-	// 		var categoriesEntity = new CategoriesEntity(nonEditableEntity);
+		it('skips save if not editable', async() => {
+			var categoriesEntity = new CategoriesEntity(nonEditableEntity);
 
-	// 		await categoriesEntity.save({
-	// 			categoryId: '123'
-	// 		});
+			await categoriesEntity.save({
+				categoryId: '123'
+			});
 
-	// 		expect(fetchMock.done());
-	// 	});
-	// });
+			expect(fetchMock.done());
+		});
+	});
 });
