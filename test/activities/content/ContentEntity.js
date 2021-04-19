@@ -1,5 +1,5 @@
 import { ContentEntity, CONTENT_TYPES } from '../../../src/activities/content/ContentEntity.js';
-import { contentModuleEntityData, contentWebLinkEntityData, contentLTILinkEntityData, contentHtmlFileEntityData } from './data/TestContentEntity.js';
+import { contentModuleEntityData, contentWebLinkEntityData, contentLTILinkEntityData, contentFileEntityData } from './data/TestContentEntity.js';
 
 describe('Module ContentEntity', () => {
 	let contentData;
@@ -55,20 +55,20 @@ describe('LTI Link ContentEntity', () => {
 	});
 });
 
-describe('Html File ContentEntity', () => {
+describe('File ContentEntity', () => {
 	let contentData;
 	let contentEntity;
 
 	beforeEach(() => {
-		contentData = window.D2L.Hypermedia.Siren.Parse(contentHtmlFileEntityData);
+		contentData = window.D2L.Hypermedia.Siren.Parse(contentFileEntityData);
 		contentEntity = new ContentEntity(contentData);
 	});
 
-	it('gets html file entity type', () => {
-		expect(contentEntity.getEntityType()).to.equal(CONTENT_TYPES.htmlfile);
+	it('gets file entity type', () => {
+		expect(contentEntity.getEntityType()).to.equal(CONTENT_TYPES.contentFile);
 	});
 
-	it('gets content-htmlfile href', () => {
-		expect(contentEntity.getHtmlFileHref()).to.equal('https://fake-tenant-id.content.api.proddev.d2l/6613/files/html/12345');
+	it('gets content-file href', () => {
+		expect(contentEntity.getContentFileHref()).to.equal('https://fake-tenant-id.content.api.proddev.d2l/6613/files/12345');
 	});
 });
