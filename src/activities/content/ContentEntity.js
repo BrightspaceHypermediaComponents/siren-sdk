@@ -39,30 +39,38 @@ export class ContentEntity extends Entity {
 	}
 
 	/**
-	 * @returns {string} content-module link
+	 * @returns {string|null} content-module link
 	 */
 	getModuleHref() {
 		return ContentHelperFunctions.getHrefFromRel(Rels.Content.moduleEntity, this._entity);
 	}
 
 	/**
-	 * @returns {string} content-weblink link
+	 * @returns {string|null} content-weblink link
 	 */
 	getWebLinkHref() {
 		return ContentHelperFunctions.getHrefFromRel(Rels.Content.weblinkEntity, this._entity);
 	}
 
 	/**
-	 * @returns {string} content-ltilink link
+	 * @returns {string|null} content-ltilink link
 	 */
 	getLTILinkHref() {
 		return ContentHelperFunctions.getHrefFromRel(Rels.Content.ltilinkEntity, this._entity);
 	}
 
 	/**
-	 * @returns {string} content-file link
+	 * @returns {string|null} content-file link
 	 */
 	getContentFileHref() {
 		return ContentHelperFunctions.getHrefFromRel(Rels.Content.contentFileEntity, this._entity);
 	}
+
+	/**
+	 * @returns {string|null} lesson-view-page link
+	 */
+	getLessonViewPageHref() {
+		return ContentHelperFunctions.getHrefFromRel(Rels.Content.lessonViewPage, this._entity);
+	}
+
 }
