@@ -95,6 +95,24 @@ describe('CategoriesEntity', () => {
 		});
 	});
 
+	describe('Can add', () => {
+		it('sets canAddCategories to true', () => {
+			var categoriesEntity = new CategoriesEntity(editableEntity);
+
+			const res = categoriesEntity.canAddCategories();
+			expect(res).to.be.true;
+		});
+	});
+
+	describe('Cannot add', () => {
+		it('sets canAddCategories to false', () => {
+			var categoriesEntity = new CategoriesEntity(nonEditableEntity);
+
+			const res = categoriesEntity.canAddCategories();
+			expect(res).to.be.false;
+		});
+	});
+
 	describe('equals', () => {
 		it('returns true when equal', () => {
 			var categoriesEntity = new CategoriesEntity(editableEntity);

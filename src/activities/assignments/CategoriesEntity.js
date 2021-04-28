@@ -33,14 +33,26 @@ export class CategoriesEntity extends Entity {
 	}
 
 	/**
-	 * @returns {Boolean} Whether or not a user can edit categories
+	 * @returns {Boolean} Whether or not a user can add categories
 	*/
-	canEditCategories() {
+	canAddCategories() {
 		if (!this._entity) {
 			return;
 		}
 
 		return this._entity.hasActionByName(Actions.assignments.add);
+	}
+
+	/**
+	 * @returns {Boolean} Whether or not a user can edit categories
+	*/
+	canEditCategories() {
+		const categories = this.getCategories();
+		if (!categories || !categories.length) {
+			return;
+		}
+
+		return categories[0].hasActionByName(Actions.assignments.categories.select);
 	}
 
 	/**
