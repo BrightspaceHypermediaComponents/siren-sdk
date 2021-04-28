@@ -113,7 +113,7 @@ export const Rels = {
 		moduleEntity: 'https://modules.api.brightspace.com/rels/content-module',
 		weblinkEntity: 'https://weblinks.api.brightspace.com/rels/content-weblink',
 		ltilinkEntity: 'https://weblinks.api.brightspace.com/rels/content-ltilink',
-		htmlFileEntity: 'https://content.api.brightspace.com/rels/content-html-file',
+		contentFileEntity: 'https://content.api.brightspace.com/rels/content-file',
 		lessonViewPage: 'https://content.api.brightspace.com/rels/lesson-view-page'
 	},
 	// Parents API sub-domain rels
@@ -332,6 +332,10 @@ export const Classes = {
 		pinned: 'pinned',
 		unpinned: 'unpinned'
 	},
+	files: {
+		file: 'file',
+		html: 'html'
+	},
 	grades: {
 		category: 'grade-category',
 		comments: 'comments',
@@ -533,7 +537,6 @@ export const Actions = {
 		commitWebLink: 'commit'
 	},
 	htmlFile: {
-		deleteHtmlFile: 'delete-htmlfile',
 		updateHtmlContent: 'update-html-content'
 	},
 	notifications: {
@@ -588,7 +591,9 @@ export const Actions = {
 		createPotentialAssociation: 'create-potential-association'
 	},
 	files: {
-		filePreviewLocation: 'file-preview-location'
+		filePreviewLocation: 'file-preview-location',
+		deleteFile: 'delete-content-file'
+
 	},
 	quizzes: {
 		updateName: 'update-name',
