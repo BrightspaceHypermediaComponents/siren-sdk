@@ -52,7 +52,8 @@ export class CategoriesEntity extends Entity {
 			return;
 		}
 
-		return categories[0].hasActionByName(Actions.assignments.categories.select);
+		return (categories[0].hasActionByName(Actions.assignments.categories.select)
+			|| categories[0].hasActionByName(Actions.assignments.categories.deselect));
 	}
 
 	/**
