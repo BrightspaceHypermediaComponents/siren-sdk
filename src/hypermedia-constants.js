@@ -273,7 +273,8 @@ export const Classes = {
 		annotationEnabled: 'enabled',
 		annotationDisabled: 'disabled',
 		category: 'category',
-		selected: 'selected'
+		selected: 'selected',
+		collection: 'collection'
 	},
 	associations: {
 		singleAssociation: 'single-association',

@@ -47,13 +47,11 @@ export class CategoriesEntity extends Entity {
 	 * @returns {Boolean} Whether or not a user can edit categories
 	*/
 	canEditCategories() {
-		const categories = this.getCategories();
-		if (!categories || !categories.length) {
+		if (!this._entity) {
 			return;
 		}
 
-		return (categories[0].hasActionByName(Actions.assignments.categories.select)
-			|| categories[0].hasActionByName(Actions.assignments.categories.deselect));
+		return this._entity.hasClass(Classes.assignments.collection);
 	}
 
 	/**
@@ -83,7 +81,11 @@ export class CategoriesEntity extends Entity {
 		return category.categoryId === selectedCategory.properties.categoryId;
 	}
 
-	_generateDeselectCategoryAction() {
+	_generateDeselectCategoryAction(category) {
+		if (!this._hasCategoryIdChanged(category.categoryId)) {
+			return;
+		}
+
 		const selectedCategory = this.getSelectedCategory();
 		if (!selectedCategory) return;
 
@@ -102,6 +104,10 @@ export class CategoriesEntity extends Entity {
 	}
 
 	_generateSelectCategoryAction(category) {
+		if (!this._hasCategoryIdChanged(category.categoryId)) {
+			return;
+		}
+
 		const categoryEntity = this._getCategoryById(category.categoryId);
 		const selectCategoryAction = categoryEntity && categoryEntity.getActionByName(Actions.assignments.categories.select);
 
@@ -110,8 +116,15 @@ export class CategoriesEntity extends Entity {
 		}
 	}
 
+	_hasCategoryIdChanged(categoryId) {
+		const selectedCategory = this.getSelectedCategory();
+		const initialId = selectedCategory && selectedCategory.categoryId;
+
+		return categoryId !== initialId;
+	}
+
 	async save(category) {
-		if (!this.canEditCategories()) return;
+		if (!this.canAddCategories()) return;
 
 		if (category.categoryId && category.categoryId !== UNSET_CATEGORY_ID) {
 			const { action, fields } = this._generateSelectCategoryAction(category);
@@ -119,7 +132,7 @@ export class CategoriesEntity extends Entity {
 		}
 
 		if (category.categoryId && category.categoryId === UNSET_CATEGORY_ID) {
-			const { action, fields } = this._generateDeselectCategoryAction();
+			const { action, fields } = this._generateDeselectCategoryAction(category);
 			return await performSirenAction(this._token, action, fields);
 		}
 
