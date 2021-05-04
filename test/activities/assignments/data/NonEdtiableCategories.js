@@ -1,7 +1,6 @@
 export const nonEditableCategories = {
 	'class': [
 		'categories',
-		'collection'
 	],
 	'entities': [
 		{

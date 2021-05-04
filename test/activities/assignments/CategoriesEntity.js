@@ -143,11 +143,11 @@ describe('CategoriesEntity', () => {
 			var categoriesEntity = new CategoriesEntity(editableEntity);
 
 			await categoriesEntity.save({
-				categoryId: '123',
+				categoryId: '456',
 			});
 			const form = await getFormData(fetchMock.lastCall().request);
 			if (!form.notSupported) {
-				expect(form.get('categoryId')).to.equal('123');
+				expect(form.get('categoryId')).to.equal('456');
 			}
 			expect(fetchMock.called()).to.be.true;
 		});

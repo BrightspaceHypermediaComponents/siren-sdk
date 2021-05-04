@@ -47,13 +47,11 @@ export class CategoriesEntity extends Entity {
 	 * @returns {Boolean} Whether or not a user can edit categories
 	*/
 	canEditCategories() {
-		const categories = this.getCategories();
-		if (!categories || !categories.length) {
+		if (!this._entity) {
 			return;
 		}
 
-		return (categories[0].hasActionByName(Actions.assignments.categories.select)
-			|| categories[0].hasActionByName(Actions.assignments.categories.deselect));
+		return this._entity.hasClass(Classes.assignments.collection);
 	}
 
 	/**
@@ -74,16 +72,26 @@ export class CategoriesEntity extends Entity {
 		return selectedCategory;
 	}
 
+	getSelectedCategoryName() {
+		if (!this._entity) {
+			return;
+		}
+
+		return this._entity.properties.selectedCategory;
+	}
+
 	equals(category) {
 		const selectedCategory = this.getSelectedCategory();
 		if (!selectedCategory) {
 			return category.categoryId === selectedCategory;
 		}
 
-		return category.categoryId === selectedCategory.properties.categoryId;
+		return Number(category.categoryId) === Number(selectedCategory.properties.categoryId);
 	}
 
 	_generateDeselectCategoryAction() {
+		if (!this.canEditCategories()) return;
+
 		const selectedCategory = this.getSelectedCategory();
 		if (!selectedCategory) return;
 
@@ -93,6 +101,8 @@ export class CategoriesEntity extends Entity {
 	}
 
 	_generateNewCategoryAction(categoryName) {
+		if (!this.canAddCategories()) return;
+
 		const newCategoryAction = this._entity.getActionByName(Actions.assignments.categories.add);
 		if (!newCategoryAction) return;
 		const currentFields = newCategoryAction.getFieldByName('categoryName');
@@ -102,6 +112,8 @@ export class CategoriesEntity extends Entity {
 	}
 
 	_generateSelectCategoryAction(category) {
+		if (!this.canEditCategories()) return;
+
 		const categoryEntity = this._getCategoryById(category.categoryId);
 		const selectCategoryAction = categoryEntity && categoryEntity.getActionByName(Actions.assignments.categories.select);
 
@@ -110,22 +122,32 @@ export class CategoriesEntity extends Entity {
 		}
 	}
 
-	async save(category) {
-		if (!this.canEditCategories()) return;
+	_hasCategoryIdChanged(categoryId) {
+		const selectedCategory = this.getSelectedCategory();
+		const initialId = selectedCategory && selectedCategory.properties.categoryId;
 
-		if (category.categoryId && category.categoryId !== UNSET_CATEGORY_ID) {
-			const { action, fields } = this._generateSelectCategoryAction(category);
-			return await performSirenAction(this._token, action, fields);
+		return categoryId !== initialId;
+	}
+
+	async save(category) {
+		const hasCategoryIdChanged = category.categoryId && this._hasCategoryIdChanged(category.categoryId);
+
+		if (hasCategoryIdChanged && category.categoryId !== UNSET_CATEGORY_ID) {
+			const { action, fields } = this._generateSelectCategoryAction(category) || {};
+
+			return action && await performSirenAction(this._token, action, fields);
 		}
 
-		if (category.categoryId && category.categoryId === UNSET_CATEGORY_ID) {
-			const { action, fields } = this._generateDeselectCategoryAction();
-			return await performSirenAction(this._token, action, fields);
+		if (hasCategoryIdChanged && category.categoryId === UNSET_CATEGORY_ID) {
+			const { action, fields } = this._generateDeselectCategoryAction(category) || {};
+
+			return action && await performSirenAction(this._token, action, fields);
 		}
 
 		if (category.categoryName) {
-			const { action, fields } = this._generateNewCategoryAction(category.categoryName);
-			return await performSirenAction(this._token, action, fields);
+			const { action, fields } = this._generateNewCategoryAction(category.categoryName) || {};
+
+			return action && await performSirenAction(this._token, action, fields);
 		}
 	}
 }
