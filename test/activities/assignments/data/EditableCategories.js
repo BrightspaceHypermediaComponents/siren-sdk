@@ -66,7 +66,7 @@ export const editableCategories = {
 			],
 			'properties': {
 				'name': 'category3',
-				'categoryId': '123'
+				'categoryId': '456'
 			},
 			'actions': [
 				{
@@ -77,7 +77,7 @@ export const editableCategories = {
 						{
 							'type': 'hidden',
 							'name': 'categoryId',
-							'value': '1002'
+							'value': '456'
 						}
 					]
 				}
