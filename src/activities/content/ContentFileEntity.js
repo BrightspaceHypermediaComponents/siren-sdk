@@ -35,7 +35,7 @@ export class ContentFileEntity extends ContentWorkingCopyEntity {
 	}
 
 	/**
-	 * @returns {string|null} activity usage link
+	 * @returns {string|null} Activity usage link
 	 */
 	getActivityUsageHref() {
 		return ContentHelperFunctions.getHrefFromRel(Rels.Activities.activityUsage, this._entity);
