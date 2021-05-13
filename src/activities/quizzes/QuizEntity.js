@@ -1,6 +1,7 @@
 import { Entity } from '../../es6/Entity';
 import { Actions, Rels, Classes } from '../../hypermedia-constants';
 import { performSirenAction, performSirenActions } from '../../es6/SirenAction';
+import { ActivityTypeEntity } from './types/ActivityTypeEntity';
 
 /**
  * QuizEntity class representation of a d2l Quiz.
@@ -982,5 +983,24 @@ export class QuizEntity extends Entity {
 			if (!entity) return;
 			return new QuizEntity(entity, this._token);
 		}
+	}
+
+	async activityTypes() {
+		const action = this._entity.getActionByName(Actions.quizzes.getActivityTypes);
+		if (!action) {
+			return;
+		}
+
+		const types = await performSirenAction(this._token, action);
+		if (!types || !types.entities) {
+			return;
+		}
+
+		const items = types.getSubEntitiesByRel('item');
+		if (!items || !items.length) {
+			return;
+		}
+
+		return items.map(item => new ActivityTypeEntity(item));
 	}
 }

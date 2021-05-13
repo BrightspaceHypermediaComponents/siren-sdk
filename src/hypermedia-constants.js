@@ -393,6 +393,11 @@ export const Classes = {
 		ip: {
 			restrictions: 'ip-restrictions',
 			range: 'ip-range'
+		},
+		types: {
+			grouping: 'grouping',
+			question: 'question',
+			external: 'external'
 		}
 	},
 	text: {
@@ -610,6 +615,7 @@ export const Actions = {
 		updateDescription: 'update-description',
 		updateHeader: 'update-header',
 		updateFooter: 'update-footer',
+		getActivityTypes: 'get-activity-types',
 		timing: {
 			updateType: 'update-timing-type',
 			updateTimeLimit: 'update-timing-time-limit',
