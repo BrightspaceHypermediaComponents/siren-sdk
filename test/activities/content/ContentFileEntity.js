@@ -92,7 +92,9 @@ describe('ContentFileEntity', () => {
 		it('can get file href', () => {
 			expect(contentFileEntity.getFileHref()).to.equal('https://fake-tenant-id.files.api.proddev.d2l/my-file.file/usages/6614');
 		});
+	});
 
+	describe('Classes', () => {
 		it('can get file type', () => {
 			expect(contentFileEntity.getFileType()).to.equal('html');
 		});

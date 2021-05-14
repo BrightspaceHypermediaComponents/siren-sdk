@@ -1,10 +1,14 @@
-import { Actions, Rels, Classes } from '../../hypermedia-constants.js';
+import { Actions, Rels } from '../../hypermedia-constants.js';
 import { performSirenAction } from '../../es6/SirenAction.js';
 import ContentHelperFunctions from './ContentHelperFunctions.js';
 import { ContentWorkingCopyEntity } from './ContentWorkingCopyEntity.js';
 
 export const FILE_TYPES = {
 	html: 'html',
+};
+
+const CLASS_FILE_TYPE_MAP = {
+	html: FILE_TYPES.html,
 };
 
 /**
@@ -126,12 +130,15 @@ export class ContentFileEntity extends ContentWorkingCopyEntity {
 	 * @returns {string|null} Returns the File type
 	 */
 	getFileType() {
-		if (!this._entity && !this._entity.hasLinkByClass(Classes.files.file)) {
+		if (!this._entity) {
 			return null;
-		} else if (this._entity.hasLinkByClass(Classes.files.html)) {
-			return FILE_TYPES.html;
 		}
 
+		for (const [key, value] of Object.entries(CLASS_FILE_TYPE_MAP)) {
+			if (this._entity.hasClass(key)) {
+				return value;
+			}
+		}
 		return null;
 	}
 }

@@ -34,7 +34,8 @@ export const contentFileData = {
 	],
 	'class': [
 		'describable-entity',
-		'topic'
+		'content-file',
+		'html'
 	],
 	'properties': {
 		'title': 'Test File Title',
@@ -51,7 +52,6 @@ export const contentFileData = {
 		],
 		'class': [
 			'file',
-			'html'
 		],
 		'type': 'application/vnd.siren+json',
 		'href': 'https://fake-tenant-id.files.api.proddev.d2l/my-file.file/usages/6614'
