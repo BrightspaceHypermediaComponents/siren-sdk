@@ -230,6 +230,9 @@ export const Rels = {
 export const Classes = {
 	activities: {
 		assigned: 'assigned',
+		associateGrade: {
+			newGrade: 'new-grade'
+		},
 		complete: 'complete',
 		completion: 'completion',
 		draft: 'draft',
@@ -498,7 +501,8 @@ export const Actions = {
 		},
 		associateGrade: {
 			associateGrade: 'associate-grade',
-			gradebookStatus: 'gradebook-status'
+			gradebookStatus: 'gradebook-status',
+			chooseType: 'choose-type'
 		},
 		save: 'save',
 		filterWorkToDo: 'filter-work-to-do'
