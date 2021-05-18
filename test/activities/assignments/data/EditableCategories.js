@@ -13,18 +13,19 @@ export const editableCategories = {
 				'item'
 			],
 			'properties': {
-				'name': 'category1'
+				'name': 'category1',
+				'categoryId': '123'
 			},
 			'actions': [
 				{
 					'href': 'https://afe99802-9130-4320-a770-8d138b941e74.assignments.api.proddev.d2l/6606/folders/13',
-					'name': 'update',
+					'name': 'select',
 					'method': 'PATCH',
 					'fields': [
 						{
 							'type': 'hidden',
 							'name': 'categoryId',
-							'value': '1000'
+							'value': '123'
 						}
 					]
 				}
@@ -38,12 +39,13 @@ export const editableCategories = {
 				'item'
 			],
 			'properties': {
-				'name': 'category2'
+				'name': 'category2',
+				'categoryId': '123'
 			},
 			'actions': [
 				{
 					'href': 'https://afe99802-9130-4320-a770-8d138b941e74.assignments.api.proddev.d2l/6606/folders/13',
-					'name': 'update',
+					'name': 'select',
 					'method': 'PATCH',
 					'fields': [
 						{
@@ -63,18 +65,19 @@ export const editableCategories = {
 				'item'
 			],
 			'properties': {
-				'name': 'category3'
+				'name': 'category3',
+				'categoryId': '456'
 			},
 			'actions': [
 				{
 					'href': 'https://afe99802-9130-4320-a770-8d138b941e74.assignments.api.proddev.d2l/6606/folders/13',
-					'name': 'update',
+					'name': 'select',
 					'method': 'PATCH',
 					'fields': [
 						{
 							'type': 'hidden',
 							'name': 'categoryId',
-							'value': '1002'
+							'value': '456'
 						}
 					]
 				}

@@ -113,7 +113,8 @@ export const Rels = {
 		moduleEntity: 'https://modules.api.brightspace.com/rels/content-module',
 		weblinkEntity: 'https://weblinks.api.brightspace.com/rels/content-weblink',
 		ltilinkEntity: 'https://weblinks.api.brightspace.com/rels/content-ltilink',
-		htmlFileEntity: 'https://content.api.brightspace.com/rels/content-html-file'
+		contentFileEntity: 'https://content.api.brightspace.com/rels/content-file',
+		lessonViewPage: 'https://content.api.brightspace.com/rels/lesson-view-page'
 	},
 	// Parents API sub-domain rels
 	Parents: {
@@ -154,6 +155,7 @@ export const Rels = {
 	Quizzes: {
 		description: 'https://quizzes.api.brightspace.com/rels/description',
 		header: 'https://quizzes.api.brightspace.com/rels/header',
+		footer: 'https://quizzes.api.brightspace.com/rels/footer',
 		shuffle: 'https://quizzes.api.brightspace.com/rels/shuffle',
 		hints: 'https://quizzes.api.brightspace.com/rels/has-hints',
 		disableRightClick: 'https://quizzes.api.brightspace.com/rels/disable-right-click',
@@ -274,7 +276,8 @@ export const Classes = {
 		annotationEnabled: 'enabled',
 		annotationDisabled: 'disabled',
 		category: 'category',
-		selected: 'selected'
+		selected: 'selected',
+		collection: 'collection'
 	},
 	associations: {
 		singleAssociation: 'single-association',
@@ -333,6 +336,10 @@ export const Classes = {
 		pinned: 'pinned',
 		unpinned: 'unpinned'
 	},
+	files: {
+		file: 'file',
+		html: 'html'
+	},
 	grades: {
 		category: 'grade-category',
 		comments: 'comments',
@@ -364,6 +371,8 @@ export const Classes = {
 		introIsAppendedToDescription: 'intro-is-appended-to-description',
 		header: 'header',
 		headerIsDisplayed: 'header-is-displayed',
+		footer: 'footer',
+		footerIsDisplayed: 'footer-is-displayed',
 		shuffle: 'shuffle',
 		hints: 'has-hints',
 		disableRightClick: 'disable-right-click',
@@ -387,6 +396,11 @@ export const Classes = {
 		ip: {
 			restrictions: 'ip-restrictions',
 			range: 'ip-range'
+		},
+		types: {
+			grouping: 'grouping',
+			question: 'question',
+			external: 'external'
 		}
 	},
 	text: {
@@ -510,7 +524,12 @@ export const Actions = {
 		updateFilesSubmissionLimit: 'update-files-submission-limit',
 		updateDefaultScoringRubric: 'update-default-scoring-rubric',
 		updateNotificationEmail: 'update-notification-email',
-		add: 'add'
+		add: 'add',
+		categories: {
+			select: 'select',
+			deselect: 'deselect',
+			add: 'add'
+		}
 	},
 	content: {
 		updateTitle: 'update-title',
@@ -528,7 +547,6 @@ export const Actions = {
 		commitWebLink: 'commit'
 	},
 	htmlFile: {
-		deleteHtmlFile: 'delete-htmlfile',
 		updateHtmlContent: 'update-html-content'
 	},
 	notifications: {
@@ -583,7 +601,9 @@ export const Actions = {
 		createPotentialAssociation: 'create-potential-association'
 	},
 	files: {
-		filePreviewLocation: 'file-preview-location'
+		filePreviewLocation: 'file-preview-location',
+		deleteFile: 'delete-content-file'
+
 	},
 	quizzes: {
 		updateName: 'update-name',
@@ -598,6 +618,8 @@ export const Actions = {
 		delete: 'delete-quiz',
 		updateDescription: 'update-description',
 		updateHeader: 'update-header',
+		updateFooter: 'update-footer',
+		getActivityTypes: 'get-activity-types',
 		timing: {
 			updateType: 'update-timing-type',
 			updateTimeLimit: 'update-timing-time-limit',

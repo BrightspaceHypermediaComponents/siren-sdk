@@ -1,7 +1,6 @@
 export const nonEditableCategories = {
 	'class': [
 		'categories',
-		'collection'
 	],
 	'entities': [
 		{
@@ -13,7 +12,8 @@ export const nonEditableCategories = {
 				'item'
 			],
 			'properties': {
-				'name': 'category1'
+				'name': 'category1',
+				'categoryId': '123'
 			},
 		},
 		{
@@ -24,7 +24,8 @@ export const nonEditableCategories = {
 				'item'
 			],
 			'properties': {
-				'name': 'category2'
+				'name': 'category2',
+				'categoryId': '123'
 			},
 		},
 		{
@@ -35,7 +36,8 @@ export const nonEditableCategories = {
 				'item'
 			],
 			'properties': {
-				'name': 'category3'
+				'name': 'category3',
+				'categoryId': '123'
 			}
 		}
 	],

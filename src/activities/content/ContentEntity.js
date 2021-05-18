@@ -3,7 +3,7 @@ import { Rels } from '../../hypermedia-constants';
 import ContentHelperFunctions from './ContentHelperFunctions.js';
 
 export const CONTENT_TYPES = {
-	htmlfile: 'htmlfile',
+	contentFile: 'content-file',
 	ltilink: 'ltilink',
 	module: 'module',
 	topic: 'topic',
@@ -29,8 +29,8 @@ export class ContentEntity extends Entity {
 			return CONTENT_TYPES.weblink;
 		} else if (this._entity.hasLinkByRel(Rels.Content.ltilinkEntity)) {
 			return CONTENT_TYPES.ltilink;
-		} else if (this._entity.hasLinkByRel(Rels.Content.htmlFileEntity)) {
-			return CONTENT_TYPES.htmlfile;
+		} else if (this._entity.hasLinkByRel(Rels.Content.contentFileEntity)) {
+			return CONTENT_TYPES.contentFile;
 		} else if (this._entity.hasClass(CONTENT_TYPES.topic)) {
 			return CONTENT_TYPES.topic;
 		} else {
@@ -39,30 +39,38 @@ export class ContentEntity extends Entity {
 	}
 
 	/**
-	 * @returns {string} content-module link
+	 * @returns {string|null} content-module link
 	 */
 	getModuleHref() {
 		return ContentHelperFunctions.getHrefFromRel(Rels.Content.moduleEntity, this._entity);
 	}
 
 	/**
-	 * @returns {string} content-weblink link
+	 * @returns {string|null} content-weblink link
 	 */
 	getWebLinkHref() {
 		return ContentHelperFunctions.getHrefFromRel(Rels.Content.weblinkEntity, this._entity);
 	}
 
 	/**
-	 * @returns {string} content-ltilink link
+	 * @returns {string|null} content-ltilink link
 	 */
 	getLTILinkHref() {
 		return ContentHelperFunctions.getHrefFromRel(Rels.Content.ltilinkEntity, this._entity);
 	}
 
 	/**
-	 * @returns {string} content-htmlfile link
+	 * @returns {string|null} content-file link
 	 */
-	getHtmlFileHref() {
-		return ContentHelperFunctions.getHrefFromRel(Rels.Content.htmlFileEntity, this._entity);
+	getContentFileHref() {
+		return ContentHelperFunctions.getHrefFromRel(Rels.Content.contentFileEntity, this._entity);
 	}
+
+	/**
+	 * @returns {string|null} lesson-view-page link
+	 */
+	getLessonViewPageHref() {
+		return ContentHelperFunctions.getHrefFromRel(Rels.Content.lessonViewPage, this._entity);
+	}
+
 }

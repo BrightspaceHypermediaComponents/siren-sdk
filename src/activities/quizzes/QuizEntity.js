@@ -1,6 +1,7 @@
 import { Entity } from '../../es6/Entity';
 import { Actions, Rels, Classes } from '../../hypermedia-constants';
 import { performSirenAction, performSirenActions } from '../../es6/SirenAction';
+import { ActivityTypeEntity } from './types/ActivityTypeEntity';
 
 /**
  * QuizEntity class representation of a d2l Quiz.
@@ -388,6 +389,97 @@ export class QuizEntity extends Entity {
 	}
 
 	/**
+	 * @returns {string} Quiz footer in plaintext (HTML stripped)
+	 */
+	footerPlaintext() {
+		const footerEntity = this._getFooterEntity();
+		return footerEntity
+			&& footerEntity.properties
+			&& footerEntity.properties.text;
+	}
+
+	/**
+	 * @returns {string} Quiz footer in HTML
+	 */
+	footerHtml() {
+		const footerEntity = this._getFooterEntity();
+		if (!footerEntity || !footerEntity.properties || !footerEntity.properties.html) {
+			return;
+		}
+		return footerEntity.properties.html;
+	}
+
+	/**
+	 * @returns {string} Quiz footer formatted to be used with a d2l-html-editor
+	 */
+	footerEditorHtml() {
+		const footerEntity = this._getFooterEntity();
+		if (!footerEntity) {
+			return;
+		}
+
+		const updateFooterAction = footerEntity.getActionByName(Actions.quizzes.updateFooter);
+		return updateFooterAction
+			&& updateFooterAction.hasFieldByName('footer')
+			&& updateFooterAction.getFieldByName('footer').value;
+	}
+
+	/**
+	 * @returns {bool} Whether or not the edit footer action is present on the quiz entity
+	 */
+	canEditFooter() {
+		const footerEntity = this._getFooterEntity();
+		return footerEntity
+			&& footerEntity.hasActionByName(Actions.quizzes.updateFooter);
+	}
+
+	/**
+	 * Updates the quiz to have the given footer
+	 * @param {string} footer Footer to set on the assignment
+	 */
+	async setFooter(footer) {
+		const footerEntity = this.canEditFooter() && this._getFooterEntity();
+		if (!footerEntity) {
+			return;
+		}
+
+		const action = footerEntity.getActionByName(Actions.quizzes.updateFooter);
+		if (!action) {
+			return;
+		}
+
+		const fields = [{ name: 'footer', value: footer }];
+		await performSirenAction(this._token, action, fields);
+	}
+
+	/**
+	 * @returns {object} Richtext editor config for the quiz footer; for use with d2l-html-editor
+	 */
+	footerRichTextEditorConfig() {
+		const footerEntity = this._getFooterEntity();
+		return footerEntity
+			&& footerEntity.getSubEntityByRel(Rels.richTextEditorConfig);
+	}
+
+	/**
+	 * @returns {bool} Footer is displayed for the quiz entity
+	 */
+	footerIsDisplayed() {
+		const footerEntity = this._getFooterEntity();
+		return footerEntity && footerEntity.hasClass(Classes.quizzes.footerIsDisplayed);
+	}
+
+	/**
+	 * @returns {bool} Footer is initially empty for the quiz entity
+	 */
+	originalFooterIsEmpty() {
+		const footerEntity = this._getFooterEntity();
+		return footerEntity
+			&& footerEntity.properties
+			&& !footerEntity.properties.text;
+	}
+
+	/**
 	 * @returns {string} Timing Href of the quiz entity, if present
 	*/
 	timingHref() {
@@ -432,6 +524,7 @@ export class QuizEntity extends Entity {
 		const updateAutoSetGradedAction = this.canEditAutoSetGraded() ? this._formatUpdateAutoSetGraded(quiz) : null;
 		const updateDescriptionAction = this.canEditDescription() ? this._formatUpdateDescriptionAction(quiz) : null;
 		const updateHeaderAction = this.canEditHeader() ? this._formatUpdateHeaderAction(quiz) : null;
+		const updateFooterAction = this.canEditFooter() ? this._formatUpdateFooterAction(quiz) : null;
 
 		const sirenActions = [
 			updateNameAction,
@@ -444,7 +537,8 @@ export class QuizEntity extends Entity {
 			updatePreventMovingBackwards,
 			updateAutoSetGradedAction,
 			updateDescriptionAction,
-			updateHeaderAction
+			updateHeaderAction,
+			updateFooterAction
 		];
 		await performSirenActions(this._token, sirenActions);
 	}
@@ -717,6 +811,34 @@ export class QuizEntity extends Entity {
 		return { action, fields };
 	}
 
+	/**
+	 * Checks if quiz footer has changed and if so returns the appropriate action/fields to update
+	 * @param {object} quiz the quiz that's being modified
+	 */
+
+	_formatUpdateFooterAction(quiz) {
+		const { footer } = quiz || {};
+
+		if (typeof footer === 'undefined') return;
+
+		if (!this._hasFooterChanged(footer) && this.footerIsDisplayed()) return;
+
+		const footerEntity = this._getFooterEntity();
+
+		if (!footerEntity) return;
+
+		const action = footerEntity.getActionByName(Actions.quizzes.updateFooter);
+
+		if (!action) {
+			return;
+		}
+
+		const fields = [
+			{ name: 'footer', value: footer },
+		];
+		return { action, fields };
+	}
+
 	_hasHintsChanged(allowHints) {
 		return allowHints !== this.getHintsToolEnabled();
 	}
@@ -761,6 +883,10 @@ export class QuizEntity extends Entity {
 		return header !== this.headerEditorHtml();
 	}
 
+	_hasFooterChanged(footer) {
+		return footer !== this.footerEditorHtml();
+	}
+
 	equals(quiz) {
 		const diffs = [
 			[this.name(), quiz.name],
@@ -773,7 +899,8 @@ export class QuizEntity extends Entity {
 			[this.isPreventMovingBackwardsEnabled(), quiz.preventMovingBackwards],
 			[this.isAutoSetGradedEnabled(), quiz.autoSetGraded],
 			[this.descriptionEditorHtml(), quiz.description],
-			[this.headerEditorHtml(), quiz.header]
+			[this.headerEditorHtml(), quiz.header],
+			[this.footerEditorHtml(), quiz.footer]
 		];
 
 		for (const [left, right] of diffs) {
@@ -815,6 +942,12 @@ export class QuizEntity extends Entity {
 			&& this._entity.getSubEntityByRel(Rels.Quizzes.header);
 	}
 
+	_getFooterEntity() {
+		return this._entity
+			&& this._entity.hasSubEntityByRel(Rels.Quizzes.footer)
+			&& this._entity.getSubEntityByRel(Rels.Quizzes.footer);
+	}
+
 	_canCheckout() {
 		return this._entity && this._entity.hasActionByName(Actions.workingCopy.checkout);
 	}
@@ -850,5 +983,24 @@ export class QuizEntity extends Entity {
 			if (!entity) return;
 			return new QuizEntity(entity, this._token);
 		}
+	}
+
+	async activityTypes() {
+		const action = this._entity.getActionByName(Actions.quizzes.getActivityTypes);
+		if (!action) {
+			return;
+		}
+
+		const types = await performSirenAction(this._token, action);
+		if (!types || !types.entities) {
+			return;
+		}
+
+		const items = types.getSubEntitiesByRel('item');
+		if (!items || !items.length) {
+			return;
+		}
+
+		return items.map(item => new ActivityTypeEntity(item));
 	}
 }
