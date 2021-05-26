@@ -438,7 +438,7 @@ export class ActivityUsageEntity extends Entity {
 			return action.getFieldByName('scoreOutOf').value;
 		}
 		const scoreOutOfEntity = this._getScoreOutOfEntity();
-		return scoreOutOfEntity && scoreOutOfEntity.properties ? scoreOutOfEntity.properties.scoreOutOf : undefined;
+		return scoreOutOfEntity && scoreOutOfEntity.properties && scoreOutOfEntity.properties.scoreOutOf ? scoreOutOfEntity.properties.scoreOutOf : undefined;
 	}
 	/**
 	 * @returns {string} Href for linked score-out-of sub-entity
@@ -687,10 +687,9 @@ export class ActivityUsageEntity extends Entity {
 			[this.inGrades(), activity.scoreAndGrade.inGrades]
 		];
 
+		// For activities that don't use scoreOutOf, this.scoreOutOf() is initialized to undefined
 		const scoreOutOf = `${this.scoreOutOf()}`;
-
-		// For activities that don't use scoreOutOf, this.scoreOutOf() is initialized to undefined whereas for those that do it initializes to ''
-		if (scoreOutOf !== 'undefined') {
+		if (scoreOutOf !== undefined) {
 			diffs.push([scoreOutOf, activity.scoreAndGrade.scoreOutOf]);
 		}
 
