@@ -9,7 +9,55 @@ const GRADEBOOK_STATUS = 'gradebookStatus';
 const GRADE_NAME = 'gradeName';
 const MAX_POINTS = 'maxPoints';
 
+export const GradebookStatus = Object.freeze({
+	NotInGradebook: 'not-in-gradebook',
+	NewGrade: 'new-grade',
+	ExistingGrade: 'existing-grade'
+});
+
+export const GradeType = Object.freeze({
+	Selectbox: 'selectbox',
+	Numeric: 'numeric'
+});
+
 export class AssociateGradeEntity extends Entity {
+
+	gradebookStatus() {
+		if (!this._entity) return;
+
+		if (this._entity.hasClass(Classes.activities.associateGrade.newGrade)) {
+			return GradebookStatus.NewGrade;
+		}
+		if (this._entity.hasClass(Classes.activities.associateGrade.existingGrade)) {
+			return GradebookStatus.ExistingGrade;
+		}
+		if (this._entity.hasClass(Classes.activities.associateGrade.notInGradebook)) {
+			return GradebookStatus.NotInGradebook;
+		}
+	}
+
+	gradeName() {
+		const newGradeEntity = this._getNewGradeEntity();
+		return newGradeEntity && newGradeEntity.properties && newGradeEntity.properties.name;
+	}
+
+	maxPoints() {
+		const newGradeEntity = this._getNewGradeEntity();
+		return newGradeEntity && newGradeEntity.properties && newGradeEntity.properties.maxPoints;
+	}
+
+	gradeType() {
+		const newGradeEntity = this._getNewGradeEntity();
+		if (!newGradeEntity) return;
+
+		if (newGradeEntity.hasClass(Classes.activities.associateGrade.selectbox)) {
+			return GradeType.Selectbox;
+		}
+
+		if (newGradeEntity.hasClass(Classes.activities.associateGrade.numeric)) {
+			return GradeType.Numeric;
+		}
+	}
 
 	canEditGradebookStatus() {
 		return this._entity && this._entity.hasActionByName(Actions.activities.associateGrade.gradebookStatus);
@@ -18,6 +66,11 @@ export class AssociateGradeEntity extends Entity {
 	canEditNewGrade() {
 		const newGradeEntity = this._getNewGradeEntity();
 		return typeof newGradeEntity !== 'undefined' && newGradeEntity.hasActionByName(Actions.activities.associateGrade.chooseType);
+	}
+
+	canChooseGrade() {
+		const existingGradeEntity = this._getExistingGradeEntity();
+		return typeof existingGradeEntity !== 'undefined' && existingGradeEntity.hasActionByName(Actions.activities.associateGrade.chooseGrade);
 	}
 
 	async setGradebookStatus(newStatus, gradeName, maxPoints) {
@@ -62,5 +115,8 @@ export class AssociateGradeEntity extends Entity {
 
 	_getNewGradeEntity() {
 		return this._entity && this._entity.getSubEntityByClass(Classes.activities.associateGrade.newGrade);
+	}
+	_getExistingGradeEntity() {
+		return this._entity && this._entity.getSubEntityByClass(Classes.activities.associateGrade.existingGrade);
 	}
 }
