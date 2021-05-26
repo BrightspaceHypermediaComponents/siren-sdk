@@ -688,9 +688,9 @@ export class ActivityUsageEntity extends Entity {
 		];
 
 		// For activities that don't use scoreOutOf, this.scoreOutOf() is initialized to undefined
-		const scoreOutOf = `${this.scoreOutOf()}`;
+		const scoreOutOf = this.scoreOutOf();
 		if (scoreOutOf !== undefined) {
-			diffs.push([scoreOutOf, activity.scoreAndGrade.scoreOutOf]);
+			diffs.push([String(scoreOutOf), activity.scoreAndGrade.scoreOutOf]);
 		}
 
 		for (const [left, right] of diffs) {
