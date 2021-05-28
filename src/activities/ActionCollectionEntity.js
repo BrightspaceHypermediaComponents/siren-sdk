@@ -31,6 +31,12 @@ export class ActionCollectionEntity extends SelflessEntity {
 		return this._entity.getActionByName('execute-multiple');
 	}
 
+	addActionItemByHref(href) {
+		const match = (this._items() || []).find(item => item.activityUsageHref() === href);
+		if (match) {
+			return match.addActionItem();
+		}
+	}
 }
 
 class ActionItemEntity extends SelflessEntity {

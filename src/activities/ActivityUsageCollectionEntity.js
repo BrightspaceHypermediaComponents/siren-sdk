@@ -2,10 +2,12 @@ import { Entity } from '../es6/Entity.js';
 import { Rels } from '../hypermedia-constants';
 import { ActivityUsageEntity } from './ActivityUsageEntity.js';
 import { performSirenAction } from '../es6/SirenAction.js';
+import { ActionCollectionEntity } from './ActionCollectionEntity.js';
 
 const actions = {
 	removeActivity: 'remove-activity',
-	moveActivity: 'move-activity'
+	moveActivity: 'move-activity',
+	startAddExisting: 'start-add-existing-activity'
 };
 
 /**
@@ -49,6 +51,14 @@ export class ActivityUsageCollectionEntity extends Entity {
 		});
 		this._entity.entities = newEntityList;
 		this.update(this._entity);
+	}
+
+	async startAddExisting() {
+		const startAddExistingAction = this._entity.getActionByName(actions.startAddExisting);
+		if (!startAddExistingAction) return;
+
+		const actionCollectionEntity = await performSirenAction(this._token, startAddExistingAction);
+		return new ActionCollectionEntity(this._entity, actionCollectionEntity);
 	}
 }
 
