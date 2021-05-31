@@ -1,6 +1,7 @@
 import { Entity } from '../../es6/Entity';
 import { Actions, Classes } from '../../hypermedia-constants';
 import { performSirenAction } from '../../es6/SirenAction.js';
+import { GradeCategoryCollectionEntity } from './GradeCategoryCollectionEntity.js';
 
 /**
  * AssociateGrade entity of an activity.
@@ -68,9 +69,26 @@ export class AssociateGradeEntity extends Entity {
 		return typeof newGradeEntity !== 'undefined' && newGradeEntity.hasActionByName(Actions.activities.associateGrade.chooseType);
 	}
 
+	canGetCategories() {
+		const newGradeEntity = this._getNewGradeEntity();
+		return typeof newGradeEntity !== 'undefined' && newGradeEntity.hasActionByName(Actions.activities.associateGrade.getCategories);
+	}
+
 	canChooseGrade() {
 		const existingGradeEntity = this._getExistingGradeEntity();
 		return typeof existingGradeEntity !== 'undefined' && existingGradeEntity.hasActionByName(Actions.activities.associateGrade.chooseGrade);
+	}
+
+	async getGradeCategories() {
+		const newGradeEntity = this._getNewGradeEntity();
+		if (!newGradeEntity || !this.canGetCategories()) return;
+
+		const action = newGradeEntity.getActionByName(Actions.activities.associateGrade.getCategories);
+
+		const returnedEntity = await performSirenAction(this._token, action);
+
+		if (!returnedEntity) return;
+		return new GradeCategoryCollectionEntity(returnedEntity);
 	}
 
 	async setGradebookStatus(newStatus, gradeName, maxPoints) {
@@ -87,6 +105,7 @@ export class AssociateGradeEntity extends Entity {
 		}
 
 		const returnedEntity = await performSirenAction(this._token, action, fields);
+
 		if (!returnedEntity) return;
 		return new AssociateGradeEntity(returnedEntity);
 	}
