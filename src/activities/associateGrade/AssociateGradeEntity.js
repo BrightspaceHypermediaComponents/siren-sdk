@@ -85,7 +85,13 @@ export class AssociateGradeEntity extends Entity {
 
 		const action = newGradeEntity.getActionByName(Actions.activities.associateGrade.getCategories);
 
-		const returnedEntity = await performSirenAction(this._token, action);
+		const fields = [];
+		// HACK adding query param as field due to bug in performSirenAction (_getSirenFields function)
+		const url = new URL(action.href, window.location.origin);
+		const wcId = url.searchParams.get('workingCopyId');
+		fields.push({ name: 'workingCopyId', value: wcId } );
+
+		const returnedEntity = await performSirenAction(this._token, action, fields);
 
 		if (!returnedEntity) return;
 		return new GradeCategoryCollectionEntity(returnedEntity);
