@@ -14,7 +14,7 @@ export class GradeCategoryLinkedEntity extends Entity {
 		if (!this._entity) {
 			return;
 		}
-		return this._entity.getLinkByRel(Rels.Grades.category);
+		return this._entity.getLinkByRel(Rels.Grades.category).href;
 	}
 
 	canChooseCategory() {
