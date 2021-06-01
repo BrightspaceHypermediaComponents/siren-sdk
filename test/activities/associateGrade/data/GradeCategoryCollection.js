@@ -63,7 +63,7 @@ export const gradeCategoryCollection = {
 					'href': 'https://6544ba98-b4dd-4f95-a5f9-16ecf2e92784.grades.api.proddev.d2l/organizations/6609/grade-categories/5002'
 				}
 			]
-	}
+		}
 	],
 	'links': [
 		{
