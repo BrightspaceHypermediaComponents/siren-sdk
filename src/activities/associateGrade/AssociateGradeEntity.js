@@ -89,7 +89,7 @@ export class AssociateGradeEntity extends Entity {
 		// HACK adding query param as field due to bug in performSirenAction (_getSirenFields function)
 		const url = new URL(action.href, window.location.origin);
 		const wcId = url.searchParams.get('workingCopyId');
-		fields.push({ name: 'workingCopyId', value: wcId } );
+		fields.push({name: 'workingCopyId', value: wcId});
 
 		const returnedEntity = await performSirenAction(this._token, action, fields);
 

@@ -2,8 +2,6 @@ import { Entity } from '../../es6/Entity.js';
 import { Classes, Actions, Rels } from '../../hypermedia-constants.js';
 import { performSirenAction } from '../../es6/SirenAction.js';
 
-const UNSET_CATEGORY_ID = '0';
-
 /**
  * GradeCategoryLinkedEntity class representation of a grade category linked entity
  */
