@@ -235,7 +235,8 @@ export const Classes = {
 			existingGrade: 'existing-grade',
 			notInGradebook: 'not-in-gradebook',
 			selectbox: 'selectbox',
-			numeric: 'numeric'
+			numeric: 'numeric',
+			selected: 'selected'
 		},
 		complete: 'complete',
 		completion: 'completion',
@@ -507,7 +508,9 @@ export const Actions = {
 			associateGrade: 'associate-grade',
 			gradebookStatus: 'gradebook-status',
 			chooseType: 'choose-type',
-			chooseGrade: 'choose-grade'
+			chooseGrade: 'choose-grade',
+			chooseCategory: 'choose-category',
+			getCategories: 'get-categories'
 		},
 		save: 'save',
 		filterWorkToDo: 'filter-work-to-do'
