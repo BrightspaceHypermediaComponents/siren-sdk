@@ -2,6 +2,7 @@ import { Entity } from '../../es6/Entity';
 import { Actions, Classes } from '../../hypermedia-constants';
 import { performSirenAction } from '../../es6/SirenAction.js';
 import { GradeCategoryCollectionEntity } from './GradeCategoryCollectionEntity.js';
+import { GradeCandidateCollectionEntity } from '../GradeCandidateCollectionEntity.js';
 
 /**
  * AssociateGrade entity of an activity.
@@ -95,6 +96,24 @@ export class AssociateGradeEntity extends Entity {
 
 		if (!returnedEntity) return;
 		return new GradeCategoryCollectionEntity(returnedEntity);
+	}
+
+	async getGradeCandidates() {
+		const existingGradeEntity = this._getExistingGradeEntity();
+		if (!existingGradeEntity || !this.canChooseGrade()) return;
+
+		const action = existingGradeEntity.getActionByName(Actions.activities.associateGrade.chooseGrade);
+
+		const fields = [];
+		// HACK adding query param as field due to bug in performSirenAction (_getSirenFields function)
+		const url = new URL(action.href, window.location.origin);
+		const wcId = url.searchParams.get('workingCopyId');
+		fields.push({name: 'workingCopyId', value: wcId});
+
+		const returnedEntity = await performSirenAction(this._token, action, fields);
+
+		if (!returnedEntity) return;
+		return new GradeCandidateCollectionEntity(returnedEntity);
 	}
 
 	async setGradebookStatus(newStatus, gradeName, maxPoints) {

@@ -87,6 +87,18 @@ describe('new grade', () => {
 			expect(entity.canEditNewGrade()).to.be.false;
 		});
 	});
+
+	describe('canGetGradeCategories', () => {
+		it('returns true when new grade is editable', () => {
+			const entity = new AssociateGradeEntity(editableEntity);
+			expect(entity.canGetCategories()).to.be.true;
+		});
+
+		it('returns false when new grade is uneditable', () => {
+			const entity = new AssociateGradeEntity(nonEditableEntity);
+			expect(entity.canGetCategories()).to.be.false;
+		});
+	});
 });
 
 describe('existing grade', () => {
