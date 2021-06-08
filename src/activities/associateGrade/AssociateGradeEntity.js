@@ -65,6 +65,16 @@ export class AssociateGradeEntity extends Entity {
 		return this._entity && this._entity.hasActionByName(Actions.activities.associateGrade.gradebookStatus);
 	}
 
+	canCreateNewGrade() {
+		if (!this.canEditGradebookStatus) return false;
+
+		const action = this._entity.getActionByName(Actions.activities.associateGrade.gradebookStatus);
+		if (!action) return false;
+
+		const field = action.getFieldByName(GRADEBOOK_STATUS) || {};
+		return (field.value || []).some(val => val.value === GradebookStatus.NewGrade);
+	}
+
 	canEditNewGrade() {
 		const newGradeEntity = this._getNewGradeEntity();
 		return typeof newGradeEntity !== 'undefined' && newGradeEntity.hasActionByName(Actions.activities.associateGrade.chooseType);

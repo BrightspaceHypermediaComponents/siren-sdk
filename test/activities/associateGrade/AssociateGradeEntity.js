@@ -76,6 +76,18 @@ describe('new grade', () => {
 		});
 	});
 
+	describe('canCreateNewGrade', () => {
+		it('returns true when new grade is editable', () => {
+			const entity = new AssociateGradeEntity(editableEntity);
+			expect(entity.canCreateNewGrade()).to.be.true;
+		});
+
+		it('returns false when new grade is uneditable', () => {
+			const entity = new AssociateGradeEntity(nonEditableEntity);
+			expect(entity.canCreateNewGrade()).to.be.false;
+		});
+	});
+
 	describe('canEditNewGrade', () => {
 		it('returns true when new grade is editable', () => {
 			const entity = new AssociateGradeEntity(editableEntity);
