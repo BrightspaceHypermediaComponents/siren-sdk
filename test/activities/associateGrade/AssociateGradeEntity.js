@@ -77,7 +77,7 @@ describe('new grade', () => {
 		});
 	});
 
-	describe('canCreateNewGrade', () => {
+	describe.skip('canCreateNewGrade', () => {
 		it('returns true when new grade is editable', () => {
 			const entity = new AssociateGradeEntity(editableEntity);
 			expect(entity.canCreateNewGrade()).to.be.true;
@@ -88,7 +88,7 @@ describe('new grade', () => {
 			expect(entity.canCreateNewGrade()).to.be.false;
 		});
 
-		it.skip('returns false when new grade is uneditable (gradebookStatus action editable, missing create-new as an option)', () => {
+		it('returns false when new grade is uneditable (gradebookStatus action editable, missing create-new as an option)', () => {
 			const editableCannotCreateNewEntity = window.D2L.Hypermedia.Siren.Parse(notInGradebookCannotCreateNewEditable);
 			const entity = new AssociateGradeEntity(editableCannotCreateNewEntity);
 			expect(entity.canCreateNewGrade()).to.be.false;
