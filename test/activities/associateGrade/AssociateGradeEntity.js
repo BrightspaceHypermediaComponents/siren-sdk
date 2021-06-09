@@ -1,5 +1,6 @@
 import { notInGradebookEditable } from './data/NotInGradebookEditable.js';
 import { notInGradebookNonEditable } from './data/NotInGradebookNonEditable.js';
+import { notInGradebookCannotCreateNewEditable } from './data/notInGradebookCannotCreateNewEditable.js';
 import { newGradeEditable } from './data/NewGradeEditable.js';
 import { newGradeNonEditable } from './data/NewGradeNonEditable.js';
 import { existingGradeEditable } from './data/ExistingGradeEditable.js';
@@ -84,6 +85,12 @@ describe('new grade', () => {
 
 		it('returns false when new grade is uneditable (gradebookStatus action missing)', () => {
 			const entity = new AssociateGradeEntity(nonEditableEntity);
+			expect(entity.canCreateNewGrade()).to.be.false;
+		});
+
+		it('returns false when new grade is uneditable (gradebookStatus action editable, missing create-new as an option)', () => {
+			const editableCannotCreateNewEntity = window.D2L.Hypermedia.Siren.Parse(notInGradebookCannotCreateNewEditable);
+			const entity = new AssociateGradeEntity(editableCannotCreateNewEntity);
 			expect(entity.canCreateNewGrade()).to.be.false;
 		});
 	});
