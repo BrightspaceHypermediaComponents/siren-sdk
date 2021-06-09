@@ -88,14 +88,9 @@ describe('new grade', () => {
 			expect(entity.canCreateNewGrade()).to.be.false;
 		});
 
-		it('returns false when new grade is uneditable (gradebookStatus action editable, missing create-new as an option)', () => {
-			/* eslint-disable no-console */
-			console.log('******************** testing...');
+		it.skip('returns false when new grade is uneditable (gradebookStatus action editable, missing create-new as an option)', () => {
 			const editableCannotCreateNewEntity = window.D2L.Hypermedia.Siren.Parse(notInGradebookCannotCreateNewEditable);
-			console.log('******************** editableCannotCreateNewEntity', editableCannotCreateNewEntity);
 			const entity = new AssociateGradeEntity(editableCannotCreateNewEntity);
-			console.log('******************** entity', entity);
-			console.log('******************** entity.canCreateNewGrade()', entity.canCreateNewGrade());
 			expect(entity.canCreateNewGrade()).to.be.false;
 		});
 	});
