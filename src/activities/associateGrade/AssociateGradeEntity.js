@@ -10,6 +10,7 @@ import { GradeCandidateCollectionEntity } from '../GradeCandidateCollectionEntit
 const GRADEBOOK_STATUS = 'gradebookStatus';
 const GRADE_NAME = 'gradeName';
 const MAX_POINTS = 'maxPoints';
+const GRADE_TYPE = 'gradeType';
 
 export const GradebookStatus = Object.freeze({
 	NotInGradebook: 'not-in-gradebook',
@@ -135,32 +136,34 @@ export class AssociateGradeEntity extends Entity {
 		return new AssociateGradeEntity(returnedEntity);
 	}
 
-	async setGradeMaxPoints(maxPoints) {
-		if (!this.canEditNewGrade()) return;
-
-		const action = this._getNewGradeEntity().getActionByName(Actions.activities.associateGrade.chooseType);
-		const fields = [{ name: MAX_POINTS, value: maxPoints }];
-
-		const returnedEntity = await performSirenAction(this._token, action, fields);
-		if (!returnedEntity) return;
-		return new AssociateGradeEntity(returnedEntity);
+	setGradeMaxPoints(maxPoints) {
+		return this._setNewGradeProperty(MAX_POINTS, maxPoints);
 	}
 
-	async setGradeName(gradeName) {
-		if (!this.canEditNewGrade()) return;
+	setGradeName(gradeName) {
+		return this._setNewGradeProperty(GRADE_NAME, gradeName);
+	}
 
-		const action = this._getNewGradeEntity().getActionByName(Actions.activities.associateGrade.chooseType);
-		const fields = [{ name: GRADE_NAME, value: gradeName }];
-
-		const returnedEntity = await performSirenAction(this._token, action, fields);
-		if (!returnedEntity) return;
-		return new AssociateGradeEntity(returnedEntity);
+	setGradeType(gradeType) {
+		return this._setNewGradeProperty(GRADE_TYPE, gradeType);
 	}
 
 	_getNewGradeEntity() {
 		return this._entity && this._entity.getSubEntityByClass(Classes.activities.associateGrade.newGrade);
 	}
+
 	_getExistingGradeEntity() {
 		return this._entity && this._entity.getSubEntityByClass(Classes.activities.associateGrade.existingGrade);
+	}
+
+	async _setNewGradeProperty(name, value) {
+		if (!this.canEditNewGrade()) return;
+
+		const action = this._getNewGradeEntity().getActionByName(Actions.activities.associateGrade.chooseType);
+		const fields = [{ name: name, value: value }];
+
+		const returnedEntity = await performSirenAction(this._token, action, fields);
+		if (!returnedEntity) return;
+		return new AssociateGradeEntity(returnedEntity);
 	}
 }
