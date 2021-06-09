@@ -89,6 +89,7 @@ describe('new grade', () => {
 		});
 
 		it('returns false when new grade is uneditable (gradebookStatus action editable, missing create-new as an option)', () => {
+			// eslint-disable no-console
 			console.log('******************** testing...');
 			const editableCannotCreateNewEntity = window.D2L.Hypermedia.Siren.Parse(notInGradebookCannotCreateNewEditable);
 			console.log('******************** editableCannotCreateNewEntity', editableCannotCreateNewEntity);
