@@ -67,7 +67,7 @@ export class AssociateGradeEntity extends Entity {
 	}
 
 	canCreateNewGrade() {
-		if (!this.canEditGradebookStatus) return false;
+		if (!this.canEditGradebookStatus()) return false;
 
 		const action = this._entity.getActionByName(Actions.activities.associateGrade.gradebookStatus);
 		if (!action) return false;
