@@ -1,6 +1,6 @@
 import { notInGradebookEditable } from './data/NotInGradebookEditable.js';
 import { notInGradebookNonEditable } from './data/NotInGradebookNonEditable.js';
-import { notInGradebookCannotCreateNewEditable } from './data/notInGradebookCannotCreateNewEditable.js';
+import { notInGradebookCannotCreateNewEditable } from './data/NotInGradebookCannotCreateNewEditable.js';
 import { newGradeEditable } from './data/NewGradeEditable.js';
 import { newGradeNonEditable } from './data/NewGradeNonEditable.js';
 import { existingGradeEditable } from './data/ExistingGradeEditable.js';
