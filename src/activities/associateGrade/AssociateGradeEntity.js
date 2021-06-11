@@ -114,7 +114,7 @@ export class AssociateGradeEntity extends Entity {
 
 		const action = newGradeEntity.getActionByName(Actions.activities.associateGrade.getCategories);
 
-		const returnedEntity = await this._performActionWithWorkingCopy(action);
+		const returnedEntity = await this._performGetActionWithWorkingCopy(action);
 		if (!returnedEntity) return;
 
 		return new GradeCategoryCollectionEntity(returnedEntity);
@@ -126,21 +126,21 @@ export class AssociateGradeEntity extends Entity {
 
 		const action = existingGradeEntity.getActionByName(Actions.activities.associateGrade.chooseGrade);
 
-		const returnedEntity = await this._performActionWithWorkingCopy(action);
+		const returnedEntity = await this._performGetActionWithWorkingCopy(action);
 		if (!returnedEntity) return;
 
 		return new GradeCandidateCollectionEntity(returnedEntity);
 	}
 
-	async getGradeSchemes(gradeType) {
-		if (!this.canGetSchemesForType()) return;
+	async getGradeSchemesForType(gradeType) {
+		if (!this.canGetSchemesForType(gradeType)) return;
 
 		const newGradeEntity = this._getNewGradeEntity();
 		const gradeSchemeEntity = newGradeEntity.getSubEntityByClass(gradeType);
 
 		const action = gradeSchemeEntity.getActionByName(Actions.activities.associateGrade.getSchemes);
 
-		const returnedEntity = await this._performActionWithWorkingCopy(action);
+		const returnedEntity = await this._performGetActionWithWorkingCopy(action);
 		if (!returnedEntity) return;
 
 		return new GradeSchemeCollectionEntity(returnedEntity);
@@ -196,7 +196,10 @@ export class AssociateGradeEntity extends Entity {
 		return new AssociateGradeEntity(returnedEntity);
 	}
 
-	_performActionWithWorkingCopy(action) {
+	/* This helper is for GET actions with a workingCopyId query parameter only, needed because of a bug in SirenAction.js.
+	 * Other action methods (PATCH/POST/DELETE work correctly without this helper.)
+	*/
+	_performGetActionWithWorkingCopy(action) {
 		const fields = [];
 		// HACK adding query param as field due to bug in performSirenAction (_getSirenFields function)
 		const url = new URL(action.href, window.location.origin);
