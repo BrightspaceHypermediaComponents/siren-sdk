@@ -1,5 +1,5 @@
 /* global fetchMock */
-import { ContentLTILinkFrameOptionsEntity } from '../../../src/activities/content/ContentLTILinkEntity.js';
+import { ContentLTILinkFrameOptionsEntity } from '../../../src/activities/content/ContentLTILinkFrameOptionsEntity .js';
 import { ContentLTILinkFrameOptionsEntityData } from './data/TestContentLTILinkFrameOptionsEntity.js';
 
 describe('ContentLTILinkFrameOptionsEntity', () => {
