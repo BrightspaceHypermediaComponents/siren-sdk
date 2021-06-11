@@ -148,6 +148,7 @@ export const Rels = {
 		comments: 'https://grades.api.brightspace.com/rels/comments',
 		description: 'https://grades.api.brightspace.com/rels/description',
 		grade: 'https://grades.api.brightspace.com/rels/grade',
+		scheme: 'https://grades.api.brightspace.com/rels/grade-scheme',
 		userGrade: 'https://grades.api.brightspace.com/rels/user-grade',
 		weight: 'https://grades.api.brightspace.com/rels/weight'
 	},
@@ -510,7 +511,9 @@ export const Actions = {
 			chooseType: 'choose-type',
 			chooseGrade: 'choose-grade',
 			chooseCategory: 'choose-category',
-			getCategories: 'get-categories'
+			getCategories: 'get-categories',
+			getSchemes: 'get-schemes',
+			chooseScheme: 'choose-scheme'
 		},
 		save: 'save',
 		filterWorkToDo: 'filter-work-to-do'
