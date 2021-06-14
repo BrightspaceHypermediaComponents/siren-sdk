@@ -3,6 +3,7 @@ import { Actions, Classes } from '../../hypermedia-constants';
 import { performSirenAction } from '../../es6/SirenAction.js';
 import { GradeCategoryCollectionEntity } from './GradeCategoryCollectionEntity.js';
 import { GradeCandidateCollectionEntity } from '../GradeCandidateCollectionEntity.js';
+import { GradeSchemeCollectionEntity } from './GradeSchemeCollectionEntity.js';
 
 /**
  * AssociateGrade entity of an activity.
@@ -78,17 +79,33 @@ export class AssociateGradeEntity extends Entity {
 
 	canEditNewGrade() {
 		const newGradeEntity = this._getNewGradeEntity();
-		return typeof newGradeEntity !== 'undefined' && newGradeEntity.hasActionByName(Actions.activities.associateGrade.chooseType);
+		if (!newGradeEntity) return false;
+
+		return newGradeEntity.hasActionByName(Actions.activities.associateGrade.chooseType);
 	}
 
 	canGetCategories() {
 		const newGradeEntity = this._getNewGradeEntity();
-		return typeof newGradeEntity !== 'undefined' && newGradeEntity.hasActionByName(Actions.activities.associateGrade.getCategories);
+		if (!newGradeEntity) return false;
+
+		return newGradeEntity.hasActionByName(Actions.activities.associateGrade.getCategories);
 	}
 
 	canChooseGrade() {
 		const existingGradeEntity = this._getExistingGradeEntity();
-		return typeof existingGradeEntity !== 'undefined' && existingGradeEntity.hasActionByName(Actions.activities.associateGrade.chooseGrade);
+		if (!existingGradeEntity) return false;
+
+		return existingGradeEntity.hasActionByName(Actions.activities.associateGrade.chooseGrade);
+	}
+
+	canGetSchemesForType(gradeType) {
+		const newGradeEntity = this._getNewGradeEntity();
+		if (!newGradeEntity) return false;
+
+		const gradeSchemeEntity = newGradeEntity.getSubEntityByClass(gradeType);
+		if (!gradeSchemeEntity) return false;
+
+		return gradeSchemeEntity.hasActionByName(Actions.activities.associateGrade.getSchemes);
 	}
 
 	async getGradeCategories() {
@@ -97,15 +114,9 @@ export class AssociateGradeEntity extends Entity {
 
 		const action = newGradeEntity.getActionByName(Actions.activities.associateGrade.getCategories);
 
-		const fields = [];
-		// HACK adding query param as field due to bug in performSirenAction (_getSirenFields function)
-		const url = new URL(action.href, window.location.origin);
-		const wcId = url.searchParams.get('workingCopyId');
-		fields.push({name: 'workingCopyId', value: wcId});
-
-		const returnedEntity = await performSirenAction(this._token, action, fields);
-
+		const returnedEntity = await this._performGetActionWithWorkingCopy(action);
 		if (!returnedEntity) return;
+
 		return new GradeCategoryCollectionEntity(returnedEntity);
 	}
 
@@ -115,16 +126,24 @@ export class AssociateGradeEntity extends Entity {
 
 		const action = existingGradeEntity.getActionByName(Actions.activities.associateGrade.chooseGrade);
 
-		const fields = [];
-		// HACK adding query param as field due to bug in performSirenAction (_getSirenFields function)
-		const url = new URL(action.href, window.location.origin);
-		const wcId = url.searchParams.get('workingCopyId');
-		fields.push({name: 'workingCopyId', value: wcId});
-
-		const returnedEntity = await performSirenAction(this._token, action, fields);
-
+		const returnedEntity = await this._performGetActionWithWorkingCopy(action);
 		if (!returnedEntity) return;
+
 		return new GradeCandidateCollectionEntity(returnedEntity);
+	}
+
+	async getGradeSchemesForType(gradeType) {
+		if (!this.canGetSchemesForType(gradeType)) return;
+
+		const newGradeEntity = this._getNewGradeEntity();
+		const gradeSchemeEntity = newGradeEntity.getSubEntityByClass(gradeType);
+
+		const action = gradeSchemeEntity.getActionByName(Actions.activities.associateGrade.getSchemes);
+
+		const returnedEntity = await this._performGetActionWithWorkingCopy(action);
+		if (!returnedEntity) return;
+
+		return new GradeSchemeCollectionEntity(returnedEntity);
 	}
 
 	async setGradebookStatus(newStatus, gradeName, maxPoints) {
@@ -175,5 +194,18 @@ export class AssociateGradeEntity extends Entity {
 		const returnedEntity = await performSirenAction(this._token, action, fields);
 		if (!returnedEntity) return;
 		return new AssociateGradeEntity(returnedEntity);
+	}
+
+	/* This helper is for GET actions with a workingCopyId query parameter only, needed because of a bug in SirenAction.js.
+	 * Other action methods (PATCH/POST/DELETE work correctly without this helper.)
+	*/
+	_performGetActionWithWorkingCopy(action) {
+		const fields = [];
+		// HACK adding query param as field due to bug in performSirenAction (_getSirenFields function)
+		const url = new URL(action.href, window.location.origin);
+		const wcId = url.searchParams.get('workingCopyId');
+		fields.push({name: 'workingCopyId', value: wcId});
+
+		return performSirenAction(this._token, action, fields);
 	}
 }
