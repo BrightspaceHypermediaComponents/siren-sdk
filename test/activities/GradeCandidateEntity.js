@@ -3,6 +3,7 @@
 import { getFormData } from '../utility/test-helpers.js';
 import { GradeCandidateEntity } from '../../src/activities/GradeCandidateEntity.js';
 import { testData } from './data/GradeCandidateEntity.js';
+import { AssociateGradeEntity } from '../../src/activities/associateGrade/AssociateGradeEntity';
 
 describe('GradeCandidateEntity', () => {
 	afterEach(() => {
@@ -48,13 +49,14 @@ describe('GradeCandidateEntity', () => {
 		it('returns a promise when associating grade', async() => {
 			fetchMock.postOnce('https://9caa9c10-0175-4c56-84e5-fc2bca4d8a52.activities.api.proddev.d2l/activities/6606_2000_11/usages/6609/associate-grade', entityJson);
 
-			await entity.associateGrade();
+			const result = await entity.associateGrade();
 
 			const form = await getFormData(fetchMock.lastCall().request);
 			if (!form.notSupported) {
 				expect(form.get('gradeItemId')).to.equal('20');
 			}
 			expect(fetchMock.called()).to.be.true;
+			expect(result).to.be.an.instanceof(AssociateGradeEntity);
 		});
 	});
 
