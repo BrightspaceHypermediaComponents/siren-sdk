@@ -1,7 +1,7 @@
 import { Actions, Classes, Rels } from '../hypermedia-constants';
+import { AssociateGradeEntity } from './associateGrade/AssociateGradeEntity';
 import { Entity } from '../es6/Entity';
 import { performSirenAction } from '../es6/SirenAction';
-import { AssociateGradeEntity } from './associateGrade/AssociateGradeEntity';
 
 /**
  * GradeCandidateEntity class representation of a grade-candidate

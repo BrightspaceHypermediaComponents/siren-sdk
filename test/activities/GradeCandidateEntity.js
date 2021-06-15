@@ -1,9 +1,9 @@
 /* global fetchMock */
 
+import { AssociateGradeEntity } from '../../src/activities/associateGrade/AssociateGradeEntity';
 import { getFormData } from '../utility/test-helpers.js';
 import { GradeCandidateEntity } from '../../src/activities/GradeCandidateEntity.js';
 import { testData } from './data/GradeCandidateEntity.js';
-import { AssociateGradeEntity } from '../../src/activities/associateGrade/AssociateGradeEntity';
 
 describe('GradeCandidateEntity', () => {
 	afterEach(() => {
