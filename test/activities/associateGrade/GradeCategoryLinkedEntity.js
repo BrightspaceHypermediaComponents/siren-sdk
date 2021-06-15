@@ -1,5 +1,6 @@
 /* global fetchMock */
 
+import { AssociateGradeEntity } from '../../../src/activities/associateGrade/AssociateGradeEntity';
 import { getFormData } from '../../utility/test-helpers.js';
 import { GradeCategoryLinkedEntity } from '../../../src/activities/associateGrade/GradeCategoryLinkedEntity.js';
 import { gradeCategoryLinked } from './data/GradeCategoryLinked.js';
@@ -32,13 +33,14 @@ describe('GradeCandidateLinkedEntity', () => {
 		it('returns a promise when selecting category', async() => {
 			fetchMock.patchOnce('https://6544ba98-b4dd-4f95-a5f9-16ecf2e92784.activities.api.proddev.d2l/activities/6606_2000_1/usages/6609/associate-grade?workingCopyId=eb537250-bcd1-41fc-af48-7745966f8bc0', entityJson);
 
-			await entity.selectCategory();
+			const result = await entity.selectCategory();
 
 			const form = await getFormData(fetchMock.lastCall().request);
 			if (!form.notSupported) {
 				expect(form.get('gradeCategoryId')).to.equal('5002');
 			}
 			expect(fetchMock.called()).to.be.true;
+			expect(result).to.be.an.instanceof(AssociateGradeEntity);
 		});
 	});
 

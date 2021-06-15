@@ -1,4 +1,5 @@
 import { Actions, Classes, Rels } from '../hypermedia-constants';
+import { AssociateGradeEntity } from './associateGrade/AssociateGradeEntity';
 import { Entity } from '../es6/Entity';
 import { performSirenAction } from '../es6/SirenAction';
 
@@ -75,7 +76,15 @@ export class GradeCandidateEntity extends Entity {
 			return;
 		}
 
-		const action = this._entity.getActionByName(Actions.activities.associateGrade.associateGrade);
-		await performSirenAction(this._token, action);
+		let entity;
+		try {
+			const action = this._entity.getActionByName(Actions.activities.associateGrade.associateGrade);
+			entity = await performSirenAction(this._token, action);
+		} catch (e) {
+			return Promise.reject(e);
+		}
+
+		if (!entity) return;
+		return new AssociateGradeEntity(entity, this._token);
 	}
 }
