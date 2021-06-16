@@ -5,7 +5,7 @@ import { getFormData } from '../../utility/test-helpers.js';
 import { GradeSchemeLinkedEntity } from '../../../src/activities/associateGrade/GradeSchemeLinkedEntity.js';
 import { gradeSchemeLinked } from './data/GradeSchemeLinked.js';
 
-describe('GradeCandidateLinkedEntity', () => {
+describe('GradeSchemeLinkedEntity', () => {
 	afterEach(() => {
 		fetchMock.reset();
 	});
@@ -28,6 +28,10 @@ describe('GradeCandidateLinkedEntity', () => {
 
 		it('is selected', () => {
 			expect(entity.isSelected()).to.be.true;
+		});
+
+		it('is default', () => {
+			expect(entity.isDefault()).to.be.true;
 		});
 
 		it('returns a promise when selecting scheme', async() => {
@@ -62,6 +66,10 @@ describe('GradeCandidateLinkedEntity', () => {
 
 		it('is not selected', () => {
 			expect(entity.isSelected()).to.be.false;
+		});
+
+		it('is not default', () => {
+			expect(entity.isDefault()).to.be.false;
 		});
 
 		it('skips selecting scheme as it does not have the choose-scheme action', async() => {
