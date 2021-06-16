@@ -1,5 +1,5 @@
 import { Entity } from '../../es6/Entity';
-import { Actions, Classes, Rels } from '../../hypermedia-constants';
+import { Actions, Classes } from '../../hypermedia-constants';
 import { performSirenAction } from '../../es6/SirenAction';
 import ContentHelperFunctions from './ContentHelperFunctions.js';
 
@@ -137,12 +137,5 @@ export class ContentLTILinkEntity extends Entity {
 			}
 		}
 		return true;
-	}
-
-	/**
-	 * @returns {string|undefined} LTI frame option's location
-	 */
-	getFrameOptionsHref() {
-		return ContentHelperFunctions.getHrefFromRel(Rels.Content.ltilinkFrameOptionsEntity, this._entity);
 	}
 }
