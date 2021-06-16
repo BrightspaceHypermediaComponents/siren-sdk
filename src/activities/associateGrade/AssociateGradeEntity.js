@@ -206,6 +206,6 @@ export class AssociateGradeEntity extends Entity {
 		const wcId = url.searchParams.get('workingCopyId');
 		fields.push({name: 'workingCopyId', value: wcId});
 
-		return performSirenAction(this._token, action, fields);
+		return performSirenAction(this._token, action, fields, false, true);
 	}
 }

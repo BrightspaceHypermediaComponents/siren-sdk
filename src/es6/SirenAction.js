@@ -97,7 +97,7 @@ const _fetch = function(href, opts) {
 		});
 };
 
-const _performSirenAction = function(action, fields, tokenValue) {
+const _performSirenAction = function(action, fields, tokenValue, bypassCache) {
 	if (!action) {
 		return Promise.reject(new Error('No action given'));
 	}
@@ -105,6 +105,10 @@ const _performSirenAction = function(action, fields, tokenValue) {
 	const headers = new Headers();
 	tokenValue && headers.append('Authorization', 'Bearer ' + tokenValue);
 
+	if(bypassCache) {
+		headers.append('pragma', 'no-cache');
+		headers.append('cache-control', 'no-cache');
+	}
 	let body;
 
 	if (fields) {
@@ -217,12 +221,12 @@ export const performSirenActions = function(token, actionsAndFields) {
 		});
 };
 
-export const performSirenAction = function(token, action, fields, immediate) {
+export const performSirenAction = function(token, action, fields, immediate, bypassCache) {
 	return window.D2L.Siren.EntityStore.getToken(token)
 		.then(function(resolved) {
 			const tokenValue = resolved.tokenValue;
 			return !immediate ? window.D2L.Siren.ActionQueue.enqueue(function() {
-				return _performSirenAction(action, fields, tokenValue);
-			}) : _performSirenAction(action, fields, tokenValue);
+				return _performSirenAction(action, fields, tokenValue, bypassCache);
+			}) : _performSirenAction(action, fields, tokenValue, bypassCache);
 		});
 };
