@@ -12,7 +12,7 @@ export class GradeCategoryLinkedEntity extends Entity {
 	 * @returns {Array} Category's URL
 	*/
 	href() {
-		if (!this._entity) {
+		if (!this._entity || !this._entity.hasLinkByRel(Rels.Grades.category)) {
 			return;
 		}
 		return this._entity.getLinkByRel(Rels.Grades.category).href;

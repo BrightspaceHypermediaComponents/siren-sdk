@@ -105,7 +105,7 @@ const _performSirenAction = function(action, fields, tokenValue, bypassCache) {
 	const headers = new Headers();
 	tokenValue && headers.append('Authorization', 'Bearer ' + tokenValue);
 
-	if(bypassCache) {
+	if (bypassCache) {
 		headers.append('pragma', 'no-cache');
 		headers.append('cache-control', 'no-cache');
 	}
