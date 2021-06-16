@@ -37,7 +37,7 @@ export class GradeSchemeLinkedEntity extends Entity {
 	}
 
 	async selectScheme() {
-		if (!this.canChooseScheme() || this.isSelected()) {
+		if (!this.canChooseScheme()) {
 			return;
 		}
 
