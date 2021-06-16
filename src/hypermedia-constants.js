@@ -238,7 +238,8 @@ export const Classes = {
 			notInGradebook: 'not-in-gradebook',
 			selectbox: 'selectbox',
 			numeric: 'numeric',
-			selected: 'selected'
+			selected: 'selected',
+			default: 'default'
 		},
 		complete: 'complete',
 		completion: 'completion',
