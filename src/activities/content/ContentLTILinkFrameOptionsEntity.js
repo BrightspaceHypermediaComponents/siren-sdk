@@ -6,7 +6,7 @@ import { Entity } from '../../es6/Entity';
 export class ContentLTILinkFrameOptionsEntity extends Entity {
 
 	/**
-	 * @returns {string|undefined} Bool if the quicklink can be embedded
+	 * @returns {boolean|undefined} Bool if the quicklink can be embedded
 	 */
 	canBeEmbedded() {
 		return this._entity && this._entity.properties && this._entity.properties.canBeEmbedded;
