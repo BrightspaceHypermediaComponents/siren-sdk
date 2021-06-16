@@ -200,12 +200,12 @@ export class AssociateGradeEntity extends Entity {
 	 * Other action methods (PATCH/POST/DELETE work correctly without this helper.)
 	*/
 	_performGetActionWithWorkingCopy(action) {
-		const fields = [];
+		const fields = action.fields || [];
 		// HACK adding query param as field due to bug in performSirenAction (_getSirenFields function)
 		const url = new URL(action.href, window.location.origin);
 		const wcId = url.searchParams.get('workingCopyId');
 		fields.push({name: 'workingCopyId', value: wcId});
 
-		return performSirenAction(this._token, action, fields);
+		return performSirenAction(this._token, action, fields, false, true);
 	}
 }

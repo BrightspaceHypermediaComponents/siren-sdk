@@ -2,7 +2,8 @@ export const gradeSchemeLinked = {
 	selected: {
 		'class': [
 			'grade-scheme',
-			'selected'
+			'selected',
+			'default'
 		],
 		'rel': [
 			'item'
