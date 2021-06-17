@@ -751,12 +751,7 @@ export class ActivityUsageEntity extends Entity {
 	}
 
 	canCheckin() {
-		return false;
-		/* For now, don't check in activity usage so as not to duplicate functionality with legacy code
-		 * Once everything has been switched over to use WC instead of legacy, we'll un-comment this
-		 * to allow WC implementation to take over
-		 */
-		//return this._entity && this._entity.hasActionByName(Actions.workingCopy.checkin);
+		return this._entity && this._entity.hasActionByName(Actions.workingCopy.checkin);
 	}
 
 	/**
