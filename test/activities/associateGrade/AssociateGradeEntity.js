@@ -118,6 +118,18 @@ describe('new grade', () => {
 			expect(entity.canGetCategories()).to.be.false;
 		});
 	});
+
+	describe('selectedSchemeHref', () => {
+		it('returns true when new grade is editable', () => {
+			const entity = new AssociateGradeEntity(editableEntity);
+			expect(entity.selectedSchemeHref()).to.equal('https://5096e993-e418-4681-81c5-cae06b019fbb.grades.api.dev.brightspace.com/organizations/123171/grade-scheme/5258');
+		});
+
+		it('returns false when new grade is uneditable', () => {
+			const entity = new AssociateGradeEntity(nonEditableEntity);
+			expect(entity.selectedSchemeHref()).to.be.undefined;
+		});
+	});
 });
 
 describe('existing grade', () => {
