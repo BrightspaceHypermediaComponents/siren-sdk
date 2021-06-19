@@ -1,5 +1,5 @@
 import { Entity } from '../../es6/Entity';
-import { Actions, Classes } from '../../hypermedia-constants';
+import { Actions, Classes, Rels } from '../../hypermedia-constants';
 import { performSirenAction } from '../../es6/SirenAction.js';
 import { GradeCategoryCollectionEntity } from './GradeCategoryCollectionEntity.js';
 import { GradeCandidateCollectionEntity } from '../GradeCandidateCollectionEntity.js';
@@ -144,6 +144,22 @@ export class AssociateGradeEntity extends Entity {
 		if (!returnedEntity) return;
 
 		return new GradeSchemeCollectionEntity(returnedEntity);
+	}
+
+	selectedSchemeHref() {
+		const newGradeEntity = this._getNewGradeEntity();
+		if (!newGradeEntity) return;
+
+		const gradeType = this.gradeType();
+		if (!gradeType) return;
+
+		const gradeSchemeEntity = newGradeEntity.getSubEntityByClass(gradeType);
+		if (!gradeSchemeEntity) return;
+
+		const link = gradeSchemeEntity.getLinkByRel(Rels.Grades.scheme);
+		if (!link) return;
+
+		return link.href;
 	}
 
 	async setGradebookStatus(newStatus, gradeName, maxPoints) {
