@@ -162,19 +162,12 @@ export class AssociateGradeEntity extends Entity {
 		return link.href;
 	}
 
-	async setGradebookStatus(newStatus, gradeName, maxPoints) {
+	async setGradebookStatus(newStatus) {
 		if (!this.canEditGradebookStatus()) return;
 
 		const action = this._entity.getActionByName(Actions.activities.associateGrade.gradebookStatus);
 
 		const fields = [{ name: GRADEBOOK_STATUS, value: newStatus }];
-		if (gradeName) {
-			fields.push({ name: GRADE_NAME, value: gradeName });
-		}
-		if (maxPoints) {
-			fields.push({ name: MAX_POINTS, value: maxPoints });
-		}
-
 		const returnedEntity = await performSirenAction(this._token, action, fields);
 
 		if (!returnedEntity) return;
