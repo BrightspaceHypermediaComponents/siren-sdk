@@ -502,14 +502,14 @@ export class ActivityUsageEntity extends Entity {
 	 * @param {number} score The numerical score value to bet set for the activity usage entity
 	 * @param {boolean} inGrades True if a grade item should be associated with this activity usage
 	 */
-	async setScoreOutOf(score, inGrades) {
+	async setScoreOutOf(score, inGrades, createSelectboxGradeItemEnabled) {
 		if (!this.canEditScoreOutOf()) {
 			return;
 		}
 
 		const fields = [{ name: 'scoreOutOf', value: score }];
 
-		if (this.canEditGrades()) {
+		if (this.canEditGrades() && !createSelectboxGradeItemEnabled) {
 			fields.push({ name: 'inGrades', value: inGrades });
 			fields.push({ name: 'gradeType', value: 'Numeric' });
 		}
@@ -663,18 +663,21 @@ export class ActivityUsageEntity extends Entity {
 				|| scoreAndGrade.inGrades !== this.inGrades());
 	}
 
-	async save(activity) {
+	async save(activity, createSelectboxGradeItemEnabled) {
 		if (!activity) return;
 
 		await this.setDraftStatus(activity.isDraft);
 
 		const dateActionAndFields = await this.saveDates(activity.dates, true);
-		const associateGradeActionAndFields = await this._associateGrade(activity.scoreAndGrade, true);
+		let associateGradeActionAndFields;
+		if (createSelectboxGradeItemEnabled) {
+			associateGradeActionAndFields = await this._associateGrade(activity.scoreAndGrade, true);
+		}
 		const sirenActions = [dateActionAndFields, associateGradeActionAndFields];
 		await performSirenActions(this._token, sirenActions);
 
 		if (this._shouldSetScoreOutOf(activity.scoreAndGrade)) {
-			await this.setScoreOutOf(activity.scoreAndGrade.scoreOutOf, activity.scoreAndGrade.inGrades);
+			await this.setScoreOutOf(activity.scoreAndGrade.scoreOutOf, activity.scoreAndGrade.inGrades, createSelectboxGradeItemEnabled);
 		}
 	}
 
