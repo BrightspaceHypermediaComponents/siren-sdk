@@ -162,6 +162,16 @@ export class AssociateGradeEntity extends Entity {
 		return link.href;
 	}
 
+	selectedCategoryHref() {
+		const newGradeEntity = this._getNewGradeEntity();
+		if (!newGradeEntity) return;
+
+		const link = newGradeEntity.getLinkByRel(Rels.Grades.category);
+		if (!link) return;
+
+		return link.href;
+	}
+
 	async setGradebookStatus(newStatus) {
 		if (!this.canEditGradebookStatus()) return;
 
