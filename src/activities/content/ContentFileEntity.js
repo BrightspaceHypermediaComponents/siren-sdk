@@ -145,7 +145,7 @@ export class ContentFileEntity extends ContentWorkingCopyEntity {
 	/**
 	 * @returns {string|null} html templates link
 	 */
-	 getHtmlTemplatesHref() {
+	getHtmlTemplatesHref() {
 		return ContentHelperFunctions.getHrefFromRel(Rels.Content.htmlTemplates, this._entity);
 	}
 }
