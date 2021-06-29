@@ -670,7 +670,7 @@ export class ActivityUsageEntity extends Entity {
 
 		const dateActionAndFields = await this.saveDates(activity.dates, true);
 		let associateGradeActionAndFields;
-		if (createSelectboxGradeItemEnabled) {
+		if (!createSelectboxGradeItemEnabled) {
 			associateGradeActionAndFields = await this._associateGrade(activity.scoreAndGrade, true);
 		}
 		const sirenActions = [dateActionAndFields, associateGradeActionAndFields];
