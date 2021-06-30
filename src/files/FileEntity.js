@@ -4,6 +4,12 @@ import { Entity } from '../es6/Entity';
  * FileEntity class representation of a d2l content file entity.
  */
 export class FileEntity extends Entity {
+	/**
+	 * @returns {string|undefined} Title of the content HTML file template entity
+	 */
+	title() {
+		return this._entity && this._entity.properties && this._entity.properties.title;
+	}
 
 	/**
 	 * @returns {string|null} File's location
