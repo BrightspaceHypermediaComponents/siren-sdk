@@ -803,16 +803,16 @@ export class AssignmentEntity extends Entity {
 			this.canEditAnnotations();
 
 		if (shouldSaveAnnotations) {
-
 			fields.push({
 				name: 'annotationToolsAvailability',
 				value: assignment.annotationToolsAvailable
 			});
 		}
 
-		if (typeof assignment.submissionType !== 'undefined' &&
-				assignment.submissionType !== this.submissionType() &&
-				this.canEditSubmissionType()) {
+		const shouldSaveSubmissionType = typeof assignment.submissionType !== 'undefined' &&
+			(!this.submissionType() || assignment.submissionType !== String(this.submissionType().value)) &&
+			this.canEditSubmissionType();
+		if (shouldSaveSubmissionType) {
 			fields.push({ name: 'submissionType', value: assignment.submissionType });
 		}
 
@@ -829,8 +829,8 @@ export class AssignmentEntity extends Entity {
 		}
 
 		if (typeof assignment.completionType !== 'undefined' &&
-				assignment.completionType !== this.completionType() &&
-				this.canEditCompletionType()) {
+			(shouldSaveSubmissionType || assignment.completionType !== this.completionTypeValue()) &&
+			this.canEditCompletionType()) {
 			fields.push({ name: 'completionType', value: assignment.completionType });
 		}
 
@@ -850,7 +850,8 @@ export class AssignmentEntity extends Entity {
 			fields.push({ name: 'defaultScoringRubricId', value: assignment.defaultScoringRubricId });
 		}
 
-		if (typeof assignment.notificationEmail !== 'undefined') {
+		if (typeof assignment.notificationEmail !== 'undefined' &&
+			assignment.notificationEmail !== this.notificationEmail()) {
 			fields.push({ name: 'notificationEmail', value: assignment.notificationEmail });
 		}
 
