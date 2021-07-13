@@ -1,12 +1,12 @@
-import { Entity } from '../../es6/Entity';
 import { Actions, Classes, Rels } from '../../hypermedia-constants';
 import { performSirenAction } from '../../es6/SirenAction';
 import ContentHelperFunctions from './ContentHelperFunctions.js';
+import { ContentWorkingCopyEntity } from './ContentWorkingCopyEntity.js';
 
 /**
  * ContentWebLinkEntity class representation of a d2l content-weblink entity.
  */
-export class ContentWebLinkEntity extends Entity {
+export class ContentWebLinkEntity extends ContentWorkingCopyEntity {
 
 	/**
 	 * @returns {string|null} Description html of the content-weblink item
@@ -143,36 +143,6 @@ export class ContentWebLinkEntity extends Entity {
 
 		await performSirenAction(this._token, action);
 		this.dispose();
-	}
-
-	/**
-	 * performs a checkout action on the web link, creating a working copy
-	 */
-	async checkoutWebLink() {
-		if (!this._entity) {
-			return;
-		}
-		const action = this._entity.getActionByName(Actions.webLink.checkoutWebLink);
-		if (!action) {
-			return;
-		}
-
-		return await performSirenAction(this._token, action);
-	}
-
-	/**
-	 * performs a commit action on the web link, persisting and terminating a working copy
-	 */
-	async commitWebLink() {
-		if (!this._entity) {
-			return;
-		}
-		const action = this._entity.getActionByName(Actions.webLink.commitWebLink);
-		if (!action) {
-			return;
-		}
-
-		return await performSirenAction(this._token, action);
 	}
 
 	/**
