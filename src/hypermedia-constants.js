@@ -556,9 +556,7 @@ export const Actions = {
 		updateUrl: 'update-url',
 		updateExternalResource: 'update-external-resource',
 		deleteWeblink: 'delete-webLink',
-		deleteLTIlink: 'delete-ltiLink',
-		checkoutWebLink: 'checkout',
-		commitWebLink: 'commit'
+		deleteLTIlink: 'delete-ltiLink'
 	},
 	htmlFile: {
 		updateHtmlContent: 'update-html-content'
