@@ -143,6 +143,10 @@ export const Rels = {
 		courseInfo: 'https://folio.api.brightspace.com/rels/CourseInfo',
 		courseList: 'https://folio.api.brightspace.com/rels/CourseList'
 	},
+	// GBL API sub-domain rels
+	Gbl: {
+		gblMap: 'https://gbl.api.brightspace.com/rels/gbl-map'
+	},
 	// Grades API sub-domain rels
 	Grades: {
 		category: 'https://grades.api.brightspace.com/rels/grade-category',
@@ -658,5 +662,9 @@ export const Actions = {
 		checkout: 'checkout',
 		checkin: 'checkin',
 		commit: 'commit'
+	},
+	gbl: {
+		updateName: 'update-name',
+		updateMapData: 'update-map-data'
 	}
 };
