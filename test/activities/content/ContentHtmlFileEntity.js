@@ -28,6 +28,10 @@ describe('ContentHtmlFileEntity', () => {
 		it('reads text description', () => {
 			expect(contentHtmlFileEntity.descriptionText()).to.equal('description text');
 		});
+
+		it('reads font size', () => {
+			expect(contentHtmlFileEntity.fontSize()).to.equal('24');
+		});
 	});
 
 	describe('Equality tests', () => {
@@ -103,6 +107,10 @@ describe('ContentHtmlFileEntity', () => {
 	describe('Links', () => {
 		it('can get file href', () => {
 			expect(contentHtmlFileEntity.getFileHref()).to.equal('https://fake-tenant-id.files.api.proddev.d2l/my-file.html/usages/6614');
+		});
+
+		it('can get templates href', () => {
+			expect(contentHtmlFileEntity.getHtmlTemplatesHref()).to.equal('https://fake-tenant-id.files.api.proddev.d2l/6614/files/html/templates');
 		});
 	});
 

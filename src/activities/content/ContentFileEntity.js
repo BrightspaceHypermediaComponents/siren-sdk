@@ -141,11 +141,4 @@ export class ContentFileEntity extends ContentWorkingCopyEntity {
 		}
 		return null;
 	}
-
-	/**
-	 * @returns {string|null} html templates href
-	 */
-	getHtmlTemplatesHref() {
-		return ContentHelperFunctions.getHrefFromRel(Rels.Content.htmlTemplates, this._entity);
-	}
 }

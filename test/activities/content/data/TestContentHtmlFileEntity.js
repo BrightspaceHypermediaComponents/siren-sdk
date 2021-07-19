@@ -52,7 +52,8 @@ export const contentHtmlFileData = {
 	],
 	'properties': {
 		'title': 'Test Html File Title',
-		'url': 'https://phoenix-is-the-best.com'
+		'url': 'https://phoenix-is-the-best.com',
+		'contentFontSize': '24'
 	},
 	'entities': [{
 		'class': ['richtext', 'description'],
@@ -68,6 +69,12 @@ export const contentHtmlFileData = {
 		],
 		'type': 'application/vnd.siren+json',
 		'href': 'https://fake-tenant-id.files.api.proddev.d2l/my-file.html/usages/6614'
+	},
+	{
+		'rel': [
+			'https://content.api.brightspace.com/rels/content-html-templates'
+		],
+		'href': 'https://fake-tenant-id.files.api.proddev.d2l/6614/files/html/templates'
 	}],
 	'rel': []
 };
