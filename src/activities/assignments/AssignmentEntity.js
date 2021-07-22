@@ -421,7 +421,6 @@ export class AssignmentEntity extends Entity {
 		return currentAllowableFileType ? [currentAllowableFileType] : [];
 	}
 
-
 	/**
 	 * @returns {object} Submission type of the assignment (including type value and type title)
 	 */
@@ -433,6 +432,9 @@ export class AssignmentEntity extends Entity {
 		return this._entity.properties.submissionType;
 	}
 
+	/**
+	 * @returns {object} Allowable filetype of the assignment (including type value and type title)
+	 */
 	allowableFileType() {
 		if (!this._entity || !this._entity.properties) {
 			return;
@@ -461,6 +463,9 @@ export class AssignmentEntity extends Entity {
 		return action.getFieldByName('submissionType').value;
 	}
 
+	/**
+	 * @returns {Array} Set of allowable filetype options for this assignment
+	 */
 	allowableFileTypeOptions() {
 		if (!this._entity) {
 			return [];
@@ -485,6 +490,9 @@ export class AssignmentEntity extends Entity {
 		return this._entity && this._entity.hasActionByName(Actions.assignments.updateSubmissionType);
 	}
 
+	/**
+	 * @returns {bool} Whether or not the edit allowable filetypes action is present on the assignment entity
+	 */
 	canEditAllowableFileType() {
 		return this._entity && this._entity.hasActionByName(Actions.assignments.updateAllowableFileType);
 	}
@@ -521,6 +529,10 @@ export class AssignmentEntity extends Entity {
 		await performSirenAction(this._token, action, fields);
 	}
 
+	/**
+	 * Sets the allowable filetypes of the assignment
+	 * @param {number} allowableFileType Allowable filetype option
+	 */
 	async setAllowableFileType(allowableFileType) {
 		allowableFileType = Number(allowableFileType);
 
