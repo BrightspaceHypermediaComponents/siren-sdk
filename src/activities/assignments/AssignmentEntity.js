@@ -412,6 +412,16 @@ export class AssignmentEntity extends Entity {
 		return currentSubmissionType ? [currentSubmissionType] : [];
 	}
 
+	_getReadOnlyAllowableFileTypeOptions() {
+		if (!this._entity) {
+			return [];
+		}
+
+		const currentAllowableFileType = this._entity.properties.allowableFileType;
+		return currentAllowableFileType ? [currentAllowableFileType] : [];
+	}
+
+
 	/**
 	 * @returns {object} Submission type of the assignment (including type value and type title)
 	 */
@@ -421,6 +431,14 @@ export class AssignmentEntity extends Entity {
 		}
 
 		return this._entity.properties.submissionType;
+	}
+
+	allowableFileType() {
+		if (!this._entity || !this._entity.properties) {
+			return;
+		}
+
+		return this._entity.properties.allowableFileType;
 	}
 
 	/**
@@ -443,11 +461,32 @@ export class AssignmentEntity extends Entity {
 		return action.getFieldByName('submissionType').value;
 	}
 
+	allowableFileTypeOptions() {
+		if (!this._entity) {
+			return [];
+		}
+
+		const action = this._entity.getActionByName(Actions.assignments.updateAllowableFileType);
+		if (!action) {
+			return this._getReadOnlyAllowableFileTypeOptions();
+		}
+
+		if (!action.hasFieldByName('allowableFileType')) {
+			return this._getReadOnlyAllowableFileTypeOptions();
+		}
+
+		return action.getFieldByName('allowableFileType').value;
+	}
+
 	/**
 	 * @returns {bool} Whether or not the edit submission type action is present on the assignment entity
 	 */
 	canEditSubmissionType() {
 		return this._entity && this._entity.hasActionByName(Actions.assignments.updateSubmissionType);
+	}
+
+	canEditAllowableFileType() {
+		return this._entity && this._entity.hasActionByName(Actions.assignments.updateAllowableFileType);
 	}
 
 	/**
@@ -478,6 +517,27 @@ export class AssignmentEntity extends Entity {
 		const fields = [
 			{ name: 'submissionType', value: submissionType },
 			{ name: 'completionType', value: completionType }
+		];
+		await performSirenAction(this._token, action, fields);
+	}
+
+	async setAllowableFileType(allowableFileType) {
+		allowableFileType = Number(allowableFileType);
+
+		const action = this.canEditAllowableFileType() && this._entity.getActionByName(Actions.assignments.updateAllowableFileType);
+		if (!action) {
+			return;
+		}
+
+		const fieldValue = action.getFieldByName('allowableFileType').value.find(v => {
+			return v.value === allowableFileType;
+		});
+		if (!fieldValue) {
+			return;
+		}
+
+		const fields = [
+			{ name: 'allowableFileType', value: allowableFileType }
 		];
 		await performSirenAction(this._token, action, fields);
 	}
@@ -816,6 +876,13 @@ export class AssignmentEntity extends Entity {
 			fields.push({ name: 'submissionType', value: assignment.submissionType });
 		}
 
+		const shouldSaveAllowableFileType = typeof assignment.allowableFileType !== 'undefined' &&
+			(!this.allowableFileType() || assignment.allowableFileType !== String(this.allowableFileType().value)) &&
+			this.canEditAllowableFileType();
+		if (shouldSaveAllowableFileType) {
+			fields.push({ name: 'allowableFileType', value: assignment.allowableFileType });
+		}
+
 		if (typeof assignment.filesSubmissionLimit !== 'undefined' &&
 			assignment.filesSubmissionLimit !== this.filesSubmissionLimit() &&
 				this.canEditFilesSubmissionLimit()) {
@@ -865,6 +932,7 @@ export class AssignmentEntity extends Entity {
 			[this.name(), assignment.name],
 			[this.instructionsEditorHtml(), assignment.instructions],
 			[this.submissionType() && String(this.submissionType().value), assignment.submissionType],
+			[this.allowableFileType() && String(this.allowableFileType().value), assignment.allowableFileType],
 			[this.getAvailableAnnotationTools(), assignment.annotationToolsAvailable],
 			[this.isIndividualAssignmentType(), assignment.isIndividualAssignmentType],
 			[this.getDefaultScoringRubric(), assignment.defaultScoringRubricId]
