@@ -51,3 +51,4 @@ Regular expressions are complicated, but this essentially means branch names sho
 ## Contributing
 
 Please read through our [contributing guidelines](CONTRIBUTING.md). Included are directions for opening issues, coding standards, and notes on development.
+
