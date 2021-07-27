@@ -888,10 +888,9 @@ export class AssignmentEntity extends Entity {
 			fields.push({ name: 'submissionType', value: assignment.submissionType });
 		}
 
-		const shouldSaveAllowableFileType = typeof assignment.allowableFileType !== 'undefined' &&
-			(!this.allowableFileType() || assignment.allowableFileType !== String(this.allowableFileType().value)) &&
-			this.canEditAllowableFileType();
-		if (shouldSaveAllowableFileType) {
+		const canSaveAllowableFileType = typeof assignment.allowableFileType !== 'undefined' && this.canEditAllowableFileType();
+		const shouldSaveAllowableFileType = !this.allowableFileType() || assignment.allowableFileType !== String(this.allowableFileType().value);
+		if (canSaveAllowableFileType && shouldSaveAllowableFileType) {
 			fields.push({ name: 'allowableFileType', value: assignment.allowableFileType });
 		}
 
