@@ -533,6 +533,8 @@ export const Actions = {
 		updateName: 'update-name',
 		updateCompletionType: 'update-completion-type',
 		updateSubmissionType: 'update-submission-type',
+		updateSubmissionsRule: 'update-submissions-rule',
+		updateAllowableFileType: 'update-allowable-file-type',
 		updateAnnotationToolsAvailability: 'update-annotation-tools-availability',
 		update: 'quick-create-folder',
 		updateFilesSubmissionLimit: 'update-files-submission-limit',
