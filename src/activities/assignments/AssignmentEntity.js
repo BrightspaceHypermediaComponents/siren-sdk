@@ -439,8 +439,21 @@ export class AssignmentEntity extends Entity {
 		if (!this._entity || !this._entity.properties) {
 			return;
 		}
-
+		console.log("asassas");
+		console.log(this._entity.properties);
+		console.log(Actions.assignments);
 		return this._entity.properties.allowableFileType;
+	}
+
+	/**
+	 * @returns {object} Custom allowable filetypes of the assignment (including type value and type title)
+	 */
+	customAllowableFileTypes() {
+		if (!this._entity || !this._entity.properties) {
+			return;
+		}
+
+		return this._entity.properties.customAllowableFileTypes;
 	}
 
 	/**
@@ -551,6 +564,32 @@ export class AssignmentEntity extends Entity {
 		const fields = [
 			{ name: 'allowableFileType', value: allowableFileType }
 		];
+		await performSirenAction(this._token, action, fields);
+	}
+
+	/**
+	 * Sets the custom allowable filetypes of the assignment
+	 * @param {string} customAllowableFileTypes Allowable filetype option
+	 */
+	async setCustomAllowableFileTypes(customAllowableFileTypes) {
+		customAllowableFileTypes = String(customAllowableFileTypes);
+		console.log("entityyyyyyy");
+		console.log(this._entity);
+		const action = this.canEditAllowableFileType() && this._entity.getActionByName(Actions.assignments.updateCustomAllowableFileType);
+		if (!action) {
+			return;
+		}
+
+		const fieldValue = action.getFieldByName('customAllowableFileTypes').value;
+
+		if (!fieldValue) {
+			return;
+		}
+
+		const fields = [
+			{ name: 'customAllowableFileTypes', value: customAllowableFileTypes }
+		];
+
 		await performSirenAction(this._token, action, fields);
 	}
 
@@ -894,6 +933,10 @@ export class AssignmentEntity extends Entity {
 			fields.push({ name: 'allowableFileType', value: assignment.allowableFileType });
 		}
 
+		if (canSaveAllowableFileType && shouldSaveAllowableFileType && assignment.allowableFileType === '5') {
+			fields.push({ name: 'customAllowableFileTypes', value: assignment.customAllowableFileTypes });
+		}
+
 		if (typeof assignment.filesSubmissionLimit !== 'undefined' &&
 			assignment.filesSubmissionLimit !== this.filesSubmissionLimit() &&
 				this.canEditFilesSubmissionLimit()) {
@@ -936,6 +979,10 @@ export class AssignmentEntity extends Entity {
 		if (fields.length > 0) {
 			await performSirenAction(this._token, action, fields);
 		}
+
+		console.log("fields");
+		console.log(fields);
+		console.log(assignment);
 	}
 
 	equals(assignment) {
@@ -962,6 +1009,9 @@ export class AssignmentEntity extends Entity {
 		}
 		if (assignment.hasOwnProperty('notificationEmail')) {
 			diffs.push([this.notificationEmail(), assignment.notificationEmail]);
+		}
+		if (assignment.hasOwnProperty('customAllowableFileTypes')) {
+			diffs.push([this.customAllowableFileTypes(), assignment.customAllowableFileTypes]);
 		}
 		for (const [left, right] of diffs) {
 			if (left !== right) {
