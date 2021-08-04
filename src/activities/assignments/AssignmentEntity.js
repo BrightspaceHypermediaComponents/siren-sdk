@@ -439,9 +439,6 @@ export class AssignmentEntity extends Entity {
 		if (!this._entity || !this._entity.properties) {
 			return;
 		}
-		console.log("asassas");
-		console.log(this._entity.properties);
-		console.log(Actions.assignments);
 		return this._entity.properties.allowableFileType;
 	}
 
@@ -452,8 +449,7 @@ export class AssignmentEntity extends Entity {
 		if (!this._entity || !this._entity.properties) {
 			return;
 		}
-
-		return this._entity.properties.customAllowableFileTypes;
+		return this._entity.properties.customAllowableFileTypes ? this._entity.properties.customAllowableFileTypes : '';
 	}
 
 	/**
@@ -573,8 +569,6 @@ export class AssignmentEntity extends Entity {
 	 */
 	async setCustomAllowableFileTypes(customAllowableFileTypes) {
 		customAllowableFileTypes = String(customAllowableFileTypes);
-		console.log("entityyyyyyy");
-		console.log(this._entity);
 		const action = this.canEditAllowableFileType() && this._entity.getActionByName(Actions.assignments.updateCustomAllowableFileType);
 		if (!action) {
 			return;
@@ -933,7 +927,8 @@ export class AssignmentEntity extends Entity {
 			fields.push({ name: 'allowableFileType', value: assignment.allowableFileType });
 		}
 
-		if (canSaveAllowableFileType && shouldSaveAllowableFileType && assignment.allowableFileType === '5') {
+		const allowableFileTypeCustomValue = '5';
+		if (assignment.allowableFileType === allowableFileTypeCustomValue) {
 			fields.push({ name: 'customAllowableFileTypes', value: assignment.customAllowableFileTypes });
 		}
 
@@ -979,10 +974,6 @@ export class AssignmentEntity extends Entity {
 		if (fields.length > 0) {
 			await performSirenAction(this._token, action, fields);
 		}
-
-		console.log("fields");
-		console.log(fields);
-		console.log(assignment);
 	}
 
 	equals(assignment) {
