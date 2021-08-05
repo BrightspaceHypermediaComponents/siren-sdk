@@ -115,6 +115,7 @@ export const Rels = {
 		ltilinkEntity: 'https://weblinks.api.brightspace.com/rels/content-ltilink',
 		ltilinkFrameOptionsEntity: 'https://content.api.brightspace.com/rels/frame-options',
 		contentFileEntity: 'https://content.api.brightspace.com/rels/content-file',
+		scormPackageEntity: 'https://content.api.brightspace.com/rels/scorm-package',
 		lessonViewPage: 'https://content.api.brightspace.com/rels/lesson-view-page',
 		htmlTemplates: 'https://content.api.brightspace.com/rels/content-html-templates'
 	},
@@ -560,6 +561,9 @@ export const Actions = {
 	},
 	htmlFile: {
 		updateHtmlContent: 'update-html-content'
+	},
+	scormPackage: {
+		deleteScormPackage: 'delete-scorm-package'
 	},
 	notifications: {
 		getCarrierClass: 'get-carrier',
