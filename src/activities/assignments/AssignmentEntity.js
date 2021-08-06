@@ -506,6 +506,10 @@ export class AssignmentEntity extends Entity {
 		return this._entity && this._entity.hasActionByName(Actions.assignments.updateAllowableFileType);
 	}
 
+	canEditCustomAllowableFileTypes() {
+		return this._entity && this._entity.hasActionByName(Actions.assignments.updateCustomAllowableFileType);
+	}
+
 	/**
 	 * Sets the submission type of the assignment
 	 * @param {number} submissionType Submission type - see SUBMISSIONTYPE_T under https://docs.valence.desire2learn.com/res/dropbox.html#attributes for more info
@@ -569,7 +573,7 @@ export class AssignmentEntity extends Entity {
 	 */
 	async setCustomAllowableFileTypes(customAllowableFileTypes) {
 		customAllowableFileTypes = String(customAllowableFileTypes);
-		const action = this.canEditAllowableFileType() && this._entity.getActionByName(Actions.assignments.updateCustomAllowableFileType);
+		const action = this.canEditCustomAllowableFileTypes() && this._entity.getActionByName(Actions.assignments.updateCustomAllowableFileType);
 		if (!action) {
 			return;
 		}
@@ -928,7 +932,8 @@ export class AssignmentEntity extends Entity {
 		}
 
 		const allowableFileTypeCustomValue = '5';
-		if (assignment.allowableFileType === allowableFileTypeCustomValue) {
+		const canSaveCustomAllowableFileTypes = typeof assignment.customAllowableFileTypes !== 'undefined' && this.canEditCustomAllowableFileTypes();
+		if (assignment.allowableFileType === allowableFileTypeCustomValue && canSaveCustomAllowableFileTypes) {
 			fields.push({ name: 'customAllowableFileTypes', value: assignment.customAllowableFileTypes });
 		}
 
