@@ -1,11 +1,11 @@
 import { Actions } from '../../hypermedia-constants';
 import { performSirenAction } from '../../es6/SirenAction';
-import { ActivityGradeEntity } from '../ActivityGradeEntity';
+import { ContentEntity } from './ContentEntity';
 
 /**
  * ContentscormActivityEntity class representation of a d2l content-scorm-package entity.
  */
-export class ContentScormActivityEntity extends ActivityGradeEntity {
+export class ContentScormActivityEntity extends ContentEntity {
 
 	/**
 	 * @returns {string|undefined} Title of the content-scorm-package item
