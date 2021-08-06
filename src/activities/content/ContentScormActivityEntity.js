@@ -3,9 +3,9 @@ import { performSirenAction } from '../../es6/SirenAction';
 import { ActivityGradeEntity } from '../ActivityGradeEntity';
 
 /**
- * ContentScormPackageEntity class representation of a d2l content-scorm-package entity.
+ * ContentscormActivityEntity class representation of a d2l content-scorm-package entity.
  */
-export class ContentScormPackageEntity extends ActivityGradeEntity {
+export class ContentScormActivityEntity extends ActivityGradeEntity {
 
 	/**
 	 * @returns {string|undefined} Title of the content-scorm-package item
@@ -18,7 +18,7 @@ export class ContentScormPackageEntity extends ActivityGradeEntity {
 	 * Updates the SCORM package to have the given title
 	 * @param {string} title Title to set on the SCORM package
 	 */
-	async setScormPackageTitle(title) {
+	async setScormActivityTitle(title) {
 		if (!this._entity) {
 			return;
 		}
@@ -35,12 +35,12 @@ export class ContentScormPackageEntity extends ActivityGradeEntity {
 	/**
 	 * Deletes the SCORM package
 	 */
-	async deleteScormPackage() {
+	async deleteScormActivity() {
 		if (!this._entity) {
 			return;
 		}
 
-		const action = this._entity.getActionByName(Actions.scormPackage.deleteScormPackage);
+		const action = this._entity.getActionByName(Actions.scormActivity.deleteScormActivity);
 		if (!action) {
 			return;
 		}
@@ -51,11 +51,11 @@ export class ContentScormPackageEntity extends ActivityGradeEntity {
 
 	/**
 	 * Checks if content scorm package properties passed in match what is currently stored
-	 * @param {object} SCORMPackage Object containing scorm package specific properties
+	 * @param {object} scormActivity Object containing scorm package specific properties
 	 */
-	equals(contentScormPackage) {
+	equals(contentscormActivity) {
 		const diffs = [
-			[this.title(), contentScormPackage.title],
+			[this.title(), contentscormActivity.title],
 		];
 		for (const [left, right] of diffs) {
 			if (left !== right) {
