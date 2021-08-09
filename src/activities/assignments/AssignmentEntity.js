@@ -439,8 +439,17 @@ export class AssignmentEntity extends Entity {
 		if (!this._entity || !this._entity.properties) {
 			return;
 		}
-
 		return this._entity.properties.allowableFileType;
+	}
+
+	/**
+	 * @returns {object} Custom allowable filetypes of the assignment (including type value and type title)
+	 */
+	customAllowableFileTypes() {
+		if (!this._entity || !this._entity.properties) {
+			return;
+		}
+		return this._entity.properties.customAllowableFileTypes ? this._entity.properties.customAllowableFileTypes : '';
 	}
 
 	/**
@@ -497,6 +506,10 @@ export class AssignmentEntity extends Entity {
 		return this._entity && this._entity.hasActionByName(Actions.assignments.updateAllowableFileType);
 	}
 
+	canEditCustomAllowableFileTypes() {
+		return this._entity && this._entity.hasActionByName(Actions.assignments.updateCustomAllowableFileType);
+	}
+
 	/**
 	 * Sets the submission type of the assignment
 	 * @param {number} submissionType Submission type - see SUBMISSIONTYPE_T under https://docs.valence.desire2learn.com/res/dropbox.html#attributes for more info
@@ -551,6 +564,30 @@ export class AssignmentEntity extends Entity {
 		const fields = [
 			{ name: 'allowableFileType', value: allowableFileType }
 		];
+		await performSirenAction(this._token, action, fields);
+	}
+
+	/**
+	 * Sets the custom allowable filetypes of the assignment
+	 * @param {string} customAllowableFileTypes Allowable filetype option
+	 */
+	async setCustomAllowableFileTypes(customAllowableFileTypes) {
+		customAllowableFileTypes = String(customAllowableFileTypes);
+		const action = this.canEditCustomAllowableFileTypes() && this._entity.getActionByName(Actions.assignments.updateCustomAllowableFileType);
+		if (!action) {
+			return;
+		}
+
+		const fieldValue = action.getFieldByName('customAllowableFileTypes').value;
+
+		if (!fieldValue) {
+			return;
+		}
+
+		const fields = [
+			{ name: 'customAllowableFileTypes', value: customAllowableFileTypes }
+		];
+
 		await performSirenAction(this._token, action, fields);
 	}
 
@@ -894,6 +931,12 @@ export class AssignmentEntity extends Entity {
 			fields.push({ name: 'allowableFileType', value: assignment.allowableFileType });
 		}
 
+		const allowableFileTypeCustomValue = '5';
+		const canSaveCustomAllowableFileTypes = typeof assignment.customAllowableFileTypes !== 'undefined' && this.canEditCustomAllowableFileTypes();
+		if (assignment.allowableFileType === allowableFileTypeCustomValue && canSaveCustomAllowableFileTypes) {
+			fields.push({ name: 'customAllowableFileTypes', value: assignment.customAllowableFileTypes });
+		}
+
 		if (typeof assignment.filesSubmissionLimit !== 'undefined' &&
 			assignment.filesSubmissionLimit !== this.filesSubmissionLimit() &&
 				this.canEditFilesSubmissionLimit()) {
@@ -962,6 +1005,9 @@ export class AssignmentEntity extends Entity {
 		}
 		if (assignment.hasOwnProperty('notificationEmail')) {
 			diffs.push([this.notificationEmail(), assignment.notificationEmail]);
+		}
+		if (assignment.hasOwnProperty('customAllowableFileTypes')) {
+			diffs.push([this.customAllowableFileTypes(), assignment.customAllowableFileTypes]);
 		}
 		for (const [left, right] of diffs) {
 			if (left !== right) {
