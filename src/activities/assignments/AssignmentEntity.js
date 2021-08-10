@@ -443,7 +443,7 @@ export class AssignmentEntity extends Entity {
 	}
 
 	/**
-	 * @returns {object} Custom allowable filetypes of the assignment (including type value and type title)
+	 * @returns {object} Custom allowablefile types of the assignment
 	 */
 	customAllowableFileTypes() {
 		if (!this._entity || !this._entity.properties) {
