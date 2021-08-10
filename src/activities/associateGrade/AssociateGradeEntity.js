@@ -220,10 +220,11 @@ export class AssociateGradeEntity extends Entity {
 	*/
 	_performGetActionWithWorkingCopy(action) {
 		const fields = [];
-		// HACK adding query param as field due to bug in performSirenAction (_getSirenFields function)
+		// HACK adding query params as fields due to bug in performSirenAction (_getSirenFields function)
 		const url = new URL(action.href, window.location.origin);
-		const wcId = url.searchParams.get('workingCopyId');
-		fields.push({name: 'workingCopyId', value: wcId});
+		for (const [key, value] of url.searchParams) {
+			fields.push({name: key, value: value});
+		}
 
 		return performSirenAction(this._token, action, fields, false, true);
 	}
