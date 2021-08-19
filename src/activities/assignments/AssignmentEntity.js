@@ -335,6 +335,17 @@ export class AssignmentEntity extends Entity {
 	}
 
 	/**
+	 * @returns {String} Organization endpoint link
+	 */
+	getOrganizationHref() {
+		if (!this._entity) {
+			return;
+		}
+		const organizationHref = this._entity.getLinkByRel(Rels.organization);
+		return organizationHref;
+	}
+
+	/**
 	 * Sets the assignment type to group using a default group category
 	 */
 	async setToGroupAssignmentType() {
