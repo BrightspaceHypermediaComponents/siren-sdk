@@ -12,6 +12,14 @@ const ContentHelperFunctions = {
 			return null;
 		}
 		return subEntity;
+	},
+	getLastModifiedSubEntity: (entity) => {
+		const [subEntity] = entity.getSubEntitiesByClass(Classes.content.lastModified);
+
+		if (!subEntity || !subEntity.properties) {
+			return null;
+		}
+		return subEntity;
 	}
 };
 
