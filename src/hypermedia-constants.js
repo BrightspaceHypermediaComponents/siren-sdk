@@ -430,6 +430,7 @@ export const Classes = {
 	},
 	rubrics: {
 		analytic: 'analytic',
+		text: 'text',
 		assessmentCriterionCell: 'assessment-criterion-cell',
 		associations: 'associations',
 		criterion: 'criterion',
