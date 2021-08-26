@@ -144,6 +144,13 @@ export class OrganizationEntity extends Entity {
 			&& homepageEntity.properties
 			&& homepageEntity.properties.path;
 	}
+	filesUrl() {
+		if (!this._entity || !this._entity.hasLinkByRel(Rels.Files.files)) {
+			return;
+		}
+
+		return this._entity.getLinkByRel(Rels.Files.files);
+	}
 	fullyQualifiedOrganizationHomepageUrl() {
 		if (!this._entity || !this._entity.hasLinkByRel(Rels.organizationHomepage)) {
 			return;

@@ -29,6 +29,7 @@ export const Rels = {
 	parentSemester: 'https://api.brightspace.com/rels/parent-semester',
 	profileImage: 'https://api.brightspace.com/rels/profile-image',
 	quiz: 'https://api.brightspace.com/rels/quiz',
+	restricted: 'https://api.brightspace.com/rels/restricted',
 	role: 'https://api.brightspace.com/rels/role',
 	root: 'https://api.brightspace.com/rels/root',
 	richTextEditorConfig: 'https://api.brightspace.com/rels/richtext-editor-config',
