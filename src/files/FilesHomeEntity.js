@@ -1,4 +1,4 @@
-import { Actions } from '../hypermedia-constants';
+import { Actions, Rels } from '../hypermedia-constants';
 import { Entity } from '../es6/Entity';
 import { performSirenAction } from '../es6/SirenAction';
 
@@ -12,6 +12,16 @@ export class FilesHomeEntity extends Entity {
 	 */
 	canPreviewFiles() {
 		return this._entity && this._entity.hasActionByName(Actions.files.filePreviewLocation);
+	}
+
+	/**
+	 * @returns {String} Url endpoint to restricted entity
+	 */
+	restrictedUrl() {
+		if (!this._entity && !this._entity.hasLinkByRel(Rels.restricted)) {
+			return;
+		}
+		return this._entity.getLinkByRel(Rels.restricted);
 	}
 
 	/**
