@@ -335,6 +335,17 @@ export class AssignmentEntity extends Entity {
 	}
 
 	/**
+	 * @returns {String} Organization endpoint link
+	 */
+	getOrganizationHref() {
+		if (!this._entity && !this._entity.hasLinkByRel(Rels.organization)) {
+			return;
+		}
+		const organizationHref = this._entity.getLinkByRel(Rels.organization);
+		return organizationHref && organizationHref.href;
+	}
+
+	/**
 	 * Sets the assignment type to group using a default group category
 	 */
 	async setToGroupAssignmentType() {
@@ -412,6 +423,15 @@ export class AssignmentEntity extends Entity {
 		return currentSubmissionType ? [currentSubmissionType] : [];
 	}
 
+	_getReadOnlyAllowableFileTypeOptions() {
+		if (!this._entity) {
+			return [];
+		}
+
+		const currentAllowableFileType = this._entity.properties.allowableFileType;
+		return currentAllowableFileType ? [currentAllowableFileType] : [];
+	}
+
 	/**
 	 * @returns {object} Submission type of the assignment (including type value and type title)
 	 */
@@ -421,6 +441,26 @@ export class AssignmentEntity extends Entity {
 		}
 
 		return this._entity.properties.submissionType;
+	}
+
+	/**
+	 * @returns {object} Allowable filetype of the assignment (including type value and type title)
+	 */
+	allowableFileType() {
+		if (!this._entity || !this._entity.properties) {
+			return;
+		}
+		return this._entity.properties.allowableFileType;
+	}
+
+	/**
+	 * @returns {object} Custom allowablefile types of the assignment
+	 */
+	customAllowableFileTypes() {
+		if (!this._entity || !this._entity.properties) {
+			return;
+		}
+		return this._entity.properties.customAllowableFileTypes ? this._entity.properties.customAllowableFileTypes : '';
 	}
 
 	/**
@@ -444,10 +484,41 @@ export class AssignmentEntity extends Entity {
 	}
 
 	/**
+	 * @returns {Array} Set of allowable filetype options for this assignment
+	 */
+	allowableFileTypeOptions() {
+		if (!this._entity) {
+			return [];
+		}
+
+		const action = this._entity.getActionByName(Actions.assignments.updateAllowableFileType);
+		if (!action) {
+			return this._getReadOnlyAllowableFileTypeOptions();
+		}
+
+		if (!action.hasFieldByName('allowableFileType')) {
+			return this._getReadOnlyAllowableFileTypeOptions();
+		}
+
+		return action.getFieldByName('allowableFileType').value;
+	}
+
+	/**
 	 * @returns {bool} Whether or not the edit submission type action is present on the assignment entity
 	 */
 	canEditSubmissionType() {
 		return this._entity && this._entity.hasActionByName(Actions.assignments.updateSubmissionType);
+	}
+
+	/**
+	 * @returns {bool} Whether or not the edit allowable filetypes action is present on the assignment entity
+	 */
+	canEditAllowableFileType() {
+		return this._entity && this._entity.hasActionByName(Actions.assignments.updateAllowableFileType);
+	}
+
+	canEditCustomAllowableFileTypes() {
+		return this._entity && this._entity.hasActionByName(Actions.assignments.updateCustomAllowableFileType);
 	}
 
 	/**
@@ -479,6 +550,55 @@ export class AssignmentEntity extends Entity {
 			{ name: 'submissionType', value: submissionType },
 			{ name: 'completionType', value: completionType }
 		];
+		await performSirenAction(this._token, action, fields);
+	}
+
+	/**
+	 * Sets the allowable filetypes of the assignment
+	 * @param {number} allowableFileType Allowable filetype option
+	 */
+	async setAllowableFileType(allowableFileType) {
+		allowableFileType = Number(allowableFileType);
+
+		const action = this.canEditAllowableFileType() && this._entity.getActionByName(Actions.assignments.updateAllowableFileType);
+		if (!action) {
+			return;
+		}
+
+		const fieldValue = action.getFieldByName('allowableFileType').value.find(v => {
+			return v.value === allowableFileType;
+		});
+		if (!fieldValue) {
+			return;
+		}
+
+		const fields = [
+			{ name: 'allowableFileType', value: allowableFileType }
+		];
+		await performSirenAction(this._token, action, fields);
+	}
+
+	/**
+	 * Sets the custom allowable filetypes of the assignment
+	 * @param {string} customAllowableFileTypes Allowable filetype option
+	 */
+	async setCustomAllowableFileTypes(customAllowableFileTypes) {
+		customAllowableFileTypes = String(customAllowableFileTypes);
+		const action = this.canEditCustomAllowableFileTypes() && this._entity.getActionByName(Actions.assignments.updateCustomAllowableFileType);
+		if (!action) {
+			return;
+		}
+
+		const fieldValue = action.getFieldByName('customAllowableFileTypes').value;
+
+		if (!fieldValue) {
+			return;
+		}
+
+		const fields = [
+			{ name: 'customAllowableFileTypes', value: customAllowableFileTypes }
+		];
+
 		await performSirenAction(this._token, action, fields);
 	}
 
@@ -816,6 +936,18 @@ export class AssignmentEntity extends Entity {
 			fields.push({ name: 'submissionType', value: assignment.submissionType });
 		}
 
+		const canSaveAllowableFileType = typeof assignment.allowableFileType !== 'undefined' && this.canEditAllowableFileType();
+		const shouldSaveAllowableFileType = !this.allowableFileType() || assignment.allowableFileType !== String(this.allowableFileType().value);
+		if (canSaveAllowableFileType && shouldSaveAllowableFileType) {
+			fields.push({ name: 'allowableFileType', value: assignment.allowableFileType });
+		}
+
+		const allowableFileTypeCustomValue = '5';
+		const canSaveCustomAllowableFileTypes = typeof assignment.customAllowableFileTypes !== 'undefined' && this.canEditCustomAllowableFileTypes();
+		if (assignment.allowableFileType === allowableFileTypeCustomValue && canSaveCustomAllowableFileTypes) {
+			fields.push({ name: 'customAllowableFileTypes', value: assignment.customAllowableFileTypes });
+		}
+
 		if (typeof assignment.filesSubmissionLimit !== 'undefined' &&
 			assignment.filesSubmissionLimit !== this.filesSubmissionLimit() &&
 				this.canEditFilesSubmissionLimit()) {
@@ -865,6 +997,7 @@ export class AssignmentEntity extends Entity {
 			[this.name(), assignment.name],
 			[this.instructionsEditorHtml(), assignment.instructions],
 			[this.submissionType() && String(this.submissionType().value), assignment.submissionType],
+			[this.allowableFileType() && String(this.allowableFileType().value), assignment.allowableFileType],
 			[this.getAvailableAnnotationTools(), assignment.annotationToolsAvailable],
 			[this.isIndividualAssignmentType(), assignment.isIndividualAssignmentType],
 			[this.getDefaultScoringRubric(), assignment.defaultScoringRubricId]
@@ -883,6 +1016,9 @@ export class AssignmentEntity extends Entity {
 		}
 		if (assignment.hasOwnProperty('notificationEmail')) {
 			diffs.push([this.notificationEmail(), assignment.notificationEmail]);
+		}
+		if (assignment.hasOwnProperty('customAllowableFileTypes')) {
+			diffs.push([this.customAllowableFileTypes(), assignment.customAllowableFileTypes]);
 		}
 		for (const [left, right] of diffs) {
 			if (left !== right) {
