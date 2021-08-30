@@ -8,6 +8,7 @@ export const CONTENT_TYPES = {
 	module: 'module',
 	topic: 'topic',
 	weblink: 'weblink',
+	scormActivity: 'scorm-activity'
 };
 
 /**
@@ -31,6 +32,8 @@ export class ContentEntity extends Entity {
 			return CONTENT_TYPES.ltilink;
 		} else if (this._entity.hasLinkByRel(Rels.Content.contentFileEntity)) {
 			return CONTENT_TYPES.contentFile;
+		} else if (this._entity.hasLinkByRel(Rels.Content.contentScormActivityEntity)) {
+			return CONTENT_TYPES.scormActivity;
 		} else if (this._entity.hasClass(CONTENT_TYPES.topic)) {
 			return CONTENT_TYPES.topic;
 		} else {
@@ -64,6 +67,13 @@ export class ContentEntity extends Entity {
 	 */
 	getContentFileHref() {
 		return ContentHelperFunctions.getHrefFromRel(Rels.Content.contentFileEntity, this._entity);
+	}
+
+	/**
+	 * @returns {string|null} content SCORM package link
+	 */
+	getScormActivityHref() {
+		return ContentHelperFunctions.getHrefFromRel(Rels.Content.contentScormActivityEntity, this._entity);
 	}
 
 	/**

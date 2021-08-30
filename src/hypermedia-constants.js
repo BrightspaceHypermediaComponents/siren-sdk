@@ -116,6 +116,7 @@ export const Rels = {
 		ltilinkEntity: 'https://weblinks.api.brightspace.com/rels/content-ltilink',
 		ltilinkFrameOptionsEntity: 'https://content.api.brightspace.com/rels/frame-options',
 		contentFileEntity: 'https://content.api.brightspace.com/rels/content-file',
+		contentScormActivityEntity: 'https://weblinks.api.brightspace.com/rels/content-scormActivity',
 		lessonViewPage: 'https://content.api.brightspace.com/rels/lesson-view-page',
 		htmlTemplates: 'https://content.api.brightspace.com/rels/content-html-templates'
 	},
@@ -311,7 +312,8 @@ export const Classes = {
 	content: {
 		content: 'content',
 		sequencedActivity: 'sequenced-activity',
-		description: 'description'
+		description: 'description',
+		lastModified: 'lastModified'
 	},
 	webLink: {
 		externalResource: 'external-resource'
@@ -561,7 +563,8 @@ export const Actions = {
 		updateUrl: 'update-url',
 		updateExternalResource: 'update-external-resource',
 		deleteWeblink: 'delete-webLink',
-		deleteLTIlink: 'delete-ltiLink'
+		deleteLTIlink: 'delete-ltiLink',
+		deleteScormActivity: 'delete-scorm-activity'
 	},
 	htmlFile: {
 		updateHtmlContent: 'update-html-content'
