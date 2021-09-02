@@ -104,8 +104,7 @@ export class ContentScormActivityEntity extends ContentEntity {
 	equals(contentscormActivity) {
 		const diffs = [
 			[this.title(), contentscormActivity.title],
-			[this.isExternalResource(), contentscormActivity.isExternalResource],
-			[this.lastModified(), contentscormActivity.lastModified]
+			[this.isExternalResource(), contentscormActivity.isExternalResource]
 		];
 		for (const [left, right] of diffs) {
 			if (left !== right) {
