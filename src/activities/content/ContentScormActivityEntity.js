@@ -26,16 +26,17 @@ export class ContentScormActivityEntity extends ContentEntity {
 	}
 
 	/**
-	 * @returns {Date|undefined} The date and time the scorm activity was last edited
+	 * @returns {Date|undefined} The date and time the scorm activity was last edited according to the content service
 	 */
-	lastModified() {
-		const lastModifiedSubEntity = ContentHelperFunctions.getLastModifiedSubEntity(this._entity);
+	contentServiceLastModified() {
+		return this._entity && this._entity.properties && this._entity.properties.contentServiceScormActivityLastModified;
+	}
 
-		if (!lastModifiedSubEntity) {
-			return null;
-		}
-
-		return lastModifiedSubEntity.properties.date;
+	/**
+	 * @returns {string|undefined} Name of the Scorm actvity according to the content service
+	 */
+	contentServiceName() {
+		return this._entity && this._entity.properties && this._entity.properties.contentServiceScormActivityName;
 	}
 
 	/**
