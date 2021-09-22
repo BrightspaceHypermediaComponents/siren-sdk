@@ -23,7 +23,7 @@ export class ScoringEntity extends Entity {
 	/**
 	 * @returns {bool} Whether or not the update score out of action is present
 	 */
-	 canUpdateScoring() {
+	canUpdateScoring() {
 		return this._entity && this._entity.hasActionByName(Actions.activities.scoreOutOf.update);
 	}
 
@@ -33,7 +33,7 @@ export class ScoringEntity extends Entity {
 
 	_getUpdateFieldName() {
 		const updateAction = this._getUpdateAction();
-		if(!updateAction) {
+		if (!updateAction) {
 			return;
 		}
 		return updateAction.fields[0].name;
@@ -46,7 +46,7 @@ export class ScoringEntity extends Entity {
 
 		const scoreOutOf = this.scoreOutOf() ? this.scoreOutOf().toString() : '';
 
-		if( scoring.scoreOutOf !== scoreOutOf ) {
+		if (scoring.scoreOutOf !== scoreOutOf) {
 			const fields = [{ name: this._getUpdateFieldName(), value: scoring.scoreOutOf }];
 			await performSirenAction(this._token, this._getUpdateAction(), fields);
 		}
