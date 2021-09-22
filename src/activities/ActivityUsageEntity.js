@@ -8,7 +8,6 @@ import { performSirenAction, performSirenActions } from '../es6/SirenAction.js';
 /**
  * ActivityUsageEntity class representation of a d2l activity usage.
  */
-const specializationRel = 'https://api.brightspace.com/rels/specialization';
 
 export class ActivityUsageEntity extends Entity {
 	/**
@@ -26,11 +25,11 @@ export class ActivityUsageEntity extends Entity {
 	 * @returns {string} URL of the specialization associated with the activity usage, if present
 	 */
 	specializationHref() {
-		if (!this._entity || !this._entity.hasLinkByRel(specializationRel)) {
+		if (!this._entity || !this._entity.hasLinkByRel(Rels.specialization)) {
 			return;
 		}
 
-		return this._entity.getLinkByRel(specializationRel).href;
+		return this._entity.getLinkByRel(Rels.specialization).href;
 	}
 
 	/**
@@ -595,11 +594,12 @@ export class ActivityUsageEntity extends Entity {
 			&& scoreOutOfEntity.getActionByName && scoreOutOfEntity.getActionByName(Actions.activities.scoreOutOf.update);
 	}
 
-	async fetchLinkedScoreOutOfEntity(fetcher, bypassCache) {
+	/**
+	* @returns {string} URL of the scoring API, for managing activity's scoreOutOf
+	*/
+	scoringHref() {
 		const scoreOutOfSubEntity = this._entity && this._entity.getSubEntityByRel(Rels.Activities.scoreOutOf);
-		if (scoreOutOfSubEntity && scoreOutOfSubEntity.href) {
-			this._linkedScoreOutOfEntity = await fetcher(scoreOutOfSubEntity.href, this.token, bypassCache);
-		}
+		return scoreOutOfSubEntity && scoreOutOfSubEntity.href;
 	}
 
 	async validate(activity) {
