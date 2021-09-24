@@ -27,6 +27,10 @@ export class ScoringEntity extends Entity {
 		return this._entity && this._entity.hasActionByName(Actions.activities.scoreOutOf.update);
 	}
 
+	equals(scoring) {
+		return String(this.scoreOutOf()) === scoring.scoreOutOf;
+	}
+
 	_getUpdateAction() {
 		return this.canUpdateScoring() && this._entity.getActionByName(Actions.activities.scoreOutOf.update);
 	}
