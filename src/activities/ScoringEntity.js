@@ -28,7 +28,7 @@ export class ScoringEntity extends Entity {
 	}
 
 	equals(scoring) {
-		return String(this.scoreOutOf()) === scoring.scoreOutOf;
+		return this.scoreOutOf() === scoring.scoreOutOf;
 	}
 
 	_getUpdateAction() {
@@ -48,9 +48,7 @@ export class ScoringEntity extends Entity {
 			return;
 		}
 
-		const scoreOutOf = this.scoreOutOf() ? this.scoreOutOf().toString() : '';
-
-		if (scoring.scoreOutOf !== scoreOutOf) {
+		if (scoring.scoreOutOf !== this.scoreOutOf()) {
 			const fields = [{ name: this._getUpdateFieldName(), value: scoring.scoreOutOf }];
 			await performSirenAction(this._token, this._getUpdateAction(), fields);
 		}
