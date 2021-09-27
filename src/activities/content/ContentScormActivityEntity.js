@@ -10,7 +10,7 @@ export class ContentScormActivityEntity extends ContentEntity {
 	/**
 	 * @returns {string|undefined} Name of the Scorm actvity according to the content service
 	 */
-	 contentServiceTitle() {
+	contentServiceTitle() {
 		return this._entity && this._entity.properties && this._entity.properties.contentServiceScormActivityTitle;
 	}
 
