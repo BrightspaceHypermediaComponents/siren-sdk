@@ -8,6 +8,20 @@ import { ContentEntity } from './ContentEntity';
 export class ContentScormActivityEntity extends ContentEntity {
 
 	/**
+	 * @returns {string|undefined} Name of the Scorm actvity according to the content service
+	 */
+	 contentServiceTitle() {
+		return this._entity && this._entity.properties && this._entity.properties.contentServiceScormActivityTitle;
+	}
+
+	/**
+	 * @returns {Date|undefined} The date and time the scorm activity was last edited according to the content service
+	 */
+	contentServiceUpdatedAt() {
+		return this._entity && this._entity.properties && this._entity.properties.contentServiceScormActivityUpdatedAt;
+	}
+
+	/**
 	 * @returns {boolean} external resource value (i.e. open in new tab or not)
 	 */
 	isExternalResource() {
@@ -22,20 +36,6 @@ export class ContentScormActivityEntity extends ContentEntity {
 	 */
 	title() {
 		return this._entity && this._entity.properties && this._entity.properties.title;
-	}
-
-	/**
-	 * @returns {Date|undefined} The date and time the scorm activity was last edited according to the content service
-	 */
-	contentServiceLastModified() {
-		return this._entity && this._entity.properties && this._entity.properties.contentServiceScormActivityLastModified;
-	}
-
-	/**
-	 * @returns {string|undefined} Name of the Scorm actvity according to the content service
-	 */
-	contentServiceName() {
-		return this._entity && this._entity.properties && this._entity.properties.contentServiceScormActivityName;
 	}
 
 	/**
