@@ -1,12 +1,25 @@
 import { Actions, Classes } from '../../hypermedia-constants';
 import { performSirenAction } from '../../es6/SirenAction';
 import { ContentEntity } from './ContentEntity';
-import ContentHelperFunctions from './ContentHelperFunctions';
 
 /**
  * ContentscormActivityEntity class representation of a d2l content-scorm-package entity.
  */
 export class ContentScormActivityEntity extends ContentEntity {
+
+	/**
+	 * @returns {string|undefined} Name of the Scorm actvity according to the content service
+	 */
+	contentServiceTitle() {
+		return this._entity && this._entity.properties && this._entity.properties.contentServiceScormActivityTitle;
+	}
+
+	/**
+	 * @returns {Date|undefined} The date and time the scorm activity was last edited according to the content service
+	 */
+	contentServiceUpdatedAt() {
+		return this._entity && this._entity.properties && this._entity.properties.contentServiceScormActivityUpdatedAt;
+	}
 
 	/**
 	 * @returns {boolean} external resource value (i.e. open in new tab or not)
@@ -23,19 +36,6 @@ export class ContentScormActivityEntity extends ContentEntity {
 	 */
 	title() {
 		return this._entity && this._entity.properties && this._entity.properties.title;
-	}
-
-	/**
-	 * @returns {Date|undefined} The date and time the scorm activity was last edited
-	 */
-	lastModified() {
-		const lastModifiedSubEntity = ContentHelperFunctions.getLastModifiedSubEntity(this._entity);
-
-		if (!lastModifiedSubEntity) {
-			return null;
-		}
-
-		return lastModifiedSubEntity.properties.date;
 	}
 
 	/**
