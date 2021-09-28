@@ -8,7 +8,7 @@ import { ContentEntity } from './ContentEntity';
 export class ContentScormActivityEntity extends ContentEntity {
 
 	/**
-	 * @returns {string|undefined} Name of the Scorm actvity according to the content service
+	 * @returns {string|undefined} Name of the Scorm actvity package according to the content service
 	 */
 	contentServiceTitle() {
 		return this._entity && this._entity.properties && this._entity.properties.contentServiceScormActivityTitle;
