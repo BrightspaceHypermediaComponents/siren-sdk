@@ -63,6 +63,11 @@ export class AssociateGradeEntity extends Entity {
 		}
 	}
 
+	hasSelectboxType() {
+		const newGradeEntity = this._getNewGradeEntity();
+		return newGradeEntity && newGradeEntity.hasSubEntityByClass(Classes.activities.associateGrade.selectbox);
+	}
+
 	canEditGradebookStatus() {
 		return this._entity && this._entity.hasActionByName(Actions.activities.associateGrade.gradebookStatus);
 	}
