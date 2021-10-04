@@ -48,9 +48,9 @@ export class ScoringEntity extends Entity {
 			return;
 		}
 
-		if (scoring.scoreOutOf !== this.scoreOutOf()) {
-			const fields = [{ name: this._getUpdateFieldName(), value: scoring.scoreOutOf }];
-			await performSirenAction(this._token, this._getUpdateAction(), fields);
+		if (scoring.gradeMaxPoints !== this.gradeMaxPoints()) {
+			const fields = [{ name: this._getUpdateFieldName(), value: scoring.gradeMaxPoints }];
+			return await performSirenAction(this._token, this._getUpdateAction(), fields);
 		}
 	}
 }
