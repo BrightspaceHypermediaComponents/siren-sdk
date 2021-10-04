@@ -27,7 +27,7 @@ describe('ScoringEntity', () => {
 
 		it('skips save if not editable', async() => {
 			await entity.save({
-				scoreOutOf: 6
+				maxGradePoints: 6
 			});
 
 			expect(fetchMock.done());
@@ -51,19 +51,19 @@ describe('ScoringEntity', () => {
 			fetchMock.patchOnce('https://7b81c573-c2ec-4a6b-adec-0011f509dc6b.assignments.api.dev.brightspace.com/123163/folders/303/score-out-of', entityJson);
 
 			await entity.save({
-				scoreOutOf: 6
+				maxGradePoints: 6
 			});
 
 			const form = await getFormData(fetchMock.lastCall().request);
 			if (!form.notSupported) {
-				expect(form.get('scoreOutOf')).to.equal(6);
+				expect(form.get('maxGradePoints')).to.equal(6);
 			}
 			expect(fetchMock.called()).to.be.true;
 		});
 
 		it('skips save if not dirty', async() => {
 			await entity.save({
-				scoreOutOf: 5
+				maxGradePoints: 5
 			});
 
 			expect(fetchMock.done());
