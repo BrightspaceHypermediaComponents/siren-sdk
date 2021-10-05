@@ -6,6 +6,6 @@ import { Entity } from '../../../es6/Entity';
  */
 export class QuizSubmissionViewsEntity extends Entity {
 	canAddView() {
-		return this.hasActionByName(Actions.quizzes.submissionViews.add);
+		return this._entity && this._entity.hasActionByName(Actions.quizzes.submissionViews.add);
 	}
 }
