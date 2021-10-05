@@ -8,4 +8,8 @@ export class QuizSubmissionViewsEntity extends Entity {
 	canAddView() {
 		return this._entity && this._entity.hasActionByName(Actions.quizzes.submissionViews.add);
 	}
+
+	linkedSubmissionViews() {
+		return this._entity && this._entity.getSubEntitiesByRel('item');
+	}
 }

@@ -19,4 +19,11 @@ describe('QuizSubmissionViewsEntity', () => {
 			expect(entity.canAddView()).to.be.false;
 		});
 	});
+
+	describe('linkedSubmissionViews', () => {
+		it('gets views', () => {
+			var entity = new QuizSubmissionViewsEntity(editableEntity);
+			expect(entity.linkedSubmissionViews().length).to.equal(2);
+		});
+	});
 });
