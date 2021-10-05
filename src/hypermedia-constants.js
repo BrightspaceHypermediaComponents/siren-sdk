@@ -660,6 +660,9 @@ export const Actions = {
 			update: 'update',
 			delete: 'delete',
 			add: 'add'
+		},
+		submissionViews: {
+			add: 'add'
 		}
 	},
 	workingCopy: {
