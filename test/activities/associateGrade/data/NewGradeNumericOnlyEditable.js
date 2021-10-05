@@ -1,4 +1,4 @@
-export const newGradeEditable = {
+export const newGradeNumericOnlyEditable = {
 	'class': [
 		'associate-grade', 'new-grade'
 	],
