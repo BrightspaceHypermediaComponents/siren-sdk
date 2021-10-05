@@ -511,6 +511,16 @@ export class QuizEntity extends Entity {
 		return this._entity.getSubEntityByRel(Rels.Quizzes.ipRestrictions).href;
 	}
 
+	/**
+	 * @returns {string} Submission views Href of the quiz entity, if present
+	*/
+	submissionViewsHref() {
+		if (!this._entity || !this._entity.hasSubEntityByRel(Rels.Quizzes.submissionViews)) {
+			return;
+		}
+		return this._entity.getSubEntityByRel(Rels.Quizzes.submissionViews).href;
+	}
+
 	async save(quiz) {
 		if (!quiz) return;
 		const updateNameAction = this.canEditName() ? this._formatUpdateNameAction(quiz) : null;
