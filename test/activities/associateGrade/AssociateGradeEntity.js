@@ -2,6 +2,7 @@ import { notInGradebookEditable } from './data/NotInGradebookEditable.js';
 import { notInGradebookNonEditable } from './data/NotInGradebookNonEditable.js';
 import { notInGradebookCannotCreateNewEditable } from './data/NotInGradebookCannotCreateNewEditable.js';
 import { newGradeEditable } from './data/NewGradeEditable.js';
+import { newGradeNumericOnlyEditable } from './data/NewGradeNumericOnlyEditable.js';
 import { newGradeNonEditable } from './data/NewGradeNonEditable.js';
 import { existingGradeEditable } from './data/ExistingGradeEditable.js';
 import { existingGradeNonEditable } from './data/ExistingGradeNonEditable.js';
@@ -41,11 +42,12 @@ describe('not in gradebook', () => {
 });
 
 describe('new grade', () => {
-	let editableEntity, nonEditableEntity;
+	let editableEntity, editableNumericOnlyEntity, nonEditableEntity;
 
 	beforeEach(() => {
 		editableEntity = window.D2L.Hypermedia.Siren.Parse(newGradeEditable);
 		nonEditableEntity = window.D2L.Hypermedia.Siren.Parse(newGradeNonEditable);
+		editableNumericOnlyEntity = window.D2L.Hypermedia.Siren.Parse(newGradeNumericOnlyEditable);
 	});
 
 	describe('gradebookStatus', () => {
@@ -74,6 +76,18 @@ describe('new grade', () => {
 		it('gets new gradeType', () => {
 			const entity = new AssociateGradeEntity(editableEntity);
 			expect(entity.gradeType()).to.equal(GradeType.Numeric);
+		});
+	});
+
+	describe('hasSelectboxType', () => {
+		it('returns true when entity has selectbox type', () => {
+			const entity = new AssociateGradeEntity(editableEntity);
+			expect(entity.hasSelectboxType()).to.be.true;
+		});
+
+		it('returns false when entity has only numeric type', () => {
+			const entity = new AssociateGradeEntity(editableNumericOnlyEntity);
+			expect(entity.hasSelectboxType()).to.be.false;
 		});
 	});
 
