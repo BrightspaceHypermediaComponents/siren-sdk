@@ -2,7 +2,7 @@ import { Actions } from '../../../hypermedia-constants';
 import { Entity } from '../../../es6/Entity';
 
 /**
- * A QuizSubmissionViews subentity of a d2l Quiz.
+ * QuizSubmissionViewsEntity class representation of a d2l Submission Views collection.
  */
 export class QuizSubmissionViewsEntity extends Entity {
 	canAddView() {
