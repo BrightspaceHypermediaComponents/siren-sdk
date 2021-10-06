@@ -9,14 +9,14 @@ describe('QuizSubmissionViewEntity', () => {
 		editableSecondaryViewEntity = window.D2L.Hypermedia.Siren.Parse(editableSecondaryView);
 	});
 
-	describe('isPrimary', () => {
+	describe('isPrimaryView', () => {
 		it('is primary view and should be true', () => {
 			var entity = new QuizSubmissionViewEntity(editablePrimaryViewEntity);
-			expect(entity.isPrimary()).to.be.true;
+			expect(entity.isPrimaryView()).to.be.true;
 		});
 		it('is secondary view and should be false', () => {
 			var entity = new QuizSubmissionViewEntity(editableSecondaryViewEntity);
-			expect(entity.isPrimary()).to.be.false;
+			expect(entity.isPrimaryView()).to.be.false;
 		});
 	});
 });
