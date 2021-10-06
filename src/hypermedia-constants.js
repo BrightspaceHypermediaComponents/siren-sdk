@@ -411,6 +411,9 @@ export const Classes = {
 			restrictions: 'ip-restrictions',
 			range: 'ip-range'
 		},
+		submissionView: {
+			primary: 'primary'
+		},
 		types: {
 			grouping: 'grouping',
 			question: 'question',
