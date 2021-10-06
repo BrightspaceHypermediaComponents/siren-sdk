@@ -75,7 +75,8 @@ export const editablePrimaryView = {
 					'class': [
 						'show-questions',
 						'incorrect-questions',
-						'show-learner-responses'
+						'show-correct-answers',
+						'show-question-score'
 					],
 					'rel': [
 						'related'
@@ -116,7 +117,7 @@ export const editablePrimaryView = {
 								{
 									'type': 'checkbox',
 									'name': 'show-correct-answers',
-									'value': false
+									'value': true
 								}
 							]
 						},
@@ -128,7 +129,7 @@ export const editablePrimaryView = {
 								{
 									'type': 'checkbox',
 									'name': 'show-learner-responses',
-									'value': true
+									'value': false
 								}
 							]
 						},
@@ -140,7 +141,7 @@ export const editablePrimaryView = {
 								{
 									'type': 'checkbox',
 									'name': 'show-question-score',
-									'value': false
+									'value': true
 								}
 							]
 						}
@@ -624,3 +625,66 @@ export const editableSecondaryView = {
 	]
 };
 
+export const nonEditablePrimaryView = {
+	'class': [
+		'submission-view',
+		'primary',
+		'show-stats-class-average',
+		'show-attempt-score',
+		'show-standards',
+		'show-stats-score-distribution'
+	],
+	'properties': [
+
+	],
+	'entities': [
+		{
+			'class': [
+				'richtext',
+				'message'
+			],
+			'rel': [
+				'related'
+			],
+			'properties': {
+				'text': 'hello',
+				'html': '<p>hello</p>'
+			}
+		},
+		{
+			'class': [
+				'hide-show-questions',
+				'hide-questions'
+			],
+			'rel': [
+				'related'
+			],
+			'properties': {
+			},
+			'entities': [
+				{
+					'class': [
+						'show-questions',
+						'all-questions',
+						'show-correct-answers',
+						'show-learner-responses',
+						'show-question-score'
+					],
+					'rel': [
+						'related'
+					],
+					'properties': {
+					},
+				}
+			]
+		}
+	],
+	'links': [
+		{
+			'rel': [
+				'self'
+			],
+			'href': '/{orgUnitId}/quizzes/{quizId}/submissionviews/7?workingCopyId=123'
+		}
+	]
+};

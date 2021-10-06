@@ -412,7 +412,27 @@ export const Classes = {
 			range: 'ip-range'
 		},
 		submissionView: {
-			primary: 'primary'
+			primary: 'primary',
+			showStandards: 'show-standards',
+			showAttemptScore: 'show-attempt-score',
+			showStatsClassAverage: 'show-stats-class-average',
+			showStatsScoreDistribution: 'show-stats-score-distribution',
+			message: {
+				message: 'message'
+			},
+			hideShowQuestions: {
+				hideShowQuestions: 'hide-show-questions',
+				hideQuestions: 'hide-questions'
+			},
+			showQuestions: {
+				showQuestions: 'show-questions',
+				allQuestions: 'all-questions',
+				incorrectQuestions: 'incorrect-questions',
+				correctQuestions: 'correct-questions',
+				showCorrectAnswers: 'show-correct-answers',
+				showLearnerResponses: 'show-learner-responses',
+				showQuestionScore: 'show-question-score'
+			}
 		},
 		types: {
 			grouping: 'grouping',
@@ -663,6 +683,24 @@ export const Actions = {
 			update: 'update',
 			delete: 'delete',
 			add: 'add'
+		},
+		submissionView: {
+			hideShowQuestions: {
+				updateHideShowQuestions: 'update-hide-show-questions',
+			},
+			showQuestions: {
+				updateShowQuestions: 'update-show-questions',
+				updateShowCorrectAnswers: 'update-show-correct-answers',
+				updateShowLearnerResponses: 'update-show-learner-responses',
+				updateShowQuestionScore: 'update-show-question-score'
+			},
+			message: {
+				updateMessage: 'update-message'
+			},
+			updateShowStandards: 'update-show-standards',
+			updateShowAttemptScore: 'update-show-attempt-score',
+			updateShowStatsClassAverage: 'update-show-stats-class-average',
+			updateShowStatsScoreDistribution: 'update-show-stats-score-distribution'
 		},
 		submissionViews: {
 			add: 'add'
