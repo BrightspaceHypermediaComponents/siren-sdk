@@ -1,4 +1,5 @@
 import { Actions, Classes } from '../../../hypermedia-constants';
+import { performSirenAction, performSirenActions } from '../../../es6/SirenAction.js';
 import { Entity } from '../../../es6/Entity';
 
 const SHOW_QUESTION_TYPES = [
@@ -29,6 +30,17 @@ export class QuizSubmissionViewEntity extends Entity {
 
 	isPrimaryView() {
 		return this._entity && this._entity.hasClass(Classes.quizzes.submissionView.primary);
+	}
+
+	async setShowAttemptScore(value) {
+		const action = this._entity.getActionByName(Actions.quizzes.submissionView.updateShowAttemptScore);
+		const fields = [
+			{ name: 'showAttemptScore', value }
+		];
+
+		const returnedEntity = await performSirenAction(this._token, action, fields);
+		if (!returnedEntity) return;
+		return new QuizSubmissionViewEntity(returnedEntity, this._token);
 	}
 
 	showStandards() {
@@ -78,6 +90,17 @@ export class QuizSubmissionViewEntity extends Entity {
 		return subEntity && subEntity.hasClass(Classes.quizzes.submissionView.hideShowQuestions.hideQuestions);
 	}
 
+	async setHideShowQuestions(value) {
+		const action = this._hideShowQuestionsSubEntity().getActionByName(Actions.quizzes.submissionView.hideShowQuestions.updateHideShowQuestions);
+		const fields = [
+			{ name: 'hideShowQuestions', value }
+		];
+
+		const returnedEntity = await performSirenAction(this._token, action, fields);
+		if (!returnedEntity) return;
+		return new QuizSubmissionViewEntity(returnedEntity, this._token);
+	}
+
 	_hideShowQuestionsSubEntity() {
 		return this._entity && this._entity.getSubEntityByClass(Classes.quizzes.submissionView.hideShowQuestions.hideShowQuestions);
 	}
@@ -101,6 +124,35 @@ export class QuizSubmissionViewEntity extends Entity {
 	canUpdateShowQuestionScore() {
 		const subEntity = this._showQuestionsSubEntity();
 		return subEntity && subEntity.hasActionByName(Actions.quizzes.submissionView.showQuestions.updateShowQuestionScore);
+	}
+
+	async setShowQuestions(showQuestions) {
+		const actionAndFields = this._formatShowCorrectQuestionsAction(showQuestions);
+
+		const returnedEntity = await performSirenAction(this._token, actionAndFields.action, actionAndFields.fields);
+		if (!returnedEntity) return;
+		return new QuizSubmissionViewEntity(returnedEntity, this._token);
+	}
+
+	async setShowQuestionsAndCorrectAnswers(showQuestions, showCorrectAnswers) {
+		const sirenActions = [
+			this._formatShowQuestionsAction(showQuestions),
+			this._formatShowCorrectAnswersAction(showCorrectAnswers)
+		];
+
+		const returnedEntities = await performSirenActions(this._token, sirenActions);
+		if (!returnedEntities || returnedEntities.length === 0) return;
+
+		// The two actions should be combined to be 1 promise, so only 1 entity should be expected to be returned here
+		return new QuizSubmissionViewEntity(returnedEntities[0], this._token);
+	}
+
+	async setShowCorrectAnswers(showCorrectAnswers) {
+		const actionAndFields = this._formatShowCorrectAnswersAction(showCorrectAnswers);
+
+		const returnedEntity = await performSirenAction(this._token, actionAndFields.action, actionAndFields.fields);
+		if (!returnedEntity) return;
+		return new QuizSubmissionViewEntity(returnedEntity, this._token);
 	}
 
 	showCorrectAnswers() {
@@ -131,6 +183,22 @@ export class QuizSubmissionViewEntity extends Entity {
 			.getFieldByName(Classes.quizzes.submissionView.showQuestions.showQuestions)
 			.value;
 		return values;
+	}
+
+	_formatShowCorrectAnswersAction(showCorrectAnswers) {
+		const action = this._showQuestionsSubEntity().getActionByName(Actions.quizzes.submissionView.showQuestions.updateShowCorrectAnswers);
+		const fields = [
+			{ name: 'showCorrectAnswers', value: showCorrectAnswers }
+		];
+		return { action, fields };
+	}
+
+	_formatShowQuestionsAction(showQuestions) {
+		const action = this._showQuestionsSubEntity().getActionByName(Actions.quizzes.submissionView.showQuestions.updateShowQuestions);
+		const fields = [
+			{ name: 'showQuestions', value: showQuestions }
+		];
+		return { action, fields };
 	}
 
 	_showQuestionsSubEntity() {
