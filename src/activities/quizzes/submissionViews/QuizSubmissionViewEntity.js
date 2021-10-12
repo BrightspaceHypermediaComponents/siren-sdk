@@ -43,6 +43,28 @@ export class QuizSubmissionViewEntity extends Entity {
 		return new QuizSubmissionViewEntity(returnedEntity, this._token);
 	}
 
+	async setShowStatsClassAverage(value) {
+		const action = this._entity.getActionByName(Actions.quizzes.submissionView.updateShowStatsClassAverage);
+		const fields = [
+			{ name: 'showStatsClassAverage', value }
+		];
+
+		const returnedEntity = await performSirenAction(this._token, action, fields);
+		if (!returnedEntity) return;
+		return new QuizSubmissionViewEntity(returnedEntity, this._token);
+	}
+
+	async setShowStatsScoreDistribution(value) {
+		const action = this._entity.getActionByName(Actions.quizzes.submissionView.updateShowStatsScoreDistribution);
+		const fields = [
+			{ name: 'showStatsScoreDistribution', value }
+		];
+
+		const returnedEntity = await performSirenAction(this._token, action, fields);
+		if (!returnedEntity) return;
+		return new QuizSubmissionViewEntity(returnedEntity, this._token);
+	}
+
 	showStandards() {
 		return this._entity && this._entity.hasClass(Classes.quizzes.submissionView.showStandards);
 	}
