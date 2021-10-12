@@ -87,14 +87,27 @@ export class QuizSubmissionViewEntity extends Entity {
 		return subEntity && subEntity.hasActionByName(Actions.quizzes.submissionView.message.updateMessage);
 	}
 
-	messageText() {
+	message() {
 		const subEntity = this._messageSubEntity();
-		return subEntity && subEntity.properties.text;
+		if (!subEntity) return;
+		const isMessageRichtext = this.isMessageRichtext();
+		return isMessageRichtext ? subEntity.properties.html : subEntity.properties.text;
 	}
 
-	messageHtml() {
+	isMessageRichtext() {
 		const subEntity = this._messageSubEntity();
-		return subEntity && subEntity.properties.html;
+		return subEntity && subEntity.hasClass(Classes.quizzes.submissionView.message.richtext);
+	}
+
+	async setMessage(value) {
+		const action = this._entity.getActionByName(Actions.quizzes.submissionView.message.updateMessage);
+		const fields = [
+			{ name: 'message', value }
+		];
+
+		const returnedEntity = await performSirenAction(this._token, action, fields);
+		if (!returnedEntity) return;
+		return new QuizSubmissionViewEntity(returnedEntity, this._token);
 	}
 
 	_messageSubEntity() {

@@ -99,21 +99,21 @@ describe('QuizSubmissionViewEntity', () => {
 
 	describe('Message Sub-entity', () => {
 		describe('Message', () => {
-			it('returns correct message text from editable entity', () => {
+			it('correctly identifies editable entity as richtext', () => {
 				var entity = new QuizSubmissionViewEntity(editablePrimaryViewEntity);
-				expect(entity.messageText()).to.equal('hello');
+				expect(entity.isMessageRichtext()).to.be.true;
 			});
-			it('returns correct message text from non editable entity', () => {
+			it('correctly identifies non editable entity as richtext', () => {
 				var entity = new QuizSubmissionViewEntity(nonEditablePrimaryViewEntity);
-				expect(entity.messageText()).to.be.equal('hello');
+				expect(entity.isMessageRichtext()).to.be.true;
 			});
 			it('returns correct message HTML from editable entity', () => {
 				var entity = new QuizSubmissionViewEntity(editablePrimaryViewEntity);
-				expect(entity.messageHtml()).to.be.equal('<p>hello</p>');
+				expect(entity.message()).to.be.equal('<p>hello</p>');
 			});
 			it('returns correct message HTML from non editable entity', () => {
 				var entity = new QuizSubmissionViewEntity(nonEditablePrimaryViewEntity);
-				expect(entity.messageHtml()).to.be.equal('<p>hello</p>');
+				expect(entity.message()).to.be.equal('<p>hello</p>');
 			});
 			it('should have action as it is editable', () => {
 				var entity = new QuizSubmissionViewEntity(editablePrimaryViewEntity);

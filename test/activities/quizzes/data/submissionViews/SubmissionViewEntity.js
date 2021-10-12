@@ -18,7 +18,6 @@ export const editablePrimaryView = {
 				'related'
 			],
 			'properties': {
-				'text': 'hello',
 				'html': '<p>hello</p>'
 			},
 			'actions': [
@@ -394,7 +393,6 @@ export const editableSecondaryView = {
 				'related'
 			],
 			'properties': {
-				'text': 'hello',
 				'html': '<p>hello</p>'
 			},
 			'actions': [
@@ -647,7 +645,6 @@ export const nonEditablePrimaryView = {
 				'related'
 			],
 			'properties': {
-				'text': 'hello',
 				'html': '<p>hello</p>'
 			}
 		},
