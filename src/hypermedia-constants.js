@@ -418,7 +418,8 @@ export const Classes = {
 			showStatsClassAverage: 'show-stats-class-average',
 			showStatsScoreDistribution: 'show-stats-score-distribution',
 			message: {
-				message: 'message'
+				message: 'message',
+				richtext: 'richtext'
 			},
 			hideShowQuestions: {
 				hideShowQuestions: 'hide-show-questions',
