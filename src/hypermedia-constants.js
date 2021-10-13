@@ -701,7 +701,8 @@ export const Actions = {
 			updateShowStandards: 'update-show-standards',
 			updateShowAttemptScore: 'update-show-attempt-score',
 			updateShowStatsClassAverage: 'update-show-stats-class-average',
-			updateShowStatsScoreDistribution: 'update-show-stats-score-distribution'
+			updateShowStatsScoreDistribution: 'update-show-stats-score-distribution',
+			deleteSubmissionView: 'delete-submission-view'
 		},
 		submissionViews: {
 			add: 'add'
