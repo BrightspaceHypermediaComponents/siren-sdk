@@ -12,6 +12,10 @@ const SHOW_QUESTION_TYPES = [
  * QuizSubmissionViewEntity class representation of a d2l Submission View entity.
  */
 export class QuizSubmissionViewEntity extends Entity {
+	canDeleteSubmissionView() {
+		return this._entity && this._entity.hasActionByName(Actions.quizzes.submissionView.deleteSubmissionView);
+	}
+
 	canUpdateShowStandards() {
 		return this._entity && this._entity.hasActionByName(Actions.quizzes.submissionView.updateShowStandards);
 	}
@@ -26,6 +30,11 @@ export class QuizSubmissionViewEntity extends Entity {
 
 	canUpdateShowStatsScoreDistribution() {
 		return this._entity && this._entity.hasActionByName(Actions.quizzes.submissionView.updateShowStatsScoreDistribution);
+	}
+
+	async deleteSubmissionView() {
+		const action = this._entity.getActionByName(Actions.quizzes.submissionView.deleteSubmissionView);
+		await performSirenAction(this._token, action);
 	}
 
 	isPrimaryView() {

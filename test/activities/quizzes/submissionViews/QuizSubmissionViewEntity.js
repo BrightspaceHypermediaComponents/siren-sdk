@@ -10,6 +10,17 @@ describe('QuizSubmissionViewEntity', () => {
 		nonEditablePrimaryViewEntity = window.D2L.Hypermedia.Siren.Parse(nonEditablePrimaryView);
 	});
 
+	describe('Can delete submission view', () => {
+		it('can delete as secondary view has action', () => {
+			var entity = new QuizSubmissionViewEntity(editableSecondaryViewEntity);
+			expect(entity.canDeleteSubmissionView()).to.be.true;
+		});
+		it('cannot delete as primary view does not have the action', () => {
+			var entity = new QuizSubmissionViewEntity(editablePrimaryViewEntity);
+			expect(entity.canDeleteSubmissionView()).to.be.false;
+		});
+	});
+
 	describe('Is Primary View', () => {
 		it('is primary view and should be true', () => {
 			var entity = new QuizSubmissionViewEntity(editablePrimaryViewEntity);
