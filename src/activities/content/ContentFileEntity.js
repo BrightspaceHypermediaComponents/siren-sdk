@@ -5,12 +5,14 @@ import { ContentWorkingCopyEntity } from './ContentWorkingCopyEntity.js';
 
 export const FILE_TYPES = {
 	html: 'html',
-	media: 'media',
+	audio: 'audio',
+	video: 'video',
 };
 
 const CLASS_FILE_TYPE_MAP = {
 	html: FILE_TYPES.html,
-	media: FILE_TYPES.media,
+	audio: FILE_TYPES.audio,
+	video: FILE_TYPES.video,
 };
 
 /**

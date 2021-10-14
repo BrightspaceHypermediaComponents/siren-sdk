@@ -112,7 +112,7 @@ describe('ContentHtmlFileEntity', () => {
 
 	describe('Classes', () => {
 		it('can get file type', () => {
-			expect(contentMediaFileEntity.getFileType()).to.equal('media');
+			expect(contentMediaFileEntity.getFileType()).to.equal('video');
 		});
 	});
 });

@@ -35,7 +35,7 @@ export const contentMediaFileData = {
 	'class': [
 		'describable-entity',
 		'content-file',
-		'media'
+		'video'
 	],
 	'properties': {
 		'title': 'Test Media File Title',
