@@ -28,7 +28,7 @@ export class ScoringEntity extends Entity {
 	}
 
 	equals(scoring) {
-		return this.scoreOutOf() === scoring.scoreOutOf;
+		return this.gradeMaxPoints() === scoring.gradeMaxPoints;
 	}
 
 	_getUpdateAction() {
