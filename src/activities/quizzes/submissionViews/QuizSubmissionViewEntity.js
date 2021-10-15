@@ -171,7 +171,7 @@ export class QuizSubmissionViewEntity extends Entity {
 	}
 
 	async setShowQuestions(showQuestions) {
-		const actionAndFields = this._formatShowCorrectQuestionsAction(showQuestions);
+		const actionAndFields = this._formatShowQuestionsAction(showQuestions);
 
 		const returnedEntity = await performSirenAction(this._token, actionAndFields.action, actionAndFields.fields);
 		if (!returnedEntity) return;
