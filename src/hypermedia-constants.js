@@ -412,6 +412,9 @@ export const Classes = {
 			range: 'ip-range'
 		},
 		submissionView: {
+			attemptRestrictions: 'attempt-restrictions',
+			ipRestrictions:'ip-restrictions',
+			timeLimit: 'time-limit',
 			primary: 'primary',
 			showStandards: 'show-standards',
 			showAttemptScore: 'show-attempt-score',
