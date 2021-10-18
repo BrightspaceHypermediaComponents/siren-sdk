@@ -1,13 +1,14 @@
-import { editablePrimaryView, editableSecondaryView, nonEditablePrimaryView } from '../data/submissionViews/SubmissionViewEntity';
+import { editablePrimaryView, editableSecondaryView, nonEditablePrimaryView, nonEditableSecondaryView } from '../data/submissionViews/SubmissionViewEntity';
 import { QuizSubmissionViewEntity } from '../../../../src/activities/quizzes/submissionViews/QuizSubmissionViewEntity';
 
 describe('QuizSubmissionViewEntity', () => {
-	var editablePrimaryViewEntity, editableSecondaryViewEntity, nonEditablePrimaryViewEntity;
+	var editablePrimaryViewEntity, editableSecondaryViewEntity, nonEditablePrimaryViewEntity, nonEditableSecondaryViewEntity;
 
 	beforeEach(() => {
 		editablePrimaryViewEntity = window.D2L.Hypermedia.Siren.Parse(editablePrimaryView);
 		editableSecondaryViewEntity = window.D2L.Hypermedia.Siren.Parse(editableSecondaryView);
 		nonEditablePrimaryViewEntity = window.D2L.Hypermedia.Siren.Parse(nonEditablePrimaryView);
+		nonEditableSecondaryViewEntity = window.D2L.Hypermedia.Siren.Parse(nonEditableSecondaryView);
 	});
 
 	describe('Can delete submission view', () => {
@@ -133,6 +134,27 @@ describe('QuizSubmissionViewEntity', () => {
 			it('should not have action as it is non editable', () => {
 				var entity = new QuizSubmissionViewEntity(nonEditablePrimaryViewEntity);
 				expect(entity.canUpdateMessage()).to.be.false;
+			});
+		});
+	});
+
+	describe('Release Date Sub-entity', () => {
+		describe('Release Date', () => {
+			it('returns correct release date', () => {
+				var entity = new QuizSubmissionViewEntity(nonEditableSecondaryViewEntity);
+				expect(entity.releaseDate()).to.be.equal('2021-01-03T04:59:59.000Z');
+			});
+			it('should have action as it is editable secondary view', () => {
+				var entity = new QuizSubmissionViewEntity(editableSecondaryViewEntity);
+				expect(entity.canUpdateReleaseDate()).to.be.true;
+			});
+			it('should not have action as it is non editable secondary view', () => {
+				var entity = new QuizSubmissionViewEntity(nonEditableSecondaryViewEntity);
+				expect(entity.canUpdateReleaseDate()).to.be.false;
+			});
+			it('should not have action as it is a primary view', () => {
+				var entity = new QuizSubmissionViewEntity(editablePrimaryViewEntity);
+				expect(entity.canUpdateReleaseDate()).to.be.false;
 			});
 		});
 	});
