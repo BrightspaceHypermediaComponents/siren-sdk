@@ -253,9 +253,10 @@ export const editableSecondaryView = {
 		'submission-view',
 		'secondary',
 		'show-stats-class-average',
-		'grade-restrictions',
+		'attempt-restrictions',
 		'ip-restrictions',
-		'show-standards'
+		'show-standards',
+		'time-limit'
 	],
 	entities: [
 		{
@@ -576,7 +577,7 @@ export const editableSecondaryView = {
 				{
 					type: 'checkbox',
 					name: 'time-limit',
-					value: false
+					value: true
 				}
 			]
 		},
@@ -633,9 +634,10 @@ export const nonEditableSecondaryView = {
 		'submission-view',
 		'secondary',
 		'show-stats-class-average',
-		'grade-restrictions',
+		'attempt-restrictions',
 		'ip-restrictions',
-		'show-standards'
+		'show-standards',
+		'time-limit'
 	],
 	entities: [
 		{
@@ -644,22 +646,7 @@ export const nonEditableSecondaryView = {
 			properties: {
 				date: '2021-01-03T04:59:59.000Z',
 				localizedDate: '2021-01-04T21:00:00.000'
-			},
-			actions: [
-				{
-					type: 'application/x-www-form-urlencoded',
-					href: '/{orgUnitId}/quizzes/{quizId}/submissionviews/7?workingCopyId=123',
-					name: 'update-release-date',
-					method: 'PATCH',
-					fields: [
-						{
-							type: 'text',
-							name: 'release-date',
-							value: '2021-01-03T04:59:59.000Z'
-						}
-					]
-				}
-			]
+			}
 		},
 		{
 			class: ['attempt-restrictions', 'grade-restrictions'],

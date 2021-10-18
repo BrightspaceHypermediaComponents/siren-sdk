@@ -154,7 +154,7 @@ describe('QuizSubmissionViewEntity', () => {
 			});
 			it('should not have action as it is a primary view', () => {
 				var entity = new QuizSubmissionViewEntity(editablePrimaryViewEntity);
-				expect(entity.canUpdateReleaseDate()).to.be.false;
+				expect(entity.canUpdateReleaseDate()).to.be.undefined;
 			});
 		});
 	});
