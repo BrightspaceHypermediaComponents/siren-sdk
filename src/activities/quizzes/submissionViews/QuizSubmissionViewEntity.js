@@ -12,6 +12,14 @@ const SHOW_QUESTION_TYPES = [
  * QuizSubmissionViewEntity class representation of a d2l Submission View entity.
  */
 export class QuizSubmissionViewEntity extends Entity {
+	canUpdateAttemptRestrictions() {
+		return this._entity && this._entity.hasActionByName(Actions.quizzes.submissionView.attemptRestrictions);
+	}
+
+	canUpdateIpRestrictions() {
+		return this._entity && this._entity.hasActionByName(Actions.quizzes.submissionView.updateIpRestrictions);
+	}
+
 	canDeleteSubmissionView() {
 		return this._entity && this._entity.hasActionByName(Actions.quizzes.submissionView.deleteSubmissionView);
 	}
@@ -32,6 +40,22 @@ export class QuizSubmissionViewEntity extends Entity {
 		return this._entity && this._entity.hasActionByName(Actions.quizzes.submissionView.updateShowStatsScoreDistribution);
 	}
 
+	canUpdateTimeLimit() {
+		return this._entity && this._entity.hasActionByName(Actions.quizzes.submissionView.updateTimeLimit);
+	}
+
+	attemptRestrictions() {
+		return this._entity && this._entity.hasClass(Classes.quizzes.submissionView.attemptRestrictions);
+	}
+
+	ipRestrictions() {
+		return this._entity && this._entity.hasClass(Classes.quizzes.submissionView.ipRestrictions);
+	}
+
+	timeLimit() {
+		return this._entity && this._entity.hasClass(Classes.quizzes.submissionView.timeLimit);
+	}
+
 	async deleteSubmissionView() {
 		const action = this._entity.getActionByName(Actions.quizzes.submissionView.deleteSubmissionView);
 		await performSirenAction(this._token, action);
@@ -39,6 +63,28 @@ export class QuizSubmissionViewEntity extends Entity {
 
 	isPrimaryView() {
 		return this._entity && this._entity.hasClass(Classes.quizzes.submissionView.primary);
+	}
+
+	async setAttemptRestrictions(value) {
+		const action = this._entity.getActionByName(Actions.quizzes.submissionView.updateAttemptRestrictions);
+		const fields = [
+			{ name: 'attemptRestrictions', value }
+		];
+
+		const returnedEntity = await performSirenAction(this._token, action, fields);
+		if (!returnedEntity) return;
+		return new QuizSubmissionViewEntity(returnedEntity, this._token);
+	}
+
+	async setIpRestrictions(value) {
+		const action = this._entity.getActionByName(Actions.quizzes.submissionView.updateIpRestrictions);
+		const fields = [
+			{ name: 'ipRestrictions', value }
+		];
+
+		const returnedEntity = await performSirenAction(this._token, action, fields);
+		if (!returnedEntity) return;
+		return new QuizSubmissionViewEntity(returnedEntity, this._token);
 	}
 
 	async setShowAttemptScore(value) {
@@ -67,6 +113,17 @@ export class QuizSubmissionViewEntity extends Entity {
 		const action = this._entity.getActionByName(Actions.quizzes.submissionView.updateShowStatsScoreDistribution);
 		const fields = [
 			{ name: 'showStatsScoreDistribution', value }
+		];
+
+		const returnedEntity = await performSirenAction(this._token, action, fields);
+		if (!returnedEntity) return;
+		return new QuizSubmissionViewEntity(returnedEntity, this._token);
+	}
+
+	async setTimeLimit(value) {
+		const action = this._entity.getActionByName(Actions.quizzes.submissionView.updateTimeLimit);
+		const fields = [
+			{ name: 'timeLimit', value }
 		];
 
 		const returnedEntity = await performSirenAction(this._token, action, fields);
