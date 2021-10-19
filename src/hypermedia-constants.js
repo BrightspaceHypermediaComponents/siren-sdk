@@ -413,7 +413,7 @@ export const Classes = {
 		},
 		submissionView: {
 			attemptRestrictions: 'attempt-restrictions',
-			ipRestrictions:'ip-restrictions',
+			ipRestrictions: 'ip-restrictions',
 			timeLimit: 'time-limit',
 			primary: 'primary',
 			showStandards: 'show-standards',

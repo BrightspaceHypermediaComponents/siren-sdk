@@ -13,7 +13,7 @@ const SHOW_QUESTION_TYPES = [
  */
 export class QuizSubmissionViewEntity extends Entity {
 	canUpdateAttemptRestrictions() {
-		return this._entity && this._entity.hasActionByName(Actions.quizzes.submissionView.attemptRestrictions);
+		return this._entity && this._entity.hasActionByName(Actions.quizzes.submissionView.updateAttemptRestrictions);
 	}
 
 	canUpdateIpRestrictions() {
