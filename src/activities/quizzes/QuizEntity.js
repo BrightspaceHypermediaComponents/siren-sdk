@@ -201,7 +201,7 @@ export class QuizEntity extends Entity {
 	/**
 	 * @returns {bool} Whether or not the user can edit the syncGradebook property
 	 */
-	 canEditSyncGradebook() {
+	canEditSyncGradebook() {
 		const entity = this._entity.getSubEntityByRel(Rels.Quizzes.syncGradebook);
 		return entity && entity.hasActionByName(Actions.quizzes.updateSyncGradebook);
 	}
