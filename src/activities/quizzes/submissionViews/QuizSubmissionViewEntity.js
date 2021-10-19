@@ -166,7 +166,8 @@ export class QuizSubmissionViewEntity extends Entity {
 	}
 
 	async setMessage(value) {
-		const action = this._entity.getActionByName(Actions.quizzes.submissionView.message.updateMessage);
+		const subEntity = this._messageSubEntity();
+		const action = subEntity.getActionByName(Actions.quizzes.submissionView.message.updateMessage);
 		const fields = [
 			{ name: 'message', value }
 		];
@@ -319,7 +320,8 @@ export class QuizSubmissionViewEntity extends Entity {
 	}
 
 	async setReleaseDate(value) {
-		const action = this._entity.getActionByName(Actions.quizzes.submissionView.releaseDate.updateReleaseDate);
+		const subEntity = this._releaseDateSubEntity();
+		const action = subEntity.getActionByName(Actions.quizzes.submissionView.releaseDate.updateReleaseDate);
 		const fields = [
 			{ name: 'releaseDate', value }
 		];
@@ -345,7 +347,7 @@ export class QuizSubmissionViewEntity extends Entity {
 		const result = { value };
 
 		if (!this.canUpdateTimeLimitNumber()) return result;
-		const action = this._entity.getActionByName(Actions.quizzes.submissionView.timeLimit.updateTimeLimitNumber);
+		const action = subEntity.getActionByName(Actions.quizzes.submissionView.timeLimit.updateTimeLimitNumber);
 		const field = action.getFieldByName('time-limit-number');
 		if (!field) return result;
 		result.min = field.min;
@@ -355,7 +357,8 @@ export class QuizSubmissionViewEntity extends Entity {
 	}
 
 	async setTimeLimitNumber(value) {
-		const action = this._entity.getActionByName(Actions.quizzes.submissionView.timeLimit.updateTimeLimitNumber);
+		const subEntity = this._timeLimitSubEntity();
+		const action = subEntity.getActionByName(Actions.quizzes.submissionView.timeLimit.updateTimeLimitNumber);
 		const fields = [
 			{ name: 'timeLimitNumber', value }
 		];
@@ -386,7 +389,8 @@ export class QuizSubmissionViewEntity extends Entity {
 	}
 
 	async setAttemptRestrictionNumber(value) {
-		const action = this._entity.getActionByName(Actions.quizzes.submissionView.attemptRestrictions.updateAttemptRestrictionNumber);
+		const subEntity = this._attemptRestrictionsSubEntity();
+		const action = subEntity.getActionByName(Actions.quizzes.submissionView.attemptRestrictions.updateAttemptRestrictionNumber);
 		const fields = [
 			{ name: 'attemptRestrictionNumber', value }
 		];
@@ -397,7 +401,8 @@ export class QuizSubmissionViewEntity extends Entity {
 	}
 
 	async setGradeRestrictions(value) {
-		const action = this._entity.getActionByName(Actions.quizzes.submissionView.attemptRestrictions.updateGradeRestrictions);
+		const subEntity = this._attemptRestrictionsSubEntity();
+		const action = subEntity.getActionByName(Actions.quizzes.submissionView.attemptRestrictions.updateGradeRestrictions);
 		const fields = [
 			{ name: 'gradeRestrictions', value }
 		];
@@ -418,8 +423,11 @@ export class QuizSubmissionViewEntity extends Entity {
 	}
 
 	gradeRestrictionsMinMaxGrade() {
+		const subEntity = this._gradeRestrictionsSubEntity();
+		if (!subEntity) return;
+
 		if (this.canUpdateGradeRestrictionsMinMaxGrade()) {
-			const action = this._entity.getActionByName(Actions.quizzes.submissionView.gradeRestrictions.updateMinMaxGrade);
+			const action = subEntity.getActionByName(Actions.quizzes.submissionView.gradeRestrictions.updateMinMaxGrade);
 
 			const minGradeField = action.getFieldByName('min-grade');
 			const maxGradeField = action.getFieldByName('max-grade');
@@ -428,8 +436,6 @@ export class QuizSubmissionViewEntity extends Entity {
 				'max-grade': maxGradeField
 			};
 		} else {
-			const subEntity = this._gradeRestrictionsSubEntity();
-			if (!subEntity) return;
 			return {
 				'min-grade': { value: subEntity.properties['min-grade'] },
 				'max-grade': { value: subEntity.properties['max-grade'] }
@@ -438,7 +444,8 @@ export class QuizSubmissionViewEntity extends Entity {
 	}
 
 	async setMinMaxGrade(min, max) {
-		const action = this._entity.getActionByName(Actions.quizzes.submissionView.gradeRestrictions.updateMinMaxGrade);
+		const subEntity = this._gradeRestrictionsSubEntity();
+		const action = subEntity.getActionByName(Actions.quizzes.submissionView.gradeRestrictions.updateMinMaxGrade);
 		const fields = [
 			{ name: 'minGrade', min },
 			{ name: 'maxGrade', max }

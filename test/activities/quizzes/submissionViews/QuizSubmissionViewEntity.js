@@ -179,76 +179,175 @@ describe('QuizSubmissionViewEntity', () => {
 	});
 
 	describe('Message Sub-entity', () => {
-		describe('Message', () => {
-			it('correctly identifies editable entity as richtext', () => {
-				var entity = new QuizSubmissionViewEntity(editablePrimaryViewEntity);
-				expect(entity.isMessageRichtext()).to.be.true;
-			});
-			it('correctly identifies non editable entity as richtext', () => {
-				var entity = new QuizSubmissionViewEntity(nonEditablePrimaryViewEntity);
-				expect(entity.isMessageRichtext()).to.be.true;
-			});
-			it('returns correct message HTML from editable entity', () => {
-				var entity = new QuizSubmissionViewEntity(editablePrimaryViewEntity);
-				expect(entity.message()).to.be.equal('<p>hello</p>');
-			});
-			it('returns correct message HTML from non editable entity', () => {
-				var entity = new QuizSubmissionViewEntity(nonEditablePrimaryViewEntity);
-				expect(entity.message()).to.be.equal('<p>hello</p>');
-			});
-			it('should have action as it is editable', () => {
-				var entity = new QuizSubmissionViewEntity(editablePrimaryViewEntity);
-				expect(entity.canUpdateMessage()).to.be.true;
-			});
-			it('should not have action as it is non editable', () => {
-				var entity = new QuizSubmissionViewEntity(nonEditablePrimaryViewEntity);
-				expect(entity.canUpdateMessage()).to.be.false;
-			});
+		it('correctly identifies editable entity as richtext', () => {
+			var entity = new QuizSubmissionViewEntity(editablePrimaryViewEntity);
+			expect(entity.isMessageRichtext()).to.be.true;
+		});
+		it('correctly identifies non editable entity as richtext', () => {
+			var entity = new QuizSubmissionViewEntity(nonEditablePrimaryViewEntity);
+			expect(entity.isMessageRichtext()).to.be.true;
+		});
+		it('returns correct message HTML from editable entity', () => {
+			var entity = new QuizSubmissionViewEntity(editablePrimaryViewEntity);
+			expect(entity.message()).to.be.equal('<p>hello</p>');
+		});
+		it('returns correct message HTML from non editable entity', () => {
+			var entity = new QuizSubmissionViewEntity(nonEditablePrimaryViewEntity);
+			expect(entity.message()).to.be.equal('<p>hello</p>');
+		});
+		it('should have action as it is editable', () => {
+			var entity = new QuizSubmissionViewEntity(editablePrimaryViewEntity);
+			expect(entity.canUpdateMessage()).to.be.true;
+		});
+		it('should not have action as it is non editable', () => {
+			var entity = new QuizSubmissionViewEntity(nonEditablePrimaryViewEntity);
+			expect(entity.canUpdateMessage()).to.be.false;
 		});
 	});
 
 	describe('Release Date Sub-entity', () => {
-		describe('Release Date', () => {
-			it('returns correct release date', () => {
+		it('returns correct release date', () => {
+			var entity = new QuizSubmissionViewEntity(nonEditableSecondaryViewEntity);
+			expect(entity.releaseDate()).to.be.equal('2021-01-03T04:59:59.000Z');
+		});
+		it('should have action as it is editable secondary view', () => {
+			var entity = new QuizSubmissionViewEntity(editableSecondaryViewEntity);
+			expect(entity.canUpdateReleaseDate()).to.be.true;
+		});
+		it('should not have action as it is non editable secondary view', () => {
+			var entity = new QuizSubmissionViewEntity(nonEditableSecondaryViewEntity);
+			expect(entity.canUpdateReleaseDate()).to.be.false;
+		});
+		it('should not have action as it is a primary view', () => {
+			var entity = new QuizSubmissionViewEntity(editablePrimaryViewEntity);
+			expect(entity.canUpdateReleaseDate()).to.be.undefined;
+		});
+	});
+
+	describe('Time Limit Sub-entity', () => {
+		it('returns correct time limit for editable secondary view', () => {
+			var entity = new QuizSubmissionViewEntity(editableSecondaryViewEntity);
+			const actualTimeLimitNumber = entity.timeLimitNumber();
+			expect(actualTimeLimitNumber.value).to.be.equal(120);
+			expect(actualTimeLimitNumber.min).to.be.equal(1);
+			expect(actualTimeLimitNumber.max).to.be.equal(9999);
+		});
+		it('returns correct time limit for non editable secondary view', () => {
+			var entity = new QuizSubmissionViewEntity(nonEditableSecondaryViewEntity);
+			expect(entity.timeLimitNumber().value).to.be.equal(120);
+		});
+		it('should have action as it is editable secondary view', () => {
+			var entity = new QuizSubmissionViewEntity(editableSecondaryViewEntity);
+			expect(entity.canUpdateTimeLimitNumber()).to.be.true;
+		});
+		it('should not have action as it is non editable secondary view', () => {
+			var entity = new QuizSubmissionViewEntity(nonEditableSecondaryViewEntity);
+			expect(entity.canUpdateTimeLimitNumber()).to.be.false;
+		});
+		it('should not have action as it is a primary view', () => {
+			var entity = new QuizSubmissionViewEntity(editablePrimaryViewEntity);
+			expect(entity.canUpdateTimeLimitNumber()).to.be.undefined;
+		});
+	});
+
+	describe('Attempt Restrictions Sub-entity', () => {
+		describe('attempt restrictions', () => {
+			it('returns correct attempt restrictions for editable secondary view', () => {
+				var entity = new QuizSubmissionViewEntity(editableSecondaryViewEntity);
+				expect(entity.attemptRestrictionNumber()).to.be.equal(1);
+			});
+			it('returns correct attempt restrictions for non editable secondary view', () => {
 				var entity = new QuizSubmissionViewEntity(nonEditableSecondaryViewEntity);
-				expect(entity.releaseDate()).to.be.equal('2021-01-03T04:59:59.000Z');
+				expect(entity.attemptRestrictionNumber()).to.be.equal(1);
 			});
 			it('should have action as it is editable secondary view', () => {
 				var entity = new QuizSubmissionViewEntity(editableSecondaryViewEntity);
-				expect(entity.canUpdateReleaseDate()).to.be.true;
+				expect(entity.canUpdateAttemptRestrictionNumber()).to.be.true;
 			});
 			it('should not have action as it is non editable secondary view', () => {
 				var entity = new QuizSubmissionViewEntity(nonEditableSecondaryViewEntity);
-				expect(entity.canUpdateReleaseDate()).to.be.false;
+				expect(entity.canUpdateAttemptRestrictionNumber()).to.be.false;
 			});
 			it('should not have action as it is a primary view', () => {
 				var entity = new QuizSubmissionViewEntity(editablePrimaryViewEntity);
-				expect(entity.canUpdateReleaseDate()).to.be.undefined;
+				expect(entity.canUpdateAttemptRestrictionNumber()).to.be.undefined;
+			});
+		});
+
+		describe('grade restrictions', () => {
+			it('should have action as it is editable secondary view', () => {
+				var entity = new QuizSubmissionViewEntity(editableSecondaryViewEntity);
+				expect(entity.canUpdateGradeRestrictions()).to.be.true;
+			});
+			it('should not have action as it is non editable secondary view', () => {
+				var entity = new QuizSubmissionViewEntity(nonEditableSecondaryViewEntity);
+				expect(entity.canUpdateGradeRestrictions()).to.be.false;
+			});
+			it('should not have action as it is a primary view', () => {
+				var entity = new QuizSubmissionViewEntity(editablePrimaryViewEntity);
+				expect(entity.canUpdateGradeRestrictions()).to.be.undefined;
 			});
 		});
 	});
 
+	describe('Grade Restrictions Sub-entity', () => {
+		it('returns correct grade restrictions min max grade for editable secondary view', () => {
+			var entity = new QuizSubmissionViewEntity(editableSecondaryViewEntity);
+			const actualMinMaxGrade = entity.gradeRestrictionsMinMaxGrade();
+
+			const minGrade = actualMinMaxGrade['min-grade'];
+			expect(minGrade.value).to.be.equal(0);
+			expect(minGrade.min).to.be.equal(0);
+			expect(minGrade.max).to.be.equal(100);
+
+			const maxGrade = actualMinMaxGrade['max-grade'];
+			expect(maxGrade.value).to.be.equal(100);
+			expect(maxGrade.min).to.be.equal(0);
+			expect(maxGrade.max).to.be.equal(100);
+		});
+		it('returns correct grade restrictions min max grade for non editable secondary view', () => {
+			var entity = new QuizSubmissionViewEntity(nonEditableSecondaryViewEntity);
+			const actualMinMaxGrade = entity.gradeRestrictionsMinMaxGrade();
+
+			const minGrade = actualMinMaxGrade['min-grade'];
+			expect(minGrade.value).to.be.equal(0.0);
+
+			const maxGrade = actualMinMaxGrade['max-grade'];
+			expect(maxGrade.value).to.be.equal(100.0);
+		});
+		it('should have action as it is editable secondary view', () => {
+			var entity = new QuizSubmissionViewEntity(editableSecondaryViewEntity);
+			expect(entity.canUpdateGradeRestrictionsMinMaxGrade()).to.be.true;
+		});
+		it('should not have action as it is non editable secondary view', () => {
+			var entity = new QuizSubmissionViewEntity(nonEditableSecondaryViewEntity);
+			expect(entity.canUpdateGradeRestrictionsMinMaxGrade()).to.be.false;
+		});
+		it('should not have action as it is a primary view', () => {
+			var entity = new QuizSubmissionViewEntity(editablePrimaryViewEntity);
+			expect(entity.canUpdateGradeRestrictionsMinMaxGrade()).to.be.undefined;
+		});
+	});
+
 	describe('Hide Show Questions Sub-entity', () => {
-		describe('Hide Questions', () => {
-			it('returns correct value from editable entity', () => {
-				var entity = new QuizSubmissionViewEntity(editablePrimaryViewEntity);
-				expect(entity.hideQuestions()).to.be.true;
-			});
-			it('returns correct value from non editable entity', () => {
-				var entity = new QuizSubmissionViewEntity(nonEditablePrimaryViewEntity);
-				expect(entity.hideQuestions()).to.be.true;
-			});
-			it('should have action as it is editable', () => {
-				var entity = new QuizSubmissionViewEntity(editablePrimaryViewEntity);
-				expect(entity.canUpdateHideShowQuestions()).to.be.true;
-			});
-			it('should not have action as it is non editable', () => {
-				var entity = new QuizSubmissionViewEntity(nonEditablePrimaryViewEntity);
-				expect(entity.canUpdateHideShowQuestions()).to.be.false;
-			});
+		it('returns correct value from editable entity', () => {
+			var entity = new QuizSubmissionViewEntity(editablePrimaryViewEntity);
+			expect(entity.hideQuestions()).to.be.true;
+		});
+		it('returns correct value from non editable entity', () => {
+			var entity = new QuizSubmissionViewEntity(nonEditablePrimaryViewEntity);
+			expect(entity.hideQuestions()).to.be.true;
+		});
+		it('should have action as it is editable', () => {
+			var entity = new QuizSubmissionViewEntity(editablePrimaryViewEntity);
+			expect(entity.canUpdateHideShowQuestions()).to.be.true;
+		});
+		it('should not have action as it is non editable', () => {
+			var entity = new QuizSubmissionViewEntity(nonEditablePrimaryViewEntity);
+			expect(entity.canUpdateHideShowQuestions()).to.be.false;
 		});
 
-		describe('Show Question Sub-entity', () => {
+		describe('Show Questions Sub-entity', () => {
 			describe('Show Questions', () => {
 				it('returns correct value from editable entity', () => {
 					var entity = new QuizSubmissionViewEntity(editablePrimaryViewEntity);
