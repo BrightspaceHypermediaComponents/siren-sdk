@@ -275,6 +275,14 @@ describe('QuizSubmissionViewEntity', () => {
 		});
 
 		describe('grade restrictions', () => {
+			it('returns correct grade restrictions for editable secondary view', () => {
+				var entity = new QuizSubmissionViewEntity(editableSecondaryViewEntity);
+				expect(entity.gradeRestrictions()).to.be.true;
+			});
+			it('returns correct grade restrictions for non editable secondary view', () => {
+				var entity = new QuizSubmissionViewEntity(nonEditableSecondaryViewEntity);
+				expect(entity.gradeRestrictions()).to.be.true;
+			});
 			it('should have action as it is editable secondary view', () => {
 				var entity = new QuizSubmissionViewEntity(editableSecondaryViewEntity);
 				expect(entity.canUpdateGradeRestrictions()).to.be.true;

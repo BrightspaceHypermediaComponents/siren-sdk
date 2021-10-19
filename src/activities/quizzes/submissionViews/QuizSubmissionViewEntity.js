@@ -388,6 +388,11 @@ export class QuizSubmissionViewEntity extends Entity {
 		return subEntity && subEntity.properties.value;
 	}
 
+	gradeRestrictions() {
+		const subEntity = this._attemptRestrictionsSubEntity();
+		return subEntity && subEntity.hasClass(Classes.quizzes.submissionView.gradeRestrictions);
+	}
+
 	async setAttemptRestrictionNumber(value) {
 		const subEntity = this._attemptRestrictionsSubEntity();
 		const action = subEntity.getActionByName(Actions.quizzes.submissionView.attemptRestrictions.updateAttemptRestrictionNumber);
