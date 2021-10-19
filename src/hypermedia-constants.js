@@ -413,6 +413,9 @@ export const Classes = {
 			range: 'ip-range'
 		},
 		submissionView: {
+			attemptRestrictions: 'attempt-restrictions',
+			ipRestrictions: 'ip-restrictions',
+			timeLimit: 'time-limit',
 			primary: 'primary',
 			showStandards: 'show-standards',
 			showAttemptScore: 'show-attempt-score',
@@ -700,11 +703,14 @@ export const Actions = {
 			message: {
 				updateMessage: 'update-message'
 			},
+			updateAttemptRestrictions: 'update-attempt-restrictions',
+			updateIpRestrictions: 'update-ip-restrictions',
 			updateReleaseDate: 'update-release-date',
 			updateShowStandards: 'update-show-standards',
 			updateShowAttemptScore: 'update-show-attempt-score',
 			updateShowStatsClassAverage: 'update-show-stats-class-average',
 			updateShowStatsScoreDistribution: 'update-show-stats-score-distribution',
+			updateTimeLimit: 'update-time-limit',
 			deleteSubmissionView: 'delete-submission-view'
 		},
 		submissionViews: {
