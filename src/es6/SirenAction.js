@@ -230,3 +230,5 @@ export const performSirenAction = function(token, action, fields, immediate, byp
 			}) : _performSirenAction(action, fields, tokenValue, bypassCache);
 		});
 };
+
+export const getEntityUrl = _getEntityUrl;
