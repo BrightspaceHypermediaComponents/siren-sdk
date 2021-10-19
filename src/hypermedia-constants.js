@@ -702,7 +702,7 @@ export const Actions = {
 			message: {
 				updateMessage: 'update-message'
 			},
-			updateAttemptRestrictions, 'update-attempt-restrictions',
+			updateAttemptRestrictions: 'update-attempt-restrictions',
 			updateIpRestrictions: 'update-ip-restrictions',
 			updateReleaseDate: 'update-release-date',
 			updateShowStandards: 'update-show-standards',
