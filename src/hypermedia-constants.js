@@ -413,6 +413,7 @@ export const Classes = {
 		},
 		submissionView: {
 			attemptRestrictions: 'attempt-restrictions',
+			gradeRestrictions: 'grade-restrictions',
 			ipRestrictions:'ip-restrictions',
 			timeLimit: 'time-limit',
 			primary: 'primary',
@@ -702,9 +703,21 @@ export const Actions = {
 			message: {
 				updateMessage: 'update-message'
 			},
+			releaseDate: {
+				updateReleaseDate: 'update-release-date'
+			},
+			timeLimit: {
+				updateTimeLimitNumber: 'update-time-limit-number'
+			},
+			attemptRestrictions: {
+				updateAttemptRestrictionNumber: 'update-attempt-restriction-number',
+				updateGradeRestrictions: 'update-grade-restrictions'
+			},
+			gradeRestrictions: {
+				updateMinMaxGrade: 'update-min-max-grade'
+			},
 			updateAttemptRestrictions: 'update-attempt-restrictions',
 			updateIpRestrictions: 'update-ip-restrictions',
-			updateReleaseDate: 'update-release-date',
 			updateShowStandards: 'update-show-standards',
 			updateShowAttemptScore: 'update-show-attempt-score',
 			updateShowStatsClassAverage: 'update-show-stats-class-average',

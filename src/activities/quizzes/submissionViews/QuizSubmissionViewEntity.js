@@ -310,7 +310,7 @@ export class QuizSubmissionViewEntity extends Entity {
 	/** RELEASE DATE SUB-ENTITY */
 	canUpdateReleaseDate() {
 		const subEntity = this._releaseDateSubEntity();
-		return subEntity && subEntity.hasActionByName(Actions.quizzes.submissionView.updateReleaseDate);
+		return subEntity && subEntity.hasActionByName(Actions.quizzes.submissionView.releaseDate.updateReleaseDate);
 	}
 
 	releaseDate() {
@@ -319,7 +319,7 @@ export class QuizSubmissionViewEntity extends Entity {
 	}
 
 	async setReleaseDate(value) {
-		const action = this._entity.getActionByName(Actions.quizzes.submissionView.updateReleaseDate);
+		const action = this._entity.getActionByName(Actions.quizzes.submissionView.releaseDate.updateReleaseDate);
 		const fields = [
 			{ name: 'releaseDate', value }
 		];
@@ -331,5 +331,126 @@ export class QuizSubmissionViewEntity extends Entity {
 
 	_releaseDateSubEntity() {
 		return this._entity && this._entity.getSubEntityByClass(Classes.quizzes.submissionView.releaseDate);
+	}
+
+	/** TIME LIMIT SUB-ENTITY */
+	canUpdateTimeLimitNumber() {
+		const subEntity = this._timeLimitSubEntity();
+		return subEntity && subEntity.hasActionByName(Actions.quizzes.submissionView.timeLimit.updateTimeLimitNumber);
+	}
+
+	timeLimitNumber() {
+		const subEntity = this._timeLimitSubEntity();
+		const value = subEntity && subEntity.properties.value;
+		const result = { value };
+
+		if (!this.canUpdateTimeLimitNumber()) return result;
+		const action = this._entity.getActionByName(Actions.quizzes.submissionView.timeLimit.updateTimeLimitNumber);
+		const field = action.getFieldByName('time-limit-number');
+		if (!field) return result;
+		result.min = field.min;
+		result.max = field.max;
+
+		return result;
+	}
+
+	async setTimeLimitNumber(value) {
+		const action = this._entity.getActionByName(Actions.quizzes.submissionView.timeLimit.updateTimeLimitNumber);
+		const fields = [
+			{ name: 'timeLimitNumber', value }
+		];
+
+		const returnedEntity = await performSirenAction(this._token, action, fields);
+		if (!returnedEntity) return;
+		return new QuizSubmissionViewEntity(returnedEntity, this._token);
+	}
+
+	_timeLimitSubEntity() {
+		return this._entity && this._entity.getSubEntityByClass(Classes.quizzes.submissionView.timeLimit);
+	}
+
+	/** ATTEMPT RESTRICTIONS SUB-ENTITY */
+	canUpdateAttemptRestrictionNumber() {
+		const subEntity = this._attemptRestrictionsSubEntity();
+		return subEntity && subEntity.hasActionByName(Actions.quizzes.submissionView.attemptRestrictions.updateAttemptRestrictionNumber);
+	}
+
+	canUpdateGradeRestrictions() {
+		const subEntity = this._attemptRestrictionsSubEntity();
+		return subEntity && subEntity.hasActionByName(Actions.quizzes.submissionView.attemptRestrictions.updateGradeRestrictions);
+	}
+
+	attemptRestrictionNumber() {
+		const subEntity = this._attemptRestrictionsSubEntity();
+		return subEntity && subEntity.properties.value;
+	}
+
+	async setAttemptRestrictionNumber(value) {
+		const action = this._entity.getActionByName(Actions.quizzes.submissionView.attemptRestrictions.updateAttemptRestrictionNumber);
+		const fields = [
+			{ name: 'attemptRestrictionNumber', value }
+		];
+
+		const returnedEntity = await performSirenAction(this._token, action, fields);
+		if (!returnedEntity) return;
+		return new QuizSubmissionViewEntity(returnedEntity, this._token);
+	}
+
+	async setGradeRestrictions(value) {
+		const action = this._entity.getActionByName(Actions.quizzes.submissionView.attemptRestrictions.updateGradeRestrictions);
+		const fields = [
+			{ name: 'gradeRestrictions', value }
+		];
+
+		const returnedEntity = await performSirenAction(this._token, action, fields);
+		if (!returnedEntity) return;
+		return new QuizSubmissionViewEntity(returnedEntity, this._token);
+	}
+
+	_attemptRestrictionsSubEntity() {
+		return this._entity && this._entity.getSubEntityByClass(Classes.quizzes.submissionView.attemptRestrictions);
+	}
+
+	/** GRADE RESTRICTIONS SUB-ENTITY */
+	canUpdateGradeRestrictionsMinMaxGrade() {
+		const subEntity = this._gradeRestrictionsSubEntity();
+		return subEntity && subEntity.hasActionByName(Actions.quizzes.submissionView.gradeRestrictions.updateMinMaxGrade);
+	}
+
+	gradeRestrictionsMinMaxGrade() {
+		if (this.canUpdateGradeRestrictionsMinMaxGrade()) {
+			const action = this._entity.getActionByName(Actions.quizzes.submissionView.gradeRestrictions.updateMinMaxGrade);
+
+			const minGradeField = action.getFieldByName('min-grade');
+			const maxGradeField = action.getFieldByName('max-grade');
+			return {
+				'min-grade': minGradeField,
+				'max-grade': maxGradeField
+			};
+		} else {
+			const subEntity = this._gradeRestrictionsSubEntity();
+			if (!subEntity) return;
+			return {
+				'min-grade': { value: subEntity.properties['min-grade'] },
+				'max-grade': { value: subEntity.properties['max-grade'] }
+			};
+		}
+	}
+
+	async setMinMaxGrade(min, max) {
+		const action = this._entity.getActionByName(Actions.quizzes.submissionView.gradeRestrictions.updateMinMaxGrade);
+		const fields = [
+			{ name: 'minGrade', min },
+			{ name: 'maxGrade', max }
+		];
+
+		const returnedEntity = await performSirenAction(this._token, action, fields);
+		if (!returnedEntity) return;
+		return new QuizSubmissionViewEntity(returnedEntity, this._token);
+	}
+
+	_gradeRestrictionsSubEntity() {
+		const subEntity = this._attemptRestrictionsSubEntity();
+		return subEntity && subEntity.getSubEntityByClass(Classes.quizzes.submissionView.gradeRestrictions);
 	}
 }
