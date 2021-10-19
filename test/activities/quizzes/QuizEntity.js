@@ -40,6 +40,7 @@ describe('QuizEntity', () => {
 				notificationEmail: 'moose@d2l.com',
 				preventMovingBackwards: true,
 				autoSetGraded: true,
+				syncGradebook: false,
 				description: 'The Second quiz ever',
 				header: 'Top of the quiz to ya!',
 				footer: 'Bottom of the quiz to ya!'
@@ -90,6 +91,12 @@ describe('QuizEntity', () => {
 		it('returns false when autoSetGraded not equal', () => {
 			var quizEntity = new QuizEntity(editableEntity);
 			modifiedEntity.autoSetGraded = false;
+			expect(quizEntity.equals(modifiedEntity)).to.be.false;
+		});
+
+		it('returns false when syncGradebook not equal', () => {
+			var quizEntity = new QuizEntity(editableEntity);
+			modifiedEntity.syncGradebook = true;
 			expect(quizEntity.equals(modifiedEntity)).to.be.false;
 		});
 
@@ -399,6 +406,7 @@ describe('QuizEntity', () => {
 				notificationEmail: 'modifiedMoose@d2l.com',
 				preventMovingBackwards: false,
 				autoSetGraded: false,
+				syncGradebook: true,
 				description: 'New description',
 				header: 'New header',
 				footer: 'New footer'
@@ -415,6 +423,7 @@ describe('QuizEntity', () => {
 				expect(form.get('notificationEmail')).to.equal('modifiedMoose@d2l.com');
 				expect(form.get('preventMovingBackwards')).to.equal('false');
 				expect(form.get('autoSetGraded')).to.equal('false');
+				expect(form.get('syncGradebook')).to.equal('true');
 				expect(form.get('description')).to.equal('New description');
 				expect(form.get('header')).to.equal('New header');
 				expect(form.get('footer')).to.equal('New footer');
@@ -436,6 +445,7 @@ describe('QuizEntity', () => {
 				notificationEmail: 'moose@d2l.com',
 				preventMovingBackwards: true,
 				autoSetGraded: true,
+				syncGradebook: false,
 				description: 'The Second quiz ever',
 				header: 'Top of the quiz to ya!',
 				footer: 'Bottom of the quiz to ya!'
@@ -457,6 +467,7 @@ describe('QuizEntity', () => {
 				notificationEmail: 'modifiedMoose@d2l.com',
 				preventMovingBackwards: false,
 				autoSetGraded: false,
+				syncGradebook: true,
 				description: 'New and improved Description!',
 				header: 'Even better Header!',
 				footer: 'Even better Footer!'
@@ -553,6 +564,32 @@ describe('QuizEntity', () => {
 			it('returns false when isAutoSetGraded is false', () => {
 				var quizEntity = new QuizEntity(nonEditableEntity);
 				expect(quizEntity.isAutoSetGradedEnabled()).to.be.false;
+			});
+		});
+	});
+
+	describe('syncGradebook', () => {
+		describe('canEditSyncGradebook', () => {
+			it('returns true when sync gradebook is editable', () => {
+				var quizEntity = new QuizEntity(editableEntity);
+				expect(quizEntity.canEditSyncGradebook()).to.be.true;
+			});
+
+			it('returns false when sync gradebook is not editable', () => {
+				var quizEntity = new QuizEntity(nonEditableEntity);
+				expect(quizEntity.canEditSyncGradebook()).to.be.false;
+			});
+		});
+
+		describe('isSyncGradebookEnabled', () => {
+			it('returns true when isSyncGradebookEnabled is true', () => {
+				var quizEntity = new QuizEntity(editableEntity);
+				expect(quizEntity.isSyncGradebookEnabled()).to.be.true;
+			});
+
+			it('returns false when isSyncGradebookEnabled is false', () => {
+				var quizEntity = new QuizEntity(nonEditableEntity);
+				expect(quizEntity.isSyncGradebookEnabled()).to.be.false;
 			});
 		});
 	});

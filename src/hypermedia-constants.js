@@ -171,6 +171,7 @@ export const Rels = {
 		notificationEmail: 'https://quizzes.api.brightspace.com/rels/notification-email',
 		preventMovingBackwards: 'https://quizzes.api.brightspace.com/rels/prevent-moving-backwards',
 		autoSetGraded: 'https://quizzes.api.brightspace.com/rels/auto-set-graded',
+		syncGradebook: 'https://quizzes.api.brightspace.com/rels/sync-gradebook',
 		timing: 'https://quizzes.api.brightspace.com/rels/timing',
 		timingType: 'https://quizzes.api.brightspace.com/rels/timing-type',
 		timingLateType: 'https://quizzes.api.brightspace.com/rels/timing-late-type',
@@ -396,6 +397,7 @@ export const Classes = {
 		password: 'password',
 		notificationEmail: 'notificationEmail',
 		autoSetGraded: 'auto-set-graded',
+		syncGradebook: 'sync-gradebook',
 		timing: {
 			recommended: 'recommended',
 			enforced: 'enforced',
@@ -666,6 +668,7 @@ export const Actions = {
 		updateNotificationEmail: 'update-notification-email',
 		updatePreventMovingBackwards: 'update-prevent-moving-backwards',
 		updateAutoSetGraded: 'update-auto-set-graded',
+		updateSyncGradebook: 'update-sync-gradebook',
 		delete: 'delete-quiz',
 		updateDescription: 'update-description',
 		updateHeader: 'update-header',
