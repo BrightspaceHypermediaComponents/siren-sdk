@@ -584,6 +584,7 @@ describe('QuizEntity', () => {
 		describe('isSyncGradebookEnabled', () => {
 			it('returns true when isSyncGradebookEnabled is true', () => {
 				var quizEntity = new QuizEntity(editableEntity);
+				quizEntity.syncGradebook = true;
 				expect(quizEntity.isSyncGradebookEnabled()).to.be.true;
 			});
 
