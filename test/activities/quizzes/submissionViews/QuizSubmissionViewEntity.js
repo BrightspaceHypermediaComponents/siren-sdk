@@ -35,70 +35,70 @@ describe('QuizSubmissionViewEntity', () => {
 
 	describe('Attempt Restrictions', () => {
 		it('returns correct value from editable secondary view entity', () => {
-			var entity = new QuizSubmissionViewEntity(editablePrimaryViewEntity);
+			var entity = new QuizSubmissionViewEntity(editableSecondaryViewEntity);
 			expect(entity.attemptRestrictions()).to.be.true;
 		});
 		it('returns correct value from non editable secondary view entity', () => {
-			var entity = new QuizSubmissionViewEntity(nonEditablePrimaryViewEntity);
+			var entity = new QuizSubmissionViewEntity(nonEditableSecondaryViewEntity);
 			expect(entity.attemptRestrictions()).to.be.true;
 		});
 		it('should have action as it is editable secondary entity', () => {
-			var entity = new QuizSubmissionViewEntity(editablePrimaryViewEntity);
+			var entity = new QuizSubmissionViewEntity(editableSecondaryViewEntity);
 			expect(entity.canUpdateAttemptRestrictions()).to.be.true;
 		});
 		it('should not have action as it is non editable secondary entity', () => {
-			var entity = new QuizSubmissionViewEntity(nonEditablePrimaryViewEntity);
+			var entity = new QuizSubmissionViewEntity(nonEditableSecondaryViewEntity);
 			expect(entity.canUpdateAttemptRestrictions()).to.be.false;
 		});
 		it('should not have action as it is editable primary entity', () => {
-			var entity = new QuizSubmissionViewEntity(nonEditablePrimaryViewEntity);
-			expect(entity.canUpdateAttemptRestrictions()).to.be.undefined;
+			var entity = new QuizSubmissionViewEntity(editablePrimaryViewEntity);
+			expect(entity.canUpdateAttemptRestrictions()).to.be.false;
 		});
 	});
 
 	describe('IP Restrictions', () => {
 		it('returns correct value from editable secondary view entity', () => {
-			var entity = new QuizSubmissionViewEntity(editablePrimaryViewEntity);
+			var entity = new QuizSubmissionViewEntity(editableSecondaryViewEntity);
 			expect(entity.ipRestrictions()).to.be.true;
 		});
 		it('returns correct value from non editable secondary view entity', () => {
-			var entity = new QuizSubmissionViewEntity(nonEditablePrimaryViewEntity);
+			var entity = new QuizSubmissionViewEntity(nonEditableSecondaryViewEntity);
 			expect(entity.ipRestrictions()).to.be.true;
 		});
 		it('should have action as it is editable secondary entity', () => {
-			var entity = new QuizSubmissionViewEntity(editablePrimaryViewEntity);
+			var entity = new QuizSubmissionViewEntity(editableSecondaryViewEntity);
 			expect(entity.canUpdateIpRestrictions()).to.be.true;
 		});
 		it('should not have action as it is non editable secondary entity', () => {
-			var entity = new QuizSubmissionViewEntity(nonEditablePrimaryViewEntity);
+			var entity = new QuizSubmissionViewEntity(nonEditableSecondaryViewEntity);
 			expect(entity.canUpdateIpRestrictions()).to.be.false;
 		});
 		it('should not have action as it is editable primary entity', () => {
-			var entity = new QuizSubmissionViewEntity(nonEditablePrimaryViewEntity);
-			expect(entity.canUpdateIpRestrictions()).to.be.undefined;
+			var entity = new QuizSubmissionViewEntity(editablePrimaryViewEntity);
+			expect(entity.canUpdateIpRestrictions()).to.be.false;
 		});
 	});
 
 	describe('Time Limit', () => {
 		it('returns correct value from editable secondary view entity', () => {
-			var entity = new QuizSubmissionViewEntity(editablePrimaryViewEntity);
+			var entity = new QuizSubmissionViewEntity(editableSecondaryViewEntity);
 			expect(entity.timeLimit()).to.be.true;
 		});
 		it('returns correct value from non editable secondary view entity', () => {
-			var entity = new QuizSubmissionViewEntity(nonEditablePrimaryViewEntity);
+			var entity = new QuizSubmissionViewEntity(nonEditableSecondaryViewEntity);
 			expect(entity.timeLimit()).to.be.true;
 		});
 		it('should have action as it is editable secondary entity', () => {
-			var entity = new QuizSubmissionViewEntity(editablePrimaryViewEntity);
+			var entity = new QuizSubmissionViewEntity(editableSecondaryViewEntity);
 			expect(entity.canUpdateTimeLimit()).to.be.true;
 		});
 		it('should not have action as it is non editable secondary entity', () => {
-			var entity = new QuizSubmissionViewEntity(nonEditablePrimaryViewEntity);
+			var entity = new QuizSubmissionViewEntity(nonEditableSecondaryViewEntity);
 			expect(entity.canUpdateTimeLimit()).to.be.false;
 		});
 		it('should not have action as it is editable primary entity', () => {
-			var entity = new QuizSubmissionViewEntity(nonEditablePrimaryViewEntity);
-			expect(entity.canUpdateTimeLimit()).to.be.undefined;
+			var entity = new QuizSubmissionViewEntity(editablePrimaryViewEntity);
+			expect(entity.canUpdateTimeLimit()).to.be.false;
 		});
 	});
 
