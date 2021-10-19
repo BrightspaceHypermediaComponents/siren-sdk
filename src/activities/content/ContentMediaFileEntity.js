@@ -5,7 +5,7 @@ import { ContentFileEntity } from './ContentFileEntity.js';
  */
 export class ContentMediaFileEntity extends ContentFileEntity {
 	/**
-	 * @returns {string|undefined} Determines whether media should be displayed in an embedded view
+	 * @returns {boolean|undefined} Determines whether media should be displayed in an embedded view
 	 */
 	embedMedia() {
 		return this._entity && this._entity.properties && this._entity.properties.embedMedia;
