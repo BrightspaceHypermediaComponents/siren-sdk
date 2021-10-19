@@ -113,7 +113,7 @@ export const nonEditableQuiz = {
 		{
 			'class': [
 				'sync-gradebook',
-				'unchecked'
+				'checked'
 			],
 			'rel': [
 				'https://quizzes.api.brightspace.com/rels/sync-gradebook'

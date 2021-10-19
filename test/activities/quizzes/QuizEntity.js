@@ -582,15 +582,14 @@ describe('QuizEntity', () => {
 		});
 
 		describe('isSyncGradebookEnabled', () => {
-			it('returns true when isSyncGradebookEnabled is true', () => {
+			it('returns false when isSyncGradebookEnabled is false', () => {
 				var quizEntity = new QuizEntity(editableEntity);
-				quizEntity.syncGradebook = true;
-				expect(quizEntity.isSyncGradebookEnabled()).to.be.true;
+				expect(quizEntity.isSyncGradebookEnabled()).to.be.false;
 			});
 
-			it('returns false when isSyncGradebookEnabled is false', () => {
+			it('returns true when isSyncGradebookEnabled is true', () => {
 				var quizEntity = new QuizEntity(nonEditableEntity);
-				expect(quizEntity.isSyncGradebookEnabled()).to.be.false;
+				expect(quizEntity.isSyncGradebookEnabled()).to.be.true;
 			});
 		});
 	});
