@@ -418,6 +418,7 @@ export const Classes = {
 			showAttemptScore: 'show-attempt-score',
 			showStatsClassAverage: 'show-stats-class-average',
 			showStatsScoreDistribution: 'show-stats-score-distribution',
+			releaseDate: 'release-date',
 			message: {
 				message: 'message',
 				richtext: 'richtext'
@@ -699,6 +700,7 @@ export const Actions = {
 			message: {
 				updateMessage: 'update-message'
 			},
+			updateReleaseDate: 'update-release-date',
 			updateShowStandards: 'update-show-standards',
 			updateShowAttemptScore: 'update-show-attempt-score',
 			updateShowStatsClassAverage: 'update-show-stats-class-average',
