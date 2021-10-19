@@ -199,6 +199,22 @@ export class QuizEntity extends Entity {
 	}
 
 	/**
+	 * @returns {bool} Whether or not the user can edit the syncGradebook property
+	 */
+	canEditSyncGradebook() {
+		const entity = this._entity.getSubEntityByRel(Rels.Quizzes.syncGradebook);
+		return entity && entity.hasActionByName(Actions.quizzes.updateSyncGradebook);
+	}
+
+	/**
+	 * @returns {bool} Is SyncGradebook checked for the quiz entity
+	 */
+	isSyncGradebookEnabled() {
+		const entity = this._entity.getSubEntityByRel(Rels.Quizzes.syncGradebook);
+		return entity && entity.hasClass(Classes.quizzes.checked);
+	}
+
+	/**
 	 * @returns {string} Quiz discription in plaintext (HTML stripped)
 	 */
 	descriptionPlaintext() {
@@ -532,6 +548,7 @@ export class QuizEntity extends Entity {
 		const updateNotificationEmail = this.canEditNotificationEmail() ? this._formatNotificationEmailAction(quiz) : null;
 		const updatePreventMovingBackwards = this.canEditPreventMovingBackwards() ? this._formatUpdatePreventMovingBackwards(quiz) : null;
 		const updateAutoSetGradedAction = this.canEditAutoSetGraded() ? this._formatUpdateAutoSetGraded(quiz) : null;
+		const updateSyncGradebookAction = this.canEditSyncGradebook() ? this._formatUpdateSyncGradebook(quiz) : null;
 		const updateDescriptionAction = this.canEditDescription() ? this._formatUpdateDescriptionAction(quiz) : null;
 		const updateHeaderAction = this.canEditHeader() ? this._formatUpdateHeaderAction(quiz) : null;
 		const updateFooterAction = this.canEditFooter() ? this._formatUpdateFooterAction(quiz) : null;
@@ -546,6 +563,7 @@ export class QuizEntity extends Entity {
 			updateNotificationEmail,
 			updatePreventMovingBackwards,
 			updateAutoSetGradedAction,
+			updateSyncGradebookAction,
 			updateDescriptionAction,
 			updateHeaderAction,
 			updateFooterAction
@@ -764,6 +782,23 @@ export class QuizEntity extends Entity {
 		return { action, fields };
 	}
 
+	_formatUpdateSyncGradebook(quiz) {
+		if (!quiz) return;
+		if (!this._hasSyncGradebookChanged(quiz.syncGradebook)) return;
+
+		const entity = this._entity.getSubEntityByRel(Rels.Quizzes.syncGradebook);
+		if (!entity) return;
+
+		const action = entity.getActionByName(Actions.quizzes.updateSyncGradebook);
+		if (!action) return;
+
+		const fields = [
+			{ name: 'syncGradebook', value: quiz.syncGradebook },
+		];
+
+		return { action, fields };
+	}
+
 	/**
 	 * Checks if quiz description has changed and if so returns the appropriate action/fields to update
 	 * @param {object} quiz the quiz that's being modified
@@ -885,6 +920,10 @@ export class QuizEntity extends Entity {
 		return autoSetGraded !== this.isAutoSetGradedEnabled();
 	}
 
+	_hasSyncGradebookChanged(syncGradebook) {
+		return syncGradebook !== this.isSyncGradebookEnabled();
+	}
+
 	_hasDescriptionChanged(description) {
 		return description !== this.descriptionEditorHtml();
 	}
@@ -908,6 +947,7 @@ export class QuizEntity extends Entity {
 			[this.notificationEmail(), quiz.notificationEmail],
 			[this.isPreventMovingBackwardsEnabled(), quiz.preventMovingBackwards],
 			[this.isAutoSetGradedEnabled(), quiz.autoSetGraded],
+			[this.isSyncGradebookEnabled(), quiz.syncGradebook],
 			[this.descriptionEditorHtml(), quiz.description],
 			[this.headerEditorHtml(), quiz.header],
 			[this.footerEditorHtml(), quiz.footer]
