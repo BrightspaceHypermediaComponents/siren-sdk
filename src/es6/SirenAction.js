@@ -231,7 +231,8 @@ export const performSirenAction = function(token, action, fields, immediate, byp
 		});
 };
 
-export const performLazySirenAction = function(token, actionFactory, fieldOverrides) {
+export const performLazySirenAction = function(token, actionFactory, fieldOverrides, bypassCache) {
+	fieldOverrides = fieldOverrides || {};
 	return window.D2L.Siren.EntityStore.getToken(token).then(
 		resolved => window.D2L.Siren.ActionQueue.enqueue(() => {
 			const action = actionFactory();
@@ -246,7 +247,7 @@ export const performLazySirenAction = function(token, actionFactory, fieldOverri
 				});
 			});
 
-			return _performSirenAction(action, fields, resolved.tokenValue);
+			return _performSirenAction(action, fields, resolved.tokenValue, bypassCache);
 		})
 	);
 };
