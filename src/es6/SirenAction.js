@@ -231,4 +231,25 @@ export const performSirenAction = function(token, action, fields, immediate, byp
 		});
 };
 
+export const performLazySirenAction = function(token, actionFactory, fieldOverrides, bypassCache) {
+	fieldOverrides = fieldOverrides || {};
+	return window.D2L.Siren.EntityStore.getToken(token).then(
+		resolved => window.D2L.Siren.ActionQueue.enqueue(() => {
+			const action = actionFactory();
+			if (!action) return;
+
+			const fields = [];
+			(action.fields || []).forEach(actionField => {
+				const valueOverride = fieldOverrides[actionField.name];
+				fields.push({
+					name: actionField.name,
+					value: valueOverride !== undefined ? valueOverride : actionField.value
+				});
+			});
+
+			return _performSirenAction(action, fields, resolved.tokenValue, bypassCache);
+		})
+	);
+};
+
 export const getEntityUrl = _getEntityUrl;
