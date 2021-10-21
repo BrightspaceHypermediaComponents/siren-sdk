@@ -12,6 +12,14 @@ const SHOW_QUESTION_TYPES = [
  * QuizSubmissionViewEntity class representation of a d2l Submission View entity.
  */
 export class QuizSubmissionViewEntity extends Entity {
+	canUpdateAttemptRestrictions() {
+		return this._entity && this._entity.hasActionByName(Actions.quizzes.submissionView.updateAttemptRestrictions);
+	}
+
+	canUpdateIpRestrictions() {
+		return this._entity && this._entity.hasActionByName(Actions.quizzes.submissionView.updateIpRestrictions);
+	}
+
 	canDeleteSubmissionView() {
 		return this._entity && this._entity.hasActionByName(Actions.quizzes.submissionView.deleteSubmissionView);
 	}
@@ -32,6 +40,22 @@ export class QuizSubmissionViewEntity extends Entity {
 		return this._entity && this._entity.hasActionByName(Actions.quizzes.submissionView.updateShowStatsScoreDistribution);
 	}
 
+	canUpdateTimeLimit() {
+		return this._entity && this._entity.hasActionByName(Actions.quizzes.submissionView.updateTimeLimit);
+	}
+
+	attemptRestrictions() {
+		return this._entity && this._entity.hasClass(Classes.quizzes.submissionView.attemptRestrictions);
+	}
+
+	ipRestrictions() {
+		return this._entity && this._entity.hasClass(Classes.quizzes.submissionView.ipRestrictions);
+	}
+
+	timeLimit() {
+		return this._entity && this._entity.hasClass(Classes.quizzes.submissionView.timeLimit);
+	}
+
 	async deleteSubmissionView() {
 		const action = this._entity.getActionByName(Actions.quizzes.submissionView.deleteSubmissionView);
 		await performSirenAction(this._token, action);
@@ -39,6 +63,28 @@ export class QuizSubmissionViewEntity extends Entity {
 
 	isPrimaryView() {
 		return this._entity && this._entity.hasClass(Classes.quizzes.submissionView.primary);
+	}
+
+	async setAttemptRestrictions(value) {
+		const action = this._entity.getActionByName(Actions.quizzes.submissionView.updateAttemptRestrictions);
+		const fields = [
+			{ name: 'attemptRestrictions', value }
+		];
+
+		const returnedEntity = await performSirenAction(this._token, action, fields);
+		if (!returnedEntity) return;
+		return new QuizSubmissionViewEntity(returnedEntity, this._token);
+	}
+
+	async setIpRestrictions(value) {
+		const action = this._entity.getActionByName(Actions.quizzes.submissionView.updateIpRestrictions);
+		const fields = [
+			{ name: 'ipRestrictions', value }
+		];
+
+		const returnedEntity = await performSirenAction(this._token, action, fields);
+		if (!returnedEntity) return;
+		return new QuizSubmissionViewEntity(returnedEntity, this._token);
 	}
 
 	async setShowAttemptScore(value) {
@@ -67,6 +113,17 @@ export class QuizSubmissionViewEntity extends Entity {
 		const action = this._entity.getActionByName(Actions.quizzes.submissionView.updateShowStatsScoreDistribution);
 		const fields = [
 			{ name: 'showStatsScoreDistribution', value }
+		];
+
+		const returnedEntity = await performSirenAction(this._token, action, fields);
+		if (!returnedEntity) return;
+		return new QuizSubmissionViewEntity(returnedEntity, this._token);
+	}
+
+	async setTimeLimit(value) {
+		const action = this._entity.getActionByName(Actions.quizzes.submissionView.updateTimeLimit);
+		const fields = [
+			{ name: 'timeLimit', value }
 		];
 
 		const returnedEntity = await performSirenAction(this._token, action, fields);
@@ -109,7 +166,8 @@ export class QuizSubmissionViewEntity extends Entity {
 	}
 
 	async setMessage(value) {
-		const action = this._entity.getActionByName(Actions.quizzes.submissionView.message.updateMessage);
+		const subEntity = this._messageSubEntity();
+		const action = subEntity.getActionByName(Actions.quizzes.submissionView.message.updateMessage);
 		const fields = [
 			{ name: 'message', value }
 		];
@@ -248,5 +306,163 @@ export class QuizSubmissionViewEntity extends Entity {
 	_showQuestionsSubEntity() {
 		const subEntity = this._hideShowQuestionsSubEntity();
 		return subEntity && subEntity.getSubEntityByClass(Classes.quizzes.submissionView.showQuestions.showQuestions);
+	}
+
+	/** RELEASE DATE SUB-ENTITY */
+	canUpdateReleaseDate() {
+		const subEntity = this._releaseDateSubEntity();
+		return subEntity && subEntity.hasActionByName(Actions.quizzes.submissionView.releaseDate.updateReleaseDate);
+	}
+
+	releaseDate() {
+		const subEntity = this._releaseDateSubEntity();
+		return subEntity && subEntity.properties.date;
+	}
+
+	async setReleaseDate(value) {
+		const subEntity = this._releaseDateSubEntity();
+		const action = subEntity.getActionByName(Actions.quizzes.submissionView.releaseDate.updateReleaseDate);
+		const fields = [
+			{ name: 'releaseDate', value }
+		];
+
+		const returnedEntity = await performSirenAction(this._token, action, fields);
+		if (!returnedEntity) return;
+		return new QuizSubmissionViewEntity(returnedEntity, this._token);
+	}
+
+	_releaseDateSubEntity() {
+		return this._entity && this._entity.getSubEntityByClass(Classes.quizzes.submissionView.releaseDate);
+	}
+
+	/** TIME LIMIT SUB-ENTITY */
+	canUpdateTimeLimitNumber() {
+		const subEntity = this._timeLimitSubEntity();
+		return subEntity && subEntity.hasActionByName(Actions.quizzes.submissionView.timeLimit.updateTimeLimitNumber);
+	}
+
+	timeLimitNumber() {
+		const subEntity = this._timeLimitSubEntity();
+		const value = subEntity && subEntity.properties.value;
+		const result = { value };
+
+		if (!this.canUpdateTimeLimitNumber()) return result;
+		const action = subEntity.getActionByName(Actions.quizzes.submissionView.timeLimit.updateTimeLimitNumber);
+		const field = action.getFieldByName('time-limit-number');
+		if (!field) return result;
+		result.min = field.min;
+		result.max = field.max;
+
+		return result;
+	}
+
+	async setTimeLimitNumber(value) {
+		const subEntity = this._timeLimitSubEntity();
+		const action = subEntity.getActionByName(Actions.quizzes.submissionView.timeLimit.updateTimeLimitNumber);
+		const fields = [
+			{ name: 'timeLimitNumber', value }
+		];
+
+		const returnedEntity = await performSirenAction(this._token, action, fields);
+		if (!returnedEntity) return;
+		return new QuizSubmissionViewEntity(returnedEntity, this._token);
+	}
+
+	_timeLimitSubEntity() {
+		return this._entity && this._entity.getSubEntityByClass(Classes.quizzes.submissionView.timeLimit);
+	}
+
+	/** ATTEMPT RESTRICTIONS SUB-ENTITY */
+	canUpdateAttemptRestrictionNumber() {
+		const subEntity = this._attemptRestrictionsSubEntity();
+		return subEntity && subEntity.hasActionByName(Actions.quizzes.submissionView.attemptRestrictions.updateAttemptRestrictionNumber);
+	}
+
+	canUpdateGradeRestrictions() {
+		const subEntity = this._attemptRestrictionsSubEntity();
+		return subEntity && subEntity.hasActionByName(Actions.quizzes.submissionView.attemptRestrictions.updateGradeRestrictions);
+	}
+
+	attemptRestrictionNumber() {
+		const subEntity = this._attemptRestrictionsSubEntity();
+		return subEntity && subEntity.properties.value;
+	}
+
+	gradeRestrictions() {
+		const subEntity = this._attemptRestrictionsSubEntity();
+		return subEntity && subEntity.hasClass(Classes.quizzes.submissionView.gradeRestrictions);
+	}
+
+	async setAttemptRestrictionNumber(value) {
+		const subEntity = this._attemptRestrictionsSubEntity();
+		const action = subEntity.getActionByName(Actions.quizzes.submissionView.attemptRestrictions.updateAttemptRestrictionNumber);
+		const fields = [
+			{ name: 'attemptRestrictionNumber', value }
+		];
+
+		const returnedEntity = await performSirenAction(this._token, action, fields);
+		if (!returnedEntity) return;
+		return new QuizSubmissionViewEntity(returnedEntity, this._token);
+	}
+
+	async setGradeRestrictions(value) {
+		const subEntity = this._attemptRestrictionsSubEntity();
+		const action = subEntity.getActionByName(Actions.quizzes.submissionView.attemptRestrictions.updateGradeRestrictions);
+		const fields = [
+			{ name: 'gradeRestrictions', value }
+		];
+
+		const returnedEntity = await performSirenAction(this._token, action, fields);
+		if (!returnedEntity) return;
+		return new QuizSubmissionViewEntity(returnedEntity, this._token);
+	}
+
+	_attemptRestrictionsSubEntity() {
+		return this._entity && this._entity.getSubEntityByClass(Classes.quizzes.submissionView.attemptRestrictions);
+	}
+
+	/** GRADE RESTRICTIONS SUB-ENTITY */
+	canUpdateGradeRestrictionsMinMaxGrade() {
+		const subEntity = this._gradeRestrictionsSubEntity();
+		return subEntity && subEntity.hasActionByName(Actions.quizzes.submissionView.gradeRestrictions.updateMinMaxGrade);
+	}
+
+	gradeRestrictionsMinMaxGrade() {
+		const subEntity = this._gradeRestrictionsSubEntity();
+		if (!subEntity) return;
+
+		if (this.canUpdateGradeRestrictionsMinMaxGrade()) {
+			const action = subEntity.getActionByName(Actions.quizzes.submissionView.gradeRestrictions.updateMinMaxGrade);
+
+			const minGradeField = action.getFieldByName('min-grade');
+			const maxGradeField = action.getFieldByName('max-grade');
+			return {
+				'min-grade': minGradeField,
+				'max-grade': maxGradeField
+			};
+		} else {
+			return {
+				'min-grade': { value: subEntity.properties['min-grade'] },
+				'max-grade': { value: subEntity.properties['max-grade'] }
+			};
+		}
+	}
+
+	async setMinMaxGrade(min, max) {
+		const subEntity = this._gradeRestrictionsSubEntity();
+		const action = subEntity.getActionByName(Actions.quizzes.submissionView.gradeRestrictions.updateMinMaxGrade);
+		const fields = [
+			{ name: 'minGrade', min },
+			{ name: 'maxGrade', max }
+		];
+
+		const returnedEntity = await performSirenAction(this._token, action, fields);
+		if (!returnedEntity) return;
+		return new QuizSubmissionViewEntity(returnedEntity, this._token);
+	}
+
+	_gradeRestrictionsSubEntity() {
+		const subEntity = this._attemptRestrictionsSubEntity();
+		return subEntity && subEntity.getSubEntityByClass(Classes.quizzes.submissionView.gradeRestrictions);
 	}
 }

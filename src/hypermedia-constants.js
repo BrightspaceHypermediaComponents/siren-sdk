@@ -171,6 +171,7 @@ export const Rels = {
 		notificationEmail: 'https://quizzes.api.brightspace.com/rels/notification-email',
 		preventMovingBackwards: 'https://quizzes.api.brightspace.com/rels/prevent-moving-backwards',
 		autoSetGraded: 'https://quizzes.api.brightspace.com/rels/auto-set-graded',
+		syncGradebook: 'https://quizzes.api.brightspace.com/rels/sync-gradebook',
 		timing: 'https://quizzes.api.brightspace.com/rels/timing',
 		timingType: 'https://quizzes.api.brightspace.com/rels/timing-type',
 		timingLateType: 'https://quizzes.api.brightspace.com/rels/timing-late-type',
@@ -396,6 +397,7 @@ export const Classes = {
 		password: 'password',
 		notificationEmail: 'notificationEmail',
 		autoSetGraded: 'auto-set-graded',
+		syncGradebook: 'sync-gradebook',
 		timing: {
 			recommended: 'recommended',
 			enforced: 'enforced',
@@ -413,11 +415,16 @@ export const Classes = {
 			range: 'ip-range'
 		},
 		submissionView: {
+			attemptRestrictions: 'attempt-restrictions',
+			gradeRestrictions: 'grade-restrictions',
+			ipRestrictions: 'ip-restrictions',
+			timeLimit: 'time-limit',
 			primary: 'primary',
 			showStandards: 'show-standards',
 			showAttemptScore: 'show-attempt-score',
 			showStatsClassAverage: 'show-stats-class-average',
 			showStatsScoreDistribution: 'show-stats-score-distribution',
+			releaseDate: 'release-date',
 			message: {
 				message: 'message',
 				richtext: 'richtext'
@@ -662,6 +669,7 @@ export const Actions = {
 		updateNotificationEmail: 'update-notification-email',
 		updatePreventMovingBackwards: 'update-prevent-moving-backwards',
 		updateAutoSetGraded: 'update-auto-set-graded',
+		updateSyncGradebook: 'update-sync-gradebook',
 		delete: 'delete-quiz',
 		updateDescription: 'update-description',
 		updateHeader: 'update-header',
@@ -699,10 +707,26 @@ export const Actions = {
 			message: {
 				updateMessage: 'update-message'
 			},
+			releaseDate: {
+				updateReleaseDate: 'update-release-date'
+			},
+			timeLimit: {
+				updateTimeLimitNumber: 'update-time-limit-number'
+			},
+			attemptRestrictions: {
+				updateAttemptRestrictionNumber: 'update-attempt-restriction-number',
+				updateGradeRestrictions: 'update-grade-restrictions'
+			},
+			gradeRestrictions: {
+				updateMinMaxGrade: 'update-min-max-grade'
+			},
+			updateAttemptRestrictions: 'update-attempt-restrictions',
+			updateIpRestrictions: 'update-ip-restrictions',
 			updateShowStandards: 'update-show-standards',
 			updateShowAttemptScore: 'update-show-attempt-score',
 			updateShowStatsClassAverage: 'update-show-stats-class-average',
 			updateShowStatsScoreDistribution: 'update-show-stats-score-distribution',
+			updateTimeLimit: 'update-time-limit',
 			deleteSubmissionView: 'delete-submission-view'
 		},
 		submissionViews: {

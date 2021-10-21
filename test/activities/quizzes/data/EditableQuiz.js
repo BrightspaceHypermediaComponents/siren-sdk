@@ -261,6 +261,29 @@ export const editableQuiz = {
 		},
 		{
 			'class': [
+				'sync-gradebook',
+				'unchecked'
+			],
+			'rel': [
+				'https://quizzes.api.brightspace.com/rels/sync-gradebook'
+			],
+			'actions': [
+				{
+					'href': 'https://afe99802-9130-4320-a770-8d138b941e74.quizzes.api.proddev.d2l/6606/quizzes/22',
+					'name': 'update-sync-gradebook',
+					'method': 'PATCH',
+					'fields': [
+						{
+							'type': 'checkbox',
+							'name': 'syncGradebook',
+							'value': false
+						}
+					]
+				}
+			]
+		},
+		{
+			'class': [
 				'ip-restrictions',
 				'collection'
 			],
