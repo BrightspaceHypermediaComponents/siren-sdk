@@ -39,7 +39,8 @@ export const contentFileData = {
 	],
 	'properties': {
 		'title': 'Test File Title',
-		'url': 'https://phoenix-is-the-best.com'
+		'url': 'https://phoenix-is-the-best.com',
+		'orgUnitPath': '/content/course500/'
 	},
 	'entities': [{
 		'class': ['richtext', 'description'],
