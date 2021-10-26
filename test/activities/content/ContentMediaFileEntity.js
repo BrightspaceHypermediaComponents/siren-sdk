@@ -19,5 +19,13 @@ describe('ContentHtmlFileEntity', () => {
 		it('reads embed media', () => {
 			expect(contentMediaFileEntity.embedMedia()).to.equal('true');
 		});
+
+		it('reads media file location', () => {
+			expect(contentMediaFileEntity.isContentServiceResource()).to.equal('true');
+		});
+
+		it('reads is content service resource', () => {
+			expect(contentMediaFileEntity.isAdvancedEditingEnabled()).to.equal('true');
+		});
 	});
 });
