@@ -28,6 +28,10 @@ describe('ContentFileEntity', () => {
 		it('reads text description', () => {
 			expect(contentFileEntity.descriptionText()).to.equal('description text');
 		});
+
+		it('reads org unit path', () => {
+			expect(contentFileEntity.orgUnitPath()).to.equal('/content/course500/');
+		});
 	});
 
 	describe('Equality tests', () => {

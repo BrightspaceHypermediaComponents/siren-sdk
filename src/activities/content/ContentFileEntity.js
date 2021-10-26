@@ -43,6 +43,13 @@ export class ContentFileEntity extends ContentWorkingCopyEntity {
 	}
 
 	/**
+	 * @returns {string|undefined} path to where the content file is stored
+	 */
+	orgUnitPath() {
+		return this._entity && this._entity.properties && this._entity.properties.orgUnitPath;
+	}
+
+	/**
 	 * @returns {string|null} Activity usage link
 	 */
 	getActivityUsageHref() {
