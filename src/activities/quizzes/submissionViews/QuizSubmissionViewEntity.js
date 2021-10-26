@@ -437,8 +437,8 @@ export class QuizSubmissionViewEntity extends Entity {
 			const minGradeField = action.getFieldByName('min-grade');
 			const maxGradeField = action.getFieldByName('max-grade');
 			return {
-				'min-grade': minGradeField,
-				'max-grade': maxGradeField
+				'min-grade': minGradeField || null,
+				'max-grade': maxGradeField || null
 			};
 		} else {
 			return {
