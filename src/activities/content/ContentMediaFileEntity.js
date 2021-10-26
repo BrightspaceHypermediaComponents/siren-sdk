@@ -22,6 +22,6 @@ export class ContentMediaFileEntity extends ContentFileEntity {
 	 * @returns {boolean|undefined} Determines whether the advanced editing is enabled for this entity.
 	 */
 	isAdvancedEditingEnabled() {
-		return this._entity && this._entity.properties && this._entity.properties.advancedEditingEnabled;
+		return this._entity && this._entity.properties && this._entity.properties.isAdvancedEditingEnabled;
 	}
 }
