@@ -137,6 +137,15 @@ export const editablePrimaryView = {
 					]
 				}
 			]
+		},
+		{
+			'class': [
+				'show-standards'
+			],
+			'rel': [
+				'related'
+			],
+			'title': 'Show standards for the displayed questions'
 		}
 	],
 	links: [
@@ -237,6 +246,15 @@ export const nonEditablePrimaryView = {
 					properties: {}
 				}
 			]
+		},
+		{
+			'class': [
+				'show-standards'
+			],
+			'rel': [
+				'related'
+			],
+			'title': 'Show standards for the displayed questions'
 		}
 	],
 	links: [
@@ -519,6 +537,15 @@ export const editableSecondaryView = {
 					]
 				}
 			]
+		},
+		{
+			'class': [
+				'show-standards'
+			],
+			'rel': [
+				'related'
+			],
+			'title': 'Show standards for the displayed questions'
 		}
 	],
 	links: [
@@ -695,6 +722,15 @@ export const nonEditableSecondaryView = {
 					properties: {},
 				}
 			]
+		},
+		{
+			'class': [
+				'show-standards'
+			],
+			'rel': [
+				'related'
+			],
+			'title': 'Show standards for the displayed questions'
 		}
 	],
 	links: [

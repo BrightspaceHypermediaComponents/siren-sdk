@@ -33,6 +33,17 @@ describe('QuizSubmissionViewEntity', () => {
 		});
 	});
 
+	describe('Is Standards Supported', () => {
+		it('isStandardsSupported should be true', () => {
+			var entity = new QuizSubmissionViewEntity(editablePrimaryViewEntity);
+			expect(entity.isStandardsSupported()).to.be.true;
+		});
+		it('should be able to get title', () => {
+			var entity = new QuizSubmissionViewEntity(editablePrimaryViewEntity);
+			expect(entity.standardsTitle()).to.equal('Show standards for the displayed questions');
+		});
+	});
+
 	describe('Attempt Restrictions', () => {
 		it('returns correct value from editable secondary view entity', () => {
 			var entity = new QuizSubmissionViewEntity(editableSecondaryViewEntity);
