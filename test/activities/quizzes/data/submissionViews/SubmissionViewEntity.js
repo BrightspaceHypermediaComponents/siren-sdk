@@ -144,8 +144,7 @@ export const editablePrimaryView = {
 			],
 			'rel': [
 				'related'
-			],
-			'title': 'Show standards for the displayed questions'
+			]
 		}
 	],
 	links: [
@@ -253,8 +252,7 @@ export const nonEditablePrimaryView = {
 			],
 			'rel': [
 				'related'
-			],
-			'title': 'Show standards for the displayed questions'
+			]
 		}
 	],
 	links: [
@@ -544,8 +542,7 @@ export const editableSecondaryView = {
 			],
 			'rel': [
 				'related'
-			],
-			'title': 'Show standards for the displayed questions'
+			]
 		}
 	],
 	links: [
@@ -729,8 +726,7 @@ export const nonEditableSecondaryView = {
 			],
 			'rel': [
 				'related'
-			],
-			'title': 'Show standards for the displayed questions'
+			]
 		}
 	],
 	links: [

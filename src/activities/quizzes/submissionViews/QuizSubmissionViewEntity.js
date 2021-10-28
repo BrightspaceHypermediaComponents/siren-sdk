@@ -65,10 +65,6 @@ export class QuizSubmissionViewEntity extends Entity {
 		return this._entity && this._entity.hasClass(Classes.quizzes.submissionView.primary);
 	}
 
-	isStandardsSupported() {
-		return this._entity && this._entity.hasSubEntityByClass(Classes.quizzes.submissionView.showStandards);
-	}
-
 	async setAttemptRestrictions(value) {
 		const action = this._entity.getActionByName(Actions.quizzes.submissionView.updateAttemptRestrictions);
 		const fields = [
@@ -471,9 +467,8 @@ export class QuizSubmissionViewEntity extends Entity {
 	}
 
 	/** SHOW STANDARDS SUB-ENTITY */
-	standardsTitle() {
-		const subEntity = this._showStandardsSubEntity();
-		return subEntity && subEntity.title;
+	isStandardsSupported() {
+		return this._entity && !!this._showStandardsSubEntity();
 	}
 
 	_showStandardsSubEntity() {
