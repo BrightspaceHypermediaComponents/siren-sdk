@@ -51,7 +51,7 @@ describe('AssignmentEntity', () => {
 				isIndividualAssignmentType: false,
 				groupTypeId: '314',
 				filesSubmissionLimit: 'unlimited',
-				defaultScoringRubricId: '-1'
+				defaultScoringRubricId: null
 			})).to.be.true;
 		});
 
@@ -78,7 +78,7 @@ describe('AssignmentEntity', () => {
 				annotationToolsAvailable: true,
 				isIndividualAssignmentType: false,
 				groupTypeId: '314',
-				defaultScoringRubricId: '-1'
+				defaultScoringRubricId: null
 			})).to.be.true;
 		});
 	});
