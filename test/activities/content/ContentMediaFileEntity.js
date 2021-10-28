@@ -24,7 +24,7 @@ describe('ContentHtmlFileEntity', () => {
 			expect(contentMediaFileEntity.isContentServiceResource()).to.equal('true');
 		});
 
-		it('reads is content service resource', () => {
+		it('reads advanced editing feature flag', () => {
 			expect(contentMediaFileEntity.isAdvancedEditingEnabled()).to.equal('true');
 		});
 	});

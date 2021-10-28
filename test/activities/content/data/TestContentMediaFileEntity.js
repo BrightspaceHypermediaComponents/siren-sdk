@@ -41,7 +41,7 @@ export const contentMediaFileData = {
 		'title': 'Test Media File Title',
 		'url': 'https://phoenix-is-the-best.com',
 		'embedMedia': 'true',
-		'advancedEditingEnabled': 'true',
+		'isAdvancedEditingEnabled': 'true',
 		'isContentServiceResource': 'true'
 	},
 	'entities': [{
