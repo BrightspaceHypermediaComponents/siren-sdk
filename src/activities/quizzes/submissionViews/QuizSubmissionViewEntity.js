@@ -68,7 +68,7 @@ export class QuizSubmissionViewEntity extends Entity {
 	async setAttemptRestrictions(value) {
 		const action = this._entity.getActionByName(Actions.quizzes.submissionView.updateAttemptRestrictions);
 		const fields = [
-			{ name: 'attemptRestrictions', value }
+			{ name: 'restrictAttempts', value }
 		];
 
 		const returnedEntity = await performSirenAction(this._token, action, fields);
@@ -409,7 +409,7 @@ export class QuizSubmissionViewEntity extends Entity {
 		const subEntity = this._attemptRestrictionsSubEntity();
 		const action = subEntity.getActionByName(Actions.quizzes.submissionView.attemptRestrictions.updateGradeRestrictions);
 		const fields = [
-			{ name: 'gradeRestrictions', value }
+			{ name: 'restrictGrades', value }
 		];
 
 		const returnedEntity = await performSirenAction(this._token, action, fields);
@@ -464,5 +464,14 @@ export class QuizSubmissionViewEntity extends Entity {
 	_gradeRestrictionsSubEntity() {
 		const subEntity = this._attemptRestrictionsSubEntity();
 		return subEntity && subEntity.getSubEntityByClass(Classes.quizzes.submissionView.gradeRestrictions);
+	}
+
+	/** SHOW STANDARDS SUB-ENTITY */
+	isStandardsSupported() {
+		return this._entity && !!this._showStandardsSubEntity();
+	}
+
+	_showStandardsSubEntity() {
+		return this._entity && this._entity.getSubEntityByClass(Classes.quizzes.submissionView.showStandards);
 	}
 }

@@ -137,6 +137,14 @@ export const editablePrimaryView = {
 					]
 				}
 			]
+		},
+		{
+			'class': [
+				'show-standards'
+			],
+			'rel': [
+				'related'
+			]
 		}
 	],
 	links: [
@@ -236,6 +244,14 @@ export const nonEditablePrimaryView = {
 					rel: ['related'],
 					properties: {}
 				}
+			]
+		},
+		{
+			'class': [
+				'show-standards'
+			],
+			'rel': [
+				'related'
 			]
 		}
 	],
@@ -519,6 +535,14 @@ export const editableSecondaryView = {
 					]
 				}
 			]
+		},
+		{
+			'class': [
+				'show-standards'
+			],
+			'rel': [
+				'related'
+			]
 		}
 	],
 	links: [
@@ -694,6 +718,14 @@ export const nonEditableSecondaryView = {
 					rel: ['related'],
 					properties: {},
 				}
+			]
+		},
+		{
+			'class': [
+				'show-standards'
+			],
+			'rel': [
+				'related'
 			]
 		}
 	],
