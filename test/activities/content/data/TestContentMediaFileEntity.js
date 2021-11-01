@@ -40,7 +40,9 @@ export const contentMediaFileData = {
 	'properties': {
 		'title': 'Test Media File Title',
 		'url': 'https://phoenix-is-the-best.com',
-		'embedMedia': 'true'
+		'embedMedia': 'true',
+		'isAdvancedEditingEnabled': 'true',
+		'isContentServiceResource': 'true'
 	},
 	'entities': [{
 		'class': ['richtext', 'description'],

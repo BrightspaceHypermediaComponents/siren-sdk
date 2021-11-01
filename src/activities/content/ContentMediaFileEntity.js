@@ -10,4 +10,18 @@ export class ContentMediaFileEntity extends ContentFileEntity {
 	embedMedia() {
 		return this._entity && this._entity.properties && this._entity.properties.embedMedia;
 	}
+
+	/**
+	 * @returns {boolean|undefined} Determines whether the entity is located on the content service or not (otherwise manage files)
+	 */
+	isContentServiceResource() {
+		return this._entity && this._entity.properties && this._entity.properties.isContentServiceResource;
+	}
+
+	/**
+	 * @returns {boolean|undefined} Determines whether the advanced editing is enabled for this entity.
+	 */
+	isAdvancedEditingEnabled() {
+		return this._entity && this._entity.properties && this._entity.properties.isAdvancedEditingEnabled;
+	}
 }
