@@ -28,4 +28,10 @@ describe('ContentHtmlFileEntity', () => {
 			expect(contentMediaFileEntity.isAdvancedEditingEnabled()).to.equal('true');
 		});
 	});
+
+	describe('Links', () => {
+		it('can get captions href', () => {
+			expect(contentMediaFileEntity.getMediaCaptionsHref()).to.equal('https://fake-tenant-id.files.api.proddev.d2l/6614/files/media/captions');
+		});
+	});
 });
