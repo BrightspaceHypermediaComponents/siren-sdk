@@ -31,6 +31,6 @@ export class ContentMediaFileEntity extends ContentFileEntity {
 	 * @returns {string|null} media captions href
 	 */
 	getMediaCaptionsHref() {
-		return ContentHelperFunctions.getHrefFromRel(Rels.Content.htmlTemplates, this._entity);
+		return ContentHelperFunctions.getHrefFromRel(Rels.Content.mediaCaptions, this._entity);
 	}
 }
