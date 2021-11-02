@@ -288,7 +288,7 @@ describe('QuizSubmissionViewEntity', () => {
 			});
 			it('returns correct attemptRestrictionsOptions for non editable secondary view', () => {
 				var entity = new QuizSubmissionViewEntity(nonEditableSecondaryViewEntity);
-				expect(entity.attemptRestrictionsOptions().length).to.equal(3);
+				expect(entity.attemptRestrictionsOptions()).to.be.undefined;
 			});
 			it('returns correct attemptRestrictionsOptions for primary view', () => {
 				var entity = new QuizSubmissionViewEntity(editablePrimaryViewEntity);
