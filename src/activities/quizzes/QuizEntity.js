@@ -218,7 +218,7 @@ export class QuizEntity extends Entity {
 	 * @returns {bool} Is SyncGradebook the default for the quiz entity,
 	 * i.e. true if the user never explicitly set SyncGradebook value
 	 */
-	 isSyncGradebookDefault() {
+	isSyncGradebookDefault() {
 		const entity = this._entity.getSubEntityByRel(Rels.Quizzes.syncGradebook);
 		return entity && entity.hasClass(Classes.quizzes.default);
 	}
