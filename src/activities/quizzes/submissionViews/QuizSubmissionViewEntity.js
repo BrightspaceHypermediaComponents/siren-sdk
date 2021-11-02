@@ -393,6 +393,16 @@ export class QuizSubmissionViewEntity extends Entity {
 		return subEntity && subEntity.hasClass(Classes.quizzes.submissionView.gradeRestrictions);
 	}
 
+	attemptRestrictionsOptions() {
+		const canUpdate = this.canUpdateAttemptRestrictionNumber();
+		if (!canUpdate) return;
+		const values = this._attemptRestrictionsSubEntity()
+			.getActionByName(Actions.quizzes.submissionView.attemptRestrictions.updateAttemptRestrictionNumber)
+			.getFieldByName('attemptRestrictionNumber')
+			.value;
+		return values;
+	}
+
 	async setAttemptRestrictionNumber(value) {
 		const subEntity = this._attemptRestrictionsSubEntity();
 		const action = subEntity.getActionByName(Actions.quizzes.submissionView.attemptRestrictions.updateAttemptRestrictionNumber);
