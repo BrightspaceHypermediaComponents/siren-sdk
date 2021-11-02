@@ -43,7 +43,7 @@ export const editablePrimaryView = {
 					fields: [
 						{
 							type: 'radio',
-							name: 'hide-show-questions',
+							name: 'hideShowQuestions',
 							value: [
 								{
 									value: 'show-questions',
@@ -77,7 +77,7 @@ export const editablePrimaryView = {
 							fields: [
 								{
 									type: 'radio',
-									name: 'show-questions',
+									name: 'showQuestions',
 									value: [
 										{
 											value: 'all-questions',
@@ -103,7 +103,7 @@ export const editablePrimaryView = {
 							fields: [
 								{
 									type: 'checkbox',
-									name: 'show-correct-answers',
+									name: 'showCorrectAnswers',
 									value: true
 								}
 							]
@@ -116,7 +116,7 @@ export const editablePrimaryView = {
 							fields: [
 								{
 									type: 'checkbox',
-									name: 'show-learner-responses',
+									name: 'showLearnerResponses',
 									value: false
 								}
 							]
@@ -129,7 +129,7 @@ export const editablePrimaryView = {
 							fields: [
 								{
 									type: 'checkbox',
-									name: 'show-question-score',
+									name: 'showQuestionScore',
 									value: true
 								}
 							]
@@ -139,12 +139,8 @@ export const editablePrimaryView = {
 			]
 		},
 		{
-			'class': [
-				'show-standards'
-			],
-			'rel': [
-				'related'
-			]
+			class: ['show-standards'],
+			rel: ['related']
 		}
 	],
 	links: [
@@ -163,7 +159,7 @@ export const editablePrimaryView = {
 			fields: [
 				{
 					type: 'checkbox',
-					name: 'show-standards',
+					name: 'showStandards',
 					value: true
 				}
 			]
@@ -176,7 +172,7 @@ export const editablePrimaryView = {
 			fields: [
 				{
 					type: 'checkbox',
-					name: 'show-attempt-score',
+					name: 'showAttemptScore',
 					value: false
 				}
 			]
@@ -189,7 +185,7 @@ export const editablePrimaryView = {
 			fields: [
 				{
 					type: 'checkbox',
-					name: 'show-stats-class-average',
+					name: 'showStatsClassAverage',
 					value: true
 				}
 			]
@@ -202,7 +198,7 @@ export const editablePrimaryView = {
 			fields: [
 				{
 					type: 'checkbox',
-					name: 'show-stats-score-distribution',
+					name: 'showStatsScoreDistribution',
 					value: false
 				}
 			]
@@ -247,12 +243,8 @@ export const nonEditablePrimaryView = {
 			]
 		},
 		{
-			'class': [
-				'show-standards'
-			],
-			'rel': [
-				'related'
-			]
+			class: ['show-standards'],
+			rel: ['related']
 		}
 	],
 	links: [
@@ -292,7 +284,7 @@ export const editableSecondaryView = {
 					fields: [
 						{
 							type: 'text',
-							name: 'release-date',
+							name: 'releaseDate',
 							value: '2021-01-03T04:59:59.000Z'
 						}
 					]
@@ -314,7 +306,7 @@ export const editableSecondaryView = {
 					fields: [
 						{
 							type: 'radio',
-							name: 'attempt-restriction-number',
+							name: 'attemptRestrictionNumber',
 							value: [
 								{
 									value: 1,
@@ -340,7 +332,7 @@ export const editableSecondaryView = {
 					fields: [
 						{
 							type: 'checkbox',
-							name: 'grade-restrictions',
+							name: 'restrictGrades',
 							value: true
 						}
 					]
@@ -363,14 +355,14 @@ export const editableSecondaryView = {
 							fields: [
 								{
 									type: 'number',
-									name: 'min-grade',
+									name: 'minGrade',
 									value: 0,
 									min: 0,
 									max: 100
 								},
 								{
 									type: 'number',
-									name: 'max-grade',
+									name: 'maxGrade',
 									value: 100,
 									min: 0,
 									max: 100
@@ -396,7 +388,7 @@ export const editableSecondaryView = {
 					fields: [
 						{
 							type: 'number',
-							name: 'time-limit-number',
+							name: 'timeLimitNumber',
 							value: 120,
 							min: 1,
 							max: 9999
@@ -441,7 +433,7 @@ export const editableSecondaryView = {
 					fields: [
 						{
 							type: 'radio',
-							name: 'hide-show-questions',
+							name: 'hideShowQuestions',
 							value: [
 								{
 									value: 'show-questions',
@@ -475,7 +467,7 @@ export const editableSecondaryView = {
 							fields: [
 								{
 									type: 'radio',
-									name: 'show-questions',
+									name: 'showQuestions',
 									value: [
 										{
 											value: 'all-questions',
@@ -501,7 +493,7 @@ export const editableSecondaryView = {
 							fields: [
 								{
 									type: 'checkbox',
-									name: 'show-correct-answers',
+									name: 'showCorrectAnswers',
 									value: true
 								}
 							]
@@ -514,7 +506,7 @@ export const editableSecondaryView = {
 							fields: [
 								{
 									type: 'checkbox',
-									name: 'show-learner-responses',
+									name: 'showLearnerResponses',
 									value: false
 								}
 							]
@@ -527,7 +519,7 @@ export const editableSecondaryView = {
 							fields: [
 								{
 									type: 'checkbox',
-									name: 'show-question-score',
+									name: 'showQuestionScore',
 									value: true
 								}
 							]
@@ -537,12 +529,8 @@ export const editableSecondaryView = {
 			]
 		},
 		{
-			'class': [
-				'show-standards'
-			],
-			'rel': [
-				'related'
-			]
+			class: ['show-standards'],
+			rel: ['related']
 		}
 	],
 	links: [
@@ -561,7 +549,7 @@ export const editableSecondaryView = {
 			fields: [
 				{
 					type: 'checkbox',
-					name: 'show-standards',
+					name: 'showStandards',
 					value: true
 				}
 			]
@@ -574,7 +562,7 @@ export const editableSecondaryView = {
 			fields: [
 				{
 					type: 'checkbox',
-					name: 'attempt-restrictions',
+					name: 'restrictAttempts',
 					value: true
 				}
 			]
@@ -587,7 +575,7 @@ export const editableSecondaryView = {
 			fields: [
 				{
 					type: 'checkbox',
-					name: 'ip-restrictions',
+					name: 'ipRestrictions',
 					value: true
 				}
 			]
@@ -600,7 +588,7 @@ export const editableSecondaryView = {
 			fields: [
 				{
 					type: 'checkbox',
-					name: 'time-limit',
+					name: 'timeLimit',
 					value: true
 				}
 			]
@@ -613,7 +601,7 @@ export const editableSecondaryView = {
 			fields: [
 				{
 					type: 'checkbox',
-					name: 'show-attempt-score',
+					name: 'showAttemptScore',
 					value: false
 				}
 			]
@@ -626,7 +614,7 @@ export const editableSecondaryView = {
 			fields: [
 				{
 					type: 'checkbox',
-					name: 'show-stats-class-average',
+					name: 'showStatsClassAverage',
 					value: true
 				}
 			]
@@ -639,7 +627,7 @@ export const editableSecondaryView = {
 			fields: [
 				{
 					type: 'checkbox',
-					name: 'show-stats-score-distribution',
+					name: 'showStatsScoreDistribution',
 					value: false
 				}
 			]
@@ -716,24 +704,20 @@ export const nonEditableSecondaryView = {
 						'show-question-score'
 					],
 					rel: ['related'],
-					properties: {},
+					properties: {}
+				},
+				{
+					class: ['show-standards'],
+					rel: ['related']
+				}
+			],
+			links: [
+				{
+					rel: ['self'],
+					href:
+						'/{orgUnitId}/quizzes/{quizId}/submissionviews/7?workingCopyId=123'
 				}
 			]
-		},
-		{
-			'class': [
-				'show-standards'
-			],
-			'rel': [
-				'related'
-			]
-		}
-	],
-	links: [
-		{
-			rel: ['self'],
-			href:
-				'/{orgUnitId}/quizzes/{quizId}/submissionviews/7?workingCopyId=123'
 		}
 	]
 };
