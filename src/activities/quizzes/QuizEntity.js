@@ -215,6 +215,15 @@ export class QuizEntity extends Entity {
 	}
 
 	/**
+	 * @returns {bool} Is SyncGradebook the default for the quiz entity,
+	 * i.e. true if the user never explicitly set SyncGradebook value
+	 */
+	 isSyncGradebookDefault() {
+		const entity = this._entity.getSubEntityByRel(Rels.Quizzes.syncGradebook);
+		return entity && entity.hasClass(Classes.quizzes.default);
+	}
+
+	/**
 	 * @returns {string} Quiz discription in plaintext (HTML stripped)
 	 */
 	descriptionPlaintext() {
@@ -549,6 +558,7 @@ export class QuizEntity extends Entity {
 		const updatePreventMovingBackwards = this.canEditPreventMovingBackwards() ? this._formatUpdatePreventMovingBackwards(quiz) : null;
 		const updateAutoSetGradedAction = this.canEditAutoSetGraded() ? this._formatUpdateAutoSetGraded(quiz) : null;
 		const updateSyncGradebookAction = this.canEditSyncGradebook() ? this._formatUpdateSyncGradebook(quiz) : null;
+		const updateSyncGradebookDefaultAction = this.canEditSyncGradebook() ? this._formatUpdateSyncGradebookDefault(quiz) : null;
 		const updateDescriptionAction = this.canEditDescription() ? this._formatUpdateDescriptionAction(quiz) : null;
 		const updateHeaderAction = this.canEditHeader() ? this._formatUpdateHeaderAction(quiz) : null;
 		const updateFooterAction = this.canEditFooter() ? this._formatUpdateFooterAction(quiz) : null;
@@ -564,6 +574,7 @@ export class QuizEntity extends Entity {
 			updatePreventMovingBackwards,
 			updateAutoSetGradedAction,
 			updateSyncGradebookAction,
+			updateSyncGradebookDefaultAction,
 			updateDescriptionAction,
 			updateHeaderAction,
 			updateFooterAction
@@ -799,6 +810,23 @@ export class QuizEntity extends Entity {
 		return { action, fields };
 	}
 
+	_formatUpdateSyncGradebookDefault(quiz) {
+		if (!quiz) return;
+		if (!this._hasSyncGradebookDefaultChanged(quiz.syncGradebookDefault)) return;
+
+		const entity = this._entity.getSubEntityByRel(Rels.Quizzes.syncGradebook);
+		if (!entity) return;
+
+		const action = entity.getActionByName(Actions.quizzes.updateSyncGradebookDefault);
+		if (!action) return;
+
+		const fields = [
+			{ name: 'syncGradebookDefault', value: quiz.syncGradebookDefault },
+		];
+
+		return { action, fields };
+	}
+
 	/**
 	 * Checks if quiz description has changed and if so returns the appropriate action/fields to update
 	 * @param {object} quiz the quiz that's being modified
@@ -924,6 +952,10 @@ export class QuizEntity extends Entity {
 		return syncGradebook !== this.isSyncGradebookEnabled();
 	}
 
+	_hasSyncGradebookDefaultChanged(syncGradebookDefault) {
+		return syncGradebookDefault !== this.isSyncGradebookDefault();
+	}
+
 	_hasDescriptionChanged(description) {
 		return description !== this.descriptionEditorHtml();
 	}
@@ -948,6 +980,7 @@ export class QuizEntity extends Entity {
 			[this.isPreventMovingBackwardsEnabled(), quiz.preventMovingBackwards],
 			[this.isAutoSetGradedEnabled(), quiz.autoSetGraded],
 			[this.isSyncGradebookEnabled(), quiz.syncGradebook],
+			[this.isSyncGradebookDefault(), quiz.syncGradebookDefault],
 			[this.descriptionEditorHtml(), quiz.description],
 			[this.headerEditorHtml(), quiz.header],
 			[this.footerEditorHtml(), quiz.footer]

@@ -262,7 +262,8 @@ export const editableQuiz = {
 		{
 			'class': [
 				'sync-gradebook',
-				'unchecked'
+				'unchecked',
+				'default'
 			],
 			'rel': [
 				'https://quizzes.api.brightspace.com/rels/sync-gradebook'
@@ -277,6 +278,18 @@ export const editableQuiz = {
 							'type': 'checkbox',
 							'name': 'syncGradebook',
 							'value': false
+						}
+					]
+				},
+				{
+					'href': 'https://afe99802-9130-4320-a770-8d138b941e74.quizzes.api.proddev.d2l/6606/quizzes/22',
+					'name': 'update-sync-gradebook-default',
+					'method': 'PATCH',
+					'fields': [
+						{
+							'type': 'checkbox',
+							'name': 'syncGradebookDefault',
+							'value': true
 						}
 					]
 				}
