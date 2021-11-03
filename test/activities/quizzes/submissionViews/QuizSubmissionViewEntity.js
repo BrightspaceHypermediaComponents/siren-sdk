@@ -281,6 +281,21 @@ describe('QuizSubmissionViewEntity', () => {
 			});
 		});
 
+		describe('attemptRestrictionsOptions', () => {
+			it('returns correct attemptRestrictionsOptions for editable secondary view', () => {
+				var entity = new QuizSubmissionViewEntity(editableSecondaryViewEntity);
+				expect(entity.attemptRestrictionsOptions().length).to.equal(3);
+			});
+			it('returns correct attemptRestrictionsOptions for non editable secondary view', () => {
+				var entity = new QuizSubmissionViewEntity(nonEditableSecondaryViewEntity);
+				expect(entity.attemptRestrictionsOptions()).to.be.undefined;
+			});
+			it('returns correct attemptRestrictionsOptions for primary view', () => {
+				var entity = new QuizSubmissionViewEntity(editablePrimaryViewEntity);
+				expect(entity.attemptRestrictionsOptions()).to.be.undefined;
+			});
+		});
+
 		describe('grade restrictions', () => {
 			it('returns correct grade restrictions for editable secondary view', () => {
 				var entity = new QuizSubmissionViewEntity(editableSecondaryViewEntity);

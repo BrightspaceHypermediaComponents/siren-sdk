@@ -282,7 +282,7 @@ export class QuizSubmissionViewEntity extends Entity {
 		if (!canUpdate) return;
 		const values = this._showQuestionsSubEntity()
 			.getActionByName(Actions.quizzes.submissionView.showQuestions.updateShowQuestions)
-			.getFieldByName(Classes.quizzes.submissionView.showQuestions.showQuestions)
+			.getFieldByName('showQuestions')
 			.value;
 		return values;
 	}
@@ -348,7 +348,7 @@ export class QuizSubmissionViewEntity extends Entity {
 
 		if (!this.canUpdateTimeLimitNumber()) return result;
 		const action = subEntity.getActionByName(Actions.quizzes.submissionView.timeLimit.updateTimeLimitNumber);
-		const field = action.getFieldByName('time-limit-number');
+		const field = action.getFieldByName('timeLimitNumber');
 		if (!field) return result;
 		result.min = field.min;
 		result.max = field.max;
@@ -393,6 +393,16 @@ export class QuizSubmissionViewEntity extends Entity {
 		return subEntity && subEntity.hasClass(Classes.quizzes.submissionView.gradeRestrictions);
 	}
 
+	attemptRestrictionsOptions() {
+		const canUpdate = this.canUpdateAttemptRestrictionNumber();
+		if (!canUpdate) return;
+		const values = this._attemptRestrictionsSubEntity()
+			.getActionByName(Actions.quizzes.submissionView.attemptRestrictions.updateAttemptRestrictionNumber)
+			.getFieldByName('attemptRestrictionNumber')
+			.value;
+		return values;
+	}
+
 	async setAttemptRestrictionNumber(value) {
 		const subEntity = this._attemptRestrictionsSubEntity();
 		const action = subEntity.getActionByName(Actions.quizzes.submissionView.attemptRestrictions.updateAttemptRestrictionNumber);
@@ -434,8 +444,8 @@ export class QuizSubmissionViewEntity extends Entity {
 		if (this.canUpdateGradeRestrictionsMinMaxGrade()) {
 			const action = subEntity.getActionByName(Actions.quizzes.submissionView.gradeRestrictions.updateMinMaxGrade);
 
-			const minGradeField = action.getFieldByName('min-grade');
-			const maxGradeField = action.getFieldByName('max-grade');
+			const minGradeField = action.getFieldByName('minGrade');
+			const maxGradeField = action.getFieldByName('maxGrade');
 			return {
 				'min-grade': minGradeField,
 				'max-grade': maxGradeField
