@@ -399,6 +399,7 @@ export const Classes = {
 		notificationEmail: 'notificationEmail',
 		autoSetGraded: 'auto-set-graded',
 		syncGradebook: 'sync-gradebook',
+		default: 'default',
 		timing: {
 			recommended: 'recommended',
 			enforced: 'enforced',
@@ -671,6 +672,7 @@ export const Actions = {
 		updatePreventMovingBackwards: 'update-prevent-moving-backwards',
 		updateAutoSetGraded: 'update-auto-set-graded',
 		updateSyncGradebook: 'update-sync-gradebook',
+		updateSyncGradebookDefault: 'update-sync-gradebook-default',
 		delete: 'delete-quiz',
 		updateDescription: 'update-description',
 		updateHeader: 'update-header',
