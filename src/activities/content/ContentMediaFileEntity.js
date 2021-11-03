@@ -24,4 +24,8 @@ export class ContentMediaFileEntity extends ContentFileEntity {
 	isAdvancedEditingEnabled() {
 		return this._entity && this._entity.properties && this._entity.properties.isAdvancedEditingEnabled;
 	}
+
+	mediaFileName() {
+		return this._entity && this._entity.properties && this._entity.properties.mediaFileName;
+	}
 }
