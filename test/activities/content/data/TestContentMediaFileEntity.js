@@ -58,6 +58,12 @@ export const contentMediaFileData = {
 		],
 		'type': 'application/vnd.siren+json',
 		'href': 'https://fake-tenant-id.files.api.proddev.d2l/my-file.html/usages/6614'
+	},
+	{
+		'rel': [
+			'https://content.api.brightspace.com/rels/content-media-captions'
+		],
+		'href': 'https://fake-tenant-id.files.api.proddev.d2l/6614/files/media/captions'
 	}],
 	'rel': []
 };

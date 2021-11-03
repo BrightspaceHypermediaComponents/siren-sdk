@@ -1,4 +1,6 @@
 import { ContentFileEntity } from './ContentFileEntity.js';
+import ContentHelperFunctions from './ContentHelperFunctions';
+import { Rels } from '../../hypermedia-constants';
 
 /**
  *  ContentMediaFileEntity class representation of a d2l audio or video content-file entity.
@@ -23,5 +25,12 @@ export class ContentMediaFileEntity extends ContentFileEntity {
 	 */
 	isAdvancedEditingEnabled() {
 		return this._entity && this._entity.properties && this._entity.properties.isAdvancedEditingEnabled;
+	}
+
+	/**
+	 * @returns {string|null} media captions href
+	 */
+	getMediaFileCaptionsHref() {
+		return ContentHelperFunctions.getHrefFromRel(Rels.Content.mediaCaptions, this._entity);
 	}
 }
