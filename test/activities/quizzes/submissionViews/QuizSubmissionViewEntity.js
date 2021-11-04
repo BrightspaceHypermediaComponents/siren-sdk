@@ -194,13 +194,21 @@ describe('QuizSubmissionViewEntity', () => {
 			var entity = new QuizSubmissionViewEntity(nonEditablePrimaryViewEntity);
 			expect(entity.isMessageRichtext()).to.be.true;
 		});
+		it('returns correct message text from editable entity', () => {
+			var entity = new QuizSubmissionViewEntity(editablePrimaryViewEntity);
+			expect(entity.messageText()).to.be.equal('hello');
+		});
+		it('returns correct message text from non editable entity', () => {
+			var entity = new QuizSubmissionViewEntity(nonEditablePrimaryViewEntity);
+			expect(entity.messageText()).to.be.equal('hello');
+		});
 		it('returns correct message HTML from editable entity', () => {
 			var entity = new QuizSubmissionViewEntity(editablePrimaryViewEntity);
-			expect(entity.message()).to.be.equal('<p>hello</p>');
+			expect(entity.messageHtml()).to.be.equal('<p>hello</p>');
 		});
 		it('returns correct message HTML from non editable entity', () => {
 			var entity = new QuizSubmissionViewEntity(nonEditablePrimaryViewEntity);
-			expect(entity.message()).to.be.equal('<p>hello</p>');
+			expect(entity.messageHtml()).to.be.equal('<p>hello</p>');
 		});
 		it('should have action as it is editable', () => {
 			var entity = new QuizSubmissionViewEntity(editablePrimaryViewEntity);

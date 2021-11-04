@@ -153,11 +153,16 @@ export class QuizSubmissionViewEntity extends Entity {
 		return subEntity && subEntity.hasActionByName(Actions.quizzes.submissionView.message.updateMessage);
 	}
 
-	message() {
+	messageText() {
 		const subEntity = this._messageSubEntity();
 		if (!subEntity) return;
-		const isMessageRichtext = this.isMessageRichtext();
-		return isMessageRichtext ? subEntity.properties.html : subEntity.properties.text;
+		return subEntity.properties.text;
+	}
+
+	messageHtml() {
+		const subEntity = this._messageSubEntity();
+		if (!subEntity) return;
+		return subEntity.properties.html;
 	}
 
 	isMessageRichtext() {
