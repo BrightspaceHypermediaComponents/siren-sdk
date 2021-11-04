@@ -257,6 +257,30 @@ export class QuizSubmissionViewEntity extends Entity {
 		return new QuizSubmissionViewEntity(returnedEntity, this._token);
 	}
 
+	async setShowLearnerResponses(value) {
+		const subEntity = this._showQuestionsSubEntity();
+		const action = subEntity.getActionByName(Actions.quizzes.submissionView.showQuestions.updateShowLearnerResponses);
+		const fields = [
+			{ name: 'showLearnerResponses', value }
+		];
+
+		const returnedEntity = await performSirenAction(this._token, action, fields);
+		if (!returnedEntity) return;
+		return new QuizSubmissionViewEntity(returnedEntity, this._token);
+	}
+
+	async setShowQuestionScore(value) {
+		const subEntity = this._showQuestionsSubEntity();
+		const action = subEntity.getActionByName(Actions.quizzes.submissionView.showQuestions.updateShowQuestionScore);
+		const fields = [
+			{ name: 'showQuestionScore', value }
+		];
+
+		const returnedEntity = await performSirenAction(this._token, action, fields);
+		if (!returnedEntity) return;
+		return new QuizSubmissionViewEntity(returnedEntity, this._token);
+	}
+
 	showCorrectAnswers() {
 		const subEntity = this._showQuestionsSubEntity();
 		return subEntity && subEntity.hasClass(Classes.quizzes.submissionView.showQuestions.showCorrectAnswers);
@@ -479,6 +503,17 @@ export class QuizSubmissionViewEntity extends Entity {
 	/** SHOW STANDARDS SUB-ENTITY */
 	isStandardsSupported() {
 		return this._entity && !!this._showStandardsSubEntity();
+	}
+
+	async setShowStandards(value) {
+		const action = this._entity.getActionByName(Actions.quizzes.submissionView.showStandards);
+		const fields = [
+			{ name: 'showStandards', value }
+		];
+
+		const returnedEntity = await performSirenAction(this._token, action, fields);
+		if (!returnedEntity) return;
+		return new QuizSubmissionViewEntity(returnedEntity, this._token);
 	}
 
 	_showStandardsSubEntity() {
