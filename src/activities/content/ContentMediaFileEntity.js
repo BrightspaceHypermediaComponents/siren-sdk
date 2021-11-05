@@ -37,4 +37,22 @@ export class ContentMediaFileEntity extends ContentFileEntity {
 	getMediaFileCaptionsHref() {
 		return ContentHelperFunctions.getHrefFromRel(Rels.Content.mediaCaptions, this._entity);
 	}
+	/**
+	 * @returns {string|undefined} The contentId of the media, present if it is located on the content service.
+	 */
+	contentServiceContentId() {
+		return this._entity && this._entity.properties && this._entity.properties.contentServiceContentId;
+	}
+	/**
+	 * @returns {string|undefined} Content service endpoint for making requests against, present if the media is located on the content service.
+	 */
+	contentServiceEndpoint() {
+		return this._entity && this._entity.properties && this._entity.properties.contentServiceEndpoint;
+	}
+	/**
+	 * @returns {string|undefined} The tenantId for the media, present if the media is located on the content service.
+	 */
+	tenantId() {
+		return this._entity && this._entity.properties && this._entity.properties.tenantId;
+	}
 }
