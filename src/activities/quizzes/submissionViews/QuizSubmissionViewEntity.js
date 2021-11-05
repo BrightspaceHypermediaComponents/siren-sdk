@@ -320,10 +320,10 @@ export class QuizSubmissionViewEntity extends Entity {
 	showQuestionsOptions() {
 		const canUpdate = this.canUpdateShowQuestions();
 		if (!canUpdate) return;
-		const values = this._showQuestionsSubEntity()
-			.getActionByName(Actions.quizzes.submissionView.showQuestions.updateShowQuestions)
-			.getFieldByName('showQuestions')
-			.value;
+		const showQuestionsSubEntity = this._showQuestionsSubEntity();
+		const action = showQuestionsSubEntity && showQuestionsSubEntity.getActionByName(Actions.quizzes.submissionView.showQuestions.updateShowQuestions);
+		const field = action && action.getFieldByName('showQuestions');
+		const values = field && field.value;
 		return values;
 	}
 
