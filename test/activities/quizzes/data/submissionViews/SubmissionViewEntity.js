@@ -11,6 +11,7 @@ export const editablePrimaryView = {
 			class: ['richtext', 'message'],
 			rel: ['related'],
 			properties: {
+				text: 'hello',
 				html: '<p>hello</p>'
 			},
 			actions: [
@@ -221,6 +222,7 @@ export const nonEditablePrimaryView = {
 			class: ['richtext', 'message'],
 			rel: ['related'],
 			properties: {
+				text: 'hello',
 				html: '<p>hello</p>'
 			}
 		},
