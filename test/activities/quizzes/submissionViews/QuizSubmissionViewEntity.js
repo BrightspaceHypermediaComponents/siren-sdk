@@ -40,6 +40,18 @@ describe('QuizSubmissionViewEntity', () => {
 		});
 	});
 
+	describe('Is Ip Restrictions Supported', () => {
+		it('isIpRestrictions on primary view should be false', () => {
+			var entity = new QuizSubmissionViewEntity(editablePrimaryViewEntity);
+			expect(entity.isIpRestrictionsSupported()).to.be.false;
+		});
+
+		it('isIpRestrictions on secondary view should be true', () => {
+			var entity = new QuizSubmissionViewEntity(editableSecondaryViewEntity);
+			expect(entity.isIpRestrictionsSupported()).to.be.true;
+		});
+	});
+
 	describe('Attempt Restrictions', () => {
 		it('returns correct value from editable secondary view entity', () => {
 			var entity = new QuizSubmissionViewEntity(editableSecondaryViewEntity);
