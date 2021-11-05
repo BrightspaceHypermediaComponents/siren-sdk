@@ -98,6 +98,17 @@ export class QuizSubmissionViewEntity extends Entity {
 		return new QuizSubmissionViewEntity(returnedEntity, this._token);
 	}
 
+	async setShowStandards(value) {
+		const action = this._entity.getActionByName(Actions.quizzes.submissionView.showStandards);
+		const fields = [
+			{ name: 'showStandards', value }
+		];
+
+		const returnedEntity = await performSirenAction(this._token, action, fields);
+		if (!returnedEntity) return;
+		return new QuizSubmissionViewEntity(returnedEntity, this._token);
+	}
+
 	async setShowStatsClassAverage(value) {
 		const action = this._entity.getActionByName(Actions.quizzes.submissionView.updateShowStatsClassAverage);
 		const fields = [
@@ -510,18 +521,16 @@ export class QuizSubmissionViewEntity extends Entity {
 		return this._entity && !!this._showStandardsSubEntity();
 	}
 
-	async setShowStandards(value) {
-		const action = this._entity.getActionByName(Actions.quizzes.submissionView.showStandards);
-		const fields = [
-			{ name: 'showStandards', value }
-		];
-
-		const returnedEntity = await performSirenAction(this._token, action, fields);
-		if (!returnedEntity) return;
-		return new QuizSubmissionViewEntity(returnedEntity, this._token);
-	}
-
 	_showStandardsSubEntity() {
 		return this._entity && this._entity.getSubEntityByClass(Classes.quizzes.submissionView.showStandards);
+	}
+
+	/** IP RESTRICTIONS SUB-ENTITY */
+	isIpRestrictionsSupported() {
+		return this._entity && !!this._ipRestrictionsSubEntity();
+	}
+
+	_ipRestrictionsSubEntity() {
+		return this._entity && this._entity.getSubEntityByClass(Classes.quizzes.submissionView.ipRestrictions);
 	}
 }

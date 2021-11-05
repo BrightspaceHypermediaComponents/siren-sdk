@@ -533,6 +533,10 @@ export const editableSecondaryView = {
 		{
 			class: ['show-standards'],
 			rel: ['related']
+		},
+		{
+			class: ['ip-restrictions'],
+			rel: ['related']
 		}
 	],
 	links: [
@@ -707,19 +711,23 @@ export const nonEditableSecondaryView = {
 					],
 					rel: ['related'],
 					properties: {}
-				},
-				{
-					class: ['show-standards'],
-					rel: ['related']
-				}
-			],
-			links: [
-				{
-					rel: ['self'],
-					href:
-						'/{orgUnitId}/quizzes/{quizId}/submissionviews/7?workingCopyId=123'
 				}
 			]
+		},
+		{
+			class: ['show-standards'],
+			rel: ['related']
+		},
+		{
+			class: ['ip-restrictions'],
+			rel: ['related']
+		}
+	],
+	links: [
+		{
+			rel: ['self'],
+			href:
+				'/{orgUnitId}/quizzes/{quizId}/submissionviews/7?workingCopyId=123'
 		}
 	]
 };
