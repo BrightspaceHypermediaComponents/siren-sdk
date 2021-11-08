@@ -27,6 +27,10 @@ export class ContentMediaFileEntity extends ContentFileEntity {
 		return this._entity && this._entity.properties && this._entity.properties.isAdvancedEditingEnabled;
 	}
 
+	mediaFileName() {
+		return this._entity && this._entity.properties && this._entity.properties.mediaFileName;
+	}
+
 	/**
 	 * @returns {string|null} media captions href
 	 */

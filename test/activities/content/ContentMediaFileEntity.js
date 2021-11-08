@@ -1,4 +1,5 @@
 /* global fetchMock */
+import { expect } from 'chai';
 import { ContentMediaFileEntity } from '../../../src/activities/content/ContentMediaFileEntity.js';
 import { contentMediaFileData } from './data/TestContentMediaFileEntity.js';
 
@@ -26,6 +27,10 @@ describe('ContentHtmlFileEntity', () => {
 
 		it('reads advanced editing feature flag', () => {
 			expect(contentMediaFileEntity.isAdvancedEditingEnabled()).to.equal('true');
+		});
+
+		it ('reads mediaFileName property', () => {
+			expect(contentMediaFileEntity.mediaFileName()).to.equal('test.mp4');
 		});
 	});
 

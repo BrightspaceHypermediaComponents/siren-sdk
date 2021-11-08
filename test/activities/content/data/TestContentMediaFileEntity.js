@@ -42,7 +42,8 @@ export const contentMediaFileData = {
 		'url': 'https://phoenix-is-the-best.com',
 		'embedMedia': 'true',
 		'isAdvancedEditingEnabled': 'true',
-		'isContentServiceResource': 'true'
+		'isContentServiceResource': 'true',
+		'mediaFileName': 'test.mp4'
 	},
 	'entities': [{
 		'class': ['richtext', 'description'],
