@@ -43,7 +43,10 @@ export const contentMediaFileData = {
 		'embedMedia': 'true',
 		'isAdvancedEditingEnabled': 'true',
 		'isContentServiceResource': 'true',
-		'mediaFileName': 'test.mp4'
+		'mediaFileName': 'test.mp4',
+		'contentServiceContentId': 'fake-content-service-content-id',
+		'contentServiceEndpoint': 'https://fake-content-service-endpoint/',
+		'tenantId': 'fake-tenant-id'
 	},
 	'entities': [{
 		'class': ['richtext', 'description'],

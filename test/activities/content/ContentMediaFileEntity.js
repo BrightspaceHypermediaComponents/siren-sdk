@@ -32,6 +32,18 @@ describe('ContentHtmlFileEntity', () => {
 		it ('reads mediaFileName property', () => {
 			expect(contentMediaFileEntity.mediaFileName()).to.equal('test.mp4');
 		});
+
+		it ('reads Content Service contentId', () => {
+			expect(contentMediaFileEntity.contentServiceContentId()).to.equal('fake-content-service-content-id');
+		});
+
+		it ('reads Content Service endpoint', () => {
+			expect(contentMediaFileEntity.contentServiceEndpoint()).to.equal('https://fake-content-service-endpoint/');
+		});
+
+		it ('reads tenantId', () => {
+			expect(contentMediaFileEntity.tenantId()).to.equal('fake-tenant-id');
+		});
 	});
 
 	describe('Links', () => {
