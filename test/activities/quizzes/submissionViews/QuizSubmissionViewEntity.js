@@ -40,6 +40,18 @@ describe('QuizSubmissionViewEntity', () => {
 		});
 	});
 
+	describe('Is Ip Restrictions Supported', () => {
+		it('isIpRestrictions on primary view should be false', () => {
+			var entity = new QuizSubmissionViewEntity(editablePrimaryViewEntity);
+			expect(entity.isIpRestrictionsSupported()).to.be.false;
+		});
+
+		it('isIpRestrictions on secondary view should be true', () => {
+			var entity = new QuizSubmissionViewEntity(editableSecondaryViewEntity);
+			expect(entity.isIpRestrictionsSupported()).to.be.true;
+		});
+	});
+
 	describe('Attempt Restrictions', () => {
 		it('returns correct value from editable secondary view entity', () => {
 			var entity = new QuizSubmissionViewEntity(editableSecondaryViewEntity);
@@ -194,13 +206,21 @@ describe('QuizSubmissionViewEntity', () => {
 			var entity = new QuizSubmissionViewEntity(nonEditablePrimaryViewEntity);
 			expect(entity.isMessageRichtext()).to.be.true;
 		});
+		it('returns correct message text from editable entity', () => {
+			var entity = new QuizSubmissionViewEntity(editablePrimaryViewEntity);
+			expect(entity.messageText()).to.be.equal('hello');
+		});
+		it('returns correct message text from non editable entity', () => {
+			var entity = new QuizSubmissionViewEntity(nonEditablePrimaryViewEntity);
+			expect(entity.messageText()).to.be.equal('hello');
+		});
 		it('returns correct message HTML from editable entity', () => {
 			var entity = new QuizSubmissionViewEntity(editablePrimaryViewEntity);
-			expect(entity.message()).to.be.equal('<p>hello</p>');
+			expect(entity.messageHtml()).to.be.equal('<p>hello</p>');
 		});
 		it('returns correct message HTML from non editable entity', () => {
 			var entity = new QuizSubmissionViewEntity(nonEditablePrimaryViewEntity);
-			expect(entity.message()).to.be.equal('<p>hello</p>');
+			expect(entity.messageHtml()).to.be.equal('<p>hello</p>');
 		});
 		it('should have action as it is editable', () => {
 			var entity = new QuizSubmissionViewEntity(editablePrimaryViewEntity);

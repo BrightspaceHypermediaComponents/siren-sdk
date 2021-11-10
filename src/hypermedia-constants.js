@@ -120,7 +120,8 @@ export const Rels = {
 		contentFileEntity: 'https://content.api.brightspace.com/rels/content-file',
 		contentScormActivityEntity: 'https://weblinks.api.brightspace.com/rels/content-scormActivity',
 		lessonViewPage: 'https://content.api.brightspace.com/rels/lesson-view-page',
-		htmlTemplates: 'https://content.api.brightspace.com/rels/content-html-templates'
+		htmlTemplates: 'https://content.api.brightspace.com/rels/content-html-templates',
+		mediaCaptions: 'https://content.api.brightspace.com/rels/content-media-captions'
 	},
 	// Parents API sub-domain rels
 	Parents: {
@@ -398,6 +399,7 @@ export const Classes = {
 		notificationEmail: 'notificationEmail',
 		autoSetGraded: 'auto-set-graded',
 		syncGradebook: 'sync-gradebook',
+		default: 'default',
 		timing: {
 			recommended: 'recommended',
 			enforced: 'enforced',
@@ -670,6 +672,7 @@ export const Actions = {
 		updatePreventMovingBackwards: 'update-prevent-moving-backwards',
 		updateAutoSetGraded: 'update-auto-set-graded',
 		updateSyncGradebook: 'update-sync-gradebook',
+		updateSyncGradebookDefault: 'update-sync-gradebook-default',
 		delete: 'delete-quiz',
 		updateDescription: 'update-description',
 		updateHeader: 'update-header',

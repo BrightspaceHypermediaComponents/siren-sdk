@@ -42,7 +42,11 @@ export const contentMediaFileData = {
 		'url': 'https://phoenix-is-the-best.com',
 		'embedMedia': 'true',
 		'isAdvancedEditingEnabled': 'true',
-		'isContentServiceResource': 'true'
+		'isContentServiceResource': 'true',
+		'mediaFileName': 'test.mp4',
+		'contentServiceContentId': 'fake-content-service-content-id',
+		'contentServiceEndpoint': 'https://fake-content-service-endpoint/',
+		'tenantId': 'fake-tenant-id'
 	},
 	'entities': [{
 		'class': ['richtext', 'description'],
@@ -58,6 +62,12 @@ export const contentMediaFileData = {
 		],
 		'type': 'application/vnd.siren+json',
 		'href': 'https://fake-tenant-id.files.api.proddev.d2l/my-file.html/usages/6614'
+	},
+	{
+		'rel': [
+			'https://content.api.brightspace.com/rels/content-media-captions'
+		],
+		'href': 'https://fake-tenant-id.files.api.proddev.d2l/6614/files/media/captions'
 	}],
 	'rel': []
 };

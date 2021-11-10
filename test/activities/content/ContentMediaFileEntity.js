@@ -1,4 +1,5 @@
 /* global fetchMock */
+import { expect } from 'chai';
 import { ContentMediaFileEntity } from '../../../src/activities/content/ContentMediaFileEntity.js';
 import { contentMediaFileData } from './data/TestContentMediaFileEntity.js';
 
@@ -26,6 +27,28 @@ describe('ContentHtmlFileEntity', () => {
 
 		it('reads advanced editing feature flag', () => {
 			expect(contentMediaFileEntity.isAdvancedEditingEnabled()).to.equal('true');
+		});
+
+		it ('reads mediaFileName property', () => {
+			expect(contentMediaFileEntity.mediaFileName()).to.equal('test.mp4');
+		});
+
+		it ('reads Content Service contentId', () => {
+			expect(contentMediaFileEntity.contentServiceContentId()).to.equal('fake-content-service-content-id');
+		});
+
+		it ('reads Content Service endpoint', () => {
+			expect(contentMediaFileEntity.contentServiceEndpoint()).to.equal('https://fake-content-service-endpoint/');
+		});
+
+		it ('reads tenantId', () => {
+			expect(contentMediaFileEntity.tenantId()).to.equal('fake-tenant-id');
+		});
+	});
+
+	describe('Links', () => {
+		it('can get captions href', () => {
+			expect(contentMediaFileEntity.getMediaCaptionsHref()).to.equal('https://fake-tenant-id.files.api.proddev.d2l/6614/files/media/captions');
 		});
 	});
 });
