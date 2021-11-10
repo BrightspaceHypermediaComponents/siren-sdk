@@ -46,7 +46,8 @@ export const contentMediaFileData = {
 		'mediaFileName': 'test.mp4',
 		'contentServiceContentId': 'fake-content-service-content-id',
 		'contentServiceEndpoint': 'https://fake-content-service-endpoint/',
-		'tenantId': 'fake-tenant-id'
+		'tenantId': 'fake-tenant-id',
+		'allowDownload': 'true',
 	},
 	'entities': [{
 		'class': ['richtext', 'description'],

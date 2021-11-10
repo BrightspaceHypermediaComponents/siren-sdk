@@ -44,6 +44,10 @@ describe('ContentHtmlFileEntity', () => {
 		it ('reads tenantId', () => {
 			expect(contentMediaFileEntity.tenantId()).to.equal('fake-tenant-id');
 		});
+
+		it ('reads allowDownload property', () => {
+			expect(contentMediaFileEntity.allowDownload()).to.equal('true');
+		});
 	});
 
 	describe('Links', () => {
