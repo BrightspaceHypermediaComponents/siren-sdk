@@ -502,8 +502,8 @@ export class QuizSubmissionViewEntity extends Entity {
 		const subEntity = this._gradeRestrictionsSubEntity();
 		const action = subEntity.getActionByName(Actions.quizzes.submissionView.gradeRestrictions.updateMinMaxGrade);
 		const fields = [
-			{ name: 'minGrade', min },
-			{ name: 'maxGrade', max }
+			{ name: 'minGrade', value: min },
+			{ name: 'maxGrade', value: max }
 		];
 
 		const returnedEntity = await performSirenAction(this._token, action, fields);
