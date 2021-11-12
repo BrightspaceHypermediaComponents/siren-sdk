@@ -55,4 +55,10 @@ export class ContentMediaFileEntity extends ContentFileEntity {
 	tenantId() {
 		return this._entity && this._entity.properties && this._entity.properties.tenantId;
 	}
+	/**
+	 * @returns {boolean|undefined} Determines whether the download button is enabled for the embdedded media view.
+	 */
+	allowDownload() {
+		return this._entity && this._entity.properties && this._entity.properties.allowDownload;
+	}
 }
