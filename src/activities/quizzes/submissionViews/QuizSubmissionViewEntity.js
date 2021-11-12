@@ -99,7 +99,7 @@ export class QuizSubmissionViewEntity extends Entity {
 	}
 
 	async setShowStandards(value) {
-		const action = this._entity.getActionByName(Actions.quizzes.submissionView.showStandards);
+		const action = this._entity.getActionByName(Actions.quizzes.submissionView.updateShowStandards);
 		const fields = [
 			{ name: 'showStandards', value }
 		];
