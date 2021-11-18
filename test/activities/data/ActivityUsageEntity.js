@@ -13,52 +13,7 @@ export const testData = {
 				'rel': [
 					'https://activities.api.brightspace.com/rels/score-out-of'
 				],
-				'properties': {
-					'scoreOutOf': 56.000000000,
-					'inGrades': true,
-					'gradeType': 'Points',
-					'gradeItemId': 6064
-				},
-				'actions': [
-					{
-						'href': 'http://vlx1-mdulat.desire2learn.d2l:44444/d2l/api/hm/assignments/6609/folders/31/score-out-of',
-						'name': 'update',
-						'method': 'POST',
-						'fields': [
-							{
-								'type': 'number',
-								'name': 'scoreOutOf',
-								'value': 56.000000000
-							},
-							{
-								'type': 'checkbox',
-								'name': 'inGrades',
-								'value': true
-							},
-							{
-								'type': 'radio',
-								'name': 'gradeType',
-								'value': [
-									{
-										'title': 'Points',
-										'value': 'Numeric',
-										'selected': true
-									},
-									{
-										'title': 'Letter',
-										'value': 'SelectBox',
-										'selected': false
-									}
-								]
-							},
-							{
-								'type': 'number',
-								'name': 'gradeItemId',
-								'value': 6064
-							}
-						]
-					}
-				]
+				'href': 'http://vlx1-mdulat.desire2learn.d2l:44444/d2l/api/hm/activities/activities/6606_2000_31/usages/6609/scoring'
 			},
 			{
 				'rel': [
@@ -269,31 +224,7 @@ export const testData = {
 				'rel': [
 					'https://activities.api.brightspace.com/rels/score-out-of'
 				],
-				'properties': {
-					'scoreOutOf': 56.000000000,
-					'inGrades': true,
-					'gradeType': 'Points',
-					'gradeItemId': 6064
-				},
-				'actions': [
-					{
-						'href': 'http://vlx1-mdulat.desire2learn.d2l:44444/d2l/api/hm/assignments/6609/folders/31/score-out-of',
-						'name': 'update',
-						'method': 'POST',
-						'fields': [
-							{
-								'type': 'number',
-								'name': 'scoreOutOf',
-								'value': 56.000000000
-							},
-							{
-								'type': 'number',
-								'name': 'gradeItemId',
-								'value': 6064
-							}
-						]
-					}
-				]
+				'href': 'http://vlx1-mdulat.desire2learn.d2l:44444/d2l/api/hm/activities/activities/6606_2000_31/usages/6609/scoring'
 			},
 			{
 				'rel': [
@@ -467,12 +398,7 @@ export const testData = {
 				'rel': [
 					'https://activities.api.brightspace.com/rels/score-out-of'
 				],
-				'properties': {
-					'scoreOutOf': 56.000000000,
-					'inGrades': true,
-					'gradeType': 'Points',
-					'gradeItemId': 6064
-				}
+				'href': 'http://vlx1-mdulat.desire2learn.d2l:44444/d2l/api/hm/activities/activities/6606_2000_31/usages/6609/scoring'
 			},
 			{
 				'class': [

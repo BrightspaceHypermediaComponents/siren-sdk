@@ -183,98 +183,6 @@ describe('ActivityUsageEntity', () => {
 				});
 			});
 		});
-
-		describe('Score Out Of', () => {
-			describe('Can edit', () => {
-				let setScoreOutOfSpy, removeFromGradesSpy, addToGradesSpy, setUngradedSpy;
-
-				beforeEach(() => {
-					setScoreOutOfSpy = sandbox.spy(entity, 'setScoreOutOf');
-					removeFromGradesSpy = sandbox.spy(entity, 'removeFromGrades');
-					addToGradesSpy = sandbox.spy(entity, 'addToGrades');
-					setUngradedSpy = sandbox.spy(entity, 'setUngraded');
-				});
-
-				it('gets scoreOutOf', () => {
-					expect(entity.scoreOutOf()).to.equal(56);
-				});
-
-				it('gets inGrades', () => {
-					expect(entity.inGrades()).to.equal(true);
-				});
-
-				it('gets gradeType', () => {
-					expect(entity.gradeType()).to.equal('Points');
-				});
-
-				it('gets numeric gradeType title', () => {
-					expect(entity.numericGradeTypeTitle()).to.equal('Points');
-				});
-
-				it('can edit score out of', () => {
-					expect(entity.canEditScoreOutOf()).to.be.true;
-				});
-
-				it.skip('returns a promise when setting scoreOutOf', () => {
-					entity.setScoreOutOf('70');
-					expect(setScoreOutOfSpy.returnValues[0]).to.be.a('promise');
-				});
-
-				it.skip('returns a promise when removing from grades', () => {
-					entity.removeFromGrades();
-					expect(removeFromGradesSpy.returnValues[0]).to.be.a('promise');
-				});
-
-				it.skip('returns a promise when adding to grades', () => {
-					entity.addToGrades();
-					expect(addToGradesSpy.returnValues[0]).to.be.a('promise');
-				});
-
-				it.skip('returns a promise when setting ungraded', () => {
-					entity.setUngraded();
-					expect(setUngradedSpy.returnValues[0]).to.be.a('promise');
-				});
-			});
-
-			describe('Can NOT edit', () => {
-
-				it('gets scoreOutOf', () => {
-					expect(readonlyEntity.scoreOutOf()).to.equal(56);
-				});
-
-				it('gets inGrades', () => {
-					expect(readonlyEntity.inGrades()).to.equal(true);
-				});
-
-				it('gets gradeType', () => {
-					expect(readonlyEntity.gradeType()).to.equal('Points');
-				});
-
-				it('gets numeric gradeType title', () => {
-					expect(entity.numericGradeTypeTitle()).to.equal('Points');
-				});
-
-				it('can edit score out of', () => {
-					expect(readonlyEntity.canEditScoreOutOf()).to.be.false;
-				});
-
-				it('returns undefined if attempting to setting scoreOutOf', async() => {
-					expect(await readonlyEntity.setScoreOutOf(70)).to.be.undefined;
-				});
-
-				it('returns undefined if attempting to removing from grades', async() => {
-					expect(await readonlyEntity.removeFromGrades()).to.be.undefined;
-				});
-
-				it('returns undefined if attempting to adding to grades', async() => {
-					expect(await readonlyEntity.addToGrades()).to.be.undefined;
-				});
-
-				it('returns undefined if attempting to setting ungraded', async() => {
-					expect(await readonlyEntity.setUngraded()).to.be.undefined;
-				});
-			});
-		});
 	});
 
 	describe('Saves', () => {
@@ -355,156 +263,6 @@ describe('ActivityUsageEntity', () => {
 				expect(fetchMock.done());
 			});
 		});
-
-		describe('score and grade', () => {
-			it('saves updated score', async() => {
-				fetchMock.postOnce('http://vlx1-mdulat.desire2learn.d2l:44444/d2l/api/hm/assignments/6609/folders/31/score-out-of', entityJson);
-
-				await entity.save({
-					scoreAndGrade: {
-						scoreOutOf: '99',
-						inGrades: true
-					}
-				});
-
-				const form = await getFormData(fetchMock.lastCall().request);
-				if (!form.notSupported) {
-					expect(form.get('scoreOutOf')).to.equal('99');
-					expect(form.get('inGrades')).to.equal('true');
-				}
-				expect(fetchMock.called()).to.be.true;
-			});
-
-			it('saves empty score', async() => {
-				fetchMock.postOnce('http://vlx1-mdulat.desire2learn.d2l:44444/d2l/api/hm/assignments/6609/folders/31/score-out-of', entityJson);
-
-				await entity.save({
-					scoreAndGrade: {
-						scoreOutOf: '',
-						inGrades: false
-					}
-				});
-
-				const form = await getFormData(fetchMock.lastCall().request);
-				if (!form.notSupported) {
-					expect(form.get('scoreOutOf')).to.equal('');
-					expect(form.get('inGrades')).to.equal('false');
-				}
-				expect(fetchMock.called()).to.be.true;
-			});
-
-			it('removes from grades', async() => {
-				fetchMock.postOnce('http://vlx1-mdulat.desire2learn.d2l:44444/d2l/api/hm/assignments/6609/folders/31/score-out-of', entityJson);
-
-				await entity.save({
-					scoreAndGrade: {
-						scoreOutOf: '56',
-						inGrades: false
-					}
-				});
-
-				const form = await getFormData(fetchMock.lastCall().request);
-				if (!form.notSupported) {
-					expect(form.get('scoreOutOf')).to.equal('56');
-					expect(form.get('inGrades')).to.equal('false');
-				}
-				expect(fetchMock.called()).to.be.true;
-			});
-
-			it('skips updating grade if cannot edit grade', async() => {
-				fetchMock.postOnce('http://vlx1-mdulat.desire2learn.d2l:44444/d2l/api/hm/assignments/6609/folders/31/score-out-of', entityJsonCannotEditGrades);
-
-				await entityCannotEditGrades.save({
-					scoreAndGrade: {
-						scoreOutOf: '99',
-						inGrades: false
-					}
-				});
-
-				const form = await getFormData(fetchMock.lastCall().request);
-				if (!form.notSupported) {
-					expect(form.get('scoreOutOf')).to.equal('99');
-					expect(form.get('inGrades')).to.be.null;
-				}
-				expect(fetchMock.called()).to.be.true;
-			});
-
-			it('skips save if not dirty', async() => {
-				await entity.save({
-					scoreAndGrade: {
-						scoreOutOf: '56',
-						inGrades: true
-					}
-				});
-
-				expect(fetchMock.done());
-			});
-
-			it('skips save if not editable', async() => {
-				await readonlyEntity.save({
-					scoreAndGrade: {
-						scoreOutOf: '99',
-						inGrades: false
-					}
-				});
-
-				expect(fetchMock.done());
-			});
-		});
-
-		describe('score and grade - associated grade', () => {
-			let gradeCandidateJson, gradeCandidateEntity, gradeCandidateCannotAssociateEntity, gradeUsedInActivityUsageEntity;
-
-			beforeEach(() => {
-				gradeCandidateJson = window.D2L.Hypermedia.Siren.Parse(gradeCandidateTestData.gradeCandidateEntity.grade);
-				gradeCandidateEntity = new GradeCandidateEntity(gradeCandidateJson);
-
-				const gradeCandidateCannotAssociateJson = window.D2L.Hypermedia.Siren.Parse(gradeCandidateTestData.gradeCandidateEntity.gradeWithoutAssociateAction);
-				gradeCandidateCannotAssociateEntity = new GradeCandidateEntity(gradeCandidateCannotAssociateJson);
-
-				const gradeUsedInActivityUsageJson = window.D2L.Hypermedia.Siren.Parse(gradeCandidateTestData.gradeCandidateEntity.gradeUsedInActivityUsage);
-				gradeUsedInActivityUsageEntity = new GradeCandidateEntity(gradeUsedInActivityUsageJson);
-			});
-
-			it('associates grade and updates score (even though out of value has not changed)', async() => {
-				fetchMock.postOnce('https://9caa9c10-0175-4c56-84e5-fc2bca4d8a52.activities.api.proddev.d2l/activities/6606_2000_11/usages/6609/associate-grade', gradeCandidateJson);
-				fetchMock.postOnce('http://vlx1-mdulat.desire2learn.d2l:44444/d2l/api/hm/assignments/6609/folders/31/score-out-of', entityJson);
-
-				await entity.save({
-					scoreAndGrade: {
-						scoreOutOf: '56',
-						inGrades: true,
-						associatedGrade: gradeCandidateEntity
-					}
-				});
-
-				expect(fetchMock.done());
-			});
-
-			it('skips associating if already associated to this grade', async() => {
-				await entity.save({
-					scoreAndGrade: {
-						scoreOutOf: '56',
-						inGrades: true,
-						associatedGrade: gradeUsedInActivityUsageEntity
-					}
-				});
-
-				expect(fetchMock.done());
-			});
-
-			it('skips associating if cannot associate', async() => {
-				await entity.save({
-					scoreAndGrade: {
-						scoreOutOf: '56',
-						inGrades: true,
-						associatedGrade: gradeCandidateCannotAssociateEntity
-					}
-				});
-
-				expect(fetchMock.done());
-			});
-		});
 	});
 
 	describe('Validation', () => {
@@ -569,11 +327,7 @@ describe('ActivityUsageEntity', () => {
 					startDate: undefined,
 					endDate: undefined
 				},
-				isDraft: true,
-				scoreAndGrade: {
-					scoreOutOf: '56',
-					inGrades: true
-				}
+				isDraft: true
 			})).to.be.true;
 		});
 
@@ -584,11 +338,7 @@ describe('ActivityUsageEntity', () => {
 					startDate: undefined,
 					endDate: undefined
 				},
-				isDraft: false,
-				scoreAndGrade: {
-					scoreOutOf: '56',
-					inGrades: false
-				}
+				isDraft: false
 			})).to.be.false;
 		});
 	});
