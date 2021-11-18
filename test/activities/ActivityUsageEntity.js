@@ -3,18 +3,13 @@
 import { ActivityUsageEntity } from '../../src/activities/ActivityUsageEntity.js';
 import { testData } from './data/ActivityUsageEntity.js';
 import { getFormData } from '../utility/test-helpers.js';
-import { GradeCandidateEntity } from '../../src/activities/GradeCandidateEntity.js';
-import { testData as gradeCandidateTestData } from './data/GradeCandidateEntity.js';
 
 describe('ActivityUsageEntity', () => {
-	let entity, entityCannotEditGrades, readonlyEntity, entityJson, entityJsonCannotEditGrades;
+	let entity, readonlyEntity, entityJson;
 
 	beforeEach(() => {
 		entityJson = window.D2L.Hypermedia.Siren.Parse(testData.activityUsageEntityEditable);
 		entity = new ActivityUsageEntity(entityJson);
-
-		entityJsonCannotEditGrades = window.D2L.Hypermedia.Siren.Parse(testData.activityUsageEntityEditableCannotEditGrades);
-		entityCannotEditGrades = new ActivityUsageEntity(entityJsonCannotEditGrades);
 
 		const readonlyJson = window.D2L.Hypermedia.Siren.Parse(testData.activityUsageEntityReadOnly);
 		readonlyEntity = new ActivityUsageEntity(readonlyJson);
