@@ -3,7 +3,7 @@ import { Actions, Classes, Rels } from '../hypermedia-constants';
 import { OrganizationEntity } from '../organizations/OrganizationEntity.js';
 import { UserActivityUsageEntity } from '../enrollments/UserActivityUsageEntity.js';
 import { ActivityUsageCollectionEntity } from './ActivityUsageCollectionEntity.js';
-import { performSirenAction, performSirenActions } from '../es6/SirenAction.js';
+import { performSirenAction } from '../es6/SirenAction.js';
 
 /**
  * ActivityUsageEntity class representation of a d2l activity usage.
@@ -429,63 +429,6 @@ export class ActivityUsageEntity extends Entity {
 	}
 
 	/**
-	 * @returns {string} Score out of value of the activity usage
-	 */
-	scoreOutOf() {
-		const action = this._getScoreOutOfAction();
-		if (action && action.hasFieldByName('scoreOutOf')) {
-			return action.getFieldByName('scoreOutOf').value;
-		}
-		const scoreOutOfEntity = this._getScoreOutOfEntity();
-		return scoreOutOfEntity && scoreOutOfEntity.properties && scoreOutOfEntity.properties.scoreOutOf ? scoreOutOfEntity.properties.scoreOutOf : undefined;
-	}
-	/**
-	 * @returns {string} Href for linked score-out-of sub-entity
-	 */
-
-	/**
-	 * @returns {string} True if the activity usage is associated with a grade item, False otherwise
-	 */
-	inGrades() {
-		const action = this._getScoreOutOfAction();
-		if (action && action.hasFieldByName('inGrades')) {
-			return action.getFieldByName('inGrades').value;
-		}
-		const scoreOutOfEntity = this._getScoreOutOfEntity();
-		return scoreOutOfEntity && scoreOutOfEntity.properties ? scoreOutOfEntity.properties.inGrades : undefined;
-	}
-
-	/**
-	 * @returns {string} Grade type of the grade item associated with the activity usage
-	 */
-	gradeType() {
-		const action = this._getScoreOutOfAction();
-		if (action && action.hasFieldByName('gradeType')) {
-			const gradeTypes = action.getFieldByName('gradeType').value.filter(x => x.selected);
-			if (gradeTypes.length > 0) {
-				return gradeTypes[0].title;
-			}
-		}
-		const scoreOutOfEntity = this._getScoreOutOfEntity();
-		return scoreOutOfEntity && scoreOutOfEntity.properties ? scoreOutOfEntity.properties.gradeType : undefined;
-	}
-
-	/**
-	 * @returns {string} Grade type title for the numeric grade type.
-	 */
-	numericGradeTypeTitle() {
-		const action = this._getScoreOutOfAction();
-		if (action && action.hasFieldByName('gradeType')) {
-			const numericGradeType = action.getFieldByName('gradeType').value.find(x => x.value === 'Numeric');
-			if (numericGradeType) {
-				return numericGradeType.title;
-			}
-		}
-
-		return '';
-	}
-
-	/**
 	 * @returns {string} URL of the grade associated with the activity usage, if present
 	 */
 	gradeHref() {
@@ -494,104 +437,6 @@ export class ActivityUsageEntity extends Entity {
 		}
 
 		return this._entity.getLinkByRel(Rels.Grades.grade).href;
-	}
-
-	/**
-	 * Updates the score out of value of the activity usage entity
-	 * @param {number} score The numerical score value to bet set for the activity usage entity
-	 * @param {boolean} inGrades True if a grade item should be associated with this activity usage
-	 */
-	async setScoreOutOf(score, inGrades, createSelectboxGradeItemEnabled) {
-		if (!this.canEditScoreOutOf()) {
-			return;
-		}
-
-		const fields = [{ name: 'scoreOutOf', value: score }];
-
-		if (this.canEditGrades() && !createSelectboxGradeItemEnabled) {
-			fields.push({ name: 'inGrades', value: inGrades });
-			fields.push({ name: 'gradeType', value: 'Numeric' });
-		}
-		await performSirenAction(this._token, this._getScoreOutOfAction(), fields);
-	}
-
-	/**
-	 * Removes the grade association with the activity usage entity
-	 */
-	async removeFromGrades() {
-		if (!this.canEditScoreOutOf()) {
-			return;
-		}
-
-		const fields = [{ name: 'inGrades', value: false }];
-		await performSirenAction(this._token, this._getScoreOutOfAction(), fields);
-	}
-
-	/**
-	 * Creates a new grade item and adds it as a grade association with the activity usage entity
-	 */
-	async addToGrades() {
-		if (!this.canEditScoreOutOf()) {
-			return;
-		}
-
-		const fields = [
-			{ name: 'inGrades', value: true },
-			{ name: 'gradeType', value: 'Numeric' }
-		];
-		await performSirenAction(this._token, this._getScoreOutOfAction(), fields);
-	}
-
-	/**
-	 * Updates the score out of value of the activity usage entity to ungraded and removes any grade association
-	 */
-	async setUngraded() {
-		if (!this.canEditScoreOutOf()) {
-			return;
-		}
-
-		const fields = [
-			{ name: 'inGrades', value: false },
-			{ name: 'scoreOutOf', value: '' }
-		];
-		await performSirenAction(this._token, this._getScoreOutOfAction(), fields);
-	}
-
-	/**
-	 * @returns {bool} Whether or not the update score out of action is present on the score-out-of subentity of the activity usage entity
-	 */
-	canEditScoreOutOf() {
-		const scoreOutOfEntity = this._getScoreOutOfEntity();
-		return scoreOutOfEntity && scoreOutOfEntity.hasActionByName
-			&& scoreOutOfEntity.hasActionByName(Actions.activities.scoreOutOf.update);
-	}
-
-	/**
-	 * @returns {bool} Whether or not the inGrades property is present on the score-out-of subentity of the activity usage entity
-	 */
-	canSeeGrades() {
-		const scoreOutOfEntity = this._getScoreOutOfEntity();
-		return scoreOutOfEntity && scoreOutOfEntity.properties
-			&& scoreOutOfEntity.properties.hasOwnProperty('inGrades');
-	}
-
-	/**
-	 * @returns {bool} Whether or not the inGrades field is present on the update action of the score-out-of subentity of the activity usage entity
-	 */
-	canEditGrades() {
-		const scoreOutOfAction = this._getScoreOutOfAction();
-		return scoreOutOfAction
-			&& scoreOutOfAction.hasFieldByName('inGrades');
-	}
-
-	_getScoreOutOfEntity() {
-		return this._linkedScoreOutOfEntity || (this._entity && this._entity.getSubEntityByRel(Rels.Activities.scoreOutOf));
-	}
-
-	_getScoreOutOfAction() {
-		const scoreOutOfEntity = this._getScoreOutOfEntity();
-		return scoreOutOfEntity
-			&& scoreOutOfEntity.getActionByName && scoreOutOfEntity.getActionByName(Actions.activities.scoreOutOf.update);
 	}
 
 	/**
@@ -606,79 +451,11 @@ export class ActivityUsageEntity extends Entity {
 		await this.validateDates(activity.dates);
 	}
 
-	async _associateGrade(scoreAndGrade, deferSave) {
-		if (!scoreAndGrade) {
-			return;
-		}
-
-		const associatedGrade = scoreAndGrade.associatedGrade;
-		if (this._shouldCreateAssociationToNewGrade(scoreAndGrade)) {
-			const associateGradeActionAndFields = this._generateAssociateNewGradeAction(scoreAndGrade);
-			if (!associateGradeActionAndFields) return;
-			if (deferSave) {
-				return associateGradeActionAndFields;
-			} else {
-				await performSirenAction(this._token, associateGradeActionAndFields.action, associateGradeActionAndFields.fields);
-			}
-		} else if (this._shouldCreateAssociationToExistingGrade(scoreAndGrade)) {
-			await associatedGrade.associateGrade();
-		}
-	}
-
-	_shouldCreateAssociationToExistingGrade(scoreAndGrade) {
-		if (!scoreAndGrade) return;
-		const associatedGrade = scoreAndGrade.associatedGrade;
-		return scoreAndGrade.inGrades && associatedGrade && associatedGrade.canAssociateGrade() && this.gradeHref() !== associatedGrade.href();
-	}
-
-	_shouldCreateAssociationToNewGrade(scoreAndGrade) {
-		if (!scoreAndGrade) return;
-		return scoreAndGrade.inGrades && !scoreAndGrade.associatedGrade && scoreAndGrade.associateNewGradeAction;
-	}
-
-	_generateAssociateNewGradeAction(scoreAndGrade) {
-		const action = scoreAndGrade.associateNewGradeAction;
-		if (!action || !this.canEditGrades()) {
-			return;
-		}
-
-		const fields = [
-			{ name: 'gradeName', value: scoreAndGrade.newGradeName },
-			{ name: 'scoreOutOf', value: scoreAndGrade.scoreOutOf }
-		];
-
-		return { action, fields };
-	}
-
-	_shouldSetScoreOutOf(scoreAndGrade) {
-		if (!scoreAndGrade) {
-			return;
-		}
-
-		const scoreOutOf = this.scoreOutOf() ? this.scoreOutOf().toString() : '';
-
-		return !this._shouldCreateAssociationToNewGrade(scoreAndGrade) &&
-			(this._shouldCreateAssociationToExistingGrade(scoreAndGrade)
-				|| scoreAndGrade.scoreOutOf !== scoreOutOf
-				|| scoreAndGrade.inGrades !== this.inGrades());
-	}
-
-	async save(activity, createSelectboxGradeItemEnabled) {
+	async save(activity) {
 		if (!activity) return;
 
 		await this.setDraftStatus(activity.isDraft);
-
-		const dateActionAndFields = await this.saveDates(activity.dates, true);
-		let associateGradeActionAndFields;
-		if (!createSelectboxGradeItemEnabled) {
-			associateGradeActionAndFields = await this._associateGrade(activity.scoreAndGrade, true);
-		}
-		const sirenActions = [dateActionAndFields, associateGradeActionAndFields];
-		await performSirenActions(this._token, sirenActions);
-
-		if (this._shouldSetScoreOutOf(activity.scoreAndGrade)) {
-			await this.setScoreOutOf(activity.scoreAndGrade.scoreOutOf, activity.scoreAndGrade.inGrades, createSelectboxGradeItemEnabled);
-		}
+		await this.saveDates(activity.dates);
 	}
 
 	equals(activity) {
@@ -686,15 +463,8 @@ export class ActivityUsageEntity extends Entity {
 			[this.dueDate(), activity.dates.dueDate],
 			[this.startDate(), activity.dates.startDate],
 			[this.endDate(), activity.dates.endDate],
-			[this.isDraft(), activity.isDraft],
-			[this.inGrades(), activity.scoreAndGrade.inGrades]
+			[this.isDraft(), activity.isDraft]
 		];
-
-		// For activities that don't use scoreOutOf, this.scoreOutOf() is initialized to undefined
-		const scoreOutOf = this.scoreOutOf();
-		if (scoreOutOf !== undefined) {
-			diffs.push([String(scoreOutOf), activity.scoreAndGrade.scoreOutOf]);
-		}
 
 		for (const [left, right] of diffs) {
 			if (left !== right) {
