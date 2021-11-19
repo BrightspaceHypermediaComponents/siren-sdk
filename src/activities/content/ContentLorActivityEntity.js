@@ -1,0 +1,136 @@
+import { Actions, Classes } from '../../hypermedia-constants';
+import { performSirenAction } from '../../es6/SirenAction';
+import { ContentEntity } from './ContentEntity';
+/**
+ * ContentlorActivityEntity class representation of a d2l content-lor-package entity.
+ */
+export class ContentLorActivityEntity extends ContentEntity {
+
+	/**
+	 * @returns {string|undefined} Title of the Lor actvity
+	 */
+	title() {
+		return this._entity && this._entity.properties && this._entity.properties.title;
+	}
+
+	/**
+	 * @returns {string|undefined} The url to view the LOR object
+	 */
+	url() {
+		return this._entity && this._entity.properties && this._entity.properties.url;
+	}
+
+	/**
+	 * @returns {boolean} external resource value (i.e. open in new tab or not)
+	 */
+	isExternalResource() {
+		if (!this._entity) {
+			return false;
+		}
+		return this._entity.hasClass(Classes.webLink.externalResource);
+	}
+
+	/**
+	 * @returns {string|undefined} The name of the LOR document
+	 */
+	documentName() {
+		return this._entity && this._entity.properties && this._entity.properties.documentName;
+	}
+
+	/**
+	 * @returns {number|undefined} The version of the LOR document
+	 */
+	version() {
+		return this._entity && this._entity.properties && this._entity.properties.version;
+	}
+
+	/**
+	 * @returns {date|undefined} The date the LOR document was last edited
+	 */
+	lastModified() {
+		return this._entity && this._entity.properties && this._entity.properties.lastModified;
+	}
+
+	/**
+	 * @returns {string|undefined} The type of document the LOR object is
+	 */
+	documentType() {
+		return this._entity && this._entity.properties && this._entity.properties.documentType;
+	}
+
+	/**
+	 * @returns {string|undefined} The name of the repository the LOR belongs to
+	 */
+	repositoryName() {
+		return this._entity && this._entity.properties && this._entity.properties.repositoryName;
+	}
+
+	/**
+	 * Updates the LOR activty to have the given title
+	 * @param {string} title Title to set on the LOR activity
+	 */
+	async setLorActivityTitle(title) {
+		if (!this._entity) {
+			return;
+		}
+
+		const action = this._entity.getActionByName(Actions.content.updateTitle);
+		if (!action) {
+			return;
+		}
+
+		const fields = [{ name: 'title', value: title }];
+		await performSirenAction(this._token, action, fields);
+	}
+
+	/**
+	 * Updates the Lor Activity to have the given external resource value
+	 * @param {boolean} isExternalResource boolean value that represents external resource status
+	 */
+	async setLorActivityExternalResource(isExternalResource) {
+		if (!this._entity) {
+			return;
+		}
+		const action = this._entity.getActionByName(Actions.webLink.updateExternalResource);
+		if (!action) {
+			return;
+		}
+
+		const fields = [{ name: 'isExternalResource', value: isExternalResource }];
+		await performSirenAction(this._token, action, fields);
+	}
+
+	/**
+	 * Deletes the LOR activity
+	 */
+	async deleteLorActivity() {
+		if (!this._entity) {
+			return;
+		}
+
+		const action = this._entity.getActionByName(Actions.webLink.deleteLorActivity);
+		if (!action) {
+			return;
+		}
+
+		await performSirenAction(this._token, action);
+		this.dispose();
+	}
+
+	/**
+	 * Checks if content lor activty properties passed in match what is currently stored
+	 * @param {object} lorActivity Object containing lor activty specific properties
+	 */
+	equals(contentlorActivity) {
+		const diffs = [
+			[this.title(), contentlorActivity.title],
+			[this.isExternalResource(), contentlorActivity.isExternalResource]
+		];
+		for (const [left, right] of diffs) {
+			if (left !== right) {
+				return false;
+			}
+		}
+		return true;
+	}
+}
