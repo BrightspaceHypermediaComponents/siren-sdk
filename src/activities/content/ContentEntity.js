@@ -8,7 +8,8 @@ export const CONTENT_TYPES = {
 	module: 'module',
 	topic: 'topic',
 	weblink: 'weblink',
-	scormActivity: 'scorm-activity'
+	scormActivity: 'scorm-activity',
+	lorActivity: 'lor-activity'
 };
 
 /**
@@ -34,6 +35,8 @@ export class ContentEntity extends Entity {
 			return CONTENT_TYPES.contentFile;
 		} else if (this._entity.hasLinkByRel(Rels.Content.contentScormActivityEntity)) {
 			return CONTENT_TYPES.scormActivity;
+		} else if (this._entity.hasLinkByRel(Rels.Content.contentLorActivityEntity)) {
+			return CONTENT_TYPES.lorActivity;
 		} else if (this._entity.hasClass(CONTENT_TYPES.topic)) {
 			return CONTENT_TYPES.topic;
 		} else {
@@ -74,6 +77,13 @@ export class ContentEntity extends Entity {
 	 */
 	getScormActivityHref() {
 		return ContentHelperFunctions.getHrefFromRel(Rels.Content.contentScormActivityEntity, this._entity);
+	}
+
+	/**
+	 * @returns {string|null} content LOR link
+	 */
+	getLorActivityHref() {
+		return ContentHelperFunctions.getHrefFromRel(Rels.Content.contentLorActivityEntity, this._entity);
 	}
 
 	/**
