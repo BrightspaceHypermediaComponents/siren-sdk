@@ -48,6 +48,7 @@ export const contentMediaFileData = {
 		'contentServiceEndpoint': 'https://fake-content-service-endpoint/',
 		'tenantId': 'fake-tenant-id',
 		'allowDownload': 'true',
+		'topicId': 12345,
 	},
 	'entities': [{
 		'class': ['richtext', 'description'],
