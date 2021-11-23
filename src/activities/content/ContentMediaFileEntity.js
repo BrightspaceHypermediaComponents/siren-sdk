@@ -61,4 +61,10 @@ export class ContentMediaFileEntity extends ContentFileEntity {
 	allowDownload() {
 		return this._entity && this._entity.properties && this._entity.properties.allowDownload;
 	}
+	/**
+	 * @returns {number|undefined} The topicId for the media, present if the media is located on the content service.
+	 */
+	topicId() {
+		return this._entity && this._entity.properties && this._entity.properties.topicId;
+	}
 }
