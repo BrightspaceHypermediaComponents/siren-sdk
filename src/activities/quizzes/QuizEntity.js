@@ -450,6 +450,18 @@ export class QuizEntity extends Entity {
 	}
 
 	/**
+	 * @returns {String} Categories endpoint link
+	 */
+	categoriesHref() {
+		if (!this._entity) {
+			return;
+		}
+		const subEntity = this._entity.getSubEntityByRel(Rels.Quizzes.categories);
+
+		return subEntity && subEntity.href;
+	}
+
+	/**
 	 * @returns {bool} Whether or not the edit footer action is present on the quiz entity
 	 */
 	canEditFooter() {
