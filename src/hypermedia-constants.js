@@ -179,7 +179,8 @@ export const Rels = {
 		timingLateType: 'https://quizzes.api.brightspace.com/rels/timing-late-type',
 		attempts: 'https://quizzes.api.brightspace.com/rels/attempts',
 		ipRestrictions: 'https://quizzes.api.brightspace.com/rels/ip',
-		submissionViews: 'https://quizzes.api.brightspace.com/rels/submission-views'
+		submissionViews: 'https://quizzes.api.brightspace.com/rels/submission-views',
+		categories: 'https://quizzes.api.brightspace.com/rels/categories'
 	},
 	// Themes API sub-domain rels
 	Themes: {
@@ -250,6 +251,8 @@ export const Classes = {
 			selected: 'selected',
 			default: 'default'
 		},
+		category: 'category',
+		collection: 'collection',
 		complete: 'complete',
 		completion: 'completion',
 		draft: 'draft',
@@ -258,6 +261,7 @@ export const Classes = {
 		feedbackDate: 'feedback-date',
 		published: 'published',
 		scoreOutOf: 'score-out-of',
+		selected: 'selected',
 		started: 'started',
 		userAssignmentActivity: 'user-assignment-activity',
 		userQuizActivity: 'user-quiz-activity',
@@ -292,8 +296,6 @@ export const Classes = {
 		annotationTools: 'annotations',
 		annotationEnabled: 'enabled',
 		annotationDisabled: 'disabled',
-		category: 'category',
-		selected: 'selected',
 		collection: 'collection'
 	},
 	associations: {
@@ -541,6 +543,12 @@ export const Actions = {
 		createCurrentOrgUnitAvailabilityItem: 'create-current-orgunit-availability-item'
 	},
 	activities: {
+		add: 'add',
+		categories: {
+			select: 'select',
+			deselect: 'deselect',
+			add: 'add'
+		},
 		create: 'create',
 		selectCustomDateRange: 'select-custom-date-range',
 		startAddNew: 'start-add-new',
@@ -582,12 +590,7 @@ export const Actions = {
 		updateFilesSubmissionLimit: 'update-files-submission-limit',
 		updateDefaultScoringRubric: 'update-default-scoring-rubric',
 		updateNotificationEmail: 'update-notification-email',
-		add: 'add',
-		categories: {
-			select: 'select',
-			deselect: 'deselect',
-			add: 'add'
-		}
+		add: 'add'
 	},
 	content: {
 		updateTitle: 'update-title',
