@@ -312,6 +312,12 @@ export const editableQuiz = {
 			'href': 'https://afe99802-9130-4320-a770-8d138b941e74.quizzes.api.proddev.d2l/6606/quizzes/39/submissionviews'
 		},
 		{
+			'rel': [
+				'https://quizzes.api.brightspace.com/rels/categories'
+			],
+			'href': 'https://afe99802-9130-4320-a770-8d138b941e74.quizzes.api.proddev.d2l/6606/quizzes/39/categories'
+		},
+		{
 			'class': [
 				'attempts'
 			],
