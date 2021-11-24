@@ -49,7 +49,7 @@ export class ScoringEntity extends Entity {
 		}
 
 		if (scoring.gradeMaxPoints !== this.gradeMaxPoints()) {
-			const fields = [{ name: this._getUpdateFieldName(), value: scoring.gradeMaxPoints }];
+			const fields = [{ name: this._getUpdateFieldName(), value: scoring.gradeMaxPoints || '' }];
 			return await performSirenAction(this._token, this._getUpdateAction(), fields);
 		}
 	}
