@@ -15,7 +15,7 @@
   "author": "",
   "license": "Apache-2.0",
   "dependencies": {
-    "@brightspace-ui/core": "^1.207.3",
+    "@brightspace-ui/core": "^1",
     "@polymer/polymer": "^3.0.0",
     "d2l-polymer-siren-behaviors": "Brightspace/polymer-siren-behaviors#semver:^1"
   },
