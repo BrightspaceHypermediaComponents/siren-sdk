@@ -1,6 +1,6 @@
-import { Entity } from '../../es6/Entity.js';
-import { Classes, Actions } from '../../hypermedia-constants.js';
-import { performSirenAction } from '../../es6/SirenAction.js';
+import { Entity } from '../es6/Entity.js';
+import { Classes, Actions } from '../hypermedia-constants.js';
+import { performSirenAction } from '../es6/SirenAction.js';
 
 const UNSET_CATEGORY_ID = '0';
 
@@ -17,7 +17,7 @@ export class CategoriesEntity extends Entity {
 			return;
 		}
 
-		return this._entity.getSubEntitiesByClass(Classes.assignments.category);
+		return this._entity.getSubEntitiesByClass(Classes.activities.category);
 	}
 	/**
 	 * @returns {Object} Gets category with a selected id
@@ -40,7 +40,7 @@ export class CategoriesEntity extends Entity {
 			return;
 		}
 
-		return this._entity.hasActionByName(Actions.assignments.add);
+		return this._entity.hasActionByName(Actions.activities.add);
 	}
 
 	/**
@@ -51,7 +51,7 @@ export class CategoriesEntity extends Entity {
 			return;
 		}
 
-		return this._entity.hasClass(Classes.assignments.collection);
+		return this._entity.hasClass(Classes.activities.collection);
 	}
 
 	/**
@@ -62,11 +62,11 @@ export class CategoriesEntity extends Entity {
 			return;
 		}
 
-		const subEntities = this._entity.getSubEntitiesByClass(Classes.assignments.category);
+		const subEntities = this._entity.getSubEntitiesByClass(Classes.activities.category);
 
 		let selectedCategory;
 		if (subEntities) {
-			selectedCategory = subEntities.find(category => category.class.includes(Classes.assignments.selected));
+			selectedCategory = subEntities.find(category => category.class.includes(Classes.activities.selected));
 		}
 
 		return selectedCategory;
@@ -95,7 +95,7 @@ export class CategoriesEntity extends Entity {
 		const selectedCategory = this.getSelectedCategory();
 		if (!selectedCategory) return;
 
-		const action = selectedCategory.getActionByName(Actions.assignments.categories.deselect);
+		const action = selectedCategory.getActionByName(Actions.activities.categories.deselect);
 
 		return { action };
 	}
@@ -103,7 +103,7 @@ export class CategoriesEntity extends Entity {
 	_generateNewCategoryAction(categoryName) {
 		if (!this.canAddCategories()) return;
 
-		const newCategoryAction = this._entity.getActionByName(Actions.assignments.categories.add);
+		const newCategoryAction = this._entity.getActionByName(Actions.activities.categories.add);
 		if (!newCategoryAction) return;
 		const currentFields = newCategoryAction.getFieldByName('categoryName');
 		currentFields.value = categoryName;
@@ -115,7 +115,7 @@ export class CategoriesEntity extends Entity {
 		if (!this.canEditCategories()) return;
 
 		const categoryEntity = this._getCategoryById(category.categoryId);
-		const selectCategoryAction = categoryEntity && categoryEntity.getActionByName(Actions.assignments.categories.select);
+		const selectCategoryAction = categoryEntity && categoryEntity.getActionByName(Actions.activities.categories.select);
 
 		if (selectCategoryAction) {
 			return { action: selectCategoryAction };
