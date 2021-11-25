@@ -12,7 +12,7 @@ const expectedCategory = {
 	'properties':{'name':'category1', 'categoryId': '123'},
 	'class':['category', 'selected'],
 	'actions':[{'name':'select',
-		'href':'https://afe99802-9130-4320-a770-8d138b941e74.activities.api.proddev.d2l/6606/folders/13',
+		'href':'https://afe99802-9130-4320-a770-8d138b941e74.assignments.api.proddev.d2l/6606/folders/13',
 		'method':'PATCH',
 		'type':'application/x-www-form-urlencoded',
 		'fields':[{'name':'categoryId', 'type':'hidden', 'value':'123'}]}]
@@ -138,7 +138,7 @@ describe('CategoriesEntity', () => {
 
 	describe('Saves', () => {
 		it('saves categoryId', async() => {
-			await fetchMock.patchOnce('https://afe99802-9130-4320-a770-8d138b941e74.activities.api.proddev.d2l/6606/folders/13', editableEntity);
+			await fetchMock.patchOnce('https://afe99802-9130-4320-a770-8d138b941e74.assignments.api.proddev.d2l/6606/folders/13', editableEntity);
 
 			var categoriesEntity = new CategoriesEntity(editableEntity);
 
@@ -153,7 +153,7 @@ describe('CategoriesEntity', () => {
 		});
 
 		it('saves name', async() => {
-			await fetchMock.postOnce('https://afe99802-9130-4320-a770-8d138b941e74.activities.api.proddev.d2l/6606/folders/13/categories', editableEntity);
+			await fetchMock.postOnce('https://afe99802-9130-4320-a770-8d138b941e74.assignments.api.proddev.d2l/6606/folders/13/categories', editableEntity);
 
 			var categoriesEntity = new CategoriesEntity(editableEntity);
 
