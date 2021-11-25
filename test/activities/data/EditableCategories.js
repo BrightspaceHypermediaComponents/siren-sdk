@@ -18,7 +18,7 @@ export const editableCategories = {
 			},
 			'actions': [
 				{
-					'href': 'https://afe99802-9130-4320-a770-8d138b941e74.activities.api.proddev.d2l/6606/folders/13',
+					'href': 'https://afe99802-9130-4320-a770-8d138b941e74.assignments.api.proddev.d2l/6606/folders/13',
 					'name': 'select',
 					'method': 'PATCH',
 					'fields': [
@@ -44,7 +44,7 @@ export const editableCategories = {
 			},
 			'actions': [
 				{
-					'href': 'https://afe99802-9130-4320-a770-8d138b941e74.activities.api.proddev.d2l/6606/folders/13',
+					'href': 'https://afe99802-9130-4320-a770-8d138b941e74.assignments.api.proddev.d2l/6606/folders/13',
 					'name': 'select',
 					'method': 'PATCH',
 					'fields': [
@@ -70,7 +70,7 @@ export const editableCategories = {
 			},
 			'actions': [
 				{
-					'href': 'https://afe99802-9130-4320-a770-8d138b941e74.activities.api.proddev.d2l/6606/folders/13',
+					'href': 'https://afe99802-9130-4320-a770-8d138b941e74.assignments.api.proddev.d2l/6606/folders/13',
 					'name': 'select',
 					'method': 'PATCH',
 					'fields': [
@@ -89,12 +89,12 @@ export const editableCategories = {
 			'rel': [
 				'self'
 			],
-			'href': 'https://afe99802-9130-4320-a770-8d138b941e74.activities.api.proddev.d2l/6606/folders/13/categories'
+			'href': 'https://afe99802-9130-4320-a770-8d138b941e74.assignments.api.proddev.d2l/6606/folders/13/categories'
 		}
 	],
 	'actions': [
 		{
-			'href': 'https://afe99802-9130-4320-a770-8d138b941e74.activities.api.proddev.d2l/6606/folders/13/categories',
+			'href': 'https://afe99802-9130-4320-a770-8d138b941e74.assignments.api.proddev.d2l/6606/folders/13/categories',
 			'name': 'add',
 			'method': 'POST',
 			'fields': [
