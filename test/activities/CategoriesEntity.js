@@ -1,11 +1,11 @@
 /* global fetchMock */
 
-import { CategoriesEntity } from '../../../src/activities/assignments/CategoriesEntity.js';
+import { CategoriesEntity } from '../../src/activities/CategoriesEntity.js';
 import { nonEditableCategories } from './data/NonEdtiableCategories.js';
 import { editableCategories } from './data/EditableCategories.js';
 import { emptyCategories } from './data/EmptyCategories.js';
 import { nonSelectedCategories } from './data/NonSelectedCategories';
-import { getFormData } from '../../utility/test-helpers.js';
+import { getFormData } from '../utility/test-helpers.js';
 
 const expectedCategory = {
 	'rel':['item'],

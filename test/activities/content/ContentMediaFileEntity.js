@@ -48,6 +48,10 @@ describe('ContentHtmlFileEntity', () => {
 		it ('reads allowDownload property', () => {
 			expect(contentMediaFileEntity.allowDownload()).to.equal('true');
 		});
+
+		it ('reads topicId', () => {
+			expect(contentMediaFileEntity.topicId()).to.equal(12345);
+		});
 	});
 
 	describe('Links', () => {
