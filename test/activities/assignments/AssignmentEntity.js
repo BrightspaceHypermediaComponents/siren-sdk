@@ -120,6 +120,170 @@ describe('AssignmentEntity', () => {
 			expect(fetchMock.called()).to.be.true;
 		});
 
+		it('saves allowable file type', async() => {
+			fetchMock.patchOnce('https://f5aa43d7-c082-485c-84f5-4808147fe98a.assignments.api.dev.brightspace.com/123065/folders/7', editableEntity);
+
+			var assignmentEntity = new AssignmentEntity(editableEntity);
+
+			await assignmentEntity.save({
+				allowableFileType: '2',
+			});
+
+			const form = await getFormData(fetchMock.lastCall().request);
+			if (!form.notSupported) {
+				expect(form.get('allowableFileType')).to.equal('2');
+			}
+			expect(fetchMock.called()).to.be.true;
+		});
+
+		it('saves custom allowable file type', async() => {
+			fetchMock.patchOnce('https://f5aa43d7-c082-485c-84f5-4808147fe98a.assignments.api.dev.brightspace.com/123065/folders/7', editableEntity);
+
+			var assignmentEntity = new AssignmentEntity(editableEntity);
+
+			await assignmentEntity.save({
+				allowableFileType: '5',
+				customAllowableFileTypes: '.pdf,.html'
+			});
+
+			const form = await getFormData(fetchMock.lastCall().request);
+			if (!form.notSupported) {
+				expect(form.get('allowableFileType')).to.equal('5');
+				expect(form.get('customAllowableFileTypes')).to.equal('.pdf,.html');
+			}
+			expect(fetchMock.called()).to.be.true;
+		});
+
+		it('saves anonymous marking', async() => {
+			fetchMock.patchOnce('https://f5aa43d7-c082-485c-84f5-4808147fe98a.assignments.api.dev.brightspace.com/123065/folders/7', editableEntity);
+
+			var assignmentEntity = new AssignmentEntity(editableEntity);
+
+			await assignmentEntity.save({
+				isAnonymous: true
+			});
+
+			const form = await getFormData(fetchMock.lastCall().request);
+			if (!form.notSupported) {
+				expect(form.get('isAnonymous')).to.equal('true');
+			}
+			expect(fetchMock.called()).to.be.true;
+		});
+
+		it('saves default scoring rubric', async() => {
+			fetchMock.patchOnce('https://f5aa43d7-c082-485c-84f5-4808147fe98a.assignments.api.dev.brightspace.com/123065/folders/7', editableEntity);
+
+			var assignmentEntity = new AssignmentEntity(editableEntity);
+
+			await assignmentEntity.save({
+				defaultScoringRubricId: 123
+			});
+
+			const form = await getFormData(fetchMock.lastCall().request);
+			if (!form.notSupported) {
+				expect(form.get('defaultScoringRubricId')).to.equal('123');
+			}
+			expect(fetchMock.called()).to.be.true;
+		});
+
+		it('saves notification email', async() => {
+			fetchMock.patchOnce('https://f5aa43d7-c082-485c-84f5-4808147fe98a.assignments.api.dev.brightspace.com/123065/folders/7', editableEntity);
+
+			var assignmentEntity = new AssignmentEntity(editableEntity);
+
+			await assignmentEntity.save({
+				notificationEmail: 'a@a.com'
+			});
+
+			const form = await getFormData(fetchMock.lastCall().request);
+			if (!form.notSupported) {
+				expect(form.get('notificationEmail')).to.equal('a@a.com');
+			}
+			expect(fetchMock.called()).to.be.true;
+		});
+
+		it('saves completion type', async() => {
+			fetchMock.patchOnce('https://f5aa43d7-c082-485c-84f5-4808147fe98a.assignments.api.dev.brightspace.com/123065/folders/7', editableEntity);
+
+			var assignmentEntity = new AssignmentEntity(editableEntity);
+
+			await assignmentEntity.save({
+				completionType: '2'
+			});
+
+			const form = await getFormData(fetchMock.lastCall().request);
+			if (!form.notSupported) {
+				expect(form.get('completionType')).to.equal('2');
+			}
+			expect(fetchMock.called()).to.be.true;
+		});
+
+		it('saves submissions rule', async() => {
+			fetchMock.patchOnce('https://f5aa43d7-c082-485c-84f5-4808147fe98a.assignments.api.dev.brightspace.com/123065/folders/7', editableEntity);
+
+			var assignmentEntity = new AssignmentEntity(editableEntity);
+
+			await assignmentEntity.save({
+				submissionsRule: 'onlyone'
+			});
+
+			const form = await getFormData(fetchMock.lastCall().request);
+			if (!form.notSupported) {
+				expect(form.get('submissionsRule')).to.equal('onlyone');
+			}
+			expect(fetchMock.called()).to.be.true;
+		});
+
+		it('saves file submissions limit', async() => {
+			fetchMock.patchOnce('https://f5aa43d7-c082-485c-84f5-4808147fe98a.assignments.api.dev.brightspace.com/123065/folders/7', editableEntity);
+
+			var assignmentEntity = new AssignmentEntity(editableEntity);
+
+			await assignmentEntity.save({
+				filesSubmissionLimit: 'onefilepersubmission'
+			});
+
+			const form = await getFormData(fetchMock.lastCall().request);
+			if (!form.notSupported) {
+				expect(form.get('filesSubmissionLimit')).to.equal('onefilepersubmission');
+			}
+			expect(fetchMock.called()).to.be.true;
+		});
+
+		it('saves annotations', async() => {
+			fetchMock.patchOnce('https://f5aa43d7-c082-485c-84f5-4808147fe98a.assignments.api.dev.brightspace.com/123065/folders/7', editableEntity);
+
+			var assignmentEntity = new AssignmentEntity(editableEntity);
+
+			await assignmentEntity.save({
+				annotationToolsAvailable: false
+			});
+
+			const form = await getFormData(fetchMock.lastCall().request);
+			if (!form.notSupported) {
+				expect(form.get('annotationToolsAvailability')).to.equal('false');
+			}
+			expect(fetchMock.called()).to.be.true;
+		});
+
+		it('saves custom allowable file type', async() => {
+			fetchMock.patchOnce('https://f5aa43d7-c082-485c-84f5-4808147fe98a.assignments.api.dev.brightspace.com/123065/folders/7', editableEntity);
+
+			var assignmentEntity = new AssignmentEntity(editableEntity);
+
+			await assignmentEntity.save({
+				allowableFileType: '5',
+				customAllowableFileTypes: '.pdf,.html'
+			});
+
+			const form = await getFormData(fetchMock.lastCall().request);
+			if (!form.notSupported) {
+				expect(form.get('allowableFileType')).to.equal('5');
+				expect(form.get('customAllowableFileTypes')).to.equal('.pdf,.html');
+			}
+			expect(fetchMock.called()).to.be.true;
+		});
+
 		it('skips save if not dirty', async() => {
 			var assignmentEntity = new AssignmentEntity(editableEntity);
 
@@ -136,10 +300,51 @@ describe('AssignmentEntity', () => {
 
 			await assignmentEntity.save({
 				name: 'New name',
-				instructions: 'New instructions'
+				instructions: 'New instructions',
+				allowableFileType: '5',
+				customAllowableFileTypes: '.pdf,.html',
+				annotationToolsAvailable: false,
+				filesSubmissionLimit: 'onefilepersubmission',
+				submissionsRule: 'onlyone',
+				notificationEmail: 'a@a.com',
+				defaultScoringRubricId: 123,
+				isAnonymous: true,
 			});
 
 			expect(fetchMock.done());
+		});
+
+		it('combines multiple actions into a single request', async() => {
+			fetchMock.patchOnce('https://f5aa43d7-c082-485c-84f5-4808147fe98a.assignments.api.dev.brightspace.com/123065/folders/7', editableEntity);
+
+			var assignmentEntity = new AssignmentEntity(editableEntity);
+
+			await assignmentEntity.save({
+				name: 'New name',
+				instructions: 'New instructions',
+				allowableFileType: '5',
+				customAllowableFileTypes: '.pdf,.html',
+				annotationToolsAvailable: false,
+				filesSubmissionLimit: 'onefilepersubmission',
+				submissionsRule: 'onlyone',
+				notificationEmail: 'a@a.com',
+				defaultScoringRubricId: 123,
+				isAnonymous: true,
+			});
+
+			const form = await getFormData(fetchMock.lastCall().request);
+			if (!form.notSupported) {
+				expect(form.get('name')).to.equal('New name');
+				expect(form.get('instructions')).to.equal('New instructions');
+				expect(form.get('allowableFileType')).to.equal('5');
+				expect(form.get('customAllowableFileTypes')).to.equal('.pdf,.html');
+				expect(form.get('filesSubmissionLimit')).to.equal('onefilepersubmission');
+				expect(form.get('submissionsRule')).to.equal('onlyone');
+				expect(form.get('notificationEmail')).to.equal('a@a.com');
+				expect(form.get('defaultScoringRubricId')).to.equal('123');
+				expect(form.get('isAnonymous')).to.equal('true');
+			}
+			expect(fetchMock.called()).to.be.true;
 		});
 	});
 
@@ -173,13 +378,6 @@ describe('AssignmentEntity', () => {
 			var assignmentEntity = new AssignmentEntity(editableEntity);
 			expect(assignmentEntity.filesSubmissionLimit()).to.equal('unlimited');
 		});
-		it('set files per submission', async() => {
-			fetchMock.patchOnce('https://f5aa43d7-c082-485c-84f5-4808147fe98a.assignments.api.dev.brightspace.com/123065/folders/7', editableEntity);
-			var assignmentEntity = new AssignmentEntity(editableEntity);
-			await assignmentEntity.setFilesSubmissionLimit('onefilepersubmission');
-			expect(fetchMock.called()).to.be.true;
-		});
-
 	});
 
 	describe('SubmissionsRule', () => {
@@ -191,13 +389,6 @@ describe('AssignmentEntity', () => {
 			var assignmentEntity = new AssignmentEntity(editableEntity);
 			expect(assignmentEntity.submissionsRule()).to.equal('keepall');
 		});
-		it('set files per submission', async() => {
-			fetchMock.patchOnce('https://f5aa43d7-c082-485c-84f5-4808147fe98a.assignments.api.dev.brightspace.com/123065/folders/7', editableEntity);
-			var assignmentEntity = new AssignmentEntity(editableEntity);
-			await assignmentEntity.setSubmissionsRule('onlyone');
-			expect(fetchMock.called()).to.be.true;
-		});
-
 	});
 	describe('NotificationEmail', () => {
 		it('Can Edit notificaiton email', () => {
@@ -208,12 +399,5 @@ describe('AssignmentEntity', () => {
 			var assignmentEntity = new AssignmentEntity(editableEntity);
 			expect(assignmentEntity.notificationEmail()).to.equal('test@d2l.com');
 		});
-		it('set notificaiton email', async() => {
-			fetchMock.patchOnce('https://f5aa43d7-c082-485c-84f5-4808147fe98a.assignments.api.dev.brightspace.com/123065/folders/7', editableEntity);
-			var assignmentEntity = new AssignmentEntity(editableEntity);
-			await assignmentEntity.setNotificationEmail('test1@d2l.com');
-			expect(fetchMock.called()).to.be.true;
-		});
-
 	});
 });
