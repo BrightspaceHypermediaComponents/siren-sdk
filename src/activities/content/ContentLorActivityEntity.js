@@ -31,6 +31,13 @@ export class ContentLorActivityEntity extends ContentEntity {
 	}
 
 	/**
+	 * @returns {boolean} Whether or not the LOR object can be embedded or not (in iframe for previewing)
+	 */
+	canEmbed() {
+		return this._entity && this._entity.properties && this._entity.properties.canEmbed;
+	}
+
+	/**
 	 * @returns {string|undefined} The name of the LOR document
 	 */
 	documentName() {
