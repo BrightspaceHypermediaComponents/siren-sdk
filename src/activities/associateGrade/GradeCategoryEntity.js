@@ -5,7 +5,7 @@ import { Entity } from '../../es6/Entity';
  */
 export class GradeCategoryEntity extends Entity {
 	/**
-	 * @returns {string} Grade Cateogry's name
+	 * @returns {string} Grade Category's name
 	 */
 	name() {
 		return this._entity && this._entity.properties && this._entity.properties.name;
