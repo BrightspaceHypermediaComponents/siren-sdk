@@ -25,6 +25,15 @@ export class GradeCandidateEntity extends Entity {
 			return entity.getLinkByRel(Rels.Grades.grade).href;
 		}
 	}
+	/**
+	 * @returns {bool} True if grade-candidate is `autoPoints` i.e. maxPoints are set automatically
+	 */
+	isAutoPoints() {
+		const associateGradeAction = this._entity && this._entity.getActionByName(Actions.activities.associateGrade.associateGrade);
+		if (!associateGradeAction) return false;
+		const autoPoints = associateGradeAction.getFieldByName('autoPoints');
+		return autoPoints.value;
+	}
 
 	/**
 	 * @returns {Array} Returns all grade-candidate sub-entities
