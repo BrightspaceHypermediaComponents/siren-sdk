@@ -603,7 +603,11 @@ export const Actions = {
 		updateExternalResource: 'update-external-resource',
 		deleteWeblink: 'delete-webLink',
 		deleteLTIlink: 'delete-ltiLink',
-		deleteScormActivity: 'delete-scorm-activity'
+		deleteScormActivity: 'delete-scorm-activity',
+		deleteLorActivity: 'delete-lor-activity'
+	},
+	lorActivity: {
+		updateVersion: 'update-lor-activity-version'
 	},
 	htmlFile: {
 		updateHtmlContent: 'update-html-content'

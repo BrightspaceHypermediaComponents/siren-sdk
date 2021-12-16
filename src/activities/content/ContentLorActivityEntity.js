@@ -117,6 +117,24 @@ export class ContentLorActivityEntity extends ContentEntity {
 		this.dispose();
 	}
 
+	async updateLorActivityVersion(isDynamic, version) {
+		if (!this._entity) {
+			return;
+		}
+
+		const action = this._entity.getActionByName(Actions.lorActivity.updateVersion);
+
+		if (!action) {
+			return;
+		}
+
+		const fields = [
+			{ name: 'isDynamic', value: isDynamic },
+			{ name: 'version', value: version }
+		];
+		await performSirenAction(this._token, action, fields);
+	}
+
 	/**
 	 * Checks if content lor activty properties passed in match what is currently stored
 	 * @param {object} lorActivity Object containing lor activty specific properties
