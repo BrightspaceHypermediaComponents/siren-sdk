@@ -1,6 +1,6 @@
 import { Entity } from '../../es6/Entity';
 import { Actions, Rels, Classes } from '../../hypermedia-constants';
-import { performSirenAction } from '../../es6/SirenAction';
+import { performSirenAction, performSirenActions } from '../../es6/SirenAction';
 
 const actions = {
 	delete: 'delete-folder',
@@ -29,14 +29,18 @@ export class AssignmentEntity extends Entity {
 	 * Updates the assignment to have the given name
 	 * @param {string} name Name to set on the assignment
 	 */
-	async setName(name) {
+	_formatNameAction(name) {
+		if (!name || !this._hasNameChanged(name)) {
+			return;
+		}
+
 		const action = this.canEditName() && this._entity.getActionByName(Actions.assignments.updateName);
 		if (!action) {
 			return;
 		}
 
 		const fields = [{ name: 'name', value: name }];
-		await performSirenAction(this._token, action, fields);
+		return { action, fields };
 	}
 
 	_getInstructionsEntity() {
@@ -93,9 +97,9 @@ export class AssignmentEntity extends Entity {
 	 * Updates the assignment to have the given instructions
 	 * @param {string} instructions Instructions to set on the assignment
 	 */
-	async setInstructions(instructions) {
+	_formatInstructionsAction(instructions) {
 		const instructionsEntity = this.canEditInstructions() && this._getInstructionsEntity();
-		if (!instructionsEntity) {
+		if (!instructionsEntity || instructions === undefined || !this._hasInstructionsChanged(instructions)) {
 			return;
 		}
 
@@ -105,7 +109,7 @@ export class AssignmentEntity extends Entity {
 		}
 
 		const fields = [{ name: 'instructions', value: instructions }];
-		await performSirenAction(this._token, action, fields);
+		return { action, fields };
 	}
 
 	/**
@@ -345,75 +349,6 @@ export class AssignmentEntity extends Entity {
 		return organizationHref && organizationHref.href;
 	}
 
-	/**
-	 * Sets the assignment type to group using a default group category
-	 */
-	async setToGroupAssignmentType() {
-		if (!this._entity) {
-			return;
-		}
-		const subEntity = this._entity.getSubEntityByRel(Rels.Assignments.folderType);
-		if (!subEntity) {
-			return;
-		}
-		const action = subEntity.getActionByName(Actions.assignments.setToGroup);
-		if (!action) {
-			return;
-		}
-
-		const defaultGroupTypeId = action.fields[0].value[0].value;
-
-		const fields = [
-			{ name: 'groupTypeId', value: defaultGroupTypeId },
-			{ name: 'folderType', value: 1 }
-		];
-		await performSirenAction(this._token, action, fields);
-	}
-
-	/**
-	 * Sets the assignment type to group with a specific group
-	 * @param {number} groupTypeId id of the group category
-	 */
-	async setAssignmentTypeGroupCategory(groupTypeId) {
-		if (!this._entity) {
-			return;
-		}
-		const subEntity = this._entity.getSubEntityByRel(Rels.Assignments.folderType);
-		if (!subEntity) {
-			return;
-		}
-		const action = subEntity.getActionByName(Actions.assignments.setToGroup);
-		if (!action) {
-			return;
-		}
-
-		const fields = [
-			{ name: 'groupTypeId', value: groupTypeId },
-			{ name: 'folderType', value: 1 }
-		];
-		await performSirenAction(this._token, action, fields);
-	}
-
-	/**
-	 * Sets the assignment type to individual
-	 */
-	async setToIndividualAssignmentType() {
-		if (!this._entity) {
-			return;
-		}
-		const subEntity = this._entity.getSubEntityByRel(Rels.Assignments.folderType);
-		if (!subEntity) {
-			return;
-		}
-		const action = subEntity.getActionByName(Actions.assignments.setToIndividual);
-		if (!action) {
-			return;
-		}
-
-		const fields = action.fields;
-		await performSirenAction(this._token, action, fields);
-	}
-
 	_getReadOnlySubmissionTypeOptions() {
 		if (!this._entity) {
 			return [];
@@ -525,7 +460,10 @@ export class AssignmentEntity extends Entity {
 	 * Sets the submission type of the assignment
 	 * @param {number} submissionType Submission type - see SUBMISSIONTYPE_T under https://docs.valence.desire2learn.com/res/dropbox.html#attributes for more info
 	 */
-	async setSubmissionType(submissionType) {
+	_formatSubmissionsTypeAction(submissionType) {
+		if (!submissionType || !this._hasSubmissionsTypeChanged(submissionType)) {
+			return;
+		}
 		submissionType = Number(submissionType);
 
 		const action = this.canEditSubmissionType() && this._entity.getActionByName(Actions.assignments.updateSubmissionType);
@@ -533,73 +471,90 @@ export class AssignmentEntity extends Entity {
 			return;
 		}
 
-		const fieldValue = action.getFieldByName('submissionType').value.find(v => {
-			return v.value === submissionType;
-		});
-		if (!fieldValue) {
+		const fields = [
+			{ name: 'submissionType', value: submissionType },
+		];
+		return { action, fields };
+	}
+
+	/**
+	 * Sets the group/individual status for an assignment
+	 * @param {boolean} isIndividualAssignmentType Allowable filetype option
+	 * @param {Number} groupTypeId Group id
+	 */
+	_formatIndividualAssignmentTypeAction(isIndividualAssignmentType, groupTypeId) {
+		if (!this._entity || isIndividualAssignmentType === undefined || this.isAssignmentTypeReadOnly()) {
 			return;
 		}
 
-		let completionType = 0;
-		const validCompletionTypes = fieldValue.completionTypes;
-		if (validCompletionTypes !== null) {
-			completionType = validCompletionTypes[0]; // Use first option as default
+		const subEntity = this._entity.getSubEntityByRel(Rels.Assignments.folderType);
+		if (!subEntity) {
+			return;
 		}
 
-		const fields = [
-			{ name: 'submissionType', value: submissionType },
-			{ name: 'completionType', value: completionType }
-		];
-		await performSirenAction(this._token, action, fields);
+		const fields = [];
+		let action;
+
+		if (isIndividualAssignmentType) {
+			action = subEntity.getActionByName(Actions.assignments.setToIndividual);
+
+			fields.push({ name: 'groupTypeId', value: null });
+			fields.push({ name: 'folderType', value: 2 });
+		} else if (!isIndividualAssignmentType && !this.isGroupAssignmentTypeDisabled()) {
+			action = subEntity.getActionByName(Actions.assignments.setToGroup);
+
+			fields.push({ name: 'groupTypeId', value: groupTypeId });
+			fields.push({ name: 'folderType', value: 1 });
+		}
+
+		if (!action || fields.length < 1) {
+			return;
+		}
+
+		return { action, fields };
 	}
 
 	/**
 	 * Sets the allowable filetypes of the assignment
 	 * @param {number} allowableFileType Allowable filetype option
 	 */
-	async setAllowableFileType(allowableFileType) {
-		allowableFileType = Number(allowableFileType);
+	_formatAllowableFileTypeAction(allowableFileType) {
+		if (allowableFileType === undefined || !this._hasAllowableFileTypeChanged(allowableFileType)) {
+			return;
+		}
 
 		const action = this.canEditAllowableFileType() && this._entity.getActionByName(Actions.assignments.updateAllowableFileType);
 		if (!action) {
 			return;
 		}
 
-		const fieldValue = action.getFieldByName('allowableFileType').value.find(v => {
-			return v.value === allowableFileType;
-		});
-		if (!fieldValue) {
-			return;
-		}
-
 		const fields = [
 			{ name: 'allowableFileType', value: allowableFileType }
 		];
-		await performSirenAction(this._token, action, fields);
+		return { fields, action };
 	}
 
 	/**
 	 * Sets the custom allowable filetypes of the assignment
 	 * @param {string} customAllowableFileTypes Allowable filetype option
 	 */
-	async setCustomAllowableFileTypes(customAllowableFileTypes) {
-		customAllowableFileTypes = String(customAllowableFileTypes);
-		const action = this.canEditCustomAllowableFileTypes() && this._entity.getActionByName(Actions.assignments.updateCustomAllowableFileType);
+	_formatCustomAllowableFileTypeAction(allowableFileType, customAllowableFileTypes) {
+		const allowableFileTypeCustomValue = '5';
+
+		if (customAllowableFileTypes === undefined || allowableFileType !== allowableFileTypeCustomValue || !this.canEditCustomAllowableFileTypes()) {
+			return;
+		}
+
+		const action =  this._entity.getActionByName(Actions.assignments.updateCustomAllowableFileType);
 		if (!action) {
 			return;
 		}
 
-		const fieldValue = action.getFieldByName('customAllowableFileTypes').value;
-
-		if (!fieldValue) {
-			return;
-		}
-
 		const fields = [
-			{ name: 'customAllowableFileTypes', value: customAllowableFileTypes }
+			{ name: 'customAllowableFileTypes', value: String(customAllowableFileTypes) }
 		];
 
-		await performSirenAction(this._token, action, fields);
+		return { fields, action };
 	}
 
 	/**
@@ -652,25 +607,20 @@ export class AssignmentEntity extends Entity {
 	 * Sets the completion type of the assignment
 	 * @param {number} submissionType Submission type - see COMPLETIONTYPE_T under https://docs.valence.desire2learn.com/res/dropbox.html#attributes for more info
 	 */
-	async setCompletionType(completionType) {
-		completionType = Number(completionType);
+	_formatCompletionTypeAction(completionType) {
+		if (!completionType || !this._hasCompletionTypeChanged(completionType)) {
+			return;
+		}
 
 		const action = this.canEditCompletionType() && this._entity.getActionByName(Actions.assignments.updateCompletionType);
 		if (!action) {
 			return;
 		}
 
-		const fieldValue = action.getFieldByName('completionType').value.find(v => {
-			return v.value === completionType;
-		});
-		if (!fieldValue) {
-			return;
-		}
-
 		const fields = [
-			{ name: 'completionType', value: completionType }
+			{ name: 'completionType', value: Number(completionType) }
 		];
-		await performSirenAction(this._token, action, fields);
+		return { action, fields };
 	}
 
 	_submissionsRuleField() {
@@ -693,24 +643,22 @@ export class AssignmentEntity extends Entity {
 		return subEntity && subEntity.hasActionByName(Actions.assignments.updateSubmissionsRule);
 	}
 
-	async setSubmissionsRule(submissionsRule) {
+	_formatSubmissionsRuleAction(submissionsRule) {
+		if (submissionsRule === undefined || !this._hasSubmissionsRuleChanged(submissionsRule)) {
+			return;
+		}
+
 		const subEntity = this._entity && this._entity.getSubEntityByRel(Rels.Assignments.submissionsRule);
 		const action = this.canEditSubmissionsRule() && subEntity && subEntity.getActionByName(Actions.assignments.updateSubmissionsRule);
 		if (!action) {
 			return;
 		}
 
-		const fieldValue = action.getFieldByName('submissionsRule').value.find(v => {
-			return v.value === submissionsRule;
-		});
-		if (!fieldValue) {
-			return;
-		}
-
 		const fields = [
 			{ name: 'submissionsRule', value: submissionsRule }
 		];
-		await performSirenAction(this._token, action, fields);
+
+		return { action, fields };
 	}
 
 	getSubmissionsRuleOptions() {
@@ -743,24 +691,21 @@ export class AssignmentEntity extends Entity {
 		return subEntity && subEntity.hasActionByName(Actions.assignments.updateFilesSubmissionLimit);
 	}
 
-	async setFilesSubmissionLimit(filesSubmissionLimit) {
+	_formatFileSubmissionLimitAction(filesSubmissionLimit) {
+		if (filesSubmissionLimit === undefined || !this._hasFileSubmissionLimitChanged(filesSubmissionLimit)) {
+			return;
+		}
 		const subEntity = this._entity && this._entity.getSubEntityByRel(Rels.Assignments.filesSubmissionLimit);
 		const action = this.canEditFilesSubmissionLimit() && subEntity && subEntity.getActionByName(Actions.assignments.updateFilesSubmissionLimit);
 		if (!action) {
 			return;
 		}
 
-		const fieldValue = action.getFieldByName('filesSubmissionLimit').value.find(v => {
-			return v.value === filesSubmissionLimit;
-		});
-		if (!fieldValue) {
-			return;
-		}
-
 		const fields = [
 			{ name: 'filesSubmissionLimit', value: filesSubmissionLimit }
 		];
-		await performSirenAction(this._token, action, fields);
+
+		return { fields, action };
 	}
 
 	notificationEmail() {
@@ -777,16 +722,22 @@ export class AssignmentEntity extends Entity {
 		return subEntity && subEntity.hasActionByName(Actions.assignments.updateNotificationEmail);
 	}
 
-	async setNotificationEmail(notificationEmail) {
+	/**
+	 * @param {string} notificationEmail The email to set for notifications
+	 */
+	_formatUpdateNotificationEmailAction(notificationEmail) {
+		if (notificationEmail === undefined || !this._hasNotificationEmailChanged(notificationEmail) || !this.canEditNotificationEmail()) {
+			return;
+		}
 		const subEntity = this._entity && this._entity.getSubEntityByRel(Rels.Assignments.notificationEmail);
-		const action = this.canEditNotificationEmail() && subEntity && subEntity.getActionByName(Actions.assignments.updateNotificationEmail);
+		const action =  subEntity && subEntity.getActionByName(Actions.assignments.updateNotificationEmail);
 		if (!action) {
 			return;
 		}
 		const fields = [
 			{ name: 'notificationEmail', value: notificationEmail }
 		];
-		await performSirenAction(this._token, action, fields);
+		return { action, fields };
 	}
 
 	/**
@@ -832,14 +783,34 @@ export class AssignmentEntity extends Entity {
 	 * Sets anonymous marking
 	 * @param {bool} isAnonymous Whether anonymous marking is enabled
 	 */
-	async setAnonymousMarking(isAnonymous) {
-		if (!this._entity) return;
+	_formatAnonymousMarkingAction(isAnonymous) {
+		if (!this._entity || isAnonymous === undefined || !this._hasAnonymousMarkingChanged(isAnonymous)) return;
 		const subEntity = this._entity.getSubEntityByRel(Rels.Assignments.anonymousMarking);
 		if (!subEntity) return;
 		const action = subEntity.getActionByName(Actions.assignments.anonymousMarking.updateAnonymousMarking);
 		if (!action) return;
 		const fields = [ { name: 'isAnonymous', value: isAnonymous } ];
-		await performSirenAction(this._token, action, fields);
+
+		return { fields, action };
+	}
+
+	/**
+	 * Sets default scoring rubric
+	 * @param {Number} defaultScoringRubricId Sets default scoring rubric
+	 */
+	_formatDefaultScoringRubricAction(defaultScoringRubricId) {
+		if (defaultScoringRubricId === undefined || !this._hasDefaultScoringRubricChanged(defaultScoringRubricId) || !this.canEditDefaultScoringRubric()) {
+			return;
+		}
+
+		const action = this._entity.getActionByName(Actions.assignments.updateDefaultScoringRubric);
+		if (!action) {
+			return;
+		}
+		const fields = [
+			{ name: 'defaultScoringRubricId', value: defaultScoringRubricId }
+		];
+		return { action, fields };
 	}
 
 	/**
@@ -854,20 +825,23 @@ export class AssignmentEntity extends Entity {
 	 * Set the status of whether annotation tools are available or not for the assignment entity
 	 * @param {bool} isAvailable Annotation availability - this is the value that the annotation availability of the assignment will be set to
 	 */
-	async setAnnotationToolsAvailability(isAvailable) {
-		isAvailable = Boolean(isAvailable);
+	_formatAnnotationsAction(isAvailable) {
+		if (isAvailable === undefined || !this._hasAnnotationsChanged(isAvailable) || !this.canEditAnnotations()) {
+			return;
+		}
 
 		const annotationsEntity = this._entity.getSubEntityByRel(Rels.Assignments.annotations);
 
-		const action = this.canEditAnnotations() && annotationsEntity && annotationsEntity.getActionByName(Actions.assignments.updateAnnotationToolsAvailability);
+		const action =  annotationsEntity && annotationsEntity.getActionByName(Actions.assignments.updateAnnotationToolsAvailability);
 		if (!action) {
 			return;
 		}
 
 		const fields = [
-			{ name: 'annotationToolsAvailability', value: isAvailable }
+			{ name: 'annotationToolsAvailability', value: Boolean(isAvailable) }
 		];
-		await performSirenAction(this._token, action, fields);
+
+		return { fields, action };
 	}
 
 	/**
@@ -886,110 +860,41 @@ export class AssignmentEntity extends Entity {
 	}
 
 	async save(assignment) {
-		const action = this.canSave() && this._entity.getActionByName(Actions.assignments.update);
-		if (!action) {
+		if (assignment === undefined) {
 			return;
 		}
 
-		// TODO - Need to force PATCH on this API now. The backend just delegates the PATCH call to the PUT
-		// implementation with the correct semantics for unprovided fields
-		action.method = 'PATCH';
+		const updateNameAction = this._formatNameAction(assignment.name);
+		const updateInstructionsAction = this._formatInstructionsAction(assignment.instructions);
+		const updateAnonymousMarkingAction = this._formatAnonymousMarkingAction(assignment.isAnonymous);
+		const updateAnnotationsAction = this._formatAnnotationsAction(assignment.annotationToolsAvailable);
+		const updateSubmissionTypeAction = this._formatSubmissionsTypeAction(assignment.submissionType);
+		const updateAllowableFileTypeAction = this._formatAllowableFileTypeAction(assignment.allowableFileType);
+		const updateCustomAllowableFileTypeAction = this._formatCustomAllowableFileTypeAction(assignment.allowableFileType, assignment.customAllowableFileTypes);
+		const updateFileSubmissionLimitAction = this._formatFileSubmissionLimitAction(assignment.filesSubmissionLimit);
+		const updateSubmissionRuleAction = this._formatSubmissionsRuleAction(assignment.submissionsRule);
+		const updateCompletionTypeAction = this._formatCompletionTypeAction(assignment.completionType);
+		const updateIsIndividualAssignmentTypeAction = this._formatIndividualAssignmentTypeAction(assignment.isIndividualAssignmentType, assignment.groupTypeId);
+		const updateDefaultScoringRubricAction = this._formatDefaultScoringRubricAction(assignment.defaultScoringRubricId);
+		const updateNotificationEmailAction = this._formatUpdateNotificationEmailAction(assignment.notificationEmail);
 
-		const fields = [];
+		const sirenActions = [
+			updateNameAction,
+			updateInstructionsAction,
+			updateAnonymousMarkingAction,
+			updateAnnotationsAction,
+			updateSubmissionTypeAction,
+			updateAllowableFileTypeAction,
+			updateCustomAllowableFileTypeAction,
+			updateFileSubmissionLimitAction,
+			updateSubmissionRuleAction,
+			updateCompletionTypeAction,
+			updateIsIndividualAssignmentTypeAction,
+			updateDefaultScoringRubricAction,
+			updateNotificationEmailAction
+		];
 
-		if (typeof assignment.name !== 'undefined' && assignment.name !== this.name() && this.canEditName()) {
-			fields.push({ name: 'name', value: assignment.name });
-		}
-
-		if (typeof assignment.instructions !== 'undefined' &&
-				assignment.instructions !== this.instructionsEditorHtml() &&
-				this.canEditInstructions()) {
-			fields.push({ name: 'instructions', value: assignment.instructions });
-		}
-
-		const shouldSaveAnonymousMarking =
-			typeof assignment.isAnonymous !== 'undefined' &&
-			assignment.isAnonymous !== this.isAnonymousMarkingEnabled() &&
-			this.canEditAnonymousMarking();
-
-		if (shouldSaveAnonymousMarking) {
-
-			fields.push({ name: 'isAnonymous', value: assignment.isAnonymous });
-		}
-
-		const shouldSaveAnnotations =
-			typeof assignment.annotationToolsAvailable !== 'undefined' &&
-			assignment.annotationToolsAvailable !== this.getAvailableAnnotationTools() &&
-			this.canEditAnnotations();
-
-		if (shouldSaveAnnotations) {
-			fields.push({
-				name: 'annotationToolsAvailability',
-				value: assignment.annotationToolsAvailable
-			});
-		}
-
-		const shouldSaveSubmissionType = typeof assignment.submissionType !== 'undefined' &&
-			(!this.submissionType() || assignment.submissionType !== String(this.submissionType().value)) &&
-			this.canEditSubmissionType();
-		if (shouldSaveSubmissionType) {
-			fields.push({ name: 'submissionType', value: assignment.submissionType });
-		}
-
-		const canSaveAllowableFileType = typeof assignment.allowableFileType !== 'undefined' && this.canEditAllowableFileType();
-		const shouldSaveAllowableFileType = !this.allowableFileType() || assignment.allowableFileType !== String(this.allowableFileType().value);
-		if (canSaveAllowableFileType && shouldSaveAllowableFileType) {
-			fields.push({ name: 'allowableFileType', value: assignment.allowableFileType });
-		}
-
-		const allowableFileTypeCustomValue = '5';
-		const canSaveCustomAllowableFileTypes = typeof assignment.customAllowableFileTypes !== 'undefined' && this.canEditCustomAllowableFileTypes();
-		if (assignment.allowableFileType === allowableFileTypeCustomValue && canSaveCustomAllowableFileTypes) {
-			fields.push({ name: 'customAllowableFileTypes', value: assignment.customAllowableFileTypes });
-		}
-
-		if (typeof assignment.filesSubmissionLimit !== 'undefined' &&
-			assignment.filesSubmissionLimit !== this.filesSubmissionLimit() &&
-				this.canEditFilesSubmissionLimit()) {
-			fields.push({ name: 'filesSubmissionLimit', value: assignment.filesSubmissionLimit });
-		}
-
-		if (typeof assignment.submissionsRule !== 'undefined' &&
-				assignment.submissionsRule !== this.submissionsRule() &&
-				this.canEditSubmissionsRule()) {
-			fields.push({ name: 'submissionsRule', value: assignment.submissionsRule });
-		}
-
-		if (typeof assignment.completionType !== 'undefined' &&
-			(shouldSaveSubmissionType || assignment.completionType !== this.completionTypeValue()) &&
-			this.canEditCompletionType()) {
-			fields.push({ name: 'completionType', value: assignment.completionType });
-		}
-
-		if (typeof assignment.isIndividualAssignmentType !== 'undefined' && !this.isAssignmentTypeReadOnly()) {
-			if (assignment.isIndividualAssignmentType) {
-				fields.push({ name: 'groupTypeId', value: null });
-				fields.push({ name: 'folderType', value: 2 });
-			} else if (!assignment.isIndividualAssignmentType && !this.isGroupAssignmentTypeDisabled()) {
-				fields.push({ name: 'groupTypeId', value: assignment.groupTypeId });
-				fields.push({ name: 'folderType', value: 1 });
-			}
-		}
-
-		if (typeof assignment.defaultScoringRubricId !== 'undefined' &&
-			assignment.defaultScoringRubricId !== this.getDefaultScoringRubric() &&
-			this.canEditDefaultScoringRubric()) {
-			fields.push({ name: 'defaultScoringRubricId', value: assignment.defaultScoringRubricId });
-		}
-
-		if (typeof assignment.notificationEmail !== 'undefined' &&
-			assignment.notificationEmail !== this.notificationEmail()) {
-			fields.push({ name: 'notificationEmail', value: assignment.notificationEmail });
-		}
-
-		if (fields.length > 0) {
-			await performSirenAction(this._token, action, fields);
-		}
+		await performSirenActions(this._token, sirenActions);
 	}
 
 	equals(assignment) {
@@ -1064,5 +969,49 @@ export class AssignmentEntity extends Entity {
 		await performSirenAction(this._token, action).then(() => {
 			this.dispose();
 		});
+	}
+
+	_hasNameChanged(name) {
+		return name !== this.name();
+	}
+
+	_hasInstructionsChanged(instructions) {
+		return instructions !== this.instructionsHtml();
+	}
+
+	_hasAnonymousMarkingChanged(anonymousMarking) {
+		return anonymousMarking !== this.isAnonymousMarkingEnabled();
+	}
+
+	_hasAnnotationsChanged(annotationToolsAvailable) {
+		return annotationToolsAvailable !== this.getAvailableAnnotationTools();
+	}
+
+	_hasSubmissionsTypeChanged(submissionType) {
+		return !this.submissionType() || submissionType !== String(this.submissionType().value);
+	}
+
+	_hasAllowableFileTypeChanged(allowableFileType) {
+		return !this.allowableFileType() || allowableFileType !== String(this.allowableFileType().value);
+	}
+
+	_hasFileSubmissionLimitChanged(filesSubmissionLimit) {
+		return filesSubmissionLimit !== this.filesSubmissionLimit();
+	}
+
+	_hasSubmissionsRuleChanged(submissionsRule) {
+		return submissionsRule !== this.submissionsRule();
+	}
+
+	_hasCompletionTypeChanged(completionType) {
+		return completionType !== this.completionTypeValue();
+	}
+
+	_hasDefaultScoringRubricChanged(defaultScoringRubricId) {
+		return defaultScoringRubricId !== this.getDefaultScoringRubric();
+	}
+
+	_hasNotificationEmailChanged(notificationEmail) {
+		return notificationEmail !== this.notificationEmail();
 	}
 }

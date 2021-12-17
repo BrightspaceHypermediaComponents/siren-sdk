@@ -8,6 +8,69 @@ export const editableAssignment = {
 	'entities': [
 		{
 			'class': [
+				'submissions-rule'
+			],
+			'rel': [
+				'https://assignments.api.brightspace.com/rels/submissions-rule'
+			],
+			'properties': {
+				'rule': {
+					'title': 'All submissions are kept',
+					'value': 'keepall'
+				}
+			},
+			'actions': [
+				{
+					'href': 'https://f5aa43d7-c082-485c-84f5-4808147fe98a.assignments.api.dev.brightspace.com/123065/folders/7',
+					'name': 'update-submissions-rule',
+					'method': 'PATCH',
+					'fields': [
+						{
+							'type': 'radio',
+							'name': 'submissionsRule',
+							'value': [
+								{
+									'title': 'All submissions are kept',
+									'value': 'keepall',
+									'selected': true
+								},
+								{
+									'title': 'Only one submission allowed',
+									'value': 'onlyone',
+									'selected': false
+								},
+								{
+									'title': 'Only the most recent submission is kept',
+									'value': 'overwritesubmissions',
+									'selected': false
+								}
+							]
+						}
+					]
+				}
+			]
+		},
+		{
+			'rel': [
+				'https://assignments.api.brightspace.com/rels/anonymous-marking'
+			],
+			'actions': [
+				{
+					'href': 'https://f5aa43d7-c082-485c-84f5-4808147fe98a.assignments.api.dev.brightspace.com/123065/folders/7',
+					'name': 'update-anonymous-marking',
+					'method': 'PATCH',
+					'fields': [
+						{
+							'type': 'checkbox',
+							'name': 'isAnonymous',
+							'value': false
+						}
+					]
+				}
+			]
+		},
+		{
+			'class': [
 				'date',
 				'due-date'
 			],
@@ -277,6 +340,107 @@ export const editableAssignment = {
 		},
 	],
 	'actions': [
+		{
+			'href': 'https://f5aa43d7-c082-485c-84f5-4808147fe98a.assignments.api.dev.brightspace.com/123065/folders/7',
+			'name': 'update-completion-type',
+			'method': 'PATCH',
+			'fields': [
+				{
+					'type': 'radio',
+					'title': 'Completion Type',
+					'name': 'completionType',
+					'value': [
+						{
+							'title': 'Automatically on submission',
+							'value': 0,
+							'selected': true
+						},
+						{
+							'title': 'Manually by learners',
+							'value': 2,
+							'selected': false
+						},
+						{
+							'title': 'Automatically on evaluation',
+							'value': 3,
+							'selected': false
+						},
+						{
+							'title': 'Automatically on due date',
+							'value': 1,
+							'selected': false
+						}
+					]
+				}
+			]
+		},
+		{
+			'href': 'https://f5aa43d7-c082-485c-84f5-4808147fe98a.assignments.api.dev.brightspace.com/123065/folders/7',
+			'name': 'update-default-scoring-rubric',
+			'method': 'PATCH',
+			'fields': [
+				{
+					'type': 'text',
+					'name': 'defaultScoringRubricId',
+					'value': '-1'
+				}
+			]
+		},
+		{
+			'href': 'https://f5aa43d7-c082-485c-84f5-4808147fe98a.assignments.api.dev.brightspace.com/123065/folders/7',
+			'name': 'update-allowable-file-type',
+			'method': 'PATCH',
+			'fields': [
+				{
+					'type': 'radio',
+					'title': 'Allowable File Types',
+					'name': 'allowableFileType',
+					'value': [
+						{
+							'title': 'No Restrictions',
+							'value': 0,
+							'selected': true
+						},
+						{
+							'title': 'PDF Only',
+							'value': 1,
+							'selected': false
+						},
+						{
+							'title': 'Annotatable Files',
+							'value': 2,
+							'selected': false
+						},
+						{
+							'title': 'Files that can be previewed without conversion',
+							'value': 3,
+							'selected': false
+						},
+						{
+							'title': 'Images and Videos',
+							'value': 4,
+							'selected': false
+						},
+						{
+							'title': 'Custom File Types',
+							'value': 5,
+							'selected': false
+						}
+					]
+				}
+			]
+		},
+		{
+			'href': 'https://f5aa43d7-c082-485c-84f5-4808147fe98a.assignments.api.dev.brightspace.com/123065/folders/7',
+			'name': 'update-custom-allowable-file-type',
+			'method': 'PATCH',
+			'fields': [
+				{
+					'type': 'text',
+					'name': 'customAllowableFileTypes'
+				}
+			]
+		},
 		{
 			'class': [
 				'required'
