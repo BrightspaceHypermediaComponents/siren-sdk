@@ -515,6 +515,11 @@ export class QuizSubmissionViewEntity extends Entity {
 		return new QuizSubmissionViewEntity(returnedEntity, this._token);
 	}
 
+	/** ATTEMPT RESTRICTIONS */
+	isAttemptRestrictionsSupported() {
+		return this._entity && !!this._gradeRestrictionsSubEntity();
+	}
+
 	_gradeRestrictionsSubEntity() {
 		const subEntity = this._attemptRestrictionsSubEntity();
 		return subEntity && subEntity.getSubEntityByClass(Classes.quizzes.submissionView.gradeRestrictions);
