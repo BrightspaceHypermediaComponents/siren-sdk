@@ -19,6 +19,13 @@ export class GradeEntity extends Entity {
 	}
 
 	/**
+	 * @returns {bool} If Grade has auto points set by it's Grade Category
+	 */
+	autoPoints() {
+		return this._entity && this._entity.properties && this._entity.properties.autoPoints;
+	}
+
+	/**
 	 * @returns {string} Grade's max points value
 	 */
 	maxPoints() {
