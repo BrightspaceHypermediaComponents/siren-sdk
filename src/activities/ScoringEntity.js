@@ -21,6 +21,12 @@ export class ScoringEntity extends Entity {
 	}
 
 	/**
+	 * @returns {bool} Activity's grade maxPoints is set by an autoPoints (distributed points) grade category
+	 */
+	autoPoints() {
+		return this._entity && this._entity.properties && this._entity.properties.autoPoints;
+	}
+	/**
 	 * @returns {bool} Whether or not the update score out of action is present
 	 */
 	canUpdateScoring() {
