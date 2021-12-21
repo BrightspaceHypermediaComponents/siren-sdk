@@ -517,7 +517,7 @@ export class QuizSubmissionViewEntity extends Entity {
 
 	/** ATTEMPT RESTRICTIONS */
 	isAttemptRestrictionsSupported() {
-		return this._entity && !!this._gradeRestrictionsSubEntity();
+		return this._entity && !!this._attemptRestrictionsSubEntity();
 	}
 
 	_gradeRestrictionsSubEntity() {
