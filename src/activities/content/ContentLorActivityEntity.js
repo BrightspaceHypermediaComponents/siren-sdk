@@ -21,6 +21,13 @@ export class ContentLorActivityEntity extends ContentEntity {
 	}
 
 	/**
+	 * @returns {string|undefined} The url to embed the LOR object
+	 */
+	embedUrl() {
+		return this._entity && this._entity.properties && this._entity.properties.embedUrl;
+	}
+
+	/**
 	 * @returns {boolean} external resource value (i.e. open in new tab or not)
 	 */
 	isExternalResource() {
