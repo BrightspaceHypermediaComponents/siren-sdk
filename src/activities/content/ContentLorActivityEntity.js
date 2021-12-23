@@ -21,6 +21,13 @@ export class ContentLorActivityEntity extends ContentEntity {
 	}
 
 	/**
+	 * @returns {string|undefined} The url to embed the LOR object
+	 */
+	embedUrl() {
+		return this._entity && this._entity.properties && this._entity.properties.embedUrl;
+	}
+
+	/**
 	 * @returns {boolean} external resource value (i.e. open in new tab or not)
 	 */
 	isExternalResource() {
@@ -28,6 +35,13 @@ export class ContentLorActivityEntity extends ContentEntity {
 			return false;
 		}
 		return this._entity.hasClass(Classes.webLink.externalResource);
+	}
+
+	/**
+	 * @returns {boolean} Whether or not the LOR object can be embedded or not (in iframe for previewing)
+	 */
+	canEmbed() {
+		return this._entity && this._entity.properties && this._entity.properties.canEmbed;
 	}
 
 	/**
