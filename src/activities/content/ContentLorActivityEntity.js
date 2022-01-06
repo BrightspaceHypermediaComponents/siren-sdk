@@ -1,6 +1,7 @@
 import { Actions, Classes } from '../../hypermedia-constants';
 import { performSirenAction } from '../../es6/SirenAction';
 import { ContentEntity } from './ContentEntity';
+
 /**
  * ContentlorActivityEntity class representation of a d2l content-lor-package entity.
  */
@@ -24,7 +25,7 @@ export class ContentLorActivityEntity extends ContentEntity {
 	 * @returns {string|undefined} The url to embed the LOR object
 	 */
 	embedUrl() {
-		return this._entity && this._entity.properties && this._entity.properties.embedUrl;
+		return this._entity.hasLinkByRel('alternate') && this._entity.getLinkByRel('alternate').href;
 	}
 
 	/**
