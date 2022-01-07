@@ -180,7 +180,8 @@ export const Rels = {
 		attempts: 'https://quizzes.api.brightspace.com/rels/attempts',
 		ipRestrictions: 'https://quizzes.api.brightspace.com/rels/ip',
 		submissionViews: 'https://quizzes.api.brightspace.com/rels/submission-views',
-		categories: 'https://quizzes.api.brightspace.com/rels/categories'
+		categories: 'https://quizzes.api.brightspace.com/rels/categories',
+		completionTracking: 'https://quizzes.api.brightspace.com/rels/completion-tracking'
 	},
 	// Themes API sub-domain rels
 	Themes: {
@@ -452,7 +453,8 @@ export const Classes = {
 			grouping: 'grouping',
 			question: 'question',
 			external: 'external'
-		}
+		},
+		passingPercentage: 'passing-percentage'
 	},
 	text: {
 		richtext: 'richtext'
@@ -741,7 +743,8 @@ export const Actions = {
 		},
 		submissionViews: {
 			add: 'add'
-		}
+		},
+		updatePassingPercentage: 'update-passing-percentage'
 	},
 	workingCopy: {
 		checkout: 'checkout',

@@ -44,7 +44,8 @@ describe('QuizEntity', () => {
 				syncGradebookDefault: true,
 				description: 'The Second quiz ever',
 				header: 'Top of the quiz to ya!',
-				footer: 'Bottom of the quiz to ya!'
+				footer: 'Bottom of the quiz to ya!',
+				passingPercentage: 75
 			};
 		});
 
@@ -104,6 +105,12 @@ describe('QuizEntity', () => {
 		it('returns false when syncGradebookDefault not equal', () => {
 			var quizEntity = new QuizEntity(editableEntity);
 			modifiedEntity.syncGradebookDefault = false;
+			expect(quizEntity.equals(modifiedEntity)).to.be.false;
+		});
+
+		it('returns false when passingPercentage not equal', () => {
+			var quizEntity = new QuizEntity(editableEntity);
+			modifiedEntity.passingPercentage = 50;
 			expect(quizEntity.equals(modifiedEntity)).to.be.false;
 		});
 
@@ -417,7 +424,8 @@ describe('QuizEntity', () => {
 				syncGradebookDefault: false,
 				description: 'New description',
 				header: 'New header',
-				footer: 'New footer'
+				footer: 'New footer',
+				passingPercentage: 30
 			});
 
 			const form = await getFormData(fetchMock.lastCall().request);
@@ -436,6 +444,7 @@ describe('QuizEntity', () => {
 				expect(form.get('description')).to.equal('New description');
 				expect(form.get('header')).to.equal('New header');
 				expect(form.get('footer')).to.equal('New footer');
+				expect(form.get('passingPercentage')).to.equal('30');
 			}
 
 			expect(fetchMock.called()).to.be.true;
@@ -458,7 +467,8 @@ describe('QuizEntity', () => {
 				syncGradebookDefault: true,
 				description: 'The Second quiz ever',
 				header: 'Top of the quiz to ya!',
-				footer: 'Bottom of the quiz to ya!'
+				footer: 'Bottom of the quiz to ya!',
+				passingPercentage: 75
 			});
 
 			expect(fetchMock.done());
@@ -481,7 +491,8 @@ describe('QuizEntity', () => {
 				syncGradebookDefault: false,
 				description: 'New and improved Description!',
 				header: 'Even better Header!',
-				footer: 'Even better Footer!'
+				footer: 'Even better Footer!',
+				passingPercentage: 50
 			});
 
 			expect(fetchMock.done());
@@ -623,6 +634,34 @@ describe('QuizEntity', () => {
 			it('returns true when isSyncGradebookDefault is true', () => {
 				var quizEntity = new QuizEntity(editableEntity);
 				expect(quizEntity.isSyncGradebookDefault()).to.be.true;
+			});
+		});
+	});
+
+	describe('completionTracking', () => {
+		describe('canEditPassingPercentage', () => {
+			it('returns true when passing percentage is editable', () => {
+				var quizEntity = new QuizEntity(editableEntity);
+				expect(quizEntity.canEditPassingPercentage()).to.be.true;
+			});
+
+			it('returns false when passing percentage is not editable', () => {
+				var quizEntity = new QuizEntity(nonEditableEntity);
+				expect(quizEntity.canEditPassingPercentage()).to.be.false;
+			});
+		});
+
+		describe('properties', () => {
+			it('can read completion type and passing percentage from an editable entity', () => {
+				var quizEntity = new QuizEntity(editableEntity);
+				expect(quizEntity.isPassingPercentageType()).to.be.true;
+				expect(quizEntity.passingPercentage()).to.equal(75);
+			});
+
+			it('can read completion type and passing percentage from a non-editable entity', () => {
+				var quizEntity = new QuizEntity(nonEditableEntity);
+				expect(quizEntity.isPassingPercentageType()).to.be.false;
+				expect(quizEntity.passingPercentage()).to.equal(null);
 			});
 		});
 	});
