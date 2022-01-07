@@ -24,7 +24,7 @@ export class ContentLorActivityEntity extends ContentEntity {
 	 * @returns {string|undefined} The url to embed the LOR object
 	 */
 	embedUrl() {
-		return this._entity && this._entity.properties && this._entity.properties.embedUrl;
+		return this._entity.hasLinkByRel('alternate') && this._entity.getLinkByRel('alternate').href;
 	}
 
 	/**
