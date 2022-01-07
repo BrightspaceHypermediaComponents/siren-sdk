@@ -38,7 +38,7 @@ export class ContentEntity extends Entity {
 			return CONTENT_TYPES.scormActivity;
 		} else if (this._entity.hasLinkByRel(Rels.Content.contentImportedScormActivityEntity)) {
 			return CONTENT_TYPES.importedScormActivity;
-		} else if (this._entity.hasLinkByRel(Rels.Content.lorActivityEntity)) {
+		} else if (this._entity.hasLinkByRel(Rels.Content.contentLorActivityEntity)) {
 			return CONTENT_TYPES.lorActivity;
 		} else if (this._entity.hasClass(CONTENT_TYPES.topic)) {
 			return CONTENT_TYPES.topic;
