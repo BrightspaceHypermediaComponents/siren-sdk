@@ -517,6 +517,40 @@ export class QuizEntity extends Entity {
 	}
 
 	/**
+	 * @returns {bool} true if completion tracking is enabled
+	 */
+
+	isCompletionTrackingEnabled() {
+		return this._entity.hasSubEntityByRel(Rels.Quizzes.completionTracking);
+	}
+
+	/**
+	 * @returns {bool} true if completion tracking is enabled and completion type is "PassingPercentage"
+	 */
+
+	isPassingPercentageType() {
+		const entity = this._entity.getSubEntityByRel(Rels.Quizzes.completionTracking);
+		return entity && entity.hasClass(Classes.quizzes.passingPercentage);
+	}
+
+	/**
+	 * @returns {number|null} passing percentage value if completion tracking is enabled
+	 */
+
+	passingPercentage() {
+		const entity = this._entity.getSubEntityByRel(Rels.Quizzes.completionTracking);
+		return entity && entity.properties && entity.properties.passingPercentage;
+	}
+
+	/**
+	 * @returns {bool} Whether or not the user can edit the passingPercentage property
+	 */
+	canEditPassingPercentage() {
+		const entity = this._entity.getSubEntityByRel(Rels.Quizzes.completionTracking);
+		return entity && entity.hasActionByName(Actions.quizzes.updatePassingPercentage);
+	}
+
+	/**
 	 * @returns {string} Timing Href of the quiz entity, if present
 	*/
 	timingHref() {
@@ -574,6 +608,7 @@ export class QuizEntity extends Entity {
 		const updateDescriptionAction = this.canEditDescription() ? this._formatUpdateDescriptionAction(quiz) : null;
 		const updateHeaderAction = this.canEditHeader() ? this._formatUpdateHeaderAction(quiz) : null;
 		const updateFooterAction = this.canEditFooter() ? this._formatUpdateFooterAction(quiz) : null;
+		const updatePassingPercentageAction = this.canEditPassingPercentage() ? this._formatPassingPercentageAction(quiz) : null;
 
 		const sirenActions = [
 			updateNameAction,
@@ -589,7 +624,8 @@ export class QuizEntity extends Entity {
 			updateSyncGradebookDefaultAction,
 			updateDescriptionAction,
 			updateHeaderAction,
-			updateFooterAction
+			updateFooterAction,
+			updatePassingPercentageAction
 		];
 		await performSirenActions(this._token, sirenActions);
 	}
@@ -839,6 +875,23 @@ export class QuizEntity extends Entity {
 		return { action, fields };
 	}
 
+	_formatPassingPercentageAction(quiz) {
+		if (!quiz) return;
+		if (!this._hasPassingPercentageChanged(quiz.passingPercentage)) return;
+
+		const entity = this._entity.getSubEntityByRel(Rels.Quizzes.completionTracking);
+		if (!entity) return;
+
+		const action = entity.getActionByName(Actions.quizzes.updatePassingPercentage);
+		if (!action) return;
+
+		const fields = [
+			{ name: 'passingPercentage', value: quiz.passingPercentage },
+		];
+
+		return { action, fields };
+	}
+
 	/**
 	 * Checks if quiz description has changed and if so returns the appropriate action/fields to update
 	 * @param {object} quiz the quiz that's being modified
@@ -968,6 +1021,10 @@ export class QuizEntity extends Entity {
 		return syncGradebookDefault !== this.isSyncGradebookDefault();
 	}
 
+	_hasPassingPercentageChanged(passingPercentage) {
+		return passingPercentage !== this.passingPercentage();
+	}
+
 	_hasDescriptionChanged(description) {
 		return description !== this.descriptionEditorHtml();
 	}
@@ -995,7 +1052,8 @@ export class QuizEntity extends Entity {
 			[this.isSyncGradebookDefault(), quiz.syncGradebookDefault],
 			[this.descriptionEditorHtml(), quiz.description],
 			[this.headerEditorHtml(), quiz.header],
-			[this.footerEditorHtml(), quiz.footer]
+			[this.footerEditorHtml(), quiz.footer],
+			[this.passingPercentage(), quiz.passingPercentage]
 		];
 
 		for (const [left, right] of diffs) {

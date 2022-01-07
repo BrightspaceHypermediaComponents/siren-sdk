@@ -297,6 +297,32 @@ export const editableQuiz = {
 		},
 		{
 			'class': [
+				'completion-tracking',
+				'passing-percentage'
+			],
+			'rel': [
+				'https://quizzes.api.brightspace.com/rels/completion-tracking'
+			],
+			'properties': {
+				'passingPercentage': 75
+			},
+			'actions': [
+				{
+					'href': 'https://6544ba98-b4dd-4f95-a5f9-16ecf2e92784.quizzes.api.proddev.d2l/6609/quizzes/3',
+					'name': 'update-passing-percentage',
+					'method': 'PATCH',
+					'fields': [
+						{
+							'type': 'number',
+							'name': 'passingPercentage',
+							'value': 75
+						}
+					]
+				}
+			]
+		},
+		{
+			'class': [
 				'ip-restrictions',
 				'collection'
 			],
