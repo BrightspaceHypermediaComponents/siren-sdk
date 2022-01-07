@@ -444,7 +444,7 @@ describe('QuizEntity', () => {
 				expect(form.get('description')).to.equal('New description');
 				expect(form.get('header')).to.equal('New header');
 				expect(form.get('footer')).to.equal('New footer');
-				expect(form.get('passingPercentage')).to.equal(30);
+				expect(form.get('passingPercentage')).to.equal('30');
 			}
 
 			expect(fetchMock.called()).to.be.true;
