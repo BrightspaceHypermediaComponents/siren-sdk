@@ -119,6 +119,7 @@ export const Rels = {
 		ltilinkFrameOptionsEntity: 'https://content.api.brightspace.com/rels/frame-options',
 		contentFileEntity: 'https://content.api.brightspace.com/rels/content-file',
 		contentScormActivityEntity: 'https://weblinks.api.brightspace.com/rels/content-scormActivity',
+		contentImportedScormActivityEntity: 'https://weblinks.api.brightspace.com/rels/content-importedScormActivity',
 		contentLorActivityEntity: 'https://weblinks.api.brightspace.com/rels/content-lorActivity',
 		lessonViewPage: 'https://content.api.brightspace.com/rels/lesson-view-page',
 		htmlTemplates: 'https://content.api.brightspace.com/rels/content-html-templates',
