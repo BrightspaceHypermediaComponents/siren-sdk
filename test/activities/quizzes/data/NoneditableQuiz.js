@@ -121,6 +121,18 @@ export const nonEditableQuiz = {
 		},
 		{
 			'class': [
+				'completion-tracking',
+				'submitted'
+			],
+			'rel': [
+				'https://quizzes.api.brightspace.com/rels/completion-tracking'
+			],
+			'properties': {
+				'passingPercentage': null
+			}
+		},
+		{
+			'class': [
 				'attempts'
 			],
 			'rel': [
