@@ -93,7 +93,7 @@ export class ContentEntity extends Entity {
 	 * @returns {string|null} LOR link
 	 */
 	getLorActivityHref() {
-		return ContentHelperFunctions.getHrefFromRel(Rels.Content.lorActivityEntity, this._entity);
+		return ContentHelperFunctions.getHrefFromRel(Rels.Content.contentLorActivityEntity, this._entity);
 	}
 
 	/**
