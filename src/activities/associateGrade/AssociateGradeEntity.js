@@ -143,7 +143,6 @@ export class AssociateGradeEntity extends Entity {
 
 		const newGradeEntity = this._getNewGradeEntity();
 		const gradeSchemeEntity = newGradeEntity.getSubEntityByClass(gradeType);
-
 		const action = gradeSchemeEntity.getActionByName(Actions.activities.associateGrade.getSchemes);
 
 		const returnedEntity = await this._performGetActionWithWorkingCopy(action);
