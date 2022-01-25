@@ -12,6 +12,7 @@ const GRADEBOOK_STATUS = 'gradebookStatus';
 const GRADE_NAME = 'gradeName';
 const MAX_POINTS = 'maxPoints';
 const GRADE_TYPE = 'gradeType';
+const PUSH_SCORE = 'pushScoresToGrade';
 
 export const GradebookStatus = Object.freeze({
 	NotInGradebook: 'not-in-gradebook',
@@ -199,6 +200,10 @@ export class AssociateGradeEntity extends Entity {
 
 	setGradeType(gradeType) {
 		return this._setNewGradeProperty(GRADE_TYPE, gradeType);
+	}
+
+	setPushScoreToGrade(pushScore) {
+		return this._setNewGradeProperty(PUSH_SCORE, pushScore);
 	}
 
 	_getNewGradeEntity() {
