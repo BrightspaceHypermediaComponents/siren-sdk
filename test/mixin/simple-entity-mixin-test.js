@@ -32,7 +32,7 @@ describe('Simple Entity Mixin Test', function() {
 		organizationEntityUpdated;
 
 	beforeEach(() => {
-		sandbox = sinon.sandbox.create();
+		sandbox = sinon.createSandbox();
 
 		var organizationEntity = {
 			properties: {

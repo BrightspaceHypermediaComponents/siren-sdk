@@ -7,7 +7,7 @@ describe('d2l-organization-name', () => {
 		component2;
 
 	beforeEach(() => {
-		sandbox = sinon.sandbox.create();
+		sandbox = sinon.createSandbox();
 
 		var organizationEntity = {
 			properties: {
@@ -89,7 +89,7 @@ describe('d2l-organization-name', () => {
 			});
 
 			it('Everything works with no swap', done => {
-				expect(spy).to.have.been.calledOnce;
+				sinon.assert.calledOnce(spy);
 
 				afterNextRender(component, () => {
 					const name = component.shadowRoot.getElementById('organization-name');
@@ -108,14 +108,14 @@ describe('d2l-organization-name', () => {
 			});
 
 			it('Swap to elements', done => {
-				expect(spy).to.have.been.calledOnce;
-				expect(spy2).to.have.been.calledOnce;
+				sinon.assert.calledOnce(spy);
+				sinon.assert.calledOnce(spy2);
 				component.href = '/organization2.json';
 				component2.href = '/organization.json';
 
 				afterNextRender(component, () => {
-					expect(spy).to.have.been.calledTwice;
-					expect(spy2).to.have.been.calledTwice;
+					sinon.assert.calledTwice(spy);
+					sinon.assert.calledTwice(spy2);
 					const name = component.shadowRoot.getElementById('organization-name');
 					const code = component.shadowRoot.getElementById('organization-code');
 					const semesterNameDirect = component.shadowRoot.getElementById('semester-name-direct');
@@ -144,8 +144,8 @@ describe('d2l-organization-name', () => {
 			});
 
 			it('Not called if token is undefined', () => {
-				expect(spy).to.have.been.calledOnce;
-				expect(spy2).to.have.not.been.called;
+				sinon.assert.calledOnce(spy);
+				sinon.assert.notCalled(spy2);
 			});
 		});
 	});
