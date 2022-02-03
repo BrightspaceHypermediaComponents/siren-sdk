@@ -97,10 +97,10 @@ describe('d2l-organization-name', () => {
 					const semesterNameDirect = component.shadowRoot.getElementById('semester-name-direct');
 					const semesterName = component.shadowRoot.getElementById('semester-name').shadowRoot;
 
-					expect(name.innerHTML.replace(/<!---->/g, '')).to.be.equal('Course Name');
-					expect(code.innerHTML.replace(/<!---->/g, '')).to.be.equal('SCI100');
-					expect(semesterNameDirect.innerHTML.replace(/<!---->/g, '')).to.be.equal('Semester Name');
-					expect(semesterName.innerHTML.replace(/<!---->/g, '')).to.be.contains('Semester Name');
+					expect(name.innerHTML.replace(/<!--.*-->/g, '')).to.be.equal('Course Name');
+					expect(code.innerHTML.replace(/<!--.*-->/g, '')).to.be.equal('SCI100');
+					expect(semesterNameDirect.innerHTML.replace(/<!--.*-->/g, '')).to.be.equal('Semester Name');
+					expect(semesterName.innerHTML.replace(/<!--.*-->/g, '')).to.be.contains('Semester Name');
 					expect(component._semesterNameDirectLoaded).to.be.equal('Semester Name');
 					done();
 				});
@@ -121,10 +121,10 @@ describe('d2l-organization-name', () => {
 					const semesterNameDirect = component.shadowRoot.getElementById('semester-name-direct');
 					const semesterName = component.shadowRoot.getElementById('semester-name').shadowRoot;
 
-					expect(name.innerHTML.replace(/<!---->/g, '')).to.be.equal('Course Name 2');
-					expect(code.innerHTML.replace(/<!---->/g, '')).to.be.equal('SCI101');
-					expect(semesterNameDirect.innerHTML.replace(/<!---->/g, '')).to.be.equal('Semester Name 2');
-					expect(semesterName.innerHTML.replace(/<!---->/g, '')).to.be.contains('Semester Name 2');
+					expect(name.innerHTML.replace(/<!--.*-->/g, '')).to.be.equal('Course Name 2');
+					expect(code.innerHTML.replace(/<!--.*-->/g, '')).to.be.equal('SCI101');
+					expect(semesterNameDirect.innerHTML.replace(/<!--.*-->/g, '')).to.be.equal('Semester Name 2');
+					expect(semesterName.innerHTML.replace(/<!--.*-->/g, '')).to.be.contains('Semester Name 2');
 					done();
 				});
 			});
