@@ -9,7 +9,7 @@ describe('Entityfactory', () => {
 		var sandbox;
 
 		beforeEach(() => {
-			sandbox = sinon.sandbox.create();
+			sandbox = sinon.createSandbox();
 
 			sandbox.stub(window.d2lfetch, 'fetch').callsFake(() => {
 

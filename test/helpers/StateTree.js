@@ -51,7 +51,7 @@ describe('StateTree', () => {
 				const tree = new StateTree(stateChangedStub);
 				tree.setChild(testCase.index, testCase.item);
 
-				expect(stateChangedStub).to.have.been.calledWith(tree);
+				sinon.assert.calledWith(stateChangedStub, tree);
 			});
 		});
 

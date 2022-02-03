@@ -39,7 +39,7 @@
     "lit-element": "^3",
     "mocha": "^7.0.1",
     "polymer-cli": "^1.9.1",
-    "sinon": "^7.5.0",
+    "sinon": "^13",
     "wct-mocha": "^1.0.1",
     "whatwg-fetch": "^2.0.0",
     "d2l-fetch": "Brightspace/d2l-fetch.git#semver:^2"

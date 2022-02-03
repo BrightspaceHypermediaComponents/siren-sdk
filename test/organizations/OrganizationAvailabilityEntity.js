@@ -86,7 +86,7 @@ describe('OrganizationAvailabilityEntity', () => {
 			let sandbox, deleteExplicitEntitySpy, deleteInheritEntitySpy, deleteInheritWithDescendantTypeEntitySpy;
 
 			beforeEach(() => {
-				sandbox = sinon.sandbox.create();
+				sandbox = sinon.createSandbox();
 				deleteExplicitEntitySpy = sandbox.spy(explicitEntity, 'delete');
 				deleteInheritEntitySpy = sandbox.spy(inheritEntity, 'delete');
 				deleteInheritWithDescendantTypeEntitySpy = sandbox.spy(inheritWithDescendantTypeEntity, 'delete');
@@ -118,7 +118,7 @@ describe('OrganizationAvailabilityEntity', () => {
 			let sandbox, deleteCannotDeleteEntitySpy;
 
 			beforeEach(() => {
-				sandbox = sinon.sandbox.create();
+				sandbox = sinon.createSandbox();
 				deleteCannotDeleteEntitySpy = sandbox.spy(cannotDeleteEntity, 'delete');
 			});
 
