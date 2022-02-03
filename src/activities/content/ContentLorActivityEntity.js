@@ -87,6 +87,13 @@ export class ContentLorActivityEntity extends ContentEntity {
 	}
 
 	/**
+	 * @returns {boolean} Whether or not LOR SCORM grades feature is enabled
+	 */
+	isLorScormGradesEnabled() {
+		return this._entity && this._entity.properties && this._entity.properties.lorScormActivityFeatureEnabled;
+	}
+
+	/**
 	 * Updates the LOR activty to have the given title
 	 * @param {string} title Title to set on the LOR activity
 	 */
