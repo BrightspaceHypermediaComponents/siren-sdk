@@ -21,7 +21,7 @@
   },
   "devDependencies": {
     "@babel/polyfill": "^7.0.0",
-    "@open-wc/testing": "^2.3.4",
+    "@open-wc/testing": "^3",
     "@polymer/iron-component-page": "^3.0.0-pre.18",
     "@polymer/iron-demo-helpers": "^3.0.0-pre.18",
     "@polymer/iron-test-helpers": "^3.0.0",
@@ -36,7 +36,7 @@
     "fetch-mock": "^8.3.2",
     "jsdoc": "^3.5.5",
     "lie": "^3.3.0",
-    "lit-element": "^2",
+    "lit-element": "^3",
     "mocha": "^7.0.1",
     "polymer-cli": "^1.9.1",
     "sinon": "^7.5.0",
