@@ -3,7 +3,6 @@ import { ConsortiumTokenCollectionEntity } from '../../src/consortium/Consortium
 import { ConsortiumTokenEntity } from '../../src/consortium/ConsortiumTokenEntity.js';
 import { Rels } from '../../src/hypermedia-constants.js';
 import { root } from '../../src/root/root.js';
-import sinon from 'sinon';
 
 import 'd2l-fetch/d2l-fetch.js';
 window.D2L.Siren.WhitelistBehavior._testMode(true);
