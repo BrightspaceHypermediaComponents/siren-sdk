@@ -13,7 +13,7 @@ describe('GradeCandidateCollectionEntity', () => {
 		beforeEach(() => {
 			const entityJson = window.D2L.Hypermedia.Siren.Parse(testData.gradeCandidateCollectionEntity);
 			entity = new GradeCandidateCollectionEntity(entityJson);
-			sandbox = sinon.sandbox.create();
+			sandbox = sinon.createSandbox();
 		});
 
 		it('returns entities', () => {
