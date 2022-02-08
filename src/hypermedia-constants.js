@@ -349,9 +349,7 @@ export const Classes = {
 	},
 	availabilityDates: {
 		availabilityDates: 'availability-dates',
-		dueDate: 'due-date',
-		endDate: 'end-date',
-		issueDate: 'issue-date',
+		endDate: 'availability-end-date',
 		startDate: 'availability-start-date'
 	},
 	discussions: {
