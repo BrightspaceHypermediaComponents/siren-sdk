@@ -27,7 +27,7 @@ describe('SirenAction', () => {
 			let sandbox, actionQueueSpy;
 
 			beforeEach(() => {
-				sandbox = sinon.sandbox.create();
+				sandbox = sinon.createSandbox();
 				actionQueueSpy = sandbox.spy(window.D2L.Siren.ActionQueue, 'enqueue');
 			});
 

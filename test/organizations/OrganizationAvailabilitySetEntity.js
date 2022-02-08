@@ -40,7 +40,7 @@ describe('OrganizationAvailabilitySetEntity', () => {
 			let sandbox, addCurrentOrgUnitSpy, addExplicitSpy, addInheritSpy;
 
 			beforeEach(() => {
-				sandbox = sinon.sandbox.create();
+				sandbox = sinon.createSandbox();
 				addCurrentOrgUnitSpy = sandbox.spy(entity, 'addCurrentOrgUnit');
 				addExplicitSpy = sandbox.spy(entity, 'addExplicit');
 				addInheritSpy = sandbox.spy(entity, 'addInherit');
@@ -74,7 +74,7 @@ describe('OrganizationAvailabilitySetEntity', () => {
 			let sandbox, addCurrentOrgUnitSpy, addExplicitSpy, addInheritSpy;
 
 			beforeEach(() => {
-				sandbox = sinon.sandbox.create();
+				sandbox = sinon.createSandbox();
 				addCurrentOrgUnitSpy = sandbox.spy(cannotAddEntity, 'addCurrentOrgUnit');
 				addExplicitSpy = sandbox.spy(cannotAddEntity, 'addExplicit');
 				addInheritSpy = sandbox.spy(cannotAddEntity, 'addInherit');

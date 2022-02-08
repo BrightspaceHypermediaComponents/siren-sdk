@@ -12,6 +12,7 @@ const GRADEBOOK_STATUS = 'gradebookStatus';
 const GRADE_NAME = 'gradeName';
 const MAX_POINTS = 'maxPoints';
 const GRADE_TYPE = 'gradeType';
+const PUSH_SCORE = 'pushScoresToGrade';
 
 export const GradebookStatus = Object.freeze({
 	NotInGradebook: 'not-in-gradebook',
@@ -142,7 +143,6 @@ export class AssociateGradeEntity extends Entity {
 
 		const newGradeEntity = this._getNewGradeEntity();
 		const gradeSchemeEntity = newGradeEntity.getSubEntityByClass(gradeType);
-
 		const action = gradeSchemeEntity.getActionByName(Actions.activities.associateGrade.getSchemes);
 
 		const returnedEntity = await this._performGetActionWithWorkingCopy(action);
@@ -181,7 +181,6 @@ export class AssociateGradeEntity extends Entity {
 		if (!this.canEditGradebookStatus()) return;
 
 		const action = this._entity.getActionByName(Actions.activities.associateGrade.gradebookStatus);
-
 		const fields = [{ name: GRADEBOOK_STATUS, value: newStatus }];
 		const returnedEntity = await performSirenAction(this._token, action, fields);
 
@@ -199,6 +198,10 @@ export class AssociateGradeEntity extends Entity {
 
 	setGradeType(gradeType) {
 		return this._setNewGradeProperty(GRADE_TYPE, gradeType);
+	}
+
+	setPushScoreToGrade(pushScore) {
+		return this._setNewGradeProperty(PUSH_SCORE, pushScore);
 	}
 
 	_getNewGradeEntity() {

@@ -10,7 +10,7 @@ describe('Consortium entity', () => {
 	var sandbox;
 
 	beforeEach(() => {
-		sandbox = sinon.sandbox.create();
+		sandbox = sinon.createSandbox();
 		const rootResponse = {
 			'properties': { },
 			'classes': [],
