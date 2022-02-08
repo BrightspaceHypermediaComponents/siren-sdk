@@ -599,29 +599,7 @@ export const Actions = {
 		updateAnnotationToolsAvailability: 'update-annotation-tools-availability',
 		update: 'quick-create-folder',
 		updateFilesSubmissionLimit: 'update-files-submission-limit',
-		updateDefaultScoringRubric: 'update-default-scoring-rubric',
-		updateNotificationEmail: 'update-notification-email'
-	},
-	content: {
-		updateTitle: 'update-title',
-		updateDescription: 'update-description',
-	},
-	module: {
-		deleteModule: 'delete-module'
-	},
-	webLink: {
-		updateUrl: 'update-url',
-		updateExternalResource: 'update-external-resource',
-		deleteWeblink: 'delete-webLink',
-		deleteLTIlink: 'delete-ltiLink',
-		deleteScormActivity: 'delete-scorm-activity',
-		deleteLorActivity: 'delete-lor-activity'
-	},
-	lorActivity: {
-		updateVersion: 'update-lor-activity-version'
-	},
-	htmlFile: {
-		updateHtmlContent: 'update-html-content'
+		updateDefaultScoringRubric: 'update-default-scoring-rubric'
 	},
 	notifications: {
 		getCarrierClass: 'get-carrier',
