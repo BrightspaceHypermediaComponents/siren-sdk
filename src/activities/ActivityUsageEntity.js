@@ -245,17 +245,16 @@ export class ActivityUsageEntity extends Entity {
 	 */
 	defaultStartDateType() {
 		const dateEntity = this._getSubEntityByClass(Classes.availabilityDates.availabilityDates);
-
 		if (!dateEntity) {
 			return;
 		}
 
-		const action = dateEntity.getActionByName(Classes.availabilityDates.create);
-		if (!action || !action.fields[1]) {
+		const action = dateEntity.getActionByName(Actions.activities.availabilityDates.create);
+		if (!action || !action.getFieldByName('availabilityStartType')) {
 			return;
 		}
 
-		return action.fields[1].value;
+		return action.getFieldByName('availabilityStartType').value;
 	}
 
 	/**
@@ -278,13 +277,11 @@ export class ActivityUsageEntity extends Entity {
 	 */
 	endDate() {
 		const availabilityEndDate = this._getAvailabilityEndDateEntity();
-
 		if (availabilityEndDate && availabilityEndDate.properties && availabilityEndDate.properties.dateTime) {
 			return availabilityEndDate.properties.dateTime.date;
 		}
 
 		const endDate = this._getSubEntityByClass(Classes.dates.endDate);
-
 		if (!endDate || !endDate.properties) {
 			return;
 		}
@@ -310,17 +307,16 @@ export class ActivityUsageEntity extends Entity {
 	 */
 	defaultEndDateType() {
 		const dateEntity = this._getSubEntityByClass(Classes.availabilityDates.availabilityDates);
-
 		if (!dateEntity) {
 			return;
 		}
 
-		const action = dateEntity.getActionByName(Classes.availabilityDates.create);
-		if (!action || !action.fields[3]) {
+		const action = dateEntity.getActionByName(Actions.activities.availabilityDates.create);
+		if (!action || !action.getFieldByName('availabilityEndType')) {
 			return;
 		}
 
-		return action.fields[3].value;
+		return action.getFieldByName('availabilityEndType').value;
 	}
 
 	/**
