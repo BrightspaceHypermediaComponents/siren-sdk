@@ -214,12 +214,17 @@ export class ActivityUsageEntity extends Entity {
 	startDate() {
 		const availabilityStartDate = this._getAvailabilityStartDateEntity();
 
-		if (availabilityStartDate) {
-			return availabilityStartDate?.properties?.dateTime.date;
+		if (availabilityStartDate && availabilityStartDate.properties && availabilityStartDate.properties.dateTime) {
+			return availabilityStartDate.properties.dateTime.date;
 		}
 
 		const startDate = this._getSubEntityByClass(Classes.dates.startDate);
-		return startDate && startDate?.properties?.date;
+
+		if (!startDate || !startDate.properties) {
+			return;
+		}
+
+		return startDate.properties.date;
 	}
 
 	/**
@@ -228,7 +233,11 @@ export class ActivityUsageEntity extends Entity {
 	startDateType() {
 		const availabilityStartDate = this._getAvailabilityStartDateEntity();
 
-		return availabilityStartDate?.properties?.dateType;
+		if (!availabilityStartDate || !availabilityStartDate.properties) {
+			return;
+		}
+
+		return availabilityStartDate.properties.dateType;
 	}
 
 	/**
@@ -236,7 +245,17 @@ export class ActivityUsageEntity extends Entity {
 	 */
 	defaultStartDateType() {
 		const dateEntity = this._getSubEntityByClass(Classes.availabilityDates.availabilityDates);
-		return dateEntity?.getActionByName(Classes.availabilityDates.create)?.fields[1]?.value;
+
+		if (!dateEntity) {
+			return;
+		}
+
+		const action = dateEntity.getActionByName(Classes.availabilityDates.create);
+		if (!action || !action.fields[1]) {
+			return;
+		}
+
+		return action.fields[1].value;
 	}
 
 	/**
@@ -274,7 +293,11 @@ export class ActivityUsageEntity extends Entity {
 	endDateType() {
 		const availabilityEndDate = this._getAvailabilityEndDateEntity();
 
-		return availabilityEndDate?.properties?.dateType;
+		if (!availabilityEndDate || !availabilityEndDate.properties) {
+			return;
+		}
+
+		return availabilityEndDate.properties.dateType;
 	}
 
 	/**
@@ -282,7 +305,17 @@ export class ActivityUsageEntity extends Entity {
 	 */
 	defaultEndDateType() {
 		const dateEntity = this._getSubEntityByClass(Classes.availabilityDates.availabilityDates);
-		return dateEntity?.getActionByName(Classes.availabilityDates.create)?.fields[3]?.value;
+
+		if (!dateEntity) {
+			return;
+		}
+
+		const action = dateEntity.getActionByName(Classes.availabilityDates.create);
+		if (!action || !action.fields[3]) {
+			return;
+		}
+
+		return action.fields[3].value;
 	}
 
 	/**
@@ -392,13 +425,21 @@ export class ActivityUsageEntity extends Entity {
 	_getAvailabilityStartDateEntity() {
 		const availabilityDatesEntity = this._getSubEntityByClass(Classes.availabilityDates.availabilityDates);
 
-		return availabilityDatesEntity?.getSubEntityByClass(Classes.availabilityDates.startDate);
+		if (!availabilityDatesEntity) {
+			return;
+		}
+
+		return availabilityDatesEntity.getSubEntityByClass(Classes.availabilityDates.startDate);
 	}
 
 	_getAvailabilityEndDateEntity() {
 		const availabilityDatesEntity = this._getSubEntityByClass(Classes.availabilityDates.availabilityDates);
 
-		return availabilityDatesEntity?.getSubEntityByClass(Classes.availabilityDates.endDate);
+		if (!availabilityDatesEntity) {
+			return;
+		}
+
+		return availabilityDatesEntity.getSubEntityByClass(Classes.availabilityDates.endDate);
 	}
 
 	_getSubEntityByClass(className) {
