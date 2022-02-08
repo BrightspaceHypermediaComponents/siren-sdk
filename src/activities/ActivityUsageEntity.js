@@ -201,7 +201,7 @@ export class ActivityUsageEntity extends Entity {
 	}
 
 	/**
-	 * @returns {boolean} If F18167-flexible-assignment-dates-ux feature is enabled
+	 * @returns {boolean} If ActivityAvailabilityDates entity is present
 	 */
 	hasActivityAvailabilityDates() {
 		const dateEntity = this._getSubEntityByClass(Classes.availabilityDates.availabilityDates);
@@ -279,12 +279,17 @@ export class ActivityUsageEntity extends Entity {
 	endDate() {
 		const availabilityEndDate = this._getAvailabilityEndDateEntity();
 
-		if (availabilityEndDate) {
-			return availabilityEndDate;
+		if (availabilityEndDate && availabilityEndDate.properties && availabilityEndDate.properties.dateTime) {
+			return availabilityEndDate.properties.dateTime.date;
 		}
 
 		const endDate = this._getSubEntityByClass(Classes.dates.endDate);
-		return endDate && endDate.properties.date;
+
+		if (!endDate || !endDate.properties) {
+			return;
+		}
+
+		return endDate.properties.date;
 	}
 
 	/**
