@@ -214,7 +214,7 @@ export class ActivityUsageEntity extends Entity {
 	startDate() {
 		if (this.hasActivityAvailabilityDates()) {
 			const availabilityStartDate = this._getAvailabilityStartDateEntity();
-	
+
 			if (availabilityStartDate && availabilityStartDate.properties && availabilityStartDate.properties.dateTime) {
 				return availabilityStartDate.properties.dateTime.date;
 			}
@@ -226,7 +226,7 @@ export class ActivityUsageEntity extends Entity {
 			if (!startDate || !startDate.properties) {
 				return;
 			}
-	
+
 			return startDate.properties.date;
 		}
 	}
