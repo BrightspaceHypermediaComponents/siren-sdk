@@ -212,19 +212,23 @@ export class ActivityUsageEntity extends Entity {
 	 * @returns {string} Start date of the activity usage
 	 */
 	startDate() {
-		const availabilityStartDate = this._getAvailabilityStartDateEntity();
+		if (this.hasActivityAvailabilityDates()) {
+			const availabilityStartDate = this._getAvailabilityStartDateEntity();
+	
+			if (availabilityStartDate && availabilityStartDate.properties && availabilityStartDate.properties.dateTime) {
+				return availabilityStartDate.properties.dateTime.date;
+			}
 
-		if (availabilityStartDate && availabilityStartDate.properties && availabilityStartDate.properties.dateTime) {
-			return availabilityStartDate.properties.dateTime.date;
-		}
-
-		const startDate = this._getSubEntityByClass(Classes.dates.startDate);
-
-		if (!startDate || !startDate.properties) {
 			return;
-		}
+		} else {
+			const startDate = this._getSubEntityByClass(Classes.dates.startDate);
 
-		return startDate.properties.date;
+			if (!startDate || !startDate.properties) {
+				return;
+			}
+	
+			return startDate.properties.date;
+		}
 	}
 
 	/**
@@ -276,17 +280,22 @@ export class ActivityUsageEntity extends Entity {
 	 * @returns {string} End date of the activity usage
 	 */
 	endDate() {
-		const availabilityEndDate = this._getAvailabilityEndDateEntity();
-		if (availabilityEndDate && availabilityEndDate.properties && availabilityEndDate.properties.dateTime) {
-			return availabilityEndDate.properties.dateTime.date;
-		}
+		if (this.hasActivityAvailabilityDates()) {
+			const availabilityEndDate = this._getAvailabilityEndDateEntity();
+			if (availabilityEndDate && availabilityEndDate.properties && availabilityEndDate.properties.dateTime) {
+				return availabilityEndDate.properties.dateTime.date;
+			}
 
-		const endDate = this._getSubEntityByClass(Classes.dates.endDate);
-		if (!endDate || !endDate.properties) {
 			return;
-		}
+		} else {
+			const endDate = this._getSubEntityByClass(Classes.dates.endDate);
 
-		return endDate.properties.date;
+			if (!endDate || !endDate.properties) {
+				return;
+			}
+
+			return endDate.properties.date;
+		}
 	}
 
 	/**
