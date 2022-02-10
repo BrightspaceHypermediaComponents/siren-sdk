@@ -269,6 +269,22 @@ export class ActivityUsageEntity extends Entity {
 	}
 
 	/**
+	 * @returns {bool} Whether or not the ActivityAvailabilityDates create action is present
+	 */
+	canEditAvailabilityDates() {
+		const dateEntity = this._getSubEntityByClass(Classes.availabilityDates.availabilityDates);
+		if (!dateEntity) {
+			return false;
+		}
+
+		const action = dateEntity.getActionByName(Actions.activities.availabilityDates.create);
+		if (action) {
+			return true;
+		}
+
+		return false;
+	}
+	/**
 	   * Updates the start date of the activity usage entity to the date specified
 	 * @param {string} dateValue Date string to set as the start date, or empty string to clear the start date
 	 */
