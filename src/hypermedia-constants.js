@@ -349,6 +349,11 @@ export const Classes = {
 		issueDate: 'issue-date',
 		startDate: 'start-date'
 	},
+	availabilityDates: {
+		availabilityDates: 'availability-dates',
+		endDate: 'availability-end-date',
+		startDate: 'availability-start-date'
+	},
 	discussions: {
 		discussion: 'discussion',
 		topic: 'topic',
@@ -555,6 +560,9 @@ export const Actions = {
 			add: 'add'
 		},
 		create: 'create',
+		availabilityDates: {
+			create: 'create'
+		},
 		selectCustomDateRange: 'select-custom-date-range',
 		startAddNew: 'start-add-new',
 		update: 'update',

@@ -181,7 +181,7 @@ export class ActivityUsageEntity extends Entity {
 	 * @returns {string} Due date of the activity usage
 	 */
 	dueDate() {
-		const dueDate = this._getDateSubEntity(Classes.dates.dueDate);
+		const dueDate = this._getSubEntityByClass(Classes.dates.dueDate);
 		return dueDate && dueDate.properties.date;
 	}
 
@@ -201,11 +201,64 @@ export class ActivityUsageEntity extends Entity {
 	}
 
 	/**
+	 * @returns {boolean} If ActivityAvailabilityDates entity is present
+	 */
+	hasActivityAvailabilityDates() {
+		const dateEntity = this._getSubEntityByClass(Classes.availabilityDates.availabilityDates);
+		return dateEntity !== undefined && dateEntity !== null;
+	}
+
+	/**
 	 * @returns {string} Start date of the activity usage
 	 */
 	startDate() {
-		const startDate = this._getDateSubEntity(Classes.dates.startDate);
-		return startDate && startDate.properties.date;
+		if (this.hasActivityAvailabilityDates()) {
+			const availabilityStartDate = this._getAvailabilityStartDateEntity();
+
+			if (availabilityStartDate && availabilityStartDate.properties && availabilityStartDate.properties.dateTime) {
+				return availabilityStartDate.properties.dateTime.date;
+			}
+
+			return;
+		} else {
+			const startDate = this._getSubEntityByClass(Classes.dates.startDate);
+
+			if (!startDate || !startDate.properties) {
+				return;
+			}
+
+			return startDate.properties.date;
+		}
+	}
+
+	/**
+	 * @returns {Number} Start date type of the activity usage
+	 */
+	startDateType() {
+		const availabilityStartDate = this._getAvailabilityStartDateEntity();
+
+		if (!availabilityStartDate || !availabilityStartDate.properties) {
+			return;
+		}
+
+		return availabilityStartDate.properties.dateType;
+	}
+
+	/**
+	 * @returns {Number} Default start date type of the activity usage
+	 */
+	defaultStartDateType() {
+		const dateEntity = this._getSubEntityByClass(Classes.availabilityDates.availabilityDates);
+		if (!dateEntity) {
+			return;
+		}
+
+		const action = dateEntity.getActionByName(Actions.activities.availabilityDates.create);
+		if (!action || !action.getFieldByName('availabilityStartType')) {
+			return;
+		}
+
+		return action.getFieldByName('availabilityStartType').value;
 	}
 
 	/**
@@ -215,6 +268,22 @@ export class ActivityUsageEntity extends Entity {
 		return this._canEditDate(Classes.dates.startDate);
 	}
 
+	/**
+	 * @returns {bool} Whether or not the ActivityAvailabilityDates create action is present
+	 */
+	canEditAvailabilityDates() {
+		const dateEntity = this._getSubEntityByClass(Classes.availabilityDates.availabilityDates);
+		if (!dateEntity) {
+			return false;
+		}
+
+		const action = dateEntity.getActionByName(Actions.activities.availabilityDates.create);
+		if (action) {
+			return true;
+		}
+
+		return false;
+	}
 	/**
 	   * Updates the start date of the activity usage entity to the date specified
 	 * @param {string} dateValue Date string to set as the start date, or empty string to clear the start date
@@ -227,8 +296,52 @@ export class ActivityUsageEntity extends Entity {
 	 * @returns {string} End date of the activity usage
 	 */
 	endDate() {
-		const endDate = this._getDateSubEntity(Classes.dates.endDate);
-		return endDate && endDate.properties.date;
+		if (this.hasActivityAvailabilityDates()) {
+			const availabilityEndDate = this._getAvailabilityEndDateEntity();
+			if (availabilityEndDate && availabilityEndDate.properties && availabilityEndDate.properties.dateTime) {
+				return availabilityEndDate.properties.dateTime.date;
+			}
+
+			return;
+		} else {
+			const endDate = this._getSubEntityByClass(Classes.dates.endDate);
+
+			if (!endDate || !endDate.properties) {
+				return;
+			}
+
+			return endDate.properties.date;
+		}
+	}
+
+	/**
+	 * @returns {Number} End date type of the activity usage
+	 */
+	endDateType() {
+		const availabilityEndDate = this._getAvailabilityEndDateEntity();
+
+		if (!availabilityEndDate || !availabilityEndDate.properties) {
+			return;
+		}
+
+		return availabilityEndDate.properties.dateType;
+	}
+
+	/**
+	 * @returns {Number} Default start date type of the activity usage
+	 */
+	defaultEndDateType() {
+		const dateEntity = this._getSubEntityByClass(Classes.availabilityDates.availabilityDates);
+		if (!dateEntity) {
+			return;
+		}
+
+		const action = dateEntity.getActionByName(Actions.activities.availabilityDates.create);
+		if (!action || !action.getFieldByName('availabilityEndType')) {
+			return;
+		}
+
+		return action.getFieldByName('availabilityEndType').value;
 	}
 
 	/**
@@ -250,7 +363,7 @@ export class ActivityUsageEntity extends Entity {
 	 * @returns {bool} Whether or not the edit dates action is present on the activity usage entity (for saving start, end, and due date together)
 	 */
 	canEditDates() {
-		const datesEntity = this._getDateSubEntity('dates');
+		const datesEntity = this._getSubEntityByClass('dates');
 		return datesEntity && datesEntity.hasActionByName(Actions.activities.update);
 	}
 
@@ -287,7 +400,7 @@ export class ActivityUsageEntity extends Entity {
 
 	_generateDatesAction(startDate, dueDate, endDate, validateOnly) {
 		let action;
-		const datesEntity = this._getDateSubEntity('dates');
+		const datesEntity = this._getSubEntityByClass('dates');
 		if (datesEntity) {
 			action = datesEntity.getActionByName(Actions.activities.update);
 		}
@@ -335,14 +448,39 @@ export class ActivityUsageEntity extends Entity {
 		return '';
 	}
 
-	_getDateSubEntity(dateClass) {
+	_getAvailabilityStartDateEntity() {
+		const availabilityDatesEntity = this._getSubEntityByClass(Classes.availabilityDates.availabilityDates);
+
+		if (!availabilityDatesEntity) {
+			return;
+		}
+
+		return availabilityDatesEntity.getSubEntityByClass(Classes.availabilityDates.startDate);
+	}
+
+	_getAvailabilityEndDateEntity() {
+		const availabilityDatesEntity = this._getSubEntityByClass(Classes.availabilityDates.availabilityDates);
+
+		if (!availabilityDatesEntity) {
+			return;
+		}
+
+		return availabilityDatesEntity.getSubEntityByClass(Classes.availabilityDates.endDate);
+	}
+
+	_getSubEntityByClass(className) {
+		return this._entity
+			&& this._entity.getSubEntityByClass(className);
+	}
+
+	_getAvailabilityDateSubEntity(dateClass) {
 		return this._entity
 			&& this._entity.getSubEntityByClass(dateClass);
 	}
 
 	async _canEditDate(dateClass) {
 
-		const dateEntity = this._getDateSubEntity(dateClass);
+		const dateEntity = this._getSubEntityByClass(dateClass);
 		if (dateEntity && dateEntity.hasActionByName(Actions.activities.update)) {
 			return true;
 		}
@@ -367,7 +505,7 @@ export class ActivityUsageEntity extends Entity {
 		}
 
 		let action;
-		const dateEntity = this._getDateSubEntity(dateClass);
+		const dateEntity = this._getSubEntityByClass(dateClass);
 		if (dateEntity) {
 			action = dateEntity.getActionByName(Actions.activities.update);
 		} else {
