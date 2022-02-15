@@ -72,11 +72,11 @@ export class ContentWebLinkEntity extends ContentWorkingCopyEntity {
 			if (this._entity.hasClass(WebLinkTypes.GoogleDrive)) {
 				return WebLinkTypes.GoogleDrive;
 			} else if (this._entity.hasClass(WebLinkTypes.OneDrive)) {
-				return WebLinkTypes.OneDrive
+				return WebLinkTypes.OneDrive;
 			}
 		}
 
-		return 'default';
+		return WebLinkTypes.Default;
 	}
 
 	/**
