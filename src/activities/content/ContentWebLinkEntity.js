@@ -67,6 +67,9 @@ export class ContentWebLinkEntity extends ContentWorkingCopyEntity {
 		return this._entity && this._entity.properties && this._entity.properties.url;
 	}
 
+	/**
+	 * @returns {string} The type of weblink
+	 */
 	type() {
 		if (this._entity) {
 			if (this._entity.hasClass(WebLinkTypes.GoogleDrive)) {
