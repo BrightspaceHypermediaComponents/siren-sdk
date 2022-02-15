@@ -61,6 +61,18 @@ export class ContentWebLinkEntity extends ContentWorkingCopyEntity {
 		return this._entity && this._entity.properties && this._entity.properties.url;
 	}
 
+	type() {
+		if (this._entity) {
+			if (this._entity.hasClass(Classes.webLink.googleDriveLink)) {
+				return Classes.webLink.googleDriveLink;
+			} else if (this._entity.hasClass(Classes.webLink.oneDriveLink)) {
+				return Classes.webLink.oneDriveLink;
+			}
+		}
+
+		return 'default';
+	}
+
 	/**
 	 * Updates the web link to have the given description
 	 * @param {string} richText rich text description to set on the web link
