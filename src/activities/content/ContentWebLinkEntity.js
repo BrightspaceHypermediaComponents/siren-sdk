@@ -3,6 +3,12 @@ import { performSirenAction } from '../../es6/SirenAction';
 import ContentHelperFunctions from './ContentHelperFunctions.js';
 import { ContentWorkingCopyEntity } from './ContentWorkingCopyEntity.js';
 
+export const WebLinkTypes = {
+	Default: 'default',
+	OneDrive: 'onedrive-link',
+	GoogleDrive: 'googledrive-link'
+};
+
 /**
  * ContentWebLinkEntity class representation of a d2l content-weblink entity.
  */
@@ -63,10 +69,10 @@ export class ContentWebLinkEntity extends ContentWorkingCopyEntity {
 
 	type() {
 		if (this._entity) {
-			if (this._entity.hasClass(Classes.webLink.googleDriveLink)) {
-				return Classes.webLink.googleDriveLink;
-			} else if (this._entity.hasClass(Classes.webLink.oneDriveLink)) {
-				return Classes.webLink.oneDriveLink;
+			if (this._entity.hasClass(WebLinkTypes.GoogleDrive)) {
+				return WebLinkTypes.GoogleDrive;
+			} else if (this._entity.hasClass(WebLinkTypes.OneDrive)) {
+				return WebLinkTypes.OneDrive
 			}
 		}
 

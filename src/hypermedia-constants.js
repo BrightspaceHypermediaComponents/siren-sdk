@@ -326,9 +326,7 @@ export const Classes = {
 		lastModified: 'lastModified'
 	},
 	webLink: {
-		externalResource: 'external-resource',
-		googleDriveLink: 'googledrive-link',
-		oneDriveLink: 'onedrive-link'
+		externalResource: 'external-resource'
 	},
 	courseImage: {
 		courseImage: 'course-image',
