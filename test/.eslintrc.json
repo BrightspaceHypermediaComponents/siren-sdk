@@ -1,3 +1,17 @@
 {
-  "extends": "brightspace/wct-polymer-3-config"
+  "extends": "brightspace/open-wc-testing-config",
+  "rules": {
+    "linebreak-style": "off",
+    "sort-imports": "off",
+    "sort-class-members/sort-class-members": "off",
+    "no-var": "off",
+    "no-redeclare": "off",
+    "no-undef": "off",
+    "object-curly-spacing": "off",
+    "prefer-arrow-callback": "off",
+    "no-unused-vars": "off",
+    "arrow-spacing": "off",
+    "import/extensions": "off",
+    "no-use-before-define": "off"
+  }
 }
