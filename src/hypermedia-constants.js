@@ -84,7 +84,10 @@ export const Rels = {
 	},
 	// Assessments
 	Assessments: {
-		assessmentApplication: 'https://assessments.api.brightspace.com/rels/assessment-application'
+		assessmentApplication: 'https://assessments.api.brightspace.com/rels/assessment-application',
+		assessAllApplication: 'https://assessments.api.brightspace.com/rels/assess-all-application',
+		assessNewApplication: 'https://assessments.api.brightspace.com/rels/assess-new-application',
+		submissionApplication: 'https://assessments.api.brightspace.com/rels/submission-application'
 	},
 	// Assignments
 	Assignments: {
