@@ -390,7 +390,6 @@ export class ActivityUsageEntity extends Entity {
 		if (!this._hasDatesChanged(dates.startDate, dates.dueDate, dates.endDate, dates.startDateType, dates.endDateType)) return;
 
 		const datesActionAndFields = this._generateDatesAction(dates.startDate, dates.dueDate, dates.endDate, false, dates.startDateType, dates.endDateType);
-		debugger;
 		if (!datesActionAndFields) return;
 		if (deferSave) {
 			return datesActionAndFields;
