@@ -32,6 +32,13 @@ export class ContentImportedScormActivityEntity extends ContentEntity {
 	}
 
 	/**
+	 * @returns {boolean} Whether or not the Push-Scores-to-Grades checkbox is enabled
+	 */
+	 isGradeSyncCheckboxFeatureEnabled() {
+		return this._entity && this._entity.properties && this._entity.properties.isGradeSyncCheckboxFeatureEnabled;
+	}
+
+	/**
 	 * Updates the SCORM activty to have the given title
 	 * @param {string} title Title to set on the SCORM activity
 	 */
