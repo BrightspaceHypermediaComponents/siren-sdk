@@ -375,7 +375,7 @@ export class ActivityUsageEntity extends Entity {
 		if (!dates) return;
 		if (!this._hasDatesChanged(dates.startDate, dates.dueDate, dates.endDate, dates.startDateType, dates.endDateType)) return;
 
-		const datesActionAndFields = this._generateDatesAction(dates.startDate, dates.dueDate, dates.endDate, true);
+		const datesActionAndFields = this._generateDatesAction(dates.startDate, dates.dueDate, dates.endDate, true, dates.startDateType, dates.endDateType);
 		if (datesActionAndFields) {
 			await performSirenAction(this._token, datesActionAndFields.action, datesActionAndFields.fields);
 		}
