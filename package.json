@@ -1,6 +1,6 @@
 {
   "name": "siren-sdk",
-  "version": "1.117.2",
+  "version": "1.118.0",
   "description": "",
   "main": "index.js",
   "scripts": {
