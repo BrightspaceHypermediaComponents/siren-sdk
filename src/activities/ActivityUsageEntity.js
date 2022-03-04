@@ -373,9 +373,9 @@ export class ActivityUsageEntity extends Entity {
 	 */
 	async validateDates(dates) {
 		if (!dates) return;
-		if (!this._hasDatesChanged(dates.startDate, dates.dueDate, dates.endDate)) return;
+		if (!this._hasDatesChanged(dates.startDate, dates.dueDate, dates.endDate, dates.startDateType, dates.endDateType)) return;
 
-		const datesActionAndFields = this._generateDatesAction(dates.startDate, dates.dueDate, dates.endDate, true);
+		const datesActionAndFields = this._generateDatesAction(dates.startDate, dates.dueDate, dates.endDate, true, dates.startDateType, dates.endDateType);
 		if (datesActionAndFields) {
 			await performSirenAction(this._token, datesActionAndFields.action, datesActionAndFields.fields);
 		}
@@ -387,9 +387,9 @@ export class ActivityUsageEntity extends Entity {
 	 */
 	async saveDates(dates, deferSave) {
 		if (!dates) return;
-		if (!this._hasDatesChanged(dates.startDate, dates.dueDate, dates.endDate)) return;
+		if (!this._hasDatesChanged(dates.startDate, dates.dueDate, dates.endDate, dates.startDateType, dates.endDateType)) return;
 
-		const datesActionAndFields = this._generateDatesAction(dates.startDate, dates.dueDate, dates.endDate, false);
+		const datesActionAndFields = this._generateDatesAction(dates.startDate, dates.dueDate, dates.endDate, false, dates.startDateType, dates.endDateType);
 		if (!datesActionAndFields) return;
 		if (deferSave) {
 			return datesActionAndFields;
@@ -398,7 +398,7 @@ export class ActivityUsageEntity extends Entity {
 		}
 	}
 
-	_generateDatesAction(startDate, dueDate, endDate, validateOnly) {
+	_generateDatesAction(startDate, dueDate, endDate, validateOnly, startDateType, endDateType) {
 		let action;
 		const datesEntity = this._getSubEntityByClass('dates');
 		if (datesEntity) {
@@ -409,14 +409,18 @@ export class ActivityUsageEntity extends Entity {
 			return;
 		}
 
-		const startDateValue = this._getDateValue(startDate, this.startDate());
-		const dueDateValue = this._getDateValue(dueDate, this.dueDate());
-		const endDateValue = this._getDateValue(endDate, this.endDate());
+		const startDateValue = this._getDateParamValue(startDate, this.startDate());
+		const dueDateValue = this._getDateParamValue(dueDate, this.dueDate());
+		const endDateValue = this._getDateParamValue(endDate, this.endDate());
+		const startDateTypeValue = this._getDateParamValue(startDateType, this.startDateType());
+		const endDateTypeValue = this._getDateParamValue(endDateType, this.endDateType());
 
 		const fields = [
 			{ name: 'startDate', value: startDateValue },
 			{ name: 'dueDate', value: dueDateValue },
-			{ name: 'endDate', value: endDateValue }
+			{ name: 'endDate', value: endDateValue },
+			{ name: 'availabilityStartType', value: startDateTypeValue },
+			{ name: 'availabilityEndType', value: endDateTypeValue },
 		];
 
 		if (validateOnly) {
@@ -426,17 +430,19 @@ export class ActivityUsageEntity extends Entity {
 		return { action, fields };
 	}
 
-	_hasDateChanged(newDate, oldDate = '') {
-		return typeof newDate !== 'undefined' && newDate !== oldDate;
+	_hasValueChanged(newValue, oldValue = '') {
+		return typeof newValue !== 'undefined' && newValue !== oldValue;
 	}
 
-	_hasDatesChanged(startDate, dueDate, endDate) {
-		return this._hasDateChanged(startDate, this.startDate())
-			|| this._hasDateChanged(dueDate, this.dueDate())
-			|| this._hasDateChanged(endDate, this.endDate());
+	_hasDatesChanged(startDate, dueDate, endDate, startDateType, endDateType) {
+		return this._hasValueChanged(startDate, this.startDate())
+			|| this._hasValueChanged(startDateType, this.startDateType())
+			|| this._hasValueChanged(dueDate, this.dueDate())
+			|| this._hasValueChanged(endDate, this.endDate())
+			|| this._hasValueChanged(endDateType, this.endDateType());
 	}
 
-	_getDateValue(primaryDate, secondaryDate) {
+	_getDateParamValue(primaryDate, secondaryDate) {
 		if (typeof primaryDate !== 'undefined') {
 			return primaryDate;
 		}
