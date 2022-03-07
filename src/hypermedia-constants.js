@@ -185,7 +185,8 @@ export const Rels = {
 		ipRestrictions: 'https://quizzes.api.brightspace.com/rels/ip',
 		submissionViews: 'https://quizzes.api.brightspace.com/rels/submission-views',
 		categories: 'https://quizzes.api.brightspace.com/rels/categories',
-		completionTracking: 'https://quizzes.api.brightspace.com/rels/completion-tracking'
+		completionTracking: 'https://quizzes.api.brightspace.com/rels/completion-tracking',
+		hasAttempts: 'https://quizzes.api.brightspace.com/rels/has-attempts',
 	},
 	// Themes API sub-domain rels
 	Themes: {
@@ -423,7 +424,8 @@ export const Classes = {
 			overallGradeCalculationType: 'overall-grade-calculation-type',
 			retakeIncorrectOnly: 'retake-incorrect-only',
 			attemptConditions: 'attempt-conditions',
-			attemptCondition: 'attempt-condition'
+			attemptCondition: 'attempt-condition',
+			hasAttempts: 'has-attempts',
 		},
 		ip: {
 			restrictions: 'ip-restrictions',
