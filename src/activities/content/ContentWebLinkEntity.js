@@ -82,6 +82,9 @@ export class ContentWebLinkEntity extends ContentWorkingCopyEntity {
 		return WebLinkTypes.Default;
 	}
 
+	/**
+	 * @returns {boolean} Whether the picker dialog is enabled for this type of weblink
+	 */
 	isPickerEnabled() {
 		return this._entity && this._entity.properties && this._entity.properties.isPickerEnabled;
 	}
