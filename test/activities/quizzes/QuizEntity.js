@@ -728,4 +728,18 @@ describe('QuizEntity', () => {
 			});
 		});
 	});
+
+	describe('Has Attempts Completed', () => {
+		it('Quiz has attempts completed', () => {
+			// editableEntity has has-attempts sub-entity
+			var quizEntity = new QuizEntity(editableEntity);
+			expect(quizEntity.hasAttemptsCompleted()).to.be.true;
+		});
+
+		it('Quiz has no attempts completed', () => {
+			// nonEditableEntity does not have has-attempts sub-entity
+			var quizEntity = new QuizEntity(nonEditableEntity);
+			expect(quizEntity.hasAttemptsCompleted()).to.be.false;
+		});
+	});
 });
