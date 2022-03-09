@@ -82,6 +82,10 @@ export class ContentWebLinkEntity extends ContentWorkingCopyEntity {
 		return WebLinkTypes.Default;
 	}
 
+	isPickerEnabled() {
+		return this._entity && this._entity.properties && this._entity.properties.isPickerEnabled;
+	}
+
 	/**
 	 * Updates the web link to have the given description
 	 * @param {string} richText rich text description to set on the web link
