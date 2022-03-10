@@ -564,6 +564,20 @@ describe('QuizEntity', () => {
 		});
 	});
 
+	describe('Has Attempts Completed', () => {
+		it('Quiz has attempts completed', () => {
+			// editableEntity has has-attempts sub-entity
+			var quizEntity = new QuizEntity(editableEntity);
+			expect(quizEntity.hasAttemptsCompleted()).to.be.true;
+		});
+
+		it('Quiz has no attempts completed', () => {
+			// nonEditableEntity does not have has-attempts sub-entity
+			var quizEntity = new QuizEntity(nonEditableEntity);
+			expect(quizEntity.hasAttemptsCompleted()).to.be.false;
+		});
+	});
+
 	describe('categories', () => {
 		describe('categoriesHref', () => {
 			const expectedHref = 'https://afe99802-9130-4320-a770-8d138b941e74.quizzes.api.proddev.d2l/6606/quizzes/39/categories';
@@ -726,20 +740,6 @@ describe('QuizEntity', () => {
 				await quizEntity.checkin();
 				expect(fetchMock.done());
 			});
-		});
-	});
-
-	describe('Has Attempts Completed', () => {
-		it('Quiz has attempts completed', () => {
-			// editableEntity has has-attempts sub-entity
-			var quizEntity = new QuizEntity(editableEntity);
-			expect(quizEntity.hasAttemptsCompleted()).to.be.true;
-		});
-
-		it('Quiz has no attempts completed', () => {
-			// nonEditableEntity does not have has-attempts sub-entity
-			var quizEntity = new QuizEntity(nonEditableEntity);
-			expect(quizEntity.hasAttemptsCompleted()).to.be.false;
 		});
 	});
 });
