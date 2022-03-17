@@ -11,22 +11,22 @@
 				{
 					"browserName": "chrome",
 					"platform": "OS X 10.15",
-					"version": ""
+					"version": "latest"
 				},
 				{
 					"browserName": "firefox",
 					"platform": "OS X 10.15",
-					"version": ""
+					"version": "latest"
 				},
 				{
 					"browserName": "safari",
 					"platform": "OS X 10.15",
-					"version": ""
+					"version": "latest"
 				},
 				{
 					"browserName": "microsoftedge",
 					"platform": "Windows 10",
-					"version": ""
+					"version": "latest"
 				}
 			]
 		}
