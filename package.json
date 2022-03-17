@@ -15,7 +15,7 @@
   "author": "",
   "license": "Apache-2.0",
   "dependencies": {
-    "@brightspace-ui/core": "^1",
+    "@brightspace-ui/core": "https://github.com/BrightspaceUI/core#asegall/lit-2-breaking-changes",
     "@polymer/polymer": "^3.0.0",
     "d2l-polymer-siren-behaviors": "Brightspace/polymer-siren-behaviors#semver:^1"
   },
@@ -37,7 +37,6 @@
     "jsdoc": "^3.5.5",
     "lie": "^3.3.0",
     "lit-element": "^3",
-    "lit-html": "^2",
     "mocha": "^7.0.1",
     "polymer-cli": "^1.9.1",
     "sinon": "^13",
