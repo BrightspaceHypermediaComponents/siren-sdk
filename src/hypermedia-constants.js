@@ -84,7 +84,10 @@ export const Rels = {
 	},
 	// Assessments
 	Assessments: {
-		assessmentApplication: 'https://assessments.api.brightspace.com/rels/assessment-application'
+		assessmentApplication: 'https://assessments.api.brightspace.com/rels/assessment-application',
+		assessAllApplication: 'https://assessments.api.brightspace.com/rels/assess-all-application',
+		assessNewApplication: 'https://assessments.api.brightspace.com/rels/assess-new-application',
+		submissionApplication: 'https://assessments.api.brightspace.com/rels/submission-application'
 	},
 	// Assignments
 	Assignments: {
@@ -182,7 +185,8 @@ export const Rels = {
 		ipRestrictions: 'https://quizzes.api.brightspace.com/rels/ip',
 		submissionViews: 'https://quizzes.api.brightspace.com/rels/submission-views',
 		categories: 'https://quizzes.api.brightspace.com/rels/categories',
-		completionTracking: 'https://quizzes.api.brightspace.com/rels/completion-tracking'
+		completionTracking: 'https://quizzes.api.brightspace.com/rels/completion-tracking',
+		hasAttempts: 'https://quizzes.api.brightspace.com/rels/has-attempts',
 	},
 	// Themes API sub-domain rels
 	Themes: {
@@ -347,6 +351,11 @@ export const Classes = {
 		issueDate: 'issue-date',
 		startDate: 'start-date'
 	},
+	availabilityDates: {
+		availabilityDates: 'availability-dates',
+		endDate: 'availability-end-date',
+		startDate: 'availability-start-date'
+	},
 	discussions: {
 		discussion: 'discussion',
 		topic: 'topic',
@@ -415,7 +424,8 @@ export const Classes = {
 			overallGradeCalculationType: 'overall-grade-calculation-type',
 			retakeIncorrectOnly: 'retake-incorrect-only',
 			attemptConditions: 'attempt-conditions',
-			attemptCondition: 'attempt-condition'
+			attemptCondition: 'attempt-condition',
+			hasAttempts: 'has-attempts',
 		},
 		ip: {
 			restrictions: 'ip-restrictions',
@@ -553,6 +563,9 @@ export const Actions = {
 			add: 'add'
 		},
 		create: 'create',
+		availabilityDates: {
+			create: 'create'
+		},
 		selectCustomDateRange: 'select-custom-date-range',
 		startAddNew: 'start-add-new',
 		update: 'update',

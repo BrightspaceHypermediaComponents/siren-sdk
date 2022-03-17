@@ -1,6 +1,6 @@
 # siren-sdk
 
-This contains tools written in ES6 to help develop and use siren entities.
+This contains tools written in ES6 to help develop and use Siren entities.
 
 ## Quick start
 

@@ -3,6 +3,12 @@ import { performSirenAction } from '../../es6/SirenAction';
 import ContentHelperFunctions from './ContentHelperFunctions.js';
 import { ContentWorkingCopyEntity } from './ContentWorkingCopyEntity.js';
 
+export const WebLinkTypes = {
+	Default: 'default',
+	OneDrive: 'onedrive-link',
+	GoogleDrive: 'googledrive-link'
+};
+
 /**
  * ContentWebLinkEntity class representation of a d2l content-weblink entity.
  */
@@ -59,6 +65,28 @@ export class ContentWebLinkEntity extends ContentWorkingCopyEntity {
 	 */
 	url() {
 		return this._entity && this._entity.properties && this._entity.properties.url;
+	}
+
+	/**
+	 * @returns {string} The type of weblink
+	 */
+	type() {
+		if (this._entity) {
+			if (this._entity.hasClass(WebLinkTypes.GoogleDrive)) {
+				return WebLinkTypes.GoogleDrive;
+			} else if (this._entity.hasClass(WebLinkTypes.OneDrive)) {
+				return WebLinkTypes.OneDrive;
+			}
+		}
+
+		return WebLinkTypes.Default;
+	}
+
+	/**
+	 * @returns {boolean} Whether the picker dialog is enabled for this type of weblink
+	 */
+	isPickerEnabled() {
+		return this._entity && this._entity.properties && this._entity.properties.isPickerEnabled;
 	}
 
 	/**

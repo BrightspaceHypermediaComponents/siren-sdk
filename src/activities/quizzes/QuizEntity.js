@@ -592,6 +592,22 @@ export class QuizEntity extends Entity {
 		return this._entity.getSubEntityByRel(Rels.Quizzes.submissionViews).href;
 	}
 
+	/**
+	 * @returns {bool} Whether or not the Quiz has completed attempts
+	 */
+	hasAttemptsCompleted() {
+		if (!this._entity) {
+			return false;
+		}
+
+		const subEntity = this._entity.getSubEntityByRel(Rels.Quizzes.hasAttempts);
+		if (!subEntity) {
+			return false;
+		}
+
+		return subEntity.hasClass(Classes.quizzes.attempts.hasAttempts);
+	}
+
 	async save(quiz) {
 		if (!quiz) return;
 		const updateNameAction = this.canEditName() ? this._formatUpdateNameAction(quiz) : null;

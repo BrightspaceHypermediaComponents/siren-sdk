@@ -94,6 +94,16 @@ export class ContentLorActivityEntity extends ContentEntity {
 	}
 
 	/**
+	 * This was added to address LOR objects that are in a course but belong to a LOR on another instance.
+	 * This means the LOR info will not be able to be found by the serializer, and the page needs to handle
+	 * all the missing info.
+	 * @returns {boolean} Whether or not the LOR object was found
+	 */
+	hasLorInfo() {
+		return this._entity && this._entity.properties && this._entity.properties.hasLorInfo;
+	}
+
+	/**
 	 * Updates the LOR activty to have the given title
 	 * @param {string} title Title to set on the LOR activity
 	 */
