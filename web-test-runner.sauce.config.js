@@ -9,7 +9,8 @@ const sauceLabsOptions = {
 };
 
 const sauceLabsCapabilities = {
-	name: 'd2l-image-selector unit tests',
+	name: 'siren-sdk unit tests',
+
 	// eslint-disable-next-line no-undef
 	build: `d2l-image-selector ${process.env.GITHUB_REF ?? 'local'} build ${process.env.GITHUB_RUN_NUMBER ?? ''}`
 };
