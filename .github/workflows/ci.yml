@@ -17,6 +17,9 @@ jobs:
         run: npm run test:lint
       - name: Unit Tests (Polymer)
         run: npm run test:polymer:sauce
+        env:
+          SAUCE_ACCESS_KEY: ${{ secrets.SAUCE_ACCESS_KEY_DESIRE2LEARN }}
+          SAUCE_USERNAME: Desire2Learn
       - name: Unit Tests (Web Test Runner)
         run: npx web-test-runner --config web-test-runner.sauce.config.js
         env:
