@@ -34,10 +34,9 @@ describe('Simple Entity Mixin Test', () => {
 	let sandbox, organizationEntityUpdated;
 
 	beforeEach(() => {
-
 		sandbox = sinon.createSandbox();
 
-		const organizationEntity = {
+		var organizationEntity = {
 			properties: {
 				name: 'Course Name',
 				code: 'SCI100',
