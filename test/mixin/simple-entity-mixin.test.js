@@ -1,6 +1,9 @@
 import 'd2l-fetch/d2l-fetch.js';
+import 'siren-parser/global.js';
+import '../utility/siren-sdk-simple-organization.js';
 import { html, fixture, expect } from '@open-wc/testing';
 import { AsyncStateEvent } from '@brightspace-ui/core/helpers/asyncStateEvent.js';
+import sinon from 'sinon';
 
 window.D2L.Siren.WhitelistBehavior._testMode(true);
 
@@ -24,17 +27,17 @@ async function load(el, href) {
 	await loading;
 }
 
-describe('Simple Entity Mixin Test', function() {
+describe('Simple Entity Mixin Test', () => {
 
 	// this.timeout(180000);
 
-	let sandbox,
-		organizationEntityUpdated;
+	let sandbox, organizationEntityUpdated;
 
 	beforeEach(() => {
+
 		sandbox = sinon.createSandbox();
 
-		var organizationEntity = {
+		const organizationEntity = {
 			properties: {
 				name: 'Course Name',
 				code: 'SCI100',
