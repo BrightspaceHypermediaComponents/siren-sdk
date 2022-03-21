@@ -12,7 +12,7 @@ const sauceLabsCapabilities = {
 	name: 'siren-sdk unit tests',
 
 	// eslint-disable-next-line no-undef
-	build: `d2l-image-selector ${process.env.GITHUB_REF ?? 'local'} build ${process.env.GITHUB_RUN_NUMBER ?? ''}`
+	build: `siren-sdk ${process.env.GITHUB_REF ?? 'local'} build ${process.env.GITHUB_RUN_NUMBER ?? ''}`
 };
 
 const sauceLabsLauncher = createSauceLabsLauncher(
