@@ -22,6 +22,10 @@ describe('GradeSchemeLinkedEntity', () => {
 			expect(entity.href()).to.equal('https://5096e993-e418-4681-81c5-cae06b019fbb.grades.api.dev.brightspace.com/organizations/6613/grade-schemes/1');
 		});
 
+		it('gets schemeId', () => {
+			expect(entity.schemeId()).to.equal(1);
+		});
+
 		it('can choose scheme', () => {
 			expect(entity.canChooseScheme()).to.be.true;
 		});
@@ -58,6 +62,10 @@ describe('GradeSchemeLinkedEntity', () => {
 
 		it('gets href', () => {
 			expect(entity.href()).to.equal('https://5096e993-e418-4681-81c5-cae06b019fbb.grades.api.dev.brightspace.com/organizations/6613/grade-schemes/2');
+		});
+
+		it('schemeId is not serialized', () => {
+			expect(entity.schemeId()).to.be.undefined;
 		});
 
 		it('can not choose scheme', () => {
