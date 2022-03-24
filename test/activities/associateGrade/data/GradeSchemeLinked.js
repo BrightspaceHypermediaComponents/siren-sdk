@@ -22,6 +22,9 @@ export const gradeSchemeLinked = {
 				]
 			}
 		],
+		'properties': {
+			'gradeSchemeId': 1
+		},
 		'links': [
 			{
 				'rel': [
