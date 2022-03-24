@@ -14,6 +14,12 @@ export class GradeSchemeLinkedEntity extends Entity {
 		}
 		return this._entity.getLinkByRel(Rels.Grades.scheme).href;
 	}
+	/**
+	 * @returns {number} Grade scheme's id, will be -1 when default scheme is chosen
+	 */
+	schemeId() {
+		return this._entity && this._entity.properties && this._entity.properties.gradeSchemeId;
+	}
 
 	canChooseScheme() {
 		if (!this._entity) {
