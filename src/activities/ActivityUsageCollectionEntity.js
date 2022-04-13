@@ -90,8 +90,32 @@ export class ActivityUsageCollectionEntity extends Entity {
 		return this._entity.hasActionByName(Actions.activities.activityUsageCollection.setCollectionPaging);
 	}
 
+	equals(activityUsageCollection) {
+		const initialSelectedPagingType = this.getSelectedPagingType();
+		const { selectedPagingType : currentSelectedPagingType } = activityUsageCollection;
+		return currentSelectedPagingType === initialSelectedPagingType;
+	}
+
 	_getSetCollectionPagingAction() {
 		return this.canUpdatePagingType() && this._entity.getActionByName(Actions.activities.activityUsageCollection.setCollectionPaging);
+	}
+
+	async save(activityUsageCollection) {
+		if (!this.canUpdatePagingType() || !activityUsageCollection) return;
+
+		const initialSelectedPagingType = this.getSelectedPagingType();
+		const { selectedPagingType : currentSelectedPagingType } = activityUsageCollection;
+		if (currentSelectedPagingType !== initialSelectedPagingType) {
+			const setCollectionPagingAction = this._getSetCollectionPagingAction();
+
+			if (!setCollectionPagingAction) return;
+
+			const fields = [
+				{ name: 'pagingType', value: currentSelectedPagingType }
+			];
+
+			return await performSirenAction(this._token, setCollectionPagingAction, fields);
+		}
 	}
 }
 
