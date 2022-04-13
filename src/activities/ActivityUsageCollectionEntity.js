@@ -1,5 +1,6 @@
 import { Entity } from '../es6/Entity.js';
 import { Rels } from '../hypermedia-constants';
+import { Actions } from '../hypermedia-constants';
 import { ActivityUsageEntity } from './ActivityUsageEntity.js';
 import { performSirenAction } from '../es6/SirenAction.js';
 
@@ -49,6 +50,48 @@ export class ActivityUsageCollectionEntity extends Entity {
 		});
 		this._entity.entities = newEntityList;
 		this.update(this._entity);
+	}
+
+	/*
+	 * @returns {String} Gets selected paging type's string id
+	*/
+	getSelectedPagingType() {
+		const pagingTypeOptions = this.getPagingTypeOptions();
+
+		if (!pagingTypeOptions) return;
+
+		const selectedOption = pagingTypeOptions.find(option => option.selected);
+
+		return selectedOption && selectedOption.value;
+	}
+
+	/*
+	 * @returns {Array} Gets all available paging type objects
+	*/
+	getPagingTypeOptions() {
+		const entity = this._entity;
+
+		if (!entity) return;
+
+		const action = this._getSetCollectionPagingAction();
+		const fields = action && action.getFieldByName('pagingType');
+
+		return fields && fields.value;
+	}
+
+	/*
+	 * @returns {Boolean} Whether or not a user can edit paging type
+	*/
+	canUpdatePagingType() {
+		if (!this._entity) {
+			return;
+		}
+
+		return this._entity.hasActionByName(Actions.activities.activityUsageCollection.setCollectionPaging);
+	}
+
+	_getSetCollectionPagingAction() {
+		return this.canUpdatePagingType() && this._entity.getActionByName(Actions.activities.activityUsageCollection.setCollectionPaging);
 	}
 }
 
