@@ -64,6 +64,13 @@ export class ContentFileEntity extends ContentWorkingCopyEntity {
 	}
 
 	/**
+	 * @returns {string|undefined} Name of the content-file item as it exists on disk
+	 */
+	name() {
+		return this._entity && this._entity.properties && this._entity.properties.name;
+	}
+
+	/**
 	 * Updates the file to have the given description
 	 * @param {string} richText rich text description to set on the file
 	 */
