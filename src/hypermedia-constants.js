@@ -583,6 +583,9 @@ export const Actions = {
 			getSchemes: 'get-schemes',
 			chooseScheme: 'choose-scheme'
 		},
+		activityUsageCollection: {
+			setCollectionPaging: 'set-collection-paging',
+		},
 		save: 'save',
 		filterWorkToDo: 'filter-work-to-do'
 	},
