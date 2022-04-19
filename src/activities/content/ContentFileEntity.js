@@ -121,6 +121,24 @@ export class ContentFileEntity extends ContentWorkingCopyEntity {
 	}
 
 	/**
+	 * Replaces the file associated with the activity
+	 */
+	async replaceFile(stuff) {
+		console.log('replacing file!');
+		if (!this._entity) {
+			return;
+		}
+		const action = this._entity.getActionByName(Actions.files.deleteFile);
+		if (!action) {
+			return;
+		}
+
+		console.log({stuff});
+
+		await performSirenAction(this._token, action);
+	}
+
+	/**
 	 * Checks if content file properties passed in match what is currently stored
 	 * @param {object} contentFile Object containing file specific properties
 	 */
