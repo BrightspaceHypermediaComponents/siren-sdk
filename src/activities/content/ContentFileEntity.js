@@ -128,7 +128,7 @@ export class ContentFileEntity extends ContentWorkingCopyEntity {
 		if (!this._entity) {
 			return;
 		}
-		const action = this._entity.getActionByName(Actions.files.deleteFile);
+		const action = this._entity.getActionByName(Actions.files.replaceFile);
 		if (!action) {
 			return;
 		}
