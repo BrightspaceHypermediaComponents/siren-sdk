@@ -41,6 +41,13 @@ export class ContentLTILinkEntity extends Entity {
 	}
 
 	/**
+	 * @returns {string|undefined} Name of the content-ltilink item according to the LTI tool
+	 */
+	 ltiTitle() {
+		return this._entity && this._entity.properties && this._entity.properties.ltiTitle;
+	}
+
+	/**
 	 * @returns {string|undefined} Title of the content-ltilink item
 	 */
 	title() {
