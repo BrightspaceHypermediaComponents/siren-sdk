@@ -48,7 +48,7 @@ export class ContentLTILinkEntity extends Entity {
 	}
 
 	/**
-	 * @returns {boolean} external resource value (i.e. open in new tab or not)
+	 * @returns {boolean} Entity supports multiple grades
 	 */
 	supportMultipleGrades() {
 		return this._entity && this._entity.properties && this._entity.properties.supportMultipleGrades;
