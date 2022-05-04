@@ -584,11 +584,27 @@ export class ActivityUsageEntity extends Entity {
 	}
 
 	/**
-	* @returns {string} URL of the scoring API, for managing activity's scoreOutOf
-	*/
+	 * @returns {Number} Count of Scoring API URLs attached to this activity
+	 */
+	 scoringCount() {
+		const scoringHrefs = this.scoringHrefs();
+		return scoringHrefs ? scoringHrefs.length : 0;
+	}
+
+	/**
+	 * @returns {string} URL of the scoring API, for managing activity's scoreOutOf
+	 */
 	scoringHref() {
 		const scoreOutOfSubEntity = this._entity && this._entity.getSubEntityByRel(Rels.Activities.scoreOutOf);
 		return scoreOutOfSubEntity && scoreOutOfSubEntity.href;
+	}
+
+	/**
+	 * @returns {Array} Scoring API URLs attached to this activity, for managing the activity's grades' scoreOutOf
+	 */
+	scoringHrefs() {
+		const scoreOutOfSubEntities = this._entity && this._entity.getSubEntitiesByRel(Rels.Activities.scoreOutOf);
+		return scoreOutOfSubEntities && scoreOutOfSubEntities.map(entity => (entity.href));
 	}
 
 	async validate(activity) {
