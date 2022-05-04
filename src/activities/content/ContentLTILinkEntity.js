@@ -48,6 +48,13 @@ export class ContentLTILinkEntity extends Entity {
 	}
 
 	/**
+	 * @returns {boolean} Entity supports multiple grades
+	 */
+	supportMultipleGrades() {
+		return this._entity && this._entity.properties && this._entity.properties.supportMultipleGrades;
+	}
+
+	/**
 	 * @returns {string|undefined} Title of the content-ltilink item
 	 */
 	title() {
