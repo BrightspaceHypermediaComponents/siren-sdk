@@ -30,7 +30,7 @@ export class ScoringEntity extends Entity {
 	/**
 	 * @returns {Number} Activity's grade object ID, if there is a grade association
 	 */
-	 gradeObjectId() {
+	gradeObjectId() {
 		return this._entity && this._entity.properties && this._entity.properties.gradeObjectId;
 	}
 

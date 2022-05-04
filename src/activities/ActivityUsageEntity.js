@@ -586,7 +586,7 @@ export class ActivityUsageEntity extends Entity {
 	/**
 	 * @returns {Number} Count of Scoring API URLs attached to this activity
 	 */
-	 scoringCount() {
+	scoringCount() {
 		const scoringHrefs = this.scoringHrefs();
 		return scoringHrefs ? scoringHrefs.length : 0;
 	}
