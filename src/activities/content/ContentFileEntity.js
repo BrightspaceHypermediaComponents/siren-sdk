@@ -136,7 +136,7 @@ export class ContentFileEntity extends ContentWorkingCopyEntity {
 
 		const fields = [
 			{ name: 'fileId', value: fileId },
-			{ name: 'fileSystemType', value: fileSystemType}
+			{ name: 'fileSystemType', value: fileSystemType }
 		];
 
 		await performSirenAction(this._token, action, fields);
