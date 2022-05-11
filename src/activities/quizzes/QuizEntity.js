@@ -1,7 +1,7 @@
-import { Entity } from '../../es6/Entity';
-import { Actions, Rels, Classes } from '../../hypermedia-constants';
-import { performSirenAction, performSirenActions } from '../../es6/SirenAction';
-import { ActivityTypeEntity } from './types/ActivityTypeEntity';
+import { Entity } from '../../es6/Entity.js';
+import { Actions, Rels, Classes } from '../../hypermedia-constants.js';
+import { performSirenAction, performSirenActions } from '../../es6/SirenAction.js';
+import { ActivityTypeEntity } from './types/ActivityTypeEntity.js';
 
 /**
  * QuizEntity class representation of a d2l Quiz.

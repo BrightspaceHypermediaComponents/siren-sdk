@@ -1,4 +1,4 @@
-import { Rels } from '../hypermedia-constants';
+import { Rels } from '../hypermedia-constants.js';
 /**
  * A d2l Notification Entity is a representation of a notification that has a type and unread count
  */

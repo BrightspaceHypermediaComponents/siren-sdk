@@ -1,6 +1,6 @@
-import { Entity } from '../../es6/Entity';
-import { Actions, Rels, Classes } from '../../hypermedia-constants';
-import { performSirenAction } from '../../es6/SirenAction';
+import { Entity } from '../../es6/Entity.js';
+import { Actions, Rels, Classes } from '../../hypermedia-constants.js';
+import { performSirenAction } from '../../es6/SirenAction.js';
 
 /** Bridge entity from legacy <-> hypermedia. */
 export class LegacyConditions extends Entity {

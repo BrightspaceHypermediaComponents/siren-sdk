@@ -1,4 +1,4 @@
-import { Entity } from '../es6/Entity';
+import { Entity } from '../es6/Entity.js';
 
 /**
  * Entity representation of a collection of grade candidates

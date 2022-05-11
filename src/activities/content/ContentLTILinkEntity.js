@@ -1,6 +1,6 @@
-import { Entity } from '../../es6/Entity';
-import { Actions, Classes, Rels } from '../../hypermedia-constants';
-import { performSirenAction } from '../../es6/SirenAction';
+import { Entity } from '../../es6/Entity.js';
+import { Actions, Classes, Rels } from '../../hypermedia-constants.js';
+import { performSirenAction } from '../../es6/SirenAction.js';
 import ContentHelperFunctions from './ContentHelperFunctions.js';
 
 /**

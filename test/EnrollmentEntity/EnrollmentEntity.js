@@ -1,5 +1,5 @@
 /* global describe it expect*/
-import { EnrollmentEntity } from '../../src/enrollments/EnrollmentEntity';
+import { EnrollmentEntity } from '../../src/enrollments/EnrollmentEntity.js';
 
 describe('EnrollmentEntity', () => {
 	var enrollmentEntity, action;

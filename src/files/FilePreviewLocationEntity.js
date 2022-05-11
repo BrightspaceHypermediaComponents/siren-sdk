@@ -1,4 +1,4 @@
-import { Entity } from '../es6/Entity';
+import { Entity } from '../es6/Entity.js';
 
 /**
  * FilePreviewLocationEntity class representation of file preview location

@@ -1,5 +1,5 @@
-import { recommendedQuizTiming, enforcedQuizTiming } from '../data/timing/EditableQuizTimingEntity';
-import { nonEditableRecommendedQuizTiming, nonEditableEnforcedQuizTiming } from '../data/timing/NonEditableQuizTimingEntity';
+import { recommendedQuizTiming, enforcedQuizTiming } from '../data/timing/EditableQuizTimingEntity.js';
+import { nonEditableRecommendedQuizTiming, nonEditableEnforcedQuizTiming } from '../data/timing/NonEditableQuizTimingEntity.js';
 import { QuizTimingEntity } from '../../../../src/activities/quizzes/timing/QuizTimingEntity.js';
 import { Classes } from '../../../../src/hypermedia-constants.js';
 

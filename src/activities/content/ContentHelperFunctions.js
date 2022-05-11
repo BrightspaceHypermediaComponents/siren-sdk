@@ -1,4 +1,4 @@
-import { Classes } from '../../hypermedia-constants';
+import { Classes } from '../../hypermedia-constants.js';
 
 const ContentHelperFunctions = {
 	getHrefFromRel: (rel, entity) => {

@@ -1,5 +1,5 @@
-import { Classes } from '../../../hypermedia-constants';
-import { Entity } from '../../../es6/Entity';
+import { Classes } from '../../../hypermedia-constants.js';
+import { Entity } from '../../../es6/Entity.js';
 
 /**
  * QuizSubmissionViewLinkedEntity class representation of a d2l Submission View linked entity.

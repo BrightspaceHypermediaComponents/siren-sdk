@@ -1,6 +1,6 @@
-import { Entity } from '../es6/Entity';
-import { performSirenAction } from '../es6/SirenAction';
-import { Rels } from '../hypermedia-constants';
+import { Entity } from '../es6/Entity.js';
+import { performSirenAction } from '../es6/SirenAction.js';
+import { Rels } from '../hypermedia-constants.js';
 
 /**
  * Entity representation of a collection of attachments

@@ -1,6 +1,6 @@
-import { Actions, Classes } from '../../../hypermedia-constants';
+import { Actions, Classes } from '../../../hypermedia-constants.js';
 import { performSirenAction, performSirenActions } from '../../../es6/SirenAction.js';
-import { Entity } from '../../../es6/Entity';
+import { Entity } from '../../../es6/Entity.js';
 
 const SHOW_QUESTION_TYPES = [
 	Classes.quizzes.submissionView.showQuestions.allQuestions,

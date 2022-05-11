@@ -1,6 +1,6 @@
 import { Entity } from '../es6/Entity.js';
-import { Rels } from '../hypermedia-constants';
-import { Actions } from '../hypermedia-constants';
+import { Rels } from '../hypermedia-constants.js';
+import { Actions } from '../hypermedia-constants.js';
 import { ActivityUsageEntity } from './ActivityUsageEntity.js';
 import { performSirenAction } from '../es6/SirenAction.js';
 

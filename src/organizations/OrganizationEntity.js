@@ -1,10 +1,10 @@
 
-import { Actions, Classes, Rels } from '../hypermedia-constants';
+import { Actions, Classes, Rels } from '../hypermedia-constants.js';
 import { ActivityUsageEntity } from '../activities/ActivityUsageEntity.js';
 import { Entity } from '../es6/Entity.js';
 import { SimpleEntity } from '../es6/SimpleEntity.js';
-import { performSirenAction } from '../es6/SirenAction';
-import { NotificationCollectionEntity } from '../notifications/NotificationCollectionEntity';
+import { performSirenAction } from '../es6/SirenAction.js';
+import { NotificationCollectionEntity } from '../notifications/NotificationCollectionEntity.js';
 import { SequenceEntity } from '../sequences/SequenceEntity.js';
 
 import { AlertsEntity } from './AlertsEntity.js';

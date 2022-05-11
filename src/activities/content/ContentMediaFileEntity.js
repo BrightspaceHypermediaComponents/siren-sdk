@@ -1,6 +1,6 @@
 import { ContentFileEntity } from './ContentFileEntity.js';
-import ContentHelperFunctions from './ContentHelperFunctions';
-import { Rels } from '../../hypermedia-constants';
+import ContentHelperFunctions from './ContentHelperFunctions.js';
+import { Rels } from '../../hypermedia-constants.js';
 
 /**
  *  ContentMediaFileEntity class representation of a d2l audio or video content-file entity.
