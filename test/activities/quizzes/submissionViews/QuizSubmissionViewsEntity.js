@@ -1,5 +1,5 @@
-import { editableCollection, nonEditableCollection } from '../data/submissionViews/SubmissionViewsEntity';
-import { QuizSubmissionViewsEntity } from '../../../../src/activities/quizzes/submissionViews/QuizSubmissionViewsEntity';
+import { editableCollection, nonEditableCollection } from '../data/submissionViews/SubmissionViewsEntity.js';
+import { QuizSubmissionViewsEntity } from '../../../../src/activities/quizzes/submissionViews/QuizSubmissionViewsEntity.js';
 
 describe('QuizSubmissionViewsEntity', () => {
 	var editableEntity, nonEditableEntity;

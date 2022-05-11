@@ -1,5 +1,5 @@
 import { Entity } from '../es6/Entity.js';
-import { Rels } from '../hypermedia-constants';
+import { Rels } from '../hypermedia-constants.js';
 import { OrganizationEntity } from '../organizations/OrganizationEntity.js';
 
 export const sequenceClasses = {

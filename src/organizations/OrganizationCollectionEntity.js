@@ -1,5 +1,5 @@
 import { Entity } from '../es6/Entity.js';
-import { OrganizationEntity } from './OrganizationEntity';
+import { OrganizationEntity } from './OrganizationEntity.js';
 import { performSirenAction } from '../es6/SirenAction.js';
 
 const rels = {

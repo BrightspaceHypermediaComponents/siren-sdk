@@ -1,5 +1,5 @@
 /* global describe it expect*/
-import { UserSettingsEntity } from '../../src/userSettings/UserSettingsEntity';
+import { UserSettingsEntity } from '../../src/userSettings/UserSettingsEntity.js';
 
 describe('UserSettingsEntity', () => {
 	var entity, action;

@@ -1,5 +1,5 @@
-import { Entity } from '../es6/Entity';
-import { performSirenAction } from '../es6/SirenAction';
+import { Entity } from '../es6/Entity.js';
+import { performSirenAction } from '../es6/SirenAction.js';
 
 /**
  * AttachmentEntity class representation of an attachment (link or file)

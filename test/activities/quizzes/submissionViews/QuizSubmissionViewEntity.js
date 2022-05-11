@@ -1,5 +1,5 @@
-import { editablePrimaryView, editableSecondaryView, nonEditablePrimaryView, nonEditableSecondaryView } from '../data/submissionViews/SubmissionViewEntity';
-import { QuizSubmissionViewEntity } from '../../../../src/activities/quizzes/submissionViews/QuizSubmissionViewEntity';
+import { editablePrimaryView, editableSecondaryView, nonEditablePrimaryView, nonEditableSecondaryView } from '../data/submissionViews/SubmissionViewEntity.js';
+import { QuizSubmissionViewEntity } from '../../../../src/activities/quizzes/submissionViews/QuizSubmissionViewEntity.js';
 
 describe('QuizSubmissionViewEntity', () => {
 	var editablePrimaryViewEntity, editableSecondaryViewEntity, nonEditablePrimaryViewEntity, nonEditableSecondaryViewEntity;

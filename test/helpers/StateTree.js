@@ -1,5 +1,5 @@
 /* global describe it expect*/
-import { StateTree } from '../../src/helpers/StateTree';
+import { StateTree } from '../../src/helpers/StateTree.js';
 
 describe('StateTree', () => {
 	describe('Tests for removeAllChildren', () => {

@@ -1,4 +1,4 @@
-import { Entity } from '../../es6/Entity';
+import { Entity } from '../../es6/Entity.js';
 
 /**
  * ContentHtmlFileTemplatesEntity class representation of an html file templates entity.

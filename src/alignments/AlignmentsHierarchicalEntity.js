@@ -1,5 +1,5 @@
-import { Actions } from '../hypermedia-constants';
-import { Entity } from '../es6/Entity';
+import { Actions } from '../hypermedia-constants.js';
+import { Entity } from '../es6/Entity.js';
 
 /**
  * Entity representation of hierarchical alignments

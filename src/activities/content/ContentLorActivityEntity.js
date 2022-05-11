@@ -1,6 +1,6 @@
-import { Actions, Classes } from '../../hypermedia-constants';
-import { performSirenAction } from '../../es6/SirenAction';
-import { ContentEntity } from './ContentEntity';
+import { Actions, Classes } from '../../hypermedia-constants.js';
+import { performSirenAction } from '../../es6/SirenAction.js';
+import { ContentEntity } from './ContentEntity.js';
 /**
  * ContentlorActivityEntity class representation of a d2l content-lor-package entity.
  */

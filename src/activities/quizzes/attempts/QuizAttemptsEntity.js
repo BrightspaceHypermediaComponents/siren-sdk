@@ -1,6 +1,6 @@
-import { Entity } from '../../../es6/Entity';
-import { Actions, Classes } from '../../../hypermedia-constants';
-import { performSirenAction } from '../../../es6/SirenAction';
+import { Entity } from '../../../es6/Entity.js';
+import { Actions, Classes } from '../../../hypermedia-constants.js';
+import { performSirenAction } from '../../../es6/SirenAction.js';
 
 /**
  * AttemptsEntity class representation of a d2l Quiz Attempt.

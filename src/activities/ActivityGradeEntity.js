@@ -1,4 +1,4 @@
-import { Entity } from '../es6/Entity';
+import { Entity } from '../es6/Entity.js';
 
 /**
  * ActivityGrade: class representation of a grade for an activity

@@ -1,5 +1,5 @@
 /* global describe it expect*/
-import { PromotedSearchEntity } from '../../src/promotedSearch/PromotedSearchEntity';
+import { PromotedSearchEntity } from '../../src/promotedSearch/PromotedSearchEntity.js';
 
 describe('PromotedSearchEntity', () => {
 	var entity, action;

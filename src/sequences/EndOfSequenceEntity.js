@@ -1,4 +1,4 @@
-import { Entity } from '../es6/Entity';
+import { Entity } from '../es6/Entity.js';
 
 export class EndOfSequenceActivityEntity extends Entity {
 	/**
