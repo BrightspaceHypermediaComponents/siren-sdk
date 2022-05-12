@@ -44,8 +44,7 @@ export class ContentLTILinkEntity extends Entity {
 	 * @returns {boolean} Whether or not LTI grades is enabled
 	 */
 	isLtiGradesFeatureEnabled() {
-		return this._entity && this._entity.properties
-		&& this._entity.properties.isLtiGradesFeatureEnabled;
+		return this._entity && this._entity.properties && this._entity.properties.isLtiGradesFeatureEnabled;
 	}
 
 	/**
