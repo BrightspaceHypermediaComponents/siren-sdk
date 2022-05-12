@@ -1,6 +1,6 @@
-import { Actions, Rels } from '../hypermedia-constants';
-import { Entity } from '../es6/Entity';
-import { performSirenAction } from '../es6/SirenAction';
+import { Actions, Rels } from '../hypermedia-constants.js';
+import { Entity } from '../es6/Entity.js';
+import { performSirenAction } from '../es6/SirenAction.js';
 
 /**
  * FilesHomeEntity class representation of organization files

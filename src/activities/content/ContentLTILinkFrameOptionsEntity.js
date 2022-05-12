@@ -1,4 +1,4 @@
-import { Entity } from '../../es6/Entity';
+import { Entity } from '../../es6/Entity.js';
 
 /**
  * ContentLTILinkFrameOptionsEntity class representation of a d2l frame-options entity.

@@ -1,6 +1,6 @@
 
 /* global describe it expect sinon*/
-import { ConsortiumRootEntity } from '../../src/consortium/ConsortiumRootEntity';
+import { ConsortiumRootEntity } from '../../src/consortium/ConsortiumRootEntity.js';
 
 const consortiumRoot = {'class':['consortium'], 'actions':[{'href':'https://7f5bdf4f-ac6d-41e4-a614-4c6a0a938bff.consortium.api.proddev.d2l/tokens', 'name':'consortium-tokens', 'method':'POST'}]};
 

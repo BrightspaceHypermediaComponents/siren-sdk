@@ -1,6 +1,6 @@
 /* global fetchMock */
 
-import { AssociateGradeEntity } from '../../../src/activities/associateGrade/AssociateGradeEntity';
+import { AssociateGradeEntity } from '../../../src/activities/associateGrade/AssociateGradeEntity.js';
 import { getFormData } from '../../utility/test-helpers.js';
 import { GradeCategoryLinkedEntity } from '../../../src/activities/associateGrade/GradeCategoryLinkedEntity.js';
 import { gradeCategoryLinked } from './data/GradeCategoryLinked.js';

@@ -1,5 +1,5 @@
-import { Entity } from '../../es6/Entity';
-import { Actions, Classes, Rels } from '../../hypermedia-constants';
+import { Entity } from '../../es6/Entity.js';
+import { Actions, Classes, Rels } from '../../hypermedia-constants.js';
 import { performSirenAction } from '../../es6/SirenAction.js';
 import { GradeCategoryCollectionEntity } from './GradeCategoryCollectionEntity.js';
 import { GradeCandidateCollectionEntity } from '../GradeCandidateCollectionEntity.js';

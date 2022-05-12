@@ -121,6 +121,28 @@ export class ContentFileEntity extends ContentWorkingCopyEntity {
 	}
 
 	/**
+	 * Replaces the file associated with the activity
+	 * @param {string} fileId unique identifier for the chosen file
+	 * @param {string} fileSystemType identifier for determining how the file is stored
+	 */
+	async replaceFile(fileId, fileSystemType) {
+		if (!this._entity || !fileId || !fileSystemType) {
+			return;
+		}
+		const action = this._entity.getActionByName(Actions.files.replaceFile);
+		if (!action) {
+			return;
+		}
+
+		const fields = [
+			{ name: 'fileId', value: fileId },
+			{ name: 'fileSystemType', value: fileSystemType }
+		];
+
+		await performSirenAction(this._token, action, fields);
+	}
+
+	/**
 	 * Checks if content file properties passed in match what is currently stored
 	 * @param {object} contentFile Object containing file specific properties
 	 */

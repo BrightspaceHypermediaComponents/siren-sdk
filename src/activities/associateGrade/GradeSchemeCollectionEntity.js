@@ -1,5 +1,5 @@
 import { Classes } from '../../hypermedia-constants.js';
-import { Entity } from '../../es6/Entity';
+import { Entity } from '../../es6/Entity.js';
 
 /**
  * Entity representation of a collection of grade schemes

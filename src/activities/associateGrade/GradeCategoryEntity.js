@@ -1,4 +1,4 @@
-import { Entity } from '../../es6/Entity';
+import { Entity } from '../../es6/Entity.js';
 
 /**
  * GradeCategoryEntity class representation of a grade category

@@ -1,4 +1,4 @@
-import { Classes } from '../hypermedia-constants';
+import { Classes } from '../hypermedia-constants.js';
 import { Entity } from '../es6/Entity.js';
 
 export class RubricEntity extends Entity {

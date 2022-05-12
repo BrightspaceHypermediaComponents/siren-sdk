@@ -1,6 +1,6 @@
-import { Entity } from '../es6/Entity';
-import { NotificationEntity } from './NotificationEntity';
-import { Rels } from '../hypermedia-constants';
+import { Entity } from '../es6/Entity.js';
+import { NotificationEntity } from './NotificationEntity.js';
+import { Rels } from '../hypermedia-constants.js';
 /**
  * A collection of {@link NotificationEntity | Notification Entities}
  */

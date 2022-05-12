@@ -1,6 +1,6 @@
-import { Actions } from '../hypermedia-constants';
-import { Entity } from '../es6/Entity';
-import { performSirenAction } from '../es6/SirenAction';
+import { Actions } from '../hypermedia-constants.js';
+import { Entity } from '../es6/Entity.js';
+import { performSirenAction } from '../es6/SirenAction.js';
 
 /**
  * Entity representation of a collection of alignments

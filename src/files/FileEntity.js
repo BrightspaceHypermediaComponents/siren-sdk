@@ -1,4 +1,4 @@
-import { Entity } from '../es6/Entity';
+import { Entity } from '../es6/Entity.js';
 
 /**
  * FileEntity class representation of a d2l content file entity.

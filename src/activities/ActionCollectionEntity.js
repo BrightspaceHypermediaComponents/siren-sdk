@@ -1,7 +1,7 @@
 import { SelflessEntity } from '../es6/SelflessEntity.js';
-import { Rels } from '../hypermedia-constants';
+import { Rels } from '../hypermedia-constants.js';
 import { ActivityUsageEntity } from './ActivityUsageEntity.js';
-import { performSirenAction } from '../es6/SirenAction';
+import { performSirenAction } from '../es6/SirenAction.js';
 
 /**
  * ActionCollection Entity representation of a D2L Action Collection response

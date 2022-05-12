@@ -684,8 +684,8 @@ export const Actions = {
 	},
 	files: {
 		filePreviewLocation: 'file-preview-location',
-		deleteFile: 'delete-content-file'
-
+		deleteFile: 'delete-content-file',
+		replaceFile: 'replace-content-file'
 	},
 	quizzes: {
 		updateName: 'update-name',

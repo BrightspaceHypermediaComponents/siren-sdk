@@ -1,6 +1,6 @@
 import { AssignmentEntity } from './AssignmentEntity.js';
 import { Entity } from '../../es6/Entity.js';
-import { Rels } from '../../hypermedia-constants';
+import { Rels } from '../../hypermedia-constants.js';
 
 /**
  * AssignmentActivityUsageEntity class representation of a d2l AssignmentActivityUsage.

@@ -3,8 +3,8 @@
 import { QuizEntity } from '../../../src/activities/quizzes/QuizEntity.js';
 import { editableQuiz } from './data/EditableQuiz.js';
 import { getFormData } from '../../utility/test-helpers.js';
-import { nonEditableQuiz } from './data/NoneditableQuiz';
-import { workingCopyQuiz } from './data/WorkingCopyQuiz';
+import { nonEditableQuiz } from './data/NoneditableQuiz.js';
+import { workingCopyQuiz } from './data/WorkingCopyQuiz.js';
 
 describe('QuizEntity', () => {
 	var editableEntity, nonEditableEntity, workingCopyEntity;
