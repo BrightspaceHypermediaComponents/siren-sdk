@@ -26,6 +26,14 @@ export class ScoringEntity extends Entity {
 	autoPoints() {
 		return this._entity && this._entity.properties && this._entity.properties.autoPoints;
 	}
+
+	/**
+	 * @returns {Number} Activity's grade object ID, if there is a grade association
+	 */
+	gradeObjectId() {
+		return this._entity && this._entity.properties && this._entity.properties.gradeObjectId;
+	}
+
 	/**
 	 * @returns {bool} Whether or not the update score out of action is present
 	 */
