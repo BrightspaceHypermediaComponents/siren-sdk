@@ -6,6 +6,7 @@ import { ContentWorkingCopyEntity } from './ContentWorkingCopyEntity.js';
 export const WebLinkTypes = {
 	Default: 'default',
 	OneDrive: 'onedrive-link',
+	OneDriveLti: 'onedrivelti-link',
 	GoogleDrive: 'googledrive-link'
 };
 
@@ -76,6 +77,8 @@ export class ContentWebLinkEntity extends ContentWorkingCopyEntity {
 				return WebLinkTypes.GoogleDrive;
 			} else if (this._entity.hasClass(WebLinkTypes.OneDrive)) {
 				return WebLinkTypes.OneDrive;
+			} else if (this._entity.hasClass(WebLinkTypes.OneDriveLti)) {
+				return WebLinkTypes.OneDriveLti;
 			}
 		}
 
