@@ -14,8 +14,8 @@ export class AttachmentCollectionEntity extends Entity {
 	}
 
 	/**
- * @returns {Array} Returns all Attachment sub-entities hrefs from the attachments collection
- */
+	 * @returns {Array} Returns all Attachment sub-entities hrefs from the attachments collection
+	 */
 	getAttachmentEntityHrefs() {
 		const attachments = this.getAttachmentEntities();
 		const attachmentHrefs = attachments.map(attachment => {
@@ -35,6 +35,7 @@ export class AttachmentCollectionEntity extends Entity {
 		return this.canAddLinkAttachment()
 			|| this.canAddGoogleDriveLinkAttachment()
 			|| this.canAddOneDriveLinkAttachment()
+			|| this.canAddOneDriveLtiLinkAttachment()
 			|| this.canAddFileAttachment()
 			|| this.canAddVideoNoteAttachment()
 			|| this.canAddAudioNoteAttachment();
@@ -109,6 +110,27 @@ export class AttachmentCollectionEntity extends Entity {
 		}
 
 		const action = this._entity.getActionByName('add-onedrive-link');
+		await this._addLinkAttachment(action, name, href);
+	}
+
+	/**
+	 * @returns {bool} Returns true if the add-onedrivelti-link action is present on the entity
+	 */
+	canAddOneDriveLtiLinkAttachment() {
+		return this._entity.hasActionByName('add-onedrivelti-link');
+	}
+
+	/**
+	 * Adds a OneDrive LTI link attachment to the attachments collection
+	 * @param {string} name Name for the OneDrive LTI link attachment
+	 * @param {string} href URL of the OneDrive LTI link attachment
+	 */
+	async addOneDriveLtiLinkAttachment(name, href) {
+		if (!this.canAddOneDriveLtiLinkAttachment()) {
+			return;
+		}
+
+		const action = this._entity.getActionByName('add-onedrivelti-link');
 		await this._addLinkAttachment(action, name, href);
 	}
 
