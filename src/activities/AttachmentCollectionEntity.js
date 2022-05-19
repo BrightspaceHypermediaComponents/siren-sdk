@@ -193,8 +193,8 @@ export class AttachmentCollectionEntity extends Entity {
 	}
 
 	/**
-* @returns {string} Returns URL of the files home API
-*/
+	 * @returns {string} Returns URL of the files home API
+	 */
 	getFilesHref() {
 		if (!this._entity || !this._entity.hasLinkByRel(Rels.Files.files)) {
 			return;
