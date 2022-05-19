@@ -35,7 +35,7 @@ export const EntityMixinLit = superclass => class extends superclass {
 			this.href && this.token) {
 			this._getEntity();
 		}
-		return this.href && this.token;
+		return this.href && this.token ? super.shouldUpdate(changedProperties) : false;
 	}
 
 	_entityHasChanged(newValue, oldValue) {
