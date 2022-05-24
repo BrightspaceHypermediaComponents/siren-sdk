@@ -8,7 +8,7 @@ Options for getting started:
 
 * [Download the latest release](../../releases).
 * Clone the repo: `git clone https://github.com/BrightspaceHypermediaComponents/siren-sdk.git`.
-* Install with [npm](https://www.npmjs.com/): `npm install siren-sdk`.
+* Install with [npm](https://www.npmjs.com/): `npm install @brightspace-hmc/siren-sdk`.
 
 ## Versioning & Releasing
 
@@ -37,6 +37,7 @@ When a release is triggered, it will:
 * Update the version in `package.json`
 * Tag the commit
 * Create a GitHub release (including release notes)
+* Deploy a new package to NPM
 
 ### Releasing from Maintenance Branches
 
