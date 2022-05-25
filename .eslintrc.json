@@ -1,10 +1,10 @@
 {
-  "extends": "brightspace/polymer-3-config",
-  "globals": {
-    "fastdom": false,
-    "Promise": false
+  "extends": "brightspace/lit-config",
+  "rules": {
+    "no-prototype-builtins": 0,
+    "sort-class-members/sort-class-members": 0
   },
-  "env": {
-    "es6": true
+  "globals": {
+    "fastdom": false
   }
 }

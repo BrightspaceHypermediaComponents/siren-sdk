@@ -143,7 +143,7 @@ export class AttachmentCollectionEntity extends Entity {
 			fields = [
 				{
 					name: 'value',
-					value: JSON.stringify({ FileSystemType: fileSystemType, FileId: fileId})
+					value: JSON.stringify({ FileSystemType: fileSystemType, FileId: fileId })
 				}
 			];
 		}

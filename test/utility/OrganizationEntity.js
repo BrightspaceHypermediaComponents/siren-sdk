@@ -9,10 +9,6 @@ export const classes = {
 
 export class OrganizationEntity extends Entity {
 	// Entity has a constructor that is called from the factory to keep track of what is required to be cleaned.
-	name() {
-		return this._entity && this._entity.properties && this._entity.properties.name;
-	}
-
 	code() {
 		return this._entity && this._entity.properties && this._entity.properties.code;
 	}
@@ -21,12 +17,18 @@ export class OrganizationEntity extends Entity {
 		return this._entity && this._entity.properties && this._entity.properties.endDate;
 	}
 
-	startDate() {
-		return this._entity && this._entity.properties && this._entity.properties.startDate;
-	}
-
 	isActive() {
 		return this._entity && this._entity.properties && this._entity.properties.isActive;
+	}
+
+	name() {
+		return this._entity && this._entity.properties && this._entity.properties.name;
+	}
+
+	onImageChange(onChange) {
+		const image = this.imageEntity();
+		const imageHref = image && image.href;
+		imageHref && this._subEntity(SimpleEntity, imageHref, onChange);
 	}
 
 	onSemesterChange(onChange) {
@@ -36,10 +38,8 @@ export class OrganizationEntity extends Entity {
 		semesterHref && this._subEntity(OrganizationEntity, semesterHref, onChange);
 	}
 
-	onImageChange(onChange) {
-		const image = this.imageEntity();
-		const imageHref = image && image.href;
-		imageHref && this._subEntity(SimpleEntity, imageHref, onChange);
+	startDate() {
+		return this._entity && this._entity.properties && this._entity.properties.startDate;
 	}
 
 	_semesterHref() {

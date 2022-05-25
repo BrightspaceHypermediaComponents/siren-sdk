@@ -1,7 +1,7 @@
-import { Entity } from '../../es6/Entity.js';
 import { Actions } from '../../hypermedia-constants.js';
-import { performSirenAction } from '../../es6/SirenAction.js';
 import ContentHelperFunctions from './ContentHelperFunctions.js';
+import { Entity } from '../../es6/Entity.js';
+import { performSirenAction } from '../../es6/SirenAction.js';
 
 /**
  * ContentModuleEntity class representation of a d2l content-module entity.

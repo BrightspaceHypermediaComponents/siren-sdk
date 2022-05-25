@@ -1,4 +1,4 @@
-import { entityFactory, dispose } from '../es6/EntityFactory.js';
+import { dispose, entityFactory } from '../es6/EntityFactory.js';
 import { AsyncStateEvent } from '@brightspace-ui/core/helpers/asyncStateEvent.js';
 
 export const EntityMixinLit = superclass => class extends superclass {
@@ -57,7 +57,7 @@ export const EntityMixinLit = superclass => class extends superclass {
 		dispose(this._entity);
 		if (typeof this._entityType === 'function') {
 			let pendingResolve;
-			var pendingPromise = new Promise(function(resolve) {
+			const pendingPromise = new Promise((resolve) => {
 				pendingResolve = resolve;
 			});
 

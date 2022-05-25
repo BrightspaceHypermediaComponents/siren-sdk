@@ -67,7 +67,7 @@ export class ActivityEvaluationStatusEntity extends Entity {
 	/**
 	 * @returns {string|null} The path to the assessment application, for all assessments
 	 */
-	assesAllApplication() {
+	assessAllApplication() {
 		const entity = this._entity.getSubEntityByRel(Rels.Assessments.assessAllApplication);
 		return entity ? entity.properties.path : null;
 	}

@@ -1,6 +1,6 @@
-import { Entity } from '../es6/Entity.js';
-import { Rels, Actions } from '../hypermedia-constants.js';
+import { Actions, Rels } from '../hypermedia-constants.js';
 import { EnrollmentEntity } from './EnrollmentEntity.js';
+import { Entity } from '../es6/Entity.js';
 
 const rels = {
 	myLearning: 'https://api.brightspace.com/rels/my-learning'

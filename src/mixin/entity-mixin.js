@@ -1,7 +1,7 @@
-import { dedupingMixin } from '@polymer/polymer/lib/utils/mixin.js';
-import { entityFactory, dispose } from '../es6/EntityFactory.js';
-import { mixinBehaviors } from '@polymer/polymer/lib/legacy/class.js';
 import 'd2l-polymer-siren-behaviors/store/siren-action-behavior.js';
+import { dispose, entityFactory } from '../es6/EntityFactory.js';
+import { dedupingMixin } from '@polymer/polymer/lib/utils/mixin.js';
+import { mixinBehaviors } from '@polymer/polymer/lib/legacy/class.js';
 
 /**
  * This mixin takes care of all the clean up. Thanks to entity be able to clean up all it's childern.
@@ -56,7 +56,7 @@ export const interalEntityMixin = function(superClass) {
 		}
 
 		_performAction(action, onChange) {
-			this.performSirenAction(action).then(function(entity) {
+			this.performSirenAction(action).then((entity) => {
 				dispose(this._entity);
 				if (typeof this._entityType === 'function') {
 					entityFactory(this._entityType, this.href, this.token, entity => {
@@ -66,7 +66,7 @@ export const interalEntityMixin = function(superClass) {
 						}
 					}, entity);
 				}
-			}.bind(this));
+			});
 		}
 
 		__onHrefChange(href, token) {

@@ -1,9 +1,9 @@
-import { Entity } from '../es6/Entity.js';
 import { Actions, Classes, Rels } from '../hypermedia-constants.js';
-import { OrganizationEntity } from '../organizations/OrganizationEntity.js';
-import { UserActivityUsageEntity } from '../enrollments/UserActivityUsageEntity.js';
 import { ActivityUsageCollectionEntity } from './ActivityUsageCollectionEntity.js';
+import { Entity } from '../es6/Entity.js';
+import { OrganizationEntity } from '../organizations/OrganizationEntity.js';
 import { performSirenAction } from '../es6/SirenAction.js';
+import { UserActivityUsageEntity } from '../enrollments/UserActivityUsageEntity.js';
 
 /**
  * ActivityUsageEntity class representation of a d2l activity usage.

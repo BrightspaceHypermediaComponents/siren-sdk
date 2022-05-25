@@ -1,5 +1,5 @@
-import { Entity } from '../../../es6/Entity.js';
 import { Actions, Classes } from '../../../hypermedia-constants.js';
+import { Entity } from '../../../es6/Entity.js';
 import { performSirenAction } from '../../../es6/SirenAction.js';
 
 /**
@@ -224,8 +224,7 @@ export class QuizTimingEntity extends Entity {
 	}
 
 	async setTimeLimit(data) {
-		var entity;
-		entity = this.timingType();
+		const entity = this.timingType();
 		if (!entity) return;
 		if (!this.canEditTimeLimit()) return;
 		const action = entity.getActionByName(Actions.quizzes.timing.updateTimeLimit);

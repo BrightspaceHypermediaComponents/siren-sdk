@@ -1,7 +1,7 @@
-import { html, LitElement } from 'lit-element/lit-element.js';
+import './siren-sdk-organization-name-lit.js';
+import { html, LitElement } from 'lit';
 import { EntityMixinLit } from '../../src/mixin/entity-mixin-lit.js';
 import { OrganizationEntity } from '../utility/OrganizationEntity.js';
-import './siren-sdk-organization-name-lit.js';
 
 class SdkSirenOrganizationInfoLit extends EntityMixinLit(LitElement) {
 
@@ -12,13 +12,6 @@ class SdkSirenOrganizationInfoLit extends EntityMixinLit(LitElement) {
 			_semesterNameDirect: { type: String },
 			_semesterHref: { type: String }
 		};
-	}
-
-	set _entity(entity) {
-		if (this._entityHasChanged(entity)) {
-			this._onOrganizationChange(entity);
-			super._entity = entity;
-		}
 	}
 
 	constructor() {
@@ -34,6 +27,13 @@ class SdkSirenOrganizationInfoLit extends EntityMixinLit(LitElement) {
 			<div id="semester-name-direct">${this._semesterNameDirect}</div>
 			<siren-sdk-organization-name id="semester-name" href="${this._semesterHref}" token="whatever"></siren-sdk-organization-name>
 		`;
+	}
+
+	set _entity(entity) {
+		if (this._entityHasChanged(entity)) {
+			this._onOrganizationChange(entity);
+			super._entity = entity;
+		}
 	}
 
 	_onOrganizationChange(organization) {

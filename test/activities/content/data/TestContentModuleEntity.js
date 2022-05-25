@@ -41,7 +41,7 @@ export const contentModuleData = {
 	},
 	'entities': [{
 		'class': ['richtext', 'description'],
-		'properties': {'text': 'description text', 'html': '<p>description text</p>'},
+		'properties': { 'text': 'description text', 'html': '<p>description text</p>' },
 		'rel': []
 	}],
 	'rel': []

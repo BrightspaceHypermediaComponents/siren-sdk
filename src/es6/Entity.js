@@ -1,4 +1,4 @@
-import { entityFactory, dispose, updateEntity } from './EntityFactory.js';
+import { dispose, entityFactory, updateEntity } from './EntityFactory.js';
 import { EntitySirenProperties } from './EntitySirenProperties.js';
 
 /**

@@ -50,13 +50,13 @@ export const testData = {
 				'href': 'http://api.x.io/do/not/track/completion',
 				'name': 'do-not-track-completion',
 				'method': 'PUT',
-				'fields': [{'type': 'hidden', 'name': 'track', 'value': false}]
+				'fields': [{ 'type': 'hidden', 'name': 'track', 'value': false }]
 			},
 			{
 				'href': 'http://api.x.io/display/progress',
 				'name': 'display-progress',
 				'method': 'PUT',
-				'fields': [{'type': 'hidden', 'name': 'enable', 'value': true}]
+				'fields': [{ 'type': 'hidden', 'name': 'enable', 'value': true }]
 			}
 		]
 	},
@@ -112,13 +112,13 @@ export const testData = {
 				'href': 'http://api.x.io/do/not/track/completion',
 				'name': 'do-not-track-completion',
 				'method': 'PUT',
-				'fields': [{'type': 'hidden', 'name': 'track', 'value': false}]
+				'fields': [{ 'type': 'hidden', 'name': 'track', 'value': false }]
 			},
 			{
 				'href': 'http://api.x.io/do/not/display/progress',
 				'name': 'do-not-display-progress',
 				'method': 'PUT',
-				'fields': [{'type': 'hidden', 'name': 'enable', 'value': false}]
+				'fields': [{ 'type': 'hidden', 'name': 'enable', 'value': false }]
 			}
 		]
 	},
@@ -172,13 +172,13 @@ export const testData = {
 				'href': 'http://api.x.io/track/completion',
 				'name': 'track-completion',
 				'method': 'PUT',
-				'fields': [{'type': 'hidden', 'name': 'track', 'value': true}]
+				'fields': [{ 'type': 'hidden', 'name': 'track', 'value': true }]
 			},
 			{
 				'href': 'http://api.x.io/display/progress',
 				'name': 'display-progress',
 				'method': 'PUT',
-				'fields': [{'type': 'hidden', 'name': 'enable', 'value': true}]
+				'fields': [{ 'type': 'hidden', 'name': 'enable', 'value': true }]
 			}
 		]
 	},

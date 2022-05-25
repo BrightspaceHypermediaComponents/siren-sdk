@@ -1,7 +1,7 @@
 import { Actions, Rels } from '../../hypermedia-constants.js';
-import { performSirenAction } from '../../es6/SirenAction.js';
 import { ContentFileEntity } from './ContentFileEntity.js';
 import ContentHelperFunctions from './ContentHelperFunctions.js';
+import { performSirenAction } from '../../es6/SirenAction.js';
 
 /**
  *  ContentHtmlFileEntity class representation of a d2l html content-file entity.

@@ -1,6 +1,6 @@
+import ContentHelperFunctions from './ContentHelperFunctions.js';
 import { Entity } from '../../es6/Entity.js';
 import { Rels } from '../../hypermedia-constants.js';
-import ContentHelperFunctions from './ContentHelperFunctions.js';
 
 export const CONTENT_TYPES = {
 	contentFile: 'content-file',
