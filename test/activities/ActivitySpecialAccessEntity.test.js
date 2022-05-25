@@ -1,11 +1,13 @@
-import { testData } from './data/ActivitySpecialAccessEntity.js';
 import { ActivitySpecialAccessEntity } from '../../src/activities/ActivitySpecialAccessEntity.js';
+import { expect } from '@open-wc/testing';
+import SirenParse from 'siren-parser';
+import { testData } from './data/ActivitySpecialAccessEntity.js';
 
 describe('ActivityUsageEntity', () => {
 	let entity, entityJson;
 
 	beforeEach(() => {
-		entityJson = window.D2L.Hypermedia.Siren.Parse(testData.basic);
+		entityJson = SirenParse(testData.basic);
 		entity = new ActivitySpecialAccessEntity(entityJson);
 	});
 

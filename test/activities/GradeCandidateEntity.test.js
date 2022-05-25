@@ -1,8 +1,9 @@
-/* global fetchMock */
-
 import { AssociateGradeEntity } from '../../src/activities/associateGrade/AssociateGradeEntity.js';
+import { expect } from '@open-wc/testing';
+import fetchMock from 'fetch-mock/esm/client.js';
 import { getFormData } from '../utility/test-helpers.js';
 import { GradeCandidateEntity } from '../../src/activities/GradeCandidateEntity.js';
+import SirenParse from 'siren-parser';
 import { testData } from './data/GradeCandidateEntity.js';
 
 describe('GradeCandidateEntity', () => {
@@ -14,7 +15,7 @@ describe('GradeCandidateEntity', () => {
 		let entity, entityJson;
 
 		beforeEach(() => {
-			entityJson = window.D2L.Hypermedia.Siren.Parse(testData.gradeCandidateEntity.grade);
+			entityJson = SirenParse(testData.gradeCandidateEntity.grade);
 			entity = new GradeCandidateEntity(entityJson);
 		});
 
@@ -64,7 +65,7 @@ describe('GradeCandidateEntity', () => {
 		let entity;
 
 		beforeEach(() => {
-			const entityJson = window.D2L.Hypermedia.Siren.Parse(testData.gradeCandidateEntity.gradeWithoutAssociateAction);
+			const entityJson = SirenParse(testData.gradeCandidateEntity.gradeWithoutAssociateAction);
 			entity = new GradeCandidateEntity(entityJson);
 		});
 
@@ -106,7 +107,7 @@ describe('GradeCandidateEntity', () => {
 		let entity;
 
 		beforeEach(() => {
-			const entityJson = window.D2L.Hypermedia.Siren.Parse(testData.gradeCandidateEntity.categoryWithGrade);
+			const entityJson = SirenParse(testData.gradeCandidateEntity.categoryWithGrade);
 			entity = new GradeCandidateEntity(entityJson);
 		});
 
@@ -146,7 +147,7 @@ describe('GradeCandidateEntity', () => {
 		let entity;
 
 		beforeEach(() => {
-			const entityJson = window.D2L.Hypermedia.Siren.Parse(testData.gradeCandidateEntity.newGradeCandidateWithCategory);
+			const entityJson = SirenParse(testData.gradeCandidateEntity.newGradeCandidateWithCategory);
 			entity = new GradeCandidateEntity(entityJson);
 		});
 
@@ -188,7 +189,7 @@ describe('GradeCandidateEntity', () => {
 		let entity;
 
 		beforeEach(() => {
-			const entityJson = window.D2L.Hypermedia.Siren.Parse(testData.gradeCandidateEntity.newGradeCandidateWithoutCategory);
+			const entityJson = SirenParse(testData.gradeCandidateEntity.newGradeCandidateWithoutCategory);
 			entity = new GradeCandidateEntity(entityJson);
 		});
 
