@@ -12,7 +12,7 @@
     "test:headless": "web-test-runner --group default",
     "test:headless:watch": "web-test-runner --group default --watch"
   },
-  "author": "",
+  "author": "D2L Corporation",
   "license": "Apache-2.0",
   "files": [
     "/src"
