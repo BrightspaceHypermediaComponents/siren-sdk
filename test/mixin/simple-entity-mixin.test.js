@@ -1,16 +1,15 @@
-import 'd2l-fetch/d2l-fetch.js';
-import 'siren-parser/global.js';
 import '../utility/siren-sdk-simple-organization.js';
-import { html, fixture, expect } from '@open-wc/testing';
+import { expect, fixture, html } from '@open-wc/testing';
 import { AsyncStateEvent } from '@brightspace-ui/core/helpers/asyncStateEvent.js';
 import sinon from 'sinon';
+import SirenParse from 'siren-parser';
 
 window.D2L.Siren.WhitelistBehavior._testMode(true);
 
 async function load(el, href) {
 	let loaded;
 	const asyncStateEventType = (new AsyncStateEvent()).type;
-	const loading = new Promise(function(resolve) {
+	const loading = new Promise((resolve) => {
 		loaded = resolve;
 	});
 
@@ -36,7 +35,7 @@ describe('Simple Entity Mixin Test', () => {
 	beforeEach(() => {
 		sandbox = sinon.createSandbox();
 
-		var organizationEntity = {
+		const organizationEntity = {
 			properties: {
 				name: 'Course Name',
 				code: 'SCI100',
@@ -104,7 +103,7 @@ describe('Simple Entity Mixin Test', () => {
 				<div id="organization-name">Course Name</div>
 			`);
 
-		const updatedEntity = window.D2L.Hypermedia.Siren.Parse(organizationEntityUpdated);
+		const updatedEntity = SirenParse(organizationEntityUpdated);
 		await window.D2L.Siren.EntityStore.update('/organization.json', el.token, updatedEntity);
 		await el.updateComplete;
 

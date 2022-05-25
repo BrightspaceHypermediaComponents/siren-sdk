@@ -1,14 +1,15 @@
-/* global describe it expect*/
-import { SequenceEntity } from '../../src/sequences/SequenceEntity.js';
 import { sequenceRoot, sequenceRootMultipleTopLevel } from './data/sequenceRoot.js';
 import { entityFactory } from '../../src/es6/EntityFactory.js';
+import { expect } from '@open-wc/testing';
+import { SequenceEntity } from '../../src/sequences/SequenceEntity.js';
+import SirenParse from 'siren-parser';
 
 describe('SequenceEntity', () => {
 
 	describe('Read through the chain from root', () => {
 
 		it('Check to get activity organization href from root', done => {
-			const sirenSequenceRoot =  window.D2L.Hypermedia.Siren.Parse(sequenceRoot);
+			const sirenSequenceRoot =  SirenParse(sequenceRoot);
 			const orgHref = {};
 			entityFactory(SequenceEntity, '/sequenceRoot', 'whatever', (entity) => {
 				entity.onSubSequencesChange((subSequence) => {
@@ -26,7 +27,7 @@ describe('SequenceEntity', () => {
 		});
 
 		it('Check to get multiple subModules', done => {
-			const sirenSequenceRoot =  window.D2L.Hypermedia.Siren.Parse(sequenceRootMultipleTopLevel);
+			const sirenSequenceRoot =  SirenParse(sequenceRootMultipleTopLevel);
 			const orgHref = {};
 			entityFactory(SequenceEntity, '/sequenceRoot2', 'whatever', (entity) => {
 				entity.onSubSequencesChange((subSequence) => {
@@ -43,7 +44,7 @@ describe('SequenceEntity', () => {
 		});
 
 		it('Check to get sequence Viewer Application Href', done => {
-			const sirenSequenceRoot =  window.D2L.Hypermedia.Siren.Parse(sequenceRootMultipleTopLevel);
+			const sirenSequenceRoot =  SirenParse(sequenceRootMultipleTopLevel);
 			const orgHref = {};
 			entityFactory(SequenceEntity, '/sequenceRoot2', 'whatever', (entity) => {
 				entity.onSubSequencesChange((subSequence) => {
@@ -60,7 +61,7 @@ describe('SequenceEntity', () => {
 		});
 
 		it('Check to get alternate viewer href', done => {
-			const sirenSequenceRoot =  window.D2L.Hypermedia.Siren.Parse(sequenceRootMultipleTopLevel);
+			const sirenSequenceRoot =  SirenParse(sequenceRootMultipleTopLevel);
 			const orgHref = {};
 			entityFactory(SequenceEntity, '/sequenceRoot2', 'whatever', (entity) => {
 				entity.onSubSequencesChange((subSequence) => {
@@ -83,7 +84,7 @@ describe('SequenceEntity', () => {
 		});
 
 		it('Check completion', done => {
-			const sirenSequenceRoot =  window.D2L.Hypermedia.Siren.Parse(sequenceRootMultipleTopLevel);
+			const sirenSequenceRoot =  SirenParse(sequenceRootMultipleTopLevel);
 			const completionData = {};
 			entityFactory(SequenceEntity, '/sequenceRoot2', 'whatever', (entity) => {
 				entity.onSubSequencesChange((subSequence) => {
@@ -92,9 +93,9 @@ describe('SequenceEntity', () => {
 			}, sirenSequenceRoot);
 
 			setTimeout(() => {
-				expect(completionData[0]).deep.equal({completed: 0, total: 7, optionalTotal: 5, optionalViewed: 0, isCompleted: false});
-				expect(completionData[1]).deep.equal({completed: 7, total: 7, optionalTotal: 5, optionalViewed: 0, isCompleted: true});
-				expect(completionData[2]).deep.equal({completed: 4, total: 7, optionalTotal: 5, optionalViewed: 0, isCompleted: false});
+				expect(completionData[0]).deep.equal({ completed: 0, total: 7, optionalTotal: 5, optionalViewed: 0, isCompleted: false });
+				expect(completionData[1]).deep.equal({ completed: 7, total: 7, optionalTotal: 5, optionalViewed: 0, isCompleted: true });
+				expect(completionData[2]).deep.equal({ completed: 4, total: 7, optionalTotal: 5, optionalViewed: 0, isCompleted: false });
 				done();
 			}, 50);
 		});

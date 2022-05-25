@@ -1,4 +1,6 @@
 import { AlignmentsCollectionEntity } from '../../src/alignments/AlignmentsCollectionEntity.js';
+import { expect } from '@open-wc/testing';
+import SirenParse from 'siren-parser';
 import { testData } from './data/AlignmentsCollectionEntity.js';
 
 describe('AlignmentsCollectionEntity', () => {
@@ -6,12 +8,12 @@ describe('AlignmentsCollectionEntity', () => {
 
 	describe('editable', () => {
 		beforeEach(() => {
-			entityJson = window.D2L.Hypermedia.Siren.Parse(testData.AlignmentsCollectionEntity.editable);
+			entityJson = SirenParse(testData.alignmentsCollectionEntity.editable);
 			entity = new AlignmentsCollectionEntity(entityJson);
 		});
 
 		it('can get alignments', () => {
-			expect(entity.getAlignments()).to.have.lengthOf(2);
+			expect(entity.getAlignments()).to.have.lengthOf(3);
 		});
 
 		it('can update alignments', () => {
@@ -25,12 +27,12 @@ describe('AlignmentsCollectionEntity', () => {
 
 	describe('readonly', () => {
 		beforeEach(() => {
-			entityJson = window.D2L.Hypermedia.Siren.Parse(testData.AlignmentsCollectionEntity.readonly);
+			entityJson = SirenParse(testData.alignmentsCollectionEntity.readOnly);
 			entity = new AlignmentsCollectionEntity(entityJson);
 		});
 
 		it('can get alignments', () => {
-			expect(entity.getAlignments()).to.have.lengthOf(2);
+			expect(entity.getAlignments()).to.have.lengthOf(3);
 		});
 
 		it('can not update alignments', () => {
@@ -44,7 +46,7 @@ describe('AlignmentsCollectionEntity', () => {
 
 	describe('empty', () => {
 		beforeEach(() => {
-			entityJson = window.D2L.Hypermedia.Siren.Parse(testData.AlignmentsCollectionEntity.empty);
+			entityJson = SirenParse(testData.alignmentsCollectionEntity.empty);
 			entity = new AlignmentsCollectionEntity(entityJson);
 		});
 

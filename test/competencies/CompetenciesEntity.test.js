@@ -1,11 +1,13 @@
 import { CompetenciesEntity } from '../../src/competencies/CompetenciesEntity.js';
+import { expect } from '@open-wc/testing';
+import SirenParse from 'siren-parser';
 import { testData } from './data/CompetenciesEntity.js';
 
 describe('CompetenciesEntity', () => {
 	let entity, entityJson;
 
 	beforeEach(() => {
-		entityJson = window.D2L.Hypermedia.Siren.Parse(testData.competenciesEntity);
+		entityJson = SirenParse(testData.competenciesEntity);
 		entity = new CompetenciesEntity(entityJson);
 	});
 

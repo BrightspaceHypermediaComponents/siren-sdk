@@ -1,11 +1,12 @@
-/* global describe it expect*/
 import { AlertsEntity } from '../../src/organizations/AlertsEntity.js';
+import { expect } from '@open-wc/testing';
+import SirenParse from 'siren-parser';
 
 describe('AlertsEntity', () => {
 	var hasUnreadEntity, noUnreadEntity;
 
 	beforeEach(() => {
-		hasUnreadEntity = window.D2L.Hypermedia.Siren.Parse({
+		hasUnreadEntity = SirenParse({
 			'properties': {
 				'hasUnread': true
 			},
@@ -15,7 +16,7 @@ describe('AlertsEntity', () => {
 			}]
 		});
 
-		noUnreadEntity = window.D2L.Hypermedia.Siren.Parse({
+		noUnreadEntity = SirenParse({
 			'properties': {
 				'hasUnread': false
 			},

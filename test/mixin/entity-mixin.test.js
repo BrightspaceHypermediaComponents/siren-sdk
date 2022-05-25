@@ -1,15 +1,27 @@
+import '../utility/siren-sdk-organization-info.js';
+import '../utility/siren-sdk-organization-info-lit.js';
+import { expect, fixture, html } from '@open-wc/testing';
 import { afterNextRender } from '@polymer/polymer/lib/utils/render-status.js';
-import 'd2l-fetch/d2l-fetch.js';
+import sinon from 'sinon';
+
 window.D2L.Siren.WhitelistBehavior._testMode(true);
+
+const fixtures = {
+	'no-params-polymer': html`<siren-sdk-organization-info id="a"></siren-sdk-organization-info>`,
+	'no-params-2-polymer': html`<siren-sdk-organization-info id="b"></siren-sdk-organization-info>`,
+	'no-params-lit': html`<siren-sdk-organization-info-lit id="c"></siren-sdk-organization-info-lit>`,
+	'no-params-2-lit': html`<siren-sdk-organization-info-lit id="d"></siren-sdk-organization-info-lit>`
+};
+
 describe('d2l-organization-name', () => {
-	var sandbox,
+	let sandbox,
 		component,
 		component2;
 
 	beforeEach(() => {
 		sandbox = sinon.createSandbox();
 
-		var organizationEntity = {
+		const organizationEntity = {
 			properties: {
 				name: 'Course Name',
 				code: 'SCI100',
@@ -23,7 +35,7 @@ describe('d2l-organization-name', () => {
 				href: '/organization.json'
 			}]
 		};
-		var organizationEntity2 = {
+		const organizationEntity2 = {
 			properties: {
 				name: 'Course Name 2',
 				code: 'SCI101',
@@ -37,7 +49,7 @@ describe('d2l-organization-name', () => {
 				href: '/organization2.json'
 			}]
 		};
-		var semesterEntity = {
+		const semesterEntity = {
 			properties: {
 				name: 'Semester Name'
 			},
@@ -46,7 +58,7 @@ describe('d2l-organization-name', () => {
 				href: '/semester.json'
 			}]
 		};
-		var semesterEntity2 = {
+		const semesterEntity2 = {
 			properties: {
 				name: 'Semester Name 2'
 			},
@@ -75,9 +87,9 @@ describe('d2l-organization-name', () => {
 	[ 'lit', 'polymer' ].forEach(mixinType => {
 		describe(`Testing Swap ${mixinType}`, () => {
 			let spy, spy2;
-			beforeEach(done => {
-				component = fixture(`no-params-${mixinType}`);
-				component2 = fixture(`no-params-2-${mixinType}`);
+			beforeEach(async() => {
+				component = await fixture(fixtures[`no-params-${mixinType}`]);
+				component2 = await fixture(fixtures[`no-params-2-${mixinType}`]);
 				spy = sandbox.spy(component, '_onOrganizationChange');
 				spy2 = sandbox.spy(component2, '_onOrganizationChange');
 
@@ -85,7 +97,7 @@ describe('d2l-organization-name', () => {
 				component2.token = 'whatever';
 				component.href = '/organization.json';
 				component2.href = '/organization2.json';
-				afterNextRender(component, done);
+				await new Promise(resolve => afterNextRender(component, resolve));
 			});
 
 			it('Everything works with no swap', done => {
@@ -131,16 +143,16 @@ describe('d2l-organization-name', () => {
 		});
 		describe(`Testing No Token ${mixinType}`, () => {
 			let spy, spy2;
-			beforeEach(done => {
-				component = fixture(`no-params-${mixinType}`);
-				component2 = fixture(`no-params-2-${mixinType}`);
+			beforeEach(async() => {
+				component = await fixture(fixtures[`no-params-${mixinType}`]);
+				component2 = await fixture(fixtures[`no-params-2-${mixinType}`]);
 				spy = sandbox.spy(component, '_onOrganizationChange');
 				spy2 = sandbox.spy(component2, '_onOrganizationChange');
 
 				component.token = 'whatever';
 				component.href = '/organization.json';
 				component2.href = '/organization2.json';
-				afterNextRender(component, done);
+				await new Promise(resolve => afterNextRender(component, resolve));
 			});
 
 			it('Not called if token is undefined', () => {

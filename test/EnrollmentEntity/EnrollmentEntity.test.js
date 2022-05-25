@@ -1,8 +1,9 @@
-/* global describe it expect*/
 import { EnrollmentEntity } from '../../src/enrollments/EnrollmentEntity.js';
+import { expect } from '@open-wc/testing';
+import SirenParse from 'siren-parser';
 
 describe('EnrollmentEntity', () => {
-	var enrollmentEntity, action;
+	let enrollmentEntity, action;
 
 	beforeEach(() => {
 
@@ -12,7 +13,7 @@ describe('EnrollmentEntity', () => {
 			href: '/enrollments/users/169/organizations/1'
 		};
 
-		var entity = window.D2L.Hypermedia.Siren.Parse({
+		const entity = SirenParse({
 			class: ['pinned', 'enrollment'],
 			entities: [
 				{
@@ -56,14 +57,14 @@ describe('EnrollmentEntity', () => {
 		});
 
 		it('Should have pin action', () => {
-			var pinAction = enrollmentEntity.pinAction();
+			const pinAction = enrollmentEntity.pinAction();
 			expect(pinAction.name).to.equal(action.name);
 			expect(pinAction.method).to.equal(action.method);
 			expect(pinAction.href).to.equal(action.href);
 		});
 
 		it('Should have two enrollments', () => {
-			var enrollments = enrollmentEntity.enrollments();
+			const enrollments = enrollmentEntity.enrollments();
 			expect(enrollments.length).to.equal(2);
 			expect(enrollments[0].class).to.contains('enrollment');
 			expect(enrollments[1].class).to.contains('enrollment');

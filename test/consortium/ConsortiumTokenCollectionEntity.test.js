@@ -1,13 +1,14 @@
-/* global describe it expect sinon*/
 import { ConsortiumTokenCollectionEntity } from '../../src/consortium/ConsortiumTokenCollectionEntity.js';
 import { ConsortiumTokenEntity } from '../../src/consortium/ConsortiumTokenEntity.js';
+import { expect } from '@open-wc/testing';
 import { Rels } from '../../src/hypermedia-constants.js';
 import { root } from '../../src/root/root.js';
+import sinon from 'sinon';
+import SirenParse from 'siren-parser';
 
-import 'd2l-fetch/d2l-fetch.js';
 window.D2L.Siren.WhitelistBehavior._testMode(true);
 describe('Consortium entity', () => {
-	var sandbox;
+	let sandbox;
 
 	beforeEach(() => {
 		sandbox = sinon.createSandbox();
@@ -46,7 +47,7 @@ describe('Consortium entity', () => {
 		const tenant2 = '8b33e567-c616-4667-868b-fdfe9edc3a78';
 		const token2 = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwidGVuYW50aWQiOiI4YjMzZTU2Ny1jNjE2LTQ2NjctODY4Yi1mZGZlOWVkYzNhNzgiLCJpYXQiOjE1MTYyMzkwMjJ9.cQjR28qT_c-os_FeFy4-L1NhCIY-9utPLzSHrzIMuOc';
 		it('has collection', done => {
-			const entity =  window.D2L.Hypermedia.Siren.Parse({
+			const entity =  SirenParse({
 				class: ['tokens'],
 				entities: [
 					{
