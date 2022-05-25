@@ -1,10 +1,12 @@
+import { expect } from '@open-wc/testing';
+import SirenParse from 'siren-parser';
 import { UserActivityUsageEntity } from '../../src/enrollments/UserActivityUsageEntity.js';
 
 describe('UserActivityUsageEntity', () => {
 
 	describe('Tests for _sirenClassProperty', () => {
 		it('Read a date', () => {
-			var entity =  window.D2L.Hypermedia.Siren.Parse({
+			const entity =  SirenParse({
 				entities: [
 					{
 						class: [
@@ -20,12 +22,12 @@ describe('UserActivityUsageEntity', () => {
 					}
 				]
 			});
-			var userActivityUsageEntity = new UserActivityUsageEntity(entity);
+			const userActivityUsageEntity = new UserActivityUsageEntity(entity);
 			expect(userActivityUsageEntity._sirenClassProperty(entity, 'due-date')).to.equal('2100-08-01T04:00:00.000Z');
 		});
 
 		it('Read a duration', () => {
-			var entity =  window.D2L.Hypermedia.Siren.Parse({
+			const entity =  SirenParse({
 				entities: [
 					{
 						class: [
@@ -41,13 +43,13 @@ describe('UserActivityUsageEntity', () => {
 					}
 				]
 			});
-			var userActivityUsageEntity = new UserActivityUsageEntity(entity);
+			const userActivityUsageEntity = new UserActivityUsageEntity(entity);
 			expect(userActivityUsageEntity._sirenClassProperty(entity, 'due-date')).to.equal(6);
 
 		});
 
 		it('Read a completion', () => {
-			var entity =  window.D2L.Hypermedia.Siren.Parse({
+			const entity =  SirenParse({
 				entities: [
 					{
 						class: [
@@ -74,7 +76,7 @@ describe('UserActivityUsageEntity', () => {
 					}
 				]
 			});
-			var userActivityUsageEntity = new UserActivityUsageEntity(entity);
+			const userActivityUsageEntity = new UserActivityUsageEntity(entity);
 			expect(userActivityUsageEntity._sirenClassProperty(entity, 'due-date')).to.equal('2100-08-01T04:00:00.000Z');
 
 		});

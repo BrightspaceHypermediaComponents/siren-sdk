@@ -1,11 +1,12 @@
-/* global describe it expect*/
+import { expect } from '@open-wc/testing';
+import SirenParse from 'siren-parser';
 import { UserSettingsEntity } from '../../src/userSettings/UserSettingsEntity.js';
 
 describe('UserSettingsEntity', () => {
-	var entity, action;
+	let entity, action;
 
 	beforeEach(() => {
-		entity = window.D2L.Hypermedia.Siren.Parse({
+		entity = SirenParse({
 			'properties': {
 				'MostRecentEnrollmentsSearchType': 'None',
 				'MostRecentEnrollmentsSearchName': 'search-my-enrollments'
@@ -39,7 +40,7 @@ describe('UserSettingsEntity', () => {
 
 	describe('Tests for userSettingsHref', () => {
 		it('Return correct href', () => {
-			var userSettings = new UserSettingsEntity(entity);
+			const userSettings = new UserSettingsEntity(entity);
 			expect(userSettings.userSettingsHref()).to.equal('../data/presentation');
 		});
 	});
@@ -54,29 +55,29 @@ describe('UserSettingsEntity', () => {
 		});
 
 		it('Return correct Action href', () => {
-			var userSettings = new UserSettingsEntity(entity);
+			const userSettings = new UserSettingsEntity(entity);
 			expect(userSettings.userSettingsAction().href).to.equal(action.href);
 		});
 
 		it('Return correct Action name', () => {
-			var userSettings = new UserSettingsEntity(entity);
+			const userSettings = new UserSettingsEntity(entity);
 			expect(userSettings.userSettingsAction().name).to.equal(action.name);
 		});
 
 		it('Return correct Action method', () => {
-			var userSettings = new UserSettingsEntity(entity);
+			const userSettings = new UserSettingsEntity(entity);
 			expect(userSettings.userSettingsAction().method).to.equal(action.method);
 		});
 	});
 
 	describe('Tests for Propreties', () => {
 		it('Return correct mostRecentEnrollmentsSearchName', () => {
-			var userSettings = new UserSettingsEntity(entity);
+			const userSettings = new UserSettingsEntity(entity);
 			expect(userSettings.mostRecentEnrollmentsSearchName()).to.equal('search-my-enrollments');
 		});
 
 		it('Return correct mostRecentEnrollmentsSearchType', () => {
-			var userSettings = new UserSettingsEntity(entity);
+			const userSettings = new UserSettingsEntity(entity);
 			expect(userSettings.mostRecentEnrollmentsSearchType()).to.equal('None');
 		});
 	});

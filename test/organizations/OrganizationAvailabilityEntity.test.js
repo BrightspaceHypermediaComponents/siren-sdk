@@ -1,4 +1,7 @@
+import { expect } from '@open-wc/testing';
 import { OrganizationAvailabilityEntity } from '../../src/organizations/OrganizationAvailabilityEntity.js';
+import sinon from 'sinon';
+import SirenParse from 'siren-parser';
 import { testData } from './data/OrganizationAvailabilityEntity.js';
 
 describe('OrganizationAvailabilityEntity', () => {
@@ -6,19 +9,19 @@ describe('OrganizationAvailabilityEntity', () => {
 		inheritWithDescendantTypeEntity, cannotDeleteEntity;
 
 	beforeEach(() => {
-		const currentAvailabilityJson = window.D2L.Hypermedia.Siren.Parse(testData.current);
+		const currentAvailabilityJson = SirenParse(testData.current);
 		currentEntity = new OrganizationAvailabilityEntity(currentAvailabilityJson);
 
-		const explicitAvailabilityJson = window.D2L.Hypermedia.Siren.Parse(testData.explicit);
+		const explicitAvailabilityJson = SirenParse(testData.explicit);
 		explicitEntity = new OrganizationAvailabilityEntity(explicitAvailabilityJson);
 
-		const inheritAvailabilityJson = window.D2L.Hypermedia.Siren.Parse(testData.inherit);
+		const inheritAvailabilityJson = SirenParse(testData.inherit);
 		inheritEntity = new OrganizationAvailabilityEntity(inheritAvailabilityJson);
 
-		const inheritWithDescendantTypeAvailabilityJson = window.D2L.Hypermedia.Siren.Parse(testData.inheritWithDescendantType);
+		const inheritWithDescendantTypeAvailabilityJson = SirenParse(testData.inheritWithDescendantType);
 		inheritWithDescendantTypeEntity = new OrganizationAvailabilityEntity(inheritWithDescendantTypeAvailabilityJson);
 
-		const cannotDeleteJson = window.D2L.Hypermedia.Siren.Parse(testData.cannotDelete);
+		const cannotDeleteJson = SirenParse(testData.cannotDelete);
 		cannotDeleteEntity = new OrganizationAvailabilityEntity(cannotDeleteJson);
 	});
 

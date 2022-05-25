@@ -1,4 +1,5 @@
-/* global describe it expect*/
+import { assert, expect } from '@open-wc/testing';
+import sinon from 'sinon';
 import { StateTree } from '../../src/helpers/StateTree.js';
 
 describe('StateTree', () => {

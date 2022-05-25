@@ -1,15 +1,16 @@
-/* global fetchMock */
-
-import { FilesHomeEntity } from '../../src/files/FilesHomeEntity.js';
+import { expect } from '@open-wc/testing';
+import fetchMock from 'fetch-mock/esm/client.js';
 import { FilePreviewLocationEntity } from '../../src/files/FilePreviewLocationEntity.js';
-import { testData } from './data/FilesHomeEntity.js';
 import { filePreviewLocationEntity } from './data/FilePreviewLocationEntity.js';
+import { FilesHomeEntity } from '../../src/files/FilesHomeEntity.js';
+import SirenParse from 'siren-parser';
+import { testData } from './data/FilesHomeEntity.js';
 
 describe('AssignmentEntity', () => {
-	var editableEntity;
+	let editableEntity;
 
 	beforeEach(() => {
-		editableEntity = window.D2L.Hypermedia.Siren.Parse(testData.filesHomeEntityEditable);
+		editableEntity = SirenParse(testData.filesHomeEntityEditable);
 	});
 
 	afterEach(() => {
@@ -21,7 +22,7 @@ describe('AssignmentEntity', () => {
 			fetchMock.getOnce('https://b4b1eaba-26aa-4017-b37c-33e22649e477.files.api.proddev.d2l/121213/preview-location?fileSystemType=Temp&fileId=12345',
 				filePreviewLocationEntity);
 
-			var filesHomeEntity = new FilesHomeEntity(editableEntity);
+			const filesHomeEntity = new FilesHomeEntity(editableEntity);
 
 			const sirenFilePreviewLocation = await filesHomeEntity.getFilePreviewLocationEntity('Temp', '12345');
 

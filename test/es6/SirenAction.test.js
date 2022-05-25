@@ -1,7 +1,8 @@
-/* global fetchMock */
-
-import { getFormData } from '../utility/test-helpers.js';
 import { performSirenAction, performSirenActions } from '../../src/es6/SirenAction.js';
+import { expect } from '@open-wc/testing';
+import fetchMock from 'fetch-mock/esm/client.js';
+import { getFormData } from '../utility/test-helpers.js';
+import sinon from 'sinon';
 import { sirenActionTestData } from './data/SirenAction.js';
 
 describe('SirenAction', () => {
@@ -56,7 +57,7 @@ describe('SirenAction', () => {
 
 		beforeEach(() => {
 			AFitemsPost1 = { action: sirenActionTestData.itemsPost1, fields: [{ name: 'productCode', value: '10000' }] };
-			AFitemPatch1 = { action: sirenActionTestData.itemPatch1, fields: [{ name: 'productCode', value: '20000'}] };
+			AFitemPatch1 = { action: sirenActionTestData.itemPatch1, fields: [{ name: 'productCode', value: '20000' }] };
 			AFitemPatch2 = { action: sirenActionTestData.itemPatch2, fields: [{ name: 'quantity', value: '10' }] };
 			AFitemDelete1 = { action: sirenActionTestData.itemDelete1 };
 		});

@@ -1,14 +1,17 @@
+import { expect } from '@open-wc/testing';
 import { OrganizationAvailabilitySetEntity } from '../../src/organizations/OrganizationAvailabilitySetEntity.js';
+import sinon from 'sinon';
+import SirenParse from 'siren-parser';
 import { testData } from './data/OrganizationAvailabilitySetEntity.js';
 
 describe('OrganizationAvailabilitySetEntity', () => {
 	let entity, cannotAddEntity;
 
 	beforeEach(() => {
-		const entityJson = window.D2L.Hypermedia.Siren.Parse(testData.organizationAvailabilitySetEntity);
+		const entityJson = SirenParse(testData.organizationAvailabilitySetEntity);
 		entity = new OrganizationAvailabilitySetEntity(entityJson);
 
-		const cannotAddJson = window.D2L.Hypermedia.Siren.Parse(testData.cannotAdd);
+		const cannotAddJson = SirenParse(testData.cannotAdd);
 		cannotAddEntity = new OrganizationAvailabilitySetEntity(cannotAddJson);
 	});
 

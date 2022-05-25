@@ -1,12 +1,13 @@
 import { entityFactory } from '../../src/es6/EntityFactory.js';
+import { expect } from '@open-wc/testing';
 import { Nothing } from '../nothing-entity.js';
+import sinon from 'sinon';
 
-/* global describe it expect sinon*/
 window.D2L.Siren.WhitelistBehavior._testMode(true);
 describe('Entityfactory', () => {
 
 	describe('errors', () => {
-		var sandbox;
+		let sandbox;
 
 		beforeEach(() => {
 			sandbox = sinon.createSandbox();

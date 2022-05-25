@@ -1,24 +1,24 @@
-/* global fetchMock */
-
+import { expect } from '@open-wc/testing';
+import fetchMock from 'fetch-mock/esm/client.js';
 import { getFormData } from '../utility/test-helpers.js';
 import { OrganizationEntity } from '../../src/organizations/OrganizationEntity.js';
-
+import SirenParse from 'siren-parser';
 import { testData } from './data/CompletionTracking.js';
 
 describe('Completion tracking', () => {
 	let trackingNoDisplay, trackingAndDisplay, noTrackingDisplay, noActions;
 
 	beforeEach(() => {
-		const trackingNoDisplayJson = window.D2L.Hypermedia.Siren.Parse(testData.trackingNoDisplay);
+		const trackingNoDisplayJson = SirenParse(testData.trackingNoDisplay);
 		trackingNoDisplay = new OrganizationEntity(trackingNoDisplayJson);
 
-		const trackingAndDisplayJson = window.D2L.Hypermedia.Siren.Parse(testData.trackingAndDisplay);
+		const trackingAndDisplayJson = SirenParse(testData.trackingAndDisplay);
 		trackingAndDisplay = new OrganizationEntity(trackingAndDisplayJson);
 
-		const noTrackingJson = window.D2L.Hypermedia.Siren.Parse(testData.noTracking);
+		const noTrackingJson = SirenParse(testData.noTracking);
 		noTrackingDisplay = new OrganizationEntity(noTrackingJson);
 
-		const noActionsJson = window.D2L.Hypermedia.Siren.Parse(testData.noActions);
+		const noActionsJson = SirenParse(testData.noActions);
 		noActions = new OrganizationEntity(noActionsJson);
 	});
 	describe('properties working', () => {

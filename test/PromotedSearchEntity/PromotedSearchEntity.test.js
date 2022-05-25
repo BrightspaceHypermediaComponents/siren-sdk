@@ -1,11 +1,12 @@
-/* global describe it expect*/
+import { expect } from '@open-wc/testing';
 import { PromotedSearchEntity } from '../../src/promotedSearch/PromotedSearchEntity.js';
+import SirenParse from 'siren-parser';
 
 describe('PromotedSearchEntity', () => {
-	var entity, action;
+	let entity, action;
 
 	beforeEach(() => {
-		entity = window.D2L.Hypermedia.Siren.Parse({
+		entity = SirenParse({
 			'properties':{
 				'UserEnrollmentsSearchType':'BySemester'
 			},
@@ -39,34 +40,34 @@ describe('PromotedSearchEntity', () => {
 		});
 
 		it('Return correct action name', () => {
-			var searchEntity = new PromotedSearchEntity(entity);
+			const searchEntity = new PromotedSearchEntity(entity);
 			expect(searchEntity.actions()[0].name).to.equal(action[0].name);
 		});
 
 		it('Return correct action href', () => {
-			var searchEntity = new PromotedSearchEntity(entity);
+			const searchEntity = new PromotedSearchEntity(entity);
 			expect(searchEntity.actions()[1].href).to.equal(action[1].href);
 		});
 
 		it('Return correct action title', () => {
-			var searchEntity = new PromotedSearchEntity(entity);
+			const searchEntity = new PromotedSearchEntity(entity);
 			expect(searchEntity.actions()[1].title).to.equal(action[1].title);
 		});
 
-		it('Return correct action title', () => {
-			var searchEntity = new PromotedSearchEntity(entity);
+		it('Return correct action method', () => {
+			const searchEntity = new PromotedSearchEntity(entity);
 			expect(searchEntity.actions()[0].method).to.equal(action[0].method);
 		});
 
 		it('Return correct number of action', () => {
-			var searchEntity = new PromotedSearchEntity(entity);
+			const searchEntity = new PromotedSearchEntity(entity);
 			expect(searchEntity.actions().length).to.equal(2);
 		});
 	});
 
 	describe('Tests for Propreties', () => {
 		it('Return correct UserEnrollmentsSearchType', () => {
-			var searchEntity = new PromotedSearchEntity(entity);
+			const searchEntity = new PromotedSearchEntity(entity);
 			expect(searchEntity.userEnrollmentsSearchType()).to.equal('BySemester');
 		});
 	});

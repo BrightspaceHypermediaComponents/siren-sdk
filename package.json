@@ -26,7 +26,6 @@
   "devDependencies": {
     "@babel/polyfill": "^7.0.0",
     "@open-wc/testing": "^3",
-    "@polymer/polymer": "^3.0.0",
     "@polymer/test-fixture": "^4.0.2",
     "@web/test-runner": "^0.13",
     "babel-eslint": "^10.0.1",
@@ -34,12 +33,12 @@
     "eslint": "^4.15.0",
     "eslint-config-brightspace": "^0.4.0",
     "eslint-plugin-html": "^4.0.1",
-    "fetch-mock": "^8.3.2",
+    "fetch-mock": "^9",
     "jsdoc": "^3.5.5",
     "lit-element": "^3",
     "mocha": "^7.0.1",
     "polymer-cli": "^1.9.1",
-    "sinon": "^13",
+    "sinon": "^14",
     "wct-mocha": "^1.0.1"
   }
 }
