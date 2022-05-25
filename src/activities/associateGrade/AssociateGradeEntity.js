@@ -1,9 +1,9 @@
-import { Entity } from '../../es6/Entity.js';
 import { Actions, Classes, Rels } from '../../hypermedia-constants.js';
-import { performSirenAction } from '../../es6/SirenAction.js';
-import { GradeCategoryCollectionEntity } from './GradeCategoryCollectionEntity.js';
+import { Entity } from '../../es6/Entity.js';
 import { GradeCandidateCollectionEntity } from '../GradeCandidateCollectionEntity.js';
+import { GradeCategoryCollectionEntity } from './GradeCategoryCollectionEntity.js';
 import { GradeSchemeCollectionEntity } from './GradeSchemeCollectionEntity.js';
+import { performSirenAction } from '../../es6/SirenAction.js';
 
 /**
  * AssociateGrade entity of an activity.
@@ -231,7 +231,7 @@ export class AssociateGradeEntity extends Entity {
 		// HACK adding query params as fields due to bug in performSirenAction (_getSirenFields function)
 		const url = new URL(action.href, window.location.origin);
 		for (const [key, value] of url.searchParams) {
-			fields.push({name: key, value: value});
+			fields.push({ name: key, value: value });
 		}
 
 		return performSirenAction(this._token, action, fields, false, true);

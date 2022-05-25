@@ -3,7 +3,7 @@ import { expect } from '@open-wc/testing';
 import SirenParse from 'siren-parser';
 
 describe('AlertsEntity', () => {
-	var hasUnreadEntity, noUnreadEntity;
+	let hasUnreadEntity, noUnreadEntity;
 
 	beforeEach(() => {
 		hasUnreadEntity = SirenParse({
@@ -29,12 +29,12 @@ describe('AlertsEntity', () => {
 
 	describe('Tests for Propreties', () => {
 		it('Has Unread', () => {
-			var entity = new AlertsEntity(hasUnreadEntity);
+			const entity = new AlertsEntity(hasUnreadEntity);
 			expect(entity.hasUnread()).to.equal(true);
 		});
 
 		it('No Unread', () => {
-			var entity = new AlertsEntity(noUnreadEntity);
+			const entity = new AlertsEntity(noUnreadEntity);
 			expect(entity.hasUnread()).to.equal(false);
 		});
 	});

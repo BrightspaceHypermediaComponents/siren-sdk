@@ -35,7 +35,7 @@ export class UserActivityUsageEntity extends Entity {
 		if (!entity.hasSubEntityByClass(sirenClass)) {
 			return;
 		}
-		var subEntity = entity.getSubEntityByClass(sirenClass);
+		const subEntity = entity.getSubEntityByClass(sirenClass);
 
 		if (subEntity.hasClass('date')) {
 			return subEntity.properties ? subEntity.properties.date : null;

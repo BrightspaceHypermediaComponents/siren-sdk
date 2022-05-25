@@ -1,6 +1,6 @@
 import { Actions, Classes } from '../../hypermedia-constants.js';
-import { performSirenAction } from '../../es6/SirenAction.js';
 import { ContentEntity } from './ContentEntity.js';
+import { performSirenAction } from '../../es6/SirenAction.js';
 
 /**
  * ContentscormActivityEntity class representation of a d2l content-scorm-package entity.

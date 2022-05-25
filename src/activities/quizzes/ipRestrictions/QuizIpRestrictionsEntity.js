@@ -1,5 +1,5 @@
-import { Entity } from '../../../es6/Entity.js';
 import { Actions, Classes } from '../../../hypermedia-constants.js';
+import { Entity } from '../../../es6/Entity.js';
 import { performSirenAction } from '../../../es6/SirenAction.js';
 
 const IP_START_FIELD = 'start';

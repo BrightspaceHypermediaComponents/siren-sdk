@@ -1,6 +1,6 @@
+import './siren-sdk-simple-organization.js';
 import { html, LitElement } from 'lit';
 import { PendingContainerMixin } from '../../src/mixin/pending-container-mixin.js';
-import './siren-sdk-simple-organization.js';
 
 class SdkSirenPendingContainer extends PendingContainerMixin(LitElement) {
 	static get properties() {

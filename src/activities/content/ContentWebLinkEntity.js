@@ -1,7 +1,7 @@
 import { Actions, Classes, Rels } from '../../hypermedia-constants.js';
-import { performSirenAction } from '../../es6/SirenAction.js';
 import ContentHelperFunctions from './ContentHelperFunctions.js';
 import { ContentWorkingCopyEntity } from './ContentWorkingCopyEntity.js';
+import { performSirenAction } from '../../es6/SirenAction.js';
 
 export const WebLinkTypes = {
 	Default: 'default',

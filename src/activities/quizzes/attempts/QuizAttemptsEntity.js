@@ -1,5 +1,5 @@
-import { Entity } from '../../../es6/Entity.js';
 import { Actions, Classes } from '../../../hypermedia-constants.js';
+import { Entity } from '../../../es6/Entity.js';
 import { performSirenAction } from '../../../es6/SirenAction.js';
 
 /**
@@ -242,7 +242,7 @@ export class QuizAttemptsEntity extends Entity {
 	async setAttemptsAllowed(attemptsAllowed) {
 		if (!attemptsAllowed || !this._hasAttemptsAllowedChanged(attemptsAllowed)) return;
 		if (!this.canUpdateAttemptsAllowed()) return;
-		const {action, fields} = this._generateAttemptsAllowedAction(attemptsAllowed) || {};
+		const { action, fields } = this._generateAttemptsAllowedAction(attemptsAllowed) || {};
 		if (!action) return;
 		const returnedEntity = await performSirenAction(this._token, action, fields);
 		if (!returnedEntity) return;
@@ -252,7 +252,7 @@ export class QuizAttemptsEntity extends Entity {
 	async setOverallGradeCalculationType(calculationType) {
 		if (!calculationType || !this._hasOverallGradeCalculationTypeChanged(calculationType)) return;
 		if (!this.canUpdateOverallGradeCalculation()) return;
-		const {action, fields} = this._generateOverallGradeCalculationTypeAction(calculationType) || {};
+		const { action, fields } = this._generateOverallGradeCalculationTypeAction(calculationType) || {};
 		if (!action) return;
 		const returnedEntity = await performSirenAction(this._token, action, fields);
 		if (!returnedEntity) return;
@@ -262,7 +262,7 @@ export class QuizAttemptsEntity extends Entity {
 	async setRetakeIncorrectOnly(retakeIncorrectOnly) {
 		if (retakeIncorrectOnly === undefined || !this._hasRetakeIncorrectOnlyChanged(retakeIncorrectOnly)) return;
 		if (!this.canUpdateRetakeIncorrectOnly()) return;
-		const {action, fields} = this._generateRetakeIncorrectOnlyAction(retakeIncorrectOnly) || {};
+		const { action, fields } = this._generateRetakeIncorrectOnlyAction(retakeIncorrectOnly) || {};
 		if (!action) return;
 		const returnedEntity = await performSirenAction(this._token, action, fields);
 		if (!returnedEntity) return;
@@ -272,7 +272,7 @@ export class QuizAttemptsEntity extends Entity {
 	async setAttemptCondition(attemptCondition) {
 		if (!attemptCondition || !this._hasAttemptConditionChanged(attemptCondition)) return;
 		if (!this.canUpdateAttemptConditions()) return;
-		const {action, fields} = this._generateAttemptConditionAction(attemptCondition) || {};
+		const { action, fields } = this._generateAttemptConditionAction(attemptCondition) || {};
 		if (!action) return;
 		const returnedEntity = await performSirenAction(this._token, action, fields);
 		if (!returnedEntity) return;

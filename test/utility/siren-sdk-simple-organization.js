@@ -3,20 +3,19 @@ import { EntityMixinLit } from '../../src/mixin/entity-mixin-lit.js';
 import { OrganizationEntity } from './OrganizationEntity.js';
 
 class SdkSirenSimpleOrganization extends EntityMixinLit(LitElement) {
-
 	constructor() {
 		super();
 		this._setEntityType(OrganizationEntity);
-	}
-
-	shouldUpdate(changedProperties) {
-		return super.shouldUpdate(changedProperties) && this._entity;
 	}
 
 	render() {
 		return html`
 			<div id="organization-name">${this._entity.name()}</div>
 		`;
+	}
+
+	shouldUpdate(changedProperties) {
+		return super.shouldUpdate(changedProperties) && this._entity;
 	}
 }
 

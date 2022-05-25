@@ -1,6 +1,6 @@
+import { Actions, Classes, Rels } from '../../hypermedia-constants.js';
 import { AssociateGradeEntity } from './AssociateGradeEntity.js';
 import { Entity } from '../../es6/Entity.js';
-import { Classes, Actions, Rels } from '../../hypermedia-constants.js';
 import { performSirenAction } from '../../es6/SirenAction.js';
 
 /**

@@ -9,13 +9,6 @@ class SdkSirenOrganizationNameLit extends EntityMixinLit(LitElement) {
 		};
 	}
 
-	set _entity(entity) {
-		if (this._entityHasChanged(entity)) {
-			super._entity = entity;
-			this._onOrganizationChange(entity);
-		}
-	}
-
 	constructor() {
 		super();
 		this._setEntityType(OrganizationEntity);
@@ -25,6 +18,13 @@ class SdkSirenOrganizationNameLit extends EntityMixinLit(LitElement) {
 		return html`
 			${this._organizationName}
 		`;
+	}
+
+	set _entity(entity) {
+		if (this._entityHasChanged(entity)) {
+			super._entity = entity;
+			this._onOrganizationChange(entity);
+		}
 	}
 
 	_onOrganizationChange(organization) {

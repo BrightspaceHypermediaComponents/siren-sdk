@@ -1,5 +1,5 @@
+import { Actions, Rels } from '../hypermedia-constants.js';
 import { Entity } from '../es6/Entity.js';
-import { Rels, Actions } from '../hypermedia-constants.js';
 
 export class UserSettingsEntity extends Entity {
 	userSettingsHref() {
