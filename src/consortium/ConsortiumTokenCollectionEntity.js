@@ -1,6 +1,6 @@
-import { Entity } from '../es6/Entity.js';
 import { Classes } from '../hypermedia-constants.js';
 import { ConsortiumTokenEntity } from './ConsortiumTokenEntity.js';
+import { Entity } from '../es6/Entity.js';
 
 /**
  * Collection of {@link ConsortiumTokenEntity}

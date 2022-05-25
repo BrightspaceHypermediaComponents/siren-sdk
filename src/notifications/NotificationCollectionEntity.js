@@ -7,9 +7,9 @@ import { Rels } from '../hypermedia-constants.js';
 export class NotificationCollectionEntity extends Entity {
 
 	getNotifications() {
-		var notificationEntityList = [];
+		const notificationEntityList = [];
 		const notificationCollectionEntity = this._notificationCollectionEntity();
-		for (var i = 0; i < this._size(); i++) {
+		for (let i = 0; i < this._size(); i++) {
 			notificationEntityList.push(new NotificationEntity(notificationCollectionEntity[i]));
 		}
 		return notificationEntityList;

@@ -1,7 +1,7 @@
 import { Actions, Rels } from '../../hypermedia-constants.js';
-import { performSirenAction } from '../../es6/SirenAction.js';
 import ContentHelperFunctions from './ContentHelperFunctions.js';
 import { ContentWorkingCopyEntity } from './ContentWorkingCopyEntity.js';
+import { performSirenAction } from '../../es6/SirenAction.js';
 
 export const FILE_TYPES = {
 	html: 'html',

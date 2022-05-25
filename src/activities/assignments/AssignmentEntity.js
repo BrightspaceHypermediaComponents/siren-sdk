@@ -1,6 +1,6 @@
-import { Entity } from '../../es6/Entity.js';
-import { Actions, Rels, Classes } from '../../hypermedia-constants.js';
+import { Actions, Classes, Rels } from '../../hypermedia-constants.js';
 import { performSirenAction, performSirenActions } from '../../es6/SirenAction.js';
+import { Entity } from '../../es6/Entity.js';
 
 const actions = {
 	delete: 'delete-folder',

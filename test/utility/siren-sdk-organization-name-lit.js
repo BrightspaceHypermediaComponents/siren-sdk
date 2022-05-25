@@ -1,4 +1,4 @@
-import { html, LitElement } from 'lit-element/lit-element.js';
+import { html, LitElement } from 'lit';
 import { EntityMixinLit } from '../../src/mixin/entity-mixin-lit.js';
 import { OrganizationEntity } from '../utility/OrganizationEntity.js';
 
@@ -7,13 +7,6 @@ class SdkSirenOrganizationNameLit extends EntityMixinLit(LitElement) {
 		return {
 			_organizationName: { type: String }
 		};
-	}
-
-	set _entity(entity) {
-		if (this._entityHasChanged(entity)) {
-			super._entity = entity;
-			this._onOrganizationChange(entity);
-		}
 	}
 
 	constructor() {
@@ -25,6 +18,13 @@ class SdkSirenOrganizationNameLit extends EntityMixinLit(LitElement) {
 		return html`
 			${this._organizationName}
 		`;
+	}
+
+	set _entity(entity) {
+		if (this._entityHasChanged(entity)) {
+			super._entity = entity;
+			this._onOrganizationChange(entity);
+		}
 	}
 
 	_onOrganizationChange(organization) {

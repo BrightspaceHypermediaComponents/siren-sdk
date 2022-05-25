@@ -1,13 +1,12 @@
 
 import { Actions, Classes, Rels } from '../hypermedia-constants.js';
 import { ActivityUsageEntity } from '../activities/ActivityUsageEntity.js';
-import { Entity } from '../es6/Entity.js';
-import { SimpleEntity } from '../es6/SimpleEntity.js';
-import { performSirenAction } from '../es6/SirenAction.js';
-import { NotificationCollectionEntity } from '../notifications/NotificationCollectionEntity.js';
-import { SequenceEntity } from '../sequences/SequenceEntity.js';
-
 import { AlertsEntity } from './AlertsEntity.js';
+import { Entity } from '../es6/Entity.js';
+import { NotificationCollectionEntity } from '../notifications/NotificationCollectionEntity.js';
+import { performSirenAction } from '../es6/SirenAction.js';
+import { SequenceEntity } from '../sequences/SequenceEntity.js';
+import { SimpleEntity } from '../es6/SimpleEntity.js';
 
 export const classes = {
 	active: 'active',
@@ -65,8 +64,8 @@ export class OrganizationEntity extends Entity {
 	}
 
 	isAfterEndDate() {
-		var nowDate = Date.now();
-		var endDate = Date.parse(this.endDate());
+		const nowDate = Date.now();
+		const endDate = Date.parse(this.endDate());
 		return endDate ? endDate <= nowDate : null;
 	}
 
@@ -75,8 +74,8 @@ export class OrganizationEntity extends Entity {
 	}
 
 	isBeforeStartDate() {
-		var nowDate = Date.now();
-		var startDate = Date.parse(this.startDate());
+		const nowDate = Date.now();
+		const startDate = Date.parse(this.startDate());
 		return startDate ? startDate > nowDate : null;
 	}
 
@@ -85,11 +84,11 @@ export class OrganizationEntity extends Entity {
 	}
 
 	processedDate(hideCourseStartDate, hideCourseEndDate) {
-		var nowDate = Date.now();
-		var startDate = Date.parse(this.startDate());
-		var endDate = Date.parse(this.endDate());
-		var dateType = null;
-		var date = null;
+		const nowDate = Date.now();
+		const startDate = Date.parse(this.startDate());
+		const endDate = Date.parse(this.endDate());
+		let dateType = null;
+		let date = null;
 
 		if (startDate > nowDate) {
 			dateType = 'startsAt';
@@ -139,7 +138,7 @@ export class OrganizationEntity extends Entity {
 			return;
 		}
 
-		var homepageEntity = this._entity.getSubEntityByRel(Rels.organizationHomepage);
+		const homepageEntity = this._entity.getSubEntityByRel(Rels.organizationHomepage);
 		return homepageEntity
 			&& homepageEntity.properties
 			&& homepageEntity.properties.path;

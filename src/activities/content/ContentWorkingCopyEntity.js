@@ -1,5 +1,5 @@
-import { Entity } from '../../es6/Entity.js';
 import { Actions } from '../../hypermedia-constants.js';
+import { Entity } from '../../es6/Entity.js';
 import { performSirenAction } from '../../es6/SirenAction.js';
 
 export class ContentWorkingCopyEntity extends Entity {

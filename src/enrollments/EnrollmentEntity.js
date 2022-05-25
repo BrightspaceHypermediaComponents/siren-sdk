@@ -1,5 +1,5 @@
-import { Entity } from '../es6/Entity.js';
 import { Actions, Rels } from '../hypermedia-constants.js';
+import { Entity } from '../es6/Entity.js';
 import { OrganizationEntity } from '../organizations/OrganizationEntity.js';
 import { UserActivityUsageEntity  } from './UserActivityUsageEntity.js';
 import { UserEntity  } from '../users/UserEntity.js';

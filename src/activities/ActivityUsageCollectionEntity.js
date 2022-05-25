@@ -1,13 +1,30 @@
-import { Entity } from '../es6/Entity.js';
-import { Rels } from '../hypermedia-constants.js';
-import { Actions } from '../hypermedia-constants.js';
+import { Actions, Rels } from '../hypermedia-constants.js';
 import { ActivityUsageEntity } from './ActivityUsageEntity.js';
+import { Entity } from '../es6/Entity.js';
 import { performSirenAction } from '../es6/SirenAction.js';
 
 const actions = {
 	removeActivity: 'remove-activity',
 	moveActivity: 'move-activity'
 };
+
+class CollectedItemEntity extends Entity {
+	id() {
+		return this._entity && this._entity.properties && this._entity.properties.id;
+	}
+
+	activityUsageHref() {
+		if (!this._entity || !this._entity.hasLinkByRel(Rels.Activities.activityUsage)) {
+			return;
+		}
+		return this._entity.getLinkByRel(Rels.Activities.activityUsage).href;
+	}
+
+	onActivityUsageChange(onChange) {
+		const activityUsageHref = this.activityUsageHref();
+		activityUsageHref && this._subEntity(ActivityUsageEntity, activityUsageHref, onChange);
+	}
+}
 
 /**
  * ActivityUsageCollectionEntity class representation of a d2l activity usage collection.
@@ -33,8 +50,8 @@ export class ActivityUsageCollectionEntity extends Entity {
 
 	async moveItem(itemToMoveId, targetId) {
 		const action = this.getActionByName(actions.moveActivity);
-		const fields = [{name: 'itemToMoveId', value: itemToMoveId}];
-		targetId && fields.push({name: 'targetId', value: targetId});
+		const fields = [{ name: 'itemToMoveId', value: itemToMoveId }];
+		targetId && fields.push({ name: 'targetId', value: targetId });
 		await performSirenAction(this._token, action, fields);
 	}
 
@@ -116,23 +133,5 @@ export class ActivityUsageCollectionEntity extends Entity {
 
 			return await performSirenAction(this._token, setCollectionPagingAction, fields);
 		}
-	}
-}
-
-class CollectedItemEntity extends Entity {
-	id() {
-		return this._entity && this._entity.properties && this._entity.properties.id;
-	}
-
-	activityUsageHref() {
-		if (!this._entity || !this._entity.hasLinkByRel(Rels.Activities.activityUsage)) {
-			return;
-		}
-		return this._entity.getLinkByRel(Rels.Activities.activityUsage).href;
-	}
-
-	onActivityUsageChange(onChange) {
-		const activityUsageHref = this.activityUsageHref();
-		activityUsageHref && this._subEntity(ActivityUsageEntity, activityUsageHref, onChange);
 	}
 }

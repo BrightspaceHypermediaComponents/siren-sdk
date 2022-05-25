@@ -1,6 +1,6 @@
 import { Entity } from '../es6/Entity.js';
-import { Rels } from '../hypermedia-constants.js';
 import { OrganizationEntity } from '../organizations/OrganizationEntity.js';
+import { Rels } from '../hypermedia-constants.js';
 
 export const sequenceClasses = {
 	sequence: 'sequence',
@@ -11,6 +11,34 @@ export const sequencedActivityClasses = {
 	sequencedActivity: 'sequenced-activity',
 	activity: 'activity',
 };
+
+class SequencedActivityEntity extends Entity {
+	title() {
+		return this._entity && this._entity.properties && this._entity.properties.title;
+	}
+
+	organizationHref() {
+		const activity = this._activitySubEntity();
+		if (!activity || !activity.hasLinkByRel(Rels.organization)) {
+			return;
+		}
+
+		return activity.getLinkByRel(Rels.organization).href;
+	}
+
+	onOrganizationChange(onChange) {
+		const organizationHref = this.organizationHref();
+		organizationHref && this._subEntity(OrganizationEntity, organizationHref, onChange);
+	}
+
+	_activitySubEntity() {
+		if (!this._entity) {
+			return;
+		}
+
+		return this._entity.getSubEntityByClass(sequencedActivityClasses.activity);
+	}
+}
 
 export class SequenceEntity extends Entity {
 	/**
@@ -86,33 +114,5 @@ export class SequenceEntity extends Entity {
 		}
 
 		return this._entity.getSubEntitiesByClass(sequencedActivityClasses.sequencedActivity);
-	}
-}
-
-class SequencedActivityEntity extends Entity {
-	title() {
-		return this._entity && this._entity.properties && this._entity.properties.title;
-	}
-
-	organizationHref() {
-		const activity = this._activitySubEntity();
-		if (!activity || !activity.hasLinkByRel(Rels.organization)) {
-			return;
-		}
-
-		return activity.getLinkByRel(Rels.organization).href;
-	}
-
-	onOrganizationChange(onChange) {
-		const organizationHref = this.organizationHref();
-		organizationHref && this._subEntity(OrganizationEntity, organizationHref, onChange);
-	}
-
-	_activitySubEntity() {
-		if (!this._entity) {
-			return;
-		}
-
-		return this._entity.getSubEntityByClass(sequencedActivityClasses.activity);
 	}
 }

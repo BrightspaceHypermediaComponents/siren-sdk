@@ -13,7 +13,7 @@ const _getSirenFields = function(action) {
 	}
 
 	if (action.fields && action.fields.forEach) {
-		action.fields.forEach(function(field) {
+		action.fields.forEach((field) => {
 			if (field.value === undefined) {
 				return;
 			}
@@ -24,6 +24,15 @@ const _getSirenFields = function(action) {
 	return fields;
 };
 
+const _createURLSearchParams = function(fields) {
+	const sequence = [];
+	for (let i = 0; i < fields.length; i++) {
+		const field = fields[i];
+		sequence.push([field.name, field.value]);
+	}
+	return new URLSearchParams(sequence);
+};
+
 const _getEntityUrl = function(action, fields) {
 	if (!action) {
 		return null;
@@ -32,19 +41,10 @@ const _getEntityUrl = function(action, fields) {
 	let url = new URL(action.href, window.location.origin);
 	if (action.method === 'GET' || action.method === 'HEAD') {
 		const params = _createURLSearchParams(fields);
-		url = new URL(url.pathname + '?' + params.toString(), url.origin);
+		url = new URL(`${url.pathname}?${params.toString()}`, url.origin);
 	}
 
 	return url;
-};
-
-const _createURLSearchParams = function(fields) {
-	const sequence = [];
-	for (let i = 0; i < fields.length; i++) {
-		const field = fields[i];
-		sequence.push([field.name, field.value]);
-	}
-	return new URLSearchParams(sequence);
 };
 
 const _createFormData = function(fields) {
@@ -57,7 +57,7 @@ const _createFormData = function(fields) {
 
 const _appendHiddenFields = function(action, fields) {
 	if (action.fields && action.fields.forEach) {
-		action.fields.forEach(function(field) {
+		action.fields.forEach((field) => {
 			if (field.type === 'hidden' && field.value !== undefined) {
 				fields.push({ name: field.name, value: field.value });
 			}
@@ -68,12 +68,12 @@ const _appendHiddenFields = function(action, fields) {
 
 const _fetch = function(href, opts) {
 	return window.d2lfetch.fetch(href, opts)
-		.then(function(resp) {
+		.then((resp) => {
 			if (!resp.ok) {
-				const errMsg = resp.statusText + ' response executing ' + opts.method + ' on ' + href + '.';
-				return resp.json().then(function(data) {
+				const errMsg = `${resp.statusText} response executing ${opts.method} on ${href}.`;
+				return resp.json().then((data) => {
 					throw { json: data, message: errMsg };
-				}, function(data) {
+				}, (data) => {
 					throw { string: data, message: errMsg };
 				});
 			}
@@ -88,7 +88,7 @@ const _fetch = function(href, opts) {
 					links: links
 				};
 			}
-			return resp.json().then(function(body) {
+			return resp.json().then((body) => {
 				return {
 					body: body,
 					links: links
@@ -103,7 +103,7 @@ const _performSirenAction = function(action, fields, tokenValue, bypassCache) {
 	}
 
 	const headers = new Headers();
-	tokenValue && headers.append('Authorization', 'Bearer ' + tokenValue);
+	tokenValue && headers.append('Authorization', `Bearer ${tokenValue}`);
 
 	if (bypassCache) {
 		headers.append('pragma', 'no-cache');
@@ -138,15 +138,15 @@ const _performSirenAction = function(action, fields, tokenValue, bypassCache) {
 		body: body,
 		headers: headers
 	})
-		.then(function(result) {
+		.then((result) => {
 			const linkRequests = [];
 			if (result.links) {
-				result.links.forEach(function(link) {
+				result.links.forEach((link) => {
 					linkRequests.push(window.D2L.Siren.EntityStore.fetch(link.href, token, true));
 				});
 			}
 			const entity = result.body ? SirenParse(result.body) : null;
-			return Promise.all(linkRequests).then(function() {
+			return Promise.all(linkRequests).then(() => {
 				if (!entity) {
 					return window.D2L.Siren.EntityStore.remove(url.href, token);
 				}
@@ -210,10 +210,10 @@ export const performSirenActions = function(token, actionsAndFields) {
 	const combinedActions = _combineActions(actionsAndFields);
 
 	return window.D2L.Siren.EntityStore.getToken(token)
-		.then(function(resolved) {
+		.then((resolved) => {
 			const tokenValue = resolved.tokenValue;
 			const actionPromises = combinedActions.map(action => {
-				return window.D2L.Siren.ActionQueue.enqueue(function() {
+				return window.D2L.Siren.ActionQueue.enqueue(() => {
 					return _performSirenAction(action, null, tokenValue);
 				});
 			});
@@ -223,9 +223,9 @@ export const performSirenActions = function(token, actionsAndFields) {
 
 export const performSirenAction = function(token, action, fields, immediate, bypassCache) {
 	return window.D2L.Siren.EntityStore.getToken(token)
-		.then(function(resolved) {
+		.then((resolved) => {
 			const tokenValue = resolved.tokenValue;
-			return !immediate ? window.D2L.Siren.ActionQueue.enqueue(function() {
+			return !immediate ? window.D2L.Siren.ActionQueue.enqueue(() => {
 				return _performSirenAction(action, fields, tokenValue, bypassCache);
 			}) : _performSirenAction(action, fields, tokenValue, bypassCache);
 		});

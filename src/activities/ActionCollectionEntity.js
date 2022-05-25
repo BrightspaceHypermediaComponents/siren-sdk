@@ -1,7 +1,32 @@
-import { SelflessEntity } from '../es6/SelflessEntity.js';
-import { Rels } from '../hypermedia-constants.js';
 import { ActivityUsageEntity } from './ActivityUsageEntity.js';
 import { performSirenAction } from '../es6/SirenAction.js';
+import { Rels } from '../hypermedia-constants.js';
+import { SelflessEntity } from '../es6/SelflessEntity.js';
+
+class ActionItemEntity extends SelflessEntity {
+	activityUsageHref() {
+		if (!this._entity || !this._entity.hasLinkByRel(Rels.Activities.activityUsage)) {
+			return;
+		}
+		return this._entity.getLinkByRel(Rels.Activities.activityUsage).href;
+	}
+
+	onActivityUsageChange(onChange) {
+		const activityUsageHref = this.activityUsageHref();
+		activityUsageHref && this._subEntity(ActivityUsageEntity, activityUsageHref, onChange);
+	}
+
+	async addActionItem() {
+		const action = this._entity.actions && this._entity.actions[0];
+		if (action) {
+			await performSirenAction(this._token, action, null, true);
+		}
+	}
+
+	getActionState() {
+		return this._entity.properties.actionState;
+	}
+}
 
 /**
  * ActionCollection Entity representation of a D2L Action Collection response
@@ -31,29 +56,4 @@ export class ActionCollectionEntity extends SelflessEntity {
 		return this._entity.getActionByName('execute-multiple');
 	}
 
-}
-
-class ActionItemEntity extends SelflessEntity {
-	activityUsageHref() {
-		if (!this._entity || !this._entity.hasLinkByRel(Rels.Activities.activityUsage)) {
-			return;
-		}
-		return this._entity.getLinkByRel(Rels.Activities.activityUsage).href;
-	}
-
-	onActivityUsageChange(onChange) {
-		const activityUsageHref = this.activityUsageHref();
-		activityUsageHref && this._subEntity(ActivityUsageEntity, activityUsageHref, onChange);
-	}
-
-	async addActionItem() {
-		const action = this._entity.actions && this._entity.actions[0];
-		if (action) {
-			await performSirenAction(this._token, action, null, true);
-		}
-	}
-
-	getActionState() {
-		return this._entity.properties.actionState;
-	}
 }

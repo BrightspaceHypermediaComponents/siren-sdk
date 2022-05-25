@@ -1,8 +1,8 @@
 import { EnrollmentCollectionEntity } from '../enrollments/EnrollmentCollectionEntity.js';
 import { Entity } from '../es6/Entity.js';
 import { entityFactory } from '../es6/EntityFactory.js';
-import { Rels } from '../hypermedia-constants.js';
 import { OrganizationEntity } from '../organizations/OrganizationEntity.js';
+import { Rels } from '../hypermedia-constants.js';
 
 export class root extends Entity {
 	/**

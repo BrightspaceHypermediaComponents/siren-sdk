@@ -2,26 +2,19 @@ import { html, PolymerElement } from '@polymer/polymer/polymer-element.js';
 import { EntityMixin } from '../../src/mixin/entity-mixin.js';
 import { OrganizationEntity } from '../utility/OrganizationEntity.js';
 
-/**
- * @customElement
- * @polymer
- */
 class SdkSirenOrganizationName extends EntityMixin(PolymerElement) {
-	constructor() {
-		super();
-		this._setEntityType(OrganizationEntity);
-	}
-
-	static get template() {
-		return html`
-			[[_organizationName]]
-		`;
-	}
 	static get properties() {
 		return {
 			_organizationName: String
 		};
 	}
+
+	constructor() {
+		super();
+		this._setEntityType(OrganizationEntity);
+	}
+
+	static get is() { return 'siren-sdk-organization-name'; }
 
 	static get observers() {
 		return [
@@ -29,7 +22,11 @@ class SdkSirenOrganizationName extends EntityMixin(PolymerElement) {
 		];
 	}
 
-	static get is() { return 'siren-sdk-organization-name'; }
+	static get template() {
+		return html`
+			[[_organizationName]]
+		`;
+	}
 
 	_onOrganizationChange(organization) {
 		this._organizationName = organization.name();

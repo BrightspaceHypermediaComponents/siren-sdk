@@ -1,5 +1,5 @@
+import { Actions, Classes } from '../hypermedia-constants.js';
 import { Entity } from '../es6/Entity.js';
-import { Classes, Actions } from '../hypermedia-constants.js';
 import { performSirenAction } from '../es6/SirenAction.js';
 
 const UNSET_CATEGORY_ID = '0';
