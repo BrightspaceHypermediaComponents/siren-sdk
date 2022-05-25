@@ -30,7 +30,7 @@
     "eslint-plugin-html": "^4.0.1",
     "fetch-mock": "^9",
     "jsdoc": "^3.5.5",
-    "lit-element": "^3",
+    "lit": "^2",
     "sinon": "^14"
   }
 }

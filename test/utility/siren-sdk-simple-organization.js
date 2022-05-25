@@ -1,4 +1,4 @@
-import { html, LitElement } from 'lit-element/lit-element.js';
+import { html, LitElement } from 'lit';
 import { EntityMixinLit } from '../../src/mixin/entity-mixin-lit.js';
 import { OrganizationEntity } from './OrganizationEntity.js';
 
