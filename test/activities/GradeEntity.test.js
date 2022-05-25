@@ -1,4 +1,6 @@
+import { expect } from '@open-wc/testing';
 import { GradeEntity } from '../../src/activities/GradeEntity.js';
+import SirenParse from 'siren-parser';
 import { testData } from './data/GradeEntity.js';
 
 describe('GradeEntity', () => {
@@ -6,7 +8,7 @@ describe('GradeEntity', () => {
 		let entity;
 
 		beforeEach(() => {
-			const entityJson = window.D2L.Hypermedia.Siren.Parse(testData.gradeEntity.points);
+			const entityJson = SirenParse(testData.gradeEntity.points);
 			entity = new GradeEntity(entityJson);
 		});
 
@@ -27,7 +29,7 @@ describe('GradeEntity', () => {
 		let entity;
 
 		beforeEach(() => {
-			const entityJson = window.D2L.Hypermedia.Siren.Parse(testData.gradeEntity.weighted);
+			const entityJson = SirenParse(testData.gradeEntity.weighted);
 			entity = new GradeEntity(entityJson);
 		});
 

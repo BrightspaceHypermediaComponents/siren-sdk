@@ -1,4 +1,6 @@
 import { ActivityGradeEntity } from '../../src/activities/ActivityGradeEntity.js';
+import { expect } from '@open-wc/testing';
+import SirenParse from 'siren-parser';
 import { testData } from './data/ActivityGradeEntity.js';
 
 describe('ActivityGradeEntity', () => {
@@ -6,7 +8,7 @@ describe('ActivityGradeEntity', () => {
 		let entity;
 
 		beforeEach(() => {
-			const entityJson = window.D2L.Hypermedia.Siren.Parse(testData.gradeEntity.Numeric);
+			const entityJson = SirenParse(testData.gradeEntity.Numeric);
 			entity = new ActivityGradeEntity(entityJson);
 		});
 
@@ -35,7 +37,7 @@ describe('ActivityGradeEntity', () => {
 		let entity;
 
 		beforeEach(() => {
-			const entityJson = window.D2L.Hypermedia.Siren.Parse(testData.gradeEntity.LetterGrade);
+			const entityJson = SirenParse(testData.gradeEntity.LetterGrade);
 			entity = new ActivityGradeEntity(entityJson);
 		});
 

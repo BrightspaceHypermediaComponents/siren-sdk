@@ -1,7 +1,8 @@
-/* global fetchMock */
-
+import { expect } from '@open-wc/testing';
+import fetchMock from 'fetch-mock/esm/client.js';
 import { getFormData } from '../utility/test-helpers.js';
 import { ScoringEntity } from '../../src/activities/ScoringEntity.js';
+import SirenParse from 'siren-parser';
 import { testData } from './data/ScoringEntity.js';
 
 describe('ScoringEntity', () => {
@@ -9,7 +10,7 @@ describe('ScoringEntity', () => {
 		let entity;
 
 		beforeEach(() => {
-			const entityJson = window.D2L.Hypermedia.Siren.Parse(testData.scoringEntityReadonly);
+			const entityJson = SirenParse(testData.scoringEntityReadonly);
 			entity = new ScoringEntity(entityJson);
 		});
 
@@ -39,7 +40,7 @@ describe('ScoringEntity', () => {
 		let entityJson;
 
 		beforeEach(() => {
-			entityJson = window.D2L.Hypermedia.Siren.Parse(testData.scoringEntityEditable);
+			entityJson = SirenParse(testData.scoringEntityEditable);
 			entity = new ScoringEntity(entityJson);
 		});
 
@@ -48,22 +49,22 @@ describe('ScoringEntity', () => {
 		});
 
 		it('saves scoreOugOf', async() => {
-			fetchMock.patchOnce('https://7b81c573-c2ec-4a6b-adec-0011f509dc6b.assignments.api.dev.brightspace.com/123163/folders/303/score-out-of', entityJson);
+			fetchMock.postOnce('https://7b81c573-c2ec-4a6b-adec-0011f509dc6b.assignments.api.dev.brightspace.com/123163/folders/303/score-out-of', entityJson);
 
 			await entity.save({
-				maxGradePoints: 6
+				gradeMaxPoints: 6
 			});
 
 			const form = await getFormData(fetchMock.lastCall().request);
 			if (!form.notSupported) {
-				expect(form.get('maxGradePoints')).to.equal(6);
+				expect(form.get('scoreOutOf')).to.equal('6');
 			}
 			expect(fetchMock.called()).to.be.true;
 		});
 
 		it('skips save if not dirty', async() => {
 			await entity.save({
-				maxGradePoints: 5
+				gradeMaxPoints: 5
 			});
 
 			expect(fetchMock.done());

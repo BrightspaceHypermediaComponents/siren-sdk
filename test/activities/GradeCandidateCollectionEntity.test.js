@@ -1,4 +1,7 @@
+import { expect } from '@open-wc/testing';
 import { GradeCandidateCollectionEntity } from '../../src/activities/GradeCandidateCollectionEntity.js';
+import sinon from 'sinon';
+import SirenParse from 'siren-parser';
 import { testData } from './data/GradeCandidateCollectionEntity.js';
 
 describe('GradeCandidateCollectionEntity', () => {
@@ -11,7 +14,7 @@ describe('GradeCandidateCollectionEntity', () => {
 		let entity;
 
 		beforeEach(() => {
-			const entityJson = window.D2L.Hypermedia.Siren.Parse(testData.gradeCandidateCollectionEntity);
+			const entityJson = SirenParse(testData.gradeCandidateCollectionEntity);
 			entity = new GradeCandidateCollectionEntity(entityJson);
 			sandbox = sinon.createSandbox();
 		});

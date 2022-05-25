@@ -1,17 +1,19 @@
-/* global fetchMock */
-
 import { ActivityUsageEntity } from '../../src/activities/ActivityUsageEntity.js';
-import { testData } from './data/ActivityUsageEntity.js';
+import { expect } from '@open-wc/testing';
+import fetchMock from 'fetch-mock/esm/client.js';
 import { getFormData } from '../utility/test-helpers.js';
+import sinon from 'sinon';
+import SirenParse from 'siren-parser';
+import { testData } from './data/ActivityUsageEntity.js';
 
 describe('ActivityUsageEntity', () => {
 	let entity, readonlyEntity, entityJson;
 
 	beforeEach(() => {
-		entityJson = window.D2L.Hypermedia.Siren.Parse(testData.activityUsageEntityEditable);
+		entityJson = SirenParse(testData.activityUsageEntityEditable);
 		entity = new ActivityUsageEntity(entityJson);
 
-		const readonlyJson = window.D2L.Hypermedia.Siren.Parse(testData.activityUsageEntityReadOnly);
+		const readonlyJson = SirenParse(testData.activityUsageEntityReadOnly);
 		readonlyEntity = new ActivityUsageEntity(readonlyJson);
 	});
 

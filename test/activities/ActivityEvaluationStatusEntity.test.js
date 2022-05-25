@@ -1,11 +1,13 @@
 import { ActivityEvaluationStatusEntity } from '../../src/activities/ActivityEvaluationStatusEntity.js';
-import { testData } from './data/ActivityEvaluationentity.js';
+import { expect } from '@open-wc/testing';
+import SirenParse from 'siren-parser';
+import { testData } from './data/ActivityEvaluationEntity.js';
 
 describe('ActivityEvaluationStatusEntity', () => {
 	let entity;
 
 	beforeEach(() => {
-		const entityJson = window.D2L.Hypermedia.Siren.Parse(testData.assignmentStatusEntity);
+		const entityJson = SirenParse(testData.assignmentStatusEntity);
 		entity = new ActivityEvaluationStatusEntity(entityJson);
 	});
 
@@ -51,28 +53,28 @@ describe('ActivityEvaluationStatusEntity', () => {
 
 	describe('Loads the correct activity types', () => {
 		it('can get assignment activity type', () => {
-			const entityJson = window.D2L.Hypermedia.Siren.Parse(testData.assignmentStatusEntity);
+			const entityJson = SirenParse(testData.assignmentStatusEntity);
 			entity = new ActivityEvaluationStatusEntity(entityJson);
 
 			expect(entity.getActivityType()).to.equal('assignment');
 		});
 
 		it('can get quiz activity type', () => {
-			const entityJson = window.D2L.Hypermedia.Siren.Parse(testData.quizStatusEntity);
+			const entityJson = SirenParse(testData.quizStatusEntity);
 			entity = new ActivityEvaluationStatusEntity(entityJson);
 
 			expect(entity.getActivityType()).to.equal('quiz');
 		});
 
 		it('can get discussion topic activity type', () => {
-			const entityJson = window.D2L.Hypermedia.Siren.Parse(testData.discussionTopicEntity);
+			const entityJson = SirenParse(testData.discussionTopicStatusEntity);
 			entity = new ActivityEvaluationStatusEntity(entityJson);
 
 			expect(entity.getActivityType()).to.equal('topic');
 		});
 
 		it('returns null when unable to find activity type', () => {
-			const entityJson = window.D2L.Hypermedia.Siren.Parse(testData.unexpectedStatusEntity);
+			const entityJson = SirenParse(testData.unexpectedStatusEntity);
 			entity = new ActivityEvaluationStatusEntity(entityJson);
 
 			expect(entity.getActivityType()).to.be.null;

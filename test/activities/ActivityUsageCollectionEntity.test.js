@@ -1,12 +1,14 @@
-/* global fetchMock */
 import { ActivityUsageCollectionEntity } from '../../src/activities/ActivityUsageCollectionEntity.js';
+import { expect } from '@open-wc/testing';
+import fetchMock from 'fetch-mock/esm/client.js';
 import { getFormData } from '../utility/test-helpers.js';
+import SirenParse from 'siren-parser';
 import { testData } from './data/collection.js';
 
 describe('ActivityUsageCollectionEntity', () => {
 	describe('Basic loading', () => {
 		it('Loads collected items', done => {
-			const entity = window.D2L.Hypermedia.Siren.Parse(testData.collection);
+			const entity = SirenParse(testData.collection);
 			const collectionEntity = new ActivityUsageCollectionEntity(entity);
 
 			const itemEntities = [];
@@ -20,7 +22,7 @@ describe('ActivityUsageCollectionEntity', () => {
 		});
 
 		it('has activity-usage href for collected items', done => {
-			const entity = window.D2L.Hypermedia.Siren.Parse(testData.collection);
+			const entity = SirenParse(testData.collection);
 			const collectionEntity = new ActivityUsageCollectionEntity(entity);
 
 			const itemEntities = [];
@@ -43,7 +45,7 @@ describe('ActivityUsageCollectionEntity', () => {
 			let entityJson;
 
 			beforeEach(() => {
-				entityJson = window.D2L.Hypermedia.Siren.Parse(testData.setCollectionPagingEditable);
+				entityJson = SirenParse(testData.setCollectionPagingEditable);
 				entity = new ActivityUsageCollectionEntity(entityJson);
 			});
 
@@ -83,7 +85,7 @@ describe('ActivityUsageCollectionEntity', () => {
 			let entityJson;
 
 			beforeEach(() => {
-				entityJson = window.D2L.Hypermedia.Siren.Parse(testData.setCollectionPagingNonEditable);
+				entityJson = SirenParse(testData.setCollectionPagingNonEditable);
 				entity = new ActivityUsageCollectionEntity(entityJson);
 			});
 
