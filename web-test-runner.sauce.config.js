@@ -9,10 +9,10 @@ const sauceLabsOptions = {
 };
 
 const sauceLabsCapabilities = {
-	name: 'siren-sdk unit tests',
+	name: '@brightspace-hmc/siren-sdk unit tests',
 
 	// eslint-disable-next-line no-undef
-	build: `siren-sdk ${process.env.GITHUB_REF ?? 'local'} build ${process.env.GITHUB_RUN_NUMBER ?? ''}`
+	build: `@brightspace-hmc/siren-sdk ${process.env.GITHUB_REF ?? 'local'} build ${process.env.GITHUB_RUN_NUMBER ?? ''}`
 };
 
 const sauceLabsLauncher = createSauceLabsLauncher(
