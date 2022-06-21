@@ -245,8 +245,8 @@ export const Rels = {
 	},
 	Organizations: {
 		ancestors: 'https://organizations.api.brightspace.com/rels/ancestors',
-		departments: 'https://organizations.api.brightspace.com/rels/departments',
-		semesters: 'https://organizations.api.brightspace.com/rels/semesters'
+		departments: 'https://organizations.api.brightspace.com/rels/ancestors#departments',
+		semesters: 'https://organizations.api.brightspace.com/rels/ancestors#semesters'
 	}
 };
 
