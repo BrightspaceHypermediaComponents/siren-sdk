@@ -11,9 +11,12 @@ import { Entity } from '../../es6/Entity.js';
  */
 export class AssociateMultipleGradesEntity extends Entity {
 	getAssociateGrades() {
-		console.log({theEntity: this._entity});
+		console.log({theAssociateMultipleGradesEntity: this._entity});
 
 		return this._entity.getSubEntitiesByRel('existing-grade').map(subEntity => {
+			return subEntity;
+
+
 			const associateGradeEntity = new AssociateGradeEntity(subEntity);
 
 			// eslint-disable-next-line no-console
