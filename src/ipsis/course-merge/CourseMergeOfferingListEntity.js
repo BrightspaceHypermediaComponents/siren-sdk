@@ -2,8 +2,8 @@
  * CourseMergeOfferingListEntity class representation of a list of course merge offering as defined in the LMS
  * See: ISirenCourseMergeSerializer.SerializeCourseOfferingListResult
  */
- import { Entity } from '../../es6/Entity.js';
- import { Rels } from '../hypermedia-constants.js';
+import { Entity } from '../../es6/Entity.js';
+import { Rels } from '../hypermedia-constants.js';
 
 export class CourseMergeOfferingListEntity extends Entity {
 	courseMergeOfferings() {
