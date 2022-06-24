@@ -164,6 +164,13 @@ export const Rels = {
 		userGrade: 'https://grades.api.brightspace.com/rels/user-grade',
 		weight: 'https://grades.api.brightspace.com/rels/weight'
 	},
+	// IPSIS API sub-domain rels
+	IPSIS: {
+		SISCourseMerge: {
+			course_merge_offerings: 'https://ipsis.api.brightspace.com/rels/course-merge-offerings',
+			course_merge_offering:	'https://ipsis.api.brightspace.com/rels/course-merge-offering',
+		}
+	},
 	// Quizzes API sub-domain rels
 	Quizzes: {
 		description: 'https://quizzes.api.brightspace.com/rels/description',
