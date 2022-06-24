@@ -14,7 +14,7 @@ export class CourseMergeOfferingEntity extends Entity {
 		return this._entity?.properties?.orgUnitId;
 	}
 
-	_organizationHref() {
+	organizationHref() {
 		if (!this._entity || !this._entity.hasLinkByRel(Rels.organization)) {
 			return;
 		}
