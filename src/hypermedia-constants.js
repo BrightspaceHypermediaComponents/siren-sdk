@@ -167,8 +167,8 @@ export const Rels = {
 	// IPSIS API sub-domain rels
 	IPSIS: {
 		SISCourseMerge: {
-			course_merge_offerings: 'https://ipsis.api.brightspace.com/rels/course-merge-offerings',
-			course_merge_offering:	'https://ipsis.api.brightspace.com/rels/course-merge-offering',
+			courseMergeOfferings: 'https://ipsis.api.brightspace.com/rels/course-merge-offerings',
+			courseMergeOffering:	'https://ipsis.api.brightspace.com/rels/course-merge-offering',
 		}
 	},
 	// Quizzes API sub-domain rels
