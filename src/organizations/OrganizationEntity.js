@@ -151,10 +151,18 @@ export class OrganizationEntity extends Entity {
 		return this._entity.getLinkByRel(Rels.Files.files);
 	}
 	fullyQualifiedOrganizationHomepageUrl() {
-		return this._getHref(Rels.organizationHomepage);
+		if (!this._entity || !this._entity.hasLinkByRel(Rels.organizationHomepage)) {
+			return;
+		}
+
+		return this._entity.getLinkByRel(Rels.organizationHomepage).href;
 	}
 	courseInfoUrl() {
-		return this._getHref(Rels.courseOfferingInfoPage);
+		if (!this._entity || !this._entity.hasLinkByRel(Rels.courseOfferingInfoPage)) {
+			return;
+		}
+
+		return this._entity.getLinkByRel(Rels.courseOfferingInfoPage).href;
 	}
 
 	canChangeCourseImage() {
@@ -167,7 +175,11 @@ export class OrganizationEntity extends Entity {
 	}
 
 	alertsUrl() {
-		return this._getHref(rels.alerts);
+		if (!this._entity || !this._entity.hasLinkByRel(rels.alerts)) {
+			return;
+		}
+
+		return this._entity.getLinkByRel(rels.alerts).href;
 	}
 
 	onAlertsChange(onChange) {
@@ -210,31 +222,19 @@ export class OrganizationEntity extends Entity {
 		await performSirenAction(this._token, action);
 	}
 
-	_getHref(rel) {
-		if (!this._entity || !this._entity.hasLinkByRel(rel)) {
+	_semesterHref() {
+		if (!this._entity || !this._entity.hasLinkByRel(Rels.parentSemester)) {
 			return;
 		}
-		return this._entity.getLinkByRel(rel).href;
-	}
-
-	_ancestorsHref() {
-		return this._getHref(Rels.Organizations.ancestors);
-	}
-
-	_departmentsHref() {
-		return this._getHref(Rels.Organizations.departments);
-	}
-
-	_semestersHref() {
-		return this._getHref(Rels.Organizations.semesters);
-	}
-
-	_semesterHref() {
-		return this._getHref(Rels.parentSemester);
+		return this._entity.getLinkByRel(Rels.parentSemester).href;
 	}
 
 	_notificationCollectionHref() {
-		return this._getHref(Rels.Notifications.organizationNotifications);
+		if (!this._entity || !this._entity.hasLinkByRel(Rels.Notifications.organizationNotifications)) {
+			return;
+		}
+
+		return this._entity.getLinkByRel(Rels.Notifications.organizationNotifications).href;
 	}
 
 	onActivityUsageChange(onChange) {
@@ -243,7 +243,11 @@ export class OrganizationEntity extends Entity {
 	}
 
 	_activityUsageHref() {
-		return this._getHref(Rels.Activities.activityUsage);
+		const rel = Rels.Activities.activityUsage;
+		if (!this._entity || !this._entity.hasLinkByRel(rel)) {
+			return;
+		}
+		return this._entity.getLinkByRel(rel).href;
 	}
 
 	_getCompletionAction(enabled) {
