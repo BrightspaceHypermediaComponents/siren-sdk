@@ -242,6 +242,11 @@ export const Rels = {
 		edit: 'edit',
 		preview: 'preview',
 		createForm: 'create-form'
+	},
+	Organizations: {
+		ancestors: 'https://organizations.api.brightspace.com/rels/ancestors',
+		departments: 'https://organizations.api.brightspace.com/rels/ancestors#departments',
+		semesters: 'https://organizations.api.brightspace.com/rels/ancestors#semesters'
 	}
 };
 
