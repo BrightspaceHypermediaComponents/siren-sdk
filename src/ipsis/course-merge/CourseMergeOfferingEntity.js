@@ -16,13 +16,13 @@ export class CourseMergeOfferingEntity extends Entity {
 	}
 
 	onOrganizationChange(onChange) {
-		const courseOfferingHref = this.courseOfferingHref();
+		const organizationHref = this.organizationHref();
 		// _subEntity builds new sub entity and allows this object to track it.
-		// So all sub entities are dispose when this object is disposed.
-		courseOfferingHref && this._subEntity(OrganizationEntity, courseOfferingHref, onChange);
+		// So all sub entities are disposed when this object is disposed.
+		organizationHref && this._subEntity(OrganizationEntity, organizationHref, onChange);
 	}
 
-	courseOfferingHref() {
+	organizationHref() {
 		if (!this._entity || !this._entity.hasLinkByRel(Rels.organization)) {
 			return;
 		}
