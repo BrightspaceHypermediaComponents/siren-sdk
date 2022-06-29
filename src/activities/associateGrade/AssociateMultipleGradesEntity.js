@@ -15,14 +15,16 @@ export class AssociateMultipleGradesEntity extends Entity {
 
 		return this._entity.getSubEntitiesByRel('existing-grade').map(subEntity => {
 			return subEntity;
-
-
-			const associateGradeEntity = new AssociateGradeEntity(subEntity);
-
-			// eslint-disable-next-line no-console
-			console.log({ AssociateGradeEntity });
-
-			return associateGradeEntity;
+			// const associateGradeEntity = new AssociateGradeEntity(subEntity);
+			//
+			// // eslint-disable-next-line no-console
+			// console.log({ AssociateGradeEntity });
+			//
+			// return associateGradeEntity;
 		});
+	}
+
+	createNewGrade() {
+		console.log('sirensdk - making new grade');
 	}
 }

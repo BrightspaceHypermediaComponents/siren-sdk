@@ -70,6 +70,8 @@ export class AssociateGradeEntity extends Entity {
 	}
 
 	canEditGradebookStatus() {
+		if (!this._entity) return false;
+
 		return this._entity && this._entity.hasActionByName(Actions.activities.associateGrade.gradebookStatus);
 	}
 
