@@ -422,6 +422,7 @@ export const Classes = {
 		timing: {
 			recommended: 'recommended',
 			enforced: 'enforced',
+			noTimeLimit: 'notimelimit',
 			showClock: 'show-clock',
 			automaticZero: 'uselatelimit'
 		},
