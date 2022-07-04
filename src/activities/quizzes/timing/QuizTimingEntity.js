@@ -56,6 +56,12 @@ export class QuizTimingEntity extends Entity {
 		return this.hasClass(enforcedClass);
 	}
 
+	isNoTimeLimit(data) {
+		const noTimeLimitClass = Classes.quizzes.timing.noTimeLimit;
+		if (data) return data === noTimeLimitClass;
+		return this.hasClass(noTimeLimitClass);
+	}
+
 	submissionLateType() {
 		const entity = this.getEnforcedTimingSubEntity();
 		if (!entity) return;
