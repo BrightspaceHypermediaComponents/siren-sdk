@@ -584,6 +584,9 @@ export const Actions = {
 			getSchemes: 'get-schemes',
 			chooseScheme: 'choose-scheme'
 		},
+		associateMultipleGrades: {
+			gradebookStatus: 'gradebook-status'
+		},
 		activityUsageCollection: {
 			setCollectionPaging: 'set-collection-paging',
 		},

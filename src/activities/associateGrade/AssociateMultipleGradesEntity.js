@@ -1,6 +1,8 @@
 // import { Actions, Classes, Rels } from '../../hypermedia-constants.js';
 import { AssociateGradeEntity } from './AssociateGradeEntity.js';
 import { Entity } from '../../es6/Entity.js';
+import { Actions } from '../../hypermedia-constants.js';
+import { performSirenAction } from '../../es6/SirenAction.js';
 // import { GradeCandidateCollectionEntity } from '../GradeCandidateCollectionEntity.js';
 // import { GradeCategoryCollectionEntity } from './GradeCategoryCollectionEntity.js';
 // import { GradeSchemeCollectionEntity } from './GradeSchemeCollectionEntity.js';
@@ -24,7 +26,14 @@ export class AssociateMultipleGradesEntity extends Entity {
 		});
 	}
 
-	createNewGrade() {
-		console.log('sirensdk - making new grade');
+	async createNewGrade() {
+		// if (!this.canEditGradebookStatus()) return;
+
+		const action = this._entity.getActionByName(Actions.activities.associateMultipleGrades.gradebookStatus);
+		const fields = [{ name: 'gradebookStatus', value: 'new-grade' }];
+		const returnedEntity = await performSirenAction(this._token, action, fields);
+
+		if (!returnedEntity) return;
+		return new AssociateMultipleGradesEntity(returnedEntity, this._token);
 	}
 }
