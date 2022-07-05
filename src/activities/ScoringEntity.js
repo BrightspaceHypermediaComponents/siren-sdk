@@ -14,6 +14,13 @@ export class ScoringEntity extends Entity {
 	}
 
 	/**
+	 * @returns {bool} Activitiy's isNewGradeItem (associated to new grade item and pending save)
+	 */
+	isNewGradeItem() {
+		return this._entity && this._entity.properties && this._entity.properties.isNewGradeItem;
+	}
+
+	/**
 	 * @returns {string} Activity's grade maxPoints, if there is a grade association
 	 */
 	gradeMaxPoints() {
