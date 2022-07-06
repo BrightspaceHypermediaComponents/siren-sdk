@@ -1,5 +1,3 @@
-// import { Actions, Classes, Rels } from '../../hypermedia-constants.js';
-import { AssociateGradeEntity } from './AssociateGradeEntity.js';
 import { Entity } from '../../es6/Entity.js';
 import { Actions } from '../../hypermedia-constants.js';
 import { performSirenAction } from '../../es6/SirenAction.js';
@@ -13,8 +11,6 @@ import { performSirenAction } from '../../es6/SirenAction.js';
  */
 export class AssociateMultipleGradesEntity extends Entity {
 	getAssociateGrades() {
-		console.log({theAssociateMultipleGradesEntity: this._entity});
-
 		return this._entity.getSubEntitiesByRel('existing-grade').map(subEntity => {
 			return subEntity;
 			// const associateGradeEntity = new AssociateGradeEntity(subEntity);
