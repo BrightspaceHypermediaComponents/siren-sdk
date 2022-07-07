@@ -780,5 +780,9 @@ export const Actions = {
 		checkout: 'checkout',
 		checkin: 'checkin',
 		commit: 'commit'
-	}
+	},
+	discussions: {
+		topic: {
+		},
+	},
 };
