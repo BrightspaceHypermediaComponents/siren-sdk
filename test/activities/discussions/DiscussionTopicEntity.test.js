@@ -1,7 +1,7 @@
 import { DiscussionTopicEntity } from '../../../src/activities/discussions/DiscussionTopicEntity.js';
 import { editableDiscussionTopic } from './data/EditableDiscussionTopic.js';
 import { expect } from '@open-wc/testing';
-import { nonEditableDiscussionTopic } from './data/NoneditableDiscussionTopic.js';
+import { nonEditableDiscussionTopic } from './data/NonEditableDiscussionTopic.js';
 import SirenParse from 'siren-parser';
 
 describe('DiscussionTopicEntity', () => {
