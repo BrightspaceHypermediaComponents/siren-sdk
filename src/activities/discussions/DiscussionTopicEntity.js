@@ -1,6 +1,6 @@
 import { Actions } from '../../hypermedia-constants.js';
 import { Entity } from '../../es6/Entity.js';
-import { performSirenAction } from '../../es6/SirenAction.js';
+import { performSirenActions } from '../../es6/SirenAction.js';
 
 /**
  * DiscussionTopicEntity class representation of a D2L Discussion Topic.
@@ -18,6 +18,22 @@ export class DiscussionTopicEntity extends Entity {
 	 */
 	canEditName() {
 		return this._entity && this._entity.hasActionByName(Actions.discussions.topic.updateName);
+	}
+
+	/**
+	 * @summary Fires all the formatted siren actions collectively
+	 * @param {object} topic the topic that's being modified
+	 */
+	async save(topic) {
+		if (!topic) return;
+
+		const updateNameAction = this._formatUpdateNameAction(topic);
+
+		const sirenActions = [
+			updateNameAction,
+		];
+
+		await performSirenActions(this._token, sirenActions);
 	}
 
 	/**
