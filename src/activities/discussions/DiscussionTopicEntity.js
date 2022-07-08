@@ -19,18 +19,4 @@ export class DiscussionTopicEntity extends Entity {
 	canEditName() {
 		return this._entity && this._entity.hasActionByName(Actions.discussions.topic.updateName);
 	}
-
-	/**
-	 * Updates the discussion topic to have the given name
-	 * @param {string} name Name to set on the discussion topic
-	 */
-	async setName(name) {
-		const action = this.canEditName() && this._entity.getActionByName(Actions.discussions.topic.updateName);
-		if (!action) {
-			return;
-		}
-
-		const fields = [{ name: 'name', value: name }];
-		await performSirenAction(this._token, action, fields);
-	}
 }
