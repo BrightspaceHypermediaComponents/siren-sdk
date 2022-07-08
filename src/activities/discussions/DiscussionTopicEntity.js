@@ -21,6 +21,24 @@ export class DiscussionTopicEntity extends Entity {
 	}
 
 	/**
+	 * @summary Checks if topic entity has changed, primarily used for dirty check
+	 * @param {object} topic the topic that's being modified
+	 */
+	equals(topic) {
+		const diffs = [
+			[topic.name, this.name()],
+		];
+
+		for (const [current, initial] of diffs) {
+			if (current !== initial) {
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	/**
 	 * @summary Fires all the formatted siren actions collectively
 	 * @param {object} topic the topic that's being modified
 	 */
