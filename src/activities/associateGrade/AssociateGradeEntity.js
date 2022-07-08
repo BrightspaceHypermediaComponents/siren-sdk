@@ -153,6 +153,19 @@ export class AssociateGradeEntity extends Entity {
 		return new GradeSchemeCollectionEntity(returnedEntity);
 	}
 
+	multiGradeIsSetToBeRemoved() {
+		console.log(this._entity);
+		const existingGradeSubEntity = this._entity.getSubEntityByClass(Classes.activities.associateGrade.existingGrade);
+
+		if (!existingGradeSubEntity) {
+			return false;
+		}
+
+		console.log({ id: existingGradeSubEntity.properties.newGradeItemId });
+
+		return existingGradeSubEntity.properties.gradeItemId < 0;
+	}
+
 	selectedSchemeHref() {
 		const newGradeEntity = this._getNewGradeEntity();
 		if (!newGradeEntity) return;
