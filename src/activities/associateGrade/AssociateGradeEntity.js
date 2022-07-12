@@ -69,6 +69,10 @@ export class AssociateGradeEntity extends Entity {
 		return newGradeEntity && newGradeEntity.hasSubEntityByClass(Classes.activities.associateGrade.selectbox);
 	}
 
+	newGradeItemId() {
+		return this._entity && this._entity.properties && this._entity.properties.newGradeItemId;
+	}
+
 	canEditGradebookStatus() {
 		if (!this._entity) return false;
 
@@ -154,14 +158,14 @@ export class AssociateGradeEntity extends Entity {
 	}
 
 	multiGradeIsSetToBeRemoved() {
-		console.log(this._entity);
+		// console.log(this._entity);
 		const existingGradeSubEntity = this._entity.getSubEntityByClass(Classes.activities.associateGrade.existingGrade);
 
 		if (!existingGradeSubEntity) {
 			return false;
 		}
 
-		console.log({ id: existingGradeSubEntity.properties.newGradeItemId });
+		// console.log({ id: existingGradeSubEntity.properties.newGradeItemId });
 
 		return existingGradeSubEntity.properties.gradeItemId < 0;
 	}
