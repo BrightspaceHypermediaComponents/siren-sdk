@@ -3,11 +3,11 @@ import { Entity } from '../../es6/Entity.js';
 import { performSirenAction } from '../../es6/SirenAction.js';
 
 /**
- * AssociateGrade entity of an activity.
+ * AssociateMultipleGrades entity of an activity.
  */
 export class AssociateMultipleGradesEntity extends Entity {
 	/**
-	 * @returns {array} siren representations of all AssociateGradeEntities
+	 * @returns {Array} siren representations of all AssociateGrade entities
 	 */
 	getAssociateGrades() {
 		return this._entity.getSubEntitiesByRel('existing-grade');
