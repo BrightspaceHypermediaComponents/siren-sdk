@@ -691,7 +691,7 @@ export class ActivityUsageEntity extends Entity {
 	 * @returns {string} URL of the associate-multiple-grades API, for managing grade associations with the activity usage, using working copy, if present
 	 */
 	associateMultipleGradesHref() {
-		if (!this._entity || !this._entity.hasLinkByRel(Rels.Activities.associateGrade)) {
+		if (!this._entity || !this._entity.hasLinkByRel(Rels.Activities.associateMultipleGrades)) {
 			return;
 		}
 
