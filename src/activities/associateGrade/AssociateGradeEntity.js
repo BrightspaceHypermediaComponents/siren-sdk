@@ -69,6 +69,14 @@ export class AssociateGradeEntity extends Entity {
 		return newGradeEntity && newGradeEntity.hasSubEntityByClass(Classes.activities.associateGrade.selectbox);
 	}
 
+	gradeItemId() {
+		return this._entity && this._entity.properties && this._entity.properties.gradeItemId;
+	}
+
+	originalGradeItemId() {
+		return this._entity && this._entity.properties && this._entity.properties.originalGradeItemId;
+	}
+
 	newGradeItemId() {
 		return this._entity && this._entity.properties && this._entity.properties.newGradeItemId;
 	}
