@@ -53,6 +53,7 @@ export class ContentScormActivityEntity extends ContentEntity {
 	}
 
 	/**
+	 * Note: This can be removed once LTI topics are migrated
 	 * @returns {boolean|undefined} Whether the SCORM activity is launched through LTI
 	 */
 	isLtiTopic() {
