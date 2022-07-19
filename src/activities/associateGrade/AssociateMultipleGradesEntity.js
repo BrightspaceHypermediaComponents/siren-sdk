@@ -10,7 +10,10 @@ export class AssociateMultipleGradesEntity extends Entity {
 	 * @returns {Array} siren representations of all AssociateGrade entities
 	 */
 	getAssociateGrades() {
-		return this._entity.getSubEntitiesByRel('existing-grade');
+		const existingGradeEntities = this._entity.getSubEntitiesByRel('existing-grade');
+		const newGradeEntities = this._entity.getSubEntitiesByRel('new-grade');
+
+		return [...existingGradeEntities, ...newGradeEntities];
 	}
 
 	/**
