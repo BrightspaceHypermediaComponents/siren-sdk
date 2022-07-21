@@ -12,8 +12,9 @@ export class AssociateMultipleGradesEntity extends Entity {
 	getAssociateGrades() {
 		const existingGradeEntities = this._entity.getSubEntitiesByRel('existing-grade');
 		const newGradeEntities = this._entity.getSubEntitiesByRel('new-grade');
+		const notInGradebookGradeEntities = this._entity.getSubEntitiesByRel('not-in-gradebook');
 
-		return [...existingGradeEntities, ...newGradeEntities];
+		return [...existingGradeEntities, ...newGradeEntities, ...notInGradebookGradeEntities];
 	}
 
 	/**
