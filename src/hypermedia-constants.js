@@ -165,6 +165,13 @@ export const Rels = {
 		userGrade: 'https://grades.api.brightspace.com/rels/user-grade',
 		weight: 'https://grades.api.brightspace.com/rels/weight'
 	},
+	// IPSIS API sub-domain rels
+	IPSIS: {
+		SISCourseMerge: {
+			courseMergeOfferings: 'https://ipsis.api.brightspace.com/rels/course-merge-offerings',
+			courseMergeOffering:	'https://ipsis.api.brightspace.com/rels/course-merge-offering',
+		}
+	},
 	// Quizzes API sub-domain rels
 	Quizzes: {
 		description: 'https://quizzes.api.brightspace.com/rels/description',
@@ -243,6 +250,11 @@ export const Rels = {
 		edit: 'edit',
 		preview: 'preview',
 		createForm: 'create-form'
+	},
+	Organizations: {
+		ancestors: 'https://organizations.api.brightspace.com/rels/ancestors',
+		departments: 'https://organizations.api.brightspace.com/rels/ancestors#departments',
+		semesters: 'https://organizations.api.brightspace.com/rels/ancestors#semesters'
 	}
 };
 
@@ -418,6 +430,7 @@ export const Classes = {
 		timing: {
 			recommended: 'recommended',
 			enforced: 'enforced',
+			noTimeLimit: 'notimelimit',
 			showClock: 'show-clock',
 			automaticZero: 'uselatelimit'
 		},
@@ -771,5 +784,10 @@ export const Actions = {
 		checkout: 'checkout',
 		checkin: 'checkin',
 		commit: 'commit'
-	}
+	},
+	discussions: {
+		topic: {
+			updateName: 'update-name',
+		},
+	},
 };
