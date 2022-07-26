@@ -3,7 +3,7 @@
  * See: ISirenCourseMergeSerializer.SerializeCourseOfferingListResult
  */
 import { Entity } from '../../es6/Entity.js';
-import { Rels } from '../../hypermedia-constants.js';
+import { Actions, Rels } from '../../hypermedia-constants.js';
 
 export class CourseMergeOfferingCollectionEntity extends Entity {
 	courseMergeOfferings() {
@@ -67,6 +67,18 @@ export class CourseMergeOfferingCollectionEntity extends Entity {
 		}
 
 		return this._entity.getLinkByRel(Rels.filters).href;
+	}
+
+	hasSearchAction() {
+		return this._entity.hasActionByName(Actions.ipsis.sisCourseMerge.searchCourseOfferings);
+	}
+
+	getSearchAction() {
+		if (!this.hasSearchAction()) {
+			return;
+		}
+
+		return this._entity.getActionByName(Actions.ipsis.sisCourseMerge.searchCourseOfferings);
 	}
 
 	updateEntity(entity) {
