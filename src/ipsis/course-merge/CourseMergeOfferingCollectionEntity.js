@@ -3,14 +3,13 @@
  * See: ISirenCourseMergeSerializer.SerializeCourseOfferingListResult
  */
 import { Entity } from '../../es6/Entity.js';
-import { Rels } from '../../hypermedia-constants.js';
 
 export class CourseMergeOfferingCollectionEntity extends Entity {
 	courseMergeOfferings() {
 		if (!this._entity) {
 			return;
 		}
-		return this._entity.getSubEntitiesByRel(Rels.IPSIS.SISCourseMerge.courseMergeOffering);
+		return this._entity.entities;
 	}
 
 	userOwnedByMultipleSourceSystems() {
