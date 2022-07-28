@@ -12,6 +12,10 @@ export class CourseMergeOfferingCollectionEntity extends Entity {
 		return this._entity.entities;
 	}
 
+	prependCourseMergeOfferings(previousCourseMergeOfferingCollectionEntity) {
+		this._entity.entities.unshift(...previousCourseMergeOfferingCollectionEntity._entity.entities);
+	}
+
 	userOwnedByMultipleSourceSystems() {
 		return this._entity?.properties?.userOwnedByMultipleSourceSystems;
 	}
