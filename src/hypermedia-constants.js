@@ -621,7 +621,8 @@ export const Actions = {
 		update: 'quick-create-folder',
 		updateFilesSubmissionLimit: 'update-files-submission-limit',
 		updateDefaultScoringRubric: 'update-default-scoring-rubric',
-		updateNotificationEmail: 'update-notification-email'
+		updateNotificationEmail: 'update-notification-email',
+		updateAllowTextSubmission: 'update-allow-text-submission'
 	},
 	content: {
 		updateTitle: 'update-title',

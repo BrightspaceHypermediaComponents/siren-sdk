@@ -42,7 +42,6 @@ export class AssignmentEntity extends Entity {
 		const fields = [{ name: 'name', value: name }];
 		return { action, fields };
 	}
-
 	_getInstructionsEntity() {
 		return this._entity
 			&& this._entity.hasSubEntityByRel(Rels.Assignments.instructions)
@@ -229,7 +228,7 @@ export class AssignmentEntity extends Entity {
 			return false;
 		}
 		return !subEntity.hasActionByName(Actions.assignments.setToGroup) &&
-			!subEntity.hasActionByName(Actions.assignments.setToIndividual) ;
+			!subEntity.hasActionByName(Actions.assignments.setToIndividual);
 	}
 
 	/**
@@ -545,7 +544,7 @@ export class AssignmentEntity extends Entity {
 			return;
 		}
 
-		const action =  this._entity.getActionByName(Actions.assignments.updateCustomAllowableFileType);
+		const action = this._entity.getActionByName(Actions.assignments.updateCustomAllowableFileType);
 		if (!action) {
 			return;
 		}
@@ -708,6 +707,39 @@ export class AssignmentEntity extends Entity {
 		return { fields, action };
 	}
 
+	/**
+	 * @returns {bool} Whether or not the show allow text submission is present on the assignment entity
+	 */
+	showAllowTextSubmission() {
+		return this._entity && this._entity.properties && this._entity.properties.showAllowTextSubmission;
+	}
+
+	allowTextSubmission() {
+		return this._entity && this._entity.properties && this._entity.properties.allowTextSubmission;
+	}
+
+	canEditAllowTextSubmission() {
+		this._entity && this._entity.hasActionByName(Actions.assignments.updateAllowTextSubmission);
+	}
+
+	_formatUpdateAllowTextSubmissionAction(allowTextSubmission) {
+		if (allowTextSubmission === undefined || !this._hasAllowTextSubmissionChanged(allowTextSubmission)) {
+			return;
+		}
+
+		const action = this.canEditAllowTextSubmission && this._entity.getActionByName(Actions.assignments.updateAllowTextSubmission);
+		if (!action) {
+			return;
+		}
+
+		const fields = [
+			{ name: 'allowTextSubmission', value: allowTextSubmission }
+		];
+
+		return { fields, action };
+
+	}
+
 	notificationEmail() {
 		const subEntity = this._entity && this._entity.getSubEntityByRel(Rels.Assignments.notificationEmail);
 		if (!subEntity || !subEntity.properties) {
@@ -730,7 +762,7 @@ export class AssignmentEntity extends Entity {
 			return;
 		}
 		const subEntity = this._entity && this._entity.getSubEntityByRel(Rels.Assignments.notificationEmail);
-		const action =  subEntity && subEntity.getActionByName(Actions.assignments.updateNotificationEmail);
+		const action = subEntity && subEntity.getActionByName(Actions.assignments.updateNotificationEmail);
 		if (!action) {
 			return;
 		}
@@ -789,7 +821,7 @@ export class AssignmentEntity extends Entity {
 		if (!subEntity) return;
 		const action = subEntity.getActionByName(Actions.assignments.anonymousMarking.updateAnonymousMarking);
 		if (!action) return;
-		const fields = [ { name: 'isAnonymous', value: isAnonymous } ];
+		const fields = [{ name: 'isAnonymous', value: isAnonymous }];
 
 		return { fields, action };
 	}
@@ -832,7 +864,7 @@ export class AssignmentEntity extends Entity {
 
 		const annotationsEntity = this._entity.getSubEntityByRel(Rels.Assignments.annotations);
 
-		const action =  annotationsEntity && annotationsEntity.getActionByName(Actions.assignments.updateAnnotationToolsAvailability);
+		const action = annotationsEntity && annotationsEntity.getActionByName(Actions.assignments.updateAnnotationToolsAvailability);
 		if (!action) {
 			return;
 		}
@@ -877,6 +909,7 @@ export class AssignmentEntity extends Entity {
 		const updateIsIndividualAssignmentTypeAction = this._formatIndividualAssignmentTypeAction(assignment.isIndividualAssignmentType, assignment.groupTypeId);
 		const updateDefaultScoringRubricAction = this._formatDefaultScoringRubricAction(assignment.defaultScoringRubricId);
 		const updateNotificationEmailAction = this._formatUpdateNotificationEmailAction(assignment.notificationEmail);
+		const updateAllowTextSubmissionAction = this._formatUpdateAllowTextSubmissionAction(assignment.allowTextSubmission);
 
 		const sirenActions = [
 			updateNameAction,
@@ -891,7 +924,8 @@ export class AssignmentEntity extends Entity {
 			updateCompletionTypeAction,
 			updateIsIndividualAssignmentTypeAction,
 			updateDefaultScoringRubricAction,
-			updateNotificationEmailAction
+			updateNotificationEmailAction,
+			updateAllowTextSubmissionAction
 		];
 
 		await performSirenActions(this._token, sirenActions);
@@ -925,6 +959,10 @@ export class AssignmentEntity extends Entity {
 		if (assignment.hasOwnProperty('customAllowableFileTypes')) {
 			diffs.push([this.customAllowableFileTypes(), assignment.customAllowableFileTypes]);
 		}
+		if (assignment.hasOwnProperty('allowTextSubmission')) {
+			diffs.push([this.allowTextSubmission(), assignment.allowTextSubmission]);
+		}
+
 		for (const [left, right] of diffs) {
 			if (left !== right) {
 				return false;
@@ -997,6 +1035,10 @@ export class AssignmentEntity extends Entity {
 
 	_hasFileSubmissionLimitChanged(filesSubmissionLimit) {
 		return filesSubmissionLimit !== this.filesSubmissionLimit();
+	}
+
+	_hasAllowTextSubmissionChanged(allowTextSubmission) {
+		return allowTextSubmission !== this.allowTextSubmission();
 	}
 
 	_hasSubmissionsRuleChanged(submissionsRule) {
