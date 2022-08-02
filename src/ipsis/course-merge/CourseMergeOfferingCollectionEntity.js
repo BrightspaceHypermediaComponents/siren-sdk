@@ -33,7 +33,13 @@ export class CourseMergeOfferingCollectionEntity extends Entity {
 	}
 
 	pageSize() {
-		return this._pagingInfo()?.pageSize;
+		const pageSize = this._pagingInfo()?.pageSize;
+		const totalCount = this.totalCount() ?? 0;
+		const courseMergeOfferingsLength = this.courseMergeOfferings()?.length ?? 0;
+		if (totalCount < courseMergeOfferingsLength + (pageSize ?? 0)) {
+			return totalCount - courseMergeOfferingsLength;
+		}
+		return pageSize;
 	}
 
 	_pagingInfo() {
