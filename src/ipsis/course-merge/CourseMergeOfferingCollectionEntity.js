@@ -60,5 +60,17 @@ export class CourseMergeOfferingCollectionEntity extends Entity {
 
 		return this._entity.getLinkByRel('prev').href;
 	}
+
+	filtersHref() {
+		if (!this._entity.hasLinkByRel(Rels.filters)) {
+			return;
+		}
+
+		return this._entity.getLinkByRel(Rels.filters).href;
+	}
+
+	updateEntity(entity) {
+		this._entity = entity;
+	}
 }
 
