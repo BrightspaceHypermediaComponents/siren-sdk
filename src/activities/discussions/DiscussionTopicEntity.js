@@ -1,6 +1,6 @@
 import { Actions, Rels } from '../../hypermedia-constants.js';
-import { performSirenAction, performSirenActions } from '../../es6/SirenAction.js';
 import { Entity } from '../../es6/Entity.js';
+import { performSirenActions } from '../../es6/SirenAction.js';
 
 /**
  * DiscussionTopicEntity class representation of a D2L Discussion Topic.
@@ -76,9 +76,9 @@ export class DiscussionTopicEntity extends Entity {
 	}
 
 	/**
-	 * @returns {string} Topic discription in plaintext (HTML stripped)
+	 * @returns {string} Topic description in plaintext (HTML stripped)
 	 */
-	descriptionPlaintext() {
+	 descriptionPlaintext() {
 		const descriptionEntity = this._getDescriptionEntity();
 		return descriptionEntity
 			&& descriptionEntity.properties
@@ -109,25 +109,6 @@ export class DiscussionTopicEntity extends Entity {
 		return updateDescriptionAction
 			&& updateDescriptionAction.hasFieldByName('description')
 			&& updateDescriptionAction.getFieldByName('description').value;
-	}
-
-	/**
-	 * Updates the discussion topic to have the given description
-	 * @param {string} description Description to set on the topic description
-	 */
-	async setDescription(description) {
-		const descriptionEntity = this.canEditDescription() && this._getDescriptionEntity();
-		if (!descriptionEntity) {
-			return;
-		}
-
-		const action = descriptionEntity.getActionByName(Actions.discussions.topic.updateDescription);
-		if (!action) {
-			return;
-		}
-
-		const fields = [{ name: 'description', value: description }];
-		await performSirenAction(this._token, action, fields);
 	}
 
 	/**
