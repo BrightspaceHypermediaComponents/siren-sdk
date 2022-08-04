@@ -10,11 +10,16 @@ export class AssociateMultipleGradesEntity extends Entity {
 	 * @returns {Array} siren representations of all AssociateGrade entities
 	 */
 	getAssociateGrades() {
-		const existingGradeEntities = this._entity.getSubEntitiesByRel('existing-grade');
-		const newGradeEntities = this._entity.getSubEntitiesByRel('new-grade');
-		const notInGradebookGradeEntities = this._entity.getSubEntitiesByRel('not-in-gradebook');
+		const subEntities = this._entity.getSubEntitiesByClass('specific-grade');
 
-		return [...existingGradeEntities, ...newGradeEntities, ...notInGradebookGradeEntities];
+		return [...subEntities];
+
+		// TODO: messes up the order
+		// const existingGradeEntities = this._entity.getSubEntitiesByRel('existing-grade');
+		// const newGradeEntities = this._entity.getSubEntitiesByRel('new-grade');
+		// const notInGradebookGradeEntities = this._entity.getSubEntitiesByRel('not-in-gradebook');
+		//
+		// return [...existingGradeEntities, ...newGradeEntities, ...notInGradebookGradeEntities];
 	}
 
 	/**

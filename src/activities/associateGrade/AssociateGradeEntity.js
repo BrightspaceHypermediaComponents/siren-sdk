@@ -10,6 +10,7 @@ import { performSirenAction } from '../../es6/SirenAction.js';
  */
 const GRADEBOOK_STATUS = 'gradebookStatus';
 const GRADE_NAME = 'gradeName';
+const NEW_GRADE_ID = 'gradeItemId';
 const MAX_POINTS = 'maxPoints';
 const GRADE_TYPE = 'gradeType';
 const PUSH_SCORE = 'pushScoresToGrade';
@@ -208,6 +209,10 @@ export class AssociateGradeEntity extends Entity {
 
 	setGradeName(gradeName) {
 		return this._setNewGradeProperty(GRADE_NAME, gradeName);
+	}
+
+	setNewGradeId(newGradeId) {
+		return this._setNewGradeProperty(NEW_GRADE_ID, newGradeId);
 	}
 
 	setGradeType(gradeType) {
