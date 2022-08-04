@@ -292,7 +292,6 @@ export class ActivityUsageEntity extends Entity {
 		await this._setDate(dateValue, Classes.dates.startDate, 'startDate');
 	}
 
-
 	/**
 	 *
 	 * @returns {bool} The display in calendar value for availability dates
