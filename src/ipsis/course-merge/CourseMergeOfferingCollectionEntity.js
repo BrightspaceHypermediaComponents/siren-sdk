@@ -3,6 +3,7 @@
  * See: ISirenCourseMergeSerializer.SerializeCourseOfferingListResult
  */
 import { Entity } from '../../es6/Entity.js';
+import { Rels } from '../../hypermedia-constants.js';
 
 export class CourseMergeOfferingCollectionEntity extends Entity {
 	courseMergeOfferings() {
