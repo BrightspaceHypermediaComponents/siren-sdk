@@ -785,6 +785,7 @@ export const Actions = {
 	discussions: {
 		topic: {
 			updateName: 'update-name',
+			updateDescription: 'update-description'
 		},
 	},
 };
