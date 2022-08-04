@@ -78,7 +78,7 @@ export class DiscussionTopicEntity extends Entity {
 	/**
 	 * @returns {string} Topic description in plaintext (HTML stripped)
 	 */
-	 descriptionPlaintext() {
+	descriptionPlaintext() {
 		const descriptionEntity = this._getDescriptionEntity();
 		return descriptionEntity
 			&& descriptionEntity.properties
@@ -120,16 +120,6 @@ export class DiscussionTopicEntity extends Entity {
 	}
 
 	/**
-	 * @returns {bool} Description is initially empty for the quiz entity
-	 */
-	originalDescriptionIsEmpty() {
-		const descriptionEntity = this._getDescriptionEntity();
-		return descriptionEntity
-			&& descriptionEntity.properties
-			&& !descriptionEntity.properties.text;
-	}
-
-	/**
 	 * @summary Formats action and fields if topic description has changed
 	 * @param {object} topic the topic that's being modified
 	 * @returns {object} the appropriate action/fields to update
@@ -147,7 +137,7 @@ export class DiscussionTopicEntity extends Entity {
 
 		if (!descriptionEntity) return;
 
-		const action = descriptionEntity.getActionByName(Actions.quizzes.updateDescription);
+		const action = descriptionEntity.getActionByName(Actions.discussions.topic.updateDescription);
 
 		if (!action) {
 			return;
