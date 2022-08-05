@@ -1,4 +1,4 @@
-import { Actions } from '../../hypermedia-constants.js';
+import { Actions, Rels } from '../../hypermedia-constants.js';
 import { Entity } from '../../es6/Entity.js';
 import { performSirenActions } from '../../es6/SirenAction.js';
 
@@ -57,6 +57,99 @@ export class DiscussionTopicEntity extends Entity {
 	}
 
 	/**
+	 * @returns {bool} Whether or not the edit description action is present on the topic description entity
+	 */
+	canEditDescription() {
+		const descriptionEntity = this._getDescriptionEntity();
+		return descriptionEntity
+			&& descriptionEntity.hasActionByName(Actions.discussions.topic.updateDescription);
+	}
+
+	/**
+	 * @returns {object} a helper function to get topic description entity
+	 */
+
+	_getDescriptionEntity() {
+		return this._entity
+			&& this._entity.hasSubEntityByRel(Rels.Discussions.description)
+			&& this._entity.getSubEntityByRel(Rels.Discussions.description);
+	}
+
+	/**
+	 * @returns {string} Topic description in plaintext (HTML stripped)
+	 */
+	descriptionPlaintext() {
+		const descriptionEntity = this._getDescriptionEntity();
+		return descriptionEntity
+			&& descriptionEntity.properties
+			&& descriptionEntity.properties.text;
+	}
+
+	/**
+	 * @returns {string} Topic description in HTML
+	 */
+	descriptionHtml() {
+		const descriptionEntity = this._getDescriptionEntity();
+		if (!descriptionEntity || !descriptionEntity.properties || !descriptionEntity.properties.html) {
+			return;
+		}
+		return descriptionEntity.properties.html;
+	}
+
+	/**
+	 * @returns {string} Topic description formatted to be used with a d2l-html-editor
+	 */
+	descriptionEditorHtml() {
+		const descriptionEntity = this._getDescriptionEntity();
+		if (!descriptionEntity) {
+			return;
+		}
+
+		const updateDescriptionAction = descriptionEntity.getActionByName(Actions.discussions.topic.updateDescription);
+		return updateDescriptionAction
+			&& updateDescriptionAction.hasFieldByName('description')
+			&& updateDescriptionAction.getFieldByName('description').value;
+	}
+
+	/**
+	 * @returns {bool} A helper function, to see if description needs updating
+	 */
+
+	_hasDescriptionChanged(description) {
+		return description !== this.descriptionEditorHtml();
+	}
+
+	/**
+	 * @summary Formats action and fields if topic description has changed
+	 * @param {object} topic the topic that's being modified
+	 * @returns {object} the appropriate action/fields to update
+	 */
+
+	_formatUpdateDescriptionAction(topic) {
+		const { description } = topic || {};
+		const hasDescriptionChanged = this._hasDescriptionChanged(description);
+
+		if (typeof description === 'undefined') return;
+
+		if (!hasDescriptionChanged) return;
+
+		const descriptionEntity = this._getDescriptionEntity();
+
+		if (!descriptionEntity) return;
+
+		const action = descriptionEntity.getActionByName(Actions.discussions.topic.updateDescription);
+
+		if (!action) {
+			return;
+		}
+
+		const fields = [
+			{ name: 'description', value: description },
+		];
+		return { action, fields };
+	}
+
+	/**
 	 * @summary Fires all the formatted siren actions collectively
 	 * @param {object} topic the topic that's being modified
 	 */
@@ -64,9 +157,11 @@ export class DiscussionTopicEntity extends Entity {
 		if (!topic) return;
 
 		const updateNameAction = this._formatUpdateNameAction(topic);
+		const updateDescriptionAction = this.canEditDescription() ? this._formatUpdateDescriptionAction(topic) : null;
 
 		const sirenActions = [
 			updateNameAction,
+			updateDescriptionAction,
 		];
 
 		await performSirenActions(this._token, sirenActions);
