@@ -78,10 +78,6 @@ export class AssociateGradeEntity extends Entity {
 		return this._entity && this._entity.properties && this._entity.properties.originalGradeItemId;
 	}
 
-	newGradeItemId() {
-		return this._entity && this._entity.properties && this._entity.properties.newGradeItemId;
-	}
-
 	canEditGradebookStatus() {
 		if (!this._entity) return false;
 
