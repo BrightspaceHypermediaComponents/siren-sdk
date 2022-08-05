@@ -34,10 +34,6 @@ export class ScoringEntity extends Entity {
 		return this._entity && this._entity.properties && this._entity.properties.gradeObjectId;
 	}
 
-	newGradeObjectId() {
-		return this._entity && this._entity.properties && this._entity.properties.newGradeItemId;
-	}
-
 	/**
 	 * @returns {bool} Whether or not the update score out of action is present
 	 */

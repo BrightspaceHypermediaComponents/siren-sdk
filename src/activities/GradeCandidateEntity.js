@@ -79,7 +79,7 @@ export class GradeCandidateEntity extends Entity {
 		let entity;
 		try {
 			const action = this._entity.getActionByName(Actions.activities.associateGrade.associateGrade);
-			entity = await performSirenAction(this._token, action, null, false, true);
+			entity = await performSirenAction(this._token, action);
 		} catch (e) {
 			return Promise.reject(e);
 		}
