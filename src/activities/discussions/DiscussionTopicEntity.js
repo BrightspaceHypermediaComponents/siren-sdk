@@ -112,10 +112,6 @@ export class DiscussionTopicEntity extends Entity {
 	}
 
 	/**
-	 * @returns {bool} A helper function, to see if description needs updating
-	 */
-
-	/**
 	 * @summary Formats action and fields if topic description has changed
 	 * @param {object} topic the topic that's being modified
 	 * @returns {object} the appropriate action/fields to update
