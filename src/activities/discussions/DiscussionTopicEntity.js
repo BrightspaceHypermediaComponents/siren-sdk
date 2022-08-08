@@ -115,10 +115,6 @@ export class DiscussionTopicEntity extends Entity {
 	 * @returns {bool} A helper function, to see if description needs updating
 	 */
 
-	_hasDescriptionChanged(description) {
-		return description !== this.descriptionEditorHtml();
-	}
-
 	/**
 	 * @summary Formats action and fields if topic description has changed
 	 * @param {object} topic the topic that's being modified
@@ -127,16 +123,13 @@ export class DiscussionTopicEntity extends Entity {
 
 	_formatUpdateDescriptionAction(topic) {
 		const { description } = topic || {};
-		const hasDescriptionChanged = this._hasDescriptionChanged(description);
 
 		if (typeof description === 'undefined') return;
-
-		if (!hasDescriptionChanged) return;
+		if (!this._hasFieldValueChanged(description, this.descriptionEditorHtml())) return;
+		if (!this.canEditDescription()) return;
 
 		const descriptionEntity = this._getDescriptionEntity();
-
 		if (!descriptionEntity) return;
-
 		const action = descriptionEntity.getActionByName(Actions.discussions.topic.updateDescription);
 
 		if (!action) {
@@ -157,7 +150,7 @@ export class DiscussionTopicEntity extends Entity {
 		if (!topic) return;
 
 		const updateNameAction = this._formatUpdateNameAction(topic);
-		const updateDescriptionAction = this.canEditDescription() ? this._formatUpdateDescriptionAction(topic) : null;
+		const updateDescriptionAction = this._formatUpdateDescriptionAction(topic);
 
 		const sirenActions = [
 			updateNameAction,
