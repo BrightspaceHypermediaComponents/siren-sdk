@@ -146,11 +146,12 @@ export class DiscussionTopicEntity extends Entity {
 	/**
 	 * @summary Fires all the formatted siren actions collectively
 	 * @param {object} topic the topic that's being modified
+	 * @param {bool} shouldSyncNameWithForum determines whether topic and forum names should sync
 	 */
-	async save(topic) {
+	async save(topic, shouldSyncNameWithForum) {
 		if (!topic) return;
 
-		const updateNameAction = this._formatUpdateNameAction(topic);
+		const updateNameAction = this._formatUpdateNameAction(topic, shouldSyncNameWithForum);
 		const updateDescriptionAction = this._formatUpdateDescriptionAction(topic);
 
 		const sirenActions = [
