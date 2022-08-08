@@ -23,9 +23,10 @@ export class DiscussionTopicEntity extends Entity {
 	/**
 	 * @summary Formats action and fields if topic name has changed and user has edit permission
 	 * @param {object} topic the topic that's being modified
+	 * @param {bool} shouldSyncNameWithForum determines whether topic and forum names should sync
 	 * @returns {object} the appropriate action/fields to update
 	 */
-	_formatUpdateNameAction(topic) {
+	_formatUpdateNameAction(topic, shouldSyncNameWithForum) {
 		const { name } = topic || {};
 
 		if (!name) return;
@@ -33,7 +34,10 @@ export class DiscussionTopicEntity extends Entity {
 		if (!this.canEditName()) return;
 
 		const action = this._entity.getActionByName(Actions.discussions.topic.updateName);
-		const fields = [{ name: 'name', value: name }];
+		const fields = [
+			{ name: 'name', value: name },
+			{ name: 'shouldSyncNameWithForum', value: shouldSyncNameWithForum },
+		];
 
 		return { action, fields };
 	}
