@@ -21,19 +21,30 @@ describe('DiscussionTopicEntity', () => {
 		});
 	});
 
-	describe('Editable', () => {
-		it('sets canEditName to true', () => {
-			const discussionTopic = new DiscussionTopicEntity(editableEntity);
-			expect(discussionTopic.canEditName()).to.be.true;
-			expect(discussionTopic.canEditDescription()).to.be.true;
+	describe('name', () => {
+		describe('canEditName', () => {
+			it('returns true when name is editable', () => {
+				const discussionTopic = new DiscussionTopicEntity(editableEntity);
+				expect(discussionTopic.canEditName()).to.be.true;
+			});
+
+			it('returns false when name is not editable', () => {
+				const discussionTopic = new DiscussionTopicEntity(nonEditableEntity);
+				expect(discussionTopic.canEditName()).to.be.false;
+			});
 		});
 	});
 
-	describe('Non Editable', () => {
-		it('sets canEditName to false', () => {
-			const discussionTopic = new DiscussionTopicEntity(nonEditableEntity);
-			expect(discussionTopic.canEditName()).to.be.false;
-			expect(discussionTopic.canEditDescription()).to.be.false;
+	describe('description', () => {
+		describe('canEditDescription', () => {
+			it('returns true when description is editable', () => {
+				const discussionTopic = new DiscussionTopicEntity(editableEntity);
+				expect(discussionTopic.canEditDescription()).to.be.true;
+			});
+
+			it('returns false when description are not editable', () => {
+				const discussionTopic = new DiscussionTopicEntity(nonEditableEntity);
+				expect(discussionTopic.canEditDescription()).to.be.false;
+			});
 		});
 	});
-});
