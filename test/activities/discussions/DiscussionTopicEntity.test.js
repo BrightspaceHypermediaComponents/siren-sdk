@@ -16,8 +16,6 @@ describe('DiscussionTopicEntity', () => {
 		it('reads name', () => {
 			const discussionTopic = new DiscussionTopicEntity(nonEditableEntity);
 			expect(discussionTopic.name()).to.equal('What a great topic');
-			expect(discussionTopic.descriptionPlaintext()).to.equal('Example description for test case');
-			expect(discussionTopic.descriptionHtml()).to.equal('<p> Example description for test case </p>');
 		});
 	});
 
@@ -70,9 +68,36 @@ describe('DiscussionTopicEntity', () => {
 				expect(discussionTopic.canEditDescription()).to.be.true;
 			});
 
-			it('returns false when description are not editable', () => {
+			it('returns false when description are is editable', () => {
 				const discussionTopic = new DiscussionTopicEntity(nonEditableEntity);
 				expect(discussionTopic.canEditDescription()).to.be.false;
 			});
 		});
+
+		describe('properties', () => {
+			describe('descriptionPlaintext', () => {
+				it('returns description in plain text when description is editable', () => {
+					const discussionTopic = new DiscussionTopicEntity(editableEntity);
+					expect(discussionTopic.descriptionPlaintext()).to.equal('A great topic description');
+				});
+
+				it('returns description in plain text when description is not editable', () => {
+					const discussionTopic = new DiscussionTopicEntity(nonEditableEntity);
+					expect(discussionTopic.descriptionPlaintext()).to.equal('A great topic description');
+				});
+			});
+
+			describe('descriptionHtml', () => {
+				it('returns description in html format when description is editable', () => {
+					const discussionTopic = new DiscussionTopicEntity(editableEntity);
+					expect(discussionTopic.descriptionHtml()).to.equal('<p>A great topic description</p>');
+				});
+
+				it('returns description in html format when description is not editable', () => {
+					const discussionTopic = new DiscussionTopicEntity(nonEditableEntity);
+					expect(discussionTopic.descriptionHtml()).to.equal('<p>A great topic description</p>');
+				});
+			});
+		});
 	});
+});
