@@ -45,6 +45,7 @@ export class DiscussionTopicEntity extends Entity {
 	equals(topic) {
 		const diffs = [
 			[topic.name, this.name()],
+			[topic.description, this.descriptionEditorHtml()],
 		];
 
 		for (const [current, initial] of diffs) {
