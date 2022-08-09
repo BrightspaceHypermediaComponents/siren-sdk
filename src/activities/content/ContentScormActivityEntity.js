@@ -3,19 +3,19 @@ import { ContentEntity } from './ContentEntity.js';
 import { performSirenAction } from '../../es6/SirenAction.js';
 
 /**
- * ContentscormActivityEntity class representation of a d2l content-scorm-package entity.
+ * ContentScormActivityEntity class representation of a D2L content-scorm-package entity
  */
 export class ContentScormActivityEntity extends ContentEntity {
 
 	/**
-	 * @returns {string|undefined} Name of the Scorm actvity package according to the content service
+	 * @returns {string|undefined} Name of the SCORM activity package according to the Content Service
 	 */
 	contentServiceTitle() {
 		return this._entity && this._entity.properties && this._entity.properties.contentServiceScormActivityTitle;
 	}
 
 	/**
-	 * @returns {Date|undefined} The date and time the scorm activity was last edited according to the content service
+	 * @returns {Date|undefined} The date and time the SCORM activity was last edited according to the Content Service
 	 */
 	contentServiceUpdatedAt() {
 		return this._entity && this._entity.properties && this._entity.properties.contentServiceScormActivityUpdatedAt;
@@ -32,21 +32,43 @@ export class ContentScormActivityEntity extends ContentEntity {
 	}
 
 	/**
-	 * @returns {string|undefined} Title of the Scorm actvity
+	 * @returns {string|undefined} Title of the SCORM activity
 	 */
 	title() {
 		return this._entity && this._entity.properties && this._entity.properties.title;
 	}
 
 	/**
-	 * @returns {string|undefined} Url of the scorm activity
+	 * @returns {string|undefined} Url of the SCORM activity
 	 */
 	url() {
 		return this._entity && this._entity.properties && this._entity.properties.url;
 	}
 
 	/**
-	 * Updates the SCORM activty to have the given title
+	 * @returns {number|undefined} The topicId for the SCORM activity
+	 */
+	topicId() {
+		return this._entity && this._entity.properties && this._entity.properties.topicId;
+	}
+
+	/**
+	 * @returns {number|undefined} The orgUnitId for the SCORM activity
+	 */
+	orgUnitId() {
+		return this._entity && this._entity.properties && this._entity.properties.orgUnitId;
+	}
+
+	/**
+	 * Note: This can be removed once LTI topics are migrated
+	 * @returns {boolean|undefined} Whether the SCORM activity is launched through LTI
+	 */
+	isLtiTopic() {
+		return this._entity && this._entity.properties && this._entity.properties.isLtiTopic;
+	}
+
+	/**
+	 * Updates the SCORM activity to have the given title
 	 * @param {string} title Title to set on the SCORM activity
 	 */
 	async setScormActivityTitle(title) {
@@ -64,7 +86,7 @@ export class ContentScormActivityEntity extends ContentEntity {
 	}
 
 	/**
-	 * Updates the Scorm Activity to have the given external resource value
+	 * Updates the SCORM activity to have the given external resource value
 	 * @param {boolean} isExternalResource boolean value that represents external resource status
 	 */
 	async setScormActivityExternalResource(isExternalResource) {
@@ -98,8 +120,8 @@ export class ContentScormActivityEntity extends ContentEntity {
 	}
 
 	/**
-	 * Checks if content scorm activty properties passed in match what is currently stored
-	 * @param {object} scormActivity Object containing scorm activty specific properties
+	 * Checks if content SCORM activity properties passed in match what is currently stored
+	 * @param {object} scormActivity Object containing SCORM activity specific properties
 	 */
 	equals(contentscormActivity) {
 		const diffs = [

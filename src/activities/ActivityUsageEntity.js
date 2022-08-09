@@ -293,6 +293,18 @@ export class ActivityUsageEntity extends Entity {
 	}
 
 	/**
+	 *
+	 * @returns {bool} The display in calendar value for availability dates
+	 */
+	displayInCalendar() {
+		if (this.hasActivityAvailabilityDates()) {
+			const dateEntity = this._getSubEntityByClass(Classes.availabilityDates.availabilityDates);
+			return dateEntity && dateEntity.properties && dateEntity.properties.DisplayInCalendar;
+		}
+		return false;
+	}
+
+	/**
 	 * @returns {string} End date of the activity usage
 	 */
 	endDate() {
