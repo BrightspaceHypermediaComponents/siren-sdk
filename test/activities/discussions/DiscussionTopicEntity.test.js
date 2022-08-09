@@ -16,6 +16,8 @@ describe('DiscussionTopicEntity', () => {
 		it('reads name', () => {
 			const discussionTopic = new DiscussionTopicEntity(nonEditableEntity);
 			expect(discussionTopic.name()).to.equal('What a great topic');
+			expect(discussionTopic.descriptionPlaintext()).to.equal('Example description for test case');
+			expect(discussionTopic.descriptionHtml()).to.equal('<p> Example description for test case </p>');
 		});
 	});
 
@@ -23,6 +25,7 @@ describe('DiscussionTopicEntity', () => {
 		it('sets canEditName to true', () => {
 			const discussionTopic = new DiscussionTopicEntity(editableEntity);
 			expect(discussionTopic.canEditName()).to.be.true;
+			expect(discussionTopic.canEditDescription()).to.be.true;
 		});
 	});
 
@@ -30,6 +33,7 @@ describe('DiscussionTopicEntity', () => {
 		it('sets canEditName to false', () => {
 			const discussionTopic = new DiscussionTopicEntity(nonEditableEntity);
 			expect(discussionTopic.canEditName()).to.be.false;
+			expect(discussionTopic.canEditDescription()).to.be.false;
 		});
 	});
 });
