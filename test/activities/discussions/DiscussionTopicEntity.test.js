@@ -1,6 +1,8 @@
 import { DiscussionTopicEntity } from '../../../src/activities/discussions/DiscussionTopicEntity.js';
 import { editableDiscussionTopic } from './data/EditableDiscussionTopic.js';
 import { expect } from '@open-wc/testing';
+import fetchMock from 'fetch-mock/esm/client.js';
+import { getFormData } from '../../utility/test-helpers.js';
 import { nonEditableDiscussionTopic } from './data/NonEditableDiscussionTopic.js';
 import SirenParse from 'siren-parser';
 
@@ -98,6 +100,57 @@ describe('DiscussionTopicEntity', () => {
 					expect(discussionTopic.descriptionHtml()).to.equal('<p>A great topic description</p>');
 				});
 			});
+		});
+	});
+
+	describe('save', () => {
+		beforeEach(() => {
+			// Mock PATCH topic call, which only exists in editable discussion topic entities
+			fetchMock.patch('https://f5aa43d7-c082-485c-84f5-4808147fe98a.discussions.api.dev.brightspace.com/6613/forums/10003/topics/10004', editableEntity);
+		});
+
+		afterEach(() => {
+			fetchMock.reset();
+		});
+
+		it('saves', async() => {
+			const discussionTopic = new DiscussionTopicEntity(editableEntity);
+
+			await discussionTopic.save({
+				name: 'New name',
+				description: '<p>New description</p>',
+			});
+
+			const form = await getFormData(fetchMock.lastCall().request);
+			if (!form.notSupported) {
+				expect(form.get('name')).to.equal('New name');
+				expect(form.get('description')).to.equal('<p>New description</p>');
+			}
+
+			expect(fetchMock.called()).to.be.true;
+			expect(fetchMock.calls().length).to.equal(1);
+		});
+
+		it('skips save if not dirty', async() => {
+			const discussionTopic = new DiscussionTopicEntity(editableEntity);
+
+			await discussionTopic.save({
+				name: 'What a great topic',
+				description: '<p>A great topic description</p>',
+			});
+
+			expect(fetchMock.called()).to.be.false;
+		});
+
+		it('skips save if not editable', async() => {
+			const discussionTopic = new DiscussionTopicEntity(nonEditableEntity);
+
+			await discussionTopic.save({
+				name: 'New name',
+				description: '<p>New description</p>',
+			});
+
+			expect(fetchMock.called()).to.be.false;
 		});
 	});
 });
