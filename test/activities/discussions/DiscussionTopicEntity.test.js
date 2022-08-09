@@ -131,6 +131,49 @@ describe('DiscussionTopicEntity', () => {
 			expect(fetchMock.calls().length).to.equal(1);
 		});
 
+		describe('sync with forum feature', () => {
+			let discussionTopic;
+
+			beforeEach(() => {
+				discussionTopic = new DiscussionTopicEntity(editableEntity);
+			});
+
+			it('syncs when topic name is changed and topic is flagged to sync with forum name by the topic mobx entity', async() => {
+				await discussionTopic.save(
+					{ name: 'New name' },
+					true,
+				);
+
+				const form = await getFormData(fetchMock.lastCall().request);
+				if (!form.notSupported) {
+					expect(form.get('name')).to.equal('New name');
+					expect(form.get('shouldSyncNameWithForum')).to.equal('true');
+				}
+			});
+
+			it('does not fire patch topic action nor sync with forum name when topic name is unchanged', async() => {
+				await discussionTopic.save(
+					{ name: 'What a great topic' },
+					true,
+				);
+
+				expect(fetchMock.called()).to.be.false;
+			});
+
+			it('does not sync when topic is flagged to not sync with forum name by the topic mobx entity', async() => {
+				await discussionTopic.save(
+					{ name: 'New name' },
+					false,
+				);
+
+				const form = await getFormData(fetchMock.lastCall().request);
+				if (!form.notSupported) {
+					expect(form.get('name')).to.equal('New name');
+					expect(form.get('shouldSyncNameWithForum')).to.equal('false');
+				}
+			});
+		});
+
 		it('skips save if not dirty', async() => {
 			const discussionTopic = new DiscussionTopicEntity(editableEntity);
 
