@@ -21,6 +21,34 @@ describe('DiscussionTopicEntity', () => {
 		});
 	});
 
+	describe('Equals', () => {
+		let modifiedEntity;
+
+		beforeEach(() => {
+			modifiedEntity = {
+				name: 'What a great topic',
+				description: '<p>A great topic description</p>',
+			};
+		});
+
+		it('returns true when equal', () => {
+			const discussionTopic = new DiscussionTopicEntity(editableEntity);
+			expect(discussionTopic.equals(modifiedEntity)).to.be.true;
+		});
+
+		it('returns false when name not equal', () => {
+			const discussionTopic = new DiscussionTopicEntity(editableEntity);
+			modifiedEntity.name = 'New name for discussion topic';
+			expect(discussionTopic.equals(modifiedEntity)).to.be.false;
+		});
+
+		it('returns false when description not equal', () => {
+			const discussionTopic = new DiscussionTopicEntity(editableEntity);
+			modifiedEntity.description = 'New description for discussion topic';
+			expect(discussionTopic.equals(modifiedEntity)).to.be.false;
+		});
+	});
+
 	describe('name', () => {
 		describe('canEditName', () => {
 			it('returns true when name is editable', () => {
