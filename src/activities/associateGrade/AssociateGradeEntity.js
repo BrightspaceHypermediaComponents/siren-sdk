@@ -10,7 +10,6 @@ import { performSirenAction } from '../../es6/SirenAction.js';
  */
 const GRADEBOOK_STATUS = 'gradebookStatus';
 const GRADE_NAME = 'gradeName';
-const NEW_GRADE_ID = 'gradeItemId';
 const MAX_POINTS = 'maxPoints';
 const GRADE_TYPE = 'gradeType';
 const PUSH_SCORE = 'pushScoresToGrade';
