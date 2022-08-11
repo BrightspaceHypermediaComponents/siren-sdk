@@ -79,8 +79,6 @@ export class AssociateGradeEntity extends Entity {
 	}
 
 	canEditGradebookStatus() {
-		if (!this._entity) return false;
-
 		return this._entity && this._entity.hasActionByName(Actions.activities.associateGrade.gradebookStatus);
 	}
 
@@ -205,10 +203,6 @@ export class AssociateGradeEntity extends Entity {
 
 	setGradeName(gradeName) {
 		return this._setNewGradeProperty(GRADE_NAME, gradeName);
-	}
-
-	setNewGradeId(newGradeId) {
-		return this._setNewGradeProperty(NEW_GRADE_ID, newGradeId);
 	}
 
 	setGradeType(gradeType) {
