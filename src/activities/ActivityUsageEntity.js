@@ -381,13 +381,21 @@ export class ActivityUsageEntity extends Entity {
 
 	/**
 	 * Validates range/order of start date, due date, and end date against each other
-	 * @param {object} dates Dates object containing start, due, and end date, or empty strings to clear
+	 * @param {object} dates Dates object containing start, due, and end date, displayInCalendar or empty strings to clear
 	 */
 	async validateDates(dates) {
 		if (!dates) return;
 		if (!this._hasDatesChanged(dates.startDate, dates.dueDate, dates.endDate, dates.startDateType, dates.endDateType)) return;
 
-		const datesActionAndFields = this._generateDatesAction(dates.startDate, dates.dueDate, dates.endDate, true, dates.startDateType, dates.endDateType);
+		const datesActionAndFields = this._generateDatesAction(
+			dates.startDate,
+			dates.dueDate,
+			dates.endDate,
+			true, //validateOnly
+			dates.startDateType,
+			dates.endDateType,
+			dates.displayInCalendar
+		);
 		if (datesActionAndFields) {
 			await performSirenAction(this._token, datesActionAndFields.action, datesActionAndFields.fields);
 		}
@@ -395,13 +403,22 @@ export class ActivityUsageEntity extends Entity {
 
 	/**
 	 * Updates start date, due date and end date together to the dates specified
-	 * @param {object} dates Dates object containing start, due, and end date, or empty strings to clear
+	 * @param {object} dates Dates object containing start, due, and end date, displayInCalendar or empty strings to clear
 	 */
 	async saveDates(dates, deferSave) {
 		if (!dates) return;
 		if (!this._hasDatesChanged(dates.startDate, dates.dueDate, dates.endDate, dates.startDateType, dates.endDateType)) return;
 
-		const datesActionAndFields = this._generateDatesAction(dates.startDate, dates.dueDate, dates.endDate, false, dates.startDateType, dates.endDateType);
+		const datesActionAndFields = this._generateDatesAction(
+			dates.startDate,
+			dates.dueDate,
+			dates.endDate,
+			false, //validateOnly
+			dates.startDateType,
+			dates.endDateType,
+			dates.displayInCalendar
+		);
+
 		if (!datesActionAndFields) return;
 		if (deferSave) {
 			return datesActionAndFields;
@@ -410,7 +427,7 @@ export class ActivityUsageEntity extends Entity {
 		}
 	}
 
-	_generateDatesAction(startDate, dueDate, endDate, validateOnly, startDateType, endDateType) {
+	_generateDatesAction(startDate, dueDate, endDate, validateOnly, startDateType, endDateType, displayInCalendar) {
 		let action;
 		const datesEntity = this._getSubEntityByClass('dates');
 		if (datesEntity) {
@@ -433,6 +450,7 @@ export class ActivityUsageEntity extends Entity {
 			{ name: 'endDate', value: endDateValue },
 			{ name: 'availabilityStartType', value: startDateTypeValue },
 			{ name: 'availabilityEndType', value: endDateTypeValue },
+			{ name: 'displayInCalendar', value: displayInCalendar }
 		];
 
 		if (validateOnly) {
