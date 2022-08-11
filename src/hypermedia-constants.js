@@ -74,7 +74,8 @@ export const Rels = {
 		indirectAssociations: 'https://activities.api.brightspace.com/rels/indirect-associations',
 		newGradeAssociation: 'https://activities.api.brightspace.com/rels/new-grade-association',
 		specialAccess: 'https://activities.api.brightspace.com/rels/special-access',
-		associateGrade: 'https://activities.api.brightspace.com/rels/associate-grade'
+		associateGrade: 'https://activities.api.brightspace.com/rels/associate-grade',
+		associateMultipleGrades: 'https://activities.api.brightspace.com/rels/associate-multiple-grades'
 	},
 	Conditions: {
 		conditions: 'https://conditions.api.brightspace.com/rels/conditions',
@@ -595,6 +596,9 @@ export const Actions = {
 			getCategories: 'get-categories',
 			getSchemes: 'get-schemes',
 			chooseScheme: 'choose-scheme'
+		},
+		associateMultipleGrades: {
+			gradebookStatus: 'gradebook-status'
 		},
 		activityUsageCollection: {
 			setCollectionPaging: 'set-collection-paging',
