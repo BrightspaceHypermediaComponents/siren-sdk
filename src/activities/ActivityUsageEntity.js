@@ -381,7 +381,7 @@ export class ActivityUsageEntity extends Entity {
 
 	/**
 	 * Validates range/order of start date, due date, and end date against each other
-	 * @param {object} dates Dates object containing start, due, and end date, or empty strings to clear
+	 * @param {object} dates Dates object containing start, due, and end date, displayInCalendar or empty strings to clear
 	 */
 	async validateDates(dates) {
 		if (!dates) return;
@@ -403,7 +403,7 @@ export class ActivityUsageEntity extends Entity {
 
 	/**
 	 * Updates start date, due date and end date together to the dates specified
-	 * @param {object} dates Dates object containing start, due, and end date, or empty strings to clear
+	 * @param {object} dates Dates object containing start, due, and end date, displayInCalendar or empty strings to clear
 	 */
 	async saveDates(dates, deferSave) {
 		if (!dates) return;
