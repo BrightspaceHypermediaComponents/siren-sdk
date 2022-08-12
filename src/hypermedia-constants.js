@@ -705,6 +705,11 @@ export const Actions = {
 		deleteFile: 'delete-content-file',
 		replaceFile: 'replace-content-file'
 	},
+	ipsis: {
+		sisCourseMerge: {
+			searchCourseOfferings: 'Search-Course-Offerings'
+		}
+	},
 	quizzes: {
 		updateName: 'update-name',
 		updateShuffle: 'update-shuffle',
