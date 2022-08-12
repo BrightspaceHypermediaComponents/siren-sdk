@@ -4,9 +4,11 @@ export const editableDiscussionTopic = {
 	'class': [
 		'named-entity',
 		'topic',
+		'html',
 	],
 	'properties': {
 		'name': 'What a great topic',
+		'description': '<p>A great topic description</p>',
 	},
 	'actions': [
 		{
@@ -23,6 +25,37 @@ export const editableDiscussionTopic = {
 				}
 			]
 		},
+	],
+	'entities': [
+		{
+			'class': [
+				'richtext',
+				'description',
+				'annotated'
+			],
+			'rel': [
+				'item',
+				'https://discussions.api.brightspace.com/rels/description'
+			],
+			'properties': {
+				'text': 'A great topic description',
+				'html': '<p>A great topic description</p>'
+			},
+			'actions': [
+				{
+					'href': `https://${tenantId}.discussions.api.dev.brightspace.com/6613/forums/10003/topics/10004`,
+					'name': 'update-description',
+					'method': 'PATCH',
+					'fields': [
+						{
+							'type': 'text',
+							'name': 'description',
+							'value': '<p>A great topic description</p>'
+						}
+					]
+				}
+			]
+		}
 	],
 	'links': [
 		{

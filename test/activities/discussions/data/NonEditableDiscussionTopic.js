@@ -7,7 +7,26 @@ export const nonEditableDiscussionTopic = {
 	],
 	'properties': {
 		'name': 'What a great topic',
+		'description': '<p>A great topic description</p>',
 	},
+	'entities': [
+		{
+			'class': [
+				'richtext',
+				'description',
+				'annotated'
+			],
+			'rel': [
+				'item',
+				'https://discussions.api.brightspace.com/rels/description'
+			],
+			'properties': {
+				'text': 'A great topic description',
+				'html': '<p>A great topic description</p>'
+			},
+			'actions': []
+		}
+	],
 	'links': [
 		{
 			'rel': [
