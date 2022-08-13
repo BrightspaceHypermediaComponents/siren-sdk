@@ -681,6 +681,13 @@ export const Actions = {
 		skipSubscribeToParentNotifications: 'skip-subscribe-to-parent-notifications',
 		unsubscribeToParentNotifications: 'unsubscribe-to-parent-notifications'
 	},
+	discussions: {
+		topic: {
+			syncDraftWithForum: 'sync-draft-with-forum',
+			updateName: 'update-name',
+			updateDescription: 'update-description'
+		},
+	},
 	rubrics: {
 		selectCriterionCell: 'select-criterion-cell'
 	},
@@ -790,11 +797,5 @@ export const Actions = {
 		checkout: 'checkout',
 		checkin: 'checkin',
 		commit: 'commit'
-	},
-	discussions: {
-		topic: {
-			updateName: 'update-name',
-			updateDescription: 'update-description'
-		},
-	},
+	}
 };

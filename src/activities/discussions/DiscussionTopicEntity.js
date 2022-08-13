@@ -43,25 +43,6 @@ export class DiscussionTopicEntity extends Entity {
 	}
 
 	/**
-	 * @summary Checks if topic entity has changed, primarily used for dirty check
-	 * @param {object} topic the topic that's being modified
-	 */
-	equals(topic) {
-		const diffs = [
-			[topic.name, this.name()],
-			[topic.description, this.descriptionEditorHtml()],
-		];
-
-		for (const [current, initial] of diffs) {
-			if (current !== initial) {
-				return false;
-			}
-		}
-
-		return true;
-	}
-
-	/**
 	 * @returns {bool} Whether or not the edit description action is present on the topic description entity
 	 */
 	canEditDescription() {
@@ -73,7 +54,6 @@ export class DiscussionTopicEntity extends Entity {
 	/**
 	 * @returns {object} a helper function to get topic description entity
 	 */
-
 	_getDescriptionEntity() {
 		return this._entity
 			&& this._entity.hasSubEntityByRel(Rels.Discussions.description)
@@ -121,7 +101,6 @@ export class DiscussionTopicEntity extends Entity {
 	 * @param {object} topic the topic that's being modified
 	 * @returns {object} the appropriate action/fields to update
 	 */
-
 	_formatUpdateDescriptionAction(topic) {
 		const { description } = topic || {};
 
@@ -144,19 +123,68 @@ export class DiscussionTopicEntity extends Entity {
 	}
 
 	/**
+	 * @returns {bool} Sync draft status with topic's parent forum against the draft endpoint
+	 */
+	canSyncDraftWithForum() {
+		return this._entity && this._entity.hasActionByName(Actions.discussions.topic.syncDraftWithForum);
+	}
+
+	/**
+	 * Updates the draft status of the activity usage entity to draft or published
+	 * @param {object} topic the topic that's being modified
+	 * @param {bool} shouldSyncDraftWithForum Whether to sync the draft status with the forum or not
+	 */
+
+	_formatSyncDraftStatusAction(topic, shouldSyncDraftWithForum) {
+		const { isDraft } = topic || {};
+		if (!this.canSyncDraftWithForum() || typeof isDraft === 'undefined' || !shouldSyncDraftWithForum) {
+			return;
+		}
+
+		const action = this._entity.getActionByName(Actions.discussions.topic.syncDraftWithForum);
+		const fields = [
+			{ name: 'draft', value: isDraft },
+			{ name: 'shouldSyncDraftWithForum', value: shouldSyncDraftWithForum }
+		];
+		return { action, fields };
+	}
+
+	/**
+	 * @summary Checks if topic entity has changed, primarily used for dirty check
+	 * @param {object} topic the topic that's being modified
+	 */
+	equals(topic) {
+		const diffs = [
+			[topic.name, this.name()],
+			[topic.description, this.descriptionEditorHtml()],
+		];
+
+		for (const [current, initial] of diffs) {
+			if (current !== initial) {
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	/**
 	 * @summary Fires all the formatted siren actions collectively
 	 * @param {object} topic the topic that's being modified
 	 * @param {bool} shouldSyncNameWithForum determines whether topic and forum names should sync
+	 * @param {bool} shouldSyncNameWithForum determines whether topic and forum draft status should sync
 	 */
-	async save(topic, shouldSyncNameWithForum) {
+	async save(topic, shouldSyncNameWithForum, shouldSyncDraftWithForum) {
 		if (!topic) return;
 
 		const updateNameAction = this._formatUpdateNameAction(topic, shouldSyncNameWithForum);
 		const updateDescriptionAction = this._formatUpdateDescriptionAction(topic);
+		const syncDraftWithForum = this._formatSyncDraftStatusAction(topic, shouldSyncDraftWithForum);
 
 		const sirenActions = [
 			updateNameAction,
 			updateDescriptionAction,
+			syncDraftWithForum
 		];
 
 		await performSirenActions(this._token, sirenActions);
