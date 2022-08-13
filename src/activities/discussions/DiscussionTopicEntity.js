@@ -54,7 +54,6 @@ export class DiscussionTopicEntity extends Entity {
 	/**
 	 * @returns {object} a helper function to get topic description entity
 	 */
-
 	_getDescriptionEntity() {
 		return this._entity
 			&& this._entity.hasSubEntityByRel(Rels.Discussions.description)
@@ -102,7 +101,6 @@ export class DiscussionTopicEntity extends Entity {
 	 * @param {object} topic the topic that's being modified
 	 * @returns {object} the appropriate action/fields to update
 	 */
-
 	_formatUpdateDescriptionAction(topic) {
 		const { description } = topic || {};
 
@@ -123,17 +121,20 @@ export class DiscussionTopicEntity extends Entity {
 		];
 		return { action, fields };
 	}
+
 	/**
 	 * @returns {bool} Sync draft status with topic's parent forum against the draft endpoint
 	 */
 	canSyncDraftWithForum() {
 		return this._entity && this._entity.hasActionByName(Actions.discussions.topic.syncDraftWithForum);
 	}
+
 	/**
 	 * Updates the draft status of the activity usage entity to draft or published
 	 * @param {object} topic the topic that's being modified
 	 * @param {bool} shouldSyncDraftWithForum Whether to sync the draft status with the forum or not
 	 */
+
 	_formatSyncDraftStatusAction(topic, shouldSyncDraftWithForum) {
 		const { isDraft } = topic || {};
 		if (!this.canSyncDraftWithForum() || typeof isDraft === 'undefined' || !shouldSyncDraftWithForum) {
