@@ -254,11 +254,11 @@ export class ActivityUsageEntity extends Entity {
 		}
 
 		const action = dateEntity.getActionByName(Actions.activities.availabilityDates.create);
-		if (!action || !action.getFieldByName('availabilityStartType')) {
+		if (!action || !action.getFieldByName('startDateAvailabilityType')) {
 			return;
 		}
 
-		return action.getFieldByName('availabilityStartType').value;
+		return action.getFieldByName('startDateAvailabilityType').value;
 	}
 
 	/**
@@ -343,17 +343,18 @@ export class ActivityUsageEntity extends Entity {
 	 * @returns {Number} Default start date type of the activity usage
 	 */
 	defaultEndDateType() {
+		console.log('ehh');
 		const dateEntity = this._getSubEntityByClass(Classes.availabilityDates.availabilityDates);
 		if (!dateEntity) {
 			return;
 		}
 
 		const action = dateEntity.getActionByName(Actions.activities.availabilityDates.create);
-		if (!action || !action.getFieldByName('availabilityEndType')) {
+		if (!action || !action.getFieldByName('endDateAvailabilityType')) {
 			return;
 		}
 
-		return action.getFieldByName('availabilityEndType').value;
+		return action.getFieldByName('endDateAvailabilityType').value;
 	}
 
 	/**
@@ -428,6 +429,7 @@ export class ActivityUsageEntity extends Entity {
 	}
 
 	_generateDatesAction(startDate, dueDate, endDate, validateOnly, startDateType, endDateType, displayInCalendar) {
+		console.log('ehh2');
 		let action;
 		const datesEntity = this._getSubEntityByClass('dates');
 		if (datesEntity) {
@@ -448,8 +450,8 @@ export class ActivityUsageEntity extends Entity {
 			{ name: 'startDate', value: startDateValue },
 			{ name: 'dueDate', value: dueDateValue },
 			{ name: 'endDate', value: endDateValue },
-			{ name: 'availabilityStartType', value: startDateTypeValue },
-			{ name: 'availabilityEndType', value: endDateTypeValue },
+			{ name: 'startDateAvailabilityType', value: startDateTypeValue },
+			{ name: 'endDateAvailabilityType', value: endDateTypeValue },
 			{ name: 'displayInCalendar', value: displayInCalendar }
 		];
 
