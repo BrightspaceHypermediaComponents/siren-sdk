@@ -343,7 +343,7 @@ export class ActivityUsageEntity extends Entity {
 	 * @returns {Number} Default start date type of the activity usage
 	 */
 	defaultEndDateType() {
-		console.log('ehh');
+
 		const dateEntity = this._getSubEntityByClass(Classes.availabilityDates.availabilityDates);
 		if (!dateEntity) {
 			return;
@@ -429,7 +429,7 @@ export class ActivityUsageEntity extends Entity {
 	}
 
 	_generateDatesAction(startDate, dueDate, endDate, validateOnly, startDateType, endDateType, displayInCalendar) {
-		console.log('ehh2');
+
 		let action;
 		const datesEntity = this._getSubEntityByClass('dates');
 		if (datesEntity) {
