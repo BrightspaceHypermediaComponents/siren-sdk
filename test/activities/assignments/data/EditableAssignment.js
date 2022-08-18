@@ -118,28 +118,6 @@ export const editableAssignment = {
 				'text': 'These are your instructions',
 				'html': '<p>These are your instructions</p>'
 			},
-			'entities': [
-				{
-					'class': [
-						'richtext-editor-config'
-					],
-					'rel': [
-						'https://api.brightspace.com/rels/richtext-editor-config'
-					],
-					'properties': {
-						'orgUnit': {
-							'OrgId': '6606',
-							'OrgUnitId': '121213'
-						},
-						'd2l_filter': {
-							'endpoint': '/d2l/lp/htmleditor/converttoabsolute?ou=121213'
-						},
-						'd2l_isf': {
-							'endpoint': '/d2l/common/dialogs/isf/selectItem.d2l?ou=121213&filterMode=Strict'
-						}
-					}
-				}
-			],
 			'actions': [
 				{
 					'type': 'application/x-www-form-urlencoded',
