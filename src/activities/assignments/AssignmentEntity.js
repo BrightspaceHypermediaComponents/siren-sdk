@@ -112,15 +112,6 @@ export class AssignmentEntity extends Entity {
 	}
 
 	/**
-	 * @returns {object} Richtext editor config for the assignment instructions; for use with d2l-html-editor
-	 */
-	instructionsRichTextEditorConfig() {
-		const instructionsEntity = this._getInstructionsEntity();
-		return instructionsEntity
-			&& instructionsEntity.getSubEntityByRel(Rels.richTextEditorConfig);
-	}
-
-	/**
 	 * @returns {string} URL for activity usage associated with the assignment
 	 */
 	activityUsageHref() {
