@@ -19,11 +19,11 @@
 
     <h1 class="page-title">Source: activities/assignments/AssignmentEntity.js</h1>
 
-    
 
 
 
-    
+
+
     <section>
         <article>
             <pre class="prettyprint source linenums"><code>import { Entity } from '../../es6/Entity';
@@ -133,15 +133,6 @@ export class AssignmentEntity extends Entity {
 
 		const fields = [{ name: 'instructions', value: instructions }];
 		await performSirenAction(this._token, action, fields);
-	}
-
-	/**
-	 * @returns {object} Richtext editor config for the assignment instructions; for use with d2l-html-editor
-	 */
-	instructionsRichTextEditorConfig() {
-		const instructionsEntity = this._getInstructionsEntity();
-		return instructionsEntity
-			&amp;&amp; instructionsEntity.getSubEntityByRel(Rels.richTextEditorConfig);
 	}
 
 	/**

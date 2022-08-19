@@ -366,28 +366,6 @@ export const editableQuiz = {
 				'text':'The Second quiz ever',
 				'html':'The Second quiz ever'
 			},
-			'entities':[
-				{
-					'class':[
-						'richtext-editor-config'
-					],
-					'rel':[
-						'https://api.brightspace.com/rels/richtext-editor-config'
-					],
-					'properties':{
-						'orgUnit':{
-							'OrgId':'6606',
-							'OrgUnitId':'6609'
-						},
-						'd2l_filter':{
-							'endpoint':'/d2l/lp/htmleditor/converttoabsolute?ou=6609'
-						},
-						'd2l_isf':{
-							'endpoint':'/d2l/common/dialogs/isf/selectItem.d2l?ou=6609&filterMode=Strict'
-						}
-					}
-				}
-			],
 			'actions':[
 				{
 					'type':'application/x-www-form-urlencoded',
@@ -418,28 +396,6 @@ export const editableQuiz = {
 				'text':'Top of the quiz to ya!',
 				'html':'Top of the quiz to ya!'
 			},
-			'entities':[
-				{
-					'class':[
-						'richtext-editor-config'
-					],
-					'rel':[
-						'https://api.brightspace.com/rels/richtext-editor-config'
-					],
-					'properties':{
-						'orgUnit':{
-							'OrgId':'6606',
-							'OrgUnitId':'6609'
-						},
-						'd2l_filter':{
-							'endpoint':'/d2l/lp/htmleditor/converttoabsolute?ou=6609'
-						},
-						'd2l_isf':{
-							'endpoint':'/d2l/common/dialogs/isf/selectItem.d2l?ou=6609&filterMode=Strict'
-						}
-					}
-				}
-			],
 			'actions':[
 				{
 					'type':'application/x-www-form-urlencoded',
@@ -470,28 +426,6 @@ export const editableQuiz = {
 				'text': 'Bottom of the quiz to ya!',
 				'html': 'Bottom of the quiz to ya!'
 			},
-			'entities': [
-				{
-					'class': [
-						'richtext-editor-config'
-					],
-					'rel': [
-						'https://api.brightspace.com/rels/richtext-editor-config'
-					],
-					'properties': {
-						'orgUnit': {
-							'OrgId': '6606',
-							'OrgUnitId': '6609'
-						},
-						'd2l_filter': {
-							'endpoint': '/d2l/lp/htmleditor/converttoabsolute?ou=6609'
-						},
-						'd2l_isf': {
-							'endpoint': '/d2l/common/dialogs/isf/selectItem.d2l?ou=6609&filterMode=Strict'
-						}
-					}
-				}
-			],
 			'actions': [
 				{
 					'type': 'application/x-www-form-urlencoded',
