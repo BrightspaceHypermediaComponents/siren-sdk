@@ -397,7 +397,7 @@ export class ActivityUsageEntity extends Entity {
 			dates.displayInCalendar
 		);
 		if (datesActionAndFields) {
-			await performSirenAction(this._token, datesActionAndFields.action, datesActionAndFields.fields);
+			await performSirenAction(this._token, datesActionAndFields.action, datesActionAndFields.fields, true);
 		}
 	}
 
