@@ -241,7 +241,7 @@ export class ActivityUsageEntity extends Entity {
 			return;
 		}
 
-		return availabilityStartDate.properties.dateType;
+		return availabilityStartDate.properties.dateType || availabilityStartDate.properties.availabilityType;
 	}
 
 	/**
@@ -336,7 +336,7 @@ export class ActivityUsageEntity extends Entity {
 			return;
 		}
 
-		return availabilityEndDate.properties.dateType;
+		return availabilityEndDate.properties.dateType || availabilityEndDate.properties.availabilityType;
 	}
 
 	/**
