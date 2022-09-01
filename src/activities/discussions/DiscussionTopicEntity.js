@@ -10,11 +10,10 @@ export class DiscussionTopicEntity extends Entity {
 	 * @returns {string} the href of the discussion topic's discussion forum entity
 	 */
 	forumHref() {
-		if (this._entity) {
-			const href = this._entity.getLinkByRel(Rels.Discussions.forum).href;
-			return href;
+		if (!this._entity || !this._entity.hasLinkByRel(Rels.Discussions.forum)) {
+			return;
 		}
-		return;
+		return this._entity.getLinkByRel(Rels.Discussions.forum).href;
 	}
 
 	/**

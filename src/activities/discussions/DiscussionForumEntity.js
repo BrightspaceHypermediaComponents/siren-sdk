@@ -14,6 +14,13 @@ export class DiscussionForumEntity extends Entity {
 	}
 
 	/**
+	 * @returns {bool} Whether or not the edit name action is present on the discussion forum entity
+	 */
+	canEditName() {
+		return this._entity && this._entity.hasActionByName(Actions.discussions.forum.updateName);
+	}
+
+	/**
 	 * @summary Formats action and fields if forum name has changed and user has edit permission
 	 * @param {object} forum the forum that's being modified
 	 * @returns {object} the appropriate action/fields to update
