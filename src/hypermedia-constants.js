@@ -136,7 +136,8 @@ export const Rels = {
 	Discussions: {
 		description: 'https://discussions.api.brightspace.com/rels/description',
 		mySubscriptions: 'https://discussions.api.brightspace.com/rels/my-subscriptions',
-		topic: 'https://discussions.api.brightspace.com/rels/topic'
+		forum: 'https://discussions.api.brightspace.com/rels/forum',
+		topic: 'https://discussions.api.brightspace.com/rels/topic',
 	},
 	// Files API sub-domain rels
 	Files: {
@@ -370,6 +371,7 @@ export const Classes = {
 	},
 	discussions: {
 		discussion: 'discussion',
+		forum: 'forum',
 		topic: 'topic',
 		description: 'description',
 		unlocked: 'unlocked'
@@ -681,6 +683,9 @@ export const Actions = {
 		unsubscribeToParentNotifications: 'unsubscribe-to-parent-notifications'
 	},
 	discussions: {
+		forum: {
+			updateName: 'update-name',
+		},
 		topic: {
 			syncDraftWithForum: 'sync-draft-with-forum',
 			updateName: 'update-name',
