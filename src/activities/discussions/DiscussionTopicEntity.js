@@ -1,6 +1,6 @@
 import { Actions, Rels } from '../../hypermedia-constants.js';
-import { Entity } from '../../es6/Entity.js';
 import { performSirenAction, performSirenActions } from '../../es6/SirenAction.js';
+import { Entity } from '../../es6/Entity.js';
 
 /**
  * DiscussionTopicEntity class representation of a D2L Discussion Topic.
