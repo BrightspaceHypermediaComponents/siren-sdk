@@ -103,7 +103,7 @@ export class QuizTimingEntity extends Entity {
 				value: data
 			};
 		} 
-		return entity.properties && entity.properties.timeLimit;
+		return entity.properties.timeLimit;
 	}
 
 	enforcedGraceLimit() {
@@ -146,7 +146,7 @@ export class QuizTimingEntity extends Entity {
 				value: data
 			};
 		} 
-		return entity.properties && entity.properties.timeLimit;
+		return entity.properties.timeLimit;
 	}
 
 	minRecommendedTimeLimit() {
