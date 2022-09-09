@@ -102,7 +102,7 @@ export class QuizTimingEntity extends Entity {
 				...entity.properties.timeLimit,
 				value: data
 			};
-		} 
+		}
 		return entity.properties.timeLimit;
 	}
 
@@ -145,7 +145,7 @@ export class QuizTimingEntity extends Entity {
 				...entity.properties.timeLimit,
 				value: data
 			};
-		} 
+		}
 		return entity.properties.timeLimit;
 	}
 
