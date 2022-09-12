@@ -1,4 +1,4 @@
-import { Actions, Rels, Classes } from '../../hypermedia-constants.js';
+import { Actions, Classes, Rels } from '../../hypermedia-constants.js';
 import { Entity } from '../../es6/Entity.js';
 import { performSirenActions } from '../../es6/SirenAction.js';
 
@@ -33,7 +33,7 @@ export class DiscussionTopicEntity extends Entity {
 	/**
 	 * @returns {bool} Whether or not the discussion topic entity has posts
 	 */
-	 hasPosts() {
+	hasPosts() {
 		return this._entity && this._entity.hasClass(Classes.discussions.hasPosts);
 	}
 
