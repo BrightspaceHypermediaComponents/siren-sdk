@@ -1,4 +1,4 @@
-import { Actions, Rels } from '../../hypermedia-constants.js';
+import { Actions, Rels, Classes } from '../../hypermedia-constants.js';
 import { Entity } from '../../es6/Entity.js';
 import { performSirenActions } from '../../es6/SirenAction.js';
 
@@ -28,6 +28,13 @@ export class DiscussionTopicEntity extends Entity {
 	 */
 	canEditName() {
 		return this._entity && this._entity.hasActionByName(Actions.discussions.topic.updateName);
+	}
+
+	/**
+	 * @returns {bool} Whether or not the discussion topic entity has posts
+	 */
+	 hasPosts() {
+		return this._entity && this._entity.hasClass(Classes.discussions.hasPosts);
 	}
 
 	/**

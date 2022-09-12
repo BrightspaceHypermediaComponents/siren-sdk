@@ -374,7 +374,8 @@ export const Classes = {
 		forum: 'forum',
 		topic: 'topic',
 		description: 'description',
-		unlocked: 'unlocked'
+		unlocked: 'unlocked',
+		hasPosts: 'has-posts'
 	},
 	enrollments: {
 		enrollment: 'enrollment',
