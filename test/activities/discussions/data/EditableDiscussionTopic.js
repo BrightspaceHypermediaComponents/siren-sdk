@@ -5,6 +5,7 @@ export const editableDiscussionTopic = {
 		'named-entity',
 		'topic',
 		'html',
+		'has-posts'
 	],
 	'properties': {
 		'name': 'What a great topic',
