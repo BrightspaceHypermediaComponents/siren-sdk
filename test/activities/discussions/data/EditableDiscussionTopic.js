@@ -26,6 +26,19 @@ export const editableDiscussionTopic = {
 				}
 			]
 		},
+		{
+			'title': 'Delete a topic',
+			'href': `https://${tenantId}.discussions.api.dev.brightspace.com/6613/forums/10003/topics/10004`,
+			'name': 'delete-topic',
+			'method': 'DELETE',
+			'fields': [
+				{
+					'name': 'shouldDeleteParentForum',
+					'type': 'checkbox',
+					'value': true
+				}
+			]
+		}
 	],
 	'entities': [
 		{

@@ -215,13 +215,17 @@ export class DiscussionTopicEntity extends Entity {
 		return this._entity.hasActionByName(Actions.discussions.topic.delete);
 	}
 
-	async delete() {
+	async delete(shouldDeleteParentForum = false) {
 		const action = this.canDelete() && this._entity.getActionByName(Actions.discussions.topic.delete);
 		if (!action) {
 			return;
 		}
 
-		await performSirenAction(this._token, action).then(() => {
+		const fields = [
+			{ name: 'shouldDeleteParentForum', value: shouldDeleteParentForum }
+		];
+
+		await performSirenAction(this._token, action, fields).then(() => {
 			this.dispose();
 		});
 	}
