@@ -6,15 +6,52 @@ import { Actions, Rels } from '../../hypermedia-constants.js';
 import { Entity } from '../../es6/Entity.js';
 
 export class CourseMergeOfferingCollectionEntity extends Entity {
-	courseMergeOfferings() {
+
+	getCurrentOfferings() {
 		if (!this._entity) {
 			return;
 		}
 		return this._entity.entities;
 	}
 
+	courseMergeOfferings() {
+		if (!this.offerings) {
+			this.offerings = this._entity.entities.map((entity) => ({
+				href: entity.href,
+				hidden: false
+			}));
+		}
+		return this.offerings;
+	}
+
+	_removeDuplicatesAndAddNewEntities(newEntities) {
+		// Remove to be duplicated entities - todo: performance concern?
+		for (let newEntity of newEntities) {
+			this.offerings = this.offerings.filter((existingEntity) => existingEntity.href !== newEntity.href);
+		}
+
+		// Add new entities
+		this.offerings = this.offerings.concat(newEntities.map((entity) => ({
+			href: entity.href,
+			hidden: false
+		})));
+	}
+
 	prependCourseMergeOfferings(previousCourseMergeOfferingCollectionEntity) {
-		this._entity.entities.unshift(...previousCourseMergeOfferingCollectionEntity._entity.entities);
+		this.offerings = previousCourseMergeOfferingCollectionEntity.courseMergeOfferings();
+		this._removeDuplicatesAndAddNewEntities(this._entity.entities);
+	}
+
+	updateEntity(entity) {
+		// Hide old entities
+		for (let oldEntity of this.offerings) {
+			oldEntity.hidden = true;
+		}
+
+		this._removeDuplicatesAndAddNewEntities(entity.entities);
+
+
+		this._entity = entity;
 	}
 
 	userOwnedByMultipleSourceSystems() {
@@ -100,8 +137,5 @@ export class CourseMergeOfferingCollectionEntity extends Entity {
 		return this._entity.getActionByName(Actions.ipsis.sisCourseMerge.searchCourseOfferings);
 	}
 
-	updateEntity(entity) {
-		this._entity = entity;
-	}
 }
 
