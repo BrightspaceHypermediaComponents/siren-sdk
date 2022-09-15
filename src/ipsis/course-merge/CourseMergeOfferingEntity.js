@@ -60,7 +60,7 @@ export class CourseMergeOfferingEntity extends Entity {
 			return;
 		}
 
-		return await performSirenAction(this._token, action);
+		return await performSirenAction(this._token, action, null, true);
 	}
 
 	async deselect() {
@@ -69,7 +69,7 @@ export class CourseMergeOfferingEntity extends Entity {
 			return;
 		}
 
-		return await performSirenAction(this._token, action);
+		return await performSirenAction(this._token, action, null, true);
 	}
 
 	updateEntity(entity) {
