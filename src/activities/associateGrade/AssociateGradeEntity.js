@@ -200,6 +200,26 @@ export class AssociateGradeEntity extends Entity {
 		return this._setNewGradeProperty(MAX_POINTS, maxPoints);
 	}
 
+	async setGradeMaxPointsExistingGrade(maxPoints) {
+		const existingGradeEntity = this._getExistingGradeEntity();
+		if (!existingGradeEntity) return;
+
+		const fields = [{ name: MAX_POINTS, value: maxPoints }];
+		// TODO: need to add the chooseType action to the existing grade entity
+		const action = existingGradeEntity.getActionByName(Actions.activities.associateGrade.chooseType);
+
+		console.log({existingGradeEntity});
+		console.log({fields});
+		console.log({action});
+
+		if (!action) return;
+
+		const returnedEntity = await performSirenAction(this._token, action, fields);
+		if (!returnedEntity) return;
+
+		return new AssociateGradeEntity(returnedEntity);
+	}
+
 	setGradeName(gradeName) {
 		return this._setNewGradeProperty(GRADE_NAME, gradeName);
 	}

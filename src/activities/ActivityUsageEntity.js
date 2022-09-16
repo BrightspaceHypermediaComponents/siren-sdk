@@ -754,16 +754,22 @@ export class ActivityUsageEntity extends Entity {
 	 * Checkin activity usage working copy
 	 */
 	async checkin() {
+		console.log('....... siren-sdk checking in');
 		if (this.canCheckin()) {
+			console.log('canCheckin...');
 			const action = this.getActionByName(Actions.workingCopy.checkin);
 			let entity;
 			try {
+				console.log(action);
 				entity = await performSirenAction(this._token, action);
+				console.log({entity});
 			} catch (e) {
+				console.log('.. catch');
 				return Promise.reject(e);
 			}
 			if (!entity) return;
 			return new ActivityUsageEntity(entity, this._token);
 		}
+		console.log('i cant checkin :(');
 	}
 }
