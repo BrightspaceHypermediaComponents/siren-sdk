@@ -25,10 +25,6 @@ export class CourseMergeOfferingCollectionEntity extends Entity {
 		return this._entity?.properties?.canMergeCourses;
 	}
 
-	selectedCount() {
-		return this._entity?.properties?.selectedCount;
-	}
-
 	totalCount() {
 		return this._pagingInfo()?.totalCount;
 	}
