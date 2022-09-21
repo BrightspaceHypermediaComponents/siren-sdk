@@ -92,10 +92,18 @@ export class QuizTimingEntity extends Entity {
 		if (!entity) return;
 		return entity.getSubEntityByClass(Classes.quizzes.timing.automaticZero);
 	}
-	enforcedTimeLimit() {
+
+	enforcedTimeLimit(data) {
 		const entity = this.getEnforcedTimingSubEntity();
-		if (!entity) return;
-		return entity.properties && entity.properties.timeLimit;
+		if (!entity || !entity.hasProperty('timeLimit')) return;
+
+		if (data) {
+			return {
+				...entity.properties.timeLimit,
+				value: data
+			};
+		}
+		return entity.properties.timeLimit;
 	}
 
 	enforcedGraceLimit() {
@@ -128,10 +136,17 @@ export class QuizTimingEntity extends Entity {
 		return entity.hasClass(Classes.quizzes.timing.showClock);
 	}
 
-	recommendedTimeLimit() {
+	recommendedTimeLimit(data) {
 		const entity = this.getRecommendedTimingSubEntity();
-		if (!entity) return;
-		return entity.properties && entity.properties.timeLimit;
+		if (!entity || !entity.hasProperty('timeLimit')) return;
+
+		if (data) {
+			return {
+				...entity.properties.timeLimit,
+				value: data
+			};
+		}
+		return entity.properties.timeLimit;
 	}
 
 	minRecommendedTimeLimit() {
