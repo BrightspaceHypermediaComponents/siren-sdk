@@ -63,6 +63,18 @@ describe('DiscussionTopicEntity', () => {
 		});
 	});
 
+	describe('hasPosts', () => {
+		it('returns true when topic has posts', () => {
+			const discussionTopic = new DiscussionTopicEntity(editableEntity);
+			expect(discussionTopic.hasPosts()).to.be.true;
+		});
+
+		it('returns false when topic does not have posts', () => {
+			const discussionTopic = new DiscussionTopicEntity(nonEditableEntity);
+			expect(discussionTopic.hasPosts()).to.be.false;
+		});
+	});
+
 	describe('description', () => {
 		describe('canEditDescription', () => {
 			it('returns true when description is editable', () => {

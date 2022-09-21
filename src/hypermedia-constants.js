@@ -374,7 +374,8 @@ export const Classes = {
 		forum: 'forum',
 		topic: 'topic',
 		description: 'description',
-		unlocked: 'unlocked'
+		unlocked: 'unlocked',
+		hasPosts: 'has-posts'
 	},
 	enrollments: {
 		enrollment: 'enrollment',
@@ -718,7 +719,9 @@ export const Actions = {
 	},
 	ipsis: {
 		sisCourseMerge: {
-			searchCourseOfferings: 'search-course-offerings'
+			searchCourseOfferings: 'search-course-offerings',
+			select: 'select',
+			deselect: 'deselect'
 		}
 	},
 	quizzes: {
