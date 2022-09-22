@@ -719,7 +719,7 @@ export const Actions = {
 	},
 	ipsis: {
 		sisCourseMerge: {
-			searchCourseOfferings: 'Search-Course-Offerings',
+			searchCourseOfferings: 'search-course-offerings',
 			select: 'select',
 			deselect: 'deselect'
 		}
