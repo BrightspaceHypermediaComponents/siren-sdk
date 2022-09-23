@@ -434,7 +434,11 @@ export const Classes = {
 			enforced: 'enforced',
 			noTimeLimit: 'notimelimit',
 			showClock: 'show-clock',
-			automaticZero: 'uselatelimit'
+			automaticZero: 'uselatelimit',
+			withTimeLimitType: 'with-time-limit-type',
+			autosubmit: 'autosubmit',
+			markExceedTime: 'markexceedtime',
+			recommendedLimit: 'recommendedlimit',
 		},
 		attempts: {
 			overallGradeCalculationType: 'overall-grade-calculation-type',
@@ -747,7 +751,8 @@ export const Actions = {
 			updateLateTypeId: 'update-timing-late-type-id',
 			updateHasTimer: 'update-timing-has-timer',
 			updateTimingGraceLimit: 'update-timing-grace-limit',
-			updateTimingLateData: 'update-timing-late-data'
+			updateTimingLateData: 'update-timing-late-data',
+			updateTimeLimitType: 'update-time-limit-type'
 		},
 		attempts: {
 			updateAttemptsAllowed: 'update-attempts',
