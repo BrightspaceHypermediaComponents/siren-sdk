@@ -38,8 +38,8 @@ export class QuizTimingEntity extends Entity {
 		return entity && entity.hasActionByName(Actions.quizzes.timing.updateTimeLimit);
 	}
 
-	canEditTimeLimitOption() {
-		return this.getTimeLimitOptionsEntity()?.hasActionByName(Actions.quizzes.timing.updateTimeLimitType)
+	canEditTimeLimitType() {
+		return this.getTimeLimitTypesSubEntity()?.hasActionByName(Actions.quizzes.timing.updateTimeLimitType)
 	}
 
 	timingType() {
@@ -54,8 +54,10 @@ export class QuizTimingEntity extends Entity {
 		return field.value;
 	}
 
-	timeLimitOptions() {
-		const action = this._entity?.getActionByName(Actions.quizzes.timing.updateTimeLimit);
+	timeLimitTypes() {
+		const entity = this.getTimeLimitTypesSubEntity();
+		if (!entity) return;
+		const action = entity.getActionByName(Actions.quizzes.timing.updateTimeLimitType);
 		if (!action) return;
 		return action.getFieldByName('timeLimitType')?.value;
 	}
@@ -75,7 +77,7 @@ export class QuizTimingEntity extends Entity {
 	isWithTimeLimitType(data) {
 		const timeLimitTypeClass = Classes.quizzes.timing.withTimeLimitType;
 		if (data) return data === timeLimitTypeClass;
-		return this.getTimeLimitOptionsEntity()?.hasClass(timeLimitTypeClass);
+		return this.getTimeLimitTypesSubEntity()?.hasClass(timeLimitTypeClass);
 	}
 
 	submissionLateType() {
@@ -103,7 +105,7 @@ export class QuizTimingEntity extends Entity {
 		return this._entity && this._entity.getSubEntityByClass(Classes.quizzes.timing.recommended);
 	}
 
-	getTimeLimitOptionsEntity() {
+	getTimeLimitTypesSubEntity() {
 		return this._entity?.getSubEntityByClass(Classes.quizzes.timing.withTimeLimitType);
 	}
 
@@ -319,8 +321,8 @@ export class QuizTimingEntity extends Entity {
 	}
 
 	async setTimeLimitType(data) {
-		if (!this.canEditTimeLimitOption()) return;
-		const entity = this.getTimeLimitOptionsEntity();
+		if (!this.canEditTimeLimitType()) return;
+		const entity = this.getTimeLimitTypesSubEntity();
 		if (!entity) return;
 		const action = entity.getActionByName(Actions.quizzes.timing.updateTimeLimitType);
 		const fields = [
