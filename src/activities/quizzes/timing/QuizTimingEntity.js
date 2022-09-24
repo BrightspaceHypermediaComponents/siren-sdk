@@ -39,7 +39,7 @@ export class QuizTimingEntity extends Entity {
 	}
 
 	canEditTimeLimitType() {
-		return this.getTimeLimitTypesSubEntity()?.hasActionByName(Actions.quizzes.timing.updateTimeLimitType)
+		return this.getTimeLimitTypesSubEntity()?.hasActionByName(Actions.quizzes.timing.updateTimeLimitType);
 	}
 
 	timingType() {
@@ -326,7 +326,7 @@ export class QuizTimingEntity extends Entity {
 		if (!entity) return;
 		const action = entity.getActionByName(Actions.quizzes.timing.updateTimeLimitType);
 		const fields = [
-			{ name: "timeLimitType", value: data }
+			{ name: 'timeLimitType', value: data }
 		];
 		const returnedEntity = await performSirenAction(this._token, action, fields);
 		if (!returnedEntity) return;
