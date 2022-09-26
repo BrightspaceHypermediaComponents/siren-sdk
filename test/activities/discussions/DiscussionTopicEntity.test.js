@@ -88,7 +88,7 @@ describe('DiscussionTopicEntity', () => {
 		it('cannot delete topic', async() => {
 			const discussionTopic = new DiscussionTopicEntity(nonEditableEntity);
 			await discussionTopic.delete();
-			expect(fetchMock.done());
+			expect(fetchMock.called()).to.be.false;
 		});
 
 		afterEach(() => {
