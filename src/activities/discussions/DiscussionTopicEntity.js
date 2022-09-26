@@ -31,7 +31,7 @@ export class DiscussionTopicEntity extends Entity {
 	}
 
 	/**
-	 * @returns {bool} Whether or not the discussion topic entity has posts
+	 * @returns {bool} Whether or not the discussion topic entity has posts.
 	 */
 	hasPosts() {
 		return this._entity && this._entity.hasClass(Classes.discussions.hasPosts);
