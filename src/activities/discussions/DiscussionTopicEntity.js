@@ -1,6 +1,6 @@
 import { Actions, Classes, Rels } from '../../hypermedia-constants.js';
+import { performSirenAction, performSirenActions } from '../../es6/SirenAction.js';
 import { Entity } from '../../es6/Entity.js';
-import { performSirenActions } from '../../es6/SirenAction.js';
 
 /**
  * DiscussionTopicEntity class representation of a D2L Discussion Topic.
@@ -209,5 +209,24 @@ export class DiscussionTopicEntity extends Entity {
 
 	_hasFieldValueChanged(currentValue, initialValue) {
 		return currentValue !== initialValue;
+	}
+
+	canDelete() {
+		return this._entity.hasActionByName(Actions.discussions.topic.delete);
+	}
+
+	async delete(shouldDeleteParentForum = false) {
+		const action = this.canDelete() && this._entity.getActionByName(Actions.discussions.topic.delete);
+		if (!action) {
+			return;
+		}
+
+		const fields = [
+			{ name: 'shouldDeleteParentForum', value: shouldDeleteParentForum }
+		];
+
+		await performSirenAction(this._token, action, fields).then(() => {
+			this.dispose();
+		});
 	}
 }

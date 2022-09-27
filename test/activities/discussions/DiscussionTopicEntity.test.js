@@ -75,6 +75,27 @@ describe('DiscussionTopicEntity', () => {
 		});
 	});
 
+	describe('delete', () => {
+		it('delete Topic', async() => {
+			fetchMock.deleteOnce('https://f5aa43d7-c082-485c-84f5-4808147fe98a.discussions.api.dev.brightspace.com/6613/forums/10003/topics/10004', editableEntity);
+
+			const discussionTopic = new DiscussionTopicEntity(editableEntity);
+
+			await discussionTopic.delete();
+			expect(fetchMock.called()).to.be.true;
+		});
+
+		it('cannot delete topic', async() => {
+			const discussionTopic = new DiscussionTopicEntity(nonEditableEntity);
+			await discussionTopic.delete();
+			expect(fetchMock.called()).to.be.false;
+		});
+
+		afterEach(() => {
+			fetchMock.reset();
+		});
+	});
+
 	describe('description', () => {
 		describe('canEditDescription', () => {
 			it('returns true when description is editable', () => {
