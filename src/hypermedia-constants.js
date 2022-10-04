@@ -436,9 +436,6 @@ export const Classes = {
 			showClock: 'show-clock',
 			automaticZero: 'uselatelimit',
 			withTimeLimitType: 'with-time-limit-type',
-			autosubmit: 'autosubmit',
-			markExceedTime: 'markexceedtime',
-			recommendedLimit: 'recommendedlimit',
 		},
 		attempts: {
 			overallGradeCalculationType: 'overall-grade-calculation-type',
