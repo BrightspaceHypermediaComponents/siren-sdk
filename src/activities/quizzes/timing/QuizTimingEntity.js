@@ -38,6 +38,10 @@ export class QuizTimingEntity extends Entity {
 		return entity && entity.hasActionByName(Actions.quizzes.timing.updateTimeLimit);
 	}
 
+	canEditTimeLimitType() {
+		return this.getTimeLimitTypesSubEntity()?.hasActionByName(Actions.quizzes.timing.updateTimeLimitType);
+	}
+
 	timingType() {
 		return this.isTimingEnforced() ? this.getEnforcedTimingSubEntity() : this.getRecommendedTimingSubEntity();
 	}
@@ -48,6 +52,14 @@ export class QuizTimingEntity extends Entity {
 		const field = action.getFieldByName('timingType');
 		if (!field) return;
 		return field.value;
+	}
+
+	timeLimitTypes() {
+		const entity = this.getTimeLimitTypesSubEntity();
+		if (!entity) return;
+		const action = entity.getActionByName(Actions.quizzes.timing.updateTimeLimitType);
+		if (!action) return;
+		return action.getFieldByName('timeLimitType')?.value;
 	}
 
 	isTimingEnforced(data) {
@@ -85,6 +97,10 @@ export class QuizTimingEntity extends Entity {
 
 	getRecommendedTimingSubEntity() {
 		return this._entity && this._entity.getSubEntityByClass(Classes.quizzes.timing.recommended);
+	}
+
+	getTimeLimitTypesSubEntity() {
+		return this._entity?.getSubEntityByClass(Classes.quizzes.timing.withTimeLimitType);
 	}
 
 	getAutomaticZeroSubEntity() {
@@ -293,6 +309,19 @@ export class QuizTimingEntity extends Entity {
 			{ name: 'hasTimer', value: data }
 		];
 
+		const returnedEntity = await performSirenAction(this._token, action, fields);
+		if (!returnedEntity) return;
+		return new QuizTimingEntity(returnedEntity, this._token);
+	}
+
+	async setTimeLimitType(data) {
+		if (!this.canEditTimeLimitType()) return;
+		const entity = this.getTimeLimitTypesSubEntity();
+		if (!entity) return;
+		const action = entity.getActionByName(Actions.quizzes.timing.updateTimeLimitType);
+		const fields = [
+			{ name: 'timeLimitType', value: data }
+		];
 		const returnedEntity = await performSirenAction(this._token, action, fields);
 		if (!returnedEntity) return;
 		return new QuizTimingEntity(returnedEntity, this._token);
