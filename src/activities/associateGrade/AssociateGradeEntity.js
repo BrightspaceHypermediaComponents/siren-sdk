@@ -66,7 +66,7 @@ export class AssociateGradeEntity extends Entity {
 
 	isGradeItemAssociatedToActivity() {
 		return this._entity && this._entity.properties && this._entity.properties.isAssociatedToActivity;
-	} 
+	}
 
 	hasSelectboxType() {
 		const newGradeEntity = this._getNewGradeEntity();
