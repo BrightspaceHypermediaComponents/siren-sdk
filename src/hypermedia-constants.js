@@ -750,7 +750,8 @@ export const Actions = {
 			updateHasTimer: 'update-timing-has-timer',
 			updateTimingGraceLimit: 'update-timing-grace-limit',
 			updateTimingLateData: 'update-timing-late-data',
-			updateTimeLimitType: 'update-time-limit-type'
+			updateTimeLimitType: 'update-time-limit-type',
+			toggleSetTimeLimit: 'toggle-set-time-limit'
 		},
 		attempts: {
 			updateAttemptsAllowed: 'update-attempts',
