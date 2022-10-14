@@ -7,6 +7,16 @@ import { performSirenActions } from '../../es6/SirenAction.js';
  */
 export class DiscussionForumEntity extends Entity {
 	/**
+	 * @returns {string} the href of the collection that the discussion forum belongs to
+	 */
+	forumsHref() {
+		if (!this._entity || !this._entity.hasLinkByRel(Rels.Discussions.forums)) {
+			return;
+		}
+		return this._entity.getLinkByRel(Rels.Discussions.forums).href;
+	}
+
+	/**
 	 * @returns {string} Name of the discussion forum
 	 */
 	name() {
