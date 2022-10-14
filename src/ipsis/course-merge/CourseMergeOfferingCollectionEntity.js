@@ -88,6 +88,14 @@ export class CourseMergeOfferingCollectionEntity extends Entity {
 		return this._entity.getLinkByRel(Rels.filters).href;
 	}
 
+	selectedCourseMergeOfferingsHref() {
+		if (!this._entity.hasLinkByRel(Rels.IPSIS.SISCourseMerge.selectedCourseMergeOfferings)) {
+			return;
+		}
+
+		return this._entity.getLinkByRel(Rels.IPSIS.SISCourseMerge.selectedCourseMergeOfferings).href;
+	}
+
 	hasSearchAction() {
 		return this._entity.hasActionByName(Actions.ipsis.sisCourseMerge.searchCourseOfferings);
 	}
