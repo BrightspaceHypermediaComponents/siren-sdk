@@ -686,6 +686,9 @@ export const Actions = {
 		unsubscribeToParentNotifications: 'unsubscribe-to-parent-notifications'
 	},
 	discussions: {
+		forums: {
+			createForum: 'create-forum',
+		},
 		forum: {
 			updateName: 'update-name',
 		},
