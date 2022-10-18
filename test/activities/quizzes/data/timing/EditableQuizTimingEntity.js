@@ -252,3 +252,151 @@ export const enforcedQuizTiming = {
 		}
 	]
 };
+
+function buildEditableTimerSettingsEntity(timeLimit, timingType, submissionLateType, timeLimitType) {
+	return {
+		'class': ['with-time-limit-type', timeLimitType || 'autosubmit'],
+		'rel': ['https://quizzes.api.brightspace.com/rels/timing-type'],
+		'properties': {
+			'timeLimit': {
+				'title': 'Time Limit',
+				'value': timeLimit
+			}
+		},
+		'title': 'Timer Settings',
+		'actions': [
+			{
+				'href': 'https://afe99802-9130-4320-a770-8d138b941e74.quizzes.api.proddev.d2l/6606/quizzes/22/timing?workingCopyId=1234',
+				'name': 'toggle-set-time-limit',
+				'method': 'PATCH',
+				'fields': [
+					{
+						'type': 'checkbox',
+						'name': 'hasTimeLimit',
+						'value': timingType !== 'notimelimit'
+					}
+				]
+			},
+			{
+				'href': 'https://afe99802-9130-4320-a770-8d138b941e74.quizzes.api.proddev.d2l/6606/quizzes/22/timing?workingCopyId=1234',
+				'name': 'update-timing-time-limit',
+				'method': 'PATCH',
+				'fields': [
+					{
+						'type': 'number',
+						'title': 'Time Limit',
+						'name': 'timeLimit',
+						'value': timeLimit,
+						'min': 1,
+						'max': 9999
+					}
+				]
+			},
+			{
+				'title': 'Time Limit Type',
+				'href': 'https://afe99802-9130-4320-a770-8d138b941e74.quizzes.api.proddev.d2l/6606/quizzes/22/timing?workingCopyId=1234',
+				'name': 'update-time-limit-type',
+				'method': 'PATCH',
+				'fields': [
+					{
+						'type': 'radio',
+						'name': 'timeLimitType',
+						'value': [
+							{
+								'title': 'Automatically submit the quiz attempt',
+								'value': 'autosubmit',
+								'selected': (timeLimitType === 'autosubmit' &&
+									timingType === 'enforced' &&
+									timeLimit !== 0 &&
+									(submissionLateType === 'autosubmitattempt' || submissionLateType === 'uselatelimit')) ||
+									(timingType === 'notimelimit' && timeLimit === 0)
+							},
+							{
+								'title': 'Flag the attempt as exceeded time limit and allow the learner to continue working',
+								'value': 'markexceedtime',
+								'selected': timeLimitType === 'markexceedtime' &&
+									timingType === 'enforced' &&
+									submissionLateType === 'allownormalsubmission' &&
+									timeLimit !== 0
+							},
+							{
+								'title': 'Do nothing: the time limit is recommended, not enforced',
+								'value': 'recommendedlimit',
+								'selected': timeLimitType === 'recommendedlimit' && timingType === 'recommended' && timeLimit !== 0
+							}
+						]
+					}
+				]
+			}
+		]
+	};
+}
+
+function buildNonEditableRecommendedSubEntity(timeLimit) {
+	return {
+		'class': ['recommended', 'show-clock'],
+		'properties': {
+			'timeLimit': {
+				value: timeLimit
+			}
+		},
+		'rel': ['https://quizzes.api.brightspace.com/rels/timing-type'],
+		'title': 'Recommended Time Limit'
+	};
+}
+
+const readOnlySubmissionLateTypeTitles = {
+	'allownormalsubmission': 'After the grace period, flag the quiz attempt as exceeded time limit, and allow the student to continue working.',
+	'autosubmitattempt': 'After the grace period, flag the quiz attempt as exceeded time limit, and prevent the student from making further changes.',
+};
+
+function buildNonEditableEnforcedSubEntity(timeLimit, submissionLateType) {
+	return {
+		'class': ['enforced', submissionLateType || 'autosubmitattempt'],
+		'entities': [
+			{
+				'class': ['uselatelimit'],
+				'properties': {
+					'submissionLateData': {
+						'title': 'Extended Deadline',
+						'value': 1
+					}
+				},
+				'rel': ['https://quizzes.api.brightspace.com/rels/timing-late-type']
+			}
+		],
+		'properties': {
+			'timeLimit': {
+				'title': 'Time Limit',
+				'value': timeLimit
+			},
+			'graceLimit': {
+				'title': 'Grace Period',
+				'value': 5
+			},
+			'submissionLateTypeId': {
+				'title': readOnlySubmissionLateTypeTitles[submissionLateType]
+			}
+		},
+		'rel': ['https://quizzes.api.brightspace.com/rels/timing-type'],
+		'title': 'Enforced Time Limit'
+	};
+}
+
+export function buildTimingWithTimerSettings(timeLimit, timingType, submissionLateType, timeLimitType) {
+	return {
+		'class':[timingType],
+		'entities': [
+			buildNonEditableRecommendedSubEntity(timeLimit),
+			buildNonEditableEnforcedSubEntity(timeLimit, submissionLateType),
+			buildEditableTimerSettingsEntity(timeLimit, timingType, submissionLateType, timeLimitType)
+		],
+		'rel': ['https://quizzes.api.brightspace.com/rels/timing'],
+		'links': [
+			{
+				'rel': ['self'],
+				'href': 'https://afe99802-9130-4320-a770-8d138b941e74.quizzes.api.proddev.d2l/6606/quizzes/22/timing'
+			}
+		]
+	};
+}

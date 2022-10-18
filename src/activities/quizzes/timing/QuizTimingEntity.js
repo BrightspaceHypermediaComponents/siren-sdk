@@ -40,15 +40,15 @@ export class QuizTimingEntity extends Entity {
 
 	canEditTimingTimeLimit() {
 		const entity = this.getTimerSettingsSubEntity();
-		return entity && entity.hasActionByName(Actions.quizzes.timing.updateTimeLimit);
+		return !!entity?.hasActionByName(Actions.quizzes.timing.updateTimeLimit);
 	}
 
 	canEditTimeLimitType() {
-		return this.getTimerSettingsSubEntity()?.hasActionByName(Actions.quizzes.timing.updateTimeLimitType);
+		return !!this.getTimerSettingsSubEntity()?.hasActionByName(Actions.quizzes.timing.updateTimeLimitType);
 	}
 
 	canToggleSetTimeLimit() {
-		return this.getTimerSettingsSubEntity()?.hasActionByName(Actions.quizzes.timing.toggleSetTimeLimit);
+		return !!this.getTimerSettingsSubEntity()?.hasActionByName(Actions.quizzes.timing.toggleSetTimeLimit);
 	}
 
 	timingType() {
