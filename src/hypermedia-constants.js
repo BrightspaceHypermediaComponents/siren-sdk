@@ -136,6 +136,7 @@ export const Rels = {
 	Discussions: {
 		description: 'https://discussions.api.brightspace.com/rels/description',
 		mySubscriptions: 'https://discussions.api.brightspace.com/rels/my-subscriptions',
+		forums: 'https://discussions.api.brightspace.com/rels/forums',
 		forum: 'https://discussions.api.brightspace.com/rels/forum',
 		topic: 'https://discussions.api.brightspace.com/rels/topic',
 	},
@@ -685,6 +686,9 @@ export const Actions = {
 		unsubscribeToParentNotifications: 'unsubscribe-to-parent-notifications'
 	},
 	discussions: {
+		forums: {
+			createForum: 'create-forum',
+		},
 		forum: {
 			updateName: 'update-name',
 		},

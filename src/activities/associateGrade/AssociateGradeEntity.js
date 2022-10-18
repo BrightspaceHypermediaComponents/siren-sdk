@@ -8,10 +8,10 @@ import { performSirenAction } from '../../es6/SirenAction.js';
 /**
  * AssociateGrade entity of an activity.
  */
-const GRADEBOOK_STATUS = 'gradebookStatus';
 const GRADE_NAME = 'gradeName';
-const MAX_POINTS = 'maxPoints';
+const GRADEBOOK_STATUS = 'gradebookStatus';
 const GRADE_TYPE = 'gradeType';
+const MAX_POINTS = 'maxPoints';
 const PUSH_SCORE = 'pushScoresToGrade';
 
 export const GradebookStatus = Object.freeze({
@@ -62,6 +62,10 @@ export class AssociateGradeEntity extends Entity {
 		if (newGradeEntity.hasClass(Classes.activities.associateGrade.numeric)) {
 			return GradeType.Numeric;
 		}
+	}
+
+	isGradeItemAssociatedToActivity() {
+		return this._entity && this._entity.properties && this._entity.properties.isAssociatedToActivity;
 	}
 
 	hasSelectboxType() {
