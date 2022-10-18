@@ -22,6 +22,7 @@ export class DiscussionForumsEntity extends Entity {
 		if (!this.canCreateForum()) return;
 
 		const action = this._entity.getActionByName(Actions.discussions.forums.createForum);
-		await performSirenAction(this._token, action);
+		const fields = [{ name: 'name', value: name }];
+		await performSirenAction(this._token, action, fields);
 	}
 }
