@@ -7,6 +7,16 @@ import { Entity } from '../../es6/Entity.js';
  */
 export class DiscussionTopicEntity extends Entity {
 	/**
+	 * @returns {string} the href of the categories the discussion topic could associate to
+	 */
+	categoriesHref() {
+		if (!this._entity || !this._entity.hasLinkByRel(Rels.Discussions.topicCategories)) {
+			return;
+		}
+		return this._entity.getLinkByRel(Rels.Discussions.topicCategories).href;
+	}
+
+	/**
 	 * @returns {string} the href of the discussion topic's discussion forum entity
 	 */
 	forumHref() {
