@@ -28,6 +28,7 @@ describe('DiscussionTopicEntity', () => {
 			modifiedEntity = {
 				name: 'What a great topic',
 				description: '<p>A great topic description</p>',
+				postRatingSelection: 'None',
 			};
 		});
 
@@ -47,6 +48,12 @@ describe('DiscussionTopicEntity', () => {
 			modifiedEntity.description = 'New description for discussion topic';
 			expect(discussionTopic.equals(modifiedEntity)).to.be.false;
 		});
+
+		it('returns false when rating type not equal', () => {
+			const discussionTopic = new DiscussionTopicEntity(editableEntity);
+			modifiedEntity.postRatingSelection = 'FiveStar';
+			expect(discussionTopic.equals(modifiedEntity)).to.be.false;
+		});
 	});
 
 	describe('name', () => {
@@ -59,6 +66,15 @@ describe('DiscussionTopicEntity', () => {
 			it('returns false when name is not editable', () => {
 				const discussionTopic = new DiscussionTopicEntity(nonEditableEntity);
 				expect(discussionTopic.canEditName()).to.be.false;
+			});
+		});
+	});
+
+	describe('postRatingSelection', () => {
+		describe('canEditPostRatingSelection', () => {
+			it('returns true when action present', () => {
+				const discussionTopic = new DiscussionTopicEntity(editableEntity);
+				expect(discussionTopic.canUpdateRatingType()).to.be.true;
 			});
 		});
 	});
@@ -152,6 +168,7 @@ describe('DiscussionTopicEntity', () => {
 			await discussionTopic.save({
 				name: 'New name',
 				description: '<p>New description</p>',
+				postRatingSelection: 'None',
 			});
 
 			const form = await getFormData(fetchMock.lastCall().request);
@@ -213,6 +230,7 @@ describe('DiscussionTopicEntity', () => {
 			await discussionTopic.save({
 				name: 'What a great topic',
 				description: '<p>A great topic description</p>',
+				postRatingSelection: 'None',
 			});
 
 			expect(fetchMock.called()).to.be.false;
@@ -224,6 +242,7 @@ describe('DiscussionTopicEntity', () => {
 			await discussionTopic.save({
 				name: 'New name',
 				description: '<p>New description</p>',
+				postRatingSelection: 'None',
 			});
 
 			expect(fetchMock.called()).to.be.false;
