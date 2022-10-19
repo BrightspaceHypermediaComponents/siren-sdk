@@ -220,6 +220,15 @@ export class DiscussionTopicEntity extends Entity {
 
 		const action = this._entity.getActionByName(Actions.discussions.topic.updateRatingType);
 		const fields = [{ name: 'ratingType', value: postRatingSelection }];
+		return { action, fields };
+	}
+
+	/**
+	 * @returns {string} name of the parent forum associated with the discussion topic
+	 */
+	forumName() {
+		return this._entity && this._entity.properties && this._entity.properties.forumName;
+	}
 
 		return { action, fields };
 	}
