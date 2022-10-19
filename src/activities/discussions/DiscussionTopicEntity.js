@@ -290,12 +290,14 @@ export class DiscussionTopicEntity extends Entity {
 		const updateDescriptionAction = this._formatUpdateDescriptionAction(topic);
 		const syncDraftWithForum = this._formatSyncDraftStatusAction(topic, shouldSyncDraftWithForum);
 		const updateRatePostType = this._formatUpdateRatePostAction(topic);
+		const createAndAssociateWithForumAction = this._formatCreateAndAssociateWithForumAction(topic);
 
 		const sirenActions = [
 			updateNameAction,
 			updateDescriptionAction,
 			syncDraftWithForum,
-			updateRatePostType
+			updateRatePostType,
+			createAndAssociateWithForumAction,
 		];
 
 		await performSirenActions(this._token, sirenActions);
