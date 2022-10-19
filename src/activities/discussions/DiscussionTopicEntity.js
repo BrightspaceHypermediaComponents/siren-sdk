@@ -44,15 +44,14 @@ export class DiscussionTopicEntity extends Entity {
 	postRatingSelection() {
 		const options = this.postRatingOptions();
 		const selected = options?.find(option => option?.selected);
-		return selected.value || NONE_RATING_TYPE;
+		return selected?.value || NONE_RATING_TYPE;
 	}
 
 	/**
 	 * @returns {object[]} Post rating options of discussion topic.
 	 */
 	postRatingOptions() {
-		const entity = this._entity;
-		if (!entity) return;
+		if (!this.canUpdateRatingType()) return;
 
 		const action = this._entity.getActionByName(Actions.discussions.topic.updateRatingType);
 		const fields = action && action.getFieldByName('ratingType');
@@ -89,6 +88,14 @@ export class DiscussionTopicEntity extends Entity {
 		const descriptionEntity = this._getDescriptionEntity();
 		return descriptionEntity
 			&& descriptionEntity.hasActionByName(Actions.discussions.topic.updateDescription);
+	}
+
+	/**
+	 * @returns {bool} whether the update rating type action is present in the topic entity
+	 */
+	canUpdateRatingType() {
+		const entity = this._entity;
+		return entity && entity.hasActionByName(Actions.discussions.topic.updateRatingType);
 	}
 
 	/**
@@ -196,9 +203,10 @@ export class DiscussionTopicEntity extends Entity {
 	_formatUpdateRatePostAction(topic) {
 		const { postRatingSelection } = topic || {};
 
-		if (!postRatingSelection) {
+		if (!postRatingSelection || !this.canUpdateRatingType()) {
 			return;
 		}
+		if (!this._hasFieldValueChanged(postRatingSelection, this.postRatingSelection())) return;
 
 		const action = this._entity.getActionByName(Actions.discussions.topic.updateRatingType);
 		const fields = [{ name: 'ratingType', value: postRatingSelection }];
