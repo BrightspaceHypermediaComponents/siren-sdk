@@ -699,6 +699,7 @@ export const Actions = {
 			updateDescription: 'update-description',
 			delete: 'delete-topic',
 			updateRatingType: 'update-ratingtype',
+			createAndAssociateWithForum: 'create-and-associate-with-forum',
 		},
 	},
 	rubrics: {
