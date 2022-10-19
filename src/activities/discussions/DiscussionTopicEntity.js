@@ -1,6 +1,7 @@
 import { Actions, Classes, Rels } from '../../hypermedia-constants.js';
 import { performSirenAction, performSirenActions } from '../../es6/SirenAction.js';
 import { Entity } from '../../es6/Entity.js';
+const NONE_RATING_TYPE = 'None';
 
 /**
  * DiscussionTopicEntity class representation of a D2L Discussion Topic.
@@ -35,6 +36,28 @@ export class DiscussionTopicEntity extends Entity {
 	 */
 	hasPosts() {
 		return this._entity && this._entity.hasClass(Classes.discussions.hasPosts);
+	}
+
+	/**
+	 * @returns {number} Post rating scheme of discussion topic.
+	 */
+	postRatingSelection() {
+		const options = this.postRatingOptions();
+		const selected = options?.find(option => option?.selected);
+		return selected.value || NONE_RATING_TYPE;
+	}
+
+	/**
+	 * @returns {object[]} Post rating options of discussion topic.
+	 */
+	postRatingOptions() {
+		const entity = this._entity;
+		if (!entity) return;
+
+		const action = this._entity.getActionByName(Actions.discussions.topic.updateRatingType);
+		const fields = action && action.getFieldByName('ratingType');
+
+		return fields && fields.value;
 	}
 
 	/**
@@ -167,6 +190,23 @@ export class DiscussionTopicEntity extends Entity {
 	}
 
 	/**
+	 * Updates the topic's rating scheme selection
+	 * @param {object} topic the topic that's being modified
+	 */
+	_formatUpdateRatePostAction(topic) {
+		const { postRatingSelection } = topic || {};
+
+		if (!postRatingSelection) {
+			return;
+		}
+
+		const action = this._entity.getActionByName(Actions.discussions.topic.updateRatingType);
+		const fields = [{ name: 'ratingType', value: postRatingSelection }];
+
+		return { action, fields };
+	}
+
+	/**
 	 * @summary Checks if topic entity has changed, primarily used for dirty check
 	 * @param {object} topic the topic that's being modified
 	 */
@@ -174,6 +214,7 @@ export class DiscussionTopicEntity extends Entity {
 		const diffs = [
 			[topic.name, this.name()],
 			[topic.description, this.descriptionEditorHtml()],
+			[topic.postRatingSelection, this.postRatingSelection()],
 		];
 
 		for (const [current, initial] of diffs) {
@@ -197,11 +238,13 @@ export class DiscussionTopicEntity extends Entity {
 		const updateNameAction = this._formatUpdateNameAction(topic, shouldSyncNameWithForum);
 		const updateDescriptionAction = this._formatUpdateDescriptionAction(topic);
 		const syncDraftWithForum = this._formatSyncDraftStatusAction(topic, shouldSyncDraftWithForum);
+		const updateRatePostType = this._formatUpdateRatePostAction(topic);
 
 		const sirenActions = [
 			updateNameAction,
 			updateDescriptionAction,
-			syncDraftWithForum
+			syncDraftWithForum,
+			updateRatePostType
 		];
 
 		await performSirenActions(this._token, sirenActions);

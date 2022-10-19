@@ -696,7 +696,8 @@ export const Actions = {
 			syncDraftWithForum: 'sync-draft-with-forum',
 			updateName: 'update-name',
 			updateDescription: 'update-description',
-			delete: 'delete-topic'
+			delete: 'delete-topic',
+			updateRatingType: 'update-ratingtype',
 		},
 	},
 	rubrics: {
