@@ -1,4 +1,4 @@
-import { enforcedQuizTiming, recommendedQuizTiming } from '../data/timing/EditableQuizTimingEntity.js';
+import { buildTimingWithTimerSettings, enforcedQuizTiming, recommendedQuizTiming } from '../data/timing/EditableQuizTimingEntity.js';
 import { nonEditableEnforcedQuizTiming, nonEditableRecommendedQuizTiming } from '../data/timing/NonEditableQuizTimingEntity.js';
 import { Classes } from '../../../../src/hypermedia-constants.js';
 import { expect } from '@open-wc/testing';
@@ -6,13 +6,24 @@ import { QuizTimingEntity } from '../../../../src/activities/quizzes/timing/Quiz
 import SirenParse from 'siren-parser';
 
 describe('QuizTimingEntity', () => {
-	let enforcedTimingEntity, recommendedTimingEntity, nonEditableEnforcedTimingEntity, nonEditableRecommendedTimingEntity;
+	let enforcedTimingEntity,
+		recommendedTimingEntity,
+		nonEditableEnforcedTimingEntity,
+		nonEditableRecommendedTimingEntity,
+		timerSettingsNoTimeLimitTimingEntity,
+		timerSettingsRecommendedTimingEntity,
+		timerSettingsAutosubmitTimingEntity,
+		timerSettingsFlagLateTimingEntity;
 
 	beforeEach(() => {
 		enforcedTimingEntity = SirenParse(enforcedQuizTiming);
 		recommendedTimingEntity = SirenParse(recommendedQuizTiming);
 		nonEditableEnforcedTimingEntity = SirenParse(nonEditableEnforcedQuizTiming);
 		nonEditableRecommendedTimingEntity = SirenParse(nonEditableRecommendedQuizTiming);
+		timerSettingsNoTimeLimitTimingEntity = SirenParse(buildTimingWithTimerSettings(0, Classes.quizzes.timing.noTimeLimit, null, null));
+		timerSettingsRecommendedTimingEntity = SirenParse(buildTimingWithTimerSettings(120, Classes.quizzes.timing.recommended, null, 'recommendedlimit'));
+		timerSettingsAutosubmitTimingEntity = SirenParse(buildTimingWithTimerSettings(120, Classes.quizzes.timing.enforced, 'autosubmitattempt', 'autosubmit'));
+		timerSettingsFlagLateTimingEntity = SirenParse(buildTimingWithTimerSettings(120, Classes.quizzes.timing.enforced, 'allownormalsubmission', 'markexceedtime'));
 	});
 
 	describe('timing', () => {
@@ -36,6 +47,16 @@ describe('QuizTimingEntity', () => {
 				const entity = new QuizTimingEntity(nonEditableRecommendedTimingEntity);
 				expect(entity.canEditTiming()).to.be.false;
 			});
+			it('returns false when timer settings is present', () => {
+				let entity = new QuizTimingEntity(timerSettingsNoTimeLimitTimingEntity);
+				expect(entity.canEditTiming()).to.be.false;
+				entity = new QuizTimingEntity(timerSettingsRecommendedTimingEntity);
+				expect(entity.canEditTiming()).to.be.false;
+				entity = new QuizTimingEntity(timerSettingsAutosubmitTimingEntity);
+				expect(entity.canEditTiming()).to.be.false;
+				entity = new QuizTimingEntity(timerSettingsFlagLateTimingEntity);
+				expect(entity.canEditTiming()).to.be.false;
+			});
 		});
 
 		describe('isTimingEnforced', () => {
@@ -44,11 +65,20 @@ describe('QuizTimingEntity', () => {
 				expect(entity.isTimingEnforced()).to.be.true;
 				entity = new QuizTimingEntity(nonEditableEnforcedTimingEntity);
 				expect(entity.isTimingEnforced()).to.be.true;
+				entity = new QuizTimingEntity(timerSettingsAutosubmitTimingEntity);
+				expect(entity.isTimingEnforced()).to.be.true;
+				entity = new QuizTimingEntity(timerSettingsFlagLateTimingEntity);
 			});
 			it('returns false when timing is recommended', () => {
 				let entity = new QuizTimingEntity(recommendedTimingEntity);
 				expect(entity.isTimingEnforced()).to.be.false;
 				entity = new QuizTimingEntity(nonEditableRecommendedTimingEntity);
+				expect(entity.isTimingEnforced()).to.be.false;
+				entity = new QuizTimingEntity(timerSettingsRecommendedTimingEntity);
+				expect(entity.isTimingEnforced()).to.be.false;
+			});
+			it('returns false when timing is no time limit', () => {
+				const entity = new QuizTimingEntity(timerSettingsNoTimeLimitTimingEntity);
 				expect(entity.isTimingEnforced()).to.be.false;
 			});
 			it('returns true when passed a value matching enforced class', () => {
@@ -68,7 +98,9 @@ describe('QuizTimingEntity', () => {
 			expect(entity.hasClass(Classes.quizzes.timing.recommended)).to.be.true;
 		});
 		it('can get non-editable recommended timing entity', () => {
-			const entity = new QuizTimingEntity(nonEditableRecommendedTimingEntity);
+			let entity = new QuizTimingEntity(nonEditableRecommendedTimingEntity);
+			expect(entity.hasClass(Classes.quizzes.timing.recommended)).to.be.true;
+			entity = new QuizTimingEntity(timerSettingsRecommendedTimingEntity);
 			expect(entity.hasClass(Classes.quizzes.timing.recommended)).to.be.true;
 		});
 		it('can get enforced timing entity', () => {
@@ -76,7 +108,11 @@ describe('QuizTimingEntity', () => {
 			expect(entity.hasClass(Classes.quizzes.timing.enforced)).to.be.true;
 		});
 		it('can get non-editable enforced timing entity', () => {
-			const entity = new QuizTimingEntity(nonEditableEnforcedTimingEntity);
+			let entity = new QuizTimingEntity(nonEditableEnforcedTimingEntity);
+			expect(entity.hasClass(Classes.quizzes.timing.enforced)).to.be.true;
+			entity = new QuizTimingEntity(timerSettingsAutosubmitTimingEntity);
+			expect(entity.hasClass(Classes.quizzes.timing.enforced)).to.be.true;
+			entity = new QuizTimingEntity(timerSettingsFlagLateTimingEntity);
 			expect(entity.hasClass(Classes.quizzes.timing.enforced)).to.be.true;
 		});
 	});
@@ -99,15 +135,53 @@ describe('QuizTimingEntity', () => {
 				const entity = new QuizTimingEntity(nonEditableEnforcedTimingEntity);
 				expect(entity.canEditTimeLimit()).to.be.false;
 			});
+			it('can edit time limit in timer settings subentity', () => {
+				let entity = new QuizTimingEntity(timerSettingsNoTimeLimitTimingEntity);
+				expect(entity.canEditTimingTimeLimit()).to.be.true;
+				entity = new QuizTimingEntity(timerSettingsRecommendedTimingEntity);
+				expect(entity.canEditTimingTimeLimit()).to.be.true;
+				entity = new QuizTimingEntity(timerSettingsAutosubmitTimingEntity);
+				expect(entity.canEditTimingTimeLimit()).to.be.true;
+				entity = new QuizTimingEntity(timerSettingsFlagLateTimingEntity);
+				expect(entity.canEditTimingTimeLimit()).to.be.true;
+			});
+			it('cannot edit enforced and recommended time limits when timer settins is present', () => {
+				let entity = new QuizTimingEntity(timerSettingsNoTimeLimitTimingEntity);
+				expect(entity.canEditTimeLimit()).to.be.false;
+				entity = new QuizTimingEntity(timerSettingsRecommendedTimingEntity);
+				expect(entity.canEditTimeLimit()).to.be.false;
+				entity = new QuizTimingEntity(timerSettingsAutosubmitTimingEntity);
+				expect(entity.canEditTimeLimit()).to.be.false;
+				entity = new QuizTimingEntity(timerSettingsFlagLateTimingEntity);
+				expect(entity.canEditTimeLimit()).to.be.false;
+			});
+			it('cannot edit time limit in timer settings when the subentity is not present', () => {
+				let entity = new QuizTimingEntity(recommendedTimingEntity);
+				expect(entity.canEditTimingTimeLimit()).to.be.false;
+				entity = new QuizTimingEntity(enforcedTimingEntity);
+				expect(entity.canEditTimingTimeLimit()).to.be.false;
+				entity = new QuizTimingEntity(nonEditableRecommendedTimingEntity);
+				expect(entity.canEditTimingTimeLimit()).to.be.false;
+				entity = new QuizTimingEntity(nonEditableEnforcedTimingEntity);
+				expect(entity.canEditTimingTimeLimit()).to.be.false;
+			});
 		});
 
 		describe('enforcedTimeLimit', () => {
 			it('can read enforced time limit', () => {
-				const entity = new QuizTimingEntity(enforcedTimingEntity);
+				let entity = new QuizTimingEntity(enforcedTimingEntity);
+				expect(entity.enforcedTimeLimit().value).to.equal(120);
+				entity = new QuizTimingEntity(timerSettingsFlagLateTimingEntity);
+				expect(entity.enforcedTimeLimit().value).to.equal(120);
+				entity = new QuizTimingEntity(timerSettingsAutosubmitTimingEntity);
 				expect(entity.enforcedTimeLimit().value).to.equal(120);
 			});
 			it('can read enforced grace period', () => {
-				const entity = new QuizTimingEntity(enforcedTimingEntity);
+				let entity = new QuizTimingEntity(enforcedTimingEntity);
+				expect(entity.enforcedGraceLimit().value).to.equal(5);
+				entity = new QuizTimingEntity(timerSettingsFlagLateTimingEntity);
+				expect(entity.enforcedGraceLimit().value).to.equal(5);
+				entity = new QuizTimingEntity(timerSettingsAutosubmitTimingEntity);
 				expect(entity.enforcedGraceLimit().value).to.equal(5);
 			});
 		});
@@ -145,11 +219,21 @@ describe('QuizTimingEntity', () => {
 				const entity = new QuizTimingEntity(enforcedTimingEntity);
 				expect(entity.canEditGracePeriod()).to.be.true;
 			});
+			it('returns false when cannot edit grace period', () => {
+				let entity = new QuizTimingEntity(nonEditableEnforcedTimingEntity);
+				expect(entity.canEditGracePeriod()).to.be.false;
+				entity = new QuizTimingEntity(timerSettingsAutosubmitTimingEntity);
+				expect(entity.canEditGracePeriod()).to.be.false;
+				entity = new QuizTimingEntity(timerSettingsFlagLateTimingEntity);
+				expect(entity.canEditGracePeriod()).to.be.false;
+			});
 		});
 
 		describe('recommendedTimeLimit', () => {
 			it('can read recommended time limit', () => {
-				const entity = new QuizTimingEntity(recommendedTimingEntity);
+				let entity = new QuizTimingEntity(recommendedTimingEntity);
+				expect(entity.recommendedTimeLimit().value).to.equal(120);
+				entity = new QuizTimingEntity(timerSettingsRecommendedTimingEntity);
 				expect(entity.recommendedTimeLimit().value).to.equal(120);
 			});
 		});
@@ -175,8 +259,12 @@ describe('QuizTimingEntity', () => {
 				const entity = new QuizTimingEntity(enforcedTimingEntity);
 				expect(entity.canEditExtendedDeadline()).to.be.true;
 			});
-			it('returns true when cannot edit extended deadline', () => {
-				const entity = new QuizTimingEntity(nonEditableEnforcedTimingEntity);
+			it('returns false when cannot edit extended deadline', () => {
+				let entity = new QuizTimingEntity(nonEditableEnforcedTimingEntity);
+				expect(entity.canEditExtendedDeadline()).to.be.false;
+				entity = new QuizTimingEntity(timerSettingsAutosubmitTimingEntity);
+				expect(entity.canEditExtendedDeadline()).to.be.false;
+				entity = new QuizTimingEntity(timerSettingsFlagLateTimingEntity);
 				expect(entity.canEditExtendedDeadline()).to.be.false;
 			});
 		});
@@ -186,7 +274,11 @@ describe('QuizTimingEntity', () => {
 				expect(entity.getExtendedDeadline()).to.equal(1);
 			});
 			it('can get extended deadline from non-editable enforced entity', () => {
-				const entity = new QuizTimingEntity(nonEditableEnforcedTimingEntity);
+				let entity = new QuizTimingEntity(nonEditableEnforcedTimingEntity);
+				expect(entity.getExtendedDeadline()).to.equal(1);
+				entity = new QuizTimingEntity(timerSettingsAutosubmitTimingEntity);
+				expect(entity.getExtendedDeadline()).to.equal(1);
+				entity = new QuizTimingEntity(timerSettingsFlagLateTimingEntity);
 				expect(entity.getExtendedDeadline()).to.equal(1);
 			});
 		});
@@ -199,7 +291,11 @@ describe('QuizTimingEntity', () => {
 				expect(entity.canEditExceededTimeLimitBehaviour()).to.be.true;
 			});
 			it('returns false when cannot edit exceeded time limit behaviour', () => {
-				const entity = new QuizTimingEntity(nonEditableEnforcedTimingEntity);
+				let entity = new QuizTimingEntity(nonEditableEnforcedTimingEntity);
+				expect(entity.canEditExceededTimeLimitBehaviour()).to.be.false;
+				entity = new QuizTimingEntity(timerSettingsAutosubmitTimingEntity);
+				expect(entity.canEditExceededTimeLimitBehaviour()).to.be.false;
+				entity = new QuizTimingEntity(timerSettingsFlagLateTimingEntity);
 				expect(entity.canEditExceededTimeLimitBehaviour()).to.be.false;
 			});
 		});
@@ -211,8 +307,12 @@ describe('QuizTimingEntity', () => {
 			expect(entity.getSubmissionLateTypeIdTitle()).to.be.undefined;
 		});
 		it('can get submission late type Id title from non-editable enforced entity', () => {
-			const entity = new QuizTimingEntity(nonEditableEnforcedTimingEntity);
+			let entity = new QuizTimingEntity(nonEditableEnforcedTimingEntity);
 			expect(entity.getSubmissionLateTypeIdTitle()).to.equal('After the grace period, flag the quiz attempt as exceeded time limit, and allow the student to continue working. Quiz attempt will be automatically scored as zero after an extended deadline.');
+			entity = new QuizTimingEntity(timerSettingsAutosubmitTimingEntity);
+			expect(entity.getSubmissionLateTypeIdTitle()).to.equal('After the grace period, flag the quiz attempt as exceeded time limit, and prevent the student from making further changes.');
+			entity = new QuizTimingEntity(timerSettingsFlagLateTimingEntity);
+			expect(entity.getSubmissionLateTypeIdTitle()).to.equal('After the grace period, flag the quiz attempt as exceeded time limit, and allow the student to continue working.');
 		});
 	});
 
@@ -223,6 +323,8 @@ describe('QuizTimingEntity', () => {
 				expect(entity.showClock()).to.be.true;
 				entity = new QuizTimingEntity(nonEditableRecommendedTimingEntity);
 				expect(entity.showClock()).to.be.true;
+				entity = new QuizTimingEntity(timerSettingsRecommendedTimingEntity);
+				expect(entity.showClock()).to.be.true;
 			});
 		});
 		describe('canEditShowClock', () => {
@@ -231,7 +333,9 @@ describe('QuizTimingEntity', () => {
 				expect(entity.canEditShowClock()).to.be.true;
 			});
 			it('returns false when cannot edit showClock', () => {
-				const entity = new QuizTimingEntity(nonEditableRecommendedTimingEntity);
+				let entity = new QuizTimingEntity(nonEditableRecommendedTimingEntity);
+				expect(entity.canEditShowClock()).to.be.false;
+				entity = new QuizTimingEntity(timerSettingsRecommendedTimingEntity);
 				expect(entity.canEditShowClock()).to.be.false;
 			});
 		});
@@ -250,6 +354,57 @@ describe('QuizTimingEntity', () => {
 			it('returns false if passed value not matching automatic zero class', () => {
 				const entity = new QuizTimingEntity(enforcedTimingEntity);
 				expect(entity.isAutomaticZero('not true')).to.be.false;
+			});
+		});
+	});
+
+	describe('time limit type', () => {
+		describe('canEditTimeLimitType', () => {
+			it('returns true when can edit timeLimitType', () => {
+				let entity = new QuizTimingEntity(timerSettingsNoTimeLimitTimingEntity);
+				expect(entity.canEditTimeLimitType()).to.be.true;
+				entity = new QuizTimingEntity(timerSettingsRecommendedTimingEntity);
+				expect(entity.canEditTimeLimitType()).to.be.true;
+				entity = new QuizTimingEntity(timerSettingsAutosubmitTimingEntity);
+				expect(entity.canEditTimeLimitType()).to.be.true;
+				entity = new QuizTimingEntity(timerSettingsFlagLateTimingEntity);
+				expect(entity.canEditTimeLimitType()).to.be.true;
+			});
+			it('returns false when cannot edit timeLimitType', () => {
+				let entity = new QuizTimingEntity(recommendedTimingEntity);
+				expect(entity.canEditTimeLimitType()).to.be.false;
+				entity = new QuizTimingEntity(enforcedTimingEntity);
+				expect(entity.canEditTimeLimitType()).to.be.false;
+				entity = new QuizTimingEntity(nonEditableEnforcedTimingEntity);
+				expect(entity.canEditTimeLimitType()).to.be.false;
+				entity = new QuizTimingEntity(nonEditableRecommendedTimingEntity);
+				expect(entity.canEditTimeLimitType()).to.be.false;
+
+			});
+		});
+	});
+
+	describe('set time limit checkbox', () => {
+		describe('canToggleSetTimeLimit', () => {
+			it('returns true when can edit set time limit', () => {
+				let entity = new QuizTimingEntity(timerSettingsNoTimeLimitTimingEntity);
+				expect(entity.canToggleSetTimeLimit()).to.be.true;
+				entity = new QuizTimingEntity(timerSettingsRecommendedTimingEntity);
+				expect(entity.canToggleSetTimeLimit()).to.be.true;
+				entity = new QuizTimingEntity(timerSettingsAutosubmitTimingEntity);
+				expect(entity.canToggleSetTimeLimit()).to.be.true;
+				entity = new QuizTimingEntity(timerSettingsFlagLateTimingEntity);
+				expect(entity.canToggleSetTimeLimit()).to.be.true;
+			});
+			it('returns false when cannot edit set time limit', () => {
+				let entity = new QuizTimingEntity(recommendedTimingEntity);
+				expect(entity.canToggleSetTimeLimit()).to.be.false;
+				entity = new QuizTimingEntity(enforcedTimingEntity);
+				expect(entity.canToggleSetTimeLimit()).to.be.false;
+				entity = new QuizTimingEntity(nonEditableEnforcedTimingEntity);
+				expect(entity.canToggleSetTimeLimit()).to.be.false;
+				entity = new QuizTimingEntity(nonEditableRecommendedTimingEntity);
+				expect(entity.canToggleSetTimeLimit()).to.be.false;
 			});
 		});
 	});

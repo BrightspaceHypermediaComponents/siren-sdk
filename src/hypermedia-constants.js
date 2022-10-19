@@ -138,6 +138,7 @@ export const Rels = {
 		mySubscriptions: 'https://discussions.api.brightspace.com/rels/my-subscriptions',
 		forums: 'https://discussions.api.brightspace.com/rels/forums',
 		forum: 'https://discussions.api.brightspace.com/rels/forum',
+		topicCategories: 'https://discussions.api.brightspace.com/rels/topic-categories',
 		topic: 'https://discussions.api.brightspace.com/rels/topic',
 	},
 	// Files API sub-domain rels
@@ -755,7 +756,8 @@ export const Actions = {
 			updateHasTimer: 'update-timing-has-timer',
 			updateTimingGraceLimit: 'update-timing-grace-limit',
 			updateTimingLateData: 'update-timing-late-data',
-			updateTimeLimitType: 'update-time-limit-type'
+			updateTimeLimitType: 'update-time-limit-type',
+			toggleSetTimeLimit: 'toggle-set-time-limit'
 		},
 		attempts: {
 			updateAttemptsAllowed: 'update-attempts',
