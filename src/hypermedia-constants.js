@@ -171,7 +171,8 @@ export const Rels = {
 	IPSIS: {
 		SISCourseMerge: {
 			courseMergeOfferings: 'https://ipsis.api.brightspace.com/rels/course-merge-offerings',
-			courseMergeOffering:	'https://ipsis.api.brightspace.com/rels/course-merge-offering',
+			courseMergeOffering: 'https://ipsis.api.brightspace.com/rels/course-merge-offering',
+			selectedCourseMergeOfferings: 'https://ipsis.api.brightspace.com/rels/selected-course-merge-offerings'
 		}
 	},
 	// Quizzes API sub-domain rels
@@ -727,9 +728,11 @@ export const Actions = {
 	},
 	ipsis: {
 		sisCourseMerge: {
+			deselect: 'deselect',
+			mergeCourseOfferings: 'merge-course-offerings',
 			searchCourseOfferings: 'search-course-offerings',
 			select: 'select',
-			deselect: 'deselect'
+			selectAsTarget: 'select-as-target'
 		}
 	},
 	quizzes: {

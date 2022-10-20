@@ -34,24 +34,12 @@ export class CourseMergeOfferingEntity extends Entity {
 		return this._entity?.hasActionByName(Actions.ipsis.sisCourseMerge.select);
 	}
 
-	hasDeselectAction() {
-		return this._entity?.hasActionByName(Actions.ipsis.sisCourseMerge.deselect);
-	}
-
 	getSelectAction() {
 		if (!this.hasSelectAction()) {
 			return;
 		}
 
 		return this._entity.getActionByName(Actions.ipsis.sisCourseMerge.select);
-	}
-
-	getDeselectAction() {
-		if (!this.hasDeselectAction()) {
-			return;
-		}
-
-		return this._entity.getActionByName(Actions.ipsis.sisCourseMerge.deselect);
 	}
 
 	async select() {
@@ -61,6 +49,39 @@ export class CourseMergeOfferingEntity extends Entity {
 		}
 
 		return await performSirenAction(this._token, action, null, true);
+	}
+
+	hasSelectAsTargetAction() {
+		return this._entity?.hasActionByName(Actions.ipsis.sisCourseMerge.selectAsTarget);
+	}
+
+	getSelectAsTargetAction() {
+		if (!this.hasSelectAsTargetAction()) {
+			return;
+		}
+
+		return this._entity.getActionByName(Actions.ipsis.sisCourseMerge.selectAsTarget);
+	}
+
+	async selectAsTarget() {
+		const action = this.getSelectAsTargetAction();
+		if (!action) {
+			return;
+		}
+
+		return await performSirenAction(this._token, action, null, true);
+	}
+
+	hasDeselectAction() {
+		return this._entity?.hasActionByName(Actions.ipsis.sisCourseMerge.deselect);
+	}
+
+	getDeselectAction() {
+		if (!this.hasDeselectAction()) {
+			return;
+		}
+
+		return this._entity.getActionByName(Actions.ipsis.sisCourseMerge.deselect);
 	}
 
 	async deselect() {
