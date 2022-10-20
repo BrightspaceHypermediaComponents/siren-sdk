@@ -38,6 +38,41 @@ export const editableDiscussionTopic = {
 					'value': true
 				}
 			]
+		},
+		{
+			'title' : 'Update topic rating',
+			'href': `https://${tenantId}.api.dev.brightspace.com/d2l/api/hm/discussions/6609/forums/10025/topics/10026`,
+			'name': 'update-ratingtype',
+			'method': 'PATCH',
+			'type': 'application/x-www-form-urlencoded',
+			'fields': [
+				{
+					'name': 'ratingType',
+					'type': 'radio',
+					'value': [
+						{
+							'value': 'None',
+							'title': 'No Rating',
+							'selected': true
+						},
+						{
+							'value': 'FiveStar',
+							'title': 'Five-star Rating',
+							'selected': false
+						},
+						{
+							'value': 'UpVoteDownVote',
+							'title': 'Up Vote/Down Vote Rating',
+							'selected': false
+						},
+						{
+							'value': 'UpVoteOnly',
+							'title': 'Up Vote Only Rating',
+							'selected': false
+						}
+					]
+				}
+			]
 		}
 	],
 	'entities': [

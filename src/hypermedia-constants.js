@@ -136,7 +136,9 @@ export const Rels = {
 	Discussions: {
 		description: 'https://discussions.api.brightspace.com/rels/description',
 		mySubscriptions: 'https://discussions.api.brightspace.com/rels/my-subscriptions',
+		forums: 'https://discussions.api.brightspace.com/rels/forums',
 		forum: 'https://discussions.api.brightspace.com/rels/forum',
+		topicCategories: 'https://discussions.api.brightspace.com/rels/topic-categories',
 		topic: 'https://discussions.api.brightspace.com/rels/topic',
 	},
 	// Files API sub-domain rels
@@ -686,6 +688,9 @@ export const Actions = {
 		unsubscribeToParentNotifications: 'unsubscribe-to-parent-notifications'
 	},
 	discussions: {
+		forums: {
+			createForum: 'create-forum',
+		},
 		forum: {
 			updateName: 'update-name',
 		},
@@ -693,7 +698,8 @@ export const Actions = {
 			syncDraftWithForum: 'sync-draft-with-forum',
 			updateName: 'update-name',
 			updateDescription: 'update-description',
-			delete: 'delete-topic'
+			delete: 'delete-topic',
+			updateRatingType: 'update-ratingtype',
 		},
 	},
 	rubrics: {
@@ -753,7 +759,8 @@ export const Actions = {
 			updateHasTimer: 'update-timing-has-timer',
 			updateTimingGraceLimit: 'update-timing-grace-limit',
 			updateTimingLateData: 'update-timing-late-data',
-			updateTimeLimitType: 'update-time-limit-type'
+			updateTimeLimitType: 'update-time-limit-type',
+			toggleSetTimeLimit: 'toggle-set-time-limit'
 		},
 		attempts: {
 			updateAttemptsAllowed: 'update-attempts',
