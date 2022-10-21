@@ -32,7 +32,7 @@ export class DiscussionForumEntity extends Entity {
 
 	/**
 	 * @summary Formats action and fields if forum name has changed and user has edit permission
-	 * @param {object} name the forum's new name
+	 * @param {string} name the forum's new name
 	 * @returns {object} the appropriate action/fields to update
 	 */
 	_formatUpdateNameAction(name) {
@@ -50,7 +50,7 @@ export class DiscussionForumEntity extends Entity {
 
 	/**
 	 * @summary Calls the update name action if name is provided and user has edit permission
-	 * @param {object} name the forum's new name
+	 * @param {string} name the forum's new name
 	 */
 	async updateName(name) {
 		if (!name) return;

@@ -239,7 +239,7 @@ export class DiscussionTopicEntity extends Entity {
 
 	/**
 	 * @summary Formats action and fields if topic name has changed and user has edit permission
-	 * @param {object} forumName the new forum's name
+	 * @param {string} forumName the new forum's name
 	 * @returns {object} the appropriate action/fields to update
 	 */
 	_formatCreateAndAssociateWithForumAction(forumName) {
@@ -257,7 +257,7 @@ export class DiscussionTopicEntity extends Entity {
 
 	/**
 	 * @summary Calls the create and associate with forum action if name is provided and user has create permission
-	 * @param {object} name the new forum's name
+	 * @param {string} name the new forum's name
 	 */
 	async createAndAssociateWithForum(name) {
 		if (!name) return;
