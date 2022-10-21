@@ -1,6 +1,6 @@
 import { Actions, Rels } from '../../hypermedia-constants.js';
 import { Entity } from '../../es6/Entity.js';
-import { performSirenActions } from '../../es6/SirenAction.js';
+import { performSirenAction } from '../../es6/SirenAction.js';
 
 /**
  * DiscussionForumEntity class representation of a D2L Discussion Forum.
@@ -32,12 +32,10 @@ export class DiscussionForumEntity extends Entity {
 
 	/**
 	 * @summary Formats action and fields if forum name has changed and user has edit permission
-	 * @param {object} forum the forum that's being modified
+	 * @param {object} name the forum's new name
 	 * @returns {object} the appropriate action/fields to update
 	 */
-	_formatUpdateNameAction(forum) {
-		const { name } = forum || {};
-
+	_formatUpdateNameAction(name) {
 		if (!name) return;
 		if (!this._hasFieldValueChanged(name, this.name())) return;
 		if (!this.canEditName()) return;
@@ -51,37 +49,16 @@ export class DiscussionForumEntity extends Entity {
 	}
 
 	/**
-	 * @summary Checks if forum entity has changed, primarily used for dirty check
-	 * @param {object} forum the forum that's being modified
+	 * @summary Calls the update name action if name is provided and user has edit permission
+	 * @param {object} name the forum's new name
 	 */
-	equals(forum) {
-		const diffs = [
-			[forum.name, this.name()],
-		];
+	async updateName(name) {
+		if (!name) return;
+		if (!this.canEditName()) return;
 
-		for (const [current, initial] of diffs) {
-			if (current !== initial) {
-				return false;
-			}
-		}
-
-		return true;
-	}
-
-	/**
-	 * @summary Fires all the formatted siren actions collectively
-	 * @param {object} forum the forum that's being modified
-	 */
-	async save(forum) {
-		if (!forum) return;
-
-		const updateNameAction = this._formatUpdateNameAction(forum);
-
-		const sirenActions = [
-			updateNameAction,
-		];
-
-		await performSirenActions(this._token, sirenActions);
+		const sirenAction = this._formatUpdateNameAction(name);
+		const { action, fields } = sirenAction;
+		await performSirenAction(this._token, action, fields);
 	}
 
 	_hasFieldValueChanged(currentValue, initialValue) {
