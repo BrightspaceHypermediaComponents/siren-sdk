@@ -220,6 +220,39 @@ export class DiscussionTopicEntity extends Entity {
 
 		const action = this._entity.getActionByName(Actions.discussions.topic.updateRatingType);
 		const fields = [{ name: 'ratingType', value: postRatingSelection }];
+		return { action, fields };
+	}
+
+	/**
+	 * @returns {string} name of the parent forum associated with the discussion topic
+	 */
+	forumName() {
+		return this._entity && this._entity.properties && this._entity.properties.forumName;
+	}
+
+	/**
+	 * @returns {bool} Whether or not the create and associate with forum action is present on the discussion topic entity
+	 */
+	canCreateAndAssociateWithForum() {
+		return this._entity && this._entity.hasActionByName(Actions.discussions.topic.createAndAssociateWithForum);
+	}
+
+	/**
+	 * @summary Formats action and fields if topic name has changed and user has edit permission
+	 * @param {object} topic the topic that's being modified
+	 * @returns {object} the appropriate action/fields to update
+	 */
+	_formatCreateAndAssociateWithForumAction(topic) {
+		const { forumName } = topic || {};
+
+		if (!forumName) return;
+		if (!this._hasFieldValueChanged(forumName, this.forumName())) return;
+		if (!this.canCreateAndAssociateWithForum()) return;
+
+		const action = this._entity.getActionByName(Actions.discussions.topic.createAndAssociateWithForum);
+		const fields = [
+			{ name: 'forumName', value: forumName },
+		];
 
 		return { action, fields };
 	}
@@ -257,12 +290,14 @@ export class DiscussionTopicEntity extends Entity {
 		const updateDescriptionAction = this._formatUpdateDescriptionAction(topic);
 		const syncDraftWithForum = this._formatSyncDraftStatusAction(topic, shouldSyncDraftWithForum);
 		const updateRatePostType = this._formatUpdateRatePostAction(topic);
+		const createAndAssociateWithForumAction = this._formatCreateAndAssociateWithForumAction(topic);
 
 		const sirenActions = [
 			updateNameAction,
 			updateDescriptionAction,
 			syncDraftWithForum,
-			updateRatePostType
+			updateRatePostType,
+			createAndAssociateWithForumAction,
 		];
 
 		await performSirenActions(this._token, sirenActions);
