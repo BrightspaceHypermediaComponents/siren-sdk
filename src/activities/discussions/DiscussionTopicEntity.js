@@ -264,6 +264,8 @@ export class DiscussionTopicEntity extends Entity {
 		if (!this.canCreateAndAssociateWithForum()) return;
 
 		const sirenAction = this._formatCreateAndAssociateWithForumAction(name);
+		if (!sirenAction) return;
+
 		const { action, fields } = sirenAction;
 		await performSirenAction(this._token, action, fields);
 	}

@@ -57,6 +57,8 @@ export class DiscussionForumEntity extends Entity {
 		if (!this.canEditName()) return;
 
 		const sirenAction = this._formatUpdateNameAction(name);
+		if (!sirenAction) return;
+
 		const { action, fields } = sirenAction;
 		await performSirenAction(this._token, action, fields);
 	}
