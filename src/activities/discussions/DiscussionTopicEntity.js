@@ -239,12 +239,10 @@ export class DiscussionTopicEntity extends Entity {
 
 	/**
 	 * @summary Formats action and fields if topic name has changed and user has edit permission
-	 * @param {object} topic the topic that's being modified
+	 * @param {object} forumName the new forum's name
 	 * @returns {object} the appropriate action/fields to update
 	 */
-	_formatCreateAndAssociateWithForumAction(topic) {
-		const { forumName } = topic || {};
-
+	_formatCreateAndAssociateWithForumAction(forumName) {
 		if (!forumName) return;
 		if (!this._hasFieldValueChanged(forumName, this.forumName())) return;
 		if (!this.canCreateAndAssociateWithForum()) return;
@@ -255,6 +253,19 @@ export class DiscussionTopicEntity extends Entity {
 		];
 
 		return { action, fields };
+	}
+
+	/**
+	 * @summary Calls the create and associate with forum action if name is provided and user has create permission
+	 * @param {object} name the new forum's name
+	 */
+	async createAndAssociateWithForum(name) {
+		if (!name) return;
+		if (!this.canCreateAndAssociateWithForum()) return;
+
+		const sirenAction = this._formatCreateAndAssociateWithForumAction(name);
+		const { action, fields } = sirenAction;
+		await performSirenAction(this._token, action, fields);
 	}
 
 	/**
@@ -290,14 +301,12 @@ export class DiscussionTopicEntity extends Entity {
 		const updateDescriptionAction = this._formatUpdateDescriptionAction(topic);
 		const syncDraftWithForum = this._formatSyncDraftStatusAction(topic, shouldSyncDraftWithForum);
 		const updateRatePostType = this._formatUpdateRatePostAction(topic);
-		const createAndAssociateWithForumAction = this._formatCreateAndAssociateWithForumAction(topic);
 
 		const sirenActions = [
 			updateNameAction,
 			updateDescriptionAction,
 			syncDraftWithForum,
 			updateRatePostType,
-			createAndAssociateWithForumAction,
 		];
 
 		await performSirenActions(this._token, sirenActions);
