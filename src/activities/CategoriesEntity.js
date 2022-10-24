@@ -80,6 +80,29 @@ export class CategoriesEntity extends Entity {
 		return this._entity.properties.selectedCategory;
 	}
 
+	getSelectedCategoryHref(categoryId) {
+		if (!this._entity) {
+			return;
+		}
+
+		const subEntities = this._entity.getSubEntitiesByClass(Classes.activities.category);
+
+		let selectedCategory;
+		if (subEntities) {
+			selectedCategory = subEntities.find(category => Number(category.properties.categoryId) === categoryId);
+		}
+
+		if (!selectedCategory) return;
+
+		// TODO: if user selects a category and this isn't saved yet, the action might be called Actions.activities.categories.select?
+		const action = selectedCategory.getActionByName(Actions.activities.categories.deselect);
+		if (!action) return;
+
+		const { href } = action;
+
+		return href;
+	}
+
 	equals(category) {
 		const selectedCategory = this.getSelectedCategory();
 		if (!selectedCategory) {
