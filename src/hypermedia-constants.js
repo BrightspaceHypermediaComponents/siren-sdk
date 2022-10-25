@@ -580,7 +580,8 @@ export const Actions = {
 		categories: {
 			select: 'select',
 			deselect: 'deselect',
-			add: 'add'
+			add: 'add',
+			deletePreviousAndAssociateWithNewCategory: 'delete-previous-and-associate-with-new-category',
 		},
 		create: 'create',
 		availabilityDates: {
