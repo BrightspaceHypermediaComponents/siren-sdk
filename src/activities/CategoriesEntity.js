@@ -142,7 +142,7 @@ export class CategoriesEntity extends Entity {
 		return categoryId !== initialId;
 	}
 
-	async save(category, shouldDeleteDefaultCategory) {
+	async save(category, shouldDeleteDefaultCategory = false) {
 		const hasCategoryIdChanged = category.categoryId && this._hasCategoryIdChanged(category.categoryId);
 
 		if (hasCategoryIdChanged && category.categoryId !== UNSET_CATEGORY_ID) {
