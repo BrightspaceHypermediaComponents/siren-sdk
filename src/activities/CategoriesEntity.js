@@ -122,6 +122,19 @@ export class CategoriesEntity extends Entity {
 		}
 	}
 
+	_generateDeletePreviousAndAssociateWithNewCategory(category, shouldDeleteDefaultCategory) {
+		const categoryEntity = this._getCategoryById(category.categoryId);
+		if (!categoryEntity) return;
+
+		const action = shouldDeleteDefaultCategory && categoryEntity.getActionByName(Actions.activities.categories.deletePreviousAndAssociateWithNewCategory);
+		if (!action) return;
+		const fields = [
+			{ name: 'deletePreviousCategory', value: shouldDeleteDefaultCategory }
+		];
+
+		return { action, fields };
+	}
+
 	_hasCategoryIdChanged(categoryId) {
 		const selectedCategory = this.getSelectedCategory();
 		const initialId = selectedCategory && selectedCategory.properties.categoryId;
@@ -129,11 +142,13 @@ export class CategoriesEntity extends Entity {
 		return categoryId !== initialId;
 	}
 
-	async save(category) {
+	async save(category, shouldDeleteDefaultCategory) {
 		const hasCategoryIdChanged = category.categoryId && this._hasCategoryIdChanged(category.categoryId);
 
 		if (hasCategoryIdChanged && category.categoryId !== UNSET_CATEGORY_ID) {
-			const { action, fields } = this._generateSelectCategoryAction(category) || {};
+			const { action, fields } = shouldDeleteDefaultCategory
+				? this._generateDeletePreviousAndAssociateWithNewCategory(category, shouldDeleteDefaultCategory) || {}
+				: this._generateSelectCategoryAction(category) || {};
 
 			return action && await performSirenAction(this._token, action, fields);
 		}
