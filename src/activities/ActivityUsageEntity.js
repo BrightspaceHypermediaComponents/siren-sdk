@@ -692,6 +692,14 @@ export class ActivityUsageEntity extends Entity {
 		return this._entity.getLinkByRel(Rels.Activities.indirectAssociations).href;
 	}
 
+	getEvaluationsHref() {
+		if (!this._entity || !this._entity.hasLinkByRel(Rels.Activities.evaluation)) {
+			return;
+		}
+
+		return this._entity.getLinkByRel(Rels.Activities.evaluation).href;
+	}
+
 	alignmentsHref() {
 		if (!this._entity || !this._entity.hasLinkByRel(Rels.Alignments.alignments)) {
 			return;

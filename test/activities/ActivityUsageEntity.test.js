@@ -66,6 +66,10 @@ describe('ActivityUsageEntity', () => {
 			expect(entity.getIndirectRubricAssociationsHref()).to.equal('http://vlx1-mdulat.desire2learn.d2l:44444/d2l/api/hm/activities/activities/6606_2000_31/usages/6609/associations?indirect=1');
 		});
 
+		it('can get evaluation url', () => {
+			expect(entity.getEvaluationsHref()).to.equal('http://vlx1-mdulat.desire2learn.d2l:44444/d2l/api/hm/activities/activities/6606_2000_31/usages/6609/evaluation');
+		});
+
 		it('can get special access url', () => {
 			expect(entity.specialAccessHref()).to.equal('http://vlx1-mdulat.desire2learn.d2l:44444/d2l/api/hm/activities/activities/6606_2000_31/usages/6609/special-access');
 		});
