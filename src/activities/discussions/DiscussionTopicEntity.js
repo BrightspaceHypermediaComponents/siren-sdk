@@ -69,6 +69,9 @@ export class DiscussionTopicEntity extends Entity {
 		return fields && fields.value;
 	}
 
+	/**
+	 * @returns {number} participation option of discussion topic.
+	 */
 	participationSelection() {
 		const options = this.participationOptions();
 		const selected = options?.find(option => option?.selected);
@@ -76,7 +79,7 @@ export class DiscussionTopicEntity extends Entity {
 	}
 
 	/**
-	 * @returns {object[]} Post rating options of discussion topic.
+	 * @returns {object[]} participation options of discussion topic.
 	 */
 	participationOptions() {
 		if (!this.canUpdateRatingType()) return;
@@ -126,11 +129,13 @@ export class DiscussionTopicEntity extends Entity {
 		return entity && entity.hasActionByName(Actions.discussions.topic.updateRatingType);
 	}
 
+	/**
+	 * @returns {bool} whether the update participation type action is present in the topic entity
+	 */
 	canUpdateParticipationOption() {
 		const entity = this._entity;
 		return entity && entity.hasActionByName(Actions.discussions.topic.updateParticipationOption);
 	}
-
 
 	/**
 	 * @returns {object} a helper function to get topic description entity
@@ -247,6 +252,10 @@ export class DiscussionTopicEntity extends Entity {
 		return { action, fields };
 	}
 
+	/**
+	 * Updates the topic's participation option selection
+	 * @param {object} topic the topic that's being modified
+	 */
 	_formatUpdateParticipationOptionAction(topic) {
 		const { participationSelection } = topic || {};
 
@@ -316,7 +325,7 @@ export class DiscussionTopicEntity extends Entity {
 			[topic.name, this.name()],
 			[topic.description, this.descriptionEditorHtml()],
 			[topic.postRatingSelection, this.postRatingSelection()],
-			[topic.participationSelection,this.participationSelection()],
+			[topic.participationSelection, this.participationSelection()],
 		];
 
 		for (const [current, initial] of diffs) {
