@@ -89,6 +89,29 @@ export class CategoriesEntity extends Entity {
 		return Number(category.categoryId) === Number(selectedCategory.properties.categoryId);
 	}
 
+	getSelectedCategoryHref(categoryId) {
+		if (!this._entity) {
+			return;
+		}
+
+		const subEntities = this._entity.getSubEntitiesByClass(Classes.activities.category);
+
+		let selectedCategory;
+		if (subEntities) {
+			selectedCategory = subEntities.find(category => Number(category.properties.categoryId) === Number(categoryId));
+		}
+
+		if (!selectedCategory) return;
+
+		let action = selectedCategory.getActionByName(Actions.activities.categories.deselect);
+		if (!action) action = selectedCategory.getActionByName(Actions.activities.categories.select);
+		if (!action) return;
+
+		const { href } = action;
+
+		return href;
+	}
+
 	_generateDeselectCategoryAction() {
 		if (!this.canEditCategories()) return;
 
