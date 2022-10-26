@@ -98,7 +98,7 @@ export class CategoriesEntity extends Entity {
 
 		let selectedCategory;
 		if (subEntities) {
-			selectedCategory = subEntities.find(category => Number(category.properties.categoryId) === categoryId);
+			selectedCategory = subEntities.find(category => Number(category.properties.categoryId) === Number(categoryId));
 		}
 
 		if (!selectedCategory) return;
