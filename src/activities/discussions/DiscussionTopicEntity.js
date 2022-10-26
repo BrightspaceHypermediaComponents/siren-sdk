@@ -69,6 +69,24 @@ export class DiscussionTopicEntity extends Entity {
 		return fields && fields.value;
 	}
 
+	participationSelection() {
+		const options = this.participationOptions();
+		const selected = options?.find(option => option?.selected);
+		return selected?.value;
+	}
+
+	/**
+	 * @returns {object[]} Post rating options of discussion topic.
+	 */
+	participationOptions() {
+		if (!this.canUpdateRatingType()) return;
+
+		const action = this._entity.getActionByName(Actions.discussions.topic.updateParticipationOption);
+		const fields = action && action.getFieldByName('participationType');
+
+		return fields && fields.value;
+	}
+
 	/**
 	 * @summary Formats action and fields if topic name has changed and user has edit permission
 	 * @param {object} topic the topic that's being modified
@@ -107,6 +125,12 @@ export class DiscussionTopicEntity extends Entity {
 		const entity = this._entity;
 		return entity && entity.hasActionByName(Actions.discussions.topic.updateRatingType);
 	}
+
+	canUpdateParticipationOption() {
+		const entity = this._entity;
+		return entity && entity.hasActionByName(Actions.discussions.topic.updateParticipationOption);
+	}
+
 
 	/**
 	 * @returns {object} a helper function to get topic description entity
@@ -223,6 +247,19 @@ export class DiscussionTopicEntity extends Entity {
 		return { action, fields };
 	}
 
+	_formatUpdateParticipationOptionAction(topic) {
+		const { participationSelection } = topic || {};
+
+		if (!participationSelection || !this.canUpdateParticipationOption()) {
+			return;
+		}
+		if (!this._hasFieldValueChanged(participationSelection, this.participationSelection())) return;
+
+		const action = this._entity.getActionByName(Actions.discussions.topic.updateParticipationOption);
+		const fields = [{ name: 'participationType', value: participationSelection }];
+		return { action, fields };
+	}
+
 	/**
 	 * @returns {string} name of the parent forum associated with the discussion topic
 	 */
@@ -279,6 +316,7 @@ export class DiscussionTopicEntity extends Entity {
 			[topic.name, this.name()],
 			[topic.description, this.descriptionEditorHtml()],
 			[topic.postRatingSelection, this.postRatingSelection()],
+			[topic.participationSelection,this.participationSelection()],
 		];
 
 		for (const [current, initial] of diffs) {
@@ -303,12 +341,14 @@ export class DiscussionTopicEntity extends Entity {
 		const updateDescriptionAction = this._formatUpdateDescriptionAction(topic);
 		const syncDraftWithForum = this._formatSyncDraftStatusAction(topic, shouldSyncDraftWithForum);
 		const updateRatePostType = this._formatUpdateRatePostAction(topic);
+		const updateParticipationOption = this._formatUpdateParticipationOptionAction(topic);
 
 		const sirenActions = [
 			updateNameAction,
 			updateDescriptionAction,
 			syncDraftWithForum,
 			updateRatePostType,
+			updateParticipationOption,
 		];
 
 		await performSirenActions(this._token, sirenActions);
