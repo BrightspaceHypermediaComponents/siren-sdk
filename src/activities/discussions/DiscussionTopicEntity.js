@@ -91,6 +91,31 @@ export class DiscussionTopicEntity extends Entity {
 	}
 
 	/**
+	 * @returns {bool} whether the update participation type action is present in the topic entity
+	 */
+	 canUpdateParticipationOption() {
+		const entity = this._entity;
+		return entity && entity.hasActionByName(Actions.discussions.topic.updateParticipationOption);
+	}
+
+	/**
+	 * Updates the topic's participation option selection
+	 * @param {object} topic the topic that's being modified
+	 */
+	 _formatUpdateParticipationOptionAction(topic) {
+		const { participationSelection } = topic || {};
+
+		if (!participationSelection || !this.canUpdateParticipationOption()) {
+			return;
+		}
+		if (!this._hasFieldValueChanged(participationSelection, this.participationSelection())) return;
+
+		const action = this._entity.getActionByName(Actions.discussions.topic.updateParticipationOption);
+		const fields = [{ name: 'participationType', value: participationSelection }];
+		return { action, fields };
+	}
+
+	/**
 	 * @summary Formats action and fields if topic name has changed and user has edit permission
 	 * @param {object} topic the topic that's being modified
 	 * @param {bool} shouldSyncNameWithForum determines whether topic and forum names should sync
@@ -127,14 +152,6 @@ export class DiscussionTopicEntity extends Entity {
 	canUpdateRatingType() {
 		const entity = this._entity;
 		return entity && entity.hasActionByName(Actions.discussions.topic.updateRatingType);
-	}
-
-	/**
-	 * @returns {bool} whether the update participation type action is present in the topic entity
-	 */
-	canUpdateParticipationOption() {
-		const entity = this._entity;
-		return entity && entity.hasActionByName(Actions.discussions.topic.updateParticipationOption);
 	}
 
 	/**
@@ -249,23 +266,6 @@ export class DiscussionTopicEntity extends Entity {
 
 		const action = this._entity.getActionByName(Actions.discussions.topic.updateRatingType);
 		const fields = [{ name: 'ratingType', value: postRatingSelection }];
-		return { action, fields };
-	}
-
-	/**
-	 * Updates the topic's participation option selection
-	 * @param {object} topic the topic that's being modified
-	 */
-	_formatUpdateParticipationOptionAction(topic) {
-		const { participationSelection } = topic || {};
-
-		if (!participationSelection || !this.canUpdateParticipationOption()) {
-			return;
-		}
-		if (!this._hasFieldValueChanged(participationSelection, this.participationSelection())) return;
-
-		const action = this._entity.getActionByName(Actions.discussions.topic.updateParticipationOption);
-		const fields = [{ name: 'participationType', value: participationSelection }];
 		return { action, fields };
 	}
 
