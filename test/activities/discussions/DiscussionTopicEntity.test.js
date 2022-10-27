@@ -185,7 +185,7 @@ describe('DiscussionTopicEntity', () => {
 				name: 'New name',
 				description: '<p>New description</p>',
 				postRatingSelection: 'None',
-				participationSelection: 'defadefaultParticipationult',
+				participationSelection: 'defaultParticipation',
 			});
 
 			const form = await getFormData(fetchMock.lastCall().request);
