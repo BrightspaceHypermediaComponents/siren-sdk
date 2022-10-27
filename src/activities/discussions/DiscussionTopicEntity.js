@@ -93,7 +93,7 @@ export class DiscussionTopicEntity extends Entity {
 	/**
 	 * @returns {bool} whether the update participation type action is present in the topic entity
 	 */
-	 canUpdateParticipationOption() {
+	canUpdateParticipationOption() {
 		const entity = this._entity;
 		return entity && entity.hasActionByName(Actions.discussions.topic.updateParticipationOption);
 	}
@@ -102,7 +102,7 @@ export class DiscussionTopicEntity extends Entity {
 	 * Updates the topic's participation option selection
 	 * @param {object} topic the topic that's being modified
 	 */
-	 _formatUpdateParticipationOptionAction(topic) {
+	_formatUpdateParticipationOptionAction(topic) {
 		const { participationSelection } = topic || {};
 
 		if (!participationSelection || !this.canUpdateParticipationOption()) {
