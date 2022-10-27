@@ -58,7 +58,7 @@ describe('DiscussionTopicEntity', () => {
 
 		it('returns false when participation option not equal', () => {
 			const discussionTopic = new DiscussionTopicEntity(editableEntity);
-			modifiedEntity.postRatingSelection = 'anonymous';
+			modifiedEntity.participationSelection = 'anonymous';
 			expect(discussionTopic.equals(modifiedEntity)).to.be.false;
 		});
 	});

@@ -82,7 +82,7 @@ export class DiscussionTopicEntity extends Entity {
 	 * @returns {object[]} participation options of discussion topic.
 	 */
 	participationOptions() {
-		if (!this.canUpdateRatingType()) return;
+		if (!this.canUpdateParticipationOption()) return;
 
 		const action = this._entity.getActionByName(Actions.discussions.topic.updateParticipationOption);
 		const fields = action && action.getFieldByName('participationType');
