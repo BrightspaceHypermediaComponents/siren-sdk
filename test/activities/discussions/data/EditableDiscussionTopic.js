@@ -73,6 +73,33 @@ export const editableDiscussionTopic = {
 					]
 				}
 			]
+		},
+		{
+			'title' : 'Update participation type',
+			'href': `https://${tenantId}.api.dev.brightspace.com/d2l/api/hm/discussions/6609/forums/10025/topics/10026`,
+			'name': 'update-participationtype',
+			'method': 'PATCH',
+			'type': 'application/x-www-form-urlencoded',
+			'fields': [
+				{
+					'name': 'participationType',
+					'type': 'radio',
+					'value': [
+						{
+							'value': 'defaultParticipation',
+							'selected': true
+						},
+						{
+							'value': 'anonymous',
+							'selected': false
+						},
+						{
+							'value': 'startThreadToView',
+							'selected': false
+						},
+					]
+				}
+			]
 		}
 	],
 	'entities': [
