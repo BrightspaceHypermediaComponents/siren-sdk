@@ -29,6 +29,7 @@ describe('DiscussionTopicEntity', () => {
 				name: 'What a great topic',
 				description: '<p>A great topic description</p>',
 				postRatingSelection: 'None',
+				participationSelection: 'defaultParticipation',
 			};
 		});
 
@@ -54,6 +55,12 @@ describe('DiscussionTopicEntity', () => {
 			modifiedEntity.postRatingSelection = 'FiveStar';
 			expect(discussionTopic.equals(modifiedEntity)).to.be.false;
 		});
+
+		it('returns false when participation option not equal', () => {
+			const discussionTopic = new DiscussionTopicEntity(editableEntity);
+			modifiedEntity.participationSelection = 'anonymous';
+			expect(discussionTopic.equals(modifiedEntity)).to.be.false;
+		});
 	});
 
 	describe('name', () => {
@@ -75,6 +82,15 @@ describe('DiscussionTopicEntity', () => {
 			it('returns true when action present', () => {
 				const discussionTopic = new DiscussionTopicEntity(editableEntity);
 				expect(discussionTopic.canUpdateRatingType()).to.be.true;
+			});
+		});
+	});
+
+	describe('participationSelection', () => {
+		describe('canEditParticipationSelection', () => {
+			it('returns true when action present', () => {
+				const discussionTopic = new DiscussionTopicEntity(editableEntity);
+				expect(discussionTopic.canUpdateParticipationOption()).to.be.true;
 			});
 		});
 	});
@@ -169,6 +185,7 @@ describe('DiscussionTopicEntity', () => {
 				name: 'New name',
 				description: '<p>New description</p>',
 				postRatingSelection: 'None',
+				participationSelection: 'defaultParticipation',
 			});
 
 			const form = await getFormData(fetchMock.lastCall().request);
@@ -231,6 +248,7 @@ describe('DiscussionTopicEntity', () => {
 				name: 'What a great topic',
 				description: '<p>A great topic description</p>',
 				postRatingSelection: 'None',
+				participationSelection: 'defaultParticipation',
 			});
 
 			expect(fetchMock.called()).to.be.false;
@@ -243,6 +261,7 @@ describe('DiscussionTopicEntity', () => {
 				name: 'New name',
 				description: '<p>New description</p>',
 				postRatingSelection: 'None',
+				participationSelection: 'defaultParticipation',
 			});
 
 			expect(fetchMock.called()).to.be.false;
