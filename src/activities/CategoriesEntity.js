@@ -89,6 +89,29 @@ export class CategoriesEntity extends Entity {
 		return Number(category.categoryId) === Number(selectedCategory.properties.categoryId);
 	}
 
+	getSelectedCategoryHref(categoryId) {
+		if (!this._entity) {
+			return;
+		}
+
+		const subEntities = this._entity.getSubEntitiesByClass(Classes.activities.category);
+
+		let selectedCategory;
+		if (subEntities) {
+			selectedCategory = subEntities.find(category => Number(category.properties.categoryId) === Number(categoryId));
+		}
+
+		if (!selectedCategory) return;
+
+		let action = selectedCategory.getActionByName(Actions.activities.categories.deselect);
+		if (!action) action = selectedCategory.getActionByName(Actions.activities.categories.select);
+		if (!action) return;
+
+		const { href } = action;
+
+		return href;
+	}
+
 	_generateDeselectCategoryAction() {
 		if (!this.canEditCategories()) return;
 
@@ -122,6 +145,19 @@ export class CategoriesEntity extends Entity {
 		}
 	}
 
+	_generateDeletePreviousAndAssociateWithNewCategory(category, shouldDeletePreviousCategory) {
+		const categoryEntity = this._getCategoryById(category.categoryId);
+		if (!categoryEntity) return;
+
+		const action = categoryEntity.getActionByName(Actions.activities.categories.deletePreviousAndAssociateWithNewCategory);
+		if (!action) return;
+		const fields = [
+			{ name: 'deletePreviousCategory', value: shouldDeletePreviousCategory }
+		];
+
+		return { action, fields };
+	}
+
 	_hasCategoryIdChanged(categoryId) {
 		const selectedCategory = this.getSelectedCategory();
 		const initialId = selectedCategory && selectedCategory.properties.categoryId;
@@ -129,8 +165,14 @@ export class CategoriesEntity extends Entity {
 		return categoryId !== initialId;
 	}
 
-	async save(category) {
+	async save(category, shouldDeletePreviousCategory = null) {
 		const hasCategoryIdChanged = category.categoryId && this._hasCategoryIdChanged(category.categoryId);
+
+		if (hasCategoryIdChanged && shouldDeletePreviousCategory !== null) {
+			const { action, fields } = this._generateDeletePreviousAndAssociateWithNewCategory(category, shouldDeletePreviousCategory) || {};
+
+			return action && await performSirenAction(this._token, action, fields);
+		}
 
 		if (hasCategoryIdChanged && category.categoryId !== UNSET_CATEGORY_ID) {
 			const { action, fields } = this._generateSelectCategoryAction(category) || {};

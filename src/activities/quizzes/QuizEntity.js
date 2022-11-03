@@ -288,15 +288,6 @@ export class QuizEntity extends Entity {
 	}
 
 	/**
-	 * @returns {object} Richtext editor config for the quiz description; for use with d2l-html-editor
-	 */
-	descriptionRichTextEditorConfig() {
-		const descriptionEntity = this._getDescriptionEntity();
-		return descriptionEntity
-			&& descriptionEntity.getSubEntityByRel(Rels.richTextEditorConfig);
-	}
-
-	/**
 	 * @returns {bool} Description is displayed for the quiz entity
 	 */
 	descriptionIsDisplayed() {
@@ -384,15 +375,6 @@ export class QuizEntity extends Entity {
 
 		const fields = [{ name: 'header', value: header }];
 		await performSirenAction(this._token, action, fields);
-	}
-
-	/**
-	 * @returns {object} Richtext editor config for the quiz header; for use with d2l-html-editor
-	 */
-	headerRichTextEditorConfig() {
-		const headerEntity = this._getHeaderEntity();
-		return headerEntity
-			&& headerEntity.getSubEntityByRel(Rels.richTextEditorConfig);
 	}
 
 	/**
@@ -487,15 +469,6 @@ export class QuizEntity extends Entity {
 
 		const fields = [{ name: 'footer', value: footer }];
 		await performSirenAction(this._token, action, fields);
-	}
-
-	/**
-	 * @returns {object} Richtext editor config for the quiz footer; for use with d2l-html-editor
-	 */
-	footerRichTextEditorConfig() {
-		const footerEntity = this._getFooterEntity();
-		return footerEntity
-			&& footerEntity.getSubEntityByRel(Rels.richTextEditorConfig);
 	}
 
 	/**

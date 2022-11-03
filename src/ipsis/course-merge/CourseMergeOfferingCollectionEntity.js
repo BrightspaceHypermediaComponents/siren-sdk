@@ -2,15 +2,19 @@
  * CourseMergeOfferingCollectionEntity class representation of a list of course merge offering as defined in the LMS
  * See: ISirenCourseMergeSerializer.SerializeCourseOfferingListResult
  */
+import { Actions, Rels } from '../../hypermedia-constants.js';
 import { Entity } from '../../es6/Entity.js';
-import { Rels } from '../../hypermedia-constants.js';
 
 export class CourseMergeOfferingCollectionEntity extends Entity {
 	courseMergeOfferings() {
 		if (!this._entity) {
 			return;
 		}
-		return this._entity.getSubEntitiesByRel(Rels.IPSIS.SISCourseMerge.courseMergeOffering);
+		return this._entity.entities;
+	}
+
+	prependCourseMergeOfferings(previousCourseMergeOfferingCollectionEntity) {
+		this._entity.entities.unshift(...previousCourseMergeOfferingCollectionEntity._entity.entities);
 	}
 
 	userOwnedByMultipleSourceSystems() {
@@ -19,6 +23,10 @@ export class CourseMergeOfferingCollectionEntity extends Entity {
 
 	canMergeCourses() {
 		return this._entity?.properties?.canMergeCourses;
+	}
+
+	selectedCount() {
+		return this._entity?.properties?.selectedCount;
 	}
 
 	totalCount() {
@@ -31,6 +39,17 @@ export class CourseMergeOfferingCollectionEntity extends Entity {
 
 	pageSize() {
 		return this._pagingInfo()?.pageSize;
+	}
+
+	loadMorePageSize() {
+		const pageSize = this._pagingInfo()?.pageSize;
+		const totalCount = this.totalCount() ?? 0;
+		const courseMergeOfferingsLength = this.courseMergeOfferings()?.length ?? 0;
+		// if pageSize is larger than the number remaining items, return the number of remaining items to be loaded
+		if (totalCount < courseMergeOfferingsLength + (pageSize ?? 0)) {
+			return totalCount - courseMergeOfferingsLength;
+		}
+		return pageSize;
 	}
 
 	_pagingInfo() {
@@ -67,6 +86,26 @@ export class CourseMergeOfferingCollectionEntity extends Entity {
 		}
 
 		return this._entity.getLinkByRel(Rels.filters).href;
+	}
+
+	selectedCourseMergeOfferingsHref() {
+		if (!this._entity.hasLinkByRel(Rels.IPSIS.SISCourseMerge.selectedCourseMergeOfferings)) {
+			return;
+		}
+
+		return this._entity.getLinkByRel(Rels.IPSIS.SISCourseMerge.selectedCourseMergeOfferings).href;
+	}
+
+	hasSearchAction() {
+		return this._entity.hasActionByName(Actions.ipsis.sisCourseMerge.searchCourseOfferings);
+	}
+
+	getSearchAction() {
+		if (!this.hasSearchAction()) {
+			return;
+		}
+
+		return this._entity.getActionByName(Actions.ipsis.sisCourseMerge.searchCourseOfferings);
 	}
 
 	updateEntity(entity) {

@@ -32,7 +32,6 @@ export const Rels = {
 	restricted: 'https://api.brightspace.com/rels/restricted',
 	role: 'https://api.brightspace.com/rels/role',
 	root: 'https://api.brightspace.com/rels/root',
-	richTextEditorConfig: 'https://api.brightspace.com/rels/richtext-editor-config',
 	rubric: 'https://api.brightspace.com/rels/rubric',
 	semesters: 'https://api.brightspace.com/rels/semesters',
 	sequence: 'https://api.brightspace.com/rels/sequence',
@@ -74,7 +73,8 @@ export const Rels = {
 		indirectAssociations: 'https://activities.api.brightspace.com/rels/indirect-associations',
 		newGradeAssociation: 'https://activities.api.brightspace.com/rels/new-grade-association',
 		specialAccess: 'https://activities.api.brightspace.com/rels/special-access',
-		associateGrade: 'https://activities.api.brightspace.com/rels/associate-grade'
+		associateGrade: 'https://activities.api.brightspace.com/rels/associate-grade',
+		associateMultipleGrades: 'https://activities.api.brightspace.com/rels/associate-multiple-grades'
 	},
 	Conditions: {
 		conditions: 'https://conditions.api.brightspace.com/rels/conditions',
@@ -136,7 +136,10 @@ export const Rels = {
 	Discussions: {
 		description: 'https://discussions.api.brightspace.com/rels/description',
 		mySubscriptions: 'https://discussions.api.brightspace.com/rels/my-subscriptions',
-		topic: 'https://discussions.api.brightspace.com/rels/topic'
+		forums: 'https://discussions.api.brightspace.com/rels/forums',
+		forum: 'https://discussions.api.brightspace.com/rels/forum',
+		topicCategories: 'https://discussions.api.brightspace.com/rels/topic-categories',
+		topic: 'https://discussions.api.brightspace.com/rels/topic',
 	},
 	// Files API sub-domain rels
 	Files: {
@@ -168,7 +171,8 @@ export const Rels = {
 	IPSIS: {
 		SISCourseMerge: {
 			courseMergeOfferings: 'https://ipsis.api.brightspace.com/rels/course-merge-offerings',
-			courseMergeOffering:	'https://ipsis.api.brightspace.com/rels/course-merge-offering',
+			courseMergeOffering: 'https://ipsis.api.brightspace.com/rels/course-merge-offering',
+			selectedCourseMergeOfferings: 'https://ipsis.api.brightspace.com/rels/selected-course-merge-offerings'
 		}
 	},
 	// Quizzes API sub-domain rels
@@ -370,9 +374,11 @@ export const Classes = {
 	},
 	discussions: {
 		discussion: 'discussion',
+		forum: 'forum',
 		topic: 'topic',
 		description: 'description',
-		unlocked: 'unlocked'
+		unlocked: 'unlocked',
+		hasPosts: 'has-posts'
 	},
 	enrollments: {
 		enrollment: 'enrollment',
@@ -431,7 +437,8 @@ export const Classes = {
 			enforced: 'enforced',
 			noTimeLimit: 'notimelimit',
 			showClock: 'show-clock',
-			automaticZero: 'uselatelimit'
+			automaticZero: 'uselatelimit',
+			withTimeLimitType: 'with-time-limit-type',
 		},
 		attempts: {
 			overallGradeCalculationType: 'overall-grade-calculation-type',
@@ -573,7 +580,8 @@ export const Actions = {
 		categories: {
 			select: 'select',
 			deselect: 'deselect',
-			add: 'add'
+			add: 'add',
+			deletePreviousAndAssociateWithNewCategory: 'delete-previous-and-associate-with-new-category',
 		},
 		create: 'create',
 		availabilityDates: {
@@ -595,6 +603,9 @@ export const Actions = {
 			getCategories: 'get-categories',
 			getSchemes: 'get-schemes',
 			chooseScheme: 'choose-scheme'
+		},
+		associateMultipleGrades: {
+			gradebookStatus: 'gradebook-status'
 		},
 		activityUsageCollection: {
 			setCollectionPaging: 'set-collection-paging',
@@ -677,6 +688,23 @@ export const Actions = {
 		skipSubscribeToParentNotifications: 'skip-subscribe-to-parent-notifications',
 		unsubscribeToParentNotifications: 'unsubscribe-to-parent-notifications'
 	},
+	discussions: {
+		forums: {
+			createForum: 'create-forum',
+		},
+		forum: {
+			updateName: 'update-name',
+		},
+		topic: {
+			syncDraftWithForum: 'sync-draft-with-forum',
+			updateName: 'update-name',
+			updateDescription: 'update-description',
+			delete: 'delete-topic',
+			updateRatingType: 'update-ratingtype',
+			updateParticipationOption: 'update-participationtype',
+			createAndAssociateWithForum: 'create-and-associate-with-forum',
+		},
+	},
 	rubrics: {
 		selectCriterionCell: 'select-criterion-cell'
 	},
@@ -701,6 +729,15 @@ export const Actions = {
 		deleteFile: 'delete-content-file',
 		replaceFile: 'replace-content-file'
 	},
+	ipsis: {
+		sisCourseMerge: {
+			deselect: 'deselect',
+			mergeCourseOfferings: 'merge-course-offerings',
+			searchCourseOfferings: 'search-course-offerings',
+			select: 'select',
+			selectAsTarget: 'select-as-target'
+		}
+	},
 	quizzes: {
 		updateName: 'update-name',
 		updateShuffle: 'update-shuffle',
@@ -724,7 +761,9 @@ export const Actions = {
 			updateLateTypeId: 'update-timing-late-type-id',
 			updateHasTimer: 'update-timing-has-timer',
 			updateTimingGraceLimit: 'update-timing-grace-limit',
-			updateTimingLateData: 'update-timing-late-data'
+			updateTimingLateData: 'update-timing-late-data',
+			updateTimeLimitType: 'update-time-limit-type',
+			toggleSetTimeLimit: 'toggle-set-time-limit'
 		},
 		attempts: {
 			updateAttemptsAllowed: 'update-attempts',
@@ -781,10 +820,5 @@ export const Actions = {
 		checkout: 'checkout',
 		checkin: 'checkin',
 		commit: 'commit'
-	},
-	discussions: {
-		topic: {
-			updateName: 'update-name',
-		},
-	},
+	}
 };
