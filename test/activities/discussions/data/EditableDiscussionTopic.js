@@ -100,6 +100,19 @@ export const editableDiscussionTopic = {
 					]
 				}
 			]
+		},
+		{
+			'title' : 'Update requires approval',
+			'href': `https://${tenantId}.api.dev.brightspace.com/d2l/api/hm/discussions/6609/forums/10025/topics/10026`,
+			'name': 'requires-approval',
+			'method': 'PATCH',
+			'fields': [
+				{
+					'type': 'checkbox',
+					'name': 'requiresApproval',
+					'value': false
+				}
+			]
 		}
 	],
 	'entities': [

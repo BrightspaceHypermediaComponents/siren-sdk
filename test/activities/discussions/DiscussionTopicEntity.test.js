@@ -30,6 +30,7 @@ describe('DiscussionTopicEntity', () => {
 				description: '<p>A great topic description</p>',
 				postRatingSelection: 'None',
 				participationSelection: 'defaultParticipation',
+				requiresApproval: false
 			};
 		});
 
@@ -59,6 +60,12 @@ describe('DiscussionTopicEntity', () => {
 		it('returns false when participation option not equal', () => {
 			const discussionTopic = new DiscussionTopicEntity(editableEntity);
 			modifiedEntity.participationSelection = 'anonymous';
+			expect(discussionTopic.equals(modifiedEntity)).to.be.false;
+		});
+
+		it('returns false when requires approval option not equal', () => {
+			const discussionTopic = new DiscussionTopicEntity(editableEntity);
+			modifiedEntity.requiresApproval = true;
 			expect(discussionTopic.equals(modifiedEntity)).to.be.false;
 		});
 	});
@@ -91,6 +98,15 @@ describe('DiscussionTopicEntity', () => {
 			it('returns true when action present', () => {
 				const discussionTopic = new DiscussionTopicEntity(editableEntity);
 				expect(discussionTopic.canUpdateParticipationOption()).to.be.true;
+			});
+		});
+	});
+
+	describe('requiresApproval', () => {
+		describe('canEditrequiresApproval', () => {
+			it('returns true when action present', () => {
+				const discussionTopic = new DiscussionTopicEntity(editableEntity);
+				expect(discussionTopic.canEditRequiresApproval()).to.be.true;
 			});
 		});
 	});
@@ -186,6 +202,7 @@ describe('DiscussionTopicEntity', () => {
 				description: '<p>New description</p>',
 				postRatingSelection: 'None',
 				participationSelection: 'defaultParticipation',
+				requiresApproval: false
 			});
 
 			const form = await getFormData(fetchMock.lastCall().request);
@@ -249,6 +266,7 @@ describe('DiscussionTopicEntity', () => {
 				description: '<p>A great topic description</p>',
 				postRatingSelection: 'None',
 				participationSelection: 'defaultParticipation',
+				requiresApproval: false
 			});
 
 			expect(fetchMock.called()).to.be.false;
@@ -262,6 +280,7 @@ describe('DiscussionTopicEntity', () => {
 				description: '<p>New description</p>',
 				postRatingSelection: 'None',
 				participationSelection: 'defaultParticipation',
+				requiresApproval: true
 			});
 
 			expect(fetchMock.called()).to.be.false;
