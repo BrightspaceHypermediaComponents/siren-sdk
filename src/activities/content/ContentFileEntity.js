@@ -71,6 +71,13 @@ export class ContentFileEntity extends ContentWorkingCopyEntity {
 	}
 
 	/**
+	 * @returns {boolean|undefined} Determines whether the entity is located on the content service or not
+	 */
+	isContentServiceResource() {
+		return this._entity && this._entity.properties && this._entity.properties.isContentServiceResource;
+	}
+
+	/**
 	 * Updates the file to have the given description
 	 * @param {string} richText rich text description to set on the file
 	 */
