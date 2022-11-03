@@ -703,6 +703,7 @@ export const Actions = {
 			updateRatingType: 'update-ratingtype',
 			updateParticipationOption: 'update-participationtype',
 			createAndAssociateWithForum: 'create-and-associate-with-forum',
+			requiresApproval : 'requires-approval'
 		},
 	},
 	rubrics: {
