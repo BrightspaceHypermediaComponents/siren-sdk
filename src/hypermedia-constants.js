@@ -611,6 +611,9 @@ export const Actions = {
 		activityUsageCollection: {
 			setCollectionPaging: 'set-collection-paging',
 		},
+		evaluation: {
+			updateEvaluation: 'update-evaluation',
+		},
 		save: 'save',
 		filterWorkToDo: 'filter-work-to-do'
 	},
