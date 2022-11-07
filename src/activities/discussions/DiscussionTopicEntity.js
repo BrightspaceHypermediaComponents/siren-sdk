@@ -70,6 +70,74 @@ export class DiscussionTopicEntity extends Entity {
 	}
 
 	/**
+	 * @returns {number} participation option of discussion topic.
+	 */
+	participationSelection() {
+		const options = this.participationOptions();
+		const selected = options?.find(option => option?.selected);
+		return selected?.value;
+	}
+
+	/**
+	 * @returns {object[]} participation options of discussion topic.
+	 */
+	participationOptions() {
+		if (!this.canUpdateParticipationOption()) return;
+
+		const action = this._entity.getActionByName(Actions.discussions.topic.updateParticipationOption);
+		const fields = action && action.getFieldByName('participationType');
+
+		return fields && fields.value;
+	}
+
+	/**
+	 * @returns {bool} whether the update participation type action is present in the topic entity
+	 */
+	canUpdateParticipationOption() {
+		const entity = this._entity;
+		return entity && entity.hasActionByName(Actions.discussions.topic.updateParticipationOption);
+	}
+
+	/**
+	 * @returns {bool} If the discussion topic requires approval is enabled.
+	 */
+	requiresApproval() {
+		if (!this.canEditRequiresApproval()) {
+			return;
+		}
+
+		const action = this._entity.getActionByName(Actions.discussions.topic.requiresApproval);
+		const fields = action && action.getFieldByName('requiresApproval');
+
+		return fields && fields.value;
+	}
+
+	/**
+	 * @returns {bool} Whether the discussion topic requires approval action is available to edit.
+	 */
+	canEditRequiresApproval() {
+		const entity = this._entity;
+		return entity && entity.hasActionByName(Actions.discussions.topic.requiresApproval);
+	}
+
+	/**
+	 * Updates the topic's participation option selection
+	 * @param {object} topic the topic that's being modified
+	 */
+	_formatUpdateParticipationOptionAction(topic) {
+		const { participationSelection } = topic || {};
+
+		if (!participationSelection || !this.canUpdateParticipationOption()) {
+			return;
+		}
+		if (!this._hasFieldValueChanged(participationSelection, this.participationSelection())) return;
+
+		const action = this._entity.getActionByName(Actions.discussions.topic.updateParticipationOption);
+		const fields = [{ name: 'participationType', value: participationSelection }];
+		return { action, fields };
+	}
+
+	/**
 	 * @summary Formats action and fields if topic name has changed and user has edit permission
 	 * @param {object} topic the topic that's being modified
 	 * @param {bool} shouldSyncNameWithForum determines whether topic and forum names should sync
@@ -88,6 +156,23 @@ export class DiscussionTopicEntity extends Entity {
 			{ name: 'shouldSyncNameWithForum', value: shouldSyncNameWithForum },
 		];
 
+		return { action, fields };
+	}
+
+	/**
+	 * @summary Formats action and fields if topic 'requires approval' status has changed and user has edit permission
+	 * @param {object} topic the topic that's being modified
+	 * @returns {object} the appropriate action/fields to update
+	 */
+	_formatUpdateRequiresApproval(topic) {
+		const { requiresApproval } = topic || {};
+
+		if (requiresApproval === undefined || requiresApproval === null) return;
+		if (!this._hasFieldValueChanged(requiresApproval, this.requiresApproval())) return;
+		if (!this.canEditRequiresApproval()) return;
+
+		const action = this._entity.getActionByName(Actions.discussions.topic.requiresApproval);
+		const fields = [{ name: 'requiresApproval', value: requiresApproval }];
 		return { action, fields };
 	}
 
@@ -279,6 +364,8 @@ export class DiscussionTopicEntity extends Entity {
 			[topic.name, this.name()],
 			[topic.description, this.descriptionEditorHtml()],
 			[topic.postRatingSelection, this.postRatingSelection()],
+			[topic.participationSelection, this.participationSelection()],
+			[topic.requiresApproval, this.requiresApproval()]
 		];
 
 		for (const [current, initial] of diffs) {
@@ -303,12 +390,16 @@ export class DiscussionTopicEntity extends Entity {
 		const updateDescriptionAction = this._formatUpdateDescriptionAction(topic);
 		const syncDraftWithForum = this._formatSyncDraftStatusAction(topic, shouldSyncDraftWithForum);
 		const updateRatePostType = this._formatUpdateRatePostAction(topic);
+		const updateParticipationOption = this._formatUpdateParticipationOptionAction(topic);
+		const updateRequiresApproval = this._formatUpdateRequiresApproval(topic);
 
 		const sirenActions = [
 			updateNameAction,
 			updateDescriptionAction,
 			syncDraftWithForum,
 			updateRatePostType,
+			updateParticipationOption,
+			updateRequiresApproval
 		];
 
 		await performSirenActions(this._token, sirenActions);
