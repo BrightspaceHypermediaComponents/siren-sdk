@@ -1,4 +1,4 @@
-export const contentMediaFileData = {
+export const contentServiceFileData = {
 	'actions': [
 		{
 			'href': 'https://fake-tenant-id.content.api.proddev.d2l/6613/files/12345',
@@ -38,11 +38,18 @@ export const contentMediaFileData = {
 		'video'
 	],
 	'properties': {
-		'title': 'Test Media File Title',
+		'title': 'Test Content Service File Title',
 		'url': 'https://phoenix-is-the-best.com',
 		'embedMedia': 'true',
-		'mediaFileName': 'test.mp4',
+		'isAdvancedEditingAvailable': 'true',
+		'isAdvancedEditingEnabled': 'true',
+		'isContentServiceResource': 'true',
+		'contentServiceName': 'content-service-name',
+		'contentServiceContentId': 'fake-content-service-content-id',
+		'contentServiceEndpoint': 'https://fake-content-service-endpoint/',
+		'tenantId': 'fake-tenant-id',
 		'allowDownload': 'true',
+		'topicId': 12345,
 	},
 	'entities': [{
 		'class': ['richtext', 'description'],
