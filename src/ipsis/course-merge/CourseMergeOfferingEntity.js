@@ -16,6 +16,14 @@ export class CourseMergeOfferingEntity extends Entity {
 		return this._entity?.properties?.orgUnitId;
 	}
 
+	isPendingMerge() {
+		return this._entity?.properties?.isPendingMerge;
+	}
+
+	isMerged() {
+		return this._entity?.properties?.isMerged;
+	}
+
 	onOrganizationChange(onChange) {
 		const organizationHref = this.organizationHref();
 		// _subEntity builds new sub entity and allows this object to track it.
