@@ -82,7 +82,7 @@ export class ActivityEvaluationEntity extends Entity {
 		const fields = [
 			this._formatEvaluationField(ALLOW_MULTIPLE, evaluation.allowMultiple),
 			this._formatEvaluationField(UNEVAL_AS_ZERO, evaluation.unevalAsZero),
-			this._formatEvaluationField(CALCULATION_METHOD, evaluation.calculationMethods),
+			this._formatEvaluationField(CALCULATION_METHOD, evaluation.calculationMethodSelection),
 		];
 
 		const sirenActions = [{ action, fields }];
