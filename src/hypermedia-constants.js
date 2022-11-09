@@ -439,6 +439,7 @@ export const Classes = {
 			showClock: 'show-clock',
 			automaticZero: 'uselatelimit',
 			withTimeLimitType: 'with-time-limit-type',
+			useLateLimit: 'uselatelimit',
 		},
 		attempts: {
 			overallGradeCalculationType: 'overall-grade-calculation-type',
