@@ -7,12 +7,22 @@ export const FILE_TYPES = {
 	html: 'html',
 	audio: 'audio',
 	video: 'video',
+	document: 'document',
+	presentation: 'presentation',
+	spreadsheet: 'spreadsheet',
+	pdf: 'pdf',
+	image: 'image'
 };
 
 const CLASS_FILE_TYPE_MAP = {
 	html: FILE_TYPES.html,
 	audio: FILE_TYPES.audio,
 	video: FILE_TYPES.video,
+	document: FILE_TYPES.document,
+	presentation: FILE_TYPES.presentation,
+	spreadsheet: FILE_TYPES.spreadsheet,
+	pdf: FILE_TYPES.pdf,
+	image: FILE_TYPES.image
 };
 
 /**

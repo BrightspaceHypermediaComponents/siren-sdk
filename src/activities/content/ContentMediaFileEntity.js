@@ -13,20 +13,6 @@ export class ContentMediaFileEntity extends ContentFileEntity {
 		return this._entity && this._entity.properties && this._entity.properties.embedMedia;
 	}
 
-	/**
-	 * @returns {boolean|undefined} Determines whether the entity is located on the content service or not (otherwise manage files)
-	 */
-	isContentServiceResource() {
-		return this._entity && this._entity.properties && this._entity.properties.isContentServiceResource;
-	}
-
-	/**
-	 * @returns {boolean|undefined} Determines whether the advanced editing is enabled for this entity.
-	 */
-	isAdvancedEditingEnabled() {
-		return this._entity && this._entity.properties && this._entity.properties.isAdvancedEditingEnabled;
-	}
-
 	mediaFileName() {
 		return this._entity && this._entity.properties && this._entity.properties.mediaFileName;
 	}
@@ -37,34 +23,11 @@ export class ContentMediaFileEntity extends ContentFileEntity {
 	getMediaFileCaptionsHref() {
 		return ContentHelperFunctions.getHrefFromRel(Rels.Content.mediaCaptions, this._entity);
 	}
-	/**
-	 * @returns {string|undefined} The contentId of the media, present if it is located on the content service.
-	 */
-	contentServiceContentId() {
-		return this._entity && this._entity.properties && this._entity.properties.contentServiceContentId;
-	}
-	/**
-	 * @returns {string|undefined} Content service endpoint for making requests against, present if the media is located on the content service.
-	 */
-	contentServiceEndpoint() {
-		return this._entity && this._entity.properties && this._entity.properties.contentServiceEndpoint;
-	}
-	/**
-	 * @returns {string|undefined} The tenantId for the media, present if the media is located on the content service.
-	 */
-	tenantId() {
-		return this._entity && this._entity.properties && this._entity.properties.tenantId;
-	}
+
 	/**
 	 * @returns {boolean|undefined} Determines whether the download button is enabled for the embdedded media view.
 	 */
 	allowDownload() {
 		return this._entity && this._entity.properties && this._entity.properties.allowDownload;
-	}
-	/**
-	 * @returns {number|undefined} The topicId for the media, present if the media is located on the content service.
-	 */
-	topicId() {
-		return this._entity && this._entity.properties && this._entity.properties.topicId;
 	}
 }
