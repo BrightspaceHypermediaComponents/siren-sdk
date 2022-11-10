@@ -107,6 +107,12 @@ export const testData = {
 			},
 			{
 				'rel': [
+					'https://activities.api.brightspace.com/rels/evaluation'
+				],
+				'href': 'http://vlx1-mdulat.desire2learn.d2l:44444/d2l/api/hm/activities/activities/6606_2000_31/usages/6609/evaluation'
+			},
+			{
+				'rel': [
 					'https://activities.api.brightspace.com/rels/evaluation-status'
 				],
 				'href': 'http://vlx1-mdulat.desire2learn.d2l:44444/d2l/api/hm/activities/activities/6606_2000_31/usages/6609/evaluation-status'
