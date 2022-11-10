@@ -692,7 +692,7 @@ export class ActivityUsageEntity extends Entity {
 		return this._entity.getLinkByRel(Rels.Activities.indirectAssociations).href;
 	}
 
-	getEvaluationsHref() {
+	getEvaluationHref() {
 		if (!this._entity || !this._entity.hasLinkByRel(Rels.Activities.evaluation)) {
 			return;
 		}
