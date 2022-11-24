@@ -301,7 +301,6 @@ export class ActivityUsageEntity extends Entity {
 			const dateEntity = this._getSubEntityByClass(Classes.availabilityDates.availabilityDates);
 			return dateEntity && dateEntity.properties && dateEntity.properties.DisplayInCalendar;
 		}
-		return false;
 	}
 
 	/**
@@ -651,8 +650,8 @@ export class ActivityUsageEntity extends Entity {
 	}
 
 	equals(activity) {
-		const currentStartDateType = this.startDateType() ? this.startDateType().toString() : this.defaultStartDateType().toString();
-		const currentEndDateType = this.endDateType() ? this.endDateType().toString() : this.defaultEndDateType().toString();
+		const currentStartDateType = this.startDateType() ? this.startDateType().toString() : this.defaultStartDateType()?.toString();
+		const currentEndDateType = this.endDateType() ? this.endDateType().toString() : this.defaultEndDateType()?.toString();
 
 		const diffs = [
 			[this.dueDate(), activity.dates.dueDate],
