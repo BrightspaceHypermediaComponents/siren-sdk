@@ -654,7 +654,10 @@ export class ActivityUsageEntity extends Entity {
 		const diffs = [
 			[this.dueDate(), activity.dates.dueDate],
 			[this.startDate(), activity.dates.startDate],
+			[this.startDateType(), activity.dates.startDateType],
 			[this.endDate(), activity.dates.endDate],
+			[this.endDateType(), activity.dates.endDateType],
+			[this.displayInCalendar(), activity.dates.displayInCalendar],
 			[this.isDraft(), activity.isDraft]
 		];
 
