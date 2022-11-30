@@ -74,7 +74,8 @@ export const Rels = {
 		newGradeAssociation: 'https://activities.api.brightspace.com/rels/new-grade-association',
 		specialAccess: 'https://activities.api.brightspace.com/rels/special-access',
 		associateGrade: 'https://activities.api.brightspace.com/rels/associate-grade',
-		associateMultipleGrades: 'https://activities.api.brightspace.com/rels/associate-multiple-grades'
+		associateMultipleGrades: 'https://activities.api.brightspace.com/rels/associate-multiple-grades',
+		evaluation: 'https://activities.api.brightspace.com/rels/evaluation',
 	},
 	Conditions: {
 		conditions: 'https://conditions.api.brightspace.com/rels/conditions',
@@ -610,6 +611,9 @@ export const Actions = {
 		},
 		activityUsageCollection: {
 			setCollectionPaging: 'set-collection-paging',
+		},
+		evaluation: {
+			updateEvaluation: 'update-evaluation',
 		},
 		save: 'save',
 		filterWorkToDo: 'filter-work-to-do'

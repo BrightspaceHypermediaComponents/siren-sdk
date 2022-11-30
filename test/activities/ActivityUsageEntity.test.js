@@ -66,6 +66,10 @@ describe('ActivityUsageEntity', () => {
 			expect(entity.getIndirectRubricAssociationsHref()).to.equal('http://vlx1-mdulat.desire2learn.d2l:44444/d2l/api/hm/activities/activities/6606_2000_31/usages/6609/associations?indirect=1');
 		});
 
+		it('can get evaluation url', () => {
+			expect(entity.getEvaluationHref()).to.equal('http://vlx1-mdulat.desire2learn.d2l:44444/d2l/api/hm/activities/activities/6606_2000_31/usages/6609/evaluation');
+		});
+
 		it('can get special access url', () => {
 			expect(entity.specialAccessHref()).to.equal('http://vlx1-mdulat.desire2learn.d2l:44444/d2l/api/hm/activities/activities/6606_2000_31/usages/6609/special-access');
 		});
@@ -322,18 +326,24 @@ describe('ActivityUsageEntity', () => {
 				dates: {
 					dueDate: '2019-12-26T04:59:00.000Z',
 					startDate: undefined,
-					endDate: undefined
+					startDateType: undefined,
+					endDate: undefined,
+					endDateType: undefined,
+					displayInCalendar: undefined
 				},
 				isDraft: true
 			})).to.be.true;
 		});
 
-		it('return false when equal', () => {
+		it('return false when not equal', () => {
 			expect(entity.equals({
 				dates: {
 					dueDate: '2019-12-26T04:59:00.000Z',
 					startDate: undefined,
-					endDate: undefined
+					startDateType: undefined,
+					endDate: undefined,
+					endDateType: undefined,
+					displayInCalendar: undefined
 				},
 				isDraft: false
 			})).to.be.false;
