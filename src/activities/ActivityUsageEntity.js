@@ -651,7 +651,7 @@ export class ActivityUsageEntity extends Entity {
 
 	equals(activity) {
 		const currentStartDateType = this.startDateType() ? String(this.startDateType()) : String(this.defaultStartDateType());
-		const currentEndDateType = this.endDateType() ? String(this.endDateType()) : String(this.defaultEndDateType());
+		const currentEndDateType = this.endDateType() ? String(this.endDateType()) : String(this.defaultEndDateType()?.toString());
 
 		const diffs = [
 			[this.dueDate(), activity.dates.dueDate],
