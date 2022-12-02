@@ -325,11 +325,11 @@ describe('ActivityUsageEntity', () => {
 			expect(entity.equals({
 				dates: {
 					dueDate: '2019-12-26T04:59:00.000Z',
-					startDate: undefined,
-					startDateType: undefined,
-					endDate: undefined,
-					endDateType: undefined,
-					displayInCalendar: undefined
+					startDate: 'undefined',
+					startDateType: 'undefined',
+					endDate: 'undefined',
+					endDateType: 'undefined',
+					displayInCalendar: 'undefined'
 				},
 				isDraft: true
 			})).to.be.true;
@@ -339,11 +339,11 @@ describe('ActivityUsageEntity', () => {
 			expect(entity.equals({
 				dates: {
 					dueDate: '2019-12-26T04:59:00.000Z',
-					startDate: undefined,
-					startDateType: undefined,
-					endDate: undefined,
-					endDateType: undefined,
-					displayInCalendar: undefined
+					startDate: 'undefined',
+					startDateType: 'undefined',
+					endDate: 'undefined',
+					endDateType: 'undefined',
+					displayInCalendar: 'undefined'
 				},
 				isDraft: false
 			})).to.be.false;
