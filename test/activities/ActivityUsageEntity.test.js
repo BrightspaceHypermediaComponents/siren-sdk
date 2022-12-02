@@ -326,9 +326,9 @@ describe('ActivityUsageEntity', () => {
 				dates: {
 					dueDate: '2019-12-26T04:59:00.000Z',
 					startDate: undefined,
-					startDateType: undefined,
+					startDateType: 'undefined',
 					endDate: undefined,
-					endDateType: undefined,
+					endDateType: 'undefined',
 					displayInCalendar: undefined
 				},
 				isDraft: true
@@ -340,9 +340,9 @@ describe('ActivityUsageEntity', () => {
 				dates: {
 					dueDate: '2019-12-26T04:59:00.000Z',
 					startDate: undefined,
-					startDateType: undefined,
+					startDateType: 'undefined',
 					endDate: undefined,
-					endDateType: undefined,
+					endDateType: 'undefined',
 					displayInCalendar: undefined
 				},
 				isDraft: false
