@@ -48,3 +48,4 @@ Maintenance branch names should be of the form: `+([0-9])?(.{+([0-9]),x}).x`.
 Regular expressions are complicated, but this essentially means branch names should look like:
 * `1.15.x` for patch releases on top of the `1.15` release (after version `1.16` exists)
 * `2.x` for feature releases on top of the `2` release (after version `3` exists)
+
