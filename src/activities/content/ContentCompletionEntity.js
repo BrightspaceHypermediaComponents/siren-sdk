@@ -7,12 +7,12 @@ import { performSirenAction } from '../../es6/SirenAction.js';
 export class ContentCompletionEntity extends Entity {
 
 	/** @returns {bool} Whether or not the the content completion type is manual*/
-	async isContentCompletionManual() {
+	isContentCompletionManual() {
 		return this._entity && this._entity.hasClass('manual');
 	}
 
 	/** @returns {bool} Whether or not the the content has been marked as completed*/
-	async isContentCompleted() {
+	isContentCompleted() {
 		return this._entity && this._entity.hasClass('completed');
 	}
 
