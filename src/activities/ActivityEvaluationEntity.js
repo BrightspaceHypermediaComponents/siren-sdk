@@ -69,6 +69,26 @@ export class ActivityEvaluationEntity extends Entity {
 		return { name: fieldName, value: value };
 	}
 
+	/**
+	 * @summary Checks if evaluation entity has changed, primarily used for dirty check
+	 * @param {object} evaluation the evaluation that's being modified
+	 */
+	equals(evaluation) {
+		const diffs = [
+			[evaluation.allowMultiple, this.getAllowMultiple()],
+			[evaluation.unevalAsZero, this.getUnevalAsZero()],
+			[evaluation.calculationMethodSelection, this.getCalculationMethodSelection()],
+		];
+
+		for (const [current, initial] of diffs) {
+			if (current !== initial) {
+				return false;
+			}
+		}
+
+		return true;
+	}
+
 	async save(evaluation) {
 		if (!evaluation) {
 			return;
