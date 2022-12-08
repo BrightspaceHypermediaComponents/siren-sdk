@@ -369,6 +369,17 @@ export class DiscussionTopicEntity extends Entity {
 		return subEntity.hasClass(Classes.discussions.noGroupsOrSections);
 	}
 
+	groupSectionRestrictionsHref() {
+		if (!this._entity) {
+			return false;
+		}
+		const subEntity = this._entity.getSubEntityByRel(Rels.Discussions.groupSectionRestrictions);
+		if (!subEntity) {
+			return false;
+		}
+		return subEntity.href;
+	}
+
 	/**
 	 * @summary Checks if topic entity has changed, primarily used for dirty check
 	 * @param {object} topic the topic that's being modified
