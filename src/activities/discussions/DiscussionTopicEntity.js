@@ -356,6 +356,20 @@ export class DiscussionTopicEntity extends Entity {
 	}
 
 	/**
+	 * @returns {bool} If the topic's course has no groups or sections
+	 */
+	hasNoGroupsOrSections() {
+		if (!this._entity) {
+			return false;
+		}
+		const subEntity = this._entity.getSubEntityByRel(Rels.Discussions.groupSectionRestrictions);
+		if (!subEntity) {
+			return false;
+		}
+		return subEntity.hasClass(Classes.discussions.noGroupsOrSections);
+	}
+
+	/**
 	 * @summary Checks if topic entity has changed, primarily used for dirty check
 	 * @param {object} topic the topic that's being modified
 	 */

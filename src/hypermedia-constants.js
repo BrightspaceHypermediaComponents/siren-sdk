@@ -141,6 +141,7 @@ export const Rels = {
 		forum: 'https://discussions.api.brightspace.com/rels/forum',
 		topicCategories: 'https://discussions.api.brightspace.com/rels/topic-categories',
 		topic: 'https://discussions.api.brightspace.com/rels/topic',
+		groupSectionRestrictions: 'https://discussions.api.brightspace.com/rels/group-section-restrictions'
 	},
 	// Files API sub-domain rels
 	Files: {
@@ -379,7 +380,8 @@ export const Classes = {
 		topic: 'topic',
 		description: 'description',
 		unlocked: 'unlocked',
-		hasPosts: 'has-posts'
+		hasPosts: 'has-posts',
+		noGroupsOrSections: 'no-groups-or-sections',
 	},
 	enrollments: {
 		enrollment: 'enrollment',
