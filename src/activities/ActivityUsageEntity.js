@@ -301,6 +301,12 @@ export class ActivityUsageEntity extends Entity {
 			const dateEntity = this._getSubEntityByClass(Classes.availabilityDates.availabilityDates);
 			return dateEntity && dateEntity.properties && dateEntity.properties.DisplayInCalendar;
 		}
+		// Below is an interim solution for FACE Quizzing until Dates & States is fully implemented for FACE Quizzing
+		const datesEntity = this._getSubEntityByClass('dates');
+		if (datesEntity) {
+			const action = datesEntity.getActionByName(Actions.activities.update);
+			return datesEntity && action.getFieldByName('displayInCalendar').value;
+		}
 	}
 
 	/**
