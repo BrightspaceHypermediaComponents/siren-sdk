@@ -305,7 +305,8 @@ export class ActivityUsageEntity extends Entity {
 		const datesEntity = this._getSubEntityByClass('dates');
 		if (datesEntity) {
 			const action = datesEntity.getActionByName(Actions.activities.update);
-			return datesEntity && action.getFieldByName('displayInCalendar').value;
+			const displayInCalendar = action.getFieldByName('displayInCalendar');
+			return datesEntity && displayInCalendar && displayInCalendar.value;
 		}
 	}
 
