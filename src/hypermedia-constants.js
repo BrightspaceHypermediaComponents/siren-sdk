@@ -141,7 +141,8 @@ export const Rels = {
 		forum: 'https://discussions.api.brightspace.com/rels/forum',
 		topicCategories: 'https://discussions.api.brightspace.com/rels/topic-categories',
 		topic: 'https://discussions.api.brightspace.com/rels/topic',
-		groupSectionRestrictions: 'https://discussions.api.brightspace.com/rels/group-section-restrictions'
+		groupSectionRestrictions: 'https://discussions.api.brightspace.com/rels/group-section-restrictions',
+		groupSectionRestrictionsDetail: 'https://discussions.api.brightspace.com/rels/topic/group-section-restrictions-detail'
 	},
 	// Files API sub-domain rels
 	Files: {
@@ -382,6 +383,11 @@ export const Classes = {
 		unlocked: 'unlocked',
 		hasPosts: 'has-posts',
 		noGroupsOrSections: 'no-groups-or-sections',
+		restrictedThreads: 'restricted-threads',
+		restrictedTopic: 'restricted-topic',
+		bySection: 'by-section',
+		groupCategory: 'group-category',
+		section: 'section'
 	},
 	enrollments: {
 		enrollment: 'enrollment',
@@ -696,6 +702,7 @@ export const Actions = {
 		unsubscribeToParentNotifications: 'unsubscribe-to-parent-notifications'
 	},
 	discussions: {
+		delete: 'delete',
 		forums: {
 			createForum: 'create-forum',
 		},
@@ -712,6 +719,9 @@ export const Actions = {
 			createAndAssociateWithForum: 'create-and-associate-with-forum',
 			requiresApproval : 'requires-approval'
 		},
+		groupSectionRestrictions: {
+			startUpdateRestrictions: 'start-update-restrictions'
+		}
 	},
 	rubrics: {
 		selectCriterionCell: 'select-criterion-cell'
