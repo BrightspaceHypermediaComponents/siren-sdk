@@ -20,7 +20,7 @@ export class TopicGroupSectionRestrictionsEntity extends Entity {
 		return this._entity.hasClass(Classes.discussions.noGroupsOrSections);
 	}
 	isUnRestricted() {
-		return !this.isRestrictedThreads() && !this.isRestrictedTopic() && !this.hasNoGroupsOrSections();
+		return !this.isRestrictedThreads() && !this.isRestrictedTopic();
 	}
 	isLocked() {
 		if (!this._entity) return;
