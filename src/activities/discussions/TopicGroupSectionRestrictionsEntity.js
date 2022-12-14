@@ -1,5 +1,6 @@
 import { Actions, Classes, Rels } from '../../hypermedia-constants.js';
 import { Entity } from '../../es6/Entity.js';
+import { performSirenAction } from '../../es6/SirenAction.js';
 import { RestrictedTopicTileEntity } from './RestrictedTopicTileEntity.js';
 
 /**
