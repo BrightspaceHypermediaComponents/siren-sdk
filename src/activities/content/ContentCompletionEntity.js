@@ -8,7 +8,7 @@ export class ContentCompletionEntity extends Entity {
 
 	/** @returns {bool} Whether or not the the content completion type is manual*/
 	isContentCompletionManual() {
-		return this._entity && this._entity.hasClass('manual');
+		return this._entity && this._entity.hasClass('requires-user-mark-as-complete');
 	}
 
 	/** @returns {bool} Whether or not the the content has been marked as completed*/
