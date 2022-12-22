@@ -26,6 +26,14 @@ export class TopicGroupSectionRestrictionsEntity extends Entity {
 		if (!this._entity) return;
 		return !this._entity.hasActionByName(Actions.discussions.groupSectionRestrictions.startUpdateRestrictions);
 	}
+	canDeleteRestrictions() {
+		if (!this._entity) return;
+
+		const subEntity = this._entity.getSubEntityByRel(Rels.Discussions.groupSectionRestrictionsDetail);
+		if (!subEntity) return;
+
+		return subEntity.hasActionByName(Actions.discussions.delete);
+	}
 	async deleteRestrictions() {
 		if (!this._entity) return;
 
