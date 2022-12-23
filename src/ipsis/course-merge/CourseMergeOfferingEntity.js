@@ -20,6 +20,10 @@ export class CourseMergeOfferingEntity extends Entity {
 		return this._entity?.properties?.isPendingMerge;
 	}
 
+	isPendingUnmerge() {
+		return this._entity?.properties?.isPendingUnmerge;
+	}
+
 	isMerged() {
 		return this._entity?.properties?.isMerged;
 	}
