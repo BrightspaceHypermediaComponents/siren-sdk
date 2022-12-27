@@ -1,6 +1,6 @@
 {
   "name": "@brightspace-hmc/siren-sdk",
-  "version": "2.58.0",
+  "version": "2.59.0",
   "type": "module",
   "description": "",
   "main": "index.js",
