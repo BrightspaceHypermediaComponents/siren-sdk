@@ -116,4 +116,18 @@ export class TopicGroupSectionRestrictionsEntity extends Entity {
 			return new TopicGroupSectionRestrictionsEntity(entity, this._token);
 		}
 	}
+
+	equals(restrictionsEntity) {
+		const diffs = [
+			[restrictionsEntity.isUnRestricted, this.isUnRestricted()]
+		];
+
+		for (const [current, initial] of diffs) {
+			if (current !== initial) {
+				return false;
+			}
+		}
+
+		return true;
+	}
 }
