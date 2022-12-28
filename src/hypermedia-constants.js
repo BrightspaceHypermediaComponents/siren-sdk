@@ -387,7 +387,9 @@ export const Classes = {
 		restrictedTopic: 'restricted-topic',
 		bySection: 'by-section',
 		groupCategory: 'group-category',
-		section: 'section'
+		section: 'section',
+		allGroups: 'all-groups',
+		allSections: 'all-sections'
 	},
 	enrollments: {
 		enrollment: 'enrollment',
