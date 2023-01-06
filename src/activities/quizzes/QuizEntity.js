@@ -1036,7 +1036,6 @@ export class QuizEntity extends Entity {
 			[this.password(), quiz.password],
 			[this.notificationEmail(), quiz.notificationEmail],
 			[this.isPreventMovingBackwardsEnabled(), quiz.preventMovingBackwards],
-			[this.isAutoSetGradedEnabled(), quiz.autoSetGraded],
 			[this.isSyncGradebookEnabled(), quiz.syncGradebook],
 			[this.isSyncGradebookDefault(), quiz.syncGradebookDefault],
 			[this.descriptionEditorHtml(), quiz.description],
