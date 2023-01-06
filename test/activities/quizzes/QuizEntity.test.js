@@ -91,10 +91,10 @@ describe('QuizEntity', () => {
 			expect(quizEntity.equals(modifiedEntity)).to.be.false;
 		});
 
-		it('returns false when autoSetGraded not equal', () => {
+		it('returns true even when autoSetGraded not equal', () => {
 			const quizEntity = new QuizEntity(editableEntity);
 			modifiedEntity.autoSetGraded = false;
-			expect(quizEntity.equals(modifiedEntity)).to.be.false;
+			expect(quizEntity.equals(modifiedEntity)).to.be.true;
 		});
 
 		it('returns false when syncGradebook not equal', () => {
