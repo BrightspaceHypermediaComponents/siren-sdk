@@ -5,11 +5,11 @@ import { performSirenAction } from '../../es6/SirenAction.js';
 export class GroupSectionRestrictionActionsEntity extends Entity {
 	canSetToRestrictedTopic() {
 		if (!this._entity) return;
-		return !this._entity.hasActionByName(Actions.discussions.groupSectionRestrictions.setToRestrictedTopic);
+		return this._entity.hasActionByName(Actions.discussions.groupSectionRestrictions.setToRestrictedTopic);
 	}
 	canSetToRestrictedThreads() {
 		if (!this._entity) return;
-		return !this._entity.hasActionByName(Actions.discussions.groupSectionRestrictions.setToRestrictedThreads);
+		return this._entity.hasActionByName(Actions.discussions.groupSectionRestrictions.setToRestrictedThreads);
 	}
 	setToRestrictedTopic() {
 		if (!this._entity) return;
