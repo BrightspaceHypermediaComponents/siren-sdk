@@ -2,6 +2,7 @@ import { Actions, Classes, Rels } from '../../hypermedia-constants.js';
 import { Entity } from '../../es6/Entity.js';
 import { performSirenAction } from '../../es6/SirenAction.js';
 import { RestrictedTopicTileEntity } from './RestrictedTopicTileEntity.js';
+import { GroupSectionRestrictionActionsEntity } from './GroupSectionRestrictionActionsEntity.js';
 
 /**
  * TopicGroupSectionRestrictionsEntity class representation of a D2L Discussion Topic Group Section Restrictions entity.
@@ -80,6 +81,32 @@ export class TopicGroupSectionRestrictionsEntity extends Entity {
 			return new RestrictedTopicTileEntity(item);
 		});
 	}
+
+	async startUpdateRestrictions() {
+		if (!this._entity) return;
+
+		const action = this._entity.getActionByName(Actions.discussions.groupSectionRestrictions.startUpdateRestrictions);
+		if (!action) return;
+
+		const returnedEntity = await this._performGetActionWithWorkingCopy(action);
+		if (!returnedEntity) return;
+		return new GroupSectionRestrictionActionsEntity(returnedEntity);
+	}
+
+	/* This helper is for GET actions with a workingCopyId query parameter only, needed because of a bug in SirenAction.js.
+	 * Other action methods (PATCH/POST/DELETE work correctly without this helper.)
+	*/
+	_performGetActionWithWorkingCopy(action) {
+		const fields = [];
+		// HACK adding query params as fields due to bug in performSirenAction (_getSirenFields function)
+		const url = new URL(action.href, window.location.origin);
+		for (const [key, value] of url.searchParams) {
+			fields.push({ name: key, value: value });
+		}
+
+		return performSirenAction(this._token, action, fields, false, true);
+	}
+
 	_canCheckout() {
 		return this._entity && this._entity.hasActionByName(Actions.workingCopy.checkout);
 	}
