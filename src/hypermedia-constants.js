@@ -722,7 +722,9 @@ export const Actions = {
 			requiresApproval : 'requires-approval'
 		},
 		groupSectionRestrictions: {
-			startUpdateRestrictions: 'start-update-restrictions'
+			startUpdateRestrictions: 'start-update-restrictions',
+			setToRestrictedTopic: 'set-to-restricted-topic',
+			setToRestrictedThreads: 'set-to-restricted-threads'
 		}
 	},
 	rubrics: {
