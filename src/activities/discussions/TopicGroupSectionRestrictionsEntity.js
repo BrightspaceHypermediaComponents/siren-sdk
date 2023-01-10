@@ -1,8 +1,8 @@
 import { Actions, Classes, Rels } from '../../hypermedia-constants.js';
 import { Entity } from '../../es6/Entity.js';
+import { GroupSectionRestrictionActionsEntity } from './GroupSectionRestrictionActionsEntity.js';
 import { performSirenAction } from '../../es6/SirenAction.js';
 import { RestrictedTopicTileEntity } from './RestrictedTopicTileEntity.js';
-import { GroupSectionRestrictionActionsEntity } from './GroupSectionRestrictionActionsEntity.js';
 
 /**
  * TopicGroupSectionRestrictionsEntity class representation of a D2L Discussion Topic Group Section Restrictions entity.
