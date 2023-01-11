@@ -759,7 +759,7 @@ export const Actions = {
 			searchCourseOfferings: 'search-course-offerings',
 			select: 'select',
 			selectAsTarget: 'select-as-target',
-			unmergeCourseOfferings: "unmerge-course-offerings"
+			unmergeCourseOfferings: 'unmerge-course-offerings'
 		}
 	},
 	quizzes: {
