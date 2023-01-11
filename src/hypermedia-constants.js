@@ -758,7 +758,8 @@ export const Actions = {
 			mergeCourseOfferings: 'merge-course-offerings',
 			searchCourseOfferings: 'search-course-offerings',
 			select: 'select',
-			selectAsTarget: 'select-as-target'
+			selectAsTarget: 'select-as-target',
+			unmergeCourseOfferings: "unmerge-course-offerings"
 		}
 	},
 	quizzes: {
