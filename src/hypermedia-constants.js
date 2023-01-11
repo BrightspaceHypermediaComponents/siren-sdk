@@ -368,7 +368,8 @@ export const Classes = {
 		dueDate: 'due-date',
 		endDate: 'end-date',
 		issueDate: 'issue-date',
-		startDate: 'start-date'
+		startDate: 'start-date',
+		displayInCalendar: 'display-in-calendar'
 	},
 	availabilityDates: {
 		availabilityDates: 'availability-dates',
