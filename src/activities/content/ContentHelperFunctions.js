@@ -13,6 +13,13 @@ const ContentHelperFunctions = {
 		}
 		return subEntity;
 	},
+	getRawDescriptionSubEntity: (entity) => {
+		const [subEntity] = entity.getSubEntitiesByClass(Classes.content.rawDescription);
+		if (!subEntity || !subEntity.properties) {
+			return null;
+		}
+		return subEntity;
+	},
 	getLastModifiedSubEntity: (entity) => {
 		const [subEntity] = entity.getSubEntitiesByClass(Classes.content.lastModified);
 

@@ -346,6 +346,7 @@ export const Classes = {
 		content: 'content',
 		sequencedActivity: 'sequenced-activity',
 		description: 'description',
+		rawDescription: 'raw-description',
 		lastModified: 'lastModified'
 	},
 	webLink: {

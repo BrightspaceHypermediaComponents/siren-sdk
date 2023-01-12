@@ -20,6 +20,17 @@ export class ContentModuleEntity extends Entity {
 	}
 
 	/**
+	 * @returns {string|null} Raw description html of the content-module item
+	 */
+	rawDescriptionRichText() {
+		const rawDescriptionSubEntity = ContentHelperFunctions.getRawDescriptionSubEntity(this._entity);
+		if (!rawDescriptionSubEntity) {
+			return null;
+		}
+		return rawDescriptionSubEntity.properties.html || '';
+	}
+
+	/**
 	 * @returns {string|null} Description text of the content-module item
 	 */
 	descriptionText() {
@@ -94,7 +105,7 @@ export class ContentModuleEntity extends Entity {
 	equals(contentModule) {
 		const diffs = [
 			[this.title(), contentModule.title],
-			[this.descriptionRichText(), contentModule.descriptionRichText]
+			[this.rawDescriptionRichText(), contentModule.descriptionRichText]
 		];
 		for (const [left, right] of diffs) {
 			if (left !== right) {
