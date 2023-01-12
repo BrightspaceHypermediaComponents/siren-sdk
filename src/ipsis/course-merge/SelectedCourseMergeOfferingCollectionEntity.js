@@ -2,7 +2,7 @@
  * SelectedCourseMergeOfferingCollectionEntity class representation of a list of course merge offering as defined in the LMS
  * See: ISirenCourseMergeSerializer.SerializeSelectedCourseOfferingListResult
  */
-import { Actions } from '../../hypermedia-constants.js';
+import { Actions, Classes } from '../../hypermedia-constants.js';
 import { Entity } from '../../es6/Entity.js';
 import { performSirenAction } from '../../es6/SirenAction.js';
 
@@ -15,7 +15,7 @@ export class SelectedCourseMergeOfferingCollectionEntity extends Entity {
 	}
 
 	selectedCourseMergeOffering() {
-		return this._entity && this._entity.getSubEntitiesByClass('target');
+		return this._entity && this._entity.getSubEntitiesByClass(Classes.ipsis.target);
 	}
 
 	hasMergeAction() {
