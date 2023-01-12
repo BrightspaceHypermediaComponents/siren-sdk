@@ -24,7 +24,7 @@ describe('ContentModuleEntity', () => {
 		});
 
 		it('reads rich text description', () => {
-			expect(contentModuleEntity.descriptionRichText()).to.equal('<p>description text</p>');
+			expect(contentModuleEntity.rawDescriptionRichText()).to.equal('<p>description text</p>');
 		});
 
 		it('reads text description', () => {
