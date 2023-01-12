@@ -105,7 +105,7 @@ export class ContentModuleEntity extends Entity {
 	equals(contentModule) {
 		const diffs = [
 			[this.title(), contentModule.title],
-			[this.rawDescriptionRichText(), contentModule.descriptionRichText]
+			[this.descriptionRichText(), contentModule.descriptionRichText]
 		];
 		for (const [left, right] of diffs) {
 			if (left !== right) {
