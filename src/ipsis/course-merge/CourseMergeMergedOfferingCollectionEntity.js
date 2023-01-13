@@ -1,6 +1,6 @@
 /**
- * SelectedCourseMergeOfferingCollectionEntity class representation of a list of course merge offering as defined in the LMS
- * See: ISirenCourseMergeSerializer.SerializeSelectedCourseOfferingListResult
+ * CourseMergeMergedOfferingCollectionEntity class representation of a list of course merge merged offerings as defined in the LMS
+ * See: ISirenCourseMergeSerializer.SerializeMergedCoursesListResult
  */
 import { Actions, Classes } from '../../hypermedia-constants.js';
 import { Entity } from '../../es6/Entity.js';
@@ -8,10 +8,7 @@ import { performSirenAction } from '../../es6/SirenAction.js';
 
 export class CourseMergeMergedOfferingCollectionEntity extends Entity {
 	originalSourceCourseMergeOfferings() {
-		if (!this._entity) {
-			return;
-		}
-		return this._entity.entities?.filter(course => !course.class.includes(Classes.ipsis.originalTarget));
+		return this._entity?.entities?.filter(course => !course.class.includes(Classes.ipsis.originalTarget));
 	}
 
 	originalTargetCourseMergeOffering() {
@@ -23,7 +20,7 @@ export class CourseMergeMergedOfferingCollectionEntity extends Entity {
 	}
 
 	hasUnmergeAction() {
-		return this._entity.hasActionByName(Actions.ipsis.sisCourseMerge.unmergeCourseOfferings);
+		return this._entity?.hasActionByName(Actions.ipsis.sisCourseMerge.unmergeCourseOfferings);
 	}
 
 	getUnmergeAction() {
@@ -34,13 +31,13 @@ export class CourseMergeMergedOfferingCollectionEntity extends Entity {
 		return this._entity.getActionByName(Actions.ipsis.sisCourseMerge.unmergeCourseOfferings);
 	}
 
-	async unmerge() {
+	unmerge() {
 		const action = this.getUnmergeAction();
 		if (!action) {
 			return;
 		}
 
-		return await performSirenAction(this._token, action, null, true);
+		return performSirenAction(this._token, action, null, true);
 	}
 }
 
