@@ -19,6 +19,10 @@ export class CourseMergeMergedOfferingCollectionEntity extends Entity {
 		return this._entity?.properties?.userOwnedByMultipleSourceSystems;
 	}
 
+	canUnmergeCourses() {
+		return this._entity?.properties?.canUnmergeCourses;
+	}
+
 	hasUnmergeAction() {
 		return this._entity?.hasActionByName(Actions.ipsis.sisCourseMerge.unmergeCourseOfferings);
 	}
