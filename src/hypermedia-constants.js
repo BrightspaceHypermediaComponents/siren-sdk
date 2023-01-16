@@ -171,8 +171,8 @@ export const Rels = {
 		weight: 'https://grades.api.brightspace.com/rels/weight'
 	},
 	// IPSIS API sub-domain rels
-	IPSIS: {
-		SISCourseMerge: {
+	ipsis: {
+		sisCourseMerge: {
 			courseMergeOfferings: 'https://ipsis.api.brightspace.com/rels/course-merge-offerings',
 			courseMergeOffering: 'https://ipsis.api.brightspace.com/rels/course-merge-offering',
 			selectedCourseMergeOfferings: 'https://ipsis.api.brightspace.com/rels/selected-course-merge-offerings',
