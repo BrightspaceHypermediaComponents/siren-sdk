@@ -110,9 +110,9 @@ export class CourseMergeOfferingEntity extends Entity {
 	}
 
 	mergedCourseOfferingsHref() {
-		if (!this._entity || !this._entity.hasLinkByRel(Rels.IPSIS.SISCourseMerge.mergedCourseOfferings)) {
+		if (!this._entity || !this._entity.hasLinkByRel(Rels.ipsis.sisCourseMerge.mergedCourseOfferings)) {
 			return;
 		}
-		return this._entity.getLinkByRel(Rels.IPSIS.SISCourseMerge.mergedCourseOfferings).href;
+		return this._entity.getLinkByRel(Rels.ipsis.sisCourseMerge.mergedCourseOfferings).href;
 	}
 }
