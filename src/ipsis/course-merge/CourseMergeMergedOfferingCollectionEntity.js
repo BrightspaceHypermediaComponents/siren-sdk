@@ -8,11 +8,11 @@ import { performSirenAction } from '../../es6/SirenAction.js';
 
 export class CourseMergeMergedOfferingCollectionEntity extends Entity {
 	originalSourceCourseMergeOfferings() {
-		return this._entity?.entities?.filter(course => !course.class.includes(Classes.ipsis.originalTarget));
+		return this._entity?.entities?.filter(course => !course.class.includes(Classes.ipsis.sisCourseMerge.originalTarget));
 	}
 
 	originalTargetCourseMergeOffering() {
-		return this._entity?.getSubEntitiesByClass(Classes.ipsis.originalTarget)?.[0];
+		return this._entity?.getSubEntitiesByClass(Classes.ipsis.sisCourseMerge.originalTarget)?.[0];
 	}
 
 	userOwnedByMultipleSourceSystems() {

@@ -15,7 +15,7 @@ export class SelectedCourseMergeOfferingCollectionEntity extends Entity {
 	}
 
 	selectedCourseMergeOffering() {
-		return this._entity && this._entity.getSubEntitiesByClass(Classes.ipsis.target);
+		return this._entity && this._entity.getSubEntitiesByClass(Classes.ipsis.sisCourseMerge.target);
 	}
 
 	hasMergeAction() {

@@ -556,8 +556,10 @@ export const Classes = {
 	},
 	relativeUri: 'relative-uri',
 	ipsis: {
-		originalTarget: 'original-target',
-		target: 'target'
+		sisCourseMerge: {
+			originalTarget: 'original-target',
+			target: 'target'
+		}
 	}
 };
 
