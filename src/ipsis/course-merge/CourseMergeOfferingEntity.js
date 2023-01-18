@@ -108,4 +108,11 @@ export class CourseMergeOfferingEntity extends Entity {
 	updateEntity(entity) {
 		this._entity = entity;
 	}
+
+	mergedCourseOfferingsHref() {
+		if (!this._entity || !this._entity.hasLinkByRel(Rels.ipsis.sisCourseMerge.mergedCourseOfferings)) {
+			return;
+		}
+		return this._entity.getLinkByRel(Rels.ipsis.sisCourseMerge.mergedCourseOfferings).href;
+	}
 }
