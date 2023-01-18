@@ -2,7 +2,7 @@
  * CourseMergeMergedOfferingCollectionEntity class representation of a list of course merge merged offerings as defined in the LMS
  * See: ISirenCourseMergeSerializer.SerializeMergedCoursesListResult
  */
-import { Actions, Classes } from '../../hypermedia-constants.js';
+import { Actions, Classes, Rels } from '../../hypermedia-constants.js';
 import { Entity } from '../../es6/Entity.js';
 import { performSirenAction } from '../../es6/SirenAction.js';
 
@@ -21,6 +21,14 @@ export class CourseMergeMergedOfferingCollectionEntity extends Entity {
 
 	canUnmergeCourses() {
 		return this._entity?.properties?.canUnmergeCourses;
+	}
+
+	courseMergeOfferingsHref() {
+		if (!this._entity?.hasLinkByRel(Rels.ipsis.sisCourseMerge.courseMergeOfferings)) {
+			return;
+		}
+
+		return this._entity.getLinkByRel(Rels.ipsis.sisCourseMerge.courseMergeOfferings).href;
 	}
 
 	hasUnmergeAction() {
