@@ -6,21 +6,8 @@ import { Actions, Rels } from '../../hypermedia-constants.js';
 import { BaseCollectionEntity } from './BaseCollectionEntity.js';
 
 export class CourseMergeOfferingCollectionEntity extends BaseCollectionEntity {
-
-	constructor(entity, token, listener) {
-		super(entity, token, listener);
-		this._allEntities = null;
-	}
-
-	courseMergeOfferings() {
-		if (!this._entity) {
-			return;
-		}
-		return this._allEntities ?? this._entity.entities;
-	}
-
 	prependCourseMergeOfferings(previousCourseMergeOfferingCollectionEntity) {
-		this._allEntities = previousCourseMergeOfferingCollectionEntity.courseMergeOfferings().concat(this._entity.entities);
+		this.prependCourseOfferings(previousCourseMergeOfferingCollectionEntity.courseOfferings());
 	}
 
 	userOwnedByMultipleSourceSystems() {
@@ -61,11 +48,6 @@ export class CourseMergeOfferingCollectionEntity extends BaseCollectionEntity {
 		}
 
 		return this._entity.getActionByName(Actions.ipsis.sisCourseMerge.searchCourseOfferings);
-	}
-
-	updateEntity(entity) {
-		this._entity = entity;
-		this._allEntities = null;
 	}
 }
 

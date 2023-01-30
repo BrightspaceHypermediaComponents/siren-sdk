@@ -8,7 +8,7 @@ import { performSirenAction } from '../../es6/SirenAction.js';
 
 export class CourseMergeMergedOfferingCollectionEntity extends BaseCollectionEntity {
 	originalSourceCourseMergeOfferings() {
-		return this._entity?.entities?.filter(course => !course.class.includes(Classes.ipsis.sisCourseMerge.originalTarget));
+		return this._entity?.courseOfferings()?.filter(course => !course.class.includes(Classes.ipsis.sisCourseMerge.originalTarget));
 	}
 
 	originalTargetCourseMergeOffering() {
@@ -16,7 +16,7 @@ export class CourseMergeMergedOfferingCollectionEntity extends BaseCollectionEnt
 	}
 
 	prependOriginalSourceCourseMergeOfferings(previousCourseMergeMergedOfferingCollectionEntity) {
-		this._entity.entities.unshift(...previousCourseMergeMergedOfferingCollectionEntity.originalSourceCourseMergeOfferings());
+		this.prependCourseOfferings(previousCourseMergeMergedOfferingCollectionEntity.originalSourceCourseMergeOfferings());
 	}
 
 	userOwnedByMultipleSourceSystems() {
