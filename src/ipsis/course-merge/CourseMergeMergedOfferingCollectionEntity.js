@@ -3,10 +3,10 @@
  * See: ISirenCourseMergeSerializer.SerializeMergedCoursesListResult
  */
 import { Actions, Classes, Rels } from '../../hypermedia-constants.js';
-import { Entity } from '../../es6/Entity.js';
+import { BaseCollectionEntity } from './BaseCollectionEntity.js';
 import { performSirenAction } from '../../es6/SirenAction.js';
 
-export class CourseMergeMergedOfferingCollectionEntity extends Entity {
+export class CourseMergeMergedOfferingCollectionEntity extends BaseCollectionEntity {
 	originalSourceCourseMergeOfferings() {
 		return this._entity?.entities?.filter(course => !course.class.includes(Classes.ipsis.sisCourseMerge.originalTarget));
 	}
@@ -17,57 +17,6 @@ export class CourseMergeMergedOfferingCollectionEntity extends Entity {
 
 	prependOriginalSourceCourseMergeOfferings(previousCourseMergeMergedOfferingCollectionEntity) {
 		this._entity.entities.unshift(...previousCourseMergeMergedOfferingCollectionEntity.originalSourceCourseMergeOfferings());
-	}
-
-	totalCount() {
-		return this._pagingInfo()?.totalCount;
-	}
-
-	page() {
-		return this._pagingInfo()?.page;
-	}
-
-	pageSize() {
-		return this._pagingInfo()?.pageSize;
-	}
-
-	loadMorePageSize() {
-		const pageSize = this.pageSize();
-		const totalCount = this.totalCount() ?? 0;
-		const courseMergeOfferingsLength = this._entity?.entities?.length ?? 0;
-		// if pageSize is larger than the number remaining items, return the number of remaining items to be loaded
-		if (totalCount < courseMergeOfferingsLength + (pageSize ?? 0)) {
-			return totalCount - courseMergeOfferingsLength;
-		}
-		return pageSize;
-	}
-
-	_pagingInfo() {
-		return this._entity?.properties?.pagingInfo;
-	}
-
-	hasNextPage() {
-		return this._entity.hasLinkByRel('next');
-	}
-
-	hasPrevPage() {
-		return this._entity.hasLinkByRel('prev');
-	}
-
-	nextPageHref() {
-		if (!this.hasNextPage()) {
-			return;
-		}
-
-		return this._entity.getLinkByRel('next').href;
-	}
-
-	prevPageHref() {
-		if (!this.hasPrevPage()) {
-			return;
-		}
-
-		return this._entity.getLinkByRel('prev').href;
 	}
 
 	userOwnedByMultipleSourceSystems() {
