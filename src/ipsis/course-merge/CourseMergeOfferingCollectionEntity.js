@@ -10,11 +10,11 @@ export class CourseMergeOfferingCollectionEntity extends BaseCollectionEntity {
 		if (!this._entity) {
 			return;
 		}
-		return this._entity.entities;
+		return allEntities ?? this._entity.entities;
 	}
 
 	prependCourseMergeOfferings(previousCourseMergeOfferingCollectionEntity) {
-		this._entity.entities.unshift(...previousCourseMergeOfferingCollectionEntity._entity.entities);
+		this.allEntities = previousCourseMergeOfferingCollectionEntity.courseMergeOfferings().concat(this._entity.entities);
 	}
 
 	userOwnedByMultipleSourceSystems() {
@@ -59,6 +59,7 @@ export class CourseMergeOfferingCollectionEntity extends BaseCollectionEntity {
 
 	updateEntity(entity) {
 		this._entity = entity;
+		this.allEntities = null;
 	}
 }
 
