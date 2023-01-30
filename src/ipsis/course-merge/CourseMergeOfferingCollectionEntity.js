@@ -6,11 +6,17 @@ import { Actions, Rels } from '../../hypermedia-constants.js';
 import { BaseCollectionEntity } from './BaseCollectionEntity.js';
 
 export class CourseMergeOfferingCollectionEntity extends BaseCollectionEntity {
+
+	constructor(entity, token, listener) {
+		super(entity, token, listener);
+		this.allEntities = null;
+	}
+
 	courseMergeOfferings() {
 		if (!this._entity) {
 			return;
 		}
-		return allEntities ?? this._entity.entities;
+		return this.allEntities ?? this._entity.entities;
 	}
 
 	prependCourseMergeOfferings(previousCourseMergeOfferingCollectionEntity) {
