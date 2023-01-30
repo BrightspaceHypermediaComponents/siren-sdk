@@ -1,6 +1,7 @@
 import { Actions } from '../../hypermedia-constants.js';
 import { Entity } from '../../es6/Entity.js';
 import { performSirenAction } from '../../es6/SirenAction.js';
+import { RestrictedTopicCollectionEntity } from './RestrictedTopicCollectionEntity.js';
 
 export class GroupSectionRestrictionActionsEntity extends Entity {
 	canSetToRestrictedTopic() {
@@ -40,5 +41,16 @@ export class GroupSectionRestrictionActionsEntity extends Entity {
 		const fields = action.getFieldByName('groupTypeId');
 		return fields && fields.value;
 
+	}
+	restrictedTopicCollection() {
+		if (!this._entity) return null;
+
+		const subEntity = this._entity.getSubEntityByClass('restricted-topic');
+		if (!subEntity) {
+			return null;
+		}
+		return (subEntity.getSubEntitiesByRel('item') || []).map(entity => {
+			return new RestrictedTopicCollectionEntity(entity);
+		});
 	}
 }

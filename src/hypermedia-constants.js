@@ -390,6 +390,7 @@ export const Classes = {
 		bySection: 'by-section',
 		groupCategory: 'group-category',
 		section: 'section',
+		selected: 'selected',
 		allGroups: 'all-groups',
 		allSections: 'all-sections'
 	},
