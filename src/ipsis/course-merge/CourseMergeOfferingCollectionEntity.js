@@ -7,7 +7,7 @@ import { BaseCollectionEntity } from './BaseCollectionEntity.js';
 
 export class CourseMergeOfferingCollectionEntity extends BaseCollectionEntity {
 	prependCourseMergeOfferings(previousCourseMergeOfferingCollectionEntity) {
-		this.prependCourseOfferings(previousCourseMergeOfferingCollectionEntity.courseOfferings());
+		super.prependCourseMergeOfferings(previousCourseMergeOfferingCollectionEntity.courseMergeOfferings());
 	}
 
 	userOwnedByMultipleSourceSystems() {

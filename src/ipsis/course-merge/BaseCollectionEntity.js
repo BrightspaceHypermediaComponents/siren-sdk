@@ -6,14 +6,14 @@ export class BaseCollectionEntity extends Entity {
 		this._allEntities = null;
 	}
 
-	courseOfferings() {
+	courseMergeOfferings() {
 		if (!this._entity) {
 			return;
 		}
 		return this._allEntities ?? this._entity.entities;
 	}
 
-	prependCourseOfferings(previousCourseOfferings) {
+	prependCourseMergeOfferings(previousCourseOfferings) {
 		this._allEntities = previousCourseOfferings.concat(this._entity.entities);
 	}
 
@@ -32,7 +32,7 @@ export class BaseCollectionEntity extends Entity {
 	loadMorePageSize() {
 		const pageSize = this._pagingInfo()?.pageSize;
 		const totalCount = this.totalCount() ?? 0;
-		const courseMergeOfferingsLength = this.courseOfferings()?.length ?? 0;
+		const courseMergeOfferingsLength = this.courseMergeOfferings()?.length ?? 0;
 		// if pageSize is larger than the number remaining items, return the number of remaining items to be loaded
 		if (totalCount < courseMergeOfferingsLength + (pageSize ?? 0)) {
 			return totalCount - courseMergeOfferingsLength;
@@ -68,12 +68,7 @@ export class BaseCollectionEntity extends Entity {
 		return this._entity.getLinkByRel('prev').href;
 	}
 
-	clearAllEntities() {
-		this._allEntities = null;
-	}
-
 	updateEntity(entity) {
-		this.clearAllEntities();
 		this._entity = entity;
 	}
 }

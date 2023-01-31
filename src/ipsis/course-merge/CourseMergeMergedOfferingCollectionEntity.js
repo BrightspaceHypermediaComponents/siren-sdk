@@ -8,7 +8,7 @@ import { performSirenAction } from '../../es6/SirenAction.js';
 
 export class CourseMergeMergedOfferingCollectionEntity extends BaseCollectionEntity {
 	originalSourceCourseMergeOfferings() {
-		return this._entity?.courseOfferings()?.filter(course => !course.class.includes(Classes.ipsis.sisCourseMerge.originalTarget));
+		return this._entity?.courseMergeOfferings()?.filter(course => !course.class.includes(Classes.ipsis.sisCourseMerge.originalTarget));
 	}
 
 	originalTargetCourseMergeOffering() {
