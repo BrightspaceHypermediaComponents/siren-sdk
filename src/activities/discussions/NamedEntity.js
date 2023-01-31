@@ -1,6 +1,6 @@
 import { Entity } from '../../es6/Entity.js';
 
-export class GroupEntity extends Entity {
+export class NamedEntity extends Entity {
 
 	name() {
 		const subEntity = this._entity && this._entity.getSubEntityByClass('name');

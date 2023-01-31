@@ -1,6 +1,7 @@
 import { Classes } from '../../hypermedia-constants.js';
 import { Entity } from '../../es6/Entity.js';
-import { GroupEntity } from './GroupEntity.js';
+import { NamedEntity } from './NamedEntity.js';
+import { performSirenAction } from '../../es6/SirenAction.js';
 
 export class RestrictedTopicCollectionEntity extends Entity {
 	isSelected() {
@@ -30,12 +31,17 @@ export class RestrictedTopicCollectionEntity extends Entity {
 	nameHref() {
 		return this._entity && this._entity.entities && this._entity.entities[0] && this._entity.entities[0].href;
 	}
-	onGroupChange(onChange) {
-		if (!this._entity) return;
+	async getName() {
+		if (!this._entity) {
+			return null;
+		}
 
-		const href = this.nameHref();
-		if (!href) return;
+		const action = this.nameHref();
 
-		this._subEntity(GroupEntity, href, onChange);
+		const fields = [];
+		const returnedEntity = await performSirenAction(this._token, action, fields, false, true);
+		if (!returnedEntity) return;
+
+		return new NamedEntity(returnedEntity);
 	}
 }

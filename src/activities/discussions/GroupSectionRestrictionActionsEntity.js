@@ -1,4 +1,4 @@
-import { Actions } from '../../hypermedia-constants.js';
+import { Actions, Classes } from '../../hypermedia-constants.js';
 import { Entity } from '../../es6/Entity.js';
 import { performSirenAction } from '../../es6/SirenAction.js';
 import { RestrictedTopicCollectionEntity } from './RestrictedTopicCollectionEntity.js';
@@ -45,7 +45,7 @@ export class GroupSectionRestrictionActionsEntity extends Entity {
 	restrictedTopicCollection() {
 		if (!this._entity) return null;
 
-		const subEntity = this._entity.getSubEntityByClass('restricted-topic');
+		const subEntity = this._entity.getSubEntityByClass(Classes.discussions.restrictedTopic);
 		if (!subEntity) {
 			return null;
 		}
@@ -55,17 +55,17 @@ export class GroupSectionRestrictionActionsEntity extends Entity {
 	}
 	canToggleGroupsRestrictedTopic() {
 		if (!this._entity) return null;
-		const subEntity = this._entity.getSubEntityByClass('restricted-topic');
+		const subEntity = this._entity.getSubEntityByClass(Classes.discussions.restrictedTopic);
 		return subEntity && subEntity.hasActionByName(Actions.discussions.groupSectionRestrictions.toggleGroupsRestrictedTopic);
 	}
 	_formatToggleGroupsRestrictedTopicAction(toggleGroupIds) {
 		if (!toggleGroupIds) return;
 		if (!this.canToggleGroupsRestrictedTopic()) return;
-		const subEntity = this._entity.getSubEntityByClass('restricted-topic');
+		const subEntity = this._entity.getSubEntityByClass(Classes.discussions.restrictedTopic);
 		const action = subEntity.getActionByName(Actions.discussions.groupSectionRestrictions.toggleGroupsRestrictedTopic);
-		const fields = [
-			{ name: 'toggleGroupIds', value: toggleGroupIds },
-		];
+		const fields = toggleGroupIds.map(id => {
+			return { name: 'toggleGroupIds', value: id };
+		});
 
 		return { action, fields };
 	}
