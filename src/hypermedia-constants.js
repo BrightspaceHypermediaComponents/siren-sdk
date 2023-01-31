@@ -733,7 +733,8 @@ export const Actions = {
 		groupSectionRestrictions: {
 			startUpdateRestrictions: 'start-update-restrictions',
 			setToRestrictedTopic: 'set-to-restricted-topic',
-			setToRestrictedThreads: 'set-to-restricted-threads'
+			setToRestrictedThreads: 'set-to-restricted-threads',
+			toggleGroupsRestrictedTopic: 'toggle-groups-restricted-topic'
 		}
 	},
 	rubrics: {

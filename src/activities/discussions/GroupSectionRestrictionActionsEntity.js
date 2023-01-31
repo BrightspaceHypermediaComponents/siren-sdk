@@ -53,4 +53,30 @@ export class GroupSectionRestrictionActionsEntity extends Entity {
 			return new RestrictedTopicCollectionEntity(entity);
 		});
 	}
+	canToggleGroupsRestrictedTopic() {
+		if (!this._entity) return null;
+		const subEntity = this._entity.getSubEntityByClass('restricted-topic');
+		return subEntity && subEntity.hasActionByName(Actions.discussions.groupSectionRestrictions.toggleGroupsRestrictedTopic);
+	}
+	_formatToggleGroupsRestrictedTopicAction(toggleGroupIds) {
+		if (!toggleGroupIds) return;
+		if (!this.canToggleGroupsRestrictedTopic()) return;
+		const subEntity = this._entity.getSubEntityByClass('restricted-topic');
+		const action = subEntity.getActionByName(Actions.discussions.groupSectionRestrictions.toggleGroupsRestrictedTopic);
+		const fields = [
+			{ name: 'toggleGroupIds', value: toggleGroupIds },
+		];
+
+		return { action, fields };
+	}
+	async toggleGroupsRestrictedTopic(toggleGroupIds) {
+		if (!toggleGroupIds) return;
+		if (!this.canToggleGroupsRestrictedTopic()) return;
+
+		const sirenAction = this._formatToggleGroupsRestrictedTopicAction(toggleGroupIds);
+		if (!sirenAction) return;
+
+		const { action, fields } = sirenAction;
+		await performSirenAction(this._token, action, fields);
+	}
 }
