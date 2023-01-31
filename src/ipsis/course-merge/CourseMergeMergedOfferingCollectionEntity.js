@@ -16,7 +16,7 @@ export class CourseMergeMergedOfferingCollectionEntity extends BaseCollectionEnt
 	}
 
 	prependOriginalSourceCourseMergeOfferings(previousCourseMergeMergedOfferingCollectionEntity) {
-		this.prependCourseOfferings(previousCourseMergeMergedOfferingCollectionEntity.originalSourceCourseMergeOfferings());
+		this.prependCourseMergeOfferings(previousCourseMergeMergedOfferingCollectionEntity.originalSourceCourseMergeOfferings());
 	}
 
 	userOwnedByMultipleSourceSystems() {
