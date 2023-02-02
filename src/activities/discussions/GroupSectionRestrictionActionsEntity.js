@@ -49,9 +49,7 @@ export class GroupSectionRestrictionActionsEntity extends Entity {
 		if (!subEntity) {
 			return null;
 		}
-		return (subEntity.getSubEntitiesByRel('item') || []).map(entity => {
-			return new RestrictedTopicCollectionEntity(entity);
-		});
+		return new RestrictedTopicCollectionEntity(subEntity);
 	}
 	canToggleGroupsRestrictedTopic() {
 		if (!this._entity) return null;
