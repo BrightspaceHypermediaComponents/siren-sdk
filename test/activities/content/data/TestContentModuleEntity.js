@@ -39,10 +39,17 @@ export const contentModuleData = {
 	'properties': {
 		'title': 'Test Content Module Title'
 	},
-	'entities': [{
-		'class': ['richtext', 'description'],
-		'properties': { 'text': 'description text', 'html': '<p>description text</p>' },
-		'rel': []
-	}],
+	'entities': [
+		{
+			'class': ['richtext', 'description'],
+			'properties': { 'text': 'description text', 'html': '<p>description text</p>' },
+			'rel': []
+		},
+		{
+			'class': ['richtext', 'raw-description'],
+			'properties': { 'text': 'description text', 'html': '<p>description text</p>' },
+			'rel': []
+		}
+	],
 	'rel': []
 };
