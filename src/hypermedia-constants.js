@@ -764,6 +764,7 @@ export const Actions = {
 		sisCourseMerge: {
 			deselect: 'deselect',
 			mergeCourseOfferings: 'merge-course-offerings',
+			mergedCourseOffering: 'merged-course-offering',
 			searchCourseOfferings: 'search-course-offerings',
 			select: 'select',
 			selectAsTarget: 'select-as-target',
