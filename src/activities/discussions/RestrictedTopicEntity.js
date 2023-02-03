@@ -1,7 +1,5 @@
 import { Classes } from '../../hypermedia-constants.js';
 import { Entity } from '../../es6/Entity.js';
-import { NamedEntity } from './NamedEntity.js';
-import { performSirenAction } from '../../es6/SirenAction.js';
 
 export class RestrictedTopicEntity extends Entity {
 	isSelected() {
