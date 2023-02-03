@@ -31,17 +31,4 @@ export class RestrictedTopicEntity extends Entity {
 	nameHref() {
 		return this._entity && this._entity.entities && this._entity.entities[0] && this._entity.entities[0].href;
 	}
-	async getName() {
-		if (!this._entity) {
-			return null;
-		}
-
-		const action = this.nameHref();
-
-		const fields = [];
-		const returnedEntity = await performSirenAction(this._token, action, fields, false, true);
-		if (!returnedEntity) return;
-
-		return new NamedEntity(returnedEntity);
-	}
 }
