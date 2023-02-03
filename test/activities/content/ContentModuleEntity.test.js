@@ -36,7 +36,8 @@ describe('ContentModuleEntity', () => {
 		it('Equality should return true when details match', () => {
 			const contentModule = {
 				title: 'Test Content Module Title',
-				descriptionRichText: '<p>description text</p>'
+				descriptionRichText: '<p>description text</p>',
+				rawDescriptionRichText: '<p>description text</p>'
 			};
 			expect(contentModuleEntity.equals(contentModule)).to.equal(true);
 		});
@@ -44,7 +45,8 @@ describe('ContentModuleEntity', () => {
 		it('Equality should return false when title is different', () => {
 			const contentModule = {
 				title: 'Different Content Module Title',
-				descriptionRichText: '<p>description text</p>'
+				descriptionRichText: '<p>description text</p>',
+				rawDescriptionRichText: '<p>description text</p>'
 			};
 			expect(contentModuleEntity.equals(contentModule)).to.equal(false);
 		});
@@ -52,7 +54,8 @@ describe('ContentModuleEntity', () => {
 		it('Equality should return false when description is different', () => {
 			const contentModule = {
 				title: 'Test Content Module Title',
-				descriptionRichText: '<p>Different description text</p>'
+				descriptionRichText: '<p>Different description text</p>',
+				rawDescriptionRichText: '<p>description text</p>'
 			};
 			expect(contentModuleEntity.equals(contentModule)).to.equal(false);
 		});
