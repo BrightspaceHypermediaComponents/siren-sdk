@@ -75,6 +75,7 @@ export class GroupSectionRestrictionActionsEntity extends Entity {
 		if (!sirenAction) return;
 
 		const { action, fields } = sirenAction;
-		await performSirenAction(this._token, action, fields);
+
+		performSirenAction(this._token, action, fields);
 	}
 }
