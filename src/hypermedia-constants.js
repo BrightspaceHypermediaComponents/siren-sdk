@@ -51,6 +51,8 @@ export const Rels = {
 		myOrganizationActivities: 'https://activities.api.brightspace.com/rels/my-organization-activities',
 		myOrganizationActivitiesEmpty: 'https://activities.api.brightspace.com/rels/my-organization-activities#empty',
 		activityCollection: 'https://activities.api.brightspace.com/rels/activity-collection',
+		pagedActivityCollection: 'https://activities.api.brightspace.com/rels/activity-collection-paged',
+		parentCollections: 'https://activities.api.brightspace.com/rels/parent-collections',
 		activityUsage: 'https://activities.api.brightspace.com/rels/activity-usage',
 		myActivityUsage: 'https://activities.api.brightspace.com/rels/my-activity-usage',
 		userActivityUsage: 'https://activities.api.brightspace.com/rels/user-activity-usage',
@@ -76,6 +78,7 @@ export const Rels = {
 		associateGrade: 'https://activities.api.brightspace.com/rels/associate-grade',
 		associateMultipleGrades: 'https://activities.api.brightspace.com/rels/associate-multiple-grades',
 		evaluation: 'https://activities.api.brightspace.com/rels/evaluation',
+		pagingType: 'https://activities.api.brightspace.com/rels/activity-collection/paging-type'
 	},
 	Conditions: {
 		conditions: 'https://conditions.api.brightspace.com/rels/conditions',
@@ -202,6 +205,7 @@ export const Rels = {
 		categories: 'https://quizzes.api.brightspace.com/rels/categories',
 		completionTracking: 'https://quizzes.api.brightspace.com/rels/completion-tracking',
 		hasAttempts: 'https://quizzes.api.brightspace.com/rels/has-attempts',
+		questionText: 'https://questions.api.brightspace.com/rels/questionText'
 	},
 	// Themes API sub-domain rels
 	Themes: {
