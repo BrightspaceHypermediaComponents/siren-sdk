@@ -67,9 +67,32 @@ export class GroupSectionRestrictionActionsEntity extends Entity {
 
 		return { action, fields };
 	}
-	async toggleGroupsRestrictedTopic(toggleGroupIds) {
-		if (!toggleGroupIds) return;
+	_restrictedTopicToggle(selectedIds) {
+		const outputToggle = [];
+		const oldRestrictedTopicCollection = this.restrictedTopicCollection().getRestrictedTopics();
+		if (!oldRestrictedTopicCollection) return;
+
+		const newRestrictedTopicMap = {};
+		selectedIds.forEach(ids => {
+			newRestrictedTopicMap[ids] = ids;
+		});
+
+		oldRestrictedTopicCollection.forEach(oldTopic => {
+			const oldTopicId = oldTopic.id();
+			const newIsSelected = newRestrictedTopicMap[oldTopicId] !== undefined;
+			if (oldTopic.isSelected() !== newIsSelected) {
+				outputToggle.push(oldTopicId);
+			}
+		});
+
+		return outputToggle;
+	}
+
+	async toggleGroupsRestrictedTopic(selectedIds) {
+		if (!selectedIds) return;
 		if (!this.canToggleGroupsRestrictedTopic()) return;
+
+		const toggleGroupIds = this._restrictedTopicToggle(selectedIds);
 
 		const sirenAction = this._formatToggleGroupsRestrictedTopicAction(toggleGroupIds);
 		if (!sirenAction) return;
