@@ -391,6 +391,7 @@ export const Classes = {
 		bySection: 'by-section',
 		groupCategory: 'group-category',
 		section: 'section',
+		selected: 'selected',
 		allGroups: 'all-groups',
 		allSections: 'all-sections'
 	},
@@ -733,7 +734,8 @@ export const Actions = {
 		groupSectionRestrictions: {
 			startUpdateRestrictions: 'start-update-restrictions',
 			setToRestrictedTopic: 'set-to-restricted-topic',
-			setToRestrictedThreads: 'set-to-restricted-threads'
+			setToRestrictedThreads: 'set-to-restricted-threads',
+			toggleGroupsRestrictedTopic: 'toggle-groups-restricted-topic'
 		}
 	},
 	rubrics: {
