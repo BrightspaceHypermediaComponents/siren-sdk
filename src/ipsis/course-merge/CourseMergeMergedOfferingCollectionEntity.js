@@ -47,6 +47,10 @@ export class CourseMergeMergedOfferingCollectionEntity extends BaseCollectionEnt
 		return this._entity.getActionByName(Actions.ipsis.sisCourseMerge.unmergeCourseOfferings);
 	}
 
+	selectedCount() {
+		return this._entity?.properties?.selectedCount;
+	}
+
 	unmerge() {
 		const action = this.getUnmergeAction();
 		if (!action) {
@@ -54,6 +58,10 @@ export class CourseMergeMergedOfferingCollectionEntity extends BaseCollectionEnt
 		}
 
 		return performSirenAction(this._token, action, null, true);
+	}
+
+	updateEntity(entity) {
+		this._entity = entity;
 	}
 }
 
