@@ -59,9 +59,5 @@ export class CourseMergeMergedOfferingCollectionEntity extends BaseCollectionEnt
 
 		return performSirenAction(this._token, action, null, true);
 	}
-
-	updateEntity(entity) {
-		this._entity = entity;
-	}
 }
 
