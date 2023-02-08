@@ -77,13 +77,17 @@ export class GroupSectionRestrictionActionsEntity extends Entity {
 			newRestrictedTopicMap[ids] = ids;
 		});
 
-		oldRestrictedTopicCollection.forEach(oldTopic => {
+		for (const oldTopicIndex in oldRestrictedTopicCollection) {
+			const oldTopic = oldRestrictedTopicCollection[oldTopicIndex];
+			const hasParent = oldTopic.hasParentId();
+			if (!hasParent) continue; // only looking for children and filter out parent ids
+
 			const oldTopicId = oldTopic.id();
 			const newIsSelected = newRestrictedTopicMap[oldTopicId] !== undefined;
 			if (oldTopic.isSelected() !== newIsSelected) {
 				outputToggle.push(oldTopicId);
 			}
-		});
+		}
 
 		return outputToggle;
 	}
