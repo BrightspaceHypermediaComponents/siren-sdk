@@ -1,6 +1,22 @@
 import { Entity } from '../../es6/Entity.js';
 
 export class BaseCollectionEntity extends Entity {
+	constructor(entity, token, listener) {
+		super(entity, token, listener);
+		this._allEntities = null;
+	}
+
+	courseMergeOfferings() {
+		if (!this._entity) {
+			return;
+		}
+		return this._allEntities ?? this._entity.entities;
+	}
+
+	prependCourseMergeOfferings(previousCourseOfferings) {
+		this._allEntities = previousCourseOfferings.concat(this._entity.entities);
+	}
+
 	totalCount() {
 		return this._pagingInfo()?.totalCount;
 	}
@@ -16,7 +32,7 @@ export class BaseCollectionEntity extends Entity {
 	loadMorePageSize() {
 		const pageSize = this._pagingInfo()?.pageSize;
 		const totalCount = this.totalCount() ?? 0;
-		const courseMergeOfferingsLength = this._entity?.entities?.length ?? 0;
+		const courseMergeOfferingsLength = this.courseMergeOfferings()?.length ?? 0;
 		// if pageSize is larger than the number remaining items, return the number of remaining items to be loaded
 		if (totalCount < courseMergeOfferingsLength + (pageSize ?? 0)) {
 			return totalCount - courseMergeOfferingsLength;
@@ -50,6 +66,10 @@ export class BaseCollectionEntity extends Entity {
 		}
 
 		return this._entity.getLinkByRel('prev').href;
+	}
+
+	updateEntity(entity) {
+		this._entity = entity;
 	}
 }
 
