@@ -31,14 +31,14 @@ export class CourseMergeOfferingCollectionEntity extends BaseCollectionEntity {
 	}
 
 	selectedCourseMergeOfferingsHref() {
-		if (!this.hasCourseMergeOfferingsHref()) {
+		if (!this.hasSelectedCourseMergeOfferingsHref ()) {
 			return;
 		}
 
 		return this._entity.getLinkByRel(Rels.ipsis.sisCourseMerge.selectedCourseMergeOfferings).href;
 	}
 
-	hasCourseMergeOfferingsHref() {
+	hasSelectedCourseMergeOfferingsHref() {
 		return this._entity.hasLinkByRel(Rels.ipsis.sisCourseMerge.selectedCourseMergeOfferings);
 	}
 
