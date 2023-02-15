@@ -103,6 +103,6 @@ export class GroupSectionRestrictionActionsEntity extends Entity {
 
 		const { action, fields } = sirenAction;
 
-		performSirenAction(this._token, action, fields);
+		return performSirenAction(this._token, action, fields);
 	}
 }
