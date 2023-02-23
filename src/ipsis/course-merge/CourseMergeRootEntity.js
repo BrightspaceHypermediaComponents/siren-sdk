@@ -1,6 +1,6 @@
 import { Actions, Rels } from '../../hypermedia-constants.js';
+import { appendHiddenFields, getEntityUrl } from '../../es6/SirenAction.js';
 import { Entity } from '../../es6/Entity.js';
-import { getEntityUrl } from '../../es6/SirenAction.js';
 
 export class CourseMergeRootEntity extends Entity {
 	courseMergeOfferingsListHref() {
@@ -25,6 +25,7 @@ export class CourseMergeRootEntity extends Entity {
 			return;
 		}
 
-		return getEntityUrl(action, [{ name: 'orgUnitId', value: orgUnitId }]);
+		const fields = [{ name: 'orgUnitId', value: orgUnitId }];
+		return getEntityUrl(action, appendHiddenFields(action, fields));
 	}
 }

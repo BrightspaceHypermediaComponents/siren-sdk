@@ -253,3 +253,4 @@ export const performLazySirenAction = function(token, actionFactory, fieldOverri
 };
 
 export const getEntityUrl = _getEntityUrl;
+export const appendHiddenFields = _appendHiddenFields;
