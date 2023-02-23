@@ -31,11 +31,15 @@ export class CourseMergeOfferingCollectionEntity extends BaseCollectionEntity {
 	}
 
 	selectedCourseMergeOfferingsHref() {
-		if (!this._entity.hasLinkByRel(Rels.ipsis.sisCourseMerge.selectedCourseMergeOfferings)) {
+		if (!this.hasSelectedCourseMergeOfferingsHref ()) {
 			return;
 		}
 
 		return this._entity.getLinkByRel(Rels.ipsis.sisCourseMerge.selectedCourseMergeOfferings).href;
+	}
+
+	hasSelectedCourseMergeOfferingsHref() {
+		return this._entity.hasLinkByRel(Rels.ipsis.sisCourseMerge.selectedCourseMergeOfferings);
 	}
 
 	hasSearchAction() {
