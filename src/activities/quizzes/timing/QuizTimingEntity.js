@@ -83,6 +83,24 @@ export class QuizTimingEntity extends Entity {
 		return this.hasClass(noTimeLimitClass);
 	}
 
+	isAutoSubmit(data) {
+		const autoSubmitClass = Classes.quizzes.timing.autosubmit;
+		if (data) return data === autoSubmitClass;
+		return this.hasClass(autoSubmitClass);
+	}
+
+	isMarkedExceededTime(data) {
+		const markExceedTimeClass = Classes.quizzes.timing.markexceedtime;
+		if (data) return data === markExceedTimeClass;
+		return this.hasClass(markExceedTimeClass);
+	}
+
+	isRecommended(data) {
+		const recommendedClass = Classes.quizzes.timing.recommended;
+		if (data) return data === recommendedClass;
+		return this.hasClass(recommendedClass);
+	}
+
 	isUseLateLimit(data) {
 		const useLateLimitClass = Classes.quizzes.timing.useLateLimit;
 		if (data) return data === useLateLimitClass;
