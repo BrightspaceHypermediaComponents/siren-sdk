@@ -1,20 +1,11 @@
 import { Entity } from '../../es6/Entity.js';
 
 export class BaseCollectionEntity extends Entity {
-	constructor(entity, token, listener) {
-		super(entity, token, listener);
-		this._allEntities = null;
-	}
-
 	courseMergeOfferings() {
 		if (!this._entity) {
 			return;
 		}
-		return this._allEntities ?? this._entity.entities;
-	}
-
-	prependCourseMergeOfferings(previousCourseOfferings) {
-		this._allEntities = previousCourseOfferings.concat(this._entity.entities);
+		return this._entity.entities;
 	}
 
 	totalCount() {
@@ -30,7 +21,7 @@ export class BaseCollectionEntity extends Entity {
 	}
 
 	loadMorePageSize() {
-		const pageSize = this._pagingInfo()?.pageSize;
+		const pageSize = 20;
 		const totalCount = this.totalCount() ?? 0;
 		const courseMergeOfferingsLength = this.courseMergeOfferings()?.length ?? 0;
 		// if pageSize is larger than the number remaining items, return the number of remaining items to be loaded
