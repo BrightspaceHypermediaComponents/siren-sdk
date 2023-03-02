@@ -67,6 +67,10 @@ export class CourseMergeOfferingEntity extends Entity {
 		return this._entity?.hasActionByName(Actions.ipsis.sisCourseMerge.selectAsTarget);
 	}
 
+	hasContent() {
+		return this._entity?.properties?.hasContent;
+	}
+
 	getSelectAsTargetAction() {
 		if (!this.hasSelectAsTargetAction()) {
 			return;
