@@ -86,13 +86,16 @@ export class QuizTimingEntity extends Entity {
 	isAutoSubmit(data) {
 		const autoSubmitClass = Classes.quizzes.timing.autosubmit;
 		if (data) return data === autoSubmitClass;
-		return this.hasClass(autoSubmitClass);
+		const entity = this.getTimerSettingsSubEntity();
+		if (!entity) return false;
+		return entity.hasClass(autoSubmitClass);
 	}
 
 	isMarkedExceededTime(data) {
 		const markExceedTimeClass = Classes.quizzes.timing.markexceedtime;
 		if (data) return data === markExceedTimeClass;
-		return this.hasClass(markExceedTimeClass);
+		const entity = this.getTimerSettingsSubEntity();
+		return entity.hasClass(markExceedTimeClass);
 	}
 
 	isRecommended(data) {
