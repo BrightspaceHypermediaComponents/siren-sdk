@@ -3,7 +3,7 @@ import { Entity } from '../../../es6/Entity.js';
 import { performSirenAction } from '../../../es6/SirenAction.js';
 
 /**
- * A QuizTiming subentity of a d2l Quiz.
+ * A QuizTiming sub-entity of a D2L Quiz.
  */
 export class QuizTimingEntity extends Entity {
 	/**
