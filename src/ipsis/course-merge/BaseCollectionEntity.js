@@ -25,7 +25,7 @@ export class BaseCollectionEntity extends Entity {
 		const totalCount = this.totalCount() ?? 0;
 		const courseMergeOfferingsLength = this.courseMergeOfferings()?.length ?? 0;
 		// if pageSize is larger than the number remaining items, return the number of remaining items to be loaded
-		if (totalCount < courseMergeOfferingsLength + (pageSize ?? 0)) {
+		if (totalCount < courseMergeOfferingsLength + pageSize) {
 			return totalCount - courseMergeOfferingsLength;
 		}
 		return pageSize;
