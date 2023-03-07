@@ -3,8 +3,5 @@
   "rules": {
     "no-prototype-builtins": 0,
     "sort-class-members/sort-class-members": 0
-  },
-  "globals": {
-    "fastdom": false
   }
 }
