@@ -158,6 +158,35 @@ export class QuizSubmissionViewEntity extends Entity {
 		return this._entity && this._entity.hasClass(Classes.quizzes.submissionView.showStatsScoreDistribution);
 	}
 
+	/** NAME SUB-ENTITY */
+
+	_nameSubEntity() {
+		return this._entity && this._entity.getSubEntityByClass(Classes.quizzes.submissionView.viewName.viewName);
+	}
+
+	async setName(value) {
+		const subEntity = this._nameSubEntity();
+		const action = subEntity.getActionByName(Actions.quizzes.submissionView.setName);
+		const fields = [
+			{ name: 'subviewName', value }
+		];
+
+		const returnedEntity = await performSirenAction(this._token, action, fields);
+		if (!returnedEntity) return;
+		return new QuizSubmissionViewEntity(returnedEntity, this._token);
+	}
+
+	viewName() {
+		const subEntity = this._nameSubEntity();
+		if (!subEntity) return;
+		return subEntity.properties.name;
+	}
+
+	canUpdateName() {
+		const subEntity = this._nameSubEntity();
+		return subEntity && subEntity.hasActionByName(Actions.quizzes.submissionView.setName);
+	}
+
 	/** MESSAGE SUB-ENTITY */
 	canUpdateMessage() {
 		const subEntity = this._messageSubEntity();
