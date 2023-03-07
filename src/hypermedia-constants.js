@@ -809,7 +809,7 @@ export const Actions = {
 			updateTimingGraceLimit: 'update-timing-grace-limit',
 			updateTimingLateData: 'update-timing-late-data',
 			updateTimeLimitType: 'update-time-limit-type',
-			updateQuizStartType: 'update-synchronous-quiz-start',
+			updateQuizStartType: 'update-quiz-start-type',
 			toggleSetTimeLimit: 'toggle-set-time-limit'
 		},
 		attempts: {
