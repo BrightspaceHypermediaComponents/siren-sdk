@@ -280,7 +280,7 @@ describe('QuizSubmissionViewEntity', () => {
 	});
 
 	describe('Name Sub-entity', () => {
-		it('returns correct Name for editable secondary view', () => {
+		it('returns correct name for editable secondary view', () => {
 			const entity = new QuizSubmissionViewEntity(editableSecondaryViewEntity);
 			const actualNameValue = entity.viewName();
 			expect(actualNameValue).to.be.equal('Sample View');
