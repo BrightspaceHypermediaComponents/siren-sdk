@@ -99,6 +99,7 @@ export class QuizTimingEntity extends Entity {
 		const markExceedTimeClass = Classes.quizzes.timing.markexceedtime;
 		if (data) return data === markExceedTimeClass;
 		const entity = this.getTimerSettingsSubEntity();
+		if (!entity) return false;
 		return entity.hasClass(markExceedTimeClass);
 	}
 

@@ -1,6 +1,6 @@
 {
   "name": "@brightspace-hmc/siren-sdk",
-  "version": "2.72.0",
+  "version": "2.72.1",
   "type": "module",
   "description": "",
   "main": "index.js",
@@ -9,8 +9,8 @@
     "test": "npm run test:lint && npm run test:headless",
     "test:lint": "npm run test:lint:js",
     "test:lint:js": "eslint . --ext .js,.html test/**/*.js",
-    "test:headless": "web-test-runner --group default",
-    "test:headless:watch": "web-test-runner --group default --watch"
+    "test:headless": "web-test-runner --files \"./test/**/*.test.js\" --node-resolve",
+    "test:headless:watch": "web-test-runner --files \"./test/**/*.test.js\" --node-resolve --watch"
   },
   "author": "D2L Corporation",
   "license": "Apache-2.0",
@@ -22,23 +22,20 @@
   },
   "dependencies": {
     "@brightspace-ui/core": "^2",
-    "@polymer/polymer": "^3.0.0",
+    "@polymer/polymer": "^3",
     "d2l-fetch": "^2",
     "d2l-polymer-siren-behaviors": "^1"
   },
   "devDependencies": {
+    "@babel/core": "^7",
     "@babel/eslint-parser": "^7",
     "@open-wc/testing": "^3",
-    "@web/test-runner": "^0.13",
+    "@web/test-runner": "^0.15",
     "eslint": "^8",
-    "eslint-config-brightspace": "^0.17",
-    "eslint-plugin-html": "^6",
-    "eslint-plugin-import": "^2",
-    "eslint-plugin-lit": "^1",
-    "eslint-plugin-sort-class-members": "^1",
+    "eslint-config-brightspace": "^0.20",
     "fetch-mock": "^9",
-    "jsdoc": "^3.5.5",
+    "jsdoc": "^3",
     "lit": "^2",
-    "sinon": "^14"
+    "sinon": "^15"
   }
 }
