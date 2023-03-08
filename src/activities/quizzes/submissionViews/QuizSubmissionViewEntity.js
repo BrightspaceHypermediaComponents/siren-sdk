@@ -166,6 +166,10 @@ export class QuizSubmissionViewEntity extends Entity {
 
 	async setName(value) {
 		const subEntity = this._nameSubEntity();
+		const canUpdate = subEntity && subEntity.hasActionByName(Actions.quizzes.submissionView.setName);
+		if (!canUpdate) {
+			return;
+		}
 		const action = subEntity.getActionByName(Actions.quizzes.submissionView.setName);
 		const fields = [
 			{ name: 'subviewName', value }
@@ -179,7 +183,7 @@ export class QuizSubmissionViewEntity extends Entity {
 	viewName() {
 		const subEntity = this._nameSubEntity();
 		if (!subEntity) return;
-		return subEntity.properties.name;
+		return subEntity.properties?.name;
 	}
 
 	canUpdateName() {
