@@ -462,6 +462,10 @@ export const Classes = {
 			automaticZero: 'uselatelimit',
 			withTimeLimitType: 'with-time-limit-type',
 			useLateLimit: 'uselatelimit',
+			start: {
+				synchronous: 'synchronous',
+				asynchronous: 'asynchronous'
+			},
 		},
 		attempts: {
 			overallGradeCalculationType: 'overall-grade-calculation-type',
@@ -808,6 +812,7 @@ export const Actions = {
 			updateTimingGraceLimit: 'update-timing-grace-limit',
 			updateTimingLateData: 'update-timing-late-data',
 			updateTimeLimitType: 'update-time-limit-type',
+			updateQuizStartType: 'update-quiz-start-type',
 			toggleSetTimeLimit: 'toggle-set-time-limit'
 		},
 		attempts: {
