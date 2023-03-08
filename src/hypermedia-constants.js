@@ -457,6 +457,8 @@ export const Classes = {
 			enforced: 'enforced',
 			noTimeLimit: 'notimelimit',
 			showClock: 'show-clock',
+			autosubmit: 'autosubmit',
+			markexceedtime: 'markexceedtime',
 			automaticZero: 'uselatelimit',
 			withTimeLimitType: 'with-time-limit-type',
 			useLateLimit: 'uselatelimit',

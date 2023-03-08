@@ -3,7 +3,7 @@ import { Entity } from '../../../es6/Entity.js';
 import { performSirenAction } from '../../../es6/SirenAction.js';
 
 /**
- * A QuizTiming subentity of a d2l Quiz.
+ * A QuizTiming sub-entity of a D2L Quiz.
  */
 export class QuizTimingEntity extends Entity {
 	/**
@@ -81,6 +81,27 @@ export class QuizTimingEntity extends Entity {
 		const noTimeLimitClass = Classes.quizzes.timing.noTimeLimit;
 		if (data) return data === noTimeLimitClass;
 		return this.hasClass(noTimeLimitClass);
+	}
+
+	isAutoSubmit(data) {
+		const autoSubmitClass = Classes.quizzes.timing.autosubmit;
+		if (data) return data === autoSubmitClass;
+		const entity = this.getTimerSettingsSubEntity();
+		if (!entity) return false;
+		return entity.hasClass(autoSubmitClass);
+	}
+
+	isMarkedExceededTime(data) {
+		const markExceedTimeClass = Classes.quizzes.timing.markexceedtime;
+		if (data) return data === markExceedTimeClass;
+		const entity = this.getTimerSettingsSubEntity();
+		return entity.hasClass(markExceedTimeClass);
+	}
+
+	isRecommended(data) {
+		const recommendedClass = Classes.quizzes.timing.recommended;
+		if (data) return data === recommendedClass;
+		return this.hasClass(recommendedClass);
 	}
 
 	isUseLateLimit(data) {

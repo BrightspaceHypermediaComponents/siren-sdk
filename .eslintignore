@@ -2,4 +2,3 @@ test/acceptance/*
 reports
 node_modules
 docs
-web-test-runner.sauce.config.js
