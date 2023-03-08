@@ -47,6 +47,10 @@ export class QuizTimingEntity extends Entity {
 		return !!this.getTimerSettingsSubEntity()?.hasActionByName(Actions.quizzes.timing.updateTimeLimitType);
 	}
 
+	canEditQuizStartType() {
+		return !!this.getTimerSettingsSubEntity()?.hasActionByName(Actions.quizzes.timing.updateQuizStartType);
+	}
+
 	canToggleSetTimeLimit() {
 		return !!this.getTimerSettingsSubEntity()?.hasActionByName(Actions.quizzes.timing.toggleSetTimeLimit);
 	}
@@ -111,6 +115,20 @@ export class QuizTimingEntity extends Entity {
 		const entity = this.getEnforcedTimingSubEntity();
 		if (!entity) return;
 		return entity.hasClass(useLateLimitClass);
+	}
+
+	isSynchronous(data) {
+		const synchronousClass = Classes.quizzes.timing.start.synchronous;
+		if (data) return data === synchronousClass;
+		const entity = this.getTimerSettingsSubEntity();
+		return entity.hasClass(synchronousClass);
+	}
+
+	isAsynchronous(data) {
+		const asynchronousClass = Classes.quizzes.timing.start.asynchronous;
+		if (data) return data === asynchronousClass;
+		const entity = this.getTimerSettingsSubEntity();
+		return entity.hasClass(asynchronousClass);
 	}
 
 	submissionLateType() {
@@ -423,6 +441,19 @@ export class QuizTimingEntity extends Entity {
 				name: 'hasTimeLimit',
 				value: data
 			}
+		];
+		const returnedEntity = await performSirenAction(this._token, action, fields);
+		if (!returnedEntity) return;
+		return new QuizTimingEntity(returnedEntity, this._token);
+	}
+
+	async setQuizStartType(data) {
+		if (!this.canEditQuizStartType()) return;
+		const entity = this.getTimerSettingsSubEntity();
+		if (!entity) return;
+		const action = entity.getActionByName(Actions.quizzes.timing.updateQuizStartType);
+		const fields = [
+			{ name: 'quizStartType', value: data }
 		];
 		const returnedEntity = await performSirenAction(this._token, action, fields);
 		if (!returnedEntity) return;
