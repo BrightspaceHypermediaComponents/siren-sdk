@@ -505,6 +505,9 @@ export const Classes = {
 				showCorrectAnswers: 'show-correct-answers',
 				showLearnerResponses: 'show-learner-responses',
 				showQuestionScore: 'show-question-score'
+			},
+			viewName: {
+				viewName: 'subview-name'
 			}
 		},
 		types: {
@@ -856,7 +859,8 @@ export const Actions = {
 			updateShowStatsClassAverage: 'update-show-stats-class-average',
 			updateShowStatsScoreDistribution: 'update-show-stats-score-distribution',
 			updateTimeLimit: 'update-time-limit',
-			deleteSubmissionView: 'delete-submission-view'
+			deleteSubmissionView: 'delete-submission-view',
+			setName:'update-subview-name'
 		},
 		submissionViews: {
 			add: 'add'

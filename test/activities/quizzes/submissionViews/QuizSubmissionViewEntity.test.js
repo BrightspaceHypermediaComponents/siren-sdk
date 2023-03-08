@@ -279,6 +279,26 @@ describe('QuizSubmissionViewEntity', () => {
 		});
 	});
 
+	describe('Name Sub-entity', () => {
+		it('returns correct name for editable secondary view', () => {
+			const entity = new QuizSubmissionViewEntity(editableSecondaryViewEntity);
+			const actualNameValue = entity.viewName();
+			expect(actualNameValue).to.be.equal('Sample View');
+		});
+		it('should have action as it is editable secondary view', () => {
+			const entity = new QuizSubmissionViewEntity(editableSecondaryViewEntity);
+			expect(entity.canUpdateName()).to.be.true;
+		});
+		it('should not have action as it is non editable secondary view', () => {
+			const entity = new QuizSubmissionViewEntity(nonEditableSecondaryViewEntity);
+			expect(entity.canUpdateName()).to.be.false;
+		});
+		it('should not have action (no subentity) as it is a primary view', () => {
+			const entity = new QuizSubmissionViewEntity(editablePrimaryViewEntity);
+			expect(entity.canUpdateName()).to.be.undefined;
+		});
+	});
+
 	describe('Attempt Restrictions Sub-entity', () => {
 		describe('attempt restrictions', () => {
 			it('returns correct attempt restrictions for editable secondary view', () => {
