@@ -6,10 +6,6 @@ import { Actions, Rels } from '../../hypermedia-constants.js';
 import { BaseCollectionEntity } from './BaseCollectionEntity.js';
 
 export class CourseMergeOfferingCollectionEntity extends BaseCollectionEntity {
-	prependCourseMergeOfferings(previousCourseMergeOfferingCollectionEntity) {
-		super.prependCourseMergeOfferings(previousCourseMergeOfferingCollectionEntity.courseMergeOfferings());
-	}
-
 	userOwnedByMultipleSourceSystems() {
 		return this._entity?.properties?.userOwnedByMultipleSourceSystems;
 	}
