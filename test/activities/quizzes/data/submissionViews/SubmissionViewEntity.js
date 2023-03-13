@@ -294,6 +294,27 @@ export const editableSecondaryView = {
 			]
 		},
 		{
+			class: ['subview-name'],
+			rel: ['related'],
+			properties: {
+				name: 'Sample View'
+			},
+			actions: [
+				{
+					href: '/{orgUnitId}/quizzes/{quizId}/submissionviews/7?workingCopyId=123',
+					name: 'update-subview-name',
+					method: 'PATCH',
+					fields: [
+						{
+							type: 'text',
+							name: 'subviewName',
+							value: 'Sample View'
+						}
+					]
+				}
+			]
+		},
+		{
 			class: ['attempt-restrictions', 'grade-restrictions'],
 			rel: ['related'],
 			properties: {
@@ -682,6 +703,13 @@ export const nonEditableSecondaryView = {
 					}
 				}
 			]
+		},
+		{
+			class: ['subview-name'],
+			rel: ['related'],
+			properties: {
+				name: 'Sample View'
+			}
 		},
 		{
 			class: ['time-limit'],

@@ -462,6 +462,10 @@ export const Classes = {
 			automaticZero: 'uselatelimit',
 			withTimeLimitType: 'with-time-limit-type',
 			useLateLimit: 'uselatelimit',
+			start: {
+				synchronous: 'synchronous',
+				asynchronous: 'asynchronous'
+			},
 		},
 		attempts: {
 			overallGradeCalculationType: 'overall-grade-calculation-type',
@@ -501,6 +505,9 @@ export const Classes = {
 				showCorrectAnswers: 'show-correct-answers',
 				showLearnerResponses: 'show-learner-responses',
 				showQuestionScore: 'show-question-score'
+			},
+			viewName: {
+				viewName: 'subview-name'
 			}
 		},
 		types: {
@@ -805,6 +812,7 @@ export const Actions = {
 			updateTimingGraceLimit: 'update-timing-grace-limit',
 			updateTimingLateData: 'update-timing-late-data',
 			updateTimeLimitType: 'update-time-limit-type',
+			updateQuizStartType: 'update-quiz-start-type',
 			toggleSetTimeLimit: 'toggle-set-time-limit'
 		},
 		attempts: {
@@ -851,7 +859,8 @@ export const Actions = {
 			updateShowStatsClassAverage: 'update-show-stats-class-average',
 			updateShowStatsScoreDistribution: 'update-show-stats-score-distribution',
 			updateTimeLimit: 'update-time-limit',
-			deleteSubmissionView: 'delete-submission-view'
+			deleteSubmissionView: 'delete-submission-view',
+			setName:'update-subview-name'
 		},
 		submissionViews: {
 			add: 'add'
