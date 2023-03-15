@@ -180,6 +180,7 @@ export const Rels = {
 			courseMergeOfferings: 'https://ipsis.api.brightspace.com/rels/course-merge-offerings',
 			courseMergeOffering: 'https://ipsis.api.brightspace.com/rels/course-merge-offering',
 			selectedCourseMergeOfferings: 'https://ipsis.api.brightspace.com/rels/selected-course-merge-offerings',
+			selectedCourseMergeOfferingsCount: 'https://ipsis.api.brightspace.com/rels/selected-course-merge-offerings-count',
 			mergedCourseOfferings: 'https://ipsis.api.brightspace.com/rels/merged-course-offerings'
 		}
 	},
