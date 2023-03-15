@@ -43,7 +43,7 @@ export class CourseMergeOfferingCollectionEntity extends BaseCollectionEntity {
 	}
 
 	selectedCourseMergeOfferingsCountHref() {
-		if (!this.hasSelectedCourseMergeOfferingsCountHref ()) {
+		if (!this.hasSelectedCourseMergeOfferingsCountHref()) {
 			return;
 		}
 
