@@ -75,6 +75,14 @@ export class QuizTimingEntity extends Entity {
 		return action.getFieldByName('timeLimitType')?.value;
 	}
 
+	quizStartTypes() {
+		const entity = this.getTimerSettingsSubEntity();
+		if (!entity) return;
+		const action = entity.getActionByName(Actions.quizzes.timing.updateQuizStartType);
+		if (!action) return;
+		return action.getFieldByName('startType')?.value;
+	}
+
 	isTimingEnforced(data) {
 		const enforcedClass = Classes.quizzes.timing.enforced;
 		if (data) return data === enforcedClass;
@@ -453,7 +461,7 @@ export class QuizTimingEntity extends Entity {
 		if (!entity) return;
 		const action = entity.getActionByName(Actions.quizzes.timing.updateQuizStartType);
 		const fields = [
-			{ name: 'quizStartType', value: data }
+			{ name: 'startType', value: data }
 		];
 		const returnedEntity = await performSirenAction(this._token, action, fields);
 		if (!returnedEntity) return;
