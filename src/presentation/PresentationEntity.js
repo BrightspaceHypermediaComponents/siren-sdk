@@ -26,6 +26,10 @@ export class PresentationEntity extends Entity {
 		return this._entity && this._entity.properties && this._entity.properties.ShowDropboxUnreadFeedback;
 	}
 
+	showPendingEnrollmentRequests() {
+		return this._entity && this._entity.properties && this._entity.properties.ShowPendingEnrollmentRequests;
+	}
+
 	showUnattemptedQuizzes() {
 		return this._entity && this._entity.properties && this._entity.properties.ShowUnattemptedQuizzes;
 	}
