@@ -253,9 +253,9 @@ export const enforcedQuizTiming = {
 	]
 };
 
-function buildEditableTimerSettingsEntity(timeLimit, timingType, submissionLateType, timeLimitType) {
+function buildEditableTimerSettingsEntity(timeLimit, timingType, submissionLateType, timeLimitType, isSynchronous) {
 	return {
-		'class': ['with-time-limit-type', timeLimitType || 'autosubmit'],
+		'class': ['with-time-limit-type', timeLimitType || 'autosubmit', isSynchronous ? 'synchronous' : 'asynchronous'],
 		'rel': ['https://quizzes.api.brightspace.com/rels/timing-type'],
 		'properties': {
 			'timeLimit': {
@@ -265,6 +265,29 @@ function buildEditableTimerSettingsEntity(timeLimit, timingType, submissionLateT
 		},
 		'title': 'Timer Settings',
 		'actions': [
+			{
+				'href': 'https://c29f6240-0b9e-40d6-9b12-566e53c9b33b.quizzes.api.dev.brightspace.com/6609/quizzes/16/timing',
+				'name': 'update-quiz-start-type',
+				'method': 'PATCH',
+				'fields': [
+			  		{
+						'type': 'radio',
+						'name': 'startType',
+						'value': [
+				  			{
+								'title': 'Asynchronous: Timer starts when the learner launches the quiz',
+								'value': 'asynchronous',
+								'selected': !isSynchronous
+				  			},
+				  			{
+								'title': 'Synchronous: Timer starts on the start date',
+								'value': 'synchronous',
+								'selected': isSynchronous
+				  			}
+						]
+			  		}
+				]
+		  	},
 			{
 				'href': 'https://afe99802-9130-4320-a770-8d138b941e74.quizzes.api.proddev.d2l/6606/quizzes/22/timing?workingCopyId=1234',
 				'name': 'toggle-set-time-limit',
@@ -383,13 +406,13 @@ function buildNonEditableEnforcedSubEntity(timeLimit, submissionLateType) {
 	};
 }
 
-export function buildTimingWithTimerSettings(timeLimit, timingType, submissionLateType, timeLimitType) {
+export function buildTimingWithTimerSettings(timeLimit, timingType, submissionLateType, timeLimitType, isSynchronous) {
 	return {
 		'class':[timingType],
 		'entities': [
 			buildNonEditableRecommendedSubEntity(timeLimit),
 			buildNonEditableEnforcedSubEntity(timeLimit, submissionLateType),
-			buildEditableTimerSettingsEntity(timeLimit, timingType, submissionLateType, timeLimitType)
+			buildEditableTimerSettingsEntity(timeLimit, timingType, submissionLateType, timeLimitType, isSynchronous)
 		],
 		'rel': ['https://quizzes.api.brightspace.com/rels/timing'],
 		'links': [
