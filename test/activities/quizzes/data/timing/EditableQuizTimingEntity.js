@@ -270,24 +270,24 @@ function buildEditableTimerSettingsEntity(timeLimit, timingType, submissionLateT
 				'name': 'update-quiz-start-type',
 				'method': 'PATCH',
 				'fields': [
-			  		{
+					{
 						'type': 'radio',
 						'name': 'startType',
 						'value': [
-				  			{
+							{
 								'title': 'Asynchronous: Timer starts when the learner launches the quiz',
 								'value': 'asynchronous',
 								'selected': !isSynchronous
-				  			},
-				  			{
+							},
+							{
 								'title': 'Synchronous: Timer starts on the start date',
 								'value': 'synchronous',
 								'selected': isSynchronous
-				  			}
+							}
 						]
-			  		}
+					}
 				]
-		  	},
+			},
 			{
 				'href': 'https://afe99802-9130-4320-a770-8d138b941e74.quizzes.api.proddev.d2l/6606/quizzes/22/timing?workingCopyId=1234',
 				'name': 'toggle-set-time-limit',
