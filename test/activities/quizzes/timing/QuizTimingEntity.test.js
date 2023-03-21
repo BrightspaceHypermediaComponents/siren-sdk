@@ -412,13 +412,13 @@ describe('QuizTimingEntity', () => {
 	describe('synchronous quizzing', () => {
 		it('can get isSynchronous when synchronous', () => {
 			const entity = new QuizTimingEntity(timerSettingsFlagLateTimingEntity);
-			expect(entity.isSynchronous).to.be.true;
-			expect(entity.isAsynchronous).to.be.false;
+			expect(entity.isSynchronous()).to.be.true;
+			expect(entity.isAsynchronous()).to.be.false;
 		});
 		it('can get isSynchronous when asynchronous', () => {
 			const entity = new QuizTimingEntity(timerSettingsAutosubmitTimingEntity);
-			expect(entity.isSynchronous).to.be.false;
-			expect(entity.isAsynchronous).to.be.true;
+			expect(entity.isSynchronous()).to.be.false;
+			expect(entity.isAsynchronous()).to.be.true;
 		});
 	});
 });
