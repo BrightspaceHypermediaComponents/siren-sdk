@@ -696,6 +696,21 @@ describe('QuizEntity', () => {
 		});
 	});
 
+	describe('activityUsage href', async() => {
+		const href = 'https://afe99802-9130-4320-a770-8d138b941e74.activities.api.proddev.d2l/activities/6606_51000_22/usages/6606';
+		describe('activityUsageHref', () => {
+			it('can read activity-usage href when quiz is editable', () => {
+				const quizEntity = new QuizEntity(editableEntity);
+				expect(quizEntity.activityUsageHref()).to.equal(href);
+			});
+
+			it('can read activity-usage href when quiz is not editable', () => {
+				const quizEntity = new QuizEntity(nonEditableEntity);
+				expect(quizEntity.activityUsageHref()).to.equal(href);
+			});
+		});
+	});
+
 	describe('working copy actions', async() => {
 		describe('checkout', () => {
 			it('can checkout quiz working copy', async() => {

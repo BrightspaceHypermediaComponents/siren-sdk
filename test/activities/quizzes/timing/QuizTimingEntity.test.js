@@ -20,10 +20,10 @@ describe('QuizTimingEntity', () => {
 		recommendedTimingEntity = SirenParse(recommendedQuizTiming);
 		nonEditableEnforcedTimingEntity = SirenParse(nonEditableEnforcedQuizTiming);
 		nonEditableRecommendedTimingEntity = SirenParse(nonEditableRecommendedQuizTiming);
-		timerSettingsNoTimeLimitTimingEntity = SirenParse(buildTimingWithTimerSettings(0, Classes.quizzes.timing.noTimeLimit, null, null));
-		timerSettingsRecommendedTimingEntity = SirenParse(buildTimingWithTimerSettings(120, Classes.quizzes.timing.recommended, null, 'recommendedlimit'));
-		timerSettingsAutosubmitTimingEntity = SirenParse(buildTimingWithTimerSettings(120, Classes.quizzes.timing.enforced, 'autosubmitattempt', 'autosubmit'));
-		timerSettingsFlagLateTimingEntity = SirenParse(buildTimingWithTimerSettings(120, Classes.quizzes.timing.enforced, 'allownormalsubmission', 'markexceedtime'));
+		timerSettingsNoTimeLimitTimingEntity = SirenParse(buildTimingWithTimerSettings(0, Classes.quizzes.timing.noTimeLimit, null, null, false));
+		timerSettingsRecommendedTimingEntity = SirenParse(buildTimingWithTimerSettings(120, Classes.quizzes.timing.recommended, null, 'recommendedlimit', true));
+		timerSettingsAutosubmitTimingEntity = SirenParse(buildTimingWithTimerSettings(120, Classes.quizzes.timing.enforced, 'autosubmitattempt', 'autosubmit', false));
+		timerSettingsFlagLateTimingEntity = SirenParse(buildTimingWithTimerSettings(120, Classes.quizzes.timing.enforced, 'allownormalsubmission', 'markexceedtime', true));
 	});
 
 	describe('timing', () => {
@@ -406,6 +406,19 @@ describe('QuizTimingEntity', () => {
 				entity = new QuizTimingEntity(nonEditableRecommendedTimingEntity);
 				expect(entity.canToggleSetTimeLimit()).to.be.false;
 			});
+		});
+	});
+
+	describe('synchronous quizzing', () => {
+		it('can get isSynchronous when synchronous', () => {
+			const entity = new QuizTimingEntity(timerSettingsFlagLateTimingEntity);
+			expect(entity.isSynchronous()).to.be.true;
+			expect(entity.isAsynchronous()).to.be.false;
+		});
+		it('can get isSynchronous when asynchronous', () => {
+			const entity = new QuizTimingEntity(timerSettingsAutosubmitTimingEntity);
+			expect(entity.isSynchronous()).to.be.false;
+			expect(entity.isAsynchronous()).to.be.true;
 		});
 	});
 });

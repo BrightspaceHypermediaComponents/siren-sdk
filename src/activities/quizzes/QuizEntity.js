@@ -546,6 +546,17 @@ export class QuizEntity extends Entity {
 	}
 
 	/**
+	 * @returns {string} Activity Usage Href, if present
+	 */
+	activityUsageHref() {
+		if (!this._entity || !this._entity.hasLinkByRel(Rels.Activities.activityUsage)) {
+			return;
+		}
+
+		return this._entity.getLinkByRel(Rels.Activities.activityUsage).href;
+	}
+
+	/**
 	 * @returns {string} Ip restrictions Href of the quiz entity, if present
 	*/
 	ipRestrictionsHref() {
