@@ -6,10 +6,6 @@ import { Actions, Rels } from '../../hypermedia-constants.js';
 import { BaseCollectionEntity } from './BaseCollectionEntity.js';
 
 export class CourseMergeOfferingCollectionEntity extends BaseCollectionEntity {
-	prependCourseMergeOfferings(previousCourseMergeOfferingCollectionEntity) {
-		super.prependCourseMergeOfferings(previousCourseMergeOfferingCollectionEntity.courseMergeOfferings());
-	}
-
 	userOwnedByMultipleSourceSystems() {
 		return this._entity?.properties?.userOwnedByMultipleSourceSystems;
 	}
@@ -40,6 +36,18 @@ export class CourseMergeOfferingCollectionEntity extends BaseCollectionEntity {
 
 	hasSelectedCourseMergeOfferingsHref() {
 		return this._entity.hasLinkByRel(Rels.ipsis.sisCourseMerge.selectedCourseMergeOfferings);
+	}
+
+	selectedCourseMergeOfferingsCountHref() {
+		if (!this.hasSelectedCourseMergeOfferingsCountHref()) {
+			return;
+		}
+
+		return this._entity.getLinkByRel(Rels.ipsis.sisCourseMerge.selectedCourseMergeOfferingsCount).href;
+	}
+
+	hasSelectedCourseMergeOfferingsCountHref() {
+		return this._entity.hasLinkByRel(Rels.ipsis.sisCourseMerge.selectedCourseMergeOfferingsCount);
 	}
 
 	hasSearchAction() {

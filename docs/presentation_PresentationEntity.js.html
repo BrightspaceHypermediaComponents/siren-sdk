@@ -19,11 +19,11 @@
 
     <h1 class="page-title">Source: presentation/PresentationEntity.js</h1>
 
-    
 
 
 
-    
+
+
     <section>
         <article>
             <pre class="prettyprint source linenums"><code>import { Entity } from '../es6/Entity.js';
@@ -52,6 +52,10 @@ export class PresentationEntity extends Entity {
 
 	showDropboxUnreadFeedback() {
 		return this._entity &amp;&amp; this._entity.properties &amp;&amp; this._entity.properties.ShowDropboxUnreadFeedback;
+	}
+
+	showPendingEnrollmentRequests() {
+		return this._entity &amp;&amp; this._entity.properties &amp;&amp; this._entity.properties.ShowPendingEnrollmentRequests;
 	}
 
 	showUnattemptedQuizzes() {

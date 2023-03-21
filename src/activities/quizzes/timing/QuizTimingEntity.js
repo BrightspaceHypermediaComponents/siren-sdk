@@ -129,6 +129,7 @@ export class QuizTimingEntity extends Entity {
 		const synchronousClass = Classes.quizzes.timing.start.synchronous;
 		if (data) return data === synchronousClass;
 		const entity = this.getTimerSettingsSubEntity();
+		if (!entity) return false;
 		return entity.hasClass(synchronousClass);
 	}
 
@@ -136,6 +137,7 @@ export class QuizTimingEntity extends Entity {
 		const asynchronousClass = Classes.quizzes.timing.start.asynchronous;
 		if (data) return data === asynchronousClass;
 		const entity = this.getTimerSettingsSubEntity();
+		if (!entity) return false;
 		return entity.hasClass(asynchronousClass);
 	}
 

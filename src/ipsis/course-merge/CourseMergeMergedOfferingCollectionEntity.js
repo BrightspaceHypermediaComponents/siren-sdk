@@ -15,10 +15,6 @@ export class CourseMergeMergedOfferingCollectionEntity extends BaseCollectionEnt
 		return this._entity?.getSubEntitiesByClass(Classes.ipsis.sisCourseMerge.originalTarget)?.[0];
 	}
 
-	prependOriginalSourceCourseMergeOfferings(previousCourseMergeMergedOfferingCollectionEntity) {
-		this.prependCourseMergeOfferings(previousCourseMergeMergedOfferingCollectionEntity.originalSourceCourseMergeOfferings());
-	}
-
 	userOwnedByMultipleSourceSystems() {
 		return this._entity?.properties?.userOwnedByMultipleSourceSystems;
 	}
