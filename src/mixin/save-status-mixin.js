@@ -1,4 +1,6 @@
-export const SaveStatusMixin = superclass => class extends superclass {
+import { dedupeMixin } from '@open-wc/dedupe-mixin';
+
+const InternalSaveStatusMixin = superclass => class extends superclass {
 	wrapSaveAction(promise) {
 		this.dispatchEvent(new CustomEvent('d2l-siren-entity-save-start', {
 			bubbles: true,
@@ -25,3 +27,5 @@ export const SaveStatusMixin = superclass => class extends superclass {
 			});
 	}
 };
+
+export const SaveStatusMixin = dedupeMixin(InternalSaveStatusMixin);
