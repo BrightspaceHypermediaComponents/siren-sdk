@@ -1,6 +1,7 @@
+import { dedupeMixin } from '@open-wc/dedupe-mixin';
 import { performSirenAction } from '../es6/SirenAction.js';
 
-export const NamedEntityMixin = superclass => class extends superclass {
+const NamedEntityMixinInternal = superclass => class extends superclass {
 
 	isNamedEntity() {
 		return super.entity() && super.entity().hasClass('named-entity');
@@ -25,3 +26,5 @@ export const NamedEntityMixin = superclass => class extends superclass {
 		}
 	}
 };
+
+export const NamedEntityMixin = dedupeMixin(NamedEntityMixinInternal);

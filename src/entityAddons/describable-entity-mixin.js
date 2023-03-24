@@ -1,6 +1,7 @@
+import { dedupeMixin } from '@open-wc/dedupe-mixin';
 import { performSirenAction } from '../es6/SirenAction.js';
 
-export const DescribableEntityMixin = superclass => class extends superclass {
+const DescribableEntityMixinInternal = superclass => class extends superclass {
 
 	isDescribableEntity() {
 		return super.entity() && super.entity().hasClass('describable-entity');
@@ -25,3 +26,5 @@ export const DescribableEntityMixin = superclass => class extends superclass {
 		}
 	}
 };
+
+export const DescribableEntityMixin = dedupeMixin(DescribableEntityMixinInternal);
