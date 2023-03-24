@@ -1,7 +1,8 @@
 import { dispose, entityFactory } from '../es6/EntityFactory.js';
 import { AsyncStateEvent } from '@brightspace-ui/core/helpers/asyncStateEvent.js';
+import { dedupeMixin } from '@open-wc/dedupe-mixin';
 
-export const EntityMixinLit = superclass => class extends superclass {
+const InternalEntityMixinLit = superclass => class extends superclass {
 
 	static get properties() {
 		return {
@@ -74,3 +75,5 @@ export const EntityMixinLit = superclass => class extends superclass {
 		}
 	}
 };
+
+export const EntityMixinLit = dedupeMixin(InternalEntityMixinLit);

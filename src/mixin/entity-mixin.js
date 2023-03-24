@@ -7,7 +7,7 @@ import { mixinBehaviors } from '@polymer/polymer/lib/legacy/class.js';
  * This mixin takes care of all the clean up. Thanks to entity be able to clean up all it's childern.
  * @polymerMixin
  */
-export const interalEntityMixin = function(superClass) {
+export const internalEntityMixin = function(superClass) {
 	return class extends mixinBehaviors([
 		D2L.PolymerBehaviors.Siren.SirenActionBehavior,
 	], superClass) {
@@ -84,4 +84,4 @@ export const interalEntityMixin = function(superClass) {
 	};
 };
 
-export const EntityMixin = dedupingMixin(interalEntityMixin);
+export const EntityMixin = dedupingMixin(internalEntityMixin);
