@@ -268,7 +268,7 @@ export const Rels = {
 		ancestors: 'https://organizations.api.brightspace.com/rels/ancestors',
 		departments: 'https://organizations.api.brightspace.com/rels/ancestors#departments',
 		semesters: 'https://organizations.api.brightspace.com/rels/ancestors#semesters',
-		components: "https://organizations.api.brightspace.com/rels/components"
+		components: 'https://organizations.api.brightspace.com/rels/components'
 	}
 };
 
