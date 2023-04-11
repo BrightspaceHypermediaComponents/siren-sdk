@@ -14,10 +14,6 @@ export class CourseMergeOfferingCollectionEntity extends BaseCollectionEntity {
 		return this._entity?.properties?.canMergeCourses;
 	}
 
-	isFiltered() {
-		return this._entity?.properties?.isFiltered;
-	}
-
 	selectedCount() {
 		return this._entity?.properties?.selectedCount;
 	}
