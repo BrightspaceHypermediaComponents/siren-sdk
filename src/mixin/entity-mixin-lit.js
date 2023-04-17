@@ -20,7 +20,11 @@ const InternalEntityMixinLit = superclass => class extends superclass {
 			/**
 			 * Entity object that extends the Entity class.
 			 */
-			_entity: { type: Object }
+			_entity: { type: Object },
+			/**
+			 * Error object is set if there is an error fetching entity. Null if entity was successfully retrieved.
+			 */
+			_error: { type: Object }
 		};
 	}
 
@@ -65,8 +69,9 @@ const InternalEntityMixinLit = superclass => class extends superclass {
 			const pendingEvent = new AsyncStateEvent(pendingPromise);
 			this.dispatchEvent(pendingEvent);
 
-			entityFactory(this._entityType, this.href, this.token, entity => {
+			entityFactory(this._entityType, this.href, this.token, (entity, error) => {
 				this._entity = entity;
+				this._error = error;
 				if (pendingResolve) {
 					pendingResolve();
 					pendingResolve = null;
