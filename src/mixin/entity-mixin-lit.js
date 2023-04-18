@@ -22,7 +22,7 @@ const InternalEntityMixinLit = superclass => class extends superclass {
 			 */
 			_entity: { type: Object },
 			/**
-			 * Error object is set if there is an error fetching entity. Null if entity was successfully retrieved.
+			 * Error object is set if there is an error fetching entity. Undefined if entity was successfully retrieved.
 			 */
 			_entityError: { type: Object }
 		};
