@@ -67,7 +67,7 @@ export function entityFactory(entityType, href, token, onChange, entity) {
 	const entityListener = new EntityListener();
 	const onChangeWrapped = (entity, error) => {
 		if (entity) {
-			onChange(new entityType(entity, token, entityListener), null);
+			onChange(new entityType(entity, token, entityListener));
 		} else {
 			onChange(null, error);
 		}
