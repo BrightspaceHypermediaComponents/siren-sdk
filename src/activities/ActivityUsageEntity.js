@@ -98,8 +98,8 @@ export class ActivityUsageEntity extends Entity {
 		}
 
 		let action;
-		const fields = [{ completionCriteria: `${criteria}` }];
-		const completionCriteriaSubEntity = this.getSubEntitiesByClass(Classes.content.completionCriteria);
+		const fields = [{ name: 'completionCriteria', value: criteria }];
+		const completionCriteriaSubEntity = this._getSubEntityByClass(Classes.content.completionCriteria);
 		if (completionCriteriaSubEntity) {
 			action = completionCriteriaSubEntity.getActionByName(Actions.content.updateCompletionCriteria);
 		}
