@@ -233,6 +233,10 @@ export class OrganizationEntity extends Entity {
 		return this._getHref(Rels.Organizations.components);
 	}
 
+	_userProgressHref() {
+		return this._getHref(Rels.Organizations.userProgress);
+	}
+
 	_semesterHref() {
 		return this._getHref(Rels.parentSemester);
 	}
