@@ -679,7 +679,7 @@ export const Actions = {
 	content: {
 		updateTitle: 'update-title',
 		updateDescription: 'update-description',
-		updateCompletionCriteria: 'update' // might need to change the lms to a better update name
+		updateCompletionCriteria: 'update-completion-criteria'
 	},
 	module: {
 		deleteModule: 'delete-module'
