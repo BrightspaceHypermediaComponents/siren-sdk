@@ -88,6 +88,7 @@ export class ActivityUsageEntity extends Entity {
 
 		return completionCriteriaEntity.properties.completionCriteria;
 	}
+
 	/**
 	 * Updates the completion criteria
 	 * @param {string} criteria The criteria to be set for the activity usage entity
@@ -110,6 +111,7 @@ export class ActivityUsageEntity extends Entity {
 
 		await performSirenAction(this._token, action, fields);
 	}
+
 	/**
 	 * @returns {bool} Whether the release conditions dialog opener sub entity is present.
 	 */
