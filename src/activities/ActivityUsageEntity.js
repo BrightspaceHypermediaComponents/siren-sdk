@@ -90,6 +90,19 @@ export class ActivityUsageEntity extends Entity {
 	}
 
 	/**
+	 * @returns {Array} Enabled completion criteria values for this activity, for use with the updateCompletionCriteria action
+	 */
+	enabledCriteria() {
+		const completionCriteriaEntity = this._getSubEntityByClass(Classes.content.completionCriteria);
+
+		if (!completionCriteriaEntity) {
+			return;
+		}
+
+		return completionCriteriaEntity.properties.enabledCriteria;
+	}
+
+	/**
 	 * Updates the completion criteria
 	 * @param {string} criteria The criteria to be set for the activity usage entity
 	 */
