@@ -77,6 +77,42 @@ export class ActivityUsageEntity extends Entity {
 	}
 
 	/**
+	 * @returns {string} Completion criteria of the activity usage, if present
+	 */
+	completionCriteria() {
+		const completionCriteriaEntity = this._getSubEntityByClass(Classes.content.completionCriteria);
+
+		if (!completionCriteriaEntity) {
+			return;
+		}
+
+		return completionCriteriaEntity.properties.completionCriteria;
+	}
+
+	/**
+	 * Updates the completion criteria
+	 * @param {string} criteria The criteria to be set for the activity usage entity
+	 */
+	async setCompletionCriteria(criteria) {
+		if (!this._entity) {
+			return;
+		}
+
+		let action;
+		const fields = [{ name: 'completionCriteria', value: criteria }];
+		const completionCriteriaSubEntity = this._getSubEntityByClass(Classes.content.completionCriteria);
+		if (completionCriteriaSubEntity) {
+			action = completionCriteriaSubEntity.getActionByName(Actions.content.updateCompletionCriteria);
+		}
+
+		if (!action) {
+			return;
+		}
+
+		await performSirenAction(this._token, action, fields);
+	}
+
+	/**
 	 * @returns {bool} Whether the release conditions dialog opener sub entity is present.
 	 */
 	canEditReleaseConditions() {
@@ -659,6 +695,7 @@ export class ActivityUsageEntity extends Entity {
 
 		await this.setDraftStatus(activity.isDraft);
 		await this.saveDates(activity.dates);
+		await this.setCompletionCriteria(activity.completionCriteria);
 	}
 
 	equals(activity) {
@@ -672,7 +709,8 @@ export class ActivityUsageEntity extends Entity {
 			[this.endDate(), activity.dates.endDate],
 			[currentEndDateType, activity.dates.endDateType],
 			[this.displayInCalendar(), activity.dates.displayInCalendar],
-			[this.isDraft(), activity.isDraft]
+			[this.isDraft(), activity.isDraft],
+			[this.completionCriteria(), activity.completionCriteria]
 		];
 
 		for (const [left, right] of diffs) {

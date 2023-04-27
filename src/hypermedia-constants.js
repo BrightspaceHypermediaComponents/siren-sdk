@@ -353,6 +353,7 @@ export const Classes = {
 	},
 	content: {
 		content: 'content',
+		completionCriteria: 'completion-criteria',
 		sequencedActivity: 'sequenced-activity',
 		description: 'description',
 		rawDescription: 'raw-description',
@@ -680,6 +681,7 @@ export const Actions = {
 	content: {
 		updateTitle: 'update-title',
 		updateDescription: 'update-description',
+		updateCompletionCriteria: 'update-completion-criteria'
 	},
 	module: {
 		deleteModule: 'delete-module'
