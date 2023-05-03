@@ -5,6 +5,7 @@ export const Rels = {
 	color: 'https://api.brightspace.com/rels/color',
 	completion: 'https://api.brightspace.com/rels/completion',
 	content: 'https://api.brightspace.com/rels/content',
+	copyCoursePage: 'https://api.brightspace.com/rels/copy-course-tool-page',
 	courseOfferingInfoPage: 'https://api.brightspace.com/rels/course-offering-info-page',
 	date: 'https://api.brightspace.com/rels/date',
 	defaultSearch: 'https://api.brightspace.com/rels/default-search',
