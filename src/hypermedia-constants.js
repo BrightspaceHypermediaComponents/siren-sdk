@@ -269,8 +269,7 @@ export const Rels = {
 		ancestors: 'https://organizations.api.brightspace.com/rels/ancestors',
 		departments: 'https://organizations.api.brightspace.com/rels/ancestors#departments',
 		semesters: 'https://organizations.api.brightspace.com/rels/ancestors#semesters',
-		components: 'https://organizations.api.brightspace.com/rels/components',
-		userProgress: 'https://organizations.api.brightspace.com/rels/user-progress'
+		components: 'https://organizations.api.brightspace.com/rels/components'
 	}
 };
 
@@ -354,6 +353,7 @@ export const Classes = {
 	},
 	content: {
 		content: 'content',
+		completionCriteria: 'completion-criteria',
 		sequencedActivity: 'sequenced-activity',
 		description: 'description',
 		rawDescription: 'raw-description',
@@ -681,6 +681,7 @@ export const Actions = {
 	content: {
 		updateTitle: 'update-title',
 		updateDescription: 'update-description',
+		updateCompletionCriteria: 'update-completion-criteria'
 	},
 	module: {
 		deleteModule: 'delete-module'
