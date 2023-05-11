@@ -90,6 +90,19 @@ export class ActivityUsageEntity extends Entity {
 	}
 
 	/**
+	 * @returns {Array} Available completion criteria values for this activity, for use with the updateCompletionCriteria action
+	 */
+	availableCriteria() {
+		const completionCriteriaEntity = this._getSubEntityByClass(Classes.content.completionCriteria);
+
+		if (!completionCriteriaEntity) {
+			return;
+		}
+
+		return completionCriteriaEntity.properties.availableCriteria;
+	}
+
+	/**
 	 * @returns {Array} Enabled completion criteria values for this activity, for use with the updateCompletionCriteria action
 	 */
 	enabledCriteria() {
