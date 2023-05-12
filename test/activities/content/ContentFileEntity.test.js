@@ -94,7 +94,7 @@ describe('ContentFileEntity', () => {
 
 			const form = await getFormData(fetchMock.lastCall().request);
 			if (!form.notSupported) {
-				expect(form.get('title')).to.equal('manual');
+				expect(form.get('criteria')).to.equal('manual');
 			}
 			expect(fetchMock.called()).to.be.true;
 		});
