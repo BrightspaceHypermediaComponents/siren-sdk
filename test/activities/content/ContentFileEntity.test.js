@@ -87,6 +87,18 @@ describe('ContentFileEntity', () => {
 			expect(fetchMock.called()).to.be.true;
 		});
 
+		it('saves completion criteria', async() => {
+			fetchMock.patchOnce('https://fake-tenant-id.content.api.proddev.d2l/6613/files/12345', fileData);
+
+			await contentFileEntity.setFileCompletionCriteria('manual');
+
+			const form = await getFormData(fetchMock.lastCall().request);
+			if (!form.notSupported) {
+				expect(form.get('title')).to.equal('manual');
+			}
+			expect(fetchMock.called()).to.be.true;
+		});
+
 		it('performs delete request', async() => {
 			fetchMock.deleteOnce('https://fake-tenant-id.content.api.proddev.d2l/6613/files/12345', fileData);
 			await contentFileEntity.deleteFile();

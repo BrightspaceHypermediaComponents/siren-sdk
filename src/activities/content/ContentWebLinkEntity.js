@@ -158,6 +158,24 @@ export class ContentWebLinkEntity extends ContentWorkingCopyEntity {
 	}
 
 	/**
+	 * Updates the web link to have the given completion criteria
+	 * @param {string} completionCriteria completion criteria to set for the web link
+	 */
+	async setWebLinkCompletionCriteria(completionCriteria) {
+		if (!this._entity) {
+			return;
+		}
+
+		const action = this._entity.getActionByName(Actions.webLink.updateCompletionCriteria);
+		if (!action) {
+			return;
+		}
+
+		const fields = [{ name: 'criteria', value: completionCriteria }];
+		return await performSirenAction(this._token, action, fields);
+	}
+
+	/**
 	 * Deletes the web link
 	 */
 	async deleteWebLink() {
