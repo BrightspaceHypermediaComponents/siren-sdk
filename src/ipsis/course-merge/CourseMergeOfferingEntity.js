@@ -27,6 +27,14 @@ export class CourseMergeOfferingEntity extends Entity {
 	isMerged() {
 		return this._entity?.properties?.isMerged;
 	}
+	
+	sectionCount() {
+		return this._entity?.properties?.sectionCount;
+	}
+	
+	sectionMappingCount() {
+		return this._entity?.properties?.sectionMappingCount;
+	}
 
 	onOrganizationChange(onChange) {
 		const organizationHref = this.organizationHref();
