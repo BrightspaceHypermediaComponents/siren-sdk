@@ -53,6 +53,19 @@ export const contentWebLinkData = {
 		},
 		{
 			'href': 'https://fake-tenant-id.weblinks.api.proddev.d2l/6613/weblinks/12345',
+			'name': 'update-completion-criteria',
+			'method': 'PATCH',
+			'fields': [
+				{
+					'class': ['required'],
+					'type': 'text',
+					'name': 'criteria',
+					'value': 'manual'
+				}
+			]
+		},
+		{
+			'href': 'https://fake-tenant-id.weblinks.api.proddev.d2l/6613/weblinks/12345',
 			'name': 'delete-webLink',
 			'method': 'DELETE'
 		}
