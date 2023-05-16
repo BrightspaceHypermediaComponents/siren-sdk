@@ -31,7 +31,7 @@
     "@babel/core": "^7",
     "@babel/eslint-parser": "^7",
     "@open-wc/testing": "^3",
-    "@web/test-runner": "^0.15",
+    "@web/test-runner": "^0.16",
     "eslint": "^8",
     "eslint-config-brightspace": "^0.20",
     "fetch-mock": "^9",
