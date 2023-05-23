@@ -378,6 +378,18 @@ export class AssignmentEntity extends Entity {
 		return this._entity.properties.allowableFileType;
 	}
 
+	allowableFileTypeValue() {
+		if (!this._entity) {
+			return;
+		}
+
+		const allowableFileType = this.allowableFileType();
+		if (allowableFileType) {
+			return String(allowableFileType.value);
+		}
+		return String(undefined);
+	}
+
 	/**
 	 * @returns {object} Custom allowablefile types of the assignment
 	 */
@@ -927,7 +939,7 @@ export class AssignmentEntity extends Entity {
 			[this.name(), assignment.name],
 			[this.instructionsEditorHtml(), assignment.instructions],
 			[this.submissionType() && String(this.submissionType().value), assignment.submissionType],
-			[this.allowableFileType() && String(this.allowableFileType().value), assignment.allowableFileType],
+			[this.allowableFileTypeValue(), assignment.allowableFileType],
 			[this.getAvailableAnnotationTools(), assignment.annotationToolsAvailable],
 			[this.isIndividualAssignmentType(), assignment.isIndividualAssignmentType],
 			[this.getDefaultScoringRubric(), assignment.defaultScoringRubricId]
@@ -1021,7 +1033,7 @@ export class AssignmentEntity extends Entity {
 	}
 
 	_hasAllowableFileTypeChanged(allowableFileType) {
-		return !this.allowableFileType() || allowableFileType !== String(this.allowableFileType().value);
+		return allowableFileType !== this.allowableFileTypeValue();
 	}
 
 	_hasFileSubmissionLimitChanged(filesSubmissionLimit) {
