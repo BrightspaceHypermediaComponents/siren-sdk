@@ -628,7 +628,7 @@ export class AssignmentEntity extends Entity {
 	_submissionsRuleField() {
 		const subEntity = this._entity && this._entity.getSubEntityByRel(Rels.Assignments.submissionsRule);
 
-		if (!subEntity || !subEntity.properties) {
+		if (!subEntity || !subEntity.properties || subEntity.hasClass(Classes.assignments.inactive)) {
 			return;
 		}
 
@@ -681,7 +681,7 @@ export class AssignmentEntity extends Entity {
 	filesSubmissionLimit() {
 		const subEntity = this._entity && this._entity.getSubEntityByRel(Rels.Assignments.filesSubmissionLimit);
 
-		if (!subEntity || !subEntity.properties) {
+		if (!subEntity || !subEntity.properties || subEntity.hasClass(Classes.assignments.inactive)) {
 			return;
 		}
 
@@ -939,7 +939,6 @@ export class AssignmentEntity extends Entity {
 			[this.name(), assignment.name],
 			[this.instructionsEditorHtml(), assignment.instructions],
 			[this.submissionType() && String(this.submissionType().value), assignment.submissionType],
-			[this.allowableFileTypeValue(), assignment.allowableFileType],
 			[this.getAvailableAnnotationTools(), assignment.annotationToolsAvailable],
 			[this.isIndividualAssignmentType(), assignment.isIndividualAssignmentType],
 			[this.getDefaultScoringRubric(), assignment.defaultScoringRubricId]
@@ -964,6 +963,9 @@ export class AssignmentEntity extends Entity {
 		}
 		if (assignment.hasOwnProperty('allowTextSubmission')) {
 			diffs.push([this.allowTextSubmission(), assignment.allowTextSubmission]);
+		}
+		if (assignment.hasOwnProperty('allowableFileType')) {
+			diffs.push([this.allowableFileTypeValue(), assignment.allowableFileType]);
 		}
 
 		for (const [left, right] of diffs) {
