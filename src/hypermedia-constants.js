@@ -321,6 +321,7 @@ export const Classes = {
 		},
 		attachment: 'attachment',
 		attachmentList: 'attachment-list',
+		inactive: 'inactive',
 		instructions: 'instructions',
 		file: 'file',
 		latest: 'latest',
