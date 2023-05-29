@@ -33,7 +33,7 @@
     "@open-wc/testing": "^3",
     "@web/test-runner": "^0.15",
     "eslint": "^8",
-    "eslint-config-brightspace": "^0.20",
+    "eslint-config-brightspace": "^0.23",
     "fetch-mock": "^9",
     "jsdoc": "^3",
     "lit": "^2",
