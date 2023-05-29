@@ -78,6 +78,7 @@ describe('AssignmentEntity', () => {
 				name: 'Extra Special Assignment',
 				instructions: '<p>These are your instructions</p>',
 				submissionType: undefined,
+				allowableFileType: String(undefined),
 				annotationToolsAvailable: true,
 				isIndividualAssignmentType: false,
 				groupTypeId: '314',
