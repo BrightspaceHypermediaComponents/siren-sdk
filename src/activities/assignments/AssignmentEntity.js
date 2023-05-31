@@ -378,6 +378,18 @@ export class AssignmentEntity extends Entity {
 		return this._entity.properties.allowableFileType;
 	}
 
+	allowableFileTypeValue() {
+		if (!this._entity) {
+			return;
+		}
+
+		const allowableFileType = this.allowableFileType();
+		if (allowableFileType) {
+			return String(allowableFileType.value);
+		}
+		return String(undefined);
+	}
+
 	/**
 	 * @returns {object} Custom allowablefile types of the assignment
 	 */
@@ -616,7 +628,7 @@ export class AssignmentEntity extends Entity {
 	_submissionsRuleField() {
 		const subEntity = this._entity && this._entity.getSubEntityByRel(Rels.Assignments.submissionsRule);
 
-		if (!subEntity || !subEntity.properties) {
+		if (!subEntity || !subEntity.properties || subEntity.hasClass(Classes.assignments.inactive)) {
 			return;
 		}
 
@@ -669,7 +681,7 @@ export class AssignmentEntity extends Entity {
 	filesSubmissionLimit() {
 		const subEntity = this._entity && this._entity.getSubEntityByRel(Rels.Assignments.filesSubmissionLimit);
 
-		if (!subEntity || !subEntity.properties) {
+		if (!subEntity || !subEntity.properties || subEntity.hasClass(Classes.assignments.inactive)) {
 			return;
 		}
 
@@ -927,7 +939,6 @@ export class AssignmentEntity extends Entity {
 			[this.name(), assignment.name],
 			[this.instructionsEditorHtml(), assignment.instructions],
 			[this.submissionType() && String(this.submissionType().value), assignment.submissionType],
-			[this.allowableFileType() && String(this.allowableFileType().value), assignment.allowableFileType],
 			[this.getAvailableAnnotationTools(), assignment.annotationToolsAvailable],
 			[this.isIndividualAssignmentType(), assignment.isIndividualAssignmentType],
 			[this.getDefaultScoringRubric(), assignment.defaultScoringRubricId]
@@ -952,6 +963,9 @@ export class AssignmentEntity extends Entity {
 		}
 		if (assignment.hasOwnProperty('allowTextSubmission')) {
 			diffs.push([this.allowTextSubmission(), assignment.allowTextSubmission]);
+		}
+		if (assignment.hasOwnProperty('allowableFileType')) {
+			diffs.push([this.allowableFileTypeValue(), assignment.allowableFileType]);
 		}
 
 		for (const [left, right] of diffs) {
@@ -1021,7 +1035,7 @@ export class AssignmentEntity extends Entity {
 	}
 
 	_hasAllowableFileTypeChanged(allowableFileType) {
-		return !this.allowableFileType() || allowableFileType !== String(this.allowableFileType().value);
+		return allowableFileType !== this.allowableFileTypeValue();
 	}
 
 	_hasFileSubmissionLimitChanged(filesSubmissionLimit) {

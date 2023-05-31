@@ -127,6 +127,18 @@ describe('ContentWebLinkEntity', () => {
 			expect(fetchMock.called()).to.be.true;
 		});
 
+		it('saves completion criteria', async() => {
+			fetchMock.patchOnce('https://fake-tenant-id.weblinks.api.proddev.d2l/6613/weblinks/12345', webLinkData);
+
+			await contentWebLinkEntity.setWebLinkCompletionCriteria('manual');
+
+			const form = await getFormData(fetchMock.lastCall().request);
+			if (!form.notSupported) {
+				expect(form.get('criteria')).to.equal('manual');
+			}
+			expect(fetchMock.called()).to.be.true;
+		});
+
 		it('performs delete request', async() => {
 			fetchMock.deleteOnce('https://fake-tenant-id.weblinks.api.proddev.d2l/6613/weblinks/12345', webLinkData);
 			await contentWebLinkEntity.deleteWebLink();

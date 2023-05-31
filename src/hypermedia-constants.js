@@ -321,6 +321,7 @@ export const Classes = {
 		},
 		attachment: 'attachment',
 		attachmentList: 'attachment-list',
+		inactive: 'inactive',
 		instructions: 'instructions',
 		file: 'file',
 		latest: 'latest',
@@ -689,6 +690,7 @@ export const Actions = {
 	},
 	webLink: {
 		updateUrl: 'update-url',
+		updateCompletionCriteria: 'update-completion-criteria',
 		updateExternalResource: 'update-external-resource',
 		deleteWeblink: 'delete-webLink',
 		deleteLTIlink: 'delete-ltiLink',
