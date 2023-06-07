@@ -1089,6 +1089,7 @@ export class QuizEntity extends Entity {
 			[this.isDisablePagerAndAlertsEnabled(), quiz.disablePagerAndAlerts],
 			[this.password(), quiz.password],
 			[this.notificationEmail(), quiz.notificationEmail],
+			[this.deductionPercentage(), quiz.deductionPercentage],
 			[this.isPreventMovingBackwardsEnabled(), quiz.preventMovingBackwards],
 			[this.isSyncGradebookEnabled(), quiz.syncGradebook],
 			[this.isSyncGradebookDefault(), quiz.syncGradebookDefault],
