@@ -95,6 +95,7 @@ describe('QuizEntity', () => {
 		it('returns false when deductionPercentage not equal', () => {
 			const quizEntity = new QuizEntity(editableEntity);
 			modifiedEntity.deductionPercentage = 25;
+			expect(quizEntity.deductionPercentage().equals(25)).to.be.false;
 			expect(quizEntity.equals(modifiedEntity)).to.be.false;
 		});
 
