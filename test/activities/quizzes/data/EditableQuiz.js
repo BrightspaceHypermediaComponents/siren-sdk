@@ -253,7 +253,7 @@ export const editableQuiz = {
 							'type': 'number',
 							'title': 'Deduction Percentage',
 							'name': 'deductionPercentage',
-							'value': null,
+							'value': 50,
 							'min': 0,
 							'max': 100
 						}

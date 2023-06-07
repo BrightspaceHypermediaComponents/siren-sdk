@@ -183,11 +183,23 @@ export class QuizEntity extends Entity {
 	}
 
 	/**
-	 * @returns {int|null} The deduction percentage for the quiz or null if disabled.
+	 * @returns {bool} Whether or not the user can edit the Deduction Percentage property
+	 */
+	canEditDeductionPercentage() {
+		const entity = this._entity.getSubEntityByRel(Rels.Quizzes.deductionPercentage);
+		return entity && entity.hasActionByName(Actions.quizzes.updateDeductionPercentage);
+	}
+
+	/**
+	 * @returns {bool} The deduction percentage for the quiz
 	 */
 	deductionPercentage() {
 		const entity = this._entity.getSubEntityByRel(Rels.Quizzes.deductionPercentage);
-		return entity && entity.hasActionByName(Actions.quizzes.updateDeductionPercentage);
+		if (!entity || !entity.properties) {
+			return;
+		}
+		const props = entity.properties;
+		return props && props.deductionPercentage;
 	}
 
 	/**
