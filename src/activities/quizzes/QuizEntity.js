@@ -183,7 +183,7 @@ export class QuizEntity extends Entity {
 	}
 
 	/**
-	 * @returns {int|null} The deduction percentage for the quiz or null if disabled. 
+	 * @returns {int|null} The deduction percentage for the quiz or null if disabled.
 	 */
 	deductionPercentage() {
 		const entity = this._entity.getSubEntityByRel(Rels.Quizzes.deductionPercentage);
@@ -628,7 +628,7 @@ export class QuizEntity extends Entity {
 			updatePasswordAction,
 			updateNotificationEmail,
 			updatePreventMovingBackwards,
-			updateDeductionPercentage,
+			updateDeductionPercentageAction,
 			updateAutoSetGradedAction,
 			updateSyncGradebookAction,
 			updateSyncGradebookDefaultAction,

@@ -250,12 +250,12 @@ export const editableQuiz = {
 					'method': 'PATCH',
 					'fields': [
 						{
-							"type": "number",
-							"title": "Deduction Percentage",
-							"name": "deductionPercentage",
-							"value": null,
-							"min": 0,
-							"max": 100
+							'type': 'number',
+							'title': 'Deduction Percentage',
+							'name': 'deductionPercentage',
+							'value': null,
+							'min': 0,
+							'max': 100
 						}
 					]
 				}
