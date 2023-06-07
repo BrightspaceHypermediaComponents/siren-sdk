@@ -10,6 +10,10 @@ Options for getting started:
 * Clone the repo: `git clone https://github.com/BrightspaceHypermediaComponents/siren-sdk.git`.
 * Install with [npm](https://www.npmjs.com/): `npm install @brightspace-hmc/siren-sdk`.
 
+## Testing
+In a non-administrator powershell:
+* `npm run test`
+
 ## Versioning & Releasing
 
 > TL;DR: Commits prefixed with `fix:` and `feat:` will trigger patch and minor releases when merged to `main`. Read on for more details...
