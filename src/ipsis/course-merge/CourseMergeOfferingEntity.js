@@ -12,6 +12,10 @@ export class CourseMergeOfferingEntity extends Entity {
 		return this._entity?.properties?.ownedByMultipleSourceSystems;
 	}
 
+	isSectionAssociated() {
+		return this._entity?.properties?.isSectionAssociated;
+	}
+
 	orgUnitId() {
 		return this._entity?.properties?.orgUnitId;
 	}
