@@ -40,6 +40,7 @@ describe('QuizEntity', () => {
 				password: 'hello',
 				notificationEmail: 'moose@d2l.com',
 				preventMovingBackwards: true,
+				deductionPercentage: 50,
 				autoSetGraded: true,
 				syncGradebook: false,
 				syncGradebookDefault: true,
@@ -88,6 +89,12 @@ describe('QuizEntity', () => {
 		it('returns false when preventMovingBackwards is not equal', () => {
 			const quizEntity = new QuizEntity(editableEntity);
 			modifiedEntity.preventMovingBackwards = false;
+			expect(quizEntity.equals(modifiedEntity)).to.be.false;
+		});
+
+		it('returns false when deductionPercentage not equal', () => {
+			const quizEntity = new QuizEntity(editableEntity);
+			modifiedEntity.deductionPercentage = 25;
 			expect(quizEntity.equals(modifiedEntity)).to.be.false;
 		});
 
@@ -304,6 +311,32 @@ describe('QuizEntity', () => {
 		});
 	});
 
+	describe('deductionPercentage', () => {
+		describe('canEditDeductionPercentage', () => {
+			it('returns true when deductionPercentage is editable', () => {
+				const quizEntity = new QuizEntity(editableEntity);
+				expect(quizEntity.canEditDeductionPercentage()).to.be.true;
+			});
+
+			it('returns false when deductionPercentage is not editable', () => {
+				const quizEntity = new QuizEntity(nonEditableEntity);
+				expect(quizEntity.canEditDeductionPercentage()).to.be.false;
+			});
+		});
+
+		describe('deductionPercentage', () => {
+			it('can read deductionPercentage from an editable entity', () => {
+				const quizEntity = new QuizEntity(editableEntity);
+				expect(quizEntity.deductionPercentage()).to.equal(50);
+			});
+
+			it('can read deductionPercentage from a non-editable entity', () => {
+				const quizEntity = new QuizEntity(nonEditableEntity);
+				expect(quizEntity.deductionPercentage()).to.equal(50);
+			});
+		});
+	});
+
 	describe('preventMovingBackwards', () => {
 		describe('canEditPreventMovingBackwards', () => {
 			it('returns true when prevent moving backwards is editable', () => {
@@ -420,6 +453,7 @@ describe('QuizEntity', () => {
 				password: 'super-secret',
 				notificationEmail: 'modifiedMoose@d2l.com',
 				preventMovingBackwards: false,
+				deductionPercentage: 10,
 				autoSetGraded: false,
 				syncGradebook: true,
 				syncGradebookDefault: false,
@@ -439,6 +473,7 @@ describe('QuizEntity', () => {
 				expect(form.get('password')).to.equal('super-secret');
 				expect(form.get('notificationEmail')).to.equal('modifiedMoose@d2l.com');
 				expect(form.get('preventMovingBackwards')).to.equal('false');
+				expect(form.get('deductionPercentage')).to.equal('10');
 				expect(form.get('autoSetGraded')).to.equal('false');
 				expect(form.get('syncGradebook')).to.equal('true');
 				expect(form.get('syncGradebookDefault')).to.equal('false');
@@ -463,6 +498,7 @@ describe('QuizEntity', () => {
 				password: 'hello',
 				notificationEmail: 'moose@d2l.com',
 				preventMovingBackwards: true,
+				deductionPercentage: 50,
 				autoSetGraded: true,
 				syncGradebook: false,
 				syncGradebookDefault: true,
@@ -487,6 +523,7 @@ describe('QuizEntity', () => {
 				password: 'super-secret',
 				notificationEmail: 'modifiedMoose@d2l.com',
 				preventMovingBackwards: false,
+				deductionPercentage: 10,
 				autoSetGraded: false,
 				syncGradebook: true,
 				syncGradebookDefault: false,

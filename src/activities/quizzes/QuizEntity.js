@@ -183,6 +183,26 @@ export class QuizEntity extends Entity {
 	}
 
 	/**
+	 * @returns {bool} Whether or not the user can edit the Deduction Percentage property
+	 */
+	canEditDeductionPercentage() {
+		const entity = this._entity.getSubEntityByRel(Rels.Quizzes.deductionPercentage);
+		return entity && entity.hasActionByName(Actions.quizzes.updateDeductionPercentage);
+	}
+
+	/**
+	 * @returns {bool} The deduction percentage for the quiz
+	 */
+	deductionPercentage() {
+		const entity = this._entity.getSubEntityByRel(Rels.Quizzes.deductionPercentage);
+		if (!entity || !entity.properties) {
+			return;
+		}
+		const props = entity.properties;
+		return props && props.deductionPercentage;
+	}
+
+	/**
 	 * @returns {bool} Whether or not the user can edit the autoSetGraded property
 	 */
 	canEditAutoSetGraded() {
@@ -602,6 +622,7 @@ export class QuizEntity extends Entity {
 		const updatePasswordAction = this.canEditPassword() ? this._formatUpdatePasswordAction(quiz) : null;
 		const updateNotificationEmail = this.canEditNotificationEmail() ? this._formatNotificationEmailAction(quiz) : null;
 		const updatePreventMovingBackwards = this.canEditPreventMovingBackwards() ? this._formatUpdatePreventMovingBackwards(quiz) : null;
+		const updateDeductionPercentageAction = this.canEditDeductionPercentage() ? this._formatUpdateDeductionPercentage(quiz) : null;
 		const updateAutoSetGradedAction = this.canEditAutoSetGraded() ? this._formatUpdateAutoSetGraded(quiz) : null;
 		const updateSyncGradebookAction = this.canEditSyncGradebook() ? this._formatUpdateSyncGradebook(quiz) : null;
 		const updateSyncGradebookDefaultAction = this.canEditSyncGradebook() ? this._formatUpdateSyncGradebookDefault(quiz) : null;
@@ -619,6 +640,7 @@ export class QuizEntity extends Entity {
 			updatePasswordAction,
 			updateNotificationEmail,
 			updatePreventMovingBackwards,
+			updateDeductionPercentageAction,
 			updateAutoSetGradedAction,
 			updateSyncGradebookAction,
 			updateSyncGradebookDefaultAction,
@@ -824,6 +846,23 @@ export class QuizEntity extends Entity {
 		return { action, fields };
 	}
 
+	_formatUpdateDeductionPercentage(quiz) {
+		if (!quiz) return;
+		if (!this._hasDeductionPercentageChanged(quiz.deductionPercentage)) return;
+
+		const entity = this._entity.getSubEntityByRel(Rels.Quizzes.deductionPercentage);
+		if (!entity) return;
+
+		const action = entity.getActionByName(Actions.quizzes.updateDeductionPercentage);
+		if (!action) return;
+
+		const fields = [
+			{ name: 'deductionPercentage', value: quiz.deductionPercentage },
+		];
+
+		return { action, fields };
+	}
+
 	_formatUpdateAutoSetGraded(quiz) {
 		if (!quiz) return;
 		if (!this._hasAutoSetGradedChanged(quiz.autoSetGraded)) return;
@@ -1009,6 +1048,10 @@ export class QuizEntity extends Entity {
 		return preventMovingBackwards !== this.isPreventMovingBackwardsEnabled();
 	}
 
+	_hasDeductionPercentageChanged(deductionPercentage) {
+		return deductionPercentage !== this.deductionPercentage();
+	}
+
 	_hasAutoSetGradedChanged(autoSetGraded) {
 		return autoSetGraded !== this.isAutoSetGradedEnabled();
 	}
@@ -1046,6 +1089,7 @@ export class QuizEntity extends Entity {
 			[this.isDisablePagerAndAlertsEnabled(), quiz.disablePagerAndAlerts],
 			[this.password(), quiz.password],
 			[this.notificationEmail(), quiz.notificationEmail],
+			[this.deductionPercentage(), quiz.deductionPercentage],
 			[this.isPreventMovingBackwardsEnabled(), quiz.preventMovingBackwards],
 			[this.isSyncGradebookEnabled(), quiz.syncGradebook],
 			[this.isSyncGradebookDefault(), quiz.syncGradebookDefault],

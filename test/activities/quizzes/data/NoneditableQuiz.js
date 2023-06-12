@@ -103,6 +103,17 @@ export const nonEditableQuiz = {
 		},
 		{
 			'class': [
+				'deduction-percentage',
+			],
+			'rel': [
+				'https://quizzes.api.brightspace.com/rels/deduction-percentage'
+			],
+			'properties': {
+				'deductionPercentage': 50
+			},
+		},
+		{
+			'class': [
 				'auto-set-graded',
 				'unchecked'
 			],
