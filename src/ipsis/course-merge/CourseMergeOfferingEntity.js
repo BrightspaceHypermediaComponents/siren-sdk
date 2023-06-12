@@ -28,6 +28,14 @@ export class CourseMergeOfferingEntity extends Entity {
 		return this._entity?.properties?.isMerged;
 	}
 
+	sectionCount() {
+		return this._entity?.properties?.sectionCount;
+	}
+
+	sectionMappingCount() {
+		return this._entity?.properties?.sectionMappingCount;
+	}
+
 	onOrganizationChange(onChange) {
 		const organizationHref = this.organizationHref();
 		// _subEntity builds new sub entity and allows this object to track it.
