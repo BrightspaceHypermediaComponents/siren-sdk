@@ -622,7 +622,7 @@ export class QuizEntity extends Entity {
 		const updatePasswordAction = this.canEditPassword() ? this._formatUpdatePasswordAction(quiz) : null;
 		const updateNotificationEmail = this.canEditNotificationEmail() ? this._formatNotificationEmailAction(quiz) : null;
 		const updatePreventMovingBackwards = this.canEditPreventMovingBackwards() ? this._formatUpdatePreventMovingBackwards(quiz) : null;
-		const updateDeductionPercentageAction = this.deductionPercentage() ? this._formatUpdateDeductionPercentage(quiz) : null;
+		const updateDeductionPercentageAction = this.canEditDeductionPercentage() ? this._formatUpdateDeductionPercentage(quiz) : null;
 		const updateAutoSetGradedAction = this.canEditAutoSetGraded() ? this._formatUpdateAutoSetGraded(quiz) : null;
 		const updateSyncGradebookAction = this.canEditSyncGradebook() ? this._formatUpdateSyncGradebook(quiz) : null;
 		const updateSyncGradebookDefaultAction = this.canEditSyncGradebook() ? this._formatUpdateSyncGradebookDefault(quiz) : null;
