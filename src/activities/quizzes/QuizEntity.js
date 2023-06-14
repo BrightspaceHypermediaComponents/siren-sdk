@@ -207,7 +207,11 @@ export class QuizEntity extends Entity {
 	 */
 	negativeGradingEnabled() {
 		const entity = this._entity.getSubEntityByRel(Rels.Quizzes.deductionPercentage);
-		return entity;
+		if (entity) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	/**
