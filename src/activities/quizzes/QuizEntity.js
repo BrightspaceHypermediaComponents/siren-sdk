@@ -202,6 +202,14 @@ export class QuizEntity extends Entity {
 		return props && props.deductionPercentage;
 	}
 
+		/**
+	 * @returns {bool} Whether or not the negative grading entity is present 
+	 */
+	negativeGradingEnabled() {
+		const entity = this._entity.getSubEntityByRel(Rels.Quizzes.deductionPercentage);
+		return entity ? true : false;
+	}
+
 	/**
 	 * @returns {bool} Whether or not the user can edit the autoSetGraded property
 	 */
