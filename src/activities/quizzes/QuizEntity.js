@@ -206,12 +206,7 @@ export class QuizEntity extends Entity {
 	 * @returns {bool} Whether or not the negative grading entity is present
 	 */
 	negativeGradingEnabled() {
-		const entity = this._entity.getSubEntityByRel(Rels.Quizzes.deductionPercentage);
-		if (entity) {
-			return true;
-		} else {
-			return false;
-		}
+		return this._entity.hasSubEntityByRel(Rels.Quizzes.deductionPercentage);
 	}
 
 	/**
