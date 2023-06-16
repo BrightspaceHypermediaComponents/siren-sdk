@@ -855,4 +855,19 @@ export class ActivityUsageEntity extends Entity {
 			return new ActivityUsageEntity(entity, this._token);
 		}
 	}
+
+	_canDeleteInstance() {
+		return this._entity.hasActionByName(Actions.activities.deleteInstance);
+	}
+
+	async deleteInstance() {
+		const action = this._canDeleteInstance() && this._entity.getActionByName(Actions.activities.deleteInstance);
+		if (!action) {
+			return;
+		}
+
+		await performSirenAction(this._token, action).then(() => {
+			this.dispose();
+		});
+	}
 }
