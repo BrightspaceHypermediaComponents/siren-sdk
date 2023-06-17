@@ -658,7 +658,8 @@ export const Actions = {
 			updateEvaluation: 'update-evaluation',
 		},
 		save: 'save',
-		filterWorkToDo: 'filter-work-to-do'
+		filterWorkToDo: 'filter-work-to-do',
+		deleteInstance: 'delete-activity-instance'
 	},
 	assignments: {
 		assign: 'assign',
