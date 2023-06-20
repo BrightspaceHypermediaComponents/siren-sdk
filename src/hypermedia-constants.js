@@ -48,6 +48,7 @@ export const Rels = {
 	widgetSettings: 'https://api.brightspace.com/rels/widget-settings',
 	// Activities API sub-domain rels
 	Activities: {
+		activity: 'https://activities.api.brightspace.com/rels/activity',
 		myActivities: 'https://activities.api.brightspace.com/rels/my-activities',
 		myActivitiesEmpty: 'https://activities.api.brightspace.com/rels/my-activities#empty',
 		myOrganizationActivities: 'https://activities.api.brightspace.com/rels/my-organization-activities',
@@ -295,6 +296,7 @@ export const Classes = {
 		draftPublishedEntity: 'draft-published-entity',
 		exempt: 'exempt',
 		feedbackDate: 'feedback-date',
+		activityName: 'activity-name',
 		published: 'published',
 		scoreOutOf: 'score-out-of',
 		selected: 'selected',
@@ -635,6 +637,7 @@ export const Actions = {
 		startAddNew: 'start-add-new',
 		update: 'update',
 		updateDraft: 'update-draft',
+		updateName: 'update-name',
 		scoreOutOf: {
 			update: 'update'
 		},
