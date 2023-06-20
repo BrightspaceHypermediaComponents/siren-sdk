@@ -20,7 +20,7 @@ export class ActivityUsageEntity extends Entity {
 
 		return this._entity.getLinkByRel(Rels.Activities.activity).href;
 	}
-	
+
 	/**
 	 * @returns {string} URL of the organization associated with the activity usage, if present
 	 */
