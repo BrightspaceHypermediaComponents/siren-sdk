@@ -11,6 +11,17 @@ import { UserActivityUsageEntity } from '../enrollments/UserActivityUsageEntity.
 
 export class ActivityUsageEntity extends Entity {
 	/**
+	 * @returns {string} URL of the activity associated with the activity usage, if present
+	 */
+	activityHref() {
+		if (!this._entity || !this._entity.hasLinkByRel(Rels.Activities.activity)) {
+			return;
+		}
+
+		return this._entity.getLinkByRel(Rels.Activities.activity).href;
+	}
+	
+	/**
 	 * @returns {string} URL of the organization associated with the activity usage, if present
 	 */
 	organizationHref() {
