@@ -1,4 +1,4 @@
-import { Actions, Classes, Rels } from '../hypermedia-constants.js';
+import { Actions, Rels } from '../hypermedia-constants.js';
 import { Entity } from '../es6/Entity.js';
 import { performSirenActions } from '../es6/SirenAction.js';
 
