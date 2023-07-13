@@ -6,6 +6,9 @@ export const testData = {
 				'class': [
 					'activity-name'
 				],
+				'rel': [
+					'https://activities.api.brightspace.com/rels/activity-name'
+				],
 				'properties': {
 					'name': 'Sample Activity Name'
 				},
@@ -22,8 +25,7 @@ export const testData = {
 							}
 						]
 					}
-				],
-				'rel': ['activity-name']
+				]
 			}
 		],
 
@@ -43,10 +45,12 @@ export const testData = {
 				'class': [
 					'activity-name'
 				],
+				'rel': [
+					'https://activities.api.brightspace.com/rels/activity-name'
+				],
 				'properties': {
 					'name': 'Sample Activity Name'
-				},
-				'rel': ['activity-name']
+				}
 			}
 		],
 
