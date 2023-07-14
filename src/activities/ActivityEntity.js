@@ -1,10 +1,10 @@
-import { Actions, Classes } from '../hypermedia-constants.js';
+import { Actions, Rels } from '../hypermedia-constants.js';
 import { Entity } from '../es6/Entity.js';
 import { performSirenActions } from '../es6/SirenAction.js';
 
 export class ActivityEntity extends Entity {
 	_nameEntity() {
-		return this._entity?.getSubEntityByRel(Classes.activities.activityName);
+		return this._entity?.getSubEntityByRel(Rels.Activities.activityName);
 	}
 
 	name() {
