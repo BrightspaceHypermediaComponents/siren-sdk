@@ -5,6 +5,7 @@ export const Rels = {
 	color: 'https://api.brightspace.com/rels/color',
 	completion: 'https://api.brightspace.com/rels/completion',
 	content: 'https://api.brightspace.com/rels/content',
+	contentStyler: 'https://api.brightspace.com/rels/content-styler',
 	copyCoursePage: 'https://api.brightspace.com/rels/copy-course-tool-page',
 	courseOfferingInfoPage: 'https://api.brightspace.com/rels/course-offering-info-page',
 	date: 'https://api.brightspace.com/rels/date',
@@ -364,6 +365,13 @@ export const Classes = {
 		description: 'description',
 		rawDescription: 'raw-description',
 		lastModified: 'lastModified'
+	},
+	contentStyler: {
+		createTheme: 'create-theme',
+		deleteTheme: 'delete-theme',
+		getTheme: 'get-theme',
+		getAllThemes: 'get-all-themes',
+		updateTheme: 'update-theme'
 	},
 	webLink: {
 		externalResource: 'external-resource'
