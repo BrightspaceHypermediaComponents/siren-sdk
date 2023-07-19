@@ -366,6 +366,13 @@ export const Classes = {
 		rawDescription: 'raw-description',
 		lastModified: 'lastModified'
 	},
+	contentStyler: {
+		createTheme: 'create-theme',
+		deleteTheme: 'delete-theme',
+		getTheme: 'get-theme',
+		getAllThemes: 'get-all-themes',
+		updateTheme: 'update-theme'
+	},
 	webLink: {
 		externalResource: 'external-resource'
 	},
