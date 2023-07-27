@@ -665,6 +665,7 @@ export const Actions = {
 		},
 		activityUsageCollection: {
 			setCollectionPaging: 'set-collection-paging',
+			startAddNewActivity: 'start-add-new-activity',
 		},
 		evaluation: {
 			updateEvaluation: 'update-evaluation',
