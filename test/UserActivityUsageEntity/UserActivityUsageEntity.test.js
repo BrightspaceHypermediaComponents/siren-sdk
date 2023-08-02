@@ -6,7 +6,7 @@ describe('UserActivityUsageEntity', () => {
 
 	describe('Tests for _sirenClassProperty', () => {
 		it('Read a date', () => {
-			const entity =  SirenParse({
+			const entity = SirenParse({
 				entities: [
 					{
 						class: [
@@ -27,7 +27,7 @@ describe('UserActivityUsageEntity', () => {
 		});
 
 		it('Read a duration', () => {
-			const entity =  SirenParse({
+			const entity = SirenParse({
 				entities: [
 					{
 						class: [
@@ -49,7 +49,7 @@ describe('UserActivityUsageEntity', () => {
 		});
 
 		it('Read a completion', () => {
-			const entity =  SirenParse({
+			const entity = SirenParse({
 				entities: [
 					{
 						class: [
