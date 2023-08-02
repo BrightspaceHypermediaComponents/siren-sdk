@@ -86,6 +86,13 @@ export const testData = {
 		'links': [
 			{
 				'rel': [
+					'https://activities.api.brightspace.com/rels/activity',
+					'self'
+				],
+				'href': 'http://vlx1-mdulat.desire2learn.d2l:44444/d2l/api/hm/activities/activities/5'
+			},
+			{
+				'rel': [
 					'https://activities.api.brightspace.com/rels/activity-usage',
 					'self'
 				],
@@ -247,6 +254,13 @@ export const testData = {
 			}
 		],
 		'links': [
+			{
+				'rel': [
+					'https://activities.api.brightspace.com/rels/activity',
+					'self'
+				],
+				'href': 'http://vlx1-mdulat.desire2learn.d2l:44444/d2l/api/hm/activities/activities/5'
+			},
 			{
 				'rel': [
 					'https://activities.api.brightspace.com/rels/activity-usage',

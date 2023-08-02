@@ -5,6 +5,8 @@ export const Rels = {
 	color: 'https://api.brightspace.com/rels/color',
 	completion: 'https://api.brightspace.com/rels/completion',
 	content: 'https://api.brightspace.com/rels/content',
+	contentStyler: 'https://api.brightspace.com/rels/content-styler',
+	copyCoursePage: 'https://api.brightspace.com/rels/copy-course-tool-page',
 	courseOfferingInfoPage: 'https://api.brightspace.com/rels/course-offering-info-page',
 	date: 'https://api.brightspace.com/rels/date',
 	defaultSearch: 'https://api.brightspace.com/rels/default-search',
@@ -47,6 +49,7 @@ export const Rels = {
 	widgetSettings: 'https://api.brightspace.com/rels/widget-settings',
 	// Activities API sub-domain rels
 	Activities: {
+		activity: 'https://activities.api.brightspace.com/rels/activity',
 		myActivities: 'https://activities.api.brightspace.com/rels/my-activities',
 		myActivitiesEmpty: 'https://activities.api.brightspace.com/rels/my-activities#empty',
 		myOrganizationActivities: 'https://activities.api.brightspace.com/rels/my-organization-activities',
@@ -79,7 +82,8 @@ export const Rels = {
 		associateGrade: 'https://activities.api.brightspace.com/rels/associate-grade',
 		associateMultipleGrades: 'https://activities.api.brightspace.com/rels/associate-multiple-grades',
 		evaluation: 'https://activities.api.brightspace.com/rels/evaluation',
-		pagingType: 'https://activities.api.brightspace.com/rels/activity-collection/paging-type'
+		pagingType: 'https://activities.api.brightspace.com/rels/activity-collection/paging-type',
+		activityName: 'https://activities.api.brightspace.com/rels/activity-name'
 	},
 	Conditions: {
 		conditions: 'https://conditions.api.brightspace.com/rels/conditions',
@@ -196,6 +200,7 @@ export const Rels = {
 		password: 'https://quizzes.api.brightspace.com/rels/quiz-password',
 		notificationEmail: 'https://quizzes.api.brightspace.com/rels/notification-email',
 		preventMovingBackwards: 'https://quizzes.api.brightspace.com/rels/prevent-moving-backwards',
+		deductionPercentage: 'https://quizzes.api.brightspace.com/rels/deduction-percentage',
 		autoSetGraded: 'https://quizzes.api.brightspace.com/rels/auto-set-graded',
 		syncGradebook: 'https://quizzes.api.brightspace.com/rels/sync-gradebook',
 		timing: 'https://quizzes.api.brightspace.com/rels/timing',
@@ -267,7 +272,9 @@ export const Rels = {
 	Organizations: {
 		ancestors: 'https://organizations.api.brightspace.com/rels/ancestors',
 		departments: 'https://organizations.api.brightspace.com/rels/ancestors#departments',
-		semesters: 'https://organizations.api.brightspace.com/rels/ancestors#semesters'
+		semesters: 'https://organizations.api.brightspace.com/rels/ancestors#semesters',
+		components: 'https://organizations.api.brightspace.com/rels/components',
+		userProgress: 'https://organizations.api.brightspace.com/rels/user-progress'
 	}
 };
 
@@ -291,6 +298,7 @@ export const Classes = {
 		draftPublishedEntity: 'draft-published-entity',
 		exempt: 'exempt',
 		feedbackDate: 'feedback-date',
+		activityName: 'activity-name',
 		published: 'published',
 		scoreOutOf: 'score-out-of',
 		selected: 'selected',
@@ -318,6 +326,7 @@ export const Classes = {
 		},
 		attachment: 'attachment',
 		attachmentList: 'attachment-list',
+		inactive: 'inactive',
 		instructions: 'instructions',
 		file: 'file',
 		latest: 'latest',
@@ -351,10 +360,18 @@ export const Classes = {
 	},
 	content: {
 		content: 'content',
+		completionCriteria: 'completion-criteria',
 		sequencedActivity: 'sequenced-activity',
 		description: 'description',
 		rawDescription: 'raw-description',
 		lastModified: 'lastModified'
+	},
+	contentStyler: {
+		createTheme: 'create-theme',
+		deleteTheme: 'delete-theme',
+		getTheme: 'get-theme',
+		getAllThemes: 'get-all-themes',
+		updateTheme: 'update-theme'
 	},
 	webLink: {
 		externalResource: 'external-resource'
@@ -450,6 +467,7 @@ export const Classes = {
 		checked: 'checked',
 		password: 'password',
 		notificationEmail: 'notificationEmail',
+		deductionPercentage: 'deduction-percentage',
 		autoSetGraded: 'auto-set-graded',
 		syncGradebook: 'sync-gradebook',
 		default: 'default',
@@ -628,6 +646,7 @@ export const Actions = {
 		startAddNew: 'start-add-new',
 		update: 'update',
 		updateDraft: 'update-draft',
+		updateName: 'update-name',
 		scoreOutOf: {
 			update: 'update'
 		},
@@ -646,12 +665,14 @@ export const Actions = {
 		},
 		activityUsageCollection: {
 			setCollectionPaging: 'set-collection-paging',
+			startAddNewActivity: 'start-add-new-activity',
 		},
 		evaluation: {
 			updateEvaluation: 'update-evaluation',
 		},
 		save: 'save',
-		filterWorkToDo: 'filter-work-to-do'
+		filterWorkToDo: 'filter-work-to-do',
+		deleteInstance: 'delete-activity-instance'
 	},
 	assignments: {
 		assign: 'assign',
@@ -678,12 +699,14 @@ export const Actions = {
 	content: {
 		updateTitle: 'update-title',
 		updateDescription: 'update-description',
+		updateCompletionCriteria: 'update-completion-criteria'
 	},
 	module: {
 		deleteModule: 'delete-module'
 	},
 	webLink: {
 		updateUrl: 'update-url',
+		updateCompletionCriteria: 'update-completion-criteria',
 		updateExternalResource: 'update-external-resource',
 		deleteWeblink: 'delete-webLink',
 		deleteLTIlink: 'delete-ltiLink',
@@ -797,6 +820,7 @@ export const Actions = {
 		updatePassword: 'update-quiz-password',
 		updateNotificationEmail: 'update-notification-email',
 		updatePreventMovingBackwards: 'update-prevent-moving-backwards',
+		updateDeductionPercentage: 'update-deduction-percentage',
 		updateAutoSetGraded: 'update-auto-set-graded',
 		updateSyncGradebook: 'update-sync-gradebook',
 		updateSyncGradebookDefault: 'update-sync-gradebook-default',

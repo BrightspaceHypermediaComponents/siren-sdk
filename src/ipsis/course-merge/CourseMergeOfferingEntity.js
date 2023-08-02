@@ -12,6 +12,10 @@ export class CourseMergeOfferingEntity extends Entity {
 		return this._entity?.properties?.ownedByMultipleSourceSystems;
 	}
 
+	isSectionAssociated() {
+		return this._entity?.properties?.isSectionAssociated;
+	}
+
 	orgUnitId() {
 		return this._entity?.properties?.orgUnitId;
 	}
@@ -28,8 +32,12 @@ export class CourseMergeOfferingEntity extends Entity {
 		return this._entity?.properties?.isMerged;
 	}
 
-	hasContent() {
-		return this._entity?.properties?.hasContent;
+	sectionCount() {
+		return this._entity?.properties?.sectionCount;
+	}
+
+	sectionMappingCount() {
+		return this._entity?.properties?.sectionMappingCount;
 	}
 
 	onOrganizationChange(onChange) {

@@ -11,6 +11,17 @@ import { UserActivityUsageEntity } from '../enrollments/UserActivityUsageEntity.
 
 export class ActivityUsageEntity extends Entity {
 	/**
+	 * @returns {string} URL of the activity associated with the activity usage, if present
+	 */
+	activityHref() {
+		if (!this._entity || !this._entity.hasLinkByRel(Rels.Activities.activity)) {
+			return;
+		}
+
+		return this._entity.getLinkByRel(Rels.Activities.activity).href;
+	}
+
+	/**
 	 * @returns {string} URL of the organization associated with the activity usage, if present
 	 */
 	organizationHref() {
@@ -74,6 +85,68 @@ export class ActivityUsageEntity extends Entity {
 		}
 
 		return this._entity.getLinkByRel(Rels.Activities.newGradeAssociation).href;
+	}
+
+	/**
+	 * @returns {string} Completion criteria of the activity usage, if present
+	 */
+	completionCriteria() {
+		const completionCriteriaEntity = this._getSubEntityByClass(Classes.content.completionCriteria);
+
+		if (!completionCriteriaEntity) {
+			return;
+		}
+
+		return completionCriteriaEntity.properties.completionCriteria;
+	}
+
+	/**
+	 * @returns {Array} Available completion criteria values for this activity, for use with the updateCompletionCriteria action
+	 */
+	availableCriteria() {
+		const completionCriteriaEntity = this._getSubEntityByClass(Classes.content.completionCriteria);
+
+		if (!completionCriteriaEntity) {
+			return;
+		}
+
+		return completionCriteriaEntity.properties.availableCriteria;
+	}
+
+	/**
+	 * @returns {Array} Enabled completion criteria values for this activity, for use with the updateCompletionCriteria action
+	 */
+	enabledCriteria() {
+		const completionCriteriaEntity = this._getSubEntityByClass(Classes.content.completionCriteria);
+
+		if (!completionCriteriaEntity) {
+			return;
+		}
+
+		return completionCriteriaEntity.properties.enabledCriteria;
+	}
+
+	/**
+	 * Updates the completion criteria
+	 * @param {string} criteria The criteria to be set for the activity usage entity
+	 */
+	async setCompletionCriteria(criteria) {
+		if (!this._entity) {
+			return;
+		}
+
+		let action;
+		const fields = [{ name: 'completionCriteria', value: criteria }];
+		const completionCriteriaSubEntity = this._getSubEntityByClass(Classes.content.completionCriteria);
+		if (completionCriteriaSubEntity) {
+			action = completionCriteriaSubEntity.getActionByName(Actions.content.updateCompletionCriteria);
+		}
+
+		if (!action) {
+			return;
+		}
+
+		await performSirenAction(this._token, action, fields);
 	}
 
 	/**
@@ -659,6 +732,7 @@ export class ActivityUsageEntity extends Entity {
 
 		await this.setDraftStatus(activity.isDraft);
 		await this.saveDates(activity.dates);
+		await this.setCompletionCriteria(activity.completionCriteria);
 	}
 
 	equals(activity) {
@@ -672,7 +746,8 @@ export class ActivityUsageEntity extends Entity {
 			[this.endDate(), activity.dates.endDate],
 			[currentEndDateType, activity.dates.endDateType],
 			[this.displayInCalendar(), activity.dates.displayInCalendar],
-			[this.isDraft(), activity.isDraft]
+			[this.isDraft(), activity.isDraft],
+			[this.completionCriteria(), activity.completionCriteria]
 		];
 
 		for (const [left, right] of diffs) {
@@ -790,5 +865,20 @@ export class ActivityUsageEntity extends Entity {
 			if (!entity) return;
 			return new ActivityUsageEntity(entity, this._token);
 		}
+	}
+
+	_canDeleteInstance() {
+		return this._entity.hasActionByName(Actions.activities.deleteInstance);
+	}
+
+	async deleteInstance() {
+		const action = this._canDeleteInstance() && this._entity.getActionByName(Actions.activities.deleteInstance);
+		if (!action) {
+			return;
+		}
+
+		await performSirenAction(this._token, action).then(() => {
+			this.dispose();
+		});
 	}
 }

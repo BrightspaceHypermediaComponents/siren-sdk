@@ -156,6 +156,9 @@ export class OrganizationEntity extends Entity {
 	courseInfoUrl() {
 		return this._getHref(Rels.courseOfferingInfoPage);
 	}
+	copyCoursePageUrl() {
+		return this._getHref(Rels.copyCoursePage);
+	}
 
 	canChangeCourseImage() {
 		return this._entity
@@ -227,6 +230,14 @@ export class OrganizationEntity extends Entity {
 
 	_semestersHref() {
 		return this._getHref(Rels.Organizations.semesters);
+	}
+
+	_componentsHref() {
+		return this._getHref(Rels.Organizations.components);
+	}
+
+	_userProgressHref() {
+		return this._getHref(Rels.Organizations.userProgress);
 	}
 
 	_semesterHref() {

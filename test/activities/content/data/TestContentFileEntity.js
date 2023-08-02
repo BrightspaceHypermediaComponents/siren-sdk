@@ -28,6 +28,19 @@ export const contentFileData = {
 		},
 		{
 			'href': 'https://fake-tenant-id.content.api.proddev.d2l/6613/files/12345',
+			'name': 'update-completion-criteria',
+			'method': 'PATCH',
+			'fields': [
+				{
+					'class': ['required'],
+					'type': 'text',
+					'name': 'criteria',
+					'value': 'manual'
+				}
+			]
+		},
+		{
+			'href': 'https://fake-tenant-id.content.api.proddev.d2l/6613/files/12345',
 			'name': 'delete-content-file',
 			'method': 'DELETE'
 		}

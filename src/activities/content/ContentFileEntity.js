@@ -122,6 +122,24 @@ export class ContentFileEntity extends ContentWorkingCopyEntity {
 	}
 
 	/**
+	 * Updates the file to have the given completion criteria
+	 * @param {string} completionCriteria completion criteria to set for the file
+	 */
+	async setFileCompletionCriteria(completionCriteria) {
+		if (!this._entity) {
+			return;
+		}
+
+		const action = this._entity.getActionByName(Actions.content.updateCompletionCriteria);
+		if (!action) {
+			return;
+		}
+
+		const fields = [{ name: 'criteria', value: completionCriteria }];
+		return await performSirenAction(this._token, action, fields);
+	}
+
+	/**
 	 * Deletes the file
 	 */
 	async deleteFile() {

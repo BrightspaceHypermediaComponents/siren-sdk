@@ -18,6 +18,10 @@ describe('ActivityUsageEntity', () => {
 	});
 
 	describe('Basic loading', () => {
+		it('can get activity href', () => {
+			expect(entity.activityHref()).to.equal('http://vlx1-mdulat.desire2learn.d2l:44444/d2l/api/hm/activities/activities/5');
+		});
+
 		it('can get organizationHref', () => {
 			expect(entity.organizationHref()).to.equal('http://vlx1-mdulat.desire2learn.d2l:44444/d2l/api/hm/organizations/6609');
 		});

@@ -10,6 +10,10 @@ Options for getting started:
 * Clone the repo: `git clone https://github.com/BrightspaceHypermediaComponents/siren-sdk.git`.
 * Install with [npm](https://www.npmjs.com/): `npm install @brightspace-hmc/siren-sdk`.
 
+## Testing
+In a non-administrator powershell:
+* `npm run test`
+
 ## Versioning & Releasing
 
 > TL;DR: Commits prefixed with `fix:` and `feat:` will trigger patch and minor releases when merged to `main`. Read on for more details...
@@ -48,4 +52,3 @@ Maintenance branch names should be of the form: `+([0-9])?(.{+([0-9]),x}).x`.
 Regular expressions are complicated, but this essentially means branch names should look like:
 * `1.15.x` for patch releases on top of the `1.15` release (after version `1.16` exists)
 * `2.x` for feature releases on top of the `2` release (after version `3` exists)
-
