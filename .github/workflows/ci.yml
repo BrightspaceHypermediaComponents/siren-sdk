@@ -15,6 +15,6 @@ jobs:
           npm install @web/test-runner-playwright --no-save
           npx playwright install-deps
       - name: Lint
-        run: npm run test:lint
+        run: npm run lint
       - name: Unit Tests (cross-browser)
         run: npx web-test-runner --files "./test/**/*.test.js" --node-resolve --playwright --browsers chromium firefox webkit

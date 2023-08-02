@@ -5,10 +5,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "lint": "eslint . --ext .js,.html",
     "generate:docs": "jsdoc src -R README.md -r -d docs",
-    "test": "npm run test:lint && npm run test:headless",
-    "test:lint": "npm run test:lint:js",
-    "test:lint:js": "eslint . --ext .js,.html test/**/*.js",
+    "test": "npm run lint && npm run test:headless",
     "test:headless": "web-test-runner --files \"./test/**/*.test.js\" --node-resolve",
     "test:headless:watch": "web-test-runner --files \"./test/**/*.test.js\" --node-resolve --watch"
   },
