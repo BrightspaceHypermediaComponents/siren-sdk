@@ -35,20 +35,6 @@ export class ContentServiceFileEntity extends ContentFileEntity {
 	}
 
 	/**
-	 * @returns {boolean|undefined} Determines whether advanced editing is available for this object type.
-	 */
-	isAdvancedEditingAvailable() {
-		return this._entity && this._entity.properties && this._entity.properties.isAdvancedEditingAvailable;
-	}
-
-	/**
-	 * @returns {boolean|undefined} Determines whether advanced editing is enabled for this object.
-	 */
-	isAdvancedEditingEnabled() {
-		return this._entity && this._entity.properties && this._entity.properties.isAdvancedEditingEnabled;
-	}
-
-	/**
 	 * @returns {string|undefined} The Content Service API endpoint.
 	 */
 	contentServiceEndpoint() {

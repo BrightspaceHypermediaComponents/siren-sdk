@@ -26,14 +26,6 @@ describe('ContentHtmlFileEntity', () => {
 			expect(contentServiceFileEntity.isContentServiceResource()).to.equal('true');
 		});
 
-		it('reads advanced editing available (type based)', () => {
-			expect(contentServiceFileEntity.isAdvancedEditingAvailable()).to.equal('true');
-		});
-
-		it('reads advanced editing enabled (feature flag)', () => {
-			expect(contentServiceFileEntity.isAdvancedEditingEnabled()).to.equal('true');
-		});
-
 		it ('reads contentServiceName property', () => {
 			expect(contentServiceFileEntity.contentServiceName()).to.equal('content-service-name');
 		});

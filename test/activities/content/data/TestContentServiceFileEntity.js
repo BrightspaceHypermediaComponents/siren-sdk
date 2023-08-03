@@ -41,7 +41,6 @@ export const contentServiceFileData = {
 		'title': 'Test Content Service File Title',
 		'url': 'https://phoenix-is-the-best.com',
 		'embedMedia': 'true',
-		'isAdvancedEditingAvailable': 'true',
 		'isAdvancedEditingEnabled': 'true',
 		'isContentServiceResource': 'true',
 		'contentServiceName': 'content-service-name',
