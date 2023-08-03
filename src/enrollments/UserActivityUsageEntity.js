@@ -42,7 +42,7 @@ export class UserActivityUsageEntity extends Entity {
 		} else if (subEntity.hasClass('duration')) {
 			return subEntity.properties ? subEntity.properties.seconds : null;
 		} else if (subEntity.hasClass('completion')) {
-			return this._sirenClassProperty(subEntity,  'completion-date');
+			return this._sirenClassProperty(subEntity, 'completion-date');
 		}
 	}
 }

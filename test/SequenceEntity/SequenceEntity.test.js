@@ -9,7 +9,7 @@ describe('SequenceEntity', () => {
 	describe('Read through the chain from root', () => {
 
 		it('Check to get activity organization href from root', done => {
-			const sirenSequenceRoot =  SirenParse(sequenceRoot);
+			const sirenSequenceRoot = SirenParse(sequenceRoot);
 			const orgHref = {};
 			entityFactory(SequenceEntity, '/sequenceRoot', 'whatever', (entity) => {
 				entity.onSubSequencesChange((subSequence) => {
@@ -27,7 +27,7 @@ describe('SequenceEntity', () => {
 		});
 
 		it('Check to get multiple subModules', done => {
-			const sirenSequenceRoot =  SirenParse(sequenceRootMultipleTopLevel);
+			const sirenSequenceRoot = SirenParse(sequenceRootMultipleTopLevel);
 			const orgHref = {};
 			entityFactory(SequenceEntity, '/sequenceRoot2', 'whatever', (entity) => {
 				entity.onSubSequencesChange((subSequence) => {
@@ -44,7 +44,7 @@ describe('SequenceEntity', () => {
 		});
 
 		it('Check to get sequence Viewer Application Href', done => {
-			const sirenSequenceRoot =  SirenParse(sequenceRootMultipleTopLevel);
+			const sirenSequenceRoot = SirenParse(sequenceRootMultipleTopLevel);
 			const orgHref = {};
 			entityFactory(SequenceEntity, '/sequenceRoot2', 'whatever', (entity) => {
 				entity.onSubSequencesChange((subSequence) => {
@@ -61,7 +61,7 @@ describe('SequenceEntity', () => {
 		});
 
 		it('Check to get alternate viewer href', done => {
-			const sirenSequenceRoot =  SirenParse(sequenceRootMultipleTopLevel);
+			const sirenSequenceRoot = SirenParse(sequenceRootMultipleTopLevel);
 			const orgHref = {};
 			entityFactory(SequenceEntity, '/sequenceRoot2', 'whatever', (entity) => {
 				entity.onSubSequencesChange((subSequence) => {
@@ -84,7 +84,7 @@ describe('SequenceEntity', () => {
 		});
 
 		it('Check completion', done => {
-			const sirenSequenceRoot =  SirenParse(sequenceRootMultipleTopLevel);
+			const sirenSequenceRoot = SirenParse(sequenceRootMultipleTopLevel);
 			const completionData = {};
 			entityFactory(SequenceEntity, '/sequenceRoot2', 'whatever', (entity) => {
 				entity.onSubSequencesChange((subSequence) => {

@@ -47,7 +47,7 @@ describe('Consortium entity', () => {
 		const tenant2 = '8b33e567-c616-4667-868b-fdfe9edc3a78';
 		const token2 = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwidGVuYW50aWQiOiI4YjMzZTU2Ny1jNjE2LTQ2NjctODY4Yi1mZGZlOWVkYzNhNzgiLCJpYXQiOjE1MTYyMzkwMjJ9.cQjR28qT_c-os_FeFy4-L1NhCIY-9utPLzSHrzIMuOc';
 		it('has collection', done => {
-			const entity =  SirenParse({
+			const entity = SirenParse({
 				class: ['tokens'],
 				entities: [
 					{
@@ -102,7 +102,7 @@ describe('Consortium entity', () => {
 					errors.push(error);
 				}
 				tokenEntities.push(entity);
-				entity.rootOrganizationEntity((root, error) =>  {
+				entity.rootOrganizationEntity((root, error) => {
 					if (error) {
 						errors.push(error);
 					}

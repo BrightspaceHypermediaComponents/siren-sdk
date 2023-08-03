@@ -8,7 +8,7 @@ const consortiumRoot = { 'class':['consortium'], 'actions':[{ 'href':'https://7f
 describe('Consortium entity', () => {
 	describe('serializes', () => {
 		it('hasaction', () => {
-			const entity =  SirenParse(consortiumRoot);
+			const entity = SirenParse(consortiumRoot);
 			const consortiumRootEntity = new ConsortiumRootEntity(entity);
 			expect(consortiumRoot.actions[0].href).to.be.equals(consortiumRootEntity.getConsortiumCollection().href);
 		});
