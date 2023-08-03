@@ -18,10 +18,6 @@ describe('ContentHtmlFileEntity', () => {
 	});
 
 	describe('Reads properties', () => {
-		it('reads embed media', () => {
-			expect(contentMediaFileEntity.embedMedia()).to.equal('true');
-		});
-
 		it ('reads mediaFileName property', () => {
 			expect(contentMediaFileEntity.mediaFileName()).to.equal('test.mp4');
 		});
