@@ -87,13 +87,6 @@ export class ContentLorActivityEntity extends ContentEntity {
 	}
 
 	/**
-	 * @returns {boolean} Whether or not LOR SCORM grades feature is enabled
-	 */
-	isLorScormGradesEnabled() {
-		return this._entity && this._entity.properties && this._entity.properties.lorScormActivityFeatureEnabled;
-	}
-
-	/**
 	 * This was added to address LOR objects that are in a course but belong to a LOR on another instance.
 	 * This means the LOR info will not be able to be found by the serializer, and the page needs to handle
 	 * all the missing info.
