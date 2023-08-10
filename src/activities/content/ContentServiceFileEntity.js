@@ -69,10 +69,4 @@ export class ContentServiceFileEntity extends ContentFileEntity {
 		return this._entity && this._entity.properties && this._entity.properties.contentServiceName;
 	}
 
-	/**
-	 * @returns {boolean|undefined} Determines whether media should be displayed in an embedded view.
-	 */
-	embedMedia() {
-		return this._entity && this._entity.properties && this._entity.properties.embedMedia;
-	}
 }
