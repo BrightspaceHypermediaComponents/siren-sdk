@@ -367,11 +367,9 @@ export const Classes = {
 		lastModified: 'lastModified'
 	},
 	contentStyler: {
-		createTheme: 'create-theme',
-		deleteTheme: 'delete-theme',
-		getTheme: 'get-theme',
-		getAllThemes: 'get-all-themes',
-		updateTheme: 'update-theme'
+		contentStyler: 'content-styler',
+		theme: 'theme',
+		themes: 'themes'
 	},
 	webLink: {
 		externalResource: 'external-resource'
@@ -621,6 +619,13 @@ export const Actions = {
 	},
 	conditions: {
 		legacyReplace: '--legacy-replace'
+	},
+	contentStyler: {
+		createTheme: 'create-theme',
+		deleteTheme: 'delete-theme',
+		getTheme: 'get-theme',
+		getAllThemes: 'get-all-themes',
+		updateTheme: 'update-theme'
 	},
 	organizations: {
 		removeHomepageBanner: 'remove-homepage-banner',
