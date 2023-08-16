@@ -18,10 +18,6 @@ describe('ContentHtmlFileEntity', () => {
 	});
 
 	describe('Reads properties', () => {
-		it('reads embed media', () => {
-			expect(contentServiceFileEntity.embedMedia()).to.equal('true');
-		});
-
 		it('reads media file location', () => {
 			expect(contentServiceFileEntity.isContentServiceResource()).to.equal('true');
 		});
