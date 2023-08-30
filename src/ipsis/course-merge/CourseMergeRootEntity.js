@@ -28,4 +28,12 @@ export class CourseMergeRootEntity extends Entity {
 		const fields = [{ name: 'orgUnitId', value: orgUnitId }];
 		return getEntityUrl(action, appendHiddenFields(action, fields));
 	}
+	
+	courseMergeLogHref() {
+		if (!this._entity?.hasLinkByRel(Rels.ipsis.sisCourseMerge.courseMergeLog)) {
+			return;
+		}
+
+		return this._entity.getLinkByRel(Rels.ipsis.sisCourseMerge.courseMergeLog).href;
+	}
 }
