@@ -105,4 +105,12 @@ export class GroupSectionRestrictionActionsEntity extends Entity {
 
 		return performSirenAction(this._token, action, fields);
 	}
+	isRestrictedTopicDefault() {
+		if (!this._entity) return;
+		return this._entity.hasClass(Classes.discussions.restrictedTopicDefault);
+	}
+	isRestrictedThreadsDefault() {
+		if (!this._entity) return;
+		return this._entity.hasClass(Classes.discussions.restrictedThreadsDefault);
+	}
 }

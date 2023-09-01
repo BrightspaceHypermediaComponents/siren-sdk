@@ -414,7 +414,9 @@ export const Classes = {
 		section: 'section',
 		selected: 'selected',
 		allGroups: 'all-groups',
-		allSections: 'all-sections'
+		allSections: 'all-sections',
+		restrictedTopicDefault: 'restricted-topic-default',
+		restrictedThreadsDefault: 'restricted-threads-default'
 	},
 	enrollments: {
 		enrollment: 'enrollment',
