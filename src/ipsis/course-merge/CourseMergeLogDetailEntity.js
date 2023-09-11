@@ -3,6 +3,7 @@
  * See: Not yet defined
  */
 import { Entity } from '../../es6/Entity.js';
+import { Classes } from '../../hypermedia-constants.js';
 
 export class CourseMergeLogDetailEntity extends Entity {
 	targetCourse() {
@@ -16,7 +17,7 @@ export class CourseMergeLogDetailEntity extends Entity {
 		if (!this._entity) {
 			return;
 		}
-		return this._entity.getSubEntityByClass('log-user');
+		return this._entity.getSubEntityByClass(Classes.ipsis.sisCourseMerge.logUser);
 	}
 
 	isMerge() {

@@ -592,7 +592,8 @@ export const Classes = {
 	ipsis: {
 		sisCourseMerge: {
 			originalTarget: 'original-target',
-			target: 'target'
+			target: 'target',
+			logUser: 'log-user'
 		}
 	}
 };
