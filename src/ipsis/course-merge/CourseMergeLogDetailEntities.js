@@ -1,6 +1,6 @@
 /**
- * CourseMergeOfferingEntity class representation of course merge offering as defined in the LMS
- * See: ISirenCourseMergeSerializer.SerializeCourseOfferingResult
+ * CourseMergeLogDetailEntities class representation of course merge logs as defined in the LMS
+ * See: Not yet defined
  */
 import { Entity } from '../../es6/Entity.js';
 
