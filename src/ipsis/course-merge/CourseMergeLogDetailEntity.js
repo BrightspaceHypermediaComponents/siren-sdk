@@ -2,8 +2,8 @@
  * CourseMergeLogDetailEntity class representation of course merge log as defined in the LMS
  * See: Not yet defined
  */
-import { Entity } from '../../es6/Entity.js';
 import { Classes } from '../../hypermedia-constants.js';
+import { Entity } from '../../es6/Entity.js';
 
 export class CourseMergeLogDetailEntity extends Entity {
 	targetCourse() {
