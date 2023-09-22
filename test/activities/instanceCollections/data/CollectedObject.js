@@ -1,7 +1,7 @@
 const collected_object = {
 	class: [
 		'collected-object'
-	  ],
+	],
 	properties: {
 		SortOrder: 2.0,
 		Completion: 'Required'

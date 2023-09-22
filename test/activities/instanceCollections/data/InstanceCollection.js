@@ -6,29 +6,29 @@ const instance_collection = {
 		{
 			class: [
 				'collected-object'
-			  ],
+			],
 			properties: {
 				SortOrder: 2.0,
 				Completion: 'Required'
-            }
+			}
 		},
 		{
 			class: [
 				'collected-object'
-			  ],
+			],
 			properties: {
 				SortOrder: 3.0,
 				Completion: 'Required'
-            }
+			}
 		},
 		{
 			class: [
 				'collected-object'
-			  ],
+			],
 			properties: {
 				SortOrder: 4.0,
 				Completion: 'Optional'
-            }
+			}
 		},
 	],
 	links: [
