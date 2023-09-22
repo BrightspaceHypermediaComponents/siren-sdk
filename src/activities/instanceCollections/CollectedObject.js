@@ -1,4 +1,3 @@
-import { Rels, Classes } from '../../hypermedia-constants.js';
 import { Entity } from '../../es6/Entity.js';
 
 export class CollectedObjectEntity extends Entity {

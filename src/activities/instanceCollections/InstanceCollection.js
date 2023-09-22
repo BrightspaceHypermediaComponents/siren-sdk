@@ -5,7 +5,7 @@ export class InstanceCollectionEntity extends Entity {
 	getCollectedObjects() {
 		return this._entity && this._entity.entities && this._entity.getSubEntitiesByClass(Classes.activities.collectedObject);
 	}
-	getCollectedObjects() {
+	getCollectedInstanceCollections() {
 		return this._entity && this._entity.entities && this._entity.getSubEntitiesByClass(Classes.activities.instanceCollection);
 	}
 	instanceCollectionHref() {
