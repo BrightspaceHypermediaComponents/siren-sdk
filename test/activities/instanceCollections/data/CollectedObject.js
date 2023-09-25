@@ -1,22 +1,18 @@
-const collected_object = {
-	class: [
+export const collected_object = {
+	'class': [
 		'collected-object'
 	],
-	properties: {
-		SortOrder: 2.0,
-		Completion: 'Required'
+	'properties': {
+		'SortOrder': 2.0,
+		'Completion': 'Required'
 	},
-	links: [
+	'links': [
 		{
-			rel: [
+			'rel': [
 				'self'
 			],
 			//this doesn't exist yet
-			href: 'https://fake-tenant-id.activities.api.dev.brightspace.com/CollectedObject/1'
+			'href': 'https://fake-tenant-id.activities.api.dev.brightspace.com/CollectedObject/1'
 		}
 	]
-};
-
-export const testData = {
-	collected_object
 };
