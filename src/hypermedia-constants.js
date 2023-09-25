@@ -372,6 +372,10 @@ export const Classes = {
 		theme: 'theme',
 		themes: 'themes'
 	},
+	homepageWidgetExpansionPack: {
+		homepageWidgetExpansionPack: 'homepage-widget-expansion-pack',
+		hostedWidgetsEndOfLife: 'hosted-widgets-end-of-life'
+	},
 	webLink: {
 		externalResource: 'external-resource'
 	},
