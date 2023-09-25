@@ -1,13 +1,13 @@
-import { CollectedObjectEntity } from '../../src/activities/instanceCollections/CollectedObject.js';
+import { collected_object } from './data/CollectedObject.js';
+import { CollectedObjectEntity } from '../../../src/activities/instanceCollections/CollectedObject.js';
 import { expect } from '@open-wc/testing';
 import SirenParse from 'siren-parser';
-import { testData } from './data/CollectedObject.js';
 
 describe('CollectedObjectEntity', () => {
 	let entity, entityJson;
 
 	beforeEach(() => {
-		entityJson = SirenParse(testData.basic);
+		entityJson = SirenParse(collected_object);
 		entity = new CollectedObjectEntity(entityJson);
 	});
 
