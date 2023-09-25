@@ -634,6 +634,13 @@ export const Actions = {
 		getAllThemes: 'get-all-themes',
 		updateTheme: 'update-theme'
 	},
+	homepageWidgetExpansionPack: {
+		hostedWidgetsEndOfLife: {
+			getHostedWidgetsInHomepages: 'get-hosted-widgets-in-homepages',
+			replaceHostedWidgetInHomepages: 'replace-hosted-widget-in-homepages',
+			deleteHostedWidgetFromHomepages: 'delete-hosted-widget-from-homepages'
+		}
+	},
 	organizations: {
 		removeHomepageBanner: 'remove-homepage-banner',
 		setCatalogImage: 'set-catalog-image',
