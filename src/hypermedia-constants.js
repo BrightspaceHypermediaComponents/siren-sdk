@@ -17,6 +17,7 @@ export const Rels = {
 	filter: 'https://api.brightspace.com/rels/filter',
 	filters: 'https://api.brightspace.com/rels/filters',
 	firstName: 'https://api.brightspace.com/rels/first-name',
+	homepageWidgetExpansionPack: 'https://api.brightspace.com/rels/homepage-widget-expansion-pack',
 	lastName: 'https://api.brightspace.com/rels/last-name',
 	more: 'https://api.brightspace.com/rels/more',
 	myEnrollments: 'https://api.brightspace.com/rels/my-enrollments',
