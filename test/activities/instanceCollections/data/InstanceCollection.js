@@ -1,46 +1,64 @@
-const instance_collection = {
-	class: [
+export const instance_collection = {
+	'class': [
 		'instance-collection'
 	],
-	entities: [
+	'entities': [
 		{
-			class: [
+			'class': [
 				'collected-object'
 			],
-			properties: {
-				SortOrder: 2.0,
-				Completion: 'Required'
-			}
+			'properties': {
+				'SortOrder': 2.0,
+				'Completion': 'Required'
+			},
+			'rel': [
+				'object',
+				//this doesn't exist yet
+				'https://fake-tenant-id.activities.api.dev.brightspace.com/CollectedObject/2'			],
 		},
 		{
-			class: [
+			'class': [
 				'collected-object'
 			],
-			properties: {
-				SortOrder: 3.0,
-				Completion: 'Required'
-			}
+			'properties': {
+				'SortOrder': 3.0,
+				'Completion': 'Required'
+			},
+			'rel': [
+				'object',
+				//this doesn't exist yet
+				'https://fake-tenant-id.activities.api.dev.brightspace.com/CollectedObject/3'			],
 		},
 		{
-			class: [
+			'class': [
 				'collected-object'
 			],
-			properties: {
-				SortOrder: 4.0,
-				Completion: 'Optional'
-			}
+			'properties': {
+				'SortOrder': 4.0,
+				'Completion': 'Optional'
+			},
+			'rel': [
+				'object',
+				//this doesn't exist yet
+				'https://fake-tenant-id.activities.api.dev.brightspace.com/CollectedObject/1'
+			],
+		},
+		{
+			'class': [
+				'instance-collection'
+			],
+			'rel': [
+				'instance_collection',
+				'https://fake-tenant-id.activities.api.dev.brightspace.com/InstanceCollection/640'
+			],
 		},
 	],
-	links: [
+	'links': [
 		{
-			rel: [
+			'rel': [
 				'self'
 			],
-			href: 'https://ec1ee987-fd66-4dff-af57-41aab1e6238f.activities.api.dev.brightspace.com/InstanceCollection/639'
+			'href': 'https://fake-tenant-id.activities.api.dev.brightspace.com/InstanceCollection/639'
 		}
 	]
-};
-
-export const testData = {
-	instance_collection
 };
