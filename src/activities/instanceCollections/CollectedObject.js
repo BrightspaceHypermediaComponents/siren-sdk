@@ -1,13 +1,13 @@
 import { Entity } from '../../es6/Entity.js';
 
 export class CollectedObjectEntity extends Entity {
-	getSortOrder() {
+	sortOrder() {
 		if (!this._entity) {
 			return false;
 		}
 		return this._entity.properties?.SortOrder;
 	}
-	getCompletion() {
+	completionType() {
 		if (!this._entity) {
 			return false;
 		}
