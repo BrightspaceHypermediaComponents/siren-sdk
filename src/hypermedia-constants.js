@@ -55,7 +55,7 @@ export const Rels = {
 		myOrganizationActivities: 'https://activities.api.brightspace.com/rels/my-organization-activities',
 		myOrganizationActivitiesEmpty: 'https://activities.api.brightspace.com/rels/my-organization-activities#empty',
 		activityCollection: 'https://activities.api.brightspace.com/rels/activity-collection',
-		instanceCollection: 'https://activities.api.brightspace.com/rels//InstanceCollection/',
+		instanceCollection: 'https://activities.api.brightspace.com/rels/InstanceCollection/',
 		pagedActivityCollection: 'https://activities.api.brightspace.com/rels/activity-collection-paged',
 		parentCollections: 'https://activities.api.brightspace.com/rels/parent-collections',
 		activityUsage: 'https://activities.api.brightspace.com/rels/activity-usage',
