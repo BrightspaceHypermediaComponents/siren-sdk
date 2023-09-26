@@ -17,6 +17,7 @@ export const Rels = {
 	filter: 'https://api.brightspace.com/rels/filter',
 	filters: 'https://api.brightspace.com/rels/filters',
 	firstName: 'https://api.brightspace.com/rels/first-name',
+	homepageWidgetExpansionPack: 'https://api.brightspace.com/rels/homepage-widget-expansion-pack',
 	lastName: 'https://api.brightspace.com/rels/last-name',
 	more: 'https://api.brightspace.com/rels/more',
 	myEnrollments: 'https://api.brightspace.com/rels/my-enrollments',
@@ -371,6 +372,10 @@ export const Classes = {
 		theme: 'theme',
 		themes: 'themes'
 	},
+	homepageWidgetExpansionPack: {
+		homepageWidgetExpansionPack: 'homepage-widget-expansion-pack',
+		hostedWidgetsEndOfLife: 'hosted-widgets-end-of-life'
+	},
 	webLink: {
 		externalResource: 'external-resource'
 	},
@@ -628,6 +633,13 @@ export const Actions = {
 		getTheme: 'get-theme',
 		getAllThemes: 'get-all-themes',
 		updateTheme: 'update-theme'
+	},
+	homepageWidgetExpansionPack: {
+		hostedWidgetsEndOfLife: {
+			getHostedWidgetsInHomepages: 'get-hosted-widgets-in-homepages',
+			replaceHostedWidgetInHomepages: 'replace-hosted-widget-in-homepages',
+			deleteHostedWidgetFromHomepages: 'delete-hosted-widget-from-homepages'
+		}
 	},
 	organizations: {
 		removeHomepageBanner: 'remove-homepage-banner',
