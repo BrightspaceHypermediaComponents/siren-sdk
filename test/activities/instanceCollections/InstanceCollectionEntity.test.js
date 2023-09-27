@@ -13,11 +13,11 @@ describe('InstanceCollectionEntity', () => {
 
 	describe('Basic info', () => {
 		it('can get collected object sub-entities', () => {
-			expect(entity.getCollectedObjects().length).to.equal(3);
+			expect(entity.collectedObjects().length).to.equal(3);
 		});
 
 		it('can get collected instance sub-entities', () => {
-			expect(entity.getCollectedInstanceCollections().length).to.equal(1);
+			expect(entity.collectedInstanceCollections().length).to.equal(1);
 		});
 
 		it('can get self href', () => {

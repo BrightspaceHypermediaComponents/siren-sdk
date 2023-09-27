@@ -13,11 +13,11 @@ describe('CollectedObjectEntity', () => {
 
 	describe('Basic info', () => {
 		it('can get sortOrder', () => {
-			expect(entity.getSortOrder()).to.equal(2.0);
+			expect(entity.sortOrder()).to.equal(2.0);
 		});
 
 		it('can get completion', () => {
-			expect(entity.getCompletion()).to.equal('Required');
+			expect(entity.completionType()).to.equal('Required');
 		});
 
 		it('can get self href', () => {
