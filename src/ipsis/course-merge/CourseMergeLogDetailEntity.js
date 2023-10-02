@@ -1,6 +1,6 @@
 /**
  * CourseMergeLogDetailEntity class representation of course merge log as defined in the LMS
- * See: Not yet defined
+ * See: ISirenCourseMergeSerializer.SerializeCourseMergeLogDetailsListResult
  */
 import { Classes } from '../../hypermedia-constants.js';
 import { Entity } from '../../es6/Entity.js';
@@ -10,7 +10,7 @@ export class CourseMergeLogDetailEntity extends Entity {
 		if (!this._entity) {
 			return;
 		}
-		return this._entity.getSubEntityByClass('target-log'); // Should this be changed to target since we already have a 'target' class?
+		return this._entity.getSubEntityByClass('target-log');
 	}
 
 	user() {
