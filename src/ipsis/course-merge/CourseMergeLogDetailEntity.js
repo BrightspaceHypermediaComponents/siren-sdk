@@ -25,7 +25,7 @@ export class CourseMergeLogDetailEntity extends Entity {
 	}
 
 	orgUnitId() {
-		return this._entity?.properties?.orgUnitId;
+		return this._entity?.properties?.originalTarget;
 	}
 
 	status() {

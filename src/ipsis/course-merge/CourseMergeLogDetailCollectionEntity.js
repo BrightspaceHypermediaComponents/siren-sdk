@@ -4,11 +4,18 @@
  */
 import { Entity } from '../../es6/Entity.js';
 
-export class CourseMergeLogDetailEntities extends Entity {
-	courseMergeLogs() {
+export class CourseMergeLogDetailCollectionEntity extends Entity {
+	getCourseMergeLogs() {
 		if (!this._entity) {
 			return;
 		}
 		return this._entity.entities;
+	}
+
+	hasCourseMergeLogs() {
+		if (!this._entity) {
+			return false;
+		}
+		return this._entity.entities?.length > 0;
 	}
 }
