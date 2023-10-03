@@ -1,5 +1,5 @@
-import { Classes } from '../../hypermedia-constants.js';
-import { Entity } from '../../es6/Entity.js';
+import { Classes } from '../../../hypermedia-constants.js';
+import { Entity } from '../../../es6/Entity.js';
 
 export class InstanceCollectionEntity extends Entity {
 	collectedObjects() {
