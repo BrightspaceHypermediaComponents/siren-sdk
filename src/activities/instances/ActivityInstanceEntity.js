@@ -3,7 +3,7 @@ import { Entity } from '../../../es6/Entity.js';
 
 export class ActivityInstanceEntity extends Entity {
 	activityType() {
-
+		
 	}
 
 	startDate() {
