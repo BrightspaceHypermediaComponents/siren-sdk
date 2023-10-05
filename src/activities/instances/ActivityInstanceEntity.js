@@ -10,10 +10,11 @@ export class ActivityInstanceEntity extends Entity {
 			'https://api.brightspace.com/rels/Discussion': 'Discussion',
 			'https://api.brightspace.com/rels/Forum': 'Discussion Forum',
 			'https://api.brightspace.com/rels/Topic': 'Discussion Topic',
-			'https://api.brightspace.com/rels/Quiz': 'Quiz',
-			'https://api.brightspace.com/rels/Survey': 'Survey',
 			'https://api.brightspace.com/rels/GameMap': 'Game Map',
 			'https://api.brightspace.com/rels/KA': 'Knowledge Acquisition',
+			'https://api.brightspace.com/rels/Material': 'Material',
+			'https://api.brightspace.com/rels/Quiz': 'Quiz',
+			'https://api.brightspace.com/rels/Survey': 'Survey',
 		};
 
 		for (const link of this._entity.Links) {
