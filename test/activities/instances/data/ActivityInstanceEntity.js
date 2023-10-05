@@ -1,5 +1,5 @@
 export const testData = {
-	activityInstanceEntityEditable: {
+	assignmentActivityInstanceEntity: {
 		'class': [
 			'activity-instance',
 			'assignment-activity-instance'
