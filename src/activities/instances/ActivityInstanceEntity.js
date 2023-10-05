@@ -3,31 +3,45 @@ import { Entity } from '../../../es6/Entity.js';
 
 export class ActivityInstanceEntity extends Entity {
 	activityType() {
-		
+		const activityMap = {
+			'https://api.brightspace.com/rels/Assignment': 'Assignment',
+			'https://api.brightspace.com/rels/Content': 'Content',
+			'https://api.brightspace.com/rels/Checklist': 'Checklist',
+			'https://api.brightspace.com/rels/Discussion': 'Discussion',
+			'https://api.brightspace.com/rels/Forum': 'Discussion Forum',
+			'https://api.brightspace.com/rels/Topic': 'Discussion Topic',
+			'https://api.brightspace.com/rels/Quiz': 'Quiz',
+			'https://api.brightspace.com/rels/Survey': 'Survey',
+			'https://api.brightspace.com/rels/GameMap': 'Game Map',
+			'https://api.brightspace.com/rels/KA': 'Knowledge Acquisition',
+		};
+
+		for (const link of this._entity.Links) {
+			if (activityMap.hasOwnProperty(link.Rel)) {
+				return activityMap[link.Rel];
+			}
+		}
+
+		return 'undefined';
 	}
 
 	startDate() {
-		const availabilityStartDate = this._entity && this._entity.entities && this._entity.getSubEntitiesByClass(Classes.dates.startDate);
-		return availabilityStartDate && availabilityStartDate.startDate;
+		return this._entity?.getSubEntitiesByClass(Classes.dates.startDate)?.startDate;
 	}
 
 	startDateType() {
-		const availabilityStartDate = this._entity && this._entity.entities && this._entity.getSubEntitiesByClass(Classes.dates.startDate);
-		return availabilityStartDate && availabilityStartDate.startDateType;
+		return this._entity?.getSubEntitiesByClass(Classes.dates.startDate)?.startDateType;
 	}
 
 	endDate() {
-		const availabilityEndDate = this._entity && this._entity.entities && this._entity.getSubEntitiesByClass(Classes.dates.startDate);
-		return availabilityEndDate && availabilityEndDate.endDate;
+		return this._entity?.getSubEntitiesByClass(Classes.dates.startDate)?.endDate;
 	}
 
 	endDateType() {
-		const availabilityEndDate = this._entity && this._entity.entities && this._entity.getSubEntitiesByClass(Classes.dates.startDate);
-		return availabilityEndDate && availabilityEndDate.endDateType;
+		return this._entity?.getSubEntitiesByClass(Classes.dates.startDate)?.endDateType;
 	}
 
 	dueDate() {
-		const dueDate = this._entity && this._entity.entities && this._entity.getSubEntitiesByClass(Classes.dates.dueDate);
-		return dueDate && dueDate.date;
+		return this._entity?.getSubEntitiesByClass(Classes.dates.dueDate)?.date;
 	}
 }
