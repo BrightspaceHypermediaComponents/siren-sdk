@@ -593,7 +593,8 @@ export const Classes = {
 		sisCourseMerge: {
 			originalTarget: 'original-target',
 			target: 'target',
-			logUser: 'log-user'
+			logUser: 'log-user',
+			targetLog: 'target-log'
 		}
 	}
 };

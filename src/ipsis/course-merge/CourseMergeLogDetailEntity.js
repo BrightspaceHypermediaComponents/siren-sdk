@@ -10,7 +10,7 @@ export class CourseMergeLogDetailEntity extends Entity {
 		if (!this._entity) {
 			return;
 		}
-		return this._entity.getSubEntityByClass('target-log');
+		return this._entity.getSubEntityByClass(Classes.ipsis.sisCourseMerge.targetLog);
 	}
 
 	user() {
@@ -22,10 +22,6 @@ export class CourseMergeLogDetailEntity extends Entity {
 
 	isMerge() {
 		return this._entity?.properties?.isMerge;
-	}
-
-	orgUnitId() {
-		return this._entity?.properties?.originalTarget;
 	}
 
 	status() {
@@ -42,9 +38,5 @@ export class CourseMergeLogDetailEntity extends Entity {
 
 	numMergedCourses() {
 		return this._entity?.properties?.numMergedCourses;
-	}
-
-	updateEntity(entity) {
-		this._entity = entity;
 	}
 }
