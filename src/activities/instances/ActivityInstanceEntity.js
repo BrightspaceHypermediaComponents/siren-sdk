@@ -23,7 +23,7 @@ export class ActivityInstanceEntity extends Entity {
 			}
 		}
 
-		return 'undefined';
+		return null;
 	}
 
 	startDate() {
@@ -31,15 +31,15 @@ export class ActivityInstanceEntity extends Entity {
 	}
 
 	startDateType() {
-		return this._entity?.getSubEntitiesByClass(Classes.dates.startDate)?.startDateType;
+		return this._entity?.getSubEntitiesByClass(Classes.dates.startDateType)?.startDateType;
 	}
 
 	endDate() {
-		return this._entity?.getSubEntitiesByClass(Classes.dates.startDate)?.endDate;
+		return this._entity?.getSubEntitiesByClass(Classes.dates.endDate)?.endDate;
 	}
 
 	endDateType() {
-		return this._entity?.getSubEntitiesByClass(Classes.dates.startDate)?.endDateType;
+		return this._entity?.getSubEntitiesByClass(Classes.dates.endDate)?.endDateType;
 	}
 
 	dueDate() {
