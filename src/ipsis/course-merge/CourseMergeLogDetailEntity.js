@@ -7,17 +7,11 @@ import { Entity } from '../../es6/Entity.js';
 
 export class CourseMergeLogDetailEntity extends Entity {
 	targetCourse() {
-		if (!this._entity) {
-			return;
-		}
-		return this._entity.getSubEntityByClass(Classes.ipsis.sisCourseMerge.targetLog);
+		return this._entity?.getSubEntityByClass(Classes.ipsis.sisCourseMerge.targetLog);
 	}
 
 	user() {
-		if (!this._entity) {
-			return;
-		}
-		return this._entity.getSubEntityByClass(Classes.ipsis.sisCourseMerge.logUser);
+		return this._entity?.getSubEntityByClass(Classes.ipsis.sisCourseMerge.logUser);
 	}
 
 	isMerge() {
