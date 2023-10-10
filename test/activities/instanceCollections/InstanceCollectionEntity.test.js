@@ -1,6 +1,6 @@
 import { expect } from '@open-wc/testing';
 import { instance_collection } from './data/InstanceCollection.js';
-import { InstanceCollectionEntity } from '../../../../src/activities/instances/instanceCollections/InstanceCollection.js';
+import { InstanceCollectionEntity } from '../../../src/activities/instanceCollections/InstanceCollection.js';
 import SirenParse from 'siren-parser';
 
 describe('InstanceCollectionEntity', () => {

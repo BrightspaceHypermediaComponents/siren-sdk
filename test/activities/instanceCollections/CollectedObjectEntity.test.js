@@ -1,5 +1,5 @@
 import { collected_object } from './data/CollectedObject.js';
-import { CollectedObjectEntity } from '../../../../src/activities/instances/instanceCollections/CollectedObject.js';
+import { CollectedObjectEntity } from '../../../src/activities/instanceCollections/CollectedObject.js';
 import { expect } from '@open-wc/testing';
 import SirenParse from 'siren-parser';
 
