@@ -46,6 +46,11 @@ export class ActivityInstanceEntity extends Entity {
 		return this._entity?.getSubEntityByClass(Classes.dates.dueDate)?.properties?.date;
 	}
 
+	/**
+	 * Gets the number of learners that have completed the activity along with the total number of learners the activity instance was assigned to.
+	 *
+	 * @returns {{ completedCount: number; totalCount: number; }}
+	 */
 	getLearnerCompletion() {
 		let totalCount = 0;
 		let completedCount = 0;
