@@ -13,6 +13,7 @@ jobs:
         run: |
           npm install
           npm install @web/test-runner-playwright --no-save
+          npx playwright install
           npx playwright install-deps
       - name: Lint
         run: npm run lint
