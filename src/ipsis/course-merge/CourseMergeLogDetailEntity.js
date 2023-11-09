@@ -10,6 +10,10 @@ export class CourseMergeLogDetailEntity extends Entity {
 		return this._entity?.getSubEntityByClass(Classes.ipsis.sisCourseMerge.targetLog);
 	}
 
+	sourceCourses() {
+		return this._entity?.getSubEntitiesByClass(Classes.ipsis.sisCourseMerge.sourceLog);
+	}
+
 	user() {
 		return this._entity?.getSubEntityByClass(Classes.ipsis.sisCourseMerge.logUser);
 	}
