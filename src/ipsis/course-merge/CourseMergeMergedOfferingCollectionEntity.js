@@ -3,10 +3,10 @@
  * See: ISirenCourseMergeSerializer.SerializeMergedCoursesListResult
  */
 import { Actions, Classes, Rels } from '../../hypermedia-constants.js';
-import { BaseCollectionEntity } from './BaseCollectionEntity.js';
+import { CourseMergeOfferingBaseCollectionEntity } from './CourseMergeOfferingBaseCollectionEntity.js';
 import { performSirenAction } from '../../es6/SirenAction.js';
 
-export class CourseMergeMergedOfferingCollectionEntity extends BaseCollectionEntity {
+export class CourseMergeMergedOfferingCollectionEntity extends CourseMergeOfferingBaseCollectionEntity {
 	originalSourceCourseMergeOfferings() {
 		return this.courseMergeOfferings()?.filter(course => !course.class.includes(Classes.ipsis.sisCourseMerge.originalTarget));
 	}

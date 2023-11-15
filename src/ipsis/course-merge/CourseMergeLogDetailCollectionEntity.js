@@ -2,9 +2,9 @@
  * CourseMergeLogDetailCollectionEntity class representation of course merge log collection as defined in the LMS
  * See: ISirenCourseMergeSerializer.SerializeCourseMergeLogDetailsListResult
  */
-import { Entity } from '../../es6/Entity.js';
+import { BaseCollectionEntity } from './BaseCollectionEntity.js';
 
-export class CourseMergeLogDetailCollectionEntity extends Entity {
+export class CourseMergeLogDetailCollectionEntity extends BaseCollectionEntity {
 	getCourseMergeLogs() {
 		return this._entity?.entities;
 	}
@@ -15,5 +15,16 @@ export class CourseMergeLogDetailCollectionEntity extends Entity {
 
 	canGetLogs() {
 		return this._entity?.properties?.canGetLogs;
+	}
+
+	loadMorePageSize() {
+		const pageSize = 20;
+		const totalCount = this.totalCount() ?? 0;
+		const courseMergeLogsLength = this.getCourseMergeLogs()?.length ?? 0;
+		// if pageSize is larger than the number remaining items, return the number of remaining items to be loaded
+		if (totalCount < courseMergeLogsLength + pageSize) {
+			return totalCount - courseMergeLogsLength;
+		}
+		return pageSize;
 	}
 }
