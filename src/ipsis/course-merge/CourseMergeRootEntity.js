@@ -29,11 +29,11 @@ export class CourseMergeRootEntity extends Entity {
 		return getEntityUrl(action, appendHiddenFields(action, fields));
 	}
 
-	courseMergeLogHref() {
-		if (!this._entity?.hasLinkByRel(Rels.ipsis.sisCourseMerge.courseMergeLog)) {
+	courseMergeLogsHref() {
+		if (!this._entity?.hasLinkByRel(Rels.ipsis.sisCourseMerge.courseMergeLogs)) {
 			return;
 		}
 
-		return this._entity.getLinkByRel(Rels.ipsis.sisCourseMerge.courseMergeLog).href;
+		return this._entity.getLinkByRel(Rels.ipsis.sisCourseMerge.courseMergeLogs).href;
 	}
 }

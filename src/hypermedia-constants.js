@@ -189,7 +189,7 @@ export const Rels = {
 			selectedCourseMergeOfferings: 'https://ipsis.api.brightspace.com/rels/selected-course-merge-offerings',
 			selectedCourseMergeOfferingsCount: 'https://ipsis.api.brightspace.com/rels/selected-course-merge-offerings-count',
 			mergedCourseOfferings: 'https://ipsis.api.brightspace.com/rels/merged-course-offerings',
-			courseMergeLog: 'https://ipsis.api.brightspace.com/rels/course-merge-log'
+			courseMergeLogs: 'https://ipsis.api.brightspace.com/rels/course-merge-logs'
 		}
 	},
 	// Quizzes API sub-domain rels
@@ -605,7 +605,9 @@ export const Classes = {
 	ipsis: {
 		sisCourseMerge: {
 			originalTarget: 'original-target',
-			target: 'target'
+			target: 'target',
+			logUser: 'log-user',
+			targetLog: 'target-log'
 		}
 	}
 };
