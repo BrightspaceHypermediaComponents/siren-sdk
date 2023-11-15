@@ -2,14 +2,14 @@ import { BaseCollectionEntity } from './BaseCollectionEntity.js';
 
 export class CourseMergeOfferingBaseCollectionEntity extends BaseCollectionEntity {
 
-    courseMergeOfferings() {
+	courseMergeOfferings() {
 		if (!this._entity) {
 			return;
 		}
 		return this._entity.entities;
 	}
 
-    loadMorePageSize() {
+	loadMorePageSize() {
 		const pageSize = 20;
 		const totalCount = this.totalCount() ?? 0;
 		const courseMergeOfferingsLength = this.courseMergeOfferings()?.length ?? 0;
@@ -20,5 +20,4 @@ export class CourseMergeOfferingBaseCollectionEntity extends BaseCollectionEntit
 		return pageSize;
 	}
 
-	
 }
