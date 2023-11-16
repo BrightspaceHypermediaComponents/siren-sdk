@@ -60,6 +60,7 @@ export const Rels = {
 		instanceCollection: 'https://activities.api.brightspace.com/rels/InstanceCollection/',
 		pagedActivityCollection: 'https://activities.api.brightspace.com/rels/activity-collection-paged',
 		parentCollections: 'https://activities.api.brightspace.com/rels/parent-collections',
+		attemptsCollection: 'https://activities.api.brightspace.com/rels/attempts-collection',
 		activityUsage: 'https://activities.api.brightspace.com/rels/activity-usage',
 		myActivityUsage: 'https://activities.api.brightspace.com/rels/my-activity-usage',
 		userActivityUsage: 'https://activities.api.brightspace.com/rels/user-activity-usage',
