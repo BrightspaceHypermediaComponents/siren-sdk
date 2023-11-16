@@ -18,6 +18,7 @@ export const Rels = {
 	filters: 'https://api.brightspace.com/rels/filters',
 	firstName: 'https://api.brightspace.com/rels/first-name',
 	homepageWidgetExpansionPack: 'https://api.brightspace.com/rels/homepage-widget-expansion-pack',
+	hostedWidgetsEndOfLife: 'https://api.brightspace.com/rels/homepage-widget-expansion-pack/hosted-widgets-end-of-life',
 	lastName: 'https://api.brightspace.com/rels/last-name',
 	more: 'https://api.brightspace.com/rels/more',
 	myEnrollments: 'https://api.brightspace.com/rels/my-enrollments',
@@ -377,8 +378,10 @@ export const Classes = {
 		themes: 'themes'
 	},
 	homepageWidgetExpansionPack: {
+		collection: 'collection',
 		homepageWidgetExpansionPack: 'homepage-widget-expansion-pack',
-		hostedWidgetsEndOfLife: 'hosted-widgets-end-of-life'
+		hostedWidgetsEndOfLife: 'hosted-widgets-end-of-life',
+		homepageWithHostedWidget: 'homepage-with-hosted-widget'
 	},
 	webLink: {
 		externalResource: 'external-resource'
@@ -642,6 +645,7 @@ export const Actions = {
 	},
 	homepageWidgetExpansionPack: {
 		hostedWidgetsEndOfLife: {
+			getHostedWidgetInstances: 'get-hosted-widget-instances',
 			getHostedWidgetsInHomepages: 'get-hosted-widgets-in-homepages',
 			replaceHostedWidgetInHomepages: 'replace-hosted-widget-in-homepages',
 			deleteHostedWidgetFromHomepages: 'delete-hosted-widget-from-homepages'
