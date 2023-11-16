@@ -18,13 +18,6 @@ export class CourseMergeLogDetailCollectionEntity extends BaseCollectionEntity {
 	}
 
 	loadMorePageSize() {
-		const pageSize = 20;
-		const totalCount = this.totalCount() ?? 0;
-		const courseMergeLogsLength = this.getCourseMergeLogs()?.length ?? 0;
-		// if pageSize is larger than the number remaining items, return the number of remaining items to be loaded
-		if (totalCount < courseMergeLogsLength + pageSize) {
-			return totalCount - courseMergeLogsLength;
-		}
-		return pageSize;
+		return super.loadMorePageSize(this.getCourseMergeLogs);
 	}
 }

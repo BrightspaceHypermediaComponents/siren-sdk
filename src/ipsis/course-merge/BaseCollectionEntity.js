@@ -45,5 +45,16 @@ export class BaseCollectionEntity extends Entity {
 	updateEntity(entity) {
 		this._entity = entity;
 	}
+
+	loadMorePageSize(collectionGetter) {
+		const pageSize = 20;
+		const totalCount = this.totalCount() ?? 0;
+		const collectionLength = collectionGetter?.length ?? 0;
+		// if pageSize is larger than the number remaining items, return the number of remaining items to be loaded
+		if (totalCount < collectionLength + pageSize) {
+			return totalCount - collectionLength;
+		}
+		return pageSize;
+	}
 }
 
