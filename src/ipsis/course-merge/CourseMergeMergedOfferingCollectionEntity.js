@@ -15,10 +15,6 @@ export class CourseMergeMergedOfferingCollectionEntity extends BaseCollectionEnt
 		return this._entity?.getSubEntitiesByClass(Classes.ipsis.sisCourseMerge.originalTarget)?.[0];
 	}
 
-	userOwnedByMultipleSourceSystems() {
-		return this._entity?.properties?.userOwnedByMultipleSourceSystems;
-	}
-
 	canUnmergeCourses() {
 		return this._entity?.properties?.canUnmergeCourses;
 	}
