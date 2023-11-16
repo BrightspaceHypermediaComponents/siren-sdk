@@ -18,12 +18,16 @@ export class CourseMergeLogDetailEntity extends Entity {
 		return this._entity?.getSubEntityByClass(Classes.ipsis.sisCourseMerge.logUser);
 	}
 
-	isMerge() {
-		return this._entity?.properties?.isMerge;
+	jobType() {
+		return this._entity?.properties?.jobType;
 	}
 
 	status() {
 		return this._entity?.properties?.status;
+	}
+
+	batchId() {
+		return this._entity?.properties?.batchId;
 	}
 
 	mergeStartDateTime() {

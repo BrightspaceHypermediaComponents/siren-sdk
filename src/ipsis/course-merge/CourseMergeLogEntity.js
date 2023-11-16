@@ -10,13 +10,6 @@ export class CourseMergeLogEntity extends Entity {
 		return this._entity?.properties?.status;
 	}
 
-	organizationHref() {
-		if (!this._entity || !this._entity.hasLinkByRel(Rels.organization)) {
-			return;
-		}
-		return this._entity.getLinkByRel(Rels.organization).href;
-	}
-
 	courseMergeOfferingHref() {
 		if (!this._entity || !this._entity.hasLinkByRel(Rels.ipsis.sisCourseMerge.courseMergeOffering)) {
 			return;
