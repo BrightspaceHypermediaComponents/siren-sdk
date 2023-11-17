@@ -18,6 +18,6 @@ export class CourseMergeLogDetailCollectionEntity extends BaseCollectionEntity {
 	}
 
 	loadMorePageSize() {
-		return super.loadMorePageSize(this.getCourseMergeLogs);
+		return super.loadMorePageSize(() => this.getCourseMergeLogs);
 	}
 }

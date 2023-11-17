@@ -10,7 +10,7 @@ export class CourseMergeOfferingBaseCollectionEntity extends BaseCollectionEntit
 	}
 
 	loadMorePageSize() {
-		return super.loadMorePageSize(this.courseMergeOfferings);
+		return super.loadMorePageSize(() => this.courseMergeOfferings);
 	}
 
 }
