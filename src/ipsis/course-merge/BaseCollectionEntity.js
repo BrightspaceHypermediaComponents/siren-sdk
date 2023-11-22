@@ -1,12 +1,6 @@
 import { Entity } from '../../es6/Entity.js';
 
 export class BaseCollectionEntity extends Entity {
-	courseMergeOfferings() {
-		if (!this._entity) {
-			return;
-		}
-		return this._entity.entities;
-	}
 
 	totalCount() {
 		return this._pagingInfo()?.totalCount;
@@ -18,17 +12,6 @@ export class BaseCollectionEntity extends Entity {
 
 	pageSize() {
 		return this._pagingInfo()?.pageSize;
-	}
-
-	loadMorePageSize() {
-		const pageSize = 20;
-		const totalCount = this.totalCount() ?? 0;
-		const courseMergeOfferingsLength = this.courseMergeOfferings()?.length ?? 0;
-		// if pageSize is larger than the number remaining items, return the number of remaining items to be loaded
-		if (totalCount < courseMergeOfferingsLength + pageSize) {
-			return totalCount - courseMergeOfferingsLength;
-		}
-		return pageSize;
 	}
 
 	_pagingInfo() {
@@ -61,6 +44,16 @@ export class BaseCollectionEntity extends Entity {
 
 	updateEntity(entity) {
 		this._entity = entity;
+	}
+
+	loadMorePageSize(collectionGetter) {
+		const totalCount = this.totalCount() ?? 0;
+		const collectionLength = collectionGetter()?.length ?? 0;
+		// if pageSize is larger than the number remaining items, return the number of remaining items to be loaded
+		if (totalCount < collectionLength + this.pageSize()) {
+			return totalCount - collectionLength;
+		}
+		return this.pageSize();
 	}
 }
 
