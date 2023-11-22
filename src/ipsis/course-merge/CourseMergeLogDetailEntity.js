@@ -30,12 +30,12 @@ export class CourseMergeLogDetailEntity extends Entity {
 		return this._entity?.properties?.batchId;
 	}
 
-	mergeStartDateTime() {
-		return this._entity?.properties?.mergeStartDateTime;
+	batchStartDateTime() {
+		return this._entity?.properties?.batchStartDateTime;
 	}
 
-	mergeEndDateTime() {
-		return this._entity?.properties?.mergeEndDateTime;
+	batchFinishDateTime() {
+		return this._entity?.properties?.batchFinishDateTime;
 	}
 
 	numMergedCourses() {
