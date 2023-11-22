@@ -3,6 +3,7 @@
  * See: ISirenCourseMergeSerializer.SerializeCourseMergeLogDetailsListResult
  */
 import { BaseCollectionEntity } from './BaseCollectionEntity.js';
+import { Rels } from '../../hypermedia-constants.js';
 
 export class CourseMergeLogDetailCollectionEntity extends BaseCollectionEntity {
 	getCourseMergeLogs() {
@@ -15,6 +16,14 @@ export class CourseMergeLogDetailCollectionEntity extends BaseCollectionEntity {
 
 	canGetLogs() {
 		return this._entity?.properties?.canGetLogs;
+	}
+
+	dataHubHref() {
+		if (!this._entity.hasLinkByRel(Rels.dataHub)) {
+			return;
+		}
+
+		return this._entity.getLinkByRel(Rels.dataHub).href;
 	}
 
 	loadMorePageSize() {
