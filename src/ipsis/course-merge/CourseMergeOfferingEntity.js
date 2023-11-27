@@ -40,19 +40,20 @@ export class CourseMergeOfferingEntity extends Entity {
 		return this._entity?.properties?.sectionMappingCount;
 	}
 
-	isDeleted() {
-		return this._entity?.properties?.isDeleted;
-	}
-
 	sectionDeleted() {
 		return this._entity?.properties?.sectionDeleted;
 	}
 
 	onOrganizationChange(onChange) {
 		const organizationHref = this.organizationHref();
+		if (!organizationHref) {
+			// setTimeout to allow caller to finish other work before calling onChange.
+			setTimeout(() => onChange(null), 0);
+			return;
+		}
 		// _subEntity builds new sub entity and allows this object to track it.
 		// So all sub entities are disposed when this object is disposed.
-		organizationHref && this._subEntity(OrganizationEntity, organizationHref, onChange);
+		this._subEntity(OrganizationEntity, organizationHref, onChange);
 	}
 
 	organizationHref() {
