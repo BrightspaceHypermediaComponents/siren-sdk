@@ -8,6 +8,7 @@ export const Rels = {
 	contentStyler: 'https://api.brightspace.com/rels/content-styler',
 	copyCoursePage: 'https://api.brightspace.com/rels/copy-course-tool-page',
 	courseOfferingInfoPage: 'https://api.brightspace.com/rels/course-offering-info-page',
+	dataHub: 'https://api.brightspace.com/rels/datahub',
 	date: 'https://api.brightspace.com/rels/date',
 	defaultSearch: 'https://api.brightspace.com/rels/default-search',
 	departments: 'https://api.brightspace.com/rels/departments',
