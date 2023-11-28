@@ -29,16 +29,4 @@ export class CourseMergeLogDetailCollectionEntity extends BaseCollectionEntity {
 	loadMorePageSize() {
 		return super.loadMorePageSize(this.getCourseMergeLogs.bind(this));
 	}
-
-	isFiltered() {
-		return this._entity?.properties?.isFiltered;
-	}
-
-	filtersHref() {
-		if (!this._entity.hasLinkByRel(Rels.filters)) {
-			return;
-		}
-
-		return this._entity.getLinkByRel(Rels.filters).href;
-	}
 }
