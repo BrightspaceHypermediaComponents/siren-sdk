@@ -8,6 +8,7 @@ export const Rels = {
 	contentStyler: 'https://api.brightspace.com/rels/content-styler',
 	copyCoursePage: 'https://api.brightspace.com/rels/copy-course-tool-page',
 	courseOfferingInfoPage: 'https://api.brightspace.com/rels/course-offering-info-page',
+	dataHub: 'https://api.brightspace.com/rels/datahub',
 	date: 'https://api.brightspace.com/rels/date',
 	defaultSearch: 'https://api.brightspace.com/rels/default-search',
 	departments: 'https://api.brightspace.com/rels/departments',
@@ -189,7 +190,9 @@ export const Rels = {
 			selectedCourseMergeOfferings: 'https://ipsis.api.brightspace.com/rels/selected-course-merge-offerings',
 			selectedCourseMergeOfferingsCount: 'https://ipsis.api.brightspace.com/rels/selected-course-merge-offerings-count',
 			mergedCourseOfferings: 'https://ipsis.api.brightspace.com/rels/merged-course-offerings',
-			courseMergeLogs: 'https://ipsis.api.brightspace.com/rels/course-merge-logs'
+			courseMergeLogs: 'https://ipsis.api.brightspace.com/rels/course-merge-logs',
+			courseMergeLogDetail: 'https://ipsis.api.brightspace.com/rels/course-merge-log-detail',
+			courseMergeLogDetails: 'https://ipsis.api.brightspace.com/rels/course-merge-log-details'
 		}
 	},
 	// Quizzes API sub-domain rels
@@ -607,7 +610,8 @@ export const Classes = {
 			originalTarget: 'original-target',
 			target: 'target',
 			logUser: 'log-user',
-			targetLog: 'target-log'
+			targetLog: 'target-log',
+			sourceLog: 'source-log'
 		}
 	}
 };
@@ -837,7 +841,8 @@ export const Actions = {
 			searchCourseOfferings: 'search-course-offerings',
 			select: 'select',
 			selectAsTarget: 'select-as-target',
-			unmergeCourseOfferings: 'unmerge-course-offerings'
+			unmergeCourseOfferings: 'unmerge-course-offerings',
+			courseMergeLogDetail: 'course-merge-log-detail'
 		}
 	},
 	quizzes: {
