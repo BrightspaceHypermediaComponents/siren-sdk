@@ -19,6 +19,14 @@ export class CourseMergeRootEntity extends Entity {
 		return this._entity.getActionByName(Actions.ipsis.sisCourseMerge.mergedCourseOffering);
 	}
 
+	getCourseMergeLogDetailAction() {
+		if (!this._entity.hasActionByName(Actions.ipsis.sisCourseMerge.courseMergeLogDetail)) {
+			return;
+		}
+
+		return this._entity.getActionByName(Actions.ipsis.sisCourseMerge.courseMergeLogDetail);
+	}
+
 	courseMergeMergedOfferingHref(orgUnitId) {
 		const action = this.getCourseMergeMergedOfferingAction();
 		if (!action) {
@@ -35,5 +43,15 @@ export class CourseMergeRootEntity extends Entity {
 		}
 
 		return this._entity.getLinkByRel(Rels.ipsis.sisCourseMerge.courseMergeLogs).href;
+	}
+
+	courseMergeLogDetailsHref(batchId) {
+		const action = this.getCourseMergeLogDetailAction();
+		if (!action) {
+			return;
+		}
+
+		const fields = [{ name: 'batchId', value: batchId }];
+		return getEntityUrl(action, fields);
 	}
 }
