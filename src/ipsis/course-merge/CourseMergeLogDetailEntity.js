@@ -10,24 +10,32 @@ export class CourseMergeLogDetailEntity extends Entity {
 		return this._entity?.getSubEntityByClass(Classes.ipsis.sisCourseMerge.targetLog);
 	}
 
+	sourceCourses() {
+		return this._entity?.getSubEntitiesByClass(Classes.ipsis.sisCourseMerge.sourceLog);
+	}
+
 	user() {
 		return this._entity?.getSubEntityByClass(Classes.ipsis.sisCourseMerge.logUser);
 	}
 
-	isMerge() {
-		return this._entity?.properties?.isMerge;
+	jobType() {
+		return this._entity?.properties?.jobType;
 	}
 
 	status() {
 		return this._entity?.properties?.status;
 	}
 
-	mergeStartDateTime() {
-		return this._entity?.properties?.mergeStartDateTime;
+	batchId() {
+		return this._entity?.properties?.batchId;
 	}
 
-	mergeEndDateTime() {
-		return this._entity?.properties?.mergeEndDateTime;
+	batchStartDateTime() {
+		return this._entity?.properties?.batchStartDateTime;
+	}
+
+	batchFinishDateTime() {
+		return this._entity?.properties?.batchFinishDateTime;
 	}
 
 	numMergedCourses() {

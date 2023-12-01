@@ -30,6 +30,12 @@ const InternalEntityMixinLit = superclass => class extends superclass {
 
 	disconnectedCallback() {
 		super.disconnectedCallback();
+
+		// Prevent entity disposal if element is being reordered (i.e. repeat directive)
+		if (this.isConnected) {
+			return;
+		}
+
 		// this calls this._entity.dispose() if entity is actually an entity.
 		// Note this will dispose all child entities used.
 		dispose(this._entity);
