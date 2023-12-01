@@ -2,9 +2,8 @@
  * CourseMergeLogDetailCollectionEntity class representation of course merge log collection as defined in the LMS
  * See: ISirenCourseMergeSerializer.SerializeCourseMergeLogDetailsListResult
  */
-import { Actions } from '../../hypermedia-constants.js';
+import { Actions, Rels } from '../../hypermedia-constants.js';
 import { BaseCollectionEntity } from './BaseCollectionEntity.js';
-import { Rels } from '../../hypermedia-constants.js';
 
 export class CourseMergeLogDetailCollectionEntity extends BaseCollectionEntity {
 	getCourseMergeLogs() {
