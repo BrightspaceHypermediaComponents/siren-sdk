@@ -2,8 +2,8 @@
  * CourseMergeLogDetailCollectionEntity class representation of course merge log collection as defined in the LMS
  * See: ISirenCourseMergeSerializer.SerializeCourseMergeLogDetailsListResult
  */
+import { Actions, Rels } from '../../hypermedia-constants.js';
 import { BaseCollectionEntity } from './BaseCollectionEntity.js';
-import { Rels } from '../../hypermedia-constants.js';
 
 export class CourseMergeLogDetailCollectionEntity extends BaseCollectionEntity {
 	getCourseMergeLogs() {
@@ -12,6 +12,18 @@ export class CourseMergeLogDetailCollectionEntity extends BaseCollectionEntity {
 
 	hasCourseMergeLogs() {
 		return this._entity?.entities?.length > 0;
+	}
+
+	hasSearchAction() {
+		return this._entity.hasActionByName(Actions.ipsis.sisCourseMerge.searchCourseMergeLogs);
+	}
+
+	getSearchAction() {
+		if (!this.hasSearchAction()) {
+			return;
+		}
+
+		return this._entity.getActionByName(Actions.ipsis.sisCourseMerge.searchCourseMergeLogs);
 	}
 
 	canGetLogs() {
