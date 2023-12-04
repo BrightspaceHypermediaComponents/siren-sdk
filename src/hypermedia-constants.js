@@ -842,7 +842,8 @@ export const Actions = {
 			select: 'select',
 			selectAsTarget: 'select-as-target',
 			unmergeCourseOfferings: 'unmerge-course-offerings',
-			courseMergeLogDetail: 'course-merge-log-detail'
+			courseMergeLogDetail: 'course-merge-log-detail',
+			timeFilter: 'time-filter'
 		}
 	},
 	quizzes: {
