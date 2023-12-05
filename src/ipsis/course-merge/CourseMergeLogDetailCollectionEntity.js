@@ -4,6 +4,7 @@
  */
 import { Actions, Rels } from '../../hypermedia-constants.js';
 import { BaseCollectionEntity } from './BaseCollectionEntity.js';
+import { performSirenAction } from '../../es6/SirenAction.js';
 
 export class CourseMergeLogDetailCollectionEntity extends BaseCollectionEntity {
 	getCourseMergeLogs() {
@@ -52,5 +53,30 @@ export class CourseMergeLogDetailCollectionEntity extends BaseCollectionEntity {
 		}
 
 		return this._entity.getLinkByRel(Rels.filters).href;
+	}
+
+	hasTimeFilterAction() {
+		return this._entity?.hasActionByName(Actions.ipsis.sisCourseMerge.timeFilter);
+	}
+
+	getTimeFilterAction() {
+		if (!this.hasTimeFilterAction()) {
+			return;
+		}
+
+		return this._entity.getActionByName(Actions.ipsis.sisCourseMerge.timeFilter);
+	}
+
+	async timeFilter(startTime, endTime) {
+		const action = this.getTimeFilterAction();
+		if (!action) {
+			return;
+		}
+
+		const fields = [
+			{ name: 'startTime', value: startTime },
+			{ name: 'endTime', value: endTime }
+		];
+		return await performSirenAction(this._token, action, fields, true);
 	}
 }
