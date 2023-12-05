@@ -4,6 +4,7 @@
  */
 import { Actions, Rels } from '../../hypermedia-constants.js';
 import { BaseCollectionEntity } from './BaseCollectionEntity.js';
+import { performSirenAction } from '../../es6/SirenAction.js';
 
 export class CourseMergeLogDetailCollectionEntity extends BaseCollectionEntity {
 	getCourseMergeLogs() {
@@ -76,7 +77,6 @@ export class CourseMergeLogDetailCollectionEntity extends BaseCollectionEntity {
 			{ name: 'startTime', value: startTime },
 			{ name: 'endTime', value: endTime }
 		];
-		
 		return await performSirenAction(this._token, action, fields, true);
 	}
 }
