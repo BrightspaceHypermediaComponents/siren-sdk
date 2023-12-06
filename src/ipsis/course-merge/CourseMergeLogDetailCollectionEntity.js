@@ -3,9 +3,8 @@
  * See: ISirenCourseMergeSerializer.SerializeCourseMergeLogDetailsListResult
  */
 import { Actions, Rels } from '../../hypermedia-constants.js';
-import { getEntityUrl, getSirenFields } from '../../es6/SirenAction.js';
+import { getEntityUrl, getSirenFields, performSirenAction } from '../../es6/SirenAction.js';
 import { BaseCollectionEntity } from './BaseCollectionEntity.js';
-import { performSirenAction } from '../../es6/SirenAction.js';
 
 export class CourseMergeLogDetailCollectionEntity extends BaseCollectionEntity {
 	getCourseMergeLogs() {
