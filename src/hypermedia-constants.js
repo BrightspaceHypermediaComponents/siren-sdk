@@ -843,7 +843,8 @@ export const Actions = {
 			selectAsTarget: 'select-as-target',
 			unmergeCourseOfferings: 'unmerge-course-offerings',
 			searchCourseMergeLogs: 'search-course-merge-logs',
-			courseMergeLogDetail: 'course-merge-log-detail'
+			courseMergeLogDetail: 'course-merge-log-detail',
+			sortCourseMergeLogsByStartTime: 'sort-course-merge-logs-by-start-time'
 		}
 	},
 	quizzes: {

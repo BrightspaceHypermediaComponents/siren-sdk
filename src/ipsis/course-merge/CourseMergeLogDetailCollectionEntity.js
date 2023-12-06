@@ -3,6 +3,7 @@
  * See: ISirenCourseMergeSerializer.SerializeCourseMergeLogDetailsListResult
  */
 import { Actions, Rels } from '../../hypermedia-constants.js';
+import { getEntityUrl, getSirenFields } from '../../es6/SirenAction.js';
 import { BaseCollectionEntity } from './BaseCollectionEntity.js';
 
 export class CourseMergeLogDetailCollectionEntity extends BaseCollectionEntity {
@@ -26,6 +27,30 @@ export class CourseMergeLogDetailCollectionEntity extends BaseCollectionEntity {
 		return this._entity.getActionByName(Actions.ipsis.sisCourseMerge.searchCourseMergeLogs);
 	}
 
+	hasSortAction() {
+		return this._entity.hasActionByName(Actions.ipsis.sisCourseMerge.sortCourseMergeLogsByStartTime);
+	}
+
+	getSortAction() {
+		if (!this.hasSortAction()) {
+			return;
+		}
+
+		return this._entity.getActionByName(Actions.ipsis.sisCourseMerge.sortCourseMergeLogsByStartTime);
+	}
+
+	courseMergeLogsSortHref(sort) {
+		const action = this.getSortAction();
+		if (!action) {
+			return;
+		}
+
+		const fields = [{ name: 'sortByStartTimeAsc', value: sort }];
+		const existingFields = getSirenFields(action);
+
+		return getEntityUrl(action, [...existingFields, ...fields]);
+	}
+
 	canGetLogs() {
 		return this._entity?.properties?.canGetLogs;
 	}
@@ -44,6 +69,10 @@ export class CourseMergeLogDetailCollectionEntity extends BaseCollectionEntity {
 
 	isFiltered() {
 		return this._entity?.properties?.isFiltered;
+	}
+
+	isSortAscending() {
+		return this._entity?.properties?.sortByStartTimeAsc;
 	}
 
 	filtersHref() {
