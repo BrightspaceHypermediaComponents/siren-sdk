@@ -2,7 +2,7 @@
  * CourseMergeLogDetailEntity class representation of course merge log as defined in the LMS
  * See: ISirenCourseMergeSerializer.SerializeCourseMergeLogDetailsListResult
  */
-import { Classes } from '../../hypermedia-constants.js';
+import { Classes, Rels } from '../../hypermedia-constants.js';
 import { Entity } from '../../es6/Entity.js';
 
 export class CourseMergeLogDetailEntity extends Entity {
@@ -14,8 +14,8 @@ export class CourseMergeLogDetailEntity extends Entity {
 		return this._entity?.getSubEntitiesByClass(Classes.ipsis.sisCourseMerge.sourceLog);
 	}
 
-	user() {
-		return this._entity?.getSubEntityByClass(Classes.ipsis.sisCourseMerge.logUser);
+	userHref() {
+		return this._entity?.getSubEntityByClass(Classes.ipsis.sisCourseMerge.logUser).getLinkByRel(Rels.ipsis.sisCourseMerge.logUser).href;
 	}
 
 	jobType() {
