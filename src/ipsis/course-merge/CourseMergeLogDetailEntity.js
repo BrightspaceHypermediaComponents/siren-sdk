@@ -15,7 +15,7 @@ export class CourseMergeLogDetailEntity extends Entity {
 	}
 
 	userHref() {
-		return this._entity?.getSubEntityByClass(Classes.ipsis.sisCourseMerge.logUser).getLinkByRel(Rels.ipsis.sisCourseMerge.logUser).href;
+		return this._entity?.getSubEntityByClass(Classes.ipsis.sisCourseMerge.logUser)?.getLinkByRel(Rels.ipsis.sisCourseMerge.logUser)?.href;
 	}
 
 	jobType() {
