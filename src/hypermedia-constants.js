@@ -845,6 +845,7 @@ export const Actions = {
 			unmergeCourseOfferings: 'unmerge-course-offerings',
 			searchCourseMergeLogs: 'search-course-merge-logs',
 			courseMergeLogDetail: 'course-merge-log-detail',
+			sortCourseMergeLogsByStartTime: 'sort-course-merge-logs-by-start-time',
 			timeFilter: 'time-filter'
 		}
 	},
