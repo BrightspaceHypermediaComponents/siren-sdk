@@ -192,7 +192,8 @@ export const Rels = {
 			mergedCourseOfferings: 'https://ipsis.api.brightspace.com/rels/merged-course-offerings',
 			courseMergeLogs: 'https://ipsis.api.brightspace.com/rels/course-merge-logs',
 			courseMergeLogDetail: 'https://ipsis.api.brightspace.com/rels/course-merge-log-detail',
-			courseMergeLogDetails: 'https://ipsis.api.brightspace.com/rels/course-merge-log-details'
+			courseMergeLogDetails: 'https://ipsis.api.brightspace.com/rels/course-merge-log-details',
+			logUser: 'https://ipsis.api.brightspace.com/rels/log-user'
 		}
 	},
 	// Quizzes API sub-domain rels
