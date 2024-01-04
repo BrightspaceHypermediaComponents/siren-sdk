@@ -44,6 +44,10 @@ export class CourseMergeOfferingEntity extends Entity {
 		return this._entity?.properties?.sectionDeleted;
 	}
 
+	sectionDeletedInTarget() {
+		return this._entity?.properties?.sectionDeletedInTarget;
+	}
+
 	onOrganizationChange(onChange) {
 		const organizationHref = this.organizationHref();
 		if (!organizationHref) {
