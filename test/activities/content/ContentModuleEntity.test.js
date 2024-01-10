@@ -30,6 +30,10 @@ describe('ContentModuleEntity', () => {
 		it('reads text description', () => {
 			expect(contentModuleEntity.descriptionText()).to.equal('description text');
 		});
+
+		it('reads depth', () => {
+			expect(contentModuleEntity.depth()).to.equal(8675309);
+		});
 	});
 
 	describe('Equality tests', () => {
@@ -37,7 +41,8 @@ describe('ContentModuleEntity', () => {
 			const contentModule = {
 				title: 'Test Content Module Title',
 				descriptionRichText: '<p>description text</p>',
-				rawDescriptionRichText: '<p>description text</p>'
+				rawDescriptionRichText: '<p>description text</p>',
+				depth: 8675309
 			};
 			expect(contentModuleEntity.equals(contentModule)).to.equal(true);
 		});
@@ -46,7 +51,8 @@ describe('ContentModuleEntity', () => {
 			const contentModule = {
 				title: 'Different Content Module Title',
 				descriptionRichText: '<p>description text</p>',
-				rawDescriptionRichText: '<p>description text</p>'
+				rawDescriptionRichText: '<p>description text</p>',
+				depth: 8675309
 			};
 			expect(contentModuleEntity.equals(contentModule)).to.equal(false);
 		});
@@ -55,7 +61,18 @@ describe('ContentModuleEntity', () => {
 			const contentModule = {
 				title: 'Test Content Module Title',
 				descriptionRichText: '<p>Different description text</p>',
-				rawDescriptionRichText: '<p>description text</p>'
+				rawDescriptionRichText: '<p>description text</p>',
+				depth: 8675309
+			};
+			expect(contentModuleEntity.equals(contentModule)).to.equal(false);
+		});
+
+		it('Equality should return false when depth is different', () => {
+			const contentModule = {
+				title: 'Test Content Module Title',
+				descriptionRichText: '<p>description text</p>',
+				rawDescriptionRichText: '<p>description text</p>',
+				depth: 1
 			};
 			expect(contentModuleEntity.equals(contentModule)).to.equal(false);
 		});

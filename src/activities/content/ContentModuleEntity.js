@@ -49,6 +49,13 @@ export class ContentModuleEntity extends Entity {
 	}
 
 	/**
+	 * @returns {number|undefined} Depth of the content-module item
+	 */
+	depth() {
+		return this._entity && this._entity.properties && this._entity.properties.depth;
+	}
+
+	/**
 	 * Updates the module to have the given description
 	 * @param {string} richText description to set on the module
 	 */
@@ -105,6 +112,7 @@ export class ContentModuleEntity extends Entity {
 	equals(contentModule) {
 		const diffs = [
 			[this.title(), contentModule.title],
+			[this.depth(), contentModule.depth],
 			[this.descriptionRichText(), contentModule.descriptionRichText],
 			[this.rawDescriptionRichText(), contentModule.rawDescriptionRichText]
 		];
