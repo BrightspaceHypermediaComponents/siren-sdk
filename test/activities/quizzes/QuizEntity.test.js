@@ -35,7 +35,6 @@ describe('QuizEntity', () => {
 				name: 'What a great quiz',
 				shuffle: true,
 				allowHints: true,
-				disableRightClick: true,
 				disablePagerAndAlerts: true,
 				password: 'hello',
 				notificationEmail: 'moose@d2l.com',
@@ -71,12 +70,6 @@ describe('QuizEntity', () => {
 		it('returns false when hints not equal', () => {
 			const quizEntity = new QuizEntity(editableEntity);
 			modifiedEntity.allowHints = false;
-			expect(quizEntity.equals(modifiedEntity)).to.be.false;
-		});
-
-		it('returns false when disable right click not equal', () => {
-			const quizEntity = new QuizEntity(editableEntity);
-			modifiedEntity.disableRightClick = false;
 			expect(quizEntity.equals(modifiedEntity)).to.be.false;
 		});
 
@@ -203,32 +196,6 @@ describe('QuizEntity', () => {
 			it('returns false when hints are not enabled', () => {
 				const quizEntity = new QuizEntity(nonEditableEntity);
 				expect(quizEntity.getHintsToolEnabled()).to.be.false;
-			});
-		});
-	});
-
-	describe('disableRightClick', () => {
-		describe('canEditDisableRightClick', () => {
-			it('returns true when disable right click is editable', () => {
-				const quizEntity = new QuizEntity(editableEntity);
-				expect(quizEntity.canEditDisableRightClick()).to.be.true;
-			});
-
-			it('returns false when disable right click is not editable', () => {
-				const quizEntity = new QuizEntity(nonEditableEntity);
-				expect(quizEntity.canEditDisableRightClick()).to.be.false;
-			});
-		});
-
-		describe('isDisableRightClickEnabled', () => {
-			it('returns true when isDisableRightClick is true', () => {
-				const quizEntity = new QuizEntity(editableEntity);
-				expect(quizEntity.isDisableRightClickEnabled()).to.be.true;
-			});
-
-			it('returns false when isDisableRightClick is false', () => {
-				const quizEntity = new QuizEntity(nonEditableEntity);
-				expect(quizEntity.isDisableRightClickEnabled()).to.be.false;
 			});
 		});
 	});
@@ -448,7 +415,6 @@ describe('QuizEntity', () => {
 				name: 'New name',
 				shuffle: false,
 				allowHints: false,
-				disableRightClick: false,
 				disablePagerAndAlerts: false,
 				password: 'super-secret',
 				notificationEmail: 'modifiedMoose@d2l.com',
@@ -468,7 +434,6 @@ describe('QuizEntity', () => {
 				expect(form.get('name')).to.equal('New name');
 				expect(form.get('shuffle')).to.equal('false');
 				expect(form.get('allowHints')).to.equal('false');
-				expect(form.get('disableRightClick')).to.equal('false');
 				expect(form.get('disablePagerAndAlerts')).to.equal('false');
 				expect(form.get('password')).to.equal('super-secret');
 				expect(form.get('notificationEmail')).to.equal('modifiedMoose@d2l.com');
@@ -493,7 +458,6 @@ describe('QuizEntity', () => {
 				name: 'What a great quiz',
 				shuffle: true,
 				allowHints: true,
-				disableRightClick: true,
 				disablePagerAndAlerts: true,
 				password: 'hello',
 				notificationEmail: 'moose@d2l.com',
@@ -518,7 +482,6 @@ describe('QuizEntity', () => {
 				name: 'some-name',
 				shuffle: false,
 				allowHints: false,
-				disableRightClick: false,
 				disablePagerAndAlerts: false,
 				password: 'super-secret',
 				notificationEmail: 'modifiedMoose@d2l.com',
