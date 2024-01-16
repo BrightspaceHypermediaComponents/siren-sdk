@@ -1092,7 +1092,6 @@ export class QuizEntity extends Entity {
 			[this.name(), quiz.name],
 			[this.isShuffleEnabled(), quiz.shuffle],
 			[this.getHintsToolEnabled(), quiz.allowHints],
-			[this.isDisableRightClickEnabled(), quiz.disableRightClick],
 			[this.isDisablePagerAndAlertsEnabled(), quiz.disablePagerAndAlerts],
 			[this.password(), quiz.password],
 			[this.notificationEmail(), quiz.notificationEmail],
