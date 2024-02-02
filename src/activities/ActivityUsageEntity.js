@@ -723,6 +723,10 @@ export class ActivityUsageEntity extends Entity {
 		return scoreOutOfSubEntities && scoreOutOfSubEntities.map(entity => (entity.href));
 	}
 
+	isInContent() {
+		return this._entity && this._entity.hasSubEntityByClass(Classes.activities.content);
+	}
+
 	async validate(activity) {
 		await this.validateDates(activity.dates);
 	}

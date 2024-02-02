@@ -304,6 +304,7 @@ export const Classes = {
 		instanceCollection: 'instance-collection',
 		complete: 'complete',
 		completion: 'completion',
+		content: 'content',
 		draft: 'draft',
 		draftPublishedEntity: 'draft-published-entity',
 		exempt: 'exempt',
