@@ -48,6 +48,12 @@ export class AssignmentEntity extends Entity {
 			&& this._entity.getSubEntityByRel(Rels.Assignments.instructions);
 	}
 
+	_getTestCasesEntity() {
+		return this._entity
+			&& this._entity.hasSubEntityByRel("https://assignments.api.brightspace.com/rels/submission-type-code-testcases")
+			&& this._entity.getSubEntityByRel("https://assignments.api.brightspace.com/rels/submission-type-code-testcases");
+	}
+
 	/**
 	 * @returns {string} Assignment instructions in plaintext (HTML stripped)
 	 */
@@ -1060,5 +1066,9 @@ export class AssignmentEntity extends Entity {
 
 	_hasNotificationEmailChanged(notificationEmail) {
 		return notificationEmail !== this.notificationEmail();
+	}
+
+	_hasTestCasesChanged(testCases) {
+		return testCases !== this._getTestCasesEntity();
 	}
 }
