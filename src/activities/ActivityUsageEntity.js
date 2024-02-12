@@ -724,7 +724,12 @@ export class ActivityUsageEntity extends Entity {
 	}
 
 	isInContent() {
-		return this._entity && this._entity.hasSubEntityByClass(Classes.activities.content);
+		return this._entity && this._entity.hasSubEntityByRel(Rels.content);
+	}
+
+	contentModuleName() {
+		const contentEntity = this._entity && this._entity.getSubEntityByRel(Rels.content);
+		return contentEntity?.properties?.moduleName;
 	}
 
 	async validate(activity) {
