@@ -34,6 +34,10 @@ describe('ContentHtmlFileEntity', () => {
 		it('reads font size', () => {
 			expect(contentHtmlFileEntity.fontSize()).to.equal('24');
 		});
+
+		it('reads font face', () => {
+			expect(contentHtmlFileEntity.fontFace()).to.equal('arial');
+		});
 	});
 
 	describe('Equality tests', () => {

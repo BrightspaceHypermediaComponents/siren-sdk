@@ -14,6 +14,10 @@ export class ContentHtmlFileEntity extends ContentFileEntity {
 		return this._entity && this._entity.properties && this._entity.properties.contentFontSize;
 	}
 
+	fontFace() {
+		return this._entity && this._entity.properties && this._entity.properties.contentFontFace;
+	}
+
 	/**
 	 * @returns {string|null} html templates href
 	 */
