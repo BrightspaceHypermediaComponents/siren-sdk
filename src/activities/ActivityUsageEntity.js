@@ -724,7 +724,24 @@ export class ActivityUsageEntity extends Entity {
 	}
 
 	isInContent() {
-		return this._entity && this._entity.hasSubEntityByClass(Classes.activities.content);
+		return this._entity && this._entity.hasSubEntityByRel(Rels.content);
+	}
+
+	contentModuleName() {
+		const contentEntity = this._entity && this._entity.getSubEntityByRel(Rels.content);
+		return contentEntity?.properties?.moduleName;
+	}
+
+	moduleFilesUrl() {
+		const contentEntity = this._entity && this._entity.getSubEntityByRel(Rels.content);
+		const moduleFilesLink = contentEntity?.getLinkByRel(Rels.Content.moduleFilesUrl);
+		return moduleFilesLink?.href;
+	}
+
+	convertedModuleFilesUrl() {
+		const contentEntity = this._entity && this._entity.getSubEntityByRel(Rels.content);
+		const convertedModuleFilesLink = contentEntity?.getLinkByRel(Rels.Content.convertedModuleFilesUrl);
+		return convertedModuleFilesLink?.href;
 	}
 
 	async validate(activity) {
