@@ -139,7 +139,9 @@ export const Rels = {
 		contentLorActivityEntity: 'https://weblinks.api.brightspace.com/rels/content-lorActivity',
 		lessonViewPage: 'https://content.api.brightspace.com/rels/lesson-view-page',
 		htmlTemplates: 'https://content.api.brightspace.com/rels/content-html-templates',
-		mediaCaptions: 'https://content.api.brightspace.com/rels/content-media-captions'
+		mediaCaptions: 'https://content.api.brightspace.com/rels/content-media-captions',
+		moduleFilesUrl: 'https://content.api.brightspace.com/rels/module-files',
+		convertedModuleFilesUrl: 'https://content.api.brightspace.com/rels/converted-module-files'
 	},
 	// Parents API sub-domain rels
 	Parents: {
@@ -304,6 +306,7 @@ export const Classes = {
 		instanceCollection: 'instance-collection',
 		complete: 'complete',
 		completion: 'completion',
+		content: 'content',
 		draft: 'draft',
 		draftPublishedEntity: 'draft-published-entity',
 		exempt: 'exempt',

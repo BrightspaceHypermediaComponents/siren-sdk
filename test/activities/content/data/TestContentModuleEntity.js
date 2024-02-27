@@ -37,7 +37,8 @@ export const contentModuleData = {
 		'module'
 	],
 	'properties': {
-		'title': 'Test Content Module Title'
+		'title': 'Test Content Module Title',
+		'depth': 8675309
 	},
 	'entities': [
 		{

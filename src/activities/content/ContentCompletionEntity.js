@@ -13,7 +13,7 @@ export class ContentCompletionEntity extends Entity {
 
 	/** @returns {bool} Whether or not the the content has been marked as completed*/
 	isContentCompleted() {
-		return this._entity && this._entity.hasClass('completed');
+		return this._entity && (this._entity.hasClass('completed') || this._entity.hasClass('complete'));
 	}
 
 	/**
