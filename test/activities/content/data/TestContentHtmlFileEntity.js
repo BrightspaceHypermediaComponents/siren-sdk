@@ -53,7 +53,8 @@ export const contentHtmlFileData = {
 	'properties': {
 		'title': 'Test Html File Title',
 		'url': 'https://phoenix-is-the-best.com',
-		'contentFontSize': '24'
+		'contentFontSize': '24',
+		'contentFontFace': 'arial'
 	},
 	'entities': [{
 		'class': ['richtext', 'description'],
