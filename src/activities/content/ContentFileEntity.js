@@ -187,7 +187,6 @@ export class ContentFileEntity extends ContentWorkingCopyEntity {
 			[this.getFileHref(), contentFile.fileHref],
 			[this.descriptionRichText(), contentFile.descriptionRichText]
 		];
-		console.log(diffs);
 		for (const [left, right] of diffs) {
 			if (left !== right) {
 				return false;
