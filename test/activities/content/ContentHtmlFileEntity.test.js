@@ -44,7 +44,8 @@ describe('ContentHtmlFileEntity', () => {
 		it('Equality should return true when details match', () => {
 			const fileData = {
 				title: 'Test Html File Title',
-				fileHref: 'https://fake-tenant-id.files.api.proddev.d2l/my-file.html/usages/6614'
+				fileHref: 'https://fake-tenant-id.files.api.proddev.d2l/my-file.html/usages/6614',
+				descriptionRichText: '<p>description text</p>',
 			};
 			expect(contentHtmlFileEntity.equals(fileData)).to.equal(true);
 		});
@@ -52,7 +53,8 @@ describe('ContentHtmlFileEntity', () => {
 		it('Equality should return false when title is different', () => {
 			const fileData = {
 				title: 'New Title',
-				fileHref: 'https://fake-tenant-id.files.api.proddev.d2l/my-file.html/usages/6614'
+				fileHref: 'https://fake-tenant-id.files.api.proddev.d2l/my-file.html/usages/6614',
+				descriptionRichText: '<p>description text</p>',
 			};
 			expect(contentHtmlFileEntity.equals(fileData)).to.equal(false);
 		});
@@ -60,7 +62,8 @@ describe('ContentHtmlFileEntity', () => {
 		it('Equality should return false when fileHref is different', () => {
 			const fileData = {
 				title: 'Test Html File Title',
-				fileHref: 'https://fake-tenant-id.files.api.proddev.d2l/my-super-cool-file.html/usages/6614'
+				fileHref: 'https://fake-tenant-id.files.api.proddev.d2l/my-super-cool-file.html/usages/6614',
+				descriptionRichText: '<p>description text</p>',
 			};
 			expect(contentHtmlFileEntity.equals(fileData)).to.equal(false);
 		});
