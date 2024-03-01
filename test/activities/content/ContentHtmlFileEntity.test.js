@@ -46,7 +46,7 @@ describe('ContentHtmlFileEntity', () => {
 			const fileData = {
 				fileType: FILE_TYPES.html,
 				title: 'Test Html File Title',
-				fileHref: 'https://fake-tenant-id.files.api.proddev.d2l/my-file.html/usages/6614',
+				fileHref: 'https://fake-tenant-id.files.api.proddev.d2l/my-file.html/usages/6614'
 			};
 			expect(contentHtmlFileEntity.equals(fileData)).to.equal(true);
 		});
@@ -55,7 +55,7 @@ describe('ContentHtmlFileEntity', () => {
 			const fileData = {
 				fileType: FILE_TYPES.html,
 				title: 'New Title',
-				fileHref: 'https://fake-tenant-id.files.api.proddev.d2l/my-file.html/usages/6614',
+				fileHref: 'https://fake-tenant-id.files.api.proddev.d2l/my-file.html/usages/6614'
 			};
 			expect(contentHtmlFileEntity.equals(fileData)).to.equal(false);
 		});
@@ -64,7 +64,7 @@ describe('ContentHtmlFileEntity', () => {
 			const fileData = {
 				fileType: FILE_TYPES.html,
 				title: 'Test Html File Title',
-				fileHref: 'https://fake-tenant-id.files.api.proddev.d2l/my-super-cool-file.html/usages/6614',
+				fileHref: 'https://fake-tenant-id.files.api.proddev.d2l/my-super-cool-file.html/usages/6614'
 			};
 			expect(contentHtmlFileEntity.equals(fileData)).to.equal(false);
 		});
