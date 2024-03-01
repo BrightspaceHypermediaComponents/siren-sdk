@@ -41,7 +41,7 @@ describe('ContentFileEntity', () => {
 			const fileData = {
 				title: 'Test File Title',
 				fileHref: 'https://fake-tenant-id.files.api.proddev.d2l/my-file.file/usages/6614',
-				descriptionRichText: 'abcd'
+				descriptionRichText: '<p>description text</p>'
 			};
 			expect(contentFileEntity.equals(fileData)).to.equal(true);
 		});
@@ -49,7 +49,8 @@ describe('ContentFileEntity', () => {
 		it('Equality should return false when title is different', () => {
 			const fileData = {
 				title: 'New Title',
-				fileHref: 'https://fake-tenant-id.files.api.proddev.d2l/my-file.file/usages/6614'
+				fileHref: 'https://fake-tenant-id.files.api.proddev.d2l/my-file.file/usages/6614',
+				descriptionRichText: '<p>description texttttt</p>'
 			};
 			expect(contentFileEntity.equals(fileData)).to.equal(false);
 		});
