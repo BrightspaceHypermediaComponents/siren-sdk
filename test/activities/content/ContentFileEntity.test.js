@@ -40,7 +40,8 @@ describe('ContentFileEntity', () => {
 		it('Equality should return true when details match', () => {
 			const fileData = {
 				title: 'Test File Title',
-				fileHref: 'https://fake-tenant-id.files.api.proddev.d2l/my-file.file/usages/6614'
+				fileHref: 'https://fake-tenant-id.files.api.proddev.d2l/my-file.file/usages/6614',
+				descriptionRichText: 'abcd'
 			};
 			expect(contentFileEntity.equals(fileData)).to.equal(true);
 		});
