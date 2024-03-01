@@ -2,9 +2,9 @@ import { contentHtmlFileData } from './data/TestContentHtmlFileEntity.js';
 import { ContentHtmlFileEntity } from '../../../src/activities/content/ContentHtmlFileEntity.js';
 import { expect } from '@open-wc/testing';
 import fetchMock from 'fetch-mock/esm/client.js';
+import { FILE_TYPES } from '../../../src/activities/content/ContentFileEntity.js';
 import { getFormData } from '../../utility/test-helpers.js';
 import SirenParse from 'siren-parser';
-import { FILE_TYPES } from '../../../src/activities/content/ContentFileEntity.js';
 
 describe('ContentHtmlFileEntity', () => {
 	let fileData;
