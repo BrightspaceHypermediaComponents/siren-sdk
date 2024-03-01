@@ -15,6 +15,13 @@ export class ContentHtmlFileEntity extends ContentFileEntity {
 	}
 
 	/**
+	 * @returns {string|undefined} Default font-face for the html editor
+	 */
+	fontFace() {
+		return this._entity && this._entity.properties && this._entity.properties.contentFontFace;
+	}
+
+	/**
 	 * @returns {string|null} html templates href
 	 */
 	getHtmlTemplatesHref() {
