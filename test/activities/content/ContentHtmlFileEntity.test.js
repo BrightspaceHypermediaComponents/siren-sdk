@@ -4,6 +4,7 @@ import { expect } from '@open-wc/testing';
 import fetchMock from 'fetch-mock/esm/client.js';
 import { getFormData } from '../../utility/test-helpers.js';
 import SirenParse from 'siren-parser';
+import { FILE_TYPES } from '../../../src/activities/content/ContentFileEntity.js';
 
 describe('ContentHtmlFileEntity', () => {
 	let fileData;
@@ -43,27 +44,27 @@ describe('ContentHtmlFileEntity', () => {
 	describe('Equality tests', () => {
 		it('Equality should return true when details match', () => {
 			const fileData = {
+				fileType: FILE_TYPES.html,
 				title: 'Test Html File Title',
 				fileHref: 'https://fake-tenant-id.files.api.proddev.d2l/my-file.html/usages/6614',
-				descriptionRichText: '<p>description text</p>',
 			};
 			expect(contentHtmlFileEntity.equals(fileData)).to.equal(true);
 		});
 
 		it('Equality should return false when title is different', () => {
 			const fileData = {
+				fileType: FILE_TYPES.html,
 				title: 'New Title',
 				fileHref: 'https://fake-tenant-id.files.api.proddev.d2l/my-file.html/usages/6614',
-				descriptionRichText: '<p>description text</p>',
 			};
 			expect(contentHtmlFileEntity.equals(fileData)).to.equal(false);
 		});
 
 		it('Equality should return false when fileHref is different', () => {
 			const fileData = {
+				fileType: FILE_TYPES.html,
 				title: 'Test Html File Title',
 				fileHref: 'https://fake-tenant-id.files.api.proddev.d2l/my-super-cool-file.html/usages/6614',
-				descriptionRichText: '<p>description text</p>',
 			};
 			expect(contentHtmlFileEntity.equals(fileData)).to.equal(false);
 		});
