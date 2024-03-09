@@ -41,6 +41,10 @@ export class DiscussionTopicEntity extends Entity {
 		return this._entity && this._entity.hasActionByName(Actions.discussions.topic.updateName);
 	}
 
+	isAiInspired() {
+		return this._entity && this._entity.hasClass(Classes.discussions.aiInspired);
+	}
+
 	/**
 	 * @returns {bool} Whether or not the discussion topic entity has posts.
 	 */
@@ -154,6 +158,27 @@ export class DiscussionTopicEntity extends Entity {
 		const fields = [
 			{ name: 'name', value: name },
 			{ name: 'shouldSyncNameWithForum', value: shouldSyncNameWithForum },
+		];
+
+		return { action, fields };
+	}
+
+	/**
+	 * @summary Formats action and fields if topic has been ai inspired
+	 * @param {object} topic the topic that's being modified
+	 * @returns {object} the appropriate action/fields to update
+	 */
+	_formatUpdateAiInspiredAction(topic) {
+		const { isAiInspired } = topic || {};
+
+		console.log('$$$ isAiInspired', isAiInspired);
+		console.log('$$$ this.isAiInspired()', this.isAiInspired());
+		if (typeof isAiInspired === 'undefined') return;
+		if (!this._hasFieldValueChanged(isAiInspired, this.isAiInspired())) return;
+
+		const action = this._entity.getActionByName(Actions.discussions.topic.updateName);
+		const fields = [
+			{ name: 'aiHumanOrigin', value: isAiInspired ? 3 : 0 },
 		];
 
 		return { action, fields };
@@ -417,6 +442,7 @@ export class DiscussionTopicEntity extends Entity {
 		const updateRatePostType = this._formatUpdateRatePostAction(topic);
 		const updateParticipationOption = this._formatUpdateParticipationOptionAction(topic);
 		const updateRequiresApproval = this._formatUpdateRequiresApproval(topic);
+		const updateIsAiInspired = this._formatUpdateAiInspiredAction(topic);
 
 		const sirenActions = [
 			updateNameAction,
@@ -424,7 +450,8 @@ export class DiscussionTopicEntity extends Entity {
 			syncDraftWithForum,
 			updateRatePostType,
 			updateParticipationOption,
-			updateRequiresApproval
+			updateRequiresApproval,
+			updateIsAiInspired
 		];
 
 		await performSirenActions(this._token, sirenActions);
