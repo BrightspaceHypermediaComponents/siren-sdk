@@ -171,8 +171,6 @@ export class DiscussionTopicEntity extends Entity {
 	_formatUpdateAiInspiredAction(topic) {
 		const { isAiInspired } = topic || {};
 
-		console.log('$$$ isAiInspired', isAiInspired);
-		console.log('$$$ this.isAiInspired()', this.isAiInspired());
 		if (typeof isAiInspired === 'undefined') return;
 		if (!this._hasFieldValueChanged(isAiInspired, this.isAiInspired())) return;
 
