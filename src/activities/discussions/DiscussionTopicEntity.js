@@ -2,6 +2,8 @@ import { Actions, Classes, Rels } from '../../hypermedia-constants.js';
 import { performSirenAction, performSirenActions } from '../../es6/SirenAction.js';
 import { Entity } from '../../es6/Entity.js';
 const NONE_RATING_TYPE = 'None';
+const HUMAN_GENERATED = 0;
+const AI_INSPIRED = 3;
 
 /**
  * DiscussionTopicEntity class representation of a D2L Discussion Topic.
@@ -176,7 +178,7 @@ export class DiscussionTopicEntity extends Entity {
 
 		const action = this._entity.getActionByName(Actions.discussions.topic.updateName);
 		const fields = [
-			{ name: 'aiHumanOrigin', value: isAiInspired ? 3 : 0 },
+			{ name: 'aiHumanOrigin', value: isAiInspired ? AI_INSPIRED : HUMAN_GENERATED },
 		];
 
 		return { action, fields };
