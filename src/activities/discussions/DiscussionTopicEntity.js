@@ -2,6 +2,8 @@ import { Actions, Classes, Rels } from '../../hypermedia-constants.js';
 import { performSirenAction, performSirenActions } from '../../es6/SirenAction.js';
 import { Entity } from '../../es6/Entity.js';
 const NONE_RATING_TYPE = 'None';
+const HUMAN_GENERATED = 0;
+const AI_INSPIRED = 3;
 
 /**
  * DiscussionTopicEntity class representation of a D2L Discussion Topic.
@@ -39,6 +41,10 @@ export class DiscussionTopicEntity extends Entity {
 	 */
 	canEditName() {
 		return this._entity && this._entity.hasActionByName(Actions.discussions.topic.updateName);
+	}
+
+	isAiInspired() {
+		return this._entity && this._entity.hasClass(Classes.discussions.aiInspired);
 	}
 
 	/**
@@ -154,6 +160,25 @@ export class DiscussionTopicEntity extends Entity {
 		const fields = [
 			{ name: 'name', value: name },
 			{ name: 'shouldSyncNameWithForum', value: shouldSyncNameWithForum },
+		];
+
+		return { action, fields };
+	}
+
+	/**
+	 * @summary Formats action and fields if topic has been ai inspired
+	 * @param {object} topic the topic that's being modified
+	 * @returns {object} the appropriate action/fields to update
+	 */
+	_formatUpdateAiInspiredAction(topic) {
+		const { isAiInspired } = topic || {};
+
+		if (typeof isAiInspired === 'undefined') return;
+		if (!this._hasFieldValueChanged(isAiInspired, this.isAiInspired())) return;
+
+		const action = this._entity.getActionByName(Actions.discussions.topic.updateName);
+		const fields = [
+			{ name: 'aiHumanOrigin', value: isAiInspired ? AI_INSPIRED : HUMAN_GENERATED },
 		];
 
 		return { action, fields };
@@ -417,6 +442,7 @@ export class DiscussionTopicEntity extends Entity {
 		const updateRatePostType = this._formatUpdateRatePostAction(topic);
 		const updateParticipationOption = this._formatUpdateParticipationOptionAction(topic);
 		const updateRequiresApproval = this._formatUpdateRequiresApproval(topic);
+		const updateIsAiInspired = this._formatUpdateAiInspiredAction(topic);
 
 		const sirenActions = [
 			updateNameAction,
@@ -424,7 +450,8 @@ export class DiscussionTopicEntity extends Entity {
 			syncDraftWithForum,
 			updateRatePostType,
 			updateParticipationOption,
-			updateRequiresApproval
+			updateRequiresApproval,
+			updateIsAiInspired
 		];
 
 		await performSirenActions(this._token, sirenActions);

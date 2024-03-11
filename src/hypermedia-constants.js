@@ -435,7 +435,8 @@ export const Classes = {
 		allGroups: 'all-groups',
 		allSections: 'all-sections',
 		restrictedTopicDefault: 'restricted-topic-default',
-		restrictedThreadsDefault: 'restricted-threads-default'
+		restrictedThreadsDefault: 'restricted-threads-default',
+		aiInspired: 'ai-inspired'
 	},
 	enrollments: {
 		enrollment: 'enrollment',
