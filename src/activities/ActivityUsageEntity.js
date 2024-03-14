@@ -744,6 +744,11 @@ export class ActivityUsageEntity extends Entity {
 		return convertedModuleFilesLink?.href;
 	}
 
+	contentModuleId() {
+		const contentEntity = this._entity && this._entity.getSubEntityByRel(Rels.content);
+		return contentEntity?.properties?.moduleId;
+	}
+
 	async validate(activity) {
 		await this.validateDates(activity.dates);
 	}
