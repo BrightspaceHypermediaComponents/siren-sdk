@@ -80,7 +80,7 @@ describe('ContentWebLinkEntity', () => {
 			};
 			expect(contentWebLinkEntity.equals(webLinkData)).to.equal(false);
 		});
-		
+
 		it('Equality should return false when description rich text is different', () => {
 			const webLinkData = {
 				title: 'Test Web Link Title',
