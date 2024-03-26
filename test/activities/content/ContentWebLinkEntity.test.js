@@ -45,7 +45,8 @@ describe('ContentWebLinkEntity', () => {
 			const webLinkData = {
 				title: 'Test Web Link Title',
 				url: 'https://phoenix-is-the-best.com',
-				isExternalResource: true
+				isExternalResource: true,
+				descriptionRichText: '<p>description text</p>'
 			};
 			expect(contentWebLinkEntity.equals(webLinkData)).to.equal(true);
 		});
@@ -54,7 +55,8 @@ describe('ContentWebLinkEntity', () => {
 			const webLinkData = {
 				title: 'New Title',
 				url: 'https://phoenix-is-the-best.com',
-				isExternalResource: true
+				isExternalResource: true,
+				descriptionRichText: '<p>description text</p>'
 			};
 			expect(contentWebLinkEntity.equals(webLinkData)).to.equal(false);
 		});
@@ -63,7 +65,8 @@ describe('ContentWebLinkEntity', () => {
 			const webLinkData = {
 				title: 'Test Web Link Title',
 				url: 'https://phoenix-is-the-very-best.com',
-				isExternalResource: true
+				isExternalResource: true,
+				descriptionRichText: '<p>description text</p>'
 			};
 			expect(contentWebLinkEntity.equals(webLinkData)).to.equal(false);
 		});
@@ -72,7 +75,18 @@ describe('ContentWebLinkEntity', () => {
 			const webLinkData = {
 				title: 'Test Web Link Title',
 				url: 'https://phoenix-is-the-best.com',
-				isExternalResource: false
+				isExternalResource: false,
+				descriptionRichText: '<p>description text</p>'
+			};
+			expect(contentWebLinkEntity.equals(webLinkData)).to.equal(false);
+		});
+		
+		it('Equality should return false when description rich text is different', () => {
+			const webLinkData = {
+				title: 'Test Web Link Title',
+				url: 'https://phoenix-is-the-very-best.com',
+				isExternalResource: true,
+				descriptionRichText: '<p>description text modified</p>'
 			};
 			expect(contentWebLinkEntity.equals(webLinkData)).to.equal(false);
 		});
