@@ -199,6 +199,7 @@ export class ContentWebLinkEntity extends ContentWorkingCopyEntity {
 		const diffs = [
 			[this.title(), contentWebLink.title],
 			[this.url(), contentWebLink.url],
+			[this.descriptionRichText(), contentWebLink.descriptionRichText],
 			[this.isExternalResource(), contentWebLink.isExternalResource]
 		];
 		for (const [left, right] of diffs) {
