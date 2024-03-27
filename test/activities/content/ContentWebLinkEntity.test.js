@@ -84,7 +84,7 @@ describe('ContentWebLinkEntity', () => {
 		it('Equality should return false when description rich text is different', () => {
 			const webLinkData = {
 				title: 'Test Web Link Title',
-				url: 'https://phoenix-is-the-very-best.com',
+				url: 'https://phoenix-is-the-best.com',
 				isExternalResource: true,
 				descriptionRichText: '<p>description text modified</p>'
 			};
