@@ -2,6 +2,9 @@ import { Actions, Classes, Rels } from '../../hypermedia-constants.js';
 import { performSirenAction, performSirenActions } from '../../es6/SirenAction.js';
 import { Entity } from '../../es6/Entity.js';
 
+const HUMAN_GENERATED = 0;
+const AI_INSPIRED = 3;
+
 const actions = {
 	delete: 'delete-folder',
 	cancel: 'cancel-folder'
@@ -266,6 +269,10 @@ export class AssignmentEntity extends Entity {
 		return subEntity.properties.informationText;
 	}
 
+	isAiInspired() {
+		return this._entity && this._entity.hasClass(Classes.assignments.aiInspired);
+	}
+
 	/**
 	 * @returns {bool} If the assignment type is set to individual assignment
 	 */
@@ -456,6 +463,25 @@ export class AssignmentEntity extends Entity {
 
 	canEditCustomAllowableFileTypes() {
 		return this._entity && this._entity.hasActionByName(Actions.assignments.updateCustomAllowableFileType);
+	}
+
+	/**
+	 * @summary Formats action and fields if assignment has been ai inspired
+	 * @param {object} isAiInspired whether this assignment has been ai inspired
+	 */
+	_formatUpdateAiInspiredAction(isAiInspired) {
+		if (typeof isAiInspired === 'undefined') return;
+		if (!this._hasAiInspiredChanged(isAiInspired)) return;
+
+		const action = this._entity.getActionByName(Actions.assignments.updateName);
+		if (!action) {
+			return;
+		}
+		const fields = [
+			{ name: 'aiHumanOrigin', value: isAiInspired ? AI_INSPIRED : HUMAN_GENERATED },
+		];
+
+		return { action, fields };
 	}
 
 	/**
@@ -913,6 +939,7 @@ export class AssignmentEntity extends Entity {
 		const updateDefaultScoringRubricAction = this._formatDefaultScoringRubricAction(assignment.defaultScoringRubricId);
 		const updateNotificationEmailAction = this._formatUpdateNotificationEmailAction(assignment.notificationEmail);
 		const updateAllowTextSubmissionAction = this._formatUpdateAllowTextSubmissionAction(assignment.allowTextSubmission);
+		const updateIsAiInspiredAction = this._formatUpdateAiInspiredAction(assignment.isAiInspired);
 
 		const sirenActions = [
 			updateNameAction,
@@ -928,7 +955,8 @@ export class AssignmentEntity extends Entity {
 			updateIsIndividualAssignmentTypeAction,
 			updateDefaultScoringRubricAction,
 			updateNotificationEmailAction,
-			updateAllowTextSubmissionAction
+			updateAllowTextSubmissionAction,
+			updateIsAiInspiredAction
 		];
 
 		await performSirenActions(this._token, sirenActions);
@@ -1016,6 +1044,10 @@ export class AssignmentEntity extends Entity {
 
 	_hasNameChanged(name) {
 		return name !== this.name();
+	}
+
+	_hasAiInspiredChanged(aiInspired) {
+		return aiInspired !== this.isAiInspired();
 	}
 
 	_hasInstructionsChanged(instructions) {
