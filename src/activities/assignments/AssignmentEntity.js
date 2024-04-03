@@ -468,6 +468,7 @@ export class AssignmentEntity extends Entity {
 	/**
 	 * @summary Formats action and fields if assignment has been ai inspired
 	 * @param {object} isAiInspired whether this assignment has been ai inspired
+	 * @returns {object} action and fields for updating isAiInspired
 	 */
 	_formatUpdateAiInspiredAction(isAiInspired) {
 		if (typeof isAiInspired === 'undefined') return;
