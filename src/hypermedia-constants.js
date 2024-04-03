@@ -350,7 +350,8 @@ export const Classes = {
 		annotationTools: 'annotations',
 		annotationEnabled: 'enabled',
 		annotationDisabled: 'disabled',
-		collection: 'collection'
+		collection: 'collection',
+		aiInspired: 'ai-inspired'
 	},
 	associations: {
 		singleAssociation: 'single-association',
