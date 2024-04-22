@@ -26,6 +26,7 @@ export class AssignmentEntity extends Entity {
 			return;
 		}
 		return this._entity.getLinkByRel(Rels.Assignments.recommendAlignments).href;
+	}
 
 	instructionsHref() {
 		if (!this._entity || !this._entity.hasLinkByRel(Rels.Assignments.instructionsText)) {
