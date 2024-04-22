@@ -25,14 +25,14 @@ export class AssignmentEntity extends Entity {
 		if (!this._entity || !this._entity.hasLinkByRel(Rels.Assignments.recommendAlignments)) {
 			return;
 		}
-		return this._entity.getLinkByRel(this._entity.getLinkByRel(Rels.Assignments.recommendAlignments)).href;
+		return this._entity.getLinkByRel(Rels.Assignments.recommendAlignments).href;
 	}
 
 	instructionsHref() {
 		if (!this._entity || !this._entity.hasLinkByRel(Rels.Assignments.instructionsText)) {
 			return;
 		}
-		return this._entity.getLinkByRel(this._entity.getLinkByRel(Rels.Assignments.instructionsText)).href;
+		return this._entity.getLinkByRel(Rels.Assignments.instructionsText).href;
 	}
 
 	/**
