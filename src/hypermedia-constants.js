@@ -114,7 +114,9 @@ export const Rels = {
 		filesSubmissionLimit: 'https://assignments.api.brightspace.com/rels/files-submission-limit',
 		submissionsRule: 'https://assignments.api.brightspace.com/rels/submissions-rule',
 		notificationEmail: 'https://assignments.api.brightspace.com/rels/notification-email',
-		categories: 'https://assignments.api.brightspace.com/rels/categories'
+		categories: 'https://assignments.api.brightspace.com/rels/categories',
+		instructionsText: 'https://assignments.api.brightspace.com/rels/instructions-text',
+		recommendAlignments: 'https://assignments.api.brightspace.com/rels/recommend-alignments'
 	},
 	// Awards
 	Awards: {
@@ -266,7 +268,8 @@ export const Rels = {
 	Outcomes: {
 		intents: 'https://outcomes.api.brightspace.com/rels/intents',
 		intent: 'https://outcomes.api.brightspace.com/rels/intent',
-		outcome: 'https://outcomes.api.brightspace.com/rels/outcome'
+		outcome: 'https://outcomes.api.brightspace.com/rels/outcome',
+		settings: 'https://outcomes.api.brightspace.com/rels/outcomes-settings'
 	},
 	Meetings: {
 		meetingManagementTool: 'https://meetings.api.brightspace.com/rels/meeting-management-tool'

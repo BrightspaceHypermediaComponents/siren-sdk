@@ -159,6 +159,9 @@ export class OrganizationEntity extends Entity {
 	copyCoursePageUrl() {
 		return this._getHref(Rels.copyCoursePage);
 	}
+	outcomesSettingsUrl() {
+		return this._getHref(Rels.Outcomes.settings);
+	}
 
 	canChangeCourseImage() {
 		return this._entity
