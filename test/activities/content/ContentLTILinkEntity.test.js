@@ -45,7 +45,8 @@ describe('ContentLTILinkEntity', () => {
 			const ltiLinkData = {
 				title: 'Test LTI Link Title',
 				url: 'https://phoenix-is-the-best.com',
-				isExternalResource: true
+				isExternalResource: true,
+				descriptionRichText: '<p>description text</p>'
 			};
 			expect(contentLTILinkEntity.equals(ltiLinkData)).to.equal(true);
 		});
@@ -54,7 +55,8 @@ describe('ContentLTILinkEntity', () => {
 			const ltiLinkData = {
 				title: 'New Title',
 				url: 'https://phoenix-is-the-best.com',
-				isExternalResource: true
+				isExternalResource: true,
+				descriptionRichText: '<p>description text</p>'
 			};
 			expect(contentLTILinkEntity.equals(ltiLinkData)).to.equal(false);
 		});
@@ -63,7 +65,8 @@ describe('ContentLTILinkEntity', () => {
 			const ltiLinkData = {
 				title: 'Test LTI Link Title',
 				url: 'https://phoenix-is-the-very-best.com',
-				isExternalResource: true
+				isExternalResource: true,
+				descriptionRichText: '<p>description text</p>'
 			};
 			expect(contentLTILinkEntity.equals(ltiLinkData)).to.equal(false);
 		});
@@ -72,7 +75,8 @@ describe('ContentLTILinkEntity', () => {
 			const ltiLinkData = {
 				title: 'Test LTI Link Title',
 				url: 'https://phoenix-is-the-best.com',
-				isExternalResource: false
+				isExternalResource: false,
+				descriptionRichText: '<p>description text</p>'
 			};
 			expect(contentLTILinkEntity.equals(ltiLinkData)).to.equal(false);
 		});
