@@ -21,6 +21,27 @@ export class AssignmentEntity extends Entity {
 		return this._entity && this._entity.properties && this._entity.properties.name;
 	}
 
+	recommendAlignmentsEndpoint() {
+		if (!this._entity || !this._entity.hasLinkByRel(Rels.Assignments.recommendAlignments)) {
+			return;
+		}
+		return this._entity.getLinkByRel(Rels.Assignments.recommendAlignments).href;
+	}
+
+	instructionsHref() {
+		if (!this._entity || !this._entity.hasLinkByRel(Rels.Assignments.instructionsText)) {
+			return;
+		}
+		return this._entity.getLinkByRel(Rels.Assignments.instructionsText).href;
+	}
+
+	outcomesKey() {
+		if (!this._entity || !this._entity.properties) {
+			return;
+		}
+		return this._entity.properties['outcomes-term'];
+	}
+
 	/**
 	 * @returns {bool} Whether or not the edit name action is present on the assignment entity
 	 */
