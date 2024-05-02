@@ -20,11 +20,11 @@
     "access": "public"
   },
   "dependencies": {
-    "@brightspace-ui/core": "^2",
+    "@brightspace-ui/core": "^3",
     "@open-wc/dedupe-mixin": "^1",
     "@polymer/polymer": "^3",
     "d2l-fetch": "^2",
-    "d2l-polymer-siren-behaviors": "^1"
+    "d2l-polymer-siren-behaviors": "^2"
   },
   "devDependencies": {
     "@babel/core": "^7",
