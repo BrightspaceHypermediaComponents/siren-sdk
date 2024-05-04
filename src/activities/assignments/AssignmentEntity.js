@@ -35,6 +35,13 @@ export class AssignmentEntity extends Entity {
 		return this._entity.getLinkByRel(Rels.Assignments.instructionsText).href;
 	}
 
+	instructionsPartialHref() {
+		if (!this._entity || !this._entity.properties) {
+			return;
+		}
+		return this._entity.properties['instructions-text-partial'];
+	}
+
 	outcomesKey() {
 		if (!this._entity || !this._entity.properties) {
 			return;
