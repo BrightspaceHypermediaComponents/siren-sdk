@@ -80,6 +80,16 @@ describe('ContentLTILinkEntity', () => {
 			};
 			expect(contentLTILinkEntity.equals(ltiLinkData)).to.equal(false);
 		});
+
+		it('Equality should return true when description is different', () => {
+			const ltiLinkData = {
+				title: 'Test LTI Link Title',
+				url: 'https://phoenix-is-the-best.com',
+				isExternalResource: true,
+				descriptionRichText: '<p>description texttttt</p>'
+			};
+			expect(contentLTILinkEntity.equals(ltiLinkData)).to.equal(false);
+		});
 	});
 
 	describe('Actions', () => {
