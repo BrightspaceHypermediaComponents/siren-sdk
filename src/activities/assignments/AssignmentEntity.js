@@ -39,7 +39,7 @@ export class AssignmentEntity extends Entity {
 		if (!this._entity || !this._entity.properties) {
 			return;
 		}
-		return this._entity.properties['instructions-text-partial'];
+		return this._entity.properties['instructions-text-partial-url'];
 	}
 
 	outcomesKey() {
