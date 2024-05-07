@@ -150,7 +150,8 @@ export class ContentLTILinkEntity extends Entity {
 		const diffs = [
 			[this.title(), contentLTILink.title],
 			[this.url(), contentLTILink.url],
-			[this.isExternalResource(), contentLTILink.isExternalResource]
+			[this.isExternalResource(), contentLTILink.isExternalResource],
+			[this.descriptionRichText(), contentLTILink.descriptionRichText]
 		];
 		for (const [left, right] of diffs) {
 			if (left !== right) {
