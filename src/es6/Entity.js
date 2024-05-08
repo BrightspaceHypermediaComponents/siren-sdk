@@ -85,12 +85,16 @@ export class Entity extends EntitySirenProperties {
 					reject && reject();
 					resolve = null;
 					reject = null;
-				} else {
+				} else if (entity) {
 					Promise.all(entity._subEntitiesLoadStatus).then(() => {
 						resolve && resolve();
 						resolve = null;
 						reject = null;
 					});
+				} else {
+					resolve && resolve();
+					resolve = null;
+					reject = null;
 				}
 			});
 		}));

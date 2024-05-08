@@ -66,6 +66,19 @@ class EntityListener {
 export function entityFactory(entityType, href, token, onChange, entity) {
 	const entityListener = new EntityListener();
 	const onChangeWrapped = (entity, error) => {
+
+		if (!entity && error) {
+			// Prevent errors from being thrown in the Firefox & Safari console when the user navigates away while fetches are in progress
+			// https://desire2learn.atlassian.net/browse/GAUD-158
+			if (
+				(error['name'] === 'TypeError' && (error['message'] === 'NetworkError when attempting to fetch resource.' || error['message'] === 'Load failed')) ||
+				(error['name'] === 'AbortError' && error['message'] === 'The operation was aborted')
+			) {
+				console.warn(`${error.toString()} (Possibly due to navigation while fetching)`);
+				return;
+			}
+		}
+
 		if (entity) {
 			onChange(new entityType(entity, token, entityListener));
 		} else {
