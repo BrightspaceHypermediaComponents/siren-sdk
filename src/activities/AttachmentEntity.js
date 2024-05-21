@@ -37,12 +37,12 @@ export class AttachmentEntity extends Entity {
 	/**
 	 * Calls the Siren action to delete this attachment
 	 */
-	async deleteAttachment() {
+	async deleteAttachment(immediate = false) {
 		if (!this.canDeleteAttachment()) {
 			return;
 		}
 
 		const action = this._entity.getActionByName('delete');
-		await performSirenAction(this._token, action);
+		await performSirenAction(this._token, action, null, immediate);
 	}
 }
