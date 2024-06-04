@@ -56,6 +56,13 @@ export class ContentModuleEntity extends Entity {
 	}
 
 	/**
+	 * @returns {string} The custom accent colour for the root content-module
+	 */
+	customAccentColour() {
+		return this._entity && this._entity.properties && this._entity.properties.customAccentColour;
+	}
+
+	/**
 	 * Updates the module to have the given description
 	 * @param {string} richText description to set on the module
 	 */
@@ -114,7 +121,8 @@ export class ContentModuleEntity extends Entity {
 			[this.title(), contentModule.title],
 			[this.depth(), contentModule.depth],
 			[this.descriptionRichText(), contentModule.descriptionRichText],
-			[this.rawDescriptionRichText(), contentModule.rawDescriptionRichText]
+			[this.rawDescriptionRichText(), contentModule.rawDescriptionRichText],
+			[this.customAccentColour(), contentModule.customAccentColour]
 		];
 		for (const [left, right] of diffs) {
 			if (left !== right) {
