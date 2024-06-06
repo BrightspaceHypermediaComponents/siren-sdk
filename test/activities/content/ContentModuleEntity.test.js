@@ -34,6 +34,10 @@ describe('ContentModuleEntity', () => {
 		it('reads depth', () => {
 			expect(contentModuleEntity.depth()).to.equal(8675309);
 		});
+
+		it('reads custom accent colour', () => {
+			expect(contentModuleEntity.customAccentColour()).to.equal('FF0000CC');
+		});
 	});
 
 	describe('Equality tests', () => {
@@ -42,7 +46,8 @@ describe('ContentModuleEntity', () => {
 				title: 'Test Content Module Title',
 				descriptionRichText: '<p>description text</p>',
 				rawDescriptionRichText: '<p>description text</p>',
-				depth: 8675309
+				depth: 8675309,
+				customAccentColour: 'FF0000CC'
 			};
 			expect(contentModuleEntity.equals(contentModule)).to.equal(true);
 		});
@@ -52,7 +57,8 @@ describe('ContentModuleEntity', () => {
 				title: 'Different Content Module Title',
 				descriptionRichText: '<p>description text</p>',
 				rawDescriptionRichText: '<p>description text</p>',
-				depth: 8675309
+				depth: 8675309,
+				customAccentColour: 'FF0000CC'
 			};
 			expect(contentModuleEntity.equals(contentModule)).to.equal(false);
 		});
@@ -62,7 +68,8 @@ describe('ContentModuleEntity', () => {
 				title: 'Test Content Module Title',
 				descriptionRichText: '<p>Different description text</p>',
 				rawDescriptionRichText: '<p>description text</p>',
-				depth: 8675309
+				depth: 8675309,
+				customAccentColour: 'FF0000CC'
 			};
 			expect(contentModuleEntity.equals(contentModule)).to.equal(false);
 		});
@@ -72,7 +79,19 @@ describe('ContentModuleEntity', () => {
 				title: 'Test Content Module Title',
 				descriptionRichText: '<p>description text</p>',
 				rawDescriptionRichText: '<p>description text</p>',
-				depth: 1
+				depth: 1,
+				customAccentColour: 'FF0000CC'
+			};
+			expect(contentModuleEntity.equals(contentModule)).to.equal(false);
+		});
+
+		it('Equality should return false when custom accent color is different', () => {
+			const contentModule = {
+				title: 'Test Content Module Title',
+				descriptionRichText: '<p>description text</p>',
+				rawDescriptionRichText: '<p>description text</p>',
+				depth: 1,
+				customAccentColour: 'AAAAAAAA'
 			};
 			expect(contentModuleEntity.equals(contentModule)).to.equal(false);
 		});
