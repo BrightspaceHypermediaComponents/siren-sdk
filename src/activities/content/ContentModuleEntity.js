@@ -97,6 +97,23 @@ export class ContentModuleEntity extends Entity {
 	}
 
 	/**
+	 * Updates the module to have the given colour
+	 * @param {string} colour Colour to set on the module
+	 */
+	async setModuleColour(colour) {
+		if (!this._entity) {
+			return;
+		}
+		const action = this._entity.getActionByName(Actions.content.updateColour);
+		if (!action) {
+			return;
+		}
+
+		const fields = [{ name: 'colour', value: colour }];
+		await performSirenAction(this._token, action, fields);
+	}
+
+	/**
 	 * Deletes the module
 	 */
 	async deleteModule() {
