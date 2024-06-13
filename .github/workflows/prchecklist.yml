@@ -24,8 +24,8 @@ jobs:
             - [ ] Yes I used one in at least one of my commits
             - [ ] No but I will use a semver keyword in the commit message when I merge and squash
             
-            **Did you paste the Rally US URL in the description?**
+            **Did you paste the Jira ticket URL in the description?**
             - [ ] Yes
-            - [ ] No as there's no corresponding Rally US
+            - [ ] No as there's no corresponding Jira ticket
               `
             })
