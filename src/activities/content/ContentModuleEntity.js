@@ -109,7 +109,7 @@ export class ContentModuleEntity extends Entity {
 			return;
 		}
 
-		const fields = [{ name: 'colour', value: colour }];
+		const fields = [{ name: 'colour', value: colour ?? '' }];
 		await performSirenAction(this._token, action, fields);
 	}
 
