@@ -10,11 +10,10 @@ export class LegacyConditions extends Entity {
 		if (!this._entity) {
 			return [];
 		}
-
 		return this._entity
 			.getSubEntitiesByRel('item')
 			.filter(entity => entity.hasClass(Classes.conditions.legacyCondition))
-			.map(entity => ({ id: entity.properties.conditionId, text: entity.title, tagListText: entity.properties.tagListText?.Value }));
+			.map(entity => ({ id: entity.properties.conditionId, text: entity.title, tagListText: entity.properties.tagListText }));
 	}
 
 	/** @returns {bool} Whether the attach existing dialog opener sub entity is present. */
