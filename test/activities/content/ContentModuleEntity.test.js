@@ -35,8 +35,8 @@ describe('ContentModuleEntity', () => {
 			expect(contentModuleEntity.depth()).to.equal(8675309);
 		});
 
-		it('reads custom accent colour', () => {
-			expect(contentModuleEntity.customAccentColour()).to.equal('FF0000CC');
+		it('reads custom accent color', () => {
+			expect(contentModuleEntity.customAccentColor()).to.equal('FF0000');
 		});
 	});
 
@@ -47,7 +47,7 @@ describe('ContentModuleEntity', () => {
 				descriptionRichText: '<p>description text</p>',
 				rawDescriptionRichText: '<p>description text</p>',
 				depth: 8675309,
-				customAccentColour: 'FF0000CC'
+				customAccentColor: 'FF0000'
 			};
 			expect(contentModuleEntity.equals(contentModule)).to.equal(true);
 		});
@@ -58,7 +58,7 @@ describe('ContentModuleEntity', () => {
 				descriptionRichText: '<p>description text</p>',
 				rawDescriptionRichText: '<p>description text</p>',
 				depth: 8675309,
-				customAccentColour: 'FF0000CC'
+				customAccentColor: 'FF0000'
 			};
 			expect(contentModuleEntity.equals(contentModule)).to.equal(false);
 		});
@@ -69,7 +69,7 @@ describe('ContentModuleEntity', () => {
 				descriptionRichText: '<p>Different description text</p>',
 				rawDescriptionRichText: '<p>description text</p>',
 				depth: 8675309,
-				customAccentColour: 'FF0000CC'
+				customAccentColor: 'FF0000'
 			};
 			expect(contentModuleEntity.equals(contentModule)).to.equal(false);
 		});
@@ -80,7 +80,7 @@ describe('ContentModuleEntity', () => {
 				descriptionRichText: '<p>description text</p>',
 				rawDescriptionRichText: '<p>description text</p>',
 				depth: 1,
-				customAccentColour: 'FF0000CC'
+				customAccentColor: 'FF0000'
 			};
 			expect(contentModuleEntity.equals(contentModule)).to.equal(false);
 		});
@@ -91,7 +91,7 @@ describe('ContentModuleEntity', () => {
 				descriptionRichText: '<p>description text</p>',
 				rawDescriptionRichText: '<p>description text</p>',
 				depth: 1,
-				customAccentColour: 'AAAAAAAA'
+				customAccentColor: 'AAAAAA'
 			};
 			expect(contentModuleEntity.equals(contentModule)).to.equal(false);
 		});
