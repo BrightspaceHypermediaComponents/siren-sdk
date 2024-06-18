@@ -56,10 +56,10 @@ export class ContentModuleEntity extends Entity {
 	}
 
 	/**
-	 * @returns {string} The custom accent colour for the root content-module
+	 * @returns {string} The custom accent color for the root content-module
 	 */
-	customAccentColour() {
-		return this._entity && this._entity.properties && this._entity.properties.customAccentColour;
+	customAccentColor() {
+		return this._entity && this._entity.properties && this._entity.properties.customAccentColor;
 	}
 
 	/**
@@ -97,19 +97,19 @@ export class ContentModuleEntity extends Entity {
 	}
 
 	/**
-	 * Updates the module to have the given colour
-	 * @param {string} colour Colour to set on the module
+	 * Updates the module to have the given color
+	 * @param {string} color Color to set on the module
 	 */
-	async setModuleColour(colour) {
+	async setModuleColor(color) {
 		if (!this._entity) {
 			return;
 		}
-		const action = this._entity.getActionByName(Actions.content.updateColour);
+		const action = this._entity.getActionByName(Actions.content.updateColor);
 		if (!action) {
 			return;
 		}
 
-		const fields = [{ name: 'colour', value: colour ?? '' }];
+		const fields = [{ name: 'color', value: color ?? '' }];
 		await performSirenAction(this._token, action, fields);
 	}
 
@@ -139,7 +139,7 @@ export class ContentModuleEntity extends Entity {
 			[this.depth(), contentModule.depth],
 			[this.descriptionRichText(), contentModule.descriptionRichText],
 			[this.rawDescriptionRichText(), contentModule.rawDescriptionRichText],
-			[this.customAccentColour(), contentModule.customAccentColour]
+			[this.customAccentColor(), contentModule.customAccentColor]
 		];
 		for (const [left, right] of diffs) {
 			if (left !== right) {

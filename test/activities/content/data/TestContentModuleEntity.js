@@ -39,7 +39,7 @@ export const contentModuleData = {
 	'properties': {
 		'title': 'Test Content Module Title',
 		'depth': 8675309,
-		'customAccentColour': 'FF0000CC',
+		'customAccentColor': 'FF0000',
 	},
 	'entities': [
 		{
