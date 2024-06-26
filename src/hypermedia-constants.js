@@ -115,7 +115,6 @@ export const Rels = {
 		submissionsRule: 'https://assignments.api.brightspace.com/rels/submissions-rule',
 		notificationEmail: 'https://assignments.api.brightspace.com/rels/notification-email',
 		categories: 'https://assignments.api.brightspace.com/rels/categories',
-		instructionsText: 'https://assignments.api.brightspace.com/rels/instructions-text',
 		recommendAlignments: 'https://assignments.api.brightspace.com/rels/recommend-alignments'
 	},
 	// Awards
