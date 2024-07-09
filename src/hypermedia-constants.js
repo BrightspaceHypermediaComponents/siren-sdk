@@ -375,6 +375,7 @@ export const Classes = {
 		token: 'token'
 	},
 	content: {
+		AISummaryEnabled: 'ai-summary-enabled',
 		content: 'content',
 		completionCriteria: 'completion-criteria',
 		sequencedActivity: 'sequenced-activity',

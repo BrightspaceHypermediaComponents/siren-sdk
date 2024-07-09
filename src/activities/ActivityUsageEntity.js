@@ -675,6 +675,13 @@ export class ActivityUsageEntity extends Entity {
 	}
 
 	/**
+	 * @returns {bool} Whether or not the activity usage entity has AI summary functionality enabled
+	 */
+	isAISummaryEnabled() {
+		return this._entity && this._entity.hasClass('ai-summary-enabled');
+	}
+
+	/**
 	 * @returns {bool} Whether or not the activity usage entity is draft
 	 */
 	isDraft() {
