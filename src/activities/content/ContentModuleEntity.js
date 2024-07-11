@@ -81,11 +81,11 @@ export class ContentModuleEntity extends Entity {
 	 * @returns {string} Returns the endpoint for generating a summary for the module
 	 */
 	generateSummaryEndpoint() {
-		if (!this._entity || !this._entity.hasLinkByRel(Rels.Content.generateModuleSummary)) {
+		if (!this._entity || !this._entity.hasLinkByRel(Rels.Content.Modules.generateSummary)) {
 			return;
 		}
 
-		return this._entity.getLinkByRel(Rels.Content.generateModuleSummary).href;
+		return this._entity.getLinkByRel(Rels.Content.Modules.generateSummary).href;
 	}
 
 	/**
