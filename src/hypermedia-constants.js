@@ -142,7 +142,8 @@ export const Rels = {
 		htmlTemplates: 'https://content.api.brightspace.com/rels/content-html-templates',
 		mediaCaptions: 'https://content.api.brightspace.com/rels/content-media-captions',
 		moduleFilesUrl: 'https://content.api.brightspace.com/rels/module-files',
-		convertedModuleFilesUrl: 'https://content.api.brightspace.com/rels/converted-module-files'
+		convertedModuleFilesUrl: 'https://content.api.brightspace.com/rels/converted-module-files',
+		generateModuleSummary: 'https://modules.api.brightspace.com/rels/generate-summary'
 	},
 	// Parents API sub-domain rels
 	Parents: {

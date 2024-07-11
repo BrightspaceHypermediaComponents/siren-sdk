@@ -38,6 +38,18 @@ describe('ContentModuleEntity', () => {
 		it('reads custom accent color', () => {
 			expect(contentModuleEntity.customAccentColor()).to.equal('FF0000');
 		});
+
+		it('reads org unit id', () => {
+			expect(contentModuleEntity.orgUnitId()).to.equal('6613');
+		});
+
+		it('reads module id', () => {
+			expect(contentModuleEntity.moduleId()).to.equal('12345');
+		});
+
+		it('reads generate module summary url', () => {
+			expect(contentModuleEntity.generateSummaryEndpoint()).to.equal('https://fake-tenant-id.modules.api.proddev.d2l/6613/modules/12345/summary');
+		});
 	});
 
 	describe('Equality tests', () => {
