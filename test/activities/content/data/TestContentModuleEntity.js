@@ -40,6 +40,8 @@ export const contentModuleData = {
 		'title': 'Test Content Module Title',
 		'depth': 8675309,
 		'customAccentColor': 'FF0000',
+		'orgUnitId': '6613',
+		'moduleId': '12345'
 	},
 	'entities': [
 		{
@@ -53,5 +55,11 @@ export const contentModuleData = {
 			'rel': []
 		}
 	],
-	'rel': []
+	'rel': [],
+	'links': [
+		{
+			'href': 'https://fake-tenant-id.modules.api.proddev.d2l/6613/modules/12345/summary',
+			'rel': ['https://modules.api.brightspace.com/rels/generate-summary'],
+		}
+	]
 };

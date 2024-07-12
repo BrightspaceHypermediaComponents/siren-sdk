@@ -1,4 +1,4 @@
-import { Actions } from '../../hypermedia-constants.js';
+import { Actions, Rels } from '../../hypermedia-constants.js';
 import ContentHelperFunctions from './ContentHelperFunctions.js';
 import { Entity } from '../../es6/Entity.js';
 import { performSirenAction } from '../../es6/SirenAction.js';
@@ -60,6 +60,32 @@ export class ContentModuleEntity extends Entity {
 	 */
 	customAccentColor() {
 		return this._entity && this._entity.properties && this._entity.properties.customAccentColor;
+	}
+
+	/**
+	 * @returns {string} The orgUnitId of the content-module (read-only)
+	 */
+
+	orgUnitId() {
+		return this._entity && this._entity.properties && this._entity.properties.orgUnitId;
+	}
+
+	/**
+	 * @returns {string} The moduleId of the content-module (read-only)
+	 */
+	moduleId() {
+		return this._entity && this._entity.properties && this._entity.properties.moduleId;
+	}
+
+	/**
+	 * @returns {string} Returns the endpoint for generating a summary for the module
+	 */
+	generateSummaryEndpoint() {
+		if (!this._entity || !this._entity.hasLinkByRel(Rels.Content.Modules.generateSummary)) {
+			return;
+		}
+
+		return this._entity.getLinkByRel(Rels.Content.Modules.generateSummary).href;
 	}
 
 	/**
