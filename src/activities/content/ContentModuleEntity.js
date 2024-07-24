@@ -1,7 +1,9 @@
-import { Actions, Rels } from '../../hypermedia-constants.js';
+import { Actions, Classes, Rels } from '../../hypermedia-constants.js';
 import ContentHelperFunctions from './ContentHelperFunctions.js';
 import { Entity } from '../../es6/Entity.js';
 import { performSirenAction } from '../../es6/SirenAction.js';
+const HUMAN_GENERATED = 0;
+const AI_INSPIRED = 3;
 
 /**
  * ContentModuleEntity class representation of a d2l content-module entity.
@@ -41,6 +43,10 @@ export class ContentModuleEntity extends Entity {
 		return descriptionSubEntity.properties.text || '';
 	}
 
+	isAiInspired() {
+		return this._entity && this._entity.hasClass(Classes.content.aiInspired);
+	}
+
 	/**
 	 * @returns {string|undefined} Title of the content-module item
 	 */
@@ -60,6 +66,17 @@ export class ContentModuleEntity extends Entity {
 	 */
 	customAccentColor() {
 		return this._entity && this._entity.properties && this._entity.properties.customAccentColor;
+	}
+
+	/**
+	 * @summary Set AiInspired property if summary has been ai inspired
+	 * @param {object} summary the summary that's being modified
+	 */
+	async setIsAiInspired(isAiInspired) {
+		const action = this._entity.getActionByName(Actions.content.updateDescription);
+		if (!this._entity || !action || isAiInspired !== this.isAiInspired()) return;
+		const fields = [{ name: 'aiHumanOrigin', value: isAiInspired ? AI_INSPIRED : HUMAN_GENERATED }];
+		await performSirenAction(this._token, action, fields);
 	}
 
 	/**

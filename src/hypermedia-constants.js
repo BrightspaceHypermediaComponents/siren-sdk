@@ -384,7 +384,8 @@ export const Classes = {
 		sequencedActivity: 'sequenced-activity',
 		description: 'description',
 		rawDescription: 'raw-description',
-		lastModified: 'lastModified'
+		lastModified: 'lastModified',
+		aiInspired: 'ai-inspired',
 	},
 	contentStyler: {
 		contentStyler: 'content-styler',
