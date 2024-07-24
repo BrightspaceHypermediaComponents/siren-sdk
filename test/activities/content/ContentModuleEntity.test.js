@@ -50,6 +50,10 @@ describe('ContentModuleEntity', () => {
 		it('reads generate module summary url', () => {
 			expect(contentModuleEntity.generateSummaryEndpoint()).to.equal('https://fake-tenant-id.modules.api.proddev.d2l/6613/modules/12345/summary');
 		});
+
+		it('reads ai inspired', () => {
+			expect(contentModuleEntity.isAiInspired()).to.equal(true);
+		});
 	});
 
 	describe('Equality tests', () => {
