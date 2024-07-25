@@ -34,7 +34,8 @@ export const contentModuleData = {
 	],
 	'class': [
 		'describable-entity',
-		'module'
+		'module',
+		'ai-inspired'
 	],
 	'properties': {
 		'title': 'Test Content Module Title',
