@@ -746,7 +746,8 @@ export const Actions = {
 		updateTitle: 'update-title',
 		updateDescription: 'update-description',
 		updateCompletionCriteria: 'update-completion-criteria',
-		updateColor: 'update-color'
+		updateColor: 'update-color',
+		updateAiOrigin: 'update-ai-origin'
 	},
 	module: {
 		deleteModule: 'delete-module'
