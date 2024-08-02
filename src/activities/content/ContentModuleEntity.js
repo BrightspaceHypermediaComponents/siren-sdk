@@ -70,11 +70,11 @@ export class ContentModuleEntity extends Entity {
 
 	/**
 	 * @summary Set AiInspired property if summary has been ai inspired
-	 * @param {object} summary the summary that's being modified
+	 * @param {object} isAiInspired the status of the module summary that's being modified
 	 */
 	async setIsAiInspired(isAiInspired) {
-		const action = this._entity.getActionByName(Actions.content.updateDescription);
-		if (!this._entity || !action || isAiInspired !== this.isAiInspired()) return;
+		const action = this._entity.getActionByName(Actions.content.updateAiOrigin);
+		if (!this._entity || !action || isAiInspired === this.isAiInspired()) return;
 		const fields = [{ name: 'aiHumanOrigin', value: isAiInspired ? AI_INSPIRED : HUMAN_GENERATED }];
 		await performSirenAction(this._token, action, fields);
 	}
