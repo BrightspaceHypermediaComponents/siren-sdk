@@ -95,6 +95,14 @@ export class ContentModuleEntity extends Entity {
 	}
 
 	/**
+	 * @returns {string} The registryId of the content-module (read-only)
+	 */
+
+	registryId() {
+		return this._entity && this._entity.properties && this._entity.properties.registryId;
+	}
+
+	/**
 	 * @returns {string} Returns the endpoint for generating a summary for the module
 	 */
 	generateSummaryEndpoint() {
@@ -103,6 +111,17 @@ export class ContentModuleEntity extends Entity {
 		}
 
 		return this._entity.getLinkByRel(Rels.Content.Modules.generateSummary).href;
+	}
+
+	/**
+	 * @returns {string} Returns the endpoint for lores for the module
+	 */
+	loresEndpoint() {
+		if (!this._entity || !this._entity.hasLinkByRel(Rels.Content.Modules.loresEndpoint)) {
+			return;
+		}
+
+		return this._entity.getLinkByRel(Rels.Content.Modules.loresEndpoint).href;
 	}
 
 	/**

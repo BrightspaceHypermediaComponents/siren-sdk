@@ -144,7 +144,8 @@ export const Rels = {
 		moduleFilesUrl: 'https://content.api.brightspace.com/rels/module-files',
 		convertedModuleFilesUrl: 'https://content.api.brightspace.com/rels/converted-module-files',
 		Modules: {
-			generateSummary: 'https://modules.api.brightspace.com/rels/generate-summary'
+			generateSummary: 'https://modules.api.brightspace.com/rels/generate-summary',
+			loresEndpoint: 'https://modules.api.brightspace.com/rels/lores-endpoint'
 		}
 	},
 	// Parents API sub-domain rels
