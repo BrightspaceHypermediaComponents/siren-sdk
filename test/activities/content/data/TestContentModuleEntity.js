@@ -42,7 +42,8 @@ export const contentModuleData = {
 		'depth': 8675309,
 		'customAccentColor': 'FF0000',
 		'orgUnitId': '6613',
-		'moduleId': '12345'
+		'moduleId': '12345',
+		'registryId': '38db1f7d-7917-445d-867e-67034387744b'
 	},
 	'entities': [
 		{
@@ -61,6 +62,10 @@ export const contentModuleData = {
 		{
 			'href': 'https://fake-tenant-id.modules.api.proddev.d2l/6613/modules/12345/summary',
 			'rel': ['https://modules.api.brightspace.com/rels/generate-summary'],
+		},
+		{
+			'href': 'https://dev-lores.fake.com/',
+			'rel': ['https://modules.api.brightspace.com/rels/lores-endpoint'],
 		}
 	]
 };
