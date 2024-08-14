@@ -1,7 +1,9 @@
-import { Actions } from '../../hypermedia-constants.js';
+import { Actions, Classes, Rels } from '../../hypermedia-constants.js';
 import ContentHelperFunctions from './ContentHelperFunctions.js';
 import { Entity } from '../../es6/Entity.js';
 import { performSirenAction } from '../../es6/SirenAction.js';
+const HUMAN_GENERATED = 0;
+const AI_INSPIRED = 3;
 
 /**
  * ContentModuleEntity class representation of a d2l content-module entity.
@@ -41,6 +43,10 @@ export class ContentModuleEntity extends Entity {
 		return descriptionSubEntity.properties.text || '';
 	}
 
+	isAiInspired() {
+		return this._entity && this._entity.hasClass(Classes.content.aiInspired);
+	}
+
 	/**
 	 * @returns {string|undefined} Title of the content-module item
 	 */
@@ -60,6 +66,62 @@ export class ContentModuleEntity extends Entity {
 	 */
 	customAccentColor() {
 		return this._entity && this._entity.properties && this._entity.properties.customAccentColor;
+	}
+
+	/**
+	 * @summary Set AiInspired property if summary has been ai inspired
+	 * @param {object} isAiInspired the status of the module summary that's being modified
+	 */
+	async setIsAiInspired(isAiInspired) {
+		const action = this._entity.getActionByName(Actions.content.updateAiOrigin);
+		if (!this._entity || !action || isAiInspired === this.isAiInspired()) return;
+		const fields = [{ name: 'aiHumanOrigin', value: isAiInspired ? AI_INSPIRED : HUMAN_GENERATED }];
+		await performSirenAction(this._token, action, fields);
+	}
+
+	/**
+	 * @returns {string} The orgUnitId of the content-module (read-only)
+	 */
+
+	orgUnitId() {
+		return this._entity && this._entity.properties && this._entity.properties.orgUnitId;
+	}
+
+	/**
+	 * @returns {string} The moduleId of the content-module (read-only)
+	 */
+	moduleId() {
+		return this._entity && this._entity.properties && this._entity.properties.moduleId;
+	}
+
+	/**
+	 * @returns {string} The registryId of the content-module (read-only)
+	 */
+
+	registryId() {
+		return this._entity && this._entity.properties && this._entity.properties.registryId;
+	}
+
+	/**
+	 * @returns {string} Returns the endpoint for generating a summary for the module
+	 */
+	generateSummaryEndpoint() {
+		if (!this._entity || !this._entity.hasLinkByRel(Rels.Content.Modules.generateSummary)) {
+			return;
+		}
+
+		return this._entity.getLinkByRel(Rels.Content.Modules.generateSummary).href;
+	}
+
+	/**
+	 * @returns {string} Returns the endpoint for lores for the module
+	 */
+	loresEndpoint() {
+		if (!this._entity || !this._entity.hasLinkByRel(Rels.Content.Modules.loresEndpoint)) {
+			return;
+		}
+
+		return this._entity.getLinkByRel(Rels.Content.Modules.loresEndpoint).href;
 	}
 
 	/**

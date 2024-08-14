@@ -38,6 +38,30 @@ describe('ContentModuleEntity', () => {
 		it('reads custom accent color', () => {
 			expect(contentModuleEntity.customAccentColor()).to.equal('FF0000');
 		});
+
+		it('reads org unit id', () => {
+			expect(contentModuleEntity.orgUnitId()).to.equal('6613');
+		});
+
+		it('reads module id', () => {
+			expect(contentModuleEntity.moduleId()).to.equal('12345');
+		});
+
+		it('reads registry id', () => {
+			expect(contentModuleEntity.registryId()).to.equal('38db1f7d-7917-445d-867e-67034387744b');
+		});
+
+		it('reads generate module summary url', () => {
+			expect(contentModuleEntity.generateSummaryEndpoint()).to.equal('https://fake-tenant-id.modules.api.proddev.d2l/6613/modules/12345/summary');
+		});
+
+		it('reads lores endpoint url', () => {
+			expect(contentModuleEntity.loresEndpoint()).to.equal('https://dev-lores.fake.com/');
+		});
+
+		it('reads ai inspired', () => {
+			expect(contentModuleEntity.isAiInspired()).to.equal(true);
+		});
 	});
 
 	describe('Equality tests', () => {

@@ -115,7 +115,6 @@ export const Rels = {
 		submissionsRule: 'https://assignments.api.brightspace.com/rels/submissions-rule',
 		notificationEmail: 'https://assignments.api.brightspace.com/rels/notification-email',
 		categories: 'https://assignments.api.brightspace.com/rels/categories',
-		instructionsText: 'https://assignments.api.brightspace.com/rels/instructions-text',
 		recommendAlignments: 'https://assignments.api.brightspace.com/rels/recommend-alignments'
 	},
 	// Awards
@@ -143,7 +142,11 @@ export const Rels = {
 		htmlTemplates: 'https://content.api.brightspace.com/rels/content-html-templates',
 		mediaCaptions: 'https://content.api.brightspace.com/rels/content-media-captions',
 		moduleFilesUrl: 'https://content.api.brightspace.com/rels/module-files',
-		convertedModuleFilesUrl: 'https://content.api.brightspace.com/rels/converted-module-files'
+		convertedModuleFilesUrl: 'https://content.api.brightspace.com/rels/converted-module-files',
+		Modules: {
+			generateSummary: 'https://modules.api.brightspace.com/rels/generate-summary',
+			loresEndpoint: 'https://modules.api.brightspace.com/rels/lores-endpoint'
+		}
 	},
 	// Parents API sub-domain rels
 	Parents: {
@@ -376,12 +379,14 @@ export const Classes = {
 		token: 'token'
 	},
 	content: {
+		AISummaryEnabled: 'ai-summary-enabled',
 		content: 'content',
 		completionCriteria: 'completion-criteria',
 		sequencedActivity: 'sequenced-activity',
 		description: 'description',
 		rawDescription: 'raw-description',
-		lastModified: 'lastModified'
+		lastModified: 'lastModified',
+		aiInspired: 'ai-inspired',
 	},
 	contentStyler: {
 		contentStyler: 'content-styler',
@@ -742,7 +747,8 @@ export const Actions = {
 		updateTitle: 'update-title',
 		updateDescription: 'update-description',
 		updateCompletionCriteria: 'update-completion-criteria',
-		updateColor: 'update-color'
+		updateColor: 'update-color',
+		updateAiOrigin: 'update-ai-origin'
 	},
 	module: {
 		deleteModule: 'delete-module'

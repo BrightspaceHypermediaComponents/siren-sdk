@@ -34,12 +34,16 @@ export const contentModuleData = {
 	],
 	'class': [
 		'describable-entity',
-		'module'
+		'module',
+		'ai-inspired'
 	],
 	'properties': {
 		'title': 'Test Content Module Title',
 		'depth': 8675309,
 		'customAccentColor': 'FF0000',
+		'orgUnitId': '6613',
+		'moduleId': '12345',
+		'registryId': '38db1f7d-7917-445d-867e-67034387744b'
 	},
 	'entities': [
 		{
@@ -53,5 +57,15 @@ export const contentModuleData = {
 			'rel': []
 		}
 	],
-	'rel': []
+	'rel': [],
+	'links': [
+		{
+			'href': 'https://fake-tenant-id.modules.api.proddev.d2l/6613/modules/12345/summary',
+			'rel': ['https://modules.api.brightspace.com/rels/generate-summary'],
+		},
+		{
+			'href': 'https://dev-lores.fake.com/',
+			'rel': ['https://modules.api.brightspace.com/rels/lores-endpoint'],
+		}
+	]
 };
