@@ -1,5 +1,6 @@
 import { Actions, Classes } from '../../hypermedia-constants.js';
 import { ContentEntity } from './ContentEntity.js';
+import ContentHelperFunctions from './ContentHelperFunctions.js';
 import { performSirenAction } from '../../es6/SirenAction.js';
 
 /**
@@ -19,6 +20,28 @@ export class ContentScormActivityEntity extends ContentEntity {
 	 */
 	contentServiceUpdatedAt() {
 		return this._entity && this._entity.properties && this._entity.properties.contentServiceScormActivityUpdatedAt;
+	}
+
+	/**
+	 * @returns {string|null} HTML description of the SCORM activity
+	 */
+	descriptionRichText() {
+		const descriptionSubEntity = ContentHelperFunctions.getDescriptionSubEntity(this._entity);
+		if (!descriptionSubEntity) {
+			return null;
+		}
+		return descriptionSubEntity.properties.html || '';
+	}
+
+	/**
+	 * @returns {string|null} Plaintext description of the SCORM activity
+	 */
+	descriptionText() {
+		const descriptionSubEntity = ContentHelperFunctions.getDescriptionSubEntity(this._entity);
+		if (!descriptionSubEntity) {
+			return null;
+		}
+		return descriptionSubEntity.properties.text || '';
 	}
 
 	/**
@@ -65,6 +88,23 @@ export class ContentScormActivityEntity extends ContentEntity {
 	 */
 	isLtiTopic() {
 		return this._entity && this._entity.properties && this._entity.properties.isLtiTopic;
+	}
+
+	/**
+	 * Updates the SCORM activity's description
+	 * @param {string} richText Rich text description to set on the SCORM activity
+	 */
+	async setScormActivityDescription(richText) {
+		if (!this._entity) {
+			return;
+		}
+		const action = this._entity.getActionByName(Actions.content.updateDescription);
+		if (!action) {
+			return;
+		}
+
+		const fields = [{ name: 'description', value: richText }];
+		return await performSirenAction(this._token, action, fields);
 	}
 
 	/**
@@ -126,6 +166,7 @@ export class ContentScormActivityEntity extends ContentEntity {
 	equals(contentscormActivity) {
 		const diffs = [
 			[this.title(), contentscormActivity.title],
+			[this.descriptionRichText(), contentscormActivity.descriptionRichText],
 			[this.isExternalResource(), contentscormActivity.isExternalResource]
 		];
 		for (const [left, right] of diffs) {
