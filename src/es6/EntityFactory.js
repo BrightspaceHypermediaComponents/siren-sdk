@@ -1,7 +1,13 @@
 import 'd2l-polymer-siren-behaviors/store/entity-store.js';
 
+/**
+ * @typedef {import('siren-parser').Entity} ParsedEntity
+ * @typedef {import('siren-parser').Link} SirenLink
+ * @typedef {import('./EntitySirenProperties').EntitySirenProperties} EntitySirenProperties
+ */
+
 /** Allows one to manage the event store listeners. Makes it easy to update, add and remove a listener for the entity store. */
-class EntityListener {
+export class EntityListener {
 	constructor() {
 		this._href;
 		this._token;
@@ -57,11 +63,11 @@ class EntityListener {
 
 /**
  * This creates and fetch a new entity. Whenever the entity changes onChange is called.
- * @param {Function} entityType The type of the entity. For example OrganizationEntity
- * @param {Object|String} href Siren Link or Href of the entity to be created
- * @param {String|Token|Null} token JWT Token for brightspace | a function that returns a JWT token for brightspace | null (defaults to cookie authentication in a browser)
- * @param {Function} onChange Callback function that accepts an {entityType} to be called when entity changes. If there are errors onChange is called with (null, error)
- * @param {Object} entity (Optional) Entity that has already been fetched.
+ * @param {new(...args: any[]) => EntitySirenProperties} entityType The type of the entity. For example OrganizationEntity
+ * @param {SirenLink|String} href Siren Link or Href of the entity to be created
+ * @param {String|Function} [token] JWT Token for brightspace | a function that returns a JWT token for brightspace | null (defaults to cookie authentication in a browser)
+ * @param {(entity: EntitySirenProperties, error: any) => void} onChange Callback function that accepts an {entityType} to be called when entity changes. If there are errors onChange is called with (null, error)
+ * @param {ParsedEntity} entity (Optional) Entity that has already been fetched.
  */
 export function entityFactory(entityType, href, token, onChange, entity) {
 	const entityListener = new EntityListener();
@@ -99,7 +105,7 @@ export function updateEntity(href, token, entity) {
 
 /**
  * Some times the entity doesn't exists so this allows the cleanup code to be cleaner.
- * @param {Object|Null} entity Object that is of an Entity type.
+ * @param {EntitySirenProperties|null} entity Object that is of an Entity type.
  */
 export function dispose(entity) {
 	entity && entity.dispose && entity.dispose();

@@ -3,6 +3,17 @@ import 'd2l-polymer-siren-behaviors/store/entity-store.js';
 import 'd2l-polymer-siren-behaviors/store/action-queue.js';
 import SirenParse from 'siren-parser';
 
+/**
+ * @typedef {import('siren-parser').Action} Action
+ * @typedef {import('siren-parser').Field} Field
+ * @typedef {import('siren-parser').Entity} ParsedEntity
+ * @typedef {{ name: string; value: string }} FieldOverride
+ */
+
+/**
+ * @param {Action} action
+ * @returns {FieldOverride[]}
+ */
 const _getSirenFields = function(action) {
 	const url = new URL(action.href, window.location.origin);
 	const fields = [];
@@ -24,6 +35,10 @@ const _getSirenFields = function(action) {
 	return fields;
 };
 
+/**
+ * @param {FieldOverride[]} fields
+ * @returns {URLSearchParams}
+ */
 const _createURLSearchParams = function(fields) {
 	const sequence = [];
 	for (let i = 0; i < fields.length; i++) {
@@ -33,6 +48,11 @@ const _createURLSearchParams = function(fields) {
 	return new URLSearchParams(sequence);
 };
 
+/**
+ * @param {Action} action
+ * @param {FieldOverride[]} fields
+ * @returns {URL}
+ */
 const _getEntityUrl = function(action, fields) {
 	if (!action) {
 		return null;
@@ -55,6 +75,11 @@ const _createFormData = function(fields) {
 	return formData;
 };
 
+/**
+ * @param {Action} action
+ * @param {FieldOverride[]} fields
+ * @returns {FieldOverride[]}
+ */
 const _appendHiddenFields = function(action, fields) {
 	if (action.fields && action.fields.forEach) {
 		action.fields.forEach((field) => {
@@ -204,6 +229,10 @@ const _combineActions = function(actionsAndFields) {
 /**
  * Combines actions that share the same action href and method into one action.
  * Then executes list of combined actions. Performing siren actions immediately not supported.
+ *
+ * @param {string|Function} token
+ * @param {{ action: Action, fields: FieldOverride[] }[]} actionsAndFields
+ * @returns {Promise<ParsedEntity[]>}
  */
 export const performSirenActions = function(token, actionsAndFields) {
 	if (!actionsAndFields || !actionsAndFields.length) return;
@@ -221,6 +250,14 @@ export const performSirenActions = function(token, actionsAndFields) {
 		});
 };
 
+/**
+ * @param {string|Function} token
+ * @param {Action} action
+ * @param {FieldOverride[]} fields
+ * @param {boolean} [immediate]
+ * @param {boolean} [bypassCache]
+ * @returns {Promise<ParsedEntity>}
+ */
 export const performSirenAction = function(token, action, fields, immediate, bypassCache) {
 	return window.D2L.Siren.EntityStore.getToken(token)
 		.then((resolved) => {
@@ -231,6 +268,13 @@ export const performSirenAction = function(token, action, fields, immediate, byp
 		});
 };
 
+/**
+ * @param {string|Function} token
+ * @param {() => Action} actionFactory
+ * @param {FieldOverride[]} fieldOverrides
+ * @param {boolean} [bypassCache]
+ * @returns {Promise<ParsedEntity>}
+ */
 export const performLazySirenAction = function(token, actionFactory, fieldOverrides, bypassCache) {
 	fieldOverrides = fieldOverrides || {};
 	return window.D2L.Siren.EntityStore.getToken(token).then(
