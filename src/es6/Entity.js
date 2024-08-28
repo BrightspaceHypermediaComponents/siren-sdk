@@ -3,7 +3,7 @@ import { EntitySirenProperties } from './EntitySirenProperties.js';
 
 /**
  * @typedef {import('siren-parser').Entity} ParsedEntity
- * @typedef {import('./EntityFactory').EntityListener} EntityListener
+ * @typedef {import('./EntityFactory.js').EntityListener} EntityListener
  */
 
 /**
