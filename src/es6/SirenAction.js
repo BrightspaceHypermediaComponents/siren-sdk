@@ -232,7 +232,7 @@ const _combineActions = function(actionsAndFields) {
  *
  * @param {string|Function} token
  * @param {{ action: Action, fields: FieldOverride[] }[]} actionsAndFields
- * @returns {ParsedEntity[]>}
+ * @returns {Promise<ParsedEntity[]>}
  */
 export const performSirenActions = function(token, actionsAndFields) {
 	if (!actionsAndFields || !actionsAndFields.length) return;
