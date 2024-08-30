@@ -619,6 +619,18 @@ export class QuizEntity extends Entity {
 		return subEntity.hasClass(Classes.quizzes.attempts.hasAttempts);
 	}
 
+	hasNonAutoGradingQuestion() {
+		return this._entity && this._entity.properties && this._entity.properties.hasNonAutoGradingQuestion;
+	}
+
+	hasNonAutoGradingQuestionHref() {
+		if (!this._entity || !this._entity.hasLinkByRel('hasNonAutoGradingQuestion')) {
+			return;
+		}
+
+		return this._entity.getLinkByRel('hasNonAutoGradingQuestion').href;
+	}
+
 	async save(quiz) {
 		if (!quiz) return;
 		const updateNameAction = this.canEditName() ? this._formatUpdateNameAction(quiz) : null;
