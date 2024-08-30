@@ -2,6 +2,10 @@ import { dispose, entityFactory } from '../es6/EntityFactory.js';
 import { AsyncStateEvent } from '@brightspace-ui/core/helpers/asyncStateEvent.js';
 import { dedupeMixin } from '@open-wc/dedupe-mixin';
 
+/**
+ * @template {new (...args: any[]) => import('lit').ReactiveElement} S
+ * @param {S} superclass
+ */
 const InternalEntityMixinLit = superclass => class extends superclass {
 
 	static get properties() {

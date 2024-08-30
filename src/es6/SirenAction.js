@@ -271,7 +271,7 @@ export const performSirenAction = function(token, action, fields, immediate, byp
 /**
  * @param {string|Function} token
  * @param {() => Action} actionFactory
- * @param {FieldOverride[]} fieldOverrides
+ * @param {{ [key: string]: string }} fieldOverrides
  * @param {boolean} [bypassCache]
  * @returns {Promise<ParsedEntity>}
  */

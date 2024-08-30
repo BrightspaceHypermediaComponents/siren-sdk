@@ -1,5 +1,9 @@
 import { dedupeMixin } from '@open-wc/dedupe-mixin';
 
+/**
+ * @template {new (...args: any[]) => import('lit').ReactiveElement} S
+ * @param {S} superclass
+ */
 const InternalSaveStatusMixin = superclass => class extends superclass {
 	wrapSaveAction(promise) {
 		this.dispatchEvent(new CustomEvent('d2l-siren-entity-save-start', {
