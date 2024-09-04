@@ -33,17 +33,6 @@ const InternalEntityMixinLit = superclass => class extends superclass {
 		};
 	}
 
-	constructor(...args) {
-		super(...args);
-
-		/** @type {string} */
-		this.href = null;
-		/** @type {string | Function} */
-		this.token = null;
-		/** @type {EntityType} */
-		this._entity = null;
-	}
-
 	disconnectedCallback() {
 		super.disconnectedCallback();
 
