@@ -63,7 +63,7 @@ const InternalEntityMixinLit = superclass => class extends superclass {
 			this.href && this.token) {
 			this._getEntity();
 		}
-		return result || (this.href && this.token);
+		return result || (!!this.href && !!this.token);
 	}
 
 	_entityHasChanged(newValue, oldValue) {
