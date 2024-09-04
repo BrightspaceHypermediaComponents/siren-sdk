@@ -87,7 +87,8 @@ export const Rels = {
 		associateMultipleGrades: 'https://activities.api.brightspace.com/rels/associate-multiple-grades',
 		evaluation: 'https://activities.api.brightspace.com/rels/evaluation',
 		pagingType: 'https://activities.api.brightspace.com/rels/activity-collection/paging-type',
-		activityName: 'https://activities.api.brightspace.com/rels/activity-name'
+		activityName: 'https://activities.api.brightspace.com/rels/activity-name',
+		assetProcessors: 'https://activities.api.brightspace.com/rels/asset-processors'
 	},
 	Conditions: {
 		conditions: 'https://conditions.api.brightspace.com/rels/conditions',

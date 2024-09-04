@@ -931,6 +931,17 @@ export class AssignmentEntity extends Entity {
 		return this._entity.getLinkByRel(Rels.Assignments.attachments).href;
 	}
 
+	/**
+	 * @returns {string} URL of the asset processors collection, if present
+	 */
+	assetProcessorsHref() {
+		if (!this._entity || !this._entity.hasLinkByRel(Rels.Activities.assetProcessors)) {
+			return;
+		}
+
+		return this._entity.getLinkByRel(Rels.Activities.assetProcessors).href;
+	}
+
 	canSave() {
 		return this._entity && this._entity.hasActionByName(Actions.assignments.update);
 	}
