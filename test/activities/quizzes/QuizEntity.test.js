@@ -47,7 +47,7 @@ describe('QuizEntity', () => {
 				header: 'Top of the quiz to ya!',
 				footer: 'Bottom of the quiz to ya!',
 				passingPercentage: 75,
-				studySupportEnabled: false
+				studySupportEnabled: true
 			};
 		});
 
@@ -131,6 +131,12 @@ describe('QuizEntity', () => {
 		it('returns false when footer not equal', () => {
 			const quizEntity = new QuizEntity(editableEntity);
 			modifiedEntity.footer = 'New Footer!';
+			expect(quizEntity.equals(modifiedEntity)).to.be.false;
+		});
+
+		it('returns false when studySupportEnabled not equal', () => {
+			const quizEntity = new QuizEntity(editableEntity);
+			modifiedEntity.studySupportEnabled = false;
 			expect(quizEntity.equals(modifiedEntity)).to.be.false;
 		});
 	});
@@ -428,7 +434,7 @@ describe('QuizEntity', () => {
 				header: 'New header',
 				footer: 'New footer',
 				passingPercentage: 30,
-				studySupportEnabled: true
+				studySupportEnabled: false
 			});
 
 			const form = await getFormData(fetchMock.lastCall().request);
@@ -448,7 +454,7 @@ describe('QuizEntity', () => {
 				expect(form.get('header')).to.equal('New header');
 				expect(form.get('footer')).to.equal('New footer');
 				expect(form.get('passingPercentage')).to.equal('30');
-				expect(form.get('studySupportEnabled')).to.equal('true');
+				expect(form.get('studySupportEnabled')).to.equal('false');
 			}
 
 			expect(fetchMock.called()).to.be.true;
@@ -473,7 +479,7 @@ describe('QuizEntity', () => {
 				header: 'Top of the quiz to ya!',
 				footer: 'Bottom of the quiz to ya!',
 				passingPercentage: 75,
-				studySupportEnabled: false
+				studySupportEnabled: true
 			});
 
 			expect(fetchMock.done());
@@ -498,7 +504,7 @@ describe('QuizEntity', () => {
 				header: 'Even better Header!',
 				footer: 'Even better Footer!',
 				passingPercentage: 50,
-				studySupportEnabled: true
+				studySupportEnabled: false
 			});
 
 			expect(fetchMock.done());
@@ -627,7 +633,7 @@ describe('QuizEntity', () => {
 				expect(quizEntity.canEditStudySupportEnabled()).to.be.true;
 			});
 
-			it('returns false when auto set graded is not editable', () => {
+			it('returns false when studySupportEnabled is not editable', () => {
 				const quizEntity = new QuizEntity(nonEditableEntity);
 				expect(quizEntity.canEditStudySupportEnabled()).to.be.false;
 			});
