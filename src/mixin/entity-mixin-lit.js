@@ -47,12 +47,11 @@ const InternalEntityMixinLit = superclass => class extends superclass {
 	}
 
 	shouldUpdate(changedProperties) {
-		const result = super.shouldUpdate(changedProperties);
 		if ((changedProperties.has('href') || changedProperties.has('token')) &&
 			this.href && this.token) {
 			this._getEntity();
 		}
-		return result || (!!this.href && !!this.token);
+		return !!this.href && !!this.token;
 	}
 
 	_entityHasChanged(newValue, oldValue) {
