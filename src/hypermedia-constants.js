@@ -87,8 +87,7 @@ export const Rels = {
 		associateMultipleGrades: 'https://activities.api.brightspace.com/rels/associate-multiple-grades',
 		evaluation: 'https://activities.api.brightspace.com/rels/evaluation',
 		pagingType: 'https://activities.api.brightspace.com/rels/activity-collection/paging-type',
-		activityName: 'https://activities.api.brightspace.com/rels/activity-name',
-		assetProcessors: 'https://activities.api.brightspace.com/rels/asset-processors'
+		activityName: 'https://activities.api.brightspace.com/rels/activity-name'
 	},
 	Conditions: {
 		conditions: 'https://conditions.api.brightspace.com/rels/conditions',
@@ -116,7 +115,8 @@ export const Rels = {
 		submissionsRule: 'https://assignments.api.brightspace.com/rels/submissions-rule',
 		notificationEmail: 'https://assignments.api.brightspace.com/rels/notification-email',
 		categories: 'https://assignments.api.brightspace.com/rels/categories',
-		recommendAlignments: 'https://assignments.api.brightspace.com/rels/recommend-alignments'
+		recommendAlignments: 'https://assignments.api.brightspace.com/rels/recommend-alignments',
+		assetProcessors: 'https://assignments.api.brightspace.com/rels/asset-processors'
 	},
 	// Awards
 	Awards: {
