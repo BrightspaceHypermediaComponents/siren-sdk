@@ -266,6 +266,29 @@ export const editableQuiz = {
 		},
 		{
 			'class': [
+				'study-support-enabled',
+				'checked'
+			],
+			'rel': [
+				'https://quizzes.api.brightspace.com/rels/study-support-enabled'
+			],
+			'actions': [
+				{
+					'href': 'https://afe99802-9130-4320-a770-8d138b941e74.quizzes.api.proddev.d2l/6606/quizzes/22',
+					'name': 'study-support-enabled',
+					'method': 'PATCH',
+					'fields': [
+						{
+							'type': 'checkbox',
+							'name': 'studySupportEnabled',
+							'value': true
+						}
+					]
+				}
+			]
+		},
+		{
+			'class': [
 				'sync-gradebook',
 				'unchecked',
 				'default'

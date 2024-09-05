@@ -226,6 +226,29 @@ export class QuizEntity extends Entity {
 	}
 
 	/**
+	 * @returns {bool} Whether or not the user can edit the studySupportEnabled property
+	 */
+	canEditStudySupportEnabled() {
+		const entity = this._entity.getSubEntityByRel(Rels.Quizzes.studySupportEnabled);
+		return entity && entity.hasActionByName(Actions.quizzes.updateStudySupportEnabled);
+	}
+
+	/**
+	 * @returns {bool} Is studySupportEnabled checked for the quiz entity
+	 */
+	isStudySupportEnabled() {
+		const entity = this._entity.getSubEntityByRel(Rels.Quizzes.studySupportEnabled);
+		return entity && entity.hasClass(Classes.quizzes.checked);
+	}
+
+	/**
+	 * @returns {bool} Does studySupportEnabled entity exist
+	 */
+	isStudySupportEnabledVisible() {
+		return this._entity.hasSubEntityByRel(Rels.Quizzes.studySupportEnabled);
+	}
+
+	/**
 	 * @returns {bool} Whether or not the user can edit the syncGradebook property
 	 */
 	canEditSyncGradebook() {
@@ -649,6 +672,7 @@ export class QuizEntity extends Entity {
 		const updateHeaderAction = this.canEditHeader() ? this._formatUpdateHeaderAction(quiz) : null;
 		const updateFooterAction = this.canEditFooter() ? this._formatUpdateFooterAction(quiz) : null;
 		const updatePassingPercentageAction = this.canEditPassingPercentage() ? this._formatPassingPercentageAction(quiz) : null;
+		const updateStudySupportEnabledAction = this.canEditStudySupportEnabled() ? this._formatUpdateStudySupportEnabled(quiz) : null;
 
 		const sirenActions = [
 			updateNameAction,
@@ -666,7 +690,8 @@ export class QuizEntity extends Entity {
 			updateDescriptionAction,
 			updateHeaderAction,
 			updateFooterAction,
-			updatePassingPercentageAction
+			updatePassingPercentageAction,
+			updateStudySupportEnabledAction
 		];
 		await performSirenActions(this._token, sirenActions);
 	}
@@ -899,6 +924,23 @@ export class QuizEntity extends Entity {
 		return { action, fields };
 	}
 
+	_formatUpdateStudySupportEnabled(quiz) {
+		if (!quiz) return;
+		if (!this._hasStudySupportEnabledChanged(quiz.studySupportEnabled)) return;
+
+		const entity = this._entity.getSubEntityByRel(Rels.Quizzes.studySupportEnabled);
+		if (!entity) return;
+
+		const action = entity.getActionByName(Actions.quizzes.updateStudySupportEnabled);
+		if (!action) return;
+
+		const fields = [
+			{ name: 'studySupportEnabled', value: quiz.studySupportEnabled },
+		];
+
+		return { action, fields };
+	}
+
 	_formatUpdateSyncGradebook(quiz) {
 		if (!quiz) return;
 		if (!this._hasSyncGradebookChanged(quiz.syncGradebook)) return;
@@ -1075,6 +1117,10 @@ export class QuizEntity extends Entity {
 		return autoSetGraded !== this.isAutoSetGradedEnabled();
 	}
 
+	_hasStudySupportEnabledChanged(studySupportEnabled) {
+		return studySupportEnabled !== this.isStudySupportEnabled();
+	}
+
 	_hasSyncGradebookChanged(syncGradebook) {
 		return syncGradebook !== this.isSyncGradebookEnabled();
 	}
@@ -1114,7 +1160,8 @@ export class QuizEntity extends Entity {
 			[this.descriptionEditorHtml(), quiz.description],
 			[this.headerEditorHtml(), quiz.header],
 			[this.footerEditorHtml(), quiz.footer],
-			[this.passingPercentage(), quiz.passingPercentage]
+			[this.passingPercentage(), quiz.passingPercentage],
+			[this.isStudySupportEnabled(), quiz.studySupportEnabled]
 		];
 
 		for (const [left, right] of diffs) {

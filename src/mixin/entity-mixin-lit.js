@@ -2,6 +2,11 @@ import { dispose, entityFactory } from '../es6/EntityFactory.js';
 import { AsyncStateEvent } from '@brightspace-ui/core/helpers/asyncStateEvent.js';
 import { dedupeMixin } from '@open-wc/dedupe-mixin';
 
+/**
+ * @template {new (...args: any[]) => import('lit').ReactiveElement} S
+ * @template [EntityType=import('../es6/EntitySirenProperties.js').EntitySirenProperties]
+ * @param {S} superclass
+ */
 const InternalEntityMixinLit = superclass => class extends superclass {
 
 	static get properties() {
@@ -46,7 +51,7 @@ const InternalEntityMixinLit = superclass => class extends superclass {
 			this.href && this.token) {
 			this._getEntity();
 		}
-		return this.href && this.token;
+		return !!this.href && !!this.token;
 	}
 
 	_entityHasChanged(newValue, oldValue) {
@@ -56,7 +61,7 @@ const InternalEntityMixinLit = superclass => class extends superclass {
 	/**
 	 * Protected method to set the entity type such as Organization Entity.
 	 * Requires to be called in the constructor
-	 * @param {Function} entityType  The type of the entity. For example OrganizationEntity
+	 * @param {new(...args) => EntityType} entityType  The type of the entity. For example OrganizationEntity
 	 */
 	_setEntityType(entityType) {
 		if (typeof entityType === 'function') {

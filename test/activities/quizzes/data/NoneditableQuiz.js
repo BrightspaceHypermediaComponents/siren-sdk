@@ -44,6 +44,15 @@ export const nonEditableQuiz = {
 			],
 		},
 		{
+			'class': [
+				'study-support-enabled',
+				'unchecked'
+			],
+			'rel': [
+				'https://quizzes.api.brightspace.com/rels/study-support-enabled'
+			]
+		},
+		{
 			'rel': [
 				'https://quizzes.api.brightspace.com/rels/has-hints'
 			],

@@ -227,7 +227,8 @@ export const Rels = {
 		categories: 'https://quizzes.api.brightspace.com/rels/categories',
 		completionTracking: 'https://quizzes.api.brightspace.com/rels/completion-tracking',
 		hasAttempts: 'https://quizzes.api.brightspace.com/rels/has-attempts',
-		questionText: 'https://questions.api.brightspace.com/rels/questionText'
+		questionText: 'https://questions.api.brightspace.com/rels/questionText',
+		studySupportEnabled: 'https://quizzes.api.brightspace.com/rels/study-support-enabled'
 	},
 	// Themes API sub-domain rels
 	Themes: {
@@ -500,6 +501,7 @@ export const Classes = {
 		autoSetGraded: 'auto-set-graded',
 		syncGradebook: 'sync-gradebook',
 		default: 'default',
+		studySupportEnabled: 'study-support-enabled',
 		timing: {
 			recommended: 'recommended',
 			enforced: 'enforced',
@@ -882,6 +884,7 @@ export const Actions = {
 		updateHeader: 'update-header',
 		updateFooter: 'update-footer',
 		getActivityTypes: 'get-activity-types',
+		updateStudySupportEnabled: 'study-support-enabled',
 		timing: {
 			updateType: 'update-timing-type',
 			updateTimeLimit: 'update-timing-time-limit',
