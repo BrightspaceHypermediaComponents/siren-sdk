@@ -46,7 +46,8 @@ describe('QuizEntity', () => {
 				description: 'The Second quiz ever',
 				header: 'Top of the quiz to ya!',
 				footer: 'Bottom of the quiz to ya!',
-				passingPercentage: 75
+				passingPercentage: 75,
+				studySupportEnabled: false
 			};
 		});
 
@@ -426,7 +427,8 @@ describe('QuizEntity', () => {
 				description: 'New description',
 				header: 'New header',
 				footer: 'New footer',
-				passingPercentage: 30
+				passingPercentage: 30,
+				studySupportEnabled: true
 			});
 
 			const form = await getFormData(fetchMock.lastCall().request);
@@ -446,6 +448,7 @@ describe('QuizEntity', () => {
 				expect(form.get('header')).to.equal('New header');
 				expect(form.get('footer')).to.equal('New footer');
 				expect(form.get('passingPercentage')).to.equal('30');
+				expect(form.get('studySupportEnabled')).to.equal('true');
 			}
 
 			expect(fetchMock.called()).to.be.true;
@@ -469,7 +472,8 @@ describe('QuizEntity', () => {
 				description: 'The Second quiz ever',
 				header: 'Top of the quiz to ya!',
 				footer: 'Bottom of the quiz to ya!',
-				passingPercentage: 75
+				passingPercentage: 75,
+				studySupportEnabled: false
 			});
 
 			expect(fetchMock.done());
@@ -493,7 +497,8 @@ describe('QuizEntity', () => {
 				description: 'New and improved Description!',
 				header: 'Even better Header!',
 				footer: 'Even better Footer!',
-				passingPercentage: 50
+				passingPercentage: 50,
+				studySupportEnabled: true
 			});
 
 			expect(fetchMock.done());
@@ -611,6 +616,32 @@ describe('QuizEntity', () => {
 			it('returns false when isAutoSetGraded is false', () => {
 				const quizEntity = new QuizEntity(nonEditableEntity);
 				expect(quizEntity.isAutoSetGradedEnabled()).to.be.false;
+			});
+		});
+	});
+
+	describe('studySupportEnabled', () => {
+		describe('canEditstudySupportEnabled', () => {
+			it('returns true when studySupportEnabled is editable', () => {
+				const quizEntity = new QuizEntity(editableEntity);
+				expect(quizEntity.canEditStudySupportEnabled()).to.be.true;
+			});
+
+			it('returns false when auto set graded is not editable', () => {
+				const quizEntity = new QuizEntity(nonEditableEntity);
+				expect(quizEntity.canEditStudySupportEnabled()).to.be.false;
+			});
+		});
+
+		describe('isStudySupportEnabled', () => {
+			it('returns true when isStudySupportEnabled is true', () => {
+				const quizEntity = new QuizEntity(editableEntity);
+				expect(quizEntity.isStudySupportEnabled()).to.be.true;
+			});
+
+			it('returns false when isStudySupportEnabled is false', () => {
+				const quizEntity = new QuizEntity(nonEditableEntity);
+				expect(quizEntity.isStudySupportEnabled()).to.be.false;
 			});
 		});
 	});
