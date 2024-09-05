@@ -11,7 +11,7 @@ Options for getting started:
 * Install with [npm](https://www.npmjs.com/): `npm install @brightspace-hmc/siren-sdk`.
 
 ## Testing
-In a non-administrator powershell:
+In a non-administrator powershell: 
 * `npm run test`
 
 ## Versioning and Releasing
