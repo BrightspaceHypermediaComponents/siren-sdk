@@ -935,11 +935,11 @@ export class AssignmentEntity extends Entity {
 	 * @returns {string} URL of the asset processors collection, if present
 	 */
 	assetProcessorsHref() {
-		if (!this._entity || !this._entity.hasLinkByRel(Rels.Assignments.assetProcessors)) {
+		if (!this._entity || !this._entity.hasLinkByRel(Rels.LTI.assetProcessors)) {
 			return;
 		}
 
-		return this._entity.getLinkByRel(Rels.Assignments.assetProcessors).href;
+		return this._entity.getLinkByRel(Rels.LTI.assetProcessors).href;
 	}
 
 	canSave() {

@@ -115,8 +115,7 @@ export const Rels = {
 		submissionsRule: 'https://assignments.api.brightspace.com/rels/submissions-rule',
 		notificationEmail: 'https://assignments.api.brightspace.com/rels/notification-email',
 		categories: 'https://assignments.api.brightspace.com/rels/categories',
-		recommendAlignments: 'https://assignments.api.brightspace.com/rels/recommend-alignments',
-		assetProcessors: 'https://assignments.api.brightspace.com/rels/asset-processors'
+		recommendAlignments: 'https://assignments.api.brightspace.com/rels/recommend-alignments'
 	},
 	// Awards
 	Awards: {
@@ -292,6 +291,9 @@ export const Rels = {
 		semesters: 'https://organizations.api.brightspace.com/rels/ancestors#semesters',
 		components: 'https://organizations.api.brightspace.com/rels/components',
 		userProgress: 'https://organizations.api.brightspace.com/rels/user-progress'
+	},
+	LTI: {
+		assetProcessors: 'https://lti.api.brightspace.com/rels/asset-processors'
 	}
 };
 
