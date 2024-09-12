@@ -253,7 +253,7 @@ export const performSirenActions = function(token, actionsAndFields) {
 /**
  * @param {string|Function} token
  * @param {Action} action
- * @param {FieldOverride[]} fields
+ * @param {FieldOverride[]} [fields]
  * @param {boolean} [immediate]
  * @param {boolean} [bypassCache]
  * @returns {Promise<ParsedEntity>}
@@ -271,7 +271,7 @@ export const performSirenAction = function(token, action, fields, immediate, byp
 /**
  * @param {string|Function} token
  * @param {() => Action} actionFactory
- * @param {{ [key: string]: string }} fieldOverrides
+ * @param {{ [key: string]: string }} [fieldOverrides]
  * @param {boolean} [bypassCache]
  * @returns {Promise<ParsedEntity>}
  */

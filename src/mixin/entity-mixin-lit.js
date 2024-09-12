@@ -4,7 +4,7 @@ import { dedupeMixin } from '@open-wc/dedupe-mixin';
 
 /**
  * @template {new (...args: any[]) => import('lit').ReactiveElement} S
- * @template [EntityType=import('../es6/EntitySirenProperties.js').EntitySirenProperties]
+ * @template {import('../es6/EntitySirenProperties.js').EntitySirenProperties} EntityType
  * @param {S} superclass
  */
 const InternalEntityMixinLit = superclass => class extends superclass {
