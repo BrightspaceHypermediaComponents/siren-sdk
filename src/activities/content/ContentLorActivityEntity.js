@@ -199,7 +199,7 @@ export class ContentLorActivityEntity extends ContentEntity {
 	equals(contentlorActivity) {
 		const diffs = [
 			[this.title(), contentlorActivity.title],
-			[this.descriptionRichText(), contentscormActivity.descriptionRichText],
+			[this.descriptionRichText(), contentlorActivity.descriptionRichText],
 			[this.isExternalResource(), contentlorActivity.isExternalResource]
 		];
 		for (const [left, right] of diffs) {
