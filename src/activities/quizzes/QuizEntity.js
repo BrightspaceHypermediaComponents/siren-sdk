@@ -248,6 +248,15 @@ export class QuizEntity extends Entity {
 		return this._entity.hasSubEntityByRel(Rels.Quizzes.studySupportEnabled);
 	}
 
+	showResultsOverview() {
+		if (!this.isStudySupportEnabledVisible() || !this.isStudySupportEnabled()) {
+			return;
+		}
+		const studySupportEntity = this._entity.getSubEntityByRel(Rels.Quizzes.studySupportEnabled);
+		const showResultsOverviewEntity = studySupportEntity.getSubEntityByRel(Rels.Quizzes.showResultsOverview);
+		return showResultsOverviewEntity && showResultsOverviewEntity.hasClass(Classes.quizzes.checked);
+	}
+
 	/**
 	 * @returns {bool} Whether or not the user can edit the syncGradebook property
 	 */
@@ -673,6 +682,7 @@ export class QuizEntity extends Entity {
 		const updateFooterAction = this.canEditFooter() ? this._formatUpdateFooterAction(quiz) : null;
 		const updatePassingPercentageAction = this.canEditPassingPercentage() ? this._formatPassingPercentageAction(quiz) : null;
 		const updateStudySupportEnabledAction = this.canEditStudySupportEnabled() ? this._formatUpdateStudySupportEnabled(quiz) : null;
+		const updateShowResultsOverviewAction = this.canEditStudySupportEnabled() ? this._formatUpdateShowResultsOverview(quiz) : null;
 
 		const sirenActions = [
 			updateNameAction,
@@ -691,7 +701,8 @@ export class QuizEntity extends Entity {
 			updateHeaderAction,
 			updateFooterAction,
 			updatePassingPercentageAction,
-			updateStudySupportEnabledAction
+			updateStudySupportEnabledAction,
+			updateShowResultsOverviewAction
 		];
 		await performSirenActions(this._token, sirenActions);
 	}
@@ -941,6 +952,26 @@ export class QuizEntity extends Entity {
 		return { action, fields };
 	}
 
+	_formatUpdateShowResultsOverview(quiz) {
+		if (!quiz) return;
+		if (!this._hasShowResultsOverviewChanged(quiz.showResultsOverview)) return;
+
+		const studySupportEntity = this._entity.getSubEntityByRel(Rels.Quizzes.studySupportEnabled);
+		if (!studySupportEntity) return;
+
+		const showResultsOverviewEntity = studySupportEntity.getSubEntityByRel(Rels.Quizzes.showResultsOverview);
+		if (!showResultsOverviewEntity) return;
+
+		const action = showResultsOverviewEntity.getActionByName(Actions.quizzes.updateShowResultsOverview);
+		if (!action) return;
+
+		const fields = [
+			{ name: 'showResultsOverview', value: quiz.showResultsOverview },
+		];
+
+		return { action, fields };
+	}
+
 	_formatUpdateSyncGradebook(quiz) {
 		if (!quiz) return;
 		if (!this._hasSyncGradebookChanged(quiz.syncGradebook)) return;
@@ -1121,6 +1152,10 @@ export class QuizEntity extends Entity {
 		return studySupportEnabled !== this.isStudySupportEnabled();
 	}
 
+	_hasShowResultsOverviewChanged(showResultsOverview) {
+		return showResultsOverview !== this.showResultsOverview();
+	}
+
 	_hasSyncGradebookChanged(syncGradebook) {
 		return syncGradebook !== this.isSyncGradebookEnabled();
 	}
@@ -1161,7 +1196,8 @@ export class QuizEntity extends Entity {
 			[this.headerEditorHtml(), quiz.header],
 			[this.footerEditorHtml(), quiz.footer],
 			[this.passingPercentage(), quiz.passingPercentage],
-			[this.isStudySupportEnabled(), quiz.studySupportEnabled]
+			[this.isStudySupportEnabled(), quiz.studySupportEnabled],
+			[this.showResultsOverview(), quiz.showResultsOverview]
 		];
 
 		for (const [left, right] of diffs) {
