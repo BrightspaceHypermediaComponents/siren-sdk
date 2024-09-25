@@ -297,7 +297,7 @@ export const editableQuiz = {
 					],
 					'actions': [
 						{
-							'href': 'https://4d3657f7-4a53-4d1d-ba42-a302c5dd13c2.quizzes.api.dev.brightspace.com/6609/quizzes/14',
+							'href': 'https://afe99802-9130-4320-a770-8d138b941e74.quizzes.api.proddev.d2l/6606/quizzes/22',
 							'name': 'show-results-overview',
 							'method': 'PATCH',
 							'fields': [
