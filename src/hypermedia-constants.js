@@ -748,6 +748,7 @@ export const Actions = {
 	content: {
 		updateTitle: 'update-title',
 		updateDescription: 'update-description',
+		updateLor: 'update-lor',
 		updateCompletionCriteria: 'update-completion-criteria',
 		updateColor: 'update-color',
 		updateAiOrigin: 'update-ai-origin'
