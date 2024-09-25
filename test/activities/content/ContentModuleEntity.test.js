@@ -62,6 +62,10 @@ describe('ContentModuleEntity', () => {
 		it('reads ai inspired', () => {
 			expect(contentModuleEntity.isAiInspired()).to.equal(true);
 		});
+
+		it('reads ai human origin', () => {
+			expect(contentModuleEntity.aiHumanOrigin()).to.equal(0);
+		});
 	});
 
 	describe('Equality tests', () => {

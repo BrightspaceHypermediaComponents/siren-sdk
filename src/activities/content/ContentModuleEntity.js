@@ -47,6 +47,10 @@ export class ContentModuleEntity extends Entity {
 		return this._entity && this._entity.hasClass(Classes.content.aiInspired);
 	}
 
+	aiHumanOrigin() {
+		return this._entity && this._entity.properties && this._entity.properties.aiHumanOrigin;
+	}
+
 	/**
 	 * @returns {string|undefined} Title of the content-module item
 	 */

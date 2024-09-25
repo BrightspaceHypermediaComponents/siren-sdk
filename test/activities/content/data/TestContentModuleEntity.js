@@ -43,7 +43,8 @@ export const contentModuleData = {
 		'customAccentColor': 'FF0000',
 		'orgUnitId': '6613',
 		'moduleId': '12345',
-		'registryId': '38db1f7d-7917-445d-867e-67034387744b'
+		'registryId': '38db1f7d-7917-445d-867e-67034387744b',
+		'aiHumanOrigin': 0
 	},
 	'entities': [
 		{
