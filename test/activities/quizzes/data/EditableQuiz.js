@@ -285,6 +285,31 @@ export const editableQuiz = {
 						}
 					]
 				}
+			],
+			'entities': [
+				{
+					'class': [
+						'show-results-overview',
+						'checked'
+					],
+					'rel': [
+						'https://quizzes.api.brightspace.com/rels/show-results-overview'
+					],
+					'actions': [
+						{
+							'href': 'https://4d3657f7-4a53-4d1d-ba42-a302c5dd13c2.quizzes.api.dev.brightspace.com/6609/quizzes/14',
+							'name': 'show-results-overview',
+							'method': 'PATCH',
+							'fields': [
+								{
+									'type': 'checkbox',
+									'name': 'showResultsOverview',
+									'value': true
+								}
+							]
+						}
+					]
+				}
 			]
 		},
 		{
