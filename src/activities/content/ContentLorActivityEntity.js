@@ -1,5 +1,6 @@
 import { Actions, Classes } from '../../hypermedia-constants.js';
 import { ContentEntity } from './ContentEntity.js';
+import ContentHelperFunctions from './ContentHelperFunctions.js';
 import { performSirenAction } from '../../es6/SirenAction.js';
 /**
  * ContentlorActivityEntity class representation of a d2l content-lor-package entity.
@@ -11,6 +12,28 @@ export class ContentLorActivityEntity extends ContentEntity {
 	 */
 	title() {
 		return this._entity && this._entity.properties && this._entity.properties.title;
+	}
+
+	/**
+	 * @returns {string|null} HTML description of the LOR activity
+	 */
+	descriptionRichText() {
+		const descriptionSubEntity = ContentHelperFunctions.getDescriptionSubEntity(this._entity);
+		if (!descriptionSubEntity) {
+			return null;
+		}
+		return descriptionSubEntity.properties.html || '';
+	}
+
+	/**
+	 * @returns {string|null} Plaintext description of the LOR activity
+	 */
+	descriptionText() {
+		const descriptionSubEntity = ContentHelperFunctions.getDescriptionSubEntity(this._entity);
+		if (!descriptionSubEntity) {
+			return null;
+		}
+		return descriptionSubEntity.properties.text || '';
 	}
 
 	/**
@@ -100,7 +123,7 @@ export class ContentLorActivityEntity extends ContentEntity {
 	 * Updates the LOR activty to have the given title
 	 * @param {string} title Title to set on the LOR activity
 	 */
-	async setLorActivityTitle(title) {
+	async setLorActivityTitleAndDescription(title, richText) {
 		if (!this._entity) {
 			return;
 		}
@@ -110,7 +133,10 @@ export class ContentLorActivityEntity extends ContentEntity {
 			return;
 		}
 
-		const fields = [{ name: 'title', value: title }];
+		const fields = [
+			{ name: 'title', value: title },
+			{ name: 'description', value: richText }
+		];
 		await performSirenAction(this._token, action, fields);
 	}
 
@@ -173,6 +199,7 @@ export class ContentLorActivityEntity extends ContentEntity {
 	equals(contentlorActivity) {
 		const diffs = [
 			[this.title(), contentlorActivity.title],
+			[this.descriptionRichText(), contentlorActivity.descriptionRichText],
 			[this.isExternalResource(), contentlorActivity.isExternalResource]
 		];
 		for (const [left, right] of diffs) {
