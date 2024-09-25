@@ -1,6 +1,5 @@
 import { Actions, Classes } from '../../hypermedia-constants.js';
 import { ContentEntity } from './ContentEntity.js';
-import ContentHelperFunctions from './ContentHelperFunctions.js';
 import { performSirenAction } from '../../es6/SirenAction.js';
 /**
  * ContentlorActivityEntity class representation of a d2l content-lor-package entity.
@@ -18,22 +17,14 @@ export class ContentLorActivityEntity extends ContentEntity {
 	 * @returns {string|null} HTML description of the LOR activity
 	 */
 	descriptionRichText() {
-		const descriptionSubEntity = ContentHelperFunctions.getDescriptionSubEntity(this._entity);
-		if (!descriptionSubEntity) {
-			return null;
-		}
-		return descriptionSubEntity.properties.html || '';
+		return this._entity && this._entity.properties && this._entity.properties.description && this._entity.properties.description.Html;
 	}
 
 	/**
 	 * @returns {string|null} Plaintext description of the LOR activity
 	 */
 	descriptionText() {
-		const descriptionSubEntity = ContentHelperFunctions.getDescriptionSubEntity(this._entity);
-		if (!descriptionSubEntity) {
-			return null;
-		}
-		return descriptionSubEntity.properties.text || '';
+		return this._entity && this._entity.properties && this._entity.properties.description && this._entity.properties.description.Text;
 	}
 
 	/**
@@ -128,7 +119,7 @@ export class ContentLorActivityEntity extends ContentEntity {
 			return;
 		}
 
-		const action = this._entity.getActionByName(Actions.content.updateTitle);
+		const action = this._entity.getActionByName(Actions.content.updateLor);
 		if (!action) {
 			return;
 		}
