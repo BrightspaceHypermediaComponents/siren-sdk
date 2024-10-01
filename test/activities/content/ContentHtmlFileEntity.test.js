@@ -39,6 +39,9 @@ describe('ContentHtmlFileEntity', () => {
 		it('reads font face', () => {
 			expect(contentHtmlFileEntity.fontFace()).to.equal('arial');
 		});
+		it('reads aiHuman Origin', () => {
+			expect(contentHtmlFileEntity.getAiHumanOrigin()).to.equal(0);
+		});
 	});
 
 	describe('Equality tests', () => {

@@ -29,6 +29,13 @@ export class ContentHtmlFileEntity extends ContentFileEntity {
 	}
 
 	/**
+	 * @returns {number|undefined} aiHumanOrigin property of the html file topic
+	 */
+	getAiHumanOrigin() {
+		return this._entity && this._entity.properties && this._entity.properties.aiHumanOrigin;
+	}
+
+	/**
 	 * Updates the html file content with the given html
 	 * @param {html} html to set on the html file
 	 */
