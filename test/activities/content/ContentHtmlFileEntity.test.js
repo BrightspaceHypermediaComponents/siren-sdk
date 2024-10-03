@@ -40,7 +40,7 @@ describe('ContentHtmlFileEntity', () => {
 			expect(contentHtmlFileEntity.fontFace()).to.equal('arial');
 		});
 		it('reads aiHuman Origin', () => {
-			expect(contentHtmlFileEntity.getAiHumanOrigin()).to.equal(0);
+			expect(contentHtmlFileEntity.aiHumanOrigin()).to.equal(0);
 		});
 	});
 
