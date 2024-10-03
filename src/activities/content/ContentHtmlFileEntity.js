@@ -31,7 +31,7 @@ export class ContentHtmlFileEntity extends ContentFileEntity {
 	/**
 	 * @returns {number|undefined} aiHumanOrigin property of the html file topic
 	 */
-	getAiHumanOrigin() {
+	aiHumanOrigin() {
 		return this._entity && this._entity.properties && this._entity.properties.aiHumanOrigin;
 	}
 
