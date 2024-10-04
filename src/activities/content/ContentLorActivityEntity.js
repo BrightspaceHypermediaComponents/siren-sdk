@@ -7,7 +7,7 @@ import { performSirenAction } from '../../es6/SirenAction.js';
 export class ContentLorActivityEntity extends ContentEntity {
 
 	/**
-	 * @returns {string|undefined} Title of the Lor actvity
+	 * @returns {string|undefined} Title of the Lor activity
 	 */
 	title() {
 		return this._entity && this._entity.properties && this._entity.properties.title;

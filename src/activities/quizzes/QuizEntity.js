@@ -249,7 +249,7 @@ export class QuizEntity extends Entity {
 	}
 
 	showResultsOverview() {
-		if (!this.isStudySupportEnabledVisible() || !this.isStudySupportEnabled()) {
+		if (!this.isStudySupportEnabledVisible()) {
 			return;
 		}
 		const studySupportEntity = this._entity.getSubEntityByRel(Rels.Quizzes.studySupportEnabled);
