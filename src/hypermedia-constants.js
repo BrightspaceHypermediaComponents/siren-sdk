@@ -293,6 +293,10 @@ export const Rels = {
 		semesters: 'https://organizations.api.brightspace.com/rels/ancestors#semesters',
 		components: 'https://organizations.api.brightspace.com/rels/components',
 		userProgress: 'https://organizations.api.brightspace.com/rels/user-progress'
+	},
+	LTI: {
+		assetProcessorDeepLinks: 'https://lti.api.brightspace.com/rels/asset-processor-deep-links',
+		assetProcessorAttachedProcessors: 'https://lti.api.brightspace.com/rels/asset-processor-attached-processors',
 	}
 };
 

@@ -931,6 +931,28 @@ export class AssignmentEntity extends Entity {
 		return this._entity.getLinkByRel(Rels.Assignments.attachments).href;
 	}
 
+	/**
+	 * @returns {string} URL of the assignment's asset processor deep links collection
+	 */
+	assetProcessorDeepLinksCollectionHref() {
+		if (!this._entity || !this._entity.hasLinkByRel(Rels.LTI.assetProcessorDeepLinks)) {
+			return;
+		}
+
+		return this._entity.getLinkByRel(Rels.LTI.assetProcessors).href;
+	}
+	
+	/**
+	 * @returns {string} URL of the assignment's asset processor attached processors collection
+	 */
+	assetProcessorAttachedProcessorsCollectionHref() {
+		if (!this._entity || !this._entity.hasLinkByRel(Rels.LTI.assetProcessorAttachedProcessors)) {
+			return;
+		}
+
+		return this._entity.getLinkByRel(Rels.LTI.assetProcessorAttachedProcessors).href;
+	}
+
 	canSave() {
 		return this._entity && this._entity.hasActionByName(Actions.assignments.update);
 	}
