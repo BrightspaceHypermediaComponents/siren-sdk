@@ -43,28 +43,28 @@ class APAttachedProcessorEntity extends Entity {
 	eulaLaunchRoute() {
 		return this._entity && this._entity.properties && this._entity.properties.eulaLaunchRoute;
 	}
-	
+
 	/**
-	 * @returns {boolean} Whether this processor is enabled.
+	 * @returns {bool} Whether this processor is enabled.
 	 */
 	isEnabled() {
 		return this._entity && this._entity.properties && this._entity.properties.isEnabled;
 	}
-	
+
 	/**
-	 * @returns {boolean} Whether this processor will open in a new window/external resource or an iframe.
+	 * @returns {bool} Whether this processor will open in a new window/external resource or an iframe.
 	 */
 	isExternalResource() {
 		return this._entity && this._entity.properties && this._entity.properties.isExternalResource;
 	}
-	
+
 	/**
 	 * @returns {number|null} The iframe width of this processor.
 	 */
 	width() {
 		return this._entity && this._entity.properties && this._entity.properties.width;
 	}
-	
+
 	/**
 	 * @returns {number|null} The iframe height of this processor.
 	 */

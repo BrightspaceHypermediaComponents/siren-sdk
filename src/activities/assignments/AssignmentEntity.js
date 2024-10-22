@@ -941,7 +941,7 @@ export class AssignmentEntity extends Entity {
 
 		return this._entity.getLinkByRel(Rels.LTI.assetProcessors).href;
 	}
-	
+
 	/**
 	 * @returns {string} URL of the assignment's asset processor attached processors collection
 	 */
