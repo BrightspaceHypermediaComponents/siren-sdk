@@ -939,7 +939,7 @@ export class AssignmentEntity extends Entity {
 			return;
 		}
 
-		return this._entity.getLinkByRel(Rels.LTI.assetProcessors).href;
+		return this._entity.getLinkByRel(Rels.LTI.assetProcessorDeepLinks).href;
 	}
 
 	/**
