@@ -1,9 +1,10 @@
-import { Entity } from '../es6/Entity.js';
+import { Classes } from '../../hypermedia-constants.js';
+import { Entity } from '../../es6/Entity.js';
 
 class APAttachedProcessorEntity extends Entity {
 
 	/**
-	 * @returns {number} The external deployment id of the deployment this processor belongs to.
+	 * @returns {string} The external deployment id of the deployment this processor belongs to.
 	 */
 	externalDeploymentId() {
 		return this._entity && this._entity.properties && this._entity.properties.externalDeploymentId;
@@ -81,8 +82,8 @@ export class APAttachedProcessorsCollectionEntity extends Entity {
 		if (!this._entity) {
 			return;
 		}
-		return this._entity.getSubEntitiesByRel('asset-processor-attached-processor').map(attachedProcessor => {
-			const apAttachedProcessorEntity = new APAttachedProcessorEntity(this._sdkParentEntity, attachedProcessor);
+		return this._entity.getSubEntitiesByClass(Classes.assetProcessor.attachedProcessor).map(attachedProcessor => {
+			const apAttachedProcessorEntity = new APAttachedProcessorEntity(attachedProcessor);
 			return apAttachedProcessorEntity;
 		});
 	}

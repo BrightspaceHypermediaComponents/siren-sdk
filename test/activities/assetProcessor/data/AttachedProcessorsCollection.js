@@ -1,4 +1,4 @@
-export const attachedProcessors = {
+export const attachedProcessorsCollection = {
 	'class': [
 		'collection',
 		'asset-processor-attached-processors'
@@ -7,6 +7,9 @@ export const attachedProcessors = {
 		{
 			'class': [
 				'asset-processor-attached-processor'
+			],
+			'rel': [
+				'item'
 			],
 			'properties': {
 				'externalDeploymentId': '65AE4832-5255-4806-804F-09D39945015E',
@@ -26,6 +29,9 @@ export const attachedProcessors = {
 			'class': [
 				'asset-processor-attached-processor'
 			],
+			'rel': [
+				'item'
+			],
 			'properties': {
 				'externalDeploymentId': '3FFC3FA2-084E-4608-9B00-7D9259894739',
 				'deploymentName': 'My deployment 2',
@@ -43,6 +49,9 @@ export const attachedProcessors = {
 		{
 			'class': [
 				'asset-processor-attached-processor'
+			],
+			'rel': [
+				'item'
 			],
 			'properties': {
 				'externalDeploymentId': '3FFC3FA2-084E-4608-9B00-7D9259894739',

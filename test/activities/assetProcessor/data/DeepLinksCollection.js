@@ -1,4 +1,4 @@
-export const deepLinks = {
+export const deepLinksCollection = {
 	'class': [
 		'collection',
 		'asset-processor-deep-links'
@@ -7,6 +7,9 @@ export const deepLinks = {
 		{
 			'class': [
 				'asset-processor-deep-link'
+			],
+			'rel': [
+				'item'
 			],
 			'properties': {
 				'deploymentName': 'LTI Testing Tool   - 902b47c0',
@@ -18,6 +21,9 @@ export const deepLinks = {
 		{
 			'class': [
 				'asset-processor-deep-link'
+			],
+			'rel': [
+				'item'
 			],
 			'properties': {
 				'deploymentName': 'LTI Testing Tool   - 902b47c0',

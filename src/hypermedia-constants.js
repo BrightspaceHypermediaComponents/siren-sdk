@@ -635,6 +635,10 @@ export const Classes = {
 			targetLog: 'target-log',
 			sourceLog: 'source-log'
 		}
+	},
+	assetProcessor: {
+		deepLink: 'asset-processor-deep-link',
+		attachedProcessor: 'asset-processor-attached-processor'
 	}
 };
 

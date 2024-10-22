@@ -1,4 +1,5 @@
-import { Entity } from '../es6/Entity.js';
+import { Classes } from '../../hypermedia-constants.js';
+import { Entity } from '../../es6/Entity.js';
 
 class APDeepLinkEntity extends Entity {
 
@@ -39,8 +40,8 @@ export class APDeepLinksCollectionEntity extends Entity {
 		if (!this._entity) {
 			return;
 		}
-		return this._entity.getSubEntitiesByRel('asset-processor-deep-link').map(deepLink => {
-			const apDeepLinkEntity = new APDeepLinkEntity(this._sdkParentEntity, deepLink);
+		return this._entity.getSubEntitiesByClass(Classes.assetProcessor.deepLink).map(deepLink => {
+			const apDeepLinkEntity = new APDeepLinkEntity(deepLink);
 			return apDeepLinkEntity;
 		});
 	}
