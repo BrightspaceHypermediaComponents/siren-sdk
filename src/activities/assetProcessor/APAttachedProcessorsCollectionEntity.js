@@ -1,7 +1,10 @@
 import { Classes } from '../../hypermedia-constants.js';
 import { Entity } from '../../es6/Entity.js';
 
-class APAttachedProcessorEntity extends Entity {
+class APAttachedProcessorEntity {
+	constructor(_entity) {
+		this._entity = _entity;
+	}
 
 	/**
 	 * @returns {string} The external deployment id of the deployment this processor belongs to.
