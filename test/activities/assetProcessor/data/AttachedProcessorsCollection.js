@@ -9,7 +9,7 @@ export const attachedProcessorsCollection = {
 				'asset-processor-attached-processor'
 			],
 			'rel': [
-				'https://lti.api.brightspace.com/rels/assignment/asset-processor-attached-processor'
+				'https://lti.api.brightspace.com/rels/asset-processor-attached-processor'
 			],
 			'properties': {
 				'externalDeploymentId': '65AE4832-5255-4806-804F-09D39945015E',
@@ -30,7 +30,7 @@ export const attachedProcessorsCollection = {
 				'asset-processor-attached-processor'
 			],
 			'rel': [
-				'https://lti.api.brightspace.com/rels/assignment/asset-processor-attached-processor'
+				'https://lti.api.brightspace.com/rels/asset-processor-attached-processor'
 			],
 			'properties': {
 				'externalDeploymentId': '3FFC3FA2-084E-4608-9B00-7D9259894739',
@@ -51,7 +51,7 @@ export const attachedProcessorsCollection = {
 				'asset-processor-attached-processor'
 			],
 			'rel': [
-				'https://lti.api.brightspace.com/rels/assignment/asset-processor-attached-processor'
+				'https://lti.api.brightspace.com/rels/asset-processor-attached-processor'
 			],
 			'properties': {
 				'externalDeploymentId': '3FFC3FA2-084E-4608-9B00-7D9259894739',

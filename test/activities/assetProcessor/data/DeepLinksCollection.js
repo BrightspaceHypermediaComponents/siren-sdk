@@ -9,7 +9,7 @@ export const deepLinksCollection = {
 				'asset-processor-deep-link'
 			],
 			'rel': [
-				'https://lti.api.brightspace.com/rels/assignment/asset-processor-deep-link'
+				'https://lti.api.brightspace.com/rels/asset-processor-deep-link'
 			],
 			'properties': {
 				'deploymentName': 'LTI Testing Tool   - 902b47c0',
@@ -23,7 +23,7 @@ export const deepLinksCollection = {
 				'asset-processor-deep-link'
 			],
 			'rel': [
-				'https://lti.api.brightspace.com/rels/assignment/asset-processor-deep-link'
+				'https://lti.api.brightspace.com/rels/asset-processor-deep-link'
 			],
 			'properties': {
 				'deploymentName': 'LTI Testing Tool   - 902b47c0',
