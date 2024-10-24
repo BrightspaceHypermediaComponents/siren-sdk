@@ -1,7 +1,10 @@
 import { Classes } from '../../hypermedia-constants.js';
 import { Entity } from '../../es6/Entity.js';
 
-class APDeepLinkEntity extends Entity {
+class APDeepLinkEntity {
+	constructor(_entity) {
+		this._entity = _entity;
+	}
 
 	/**
 	 * @returns {string} The name of the deployment this deep link belongs to.
