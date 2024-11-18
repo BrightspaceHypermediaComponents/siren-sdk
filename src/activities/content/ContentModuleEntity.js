@@ -52,6 +52,17 @@ export class ContentModuleEntity extends Entity {
 	}
 
 	/**
+ 	* @summary Updates the module to have the given aiHumanOrigin
+ 	* @param {number} aiHumanOrigin to set on the module
+ 	*/
+	async setAiHumanOrigin(aiHumanOrigin) {
+		const action = this._entity.getActionByName(Actions.content.updateAiOrigin);
+		if (!this._entity || !action) return;
+		const fields = [{ name: 'aiHumanOrigin', value: aiHumanOrigin }];
+		await performSirenAction(this._token, action, fields);
+	}
+
+	/**
 	 * @returns {string|undefined} Title of the content-module item
 	 */
 	title() {
@@ -205,7 +216,8 @@ export class ContentModuleEntity extends Entity {
 			[this.depth(), contentModule.depth],
 			[this.descriptionRichText(), contentModule.descriptionRichText],
 			[this.rawDescriptionRichText(), contentModule.rawDescriptionRichText],
-			[this.customAccentColor(), contentModule.customAccentColor]
+			[this.customAccentColor(), contentModule.customAccentColor],
+			[this.aiHumanOrigin(), contentModule.aiHumanOrigin]
 		];
 		for (const [left, right] of diffs) {
 			if (left !== right) {
