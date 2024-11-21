@@ -229,6 +229,7 @@ export const Rels = {
 		hasAttempts: 'https://quizzes.api.brightspace.com/rels/has-attempts',
 		questionText: 'https://questions.api.brightspace.com/rels/questionText',
 		studySupportEnabled: 'https://quizzes.api.brightspace.com/rels/study-support-enabled',
+		studySupportCompatibility: 'https://quizzes.api.brightspace.com/rels/study-support-compatibility',
 		showResultsOverview: 'https://quizzes.api.brightspace.com/rels/show-results-overview'
 	},
 	// Themes API sub-domain rels
@@ -507,6 +508,7 @@ export const Classes = {
 		syncGradebook: 'sync-gradebook',
 		default: 'default',
 		studySupportEnabled: 'study-support-enabled',
+		studySupportCompatible: 'study-support-compatible',
 		showResultsOverview: 'show-results-overview',
 		timing: {
 			recommended: 'recommended',
