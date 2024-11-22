@@ -30,6 +30,19 @@ export const contentModuleData = {
 			'href': 'https://fake-tenant-id.modules.api.proddev.d2l/6613/modules/12345',
 			'name': 'delete-module',
 			'method': 'DELETE'
+		},
+		{
+			'href': 'https://fake-tenant-id.modules.api.proddev.d2l/6613/modules/12345',
+			'name': 'update-ai-origin',
+			'method': 'PATCH',
+			'fields': [
+				{
+					'class': ['required'],
+					'type': 'number',
+					'name': 'aiHumanOrigin',
+					'value': 0
+				}
+			]
 		}
 	],
 	'class': [
