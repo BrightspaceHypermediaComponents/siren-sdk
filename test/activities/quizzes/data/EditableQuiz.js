@@ -310,6 +310,14 @@ export const editableQuiz = {
 						}
 					]
 				}
+			],
+			'links': [
+				{
+					'rel': [
+						'https://quizzes.api.brightspace.com/rels/study-support-compatibility'
+					],
+					'href': 'https://test.dev.brightspace.com/d2l/api/hm/quizzes/6609/quizzes/14/studySupportCompatibility'
+				}
 			]
 		},
 		{

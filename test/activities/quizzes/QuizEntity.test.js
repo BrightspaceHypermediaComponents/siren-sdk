@@ -670,6 +670,19 @@ describe('QuizEntity', () => {
 				expect(quizEntity.showResultsOverview()).to.be.undefined;
 			});
 		});
+
+		describe('studySupportCompatibility', () => {
+			const href = 'https://test.dev.brightspace.com/d2l/api/hm/quizzes/6609/quizzes/14/studySupportCompatibility';
+			it('can read studySupportCompatibility href when quiz is editable', () => {
+				const quizEntity = new QuizEntity(editableEntity);
+				expect(quizEntity.studySupportCompatibilityHref()).to.equal(href);
+			});
+
+			it('returns undefined if studySupportCompatibility is not available', () => {
+				const quizEntity = new QuizEntity(nonEditableEntity);
+				expect(quizEntity.studySupportCompatibilityHref()).to.be.undefined;
+			});
+		});
 	});
 
 	describe('syncGradebook', () => {
