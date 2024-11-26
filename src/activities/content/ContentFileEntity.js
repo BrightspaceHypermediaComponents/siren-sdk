@@ -140,6 +140,17 @@ export class ContentFileEntity extends ContentWorkingCopyEntity {
 	}
 
 	/**
+ 	* @summary Updates the module to have the given aiHumanOrigin
+ 	* @param {number} aiHumanOrigin to set on the module
+ 	*/
+	async setAiHumanOrigin(aiHumanOrigin) {
+		const action = this._entity.getActionByName(Actions.content.updateAiOrigin);
+		if (!this._entity || !action) return;
+		const fields = [{ name: 'aiHumanOrigin', value: aiHumanOrigin }];
+		await performSirenAction(this._token, action, fields);
+	}
+
+	/**
 	 * Deletes the file
 	 */
 	async deleteFile() {
@@ -185,6 +196,7 @@ export class ContentFileEntity extends ContentWorkingCopyEntity {
 		const diffs = [
 			[this.title(), contentFile.title],
 			[this.getFileHref(), contentFile.fileHref],
+			[this.aiHumanOrigin(), contentFile.aiHumanOrigin],
 			...(contentFile.fileType !== FILE_TYPES.html ? [[this.descriptionRichText(), contentFile.descriptionRichText]] : [])
 		];
 		for (const [left, right] of diffs) {
