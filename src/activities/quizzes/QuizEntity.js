@@ -663,6 +663,14 @@ export class QuizEntity extends Entity {
 		return this._entity.getLinkByRel('hasNonAutoGradingQuestion').href;
 	}
 
+	studySupportCompatibilityHref() {
+		const entity = this._entity.getSubEntityByRel(Rels.Quizzes.studySupportEnabled);
+		if (!entity || !entity.hasLinkByRel(Rels.Quizzes.studySupportCompatibility)) {
+			return;
+		}
+		return entity.getLinkByRel(Rels.Quizzes.studySupportCompatibility).href;
+	}
+
 	async save(quiz) {
 		if (!quiz) return;
 		const updateNameAction = this.canEditName() ? this._formatUpdateNameAction(quiz) : null;
