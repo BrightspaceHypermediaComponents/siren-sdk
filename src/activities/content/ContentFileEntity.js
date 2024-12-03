@@ -29,6 +29,9 @@ const CLASS_FILE_TYPE_MAP = {
  * ContentFileEntity class representation of a d2l content-file entity.
  */
 export class ContentFileEntity extends ContentWorkingCopyEntity {
+	aiHumanOrigin() {
+		return this._entity && this._entity.properties && this._entity.properties.aiHumanOrigin;
+	}
 
 	/**
 	 * @returns {string|null} Description html of the content-file item
@@ -194,6 +197,7 @@ export class ContentFileEntity extends ContentWorkingCopyEntity {
 	 */
 	equals(contentFile) {
 		const diffs = [
+			[this.aiHumanOrigin(), contentFile.aiHumanOrigin],
 			[this.title(), contentFile.title],
 			[this.getFileHref(), contentFile.fileHref],
 			...(contentFile.fileType !== FILE_TYPES.html ? [[this.descriptionRichText(), contentFile.descriptionRichText]] : [])
