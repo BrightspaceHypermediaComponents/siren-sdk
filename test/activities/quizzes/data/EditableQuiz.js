@@ -309,6 +309,42 @@ export const editableQuiz = {
 							]
 						}
 					]
+				},
+				{
+					'class': [
+						'suggest-content-selection'
+					],
+					'rel': [
+						'https://quizzes.api.brightspace.com/rels/suggest-content-selection'
+					],
+					'properties': {
+						'suggestContentSelection': '1'
+					},
+					'actions': [
+						{
+							'href': 'https://afe99802-9130-4320-a770-8d138b941e74.quizzes.api.proddev.d2l/6606/quizzes/22',
+							'name': 'suggest-content-selection',
+							'method': 'PATCH',
+							'fields': [
+								{
+									'type': 'radio',
+									'name': 'suggestContentSelection',
+									'value': [
+										{
+											'title': 'AnyAligned',
+											'value': '0',
+											'selected': false
+										},
+										{
+											'title': 'Selected',
+											'value': '1',
+											'selected': true
+										}
+									]
+								}
+							]
+						}
+					]
 				}
 			],
 			'links': [

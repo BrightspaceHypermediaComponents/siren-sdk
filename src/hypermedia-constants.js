@@ -230,7 +230,8 @@ export const Rels = {
 		questionText: 'https://questions.api.brightspace.com/rels/questionText',
 		studySupportEnabled: 'https://quizzes.api.brightspace.com/rels/study-support-enabled',
 		studySupportCompatibility: 'https://quizzes.api.brightspace.com/rels/study-support-compatibility',
-		showResultsOverview: 'https://quizzes.api.brightspace.com/rels/show-results-overview'
+		showResultsOverview: 'https://quizzes.api.brightspace.com/rels/show-results-overview',
+		suggestContent: 'https://quizzes.api.brightspace.com/rels/suggest-content-selection'
 	},
 	// Themes API sub-domain rels
 	Themes: {
@@ -510,6 +511,7 @@ export const Classes = {
 		studySupportEnabled: 'study-support-enabled',
 		studySupportCompatible: 'study-support-compatible',
 		showResultsOverview: 'show-results-overview',
+		suggestContent: 'suggest-content-selection',
 		timing: {
 			recommended: 'recommended',
 			enforced: 'enforced',
@@ -899,6 +901,7 @@ export const Actions = {
 		getActivityTypes: 'get-activity-types',
 		updateStudySupportEnabled: 'study-support-enabled',
 		updateShowResultsOverview: 'show-results-overview',
+		updateSuggestContent: 'suggest-content-selection',
 		timing: {
 			updateType: 'update-timing-type',
 			updateTimeLimit: 'update-timing-time-limit',
