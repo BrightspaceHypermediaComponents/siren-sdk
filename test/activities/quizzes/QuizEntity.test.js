@@ -48,7 +48,8 @@ describe('QuizEntity', () => {
 				footer: 'Bottom of the quiz to ya!',
 				passingPercentage: 75,
 				studySupportEnabled: true,
-				showResultsOverview: true
+				showResultsOverview: true,
+				suggestContent: '1'
 			};
 		});
 
@@ -144,6 +145,11 @@ describe('QuizEntity', () => {
 		it('returns false when showResultsOverview not equal', () => {
 			const quizEntity = new QuizEntity(editableEntity);
 			modifiedEntity.showResultsOverview = false;
+			expect(quizEntity.equals(modifiedEntity)).to.be.false;
+		});
+		it('returns false when suggestContent not equal', () => {
+			const quizEntity = new QuizEntity(editableEntity);
+			modifiedEntity.suggestContent = '0';
 			expect(quizEntity.equals(modifiedEntity)).to.be.false;
 		});
 	});
@@ -487,7 +493,8 @@ describe('QuizEntity', () => {
 				footer: 'Bottom of the quiz to ya!',
 				passingPercentage: 75,
 				studySupportEnabled: true,
-				showResultsOverview: true
+				showResultsOverview: true,
+				suggestContent: '1'
 			});
 
 			expect(fetchMock.done());
@@ -668,6 +675,18 @@ describe('QuizEntity', () => {
 			it('returns undefined when showResultsOverview is undefined', () => {
 				const quizEntity = new QuizEntity(nonEditableEntity);
 				expect(quizEntity.showResultsOverview()).to.be.undefined;
+			});
+		});
+
+		describe('suggestContent', () => {
+			it('returns 1 when suggestContent is 1', () => {
+				const quizEntity = new QuizEntity(editableEntity);
+				expect(quizEntity.suggestContent()).to.equal('1');
+			});
+
+			it('returns undefined when suggestContent is undefined', () => {
+				const quizEntity = new QuizEntity(nonEditableEntity);
+				expect(quizEntity.suggestContent()).to.be.undefined;
 			});
 		});
 
