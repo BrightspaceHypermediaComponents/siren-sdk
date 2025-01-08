@@ -345,6 +345,36 @@ export const editableQuiz = {
 							]
 						}
 					]
+				},
+				{
+					'class': [
+						'remediation-candidates'
+					],
+					'rel': [
+						'https://quizzes.api.brightspace.com/rels/remediation-candidates'
+					],
+					'properties': {
+						'remediationCandidates': [
+							{
+								'ToolId': 37000,
+								'ToolObjectId': 97705
+							}
+						]
+					},
+					'actions': [
+						{
+							'href': 'https://afe99802-9130-4320-a770-8d138b941e74.quizzes.api.proddev.d2l/6606/quizzes/22',
+							'name': 'remediation-candidates',
+							'method': 'PATCH',
+							'fields': [
+								{
+									'type': 'text',
+									'name': 'remediationCandidates',
+									'value': ['37000,97705']
+								}
+							]
+						}
+					]
 				}
 			],
 			'links': [

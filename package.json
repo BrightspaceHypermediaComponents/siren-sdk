@@ -24,7 +24,8 @@
     "@open-wc/dedupe-mixin": "^1",
     "@polymer/polymer": "^3",
     "d2l-fetch": "^2",
-    "d2l-polymer-siren-behaviors": "^2"
+    "d2l-polymer-siren-behaviors": "^2",
+    "lodash-es": "^4.17.21"
   },
   "devDependencies": {
     "@babel/core": "^7",

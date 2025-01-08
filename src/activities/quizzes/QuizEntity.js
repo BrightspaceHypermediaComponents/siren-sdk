@@ -2,6 +2,7 @@ import { Actions, Classes, Rels } from '../../hypermedia-constants.js';
 import { performSirenAction, performSirenActions } from '../../es6/SirenAction.js';
 import { ActivityTypeEntity } from './types/ActivityTypeEntity.js';
 import { Entity } from '../../es6/Entity.js';
+import isEqual from 'lodash-es/isEqual';
 
 /**
  * QuizEntity class representation of a d2l Quiz.
@@ -264,6 +265,15 @@ export class QuizEntity extends Entity {
 		const studySupportEntity = this._entity.getSubEntityByRel(Rels.Quizzes.studySupportEnabled);
 		const suggestContentEntity = studySupportEntity.getSubEntityByRel(Rels.Quizzes.suggestContent);
 		return suggestContentEntity && suggestContentEntity.properties.suggestContentSelection.toString();
+	}
+
+	remediationCandidates() {
+		if (!this.isStudySupportEnabledVisible()) {
+			return;
+		}
+		const studySupportEntity = this._entity.getSubEntityByRel(Rels.Quizzes.studySupportEnabled);
+		const remediationCandidatesEntity = studySupportEntity.getSubEntityByRel(Rels.Quizzes.remediationCandidates);
+		return remediationCandidatesEntity && remediationCandidatesEntity.properties.remediationCandidates;
 	}
 
 	/**
@@ -701,6 +711,7 @@ export class QuizEntity extends Entity {
 		const updateStudySupportEnabledAction = this.canEditStudySupportEnabled() ? this._formatUpdateStudySupportEnabled(quiz) : null;
 		const updateShowResultsOverviewAction = this.canEditStudySupportEnabled() ? this._formatUpdateShowResultsOverview(quiz) : null;
 		const updateSuggestContentAction = this.canEditStudySupportEnabled() ? this._formatUpdateSuggestContent(quiz) : null;
+		const updateRemediationCandidatesAction = this.canEditStudySupportEnabled() ? this._formatUpdateRemediationCandidates(quiz) : null;
 
 		const sirenActions = [
 			updateNameAction,
@@ -721,7 +732,8 @@ export class QuizEntity extends Entity {
 			updatePassingPercentageAction,
 			updateStudySupportEnabledAction,
 			updateShowResultsOverviewAction,
-			updateSuggestContentAction
+			updateSuggestContentAction,
+			updateRemediationCandidatesAction
 		];
 		await performSirenActions(this._token, sirenActions);
 	}
@@ -973,6 +985,7 @@ export class QuizEntity extends Entity {
 
 	_formatUpdateShowResultsOverview(quiz) {
 		if (!quiz) return;
+		if (!quiz.studySupportEnabled) return;
 		if (!this._hasShowResultsOverviewChanged(quiz.showResultsOverview)) return;
 
 		const studySupportEntity = this._entity.getSubEntityByRel(Rels.Quizzes.studySupportEnabled);
@@ -993,6 +1006,7 @@ export class QuizEntity extends Entity {
 
 	_formatUpdateSuggestContent(quiz) {
 		if (!quiz) return;
+		if (!quiz.studySupportEnabled) return;
 		if (!this._hasSuggestContentChanged(quiz.suggestContent)) return;
 
 		const studySupportEntity = this._entity.getSubEntityByRel(Rels.Quizzes.studySupportEnabled);
@@ -1008,6 +1022,29 @@ export class QuizEntity extends Entity {
 			{ name: 'suggestContentSelection', value: quiz.suggestContent },
 		];
 
+		return { action, fields };
+	}
+
+	_formatUpdateRemediationCandidates(quiz) {
+		if (!quiz) return;
+		if (!quiz.studySupportEnabled) return;
+		if (!this._hasRemediationCandidatesChanged(quiz.remediationCandidates)) return;
+
+		const studySupportEntity = this._entity.getSubEntityByRel(Rels.Quizzes.studySupportEnabled);
+		if (!studySupportEntity) return;
+
+		const remediationCandidatesEntity = studySupportEntity.getSubEntityByRel(Rels.Quizzes.remediationCandidates);
+		if (!remediationCandidatesEntity) return;
+
+		const action = remediationCandidatesEntity.getActionByName(Actions.quizzes.updateRemediationCandidates);
+		if (!action) return;
+
+		const formattedCandidates = quiz.remediationCandidates?.map(candidate => `${candidate.ToolId},${candidate.ToolObjectId}`) || [];
+
+		const fields = [];
+		for (const candidate of formattedCandidates) {
+			fields.push({ name: 'remediationCandidates', value: candidate });
+		}
 		return { action, fields };
 	}
 
@@ -1199,6 +1236,10 @@ export class QuizEntity extends Entity {
 		return suggestContent !== this.suggestContent();
 	}
 
+	_hasRemediationCandidatesChanged(remediationCandidates) {
+		return !isEqual(remediationCandidates, this.remediationCandidates());
+	}
+
 	_hasSyncGradebookChanged(syncGradebook) {
 		return syncGradebook !== this.isSyncGradebookEnabled();
 	}
@@ -1249,7 +1290,8 @@ export class QuizEntity extends Entity {
 				return false;
 			}
 		}
-		return true;
+
+		return isEqual(this.remediationCandidates(), quiz.remediationCandidates);
 	}
 
 	canDelete() {

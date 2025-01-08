@@ -32,6 +32,7 @@ const _getSirenFields = function(action) {
 			fields.push({ name: field.name, value: field.value });
 		});
 	}
+
 	return fields;
 };
 
@@ -187,7 +188,7 @@ const _performSirenAction = function(action, fields, tokenValue, bypassCache) {
 const _combineActions = function(actionsAndFields) {
 	if (!actionsAndFields) return [];
 
-	// The structure of this is a map (hrefs) containing a map (methods) containing a map (fields)
+	// The structure of this is a map (hrefs) containing a map (methods) containing a list (fields)
 	const hrefsMap = new Map();
 
 	actionsAndFields.forEach(actionAndField => {
@@ -197,7 +198,7 @@ const _combineActions = function(actionsAndFields) {
 		if (!href || !method) return;
 
 		const methodsMap = hrefsMap.get(href) || new Map();
-		const fieldsMap = methodsMap.get(method) || new Map();
+		let fieldsList = methodsMap.get(method) || [];
 
 		let fields;
 		if (actionAndField.fields) {
@@ -205,20 +206,17 @@ const _combineActions = function(actionsAndFields) {
 		} else {
 			fields = _getSirenFields(actionAndField.action);
 		}
-		fields.forEach(field => fieldsMap.set(field.name, field.value));
 
-		methodsMap.set(method, fieldsMap);
+		fieldsList = [...fieldsList, ...fields];
+
+		methodsMap.set(method, fieldsList);
 		hrefsMap.set(href, methodsMap);
 	});
 
 	const combinedActions = [];
 	for (const [href, methodsMap] of hrefsMap.entries()) {
-		for (const [method, fieldsMap] of methodsMap) {
-			const fields = [];
-			for (const [fieldName, fieldValue] of fieldsMap) {
-				fields.push({ name: fieldName, value: fieldValue });
-			}
-			const action = { href, method, fields, type: 'application/x-www-form-urlencoded' };
+		for (const [method, fieldsList] of methodsMap) {
+			const action = { href, method, fields: fieldsList, type: 'application/x-www-form-urlencoded' };
 			combinedActions.push(action);
 		}
 	}

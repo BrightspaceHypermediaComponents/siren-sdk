@@ -231,7 +231,8 @@ export const Rels = {
 		studySupportEnabled: 'https://quizzes.api.brightspace.com/rels/study-support-enabled',
 		studySupportCompatibility: 'https://quizzes.api.brightspace.com/rels/study-support-compatibility',
 		showResultsOverview: 'https://quizzes.api.brightspace.com/rels/show-results-overview',
-		suggestContent: 'https://quizzes.api.brightspace.com/rels/suggest-content-selection'
+		suggestContent: 'https://quizzes.api.brightspace.com/rels/suggest-content-selection',
+		remediationCandidates: 'https://quizzes.api.brightspace.com/rels/remediation-candidates'
 	},
 	// Themes API sub-domain rels
 	Themes: {
@@ -512,6 +513,7 @@ export const Classes = {
 		studySupportCompatible: 'study-support-compatible',
 		showResultsOverview: 'show-results-overview',
 		suggestContent: 'suggest-content-selection',
+		remediationCandidates: 'remediation-candidates',
 		timing: {
 			recommended: 'recommended',
 			enforced: 'enforced',
@@ -902,6 +904,7 @@ export const Actions = {
 		updateStudySupportEnabled: 'study-support-enabled',
 		updateShowResultsOverview: 'show-results-overview',
 		updateSuggestContent: 'suggest-content-selection',
+		updateRemediationCandidates: 'remediation-candidates',
 		timing: {
 			updateType: 'update-timing-type',
 			updateTimeLimit: 'update-timing-time-limit',
