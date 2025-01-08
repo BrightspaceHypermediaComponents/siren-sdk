@@ -49,7 +49,11 @@ describe('QuizEntity', () => {
 				passingPercentage: 75,
 				studySupportEnabled: true,
 				showResultsOverview: true,
-				suggestContent: '1'
+				suggestContent: '1',
+				remediationCandidates: [{
+					ToolId: 37000,
+					ToolObjectId: 97705
+				}]
 			};
 		});
 
@@ -150,6 +154,14 @@ describe('QuizEntity', () => {
 		it('returns false when suggestContent not equal', () => {
 			const quizEntity = new QuizEntity(editableEntity);
 			modifiedEntity.suggestContent = '0';
+			expect(quizEntity.equals(modifiedEntity)).to.be.false;
+		});
+		it('returns false when remediationCandidates not equal', () => {
+			const quizEntity = new QuizEntity(editableEntity);
+			modifiedEntity.remediationCandidates = [{
+				ToolId: 37000,
+				ToolObjectId: 97706
+			}];
 			expect(quizEntity.equals(modifiedEntity)).to.be.false;
 		});
 	});
@@ -447,7 +459,13 @@ describe('QuizEntity', () => {
 				header: 'New header',
 				footer: 'New footer',
 				passingPercentage: 30,
-				studySupportEnabled: false
+				studySupportEnabled: false,
+				showResultsOverview: false,
+				suggestContent: '0',
+				remediationCandidates: [{
+					ToolId: 37000,
+					ToolObjectId: 97706
+				}]
 			});
 
 			const form = await getFormData(fetchMock.lastCall().request);
@@ -468,6 +486,9 @@ describe('QuizEntity', () => {
 				expect(form.get('footer')).to.equal('New footer');
 				expect(form.get('passingPercentage')).to.equal('30');
 				expect(form.get('studySupportEnabled')).to.equal('false');
+				expect(form.get('showResultsOverview')).to.equal(null); // not included when studySupportEnabled is false
+				expect(form.get('suggestContent')).to.equal(null); // not included when studySupportEnabled is false
+				expect(form.get('remediationCandidates')).to.equal(null); // not included when studySupportEnabled is false
 			}
 
 			expect(fetchMock.called()).to.be.true;
@@ -494,7 +515,11 @@ describe('QuizEntity', () => {
 				passingPercentage: 75,
 				studySupportEnabled: true,
 				showResultsOverview: true,
-				suggestContent: '1'
+				suggestContent: '1',
+				remediationCandidates: [{
+					ToolId: 37000,
+					ToolObjectId: 97705
+				}]
 			});
 
 			expect(fetchMock.done());
@@ -687,6 +712,21 @@ describe('QuizEntity', () => {
 			it('returns undefined when suggestContent is undefined', () => {
 				const quizEntity = new QuizEntity(nonEditableEntity);
 				expect(quizEntity.suggestContent()).to.be.undefined;
+			});
+		});
+
+		describe('remediationCandidates', () => {
+			it('returns object when remediationCandidates contains an object', () => {
+				const quizEntity = new QuizEntity(editableEntity);
+				expect(quizEntity.remediationCandidates()).to.deep.include({
+					ToolId: 37000,
+					ToolObjectId: 97705
+				});
+			});
+
+			it('returns undefined when remediationCandidates is undefined', () => {
+				const quizEntity = new QuizEntity(nonEditableEntity);
+				expect(quizEntity.remediationCandidates()).to.be.undefined;
 			});
 		});
 
