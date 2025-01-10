@@ -20,6 +20,7 @@ jobs:
       - uses: Brightspace/third-party-actions@actions/setup-node
         with:
           node-version-file: .nvmrc
+          registry-url: "https://registry.npmjs.org"
       - name: Incremental Release
         uses: BrightspaceUI/actions/incremental-release@main
         with:
