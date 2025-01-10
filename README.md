@@ -2,6 +2,8 @@
 
 This contains tools written in ES6 to help develop and use Siren entities
 
+Before adding to this repo, please see: https://desire2learn.atlassian.net/wiki/spaces/TA/pages/4489053073/Draft+Data+API+Guidance+Work-in-progress
+
 ## Quick start
 
 Options for getting started:
