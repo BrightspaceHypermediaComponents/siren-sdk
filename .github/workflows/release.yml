@@ -25,3 +25,5 @@ jobs:
         with:
           DEFAULT_INCREMENT: minor
           GITHUB_TOKEN: ${{ secrets.D2L_RELEASE_TOKEN }}
+          NPM: true
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
