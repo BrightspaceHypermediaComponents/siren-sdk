@@ -40,13 +40,6 @@ export class ContentFileEntity extends ContentWorkingCopyEntity {
 		return this._entity.getLinkByRel(Rels.Files.recommendAlignments).href;
 	}
 
-	outcomesTerm() {
-		if (!this._entity || !this._entity.properties) {
-			return;
-		}
-		return this._entity.properties['outcomes-term'];
-	}
-
 	/**
 	 * @returns {string|null} Description html of the content-file item
 	 */
