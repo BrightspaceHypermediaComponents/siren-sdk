@@ -33,6 +33,20 @@ export class ContentFileEntity extends ContentWorkingCopyEntity {
 		return this._entity && this._entity.properties && this._entity.properties.aiHumanOrigin;
 	}
 
+	recommendAlignmentsEndpoint() {
+		if (!this._entity || !this._entity.hasLinkByRel(Rels.Files.recommendAlignments)) {
+			return;
+		}
+		return this._entity.getLinkByRel(Rels.Files.recommendAlignments).href;
+	}
+
+	outcomesTerm() {
+		if (!this._entity || !this._entity.properties) {
+			return;
+		}
+		return this._entity.properties['outcomes-term'];
+	}
+
 	/**
 	 * @returns {string|null} Description html of the content-file item
 	 */
