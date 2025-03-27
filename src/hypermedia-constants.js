@@ -166,7 +166,8 @@ export const Rels = {
 	// Files API sub-domain rels
 	Files: {
 		files: 'https://files.api.brightspace.com/rels/files',
-		file: 'https://files.api.brightspace.com/rels/file'
+		file: 'https://files.api.brightspace.com/rels/file',
+		recommendAlignments: 'https://files.api.brightspace.com/rels/recommend-alignments'
 	},
 	// Folio API sub-domain rels
 	Folio: {
