@@ -161,7 +161,8 @@ export const Rels = {
 		topicCategories: 'https://discussions.api.brightspace.com/rels/topic-categories',
 		topic: 'https://discussions.api.brightspace.com/rels/topic',
 		groupSectionRestrictions: 'https://discussions.api.brightspace.com/rels/group-section-restrictions',
-		groupSectionRestrictionsDetail: 'https://discussions.api.brightspace.com/rels/topic/group-section-restrictions-detail'
+		groupSectionRestrictionsDetail: 'https://discussions.api.brightspace.com/rels/topic/group-section-restrictions-detail',
+		recommendAlignments: 'https://discussions.api.brightspace.com/rels/recommend-alignments'
 	},
 	// Files API sub-domain rels
 	Files: {
