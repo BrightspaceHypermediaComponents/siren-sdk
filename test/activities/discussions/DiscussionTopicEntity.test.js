@@ -286,4 +286,18 @@ describe('DiscussionTopicEntity', () => {
 			expect(fetchMock.called()).to.be.false;
 		});
 	});
+
+	describe('recommendAlignments', () => {
+		describe('Has recommend alignments endpoint', () => {
+			it('returns value when topic has reccomend alignment url', () => {
+				const discussionTopic = new DiscussionTopicEntity(editableEntity);
+				expect(discussionTopic.recommendAlignmentsEndpoint()).to.equal('https://www.d2l.com');
+			});
+
+			it('Does not have recommend alignments endpoint', () => {
+				const discussionTopic = new DiscussionTopicEntity(nonEditableEntity);
+				expect(discussionTopic.recommendAlignmentsEndpoint()).to.be.undefined;
+			});
+		});
+	});
 });
