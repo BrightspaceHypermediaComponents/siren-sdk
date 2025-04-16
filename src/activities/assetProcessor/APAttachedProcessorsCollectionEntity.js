@@ -78,7 +78,7 @@ class APAttachedProcessorEntity extends Entity {
 	 * @returns {bool} Whether this processor is enabled.
 	 */
 	enabled() {
-		return this._entity && this._entity.properties && this._entity.properties.enabled;
+		return this._entity && this._entity.properties && this._entity.properties.isEnabled;
 	}
 
 	/**
