@@ -974,5 +974,10 @@ export const Actions = {
 		checkout: 'checkout',
 		checkin: 'checkin',
 		commit: 'commit'
+	},
+	LTI: {
+		enableAssetProcessor: 'enable-asset-processor',
+		disableAssetProcessor: 'disable-asset-processor',
+		deleteAssetProcessor: 'delete-asset-processor'
 	}
 };
