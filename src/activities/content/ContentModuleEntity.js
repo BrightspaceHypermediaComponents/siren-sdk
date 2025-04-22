@@ -173,6 +173,19 @@ export class ContentModuleEntity extends Entity {
 		await performSirenAction(this._token, action, fields);
 	}
 
+	async saveObjectToCreateSpace(moduleId) {
+		if (!this._entity) {
+			return;
+		}
+		const action = this._entity.getActionByName(Actions.content.saveObjectToCreateSpace);
+		if (!action) {
+			return;
+		}
+
+		const fields = [{ name: 'toolObjectId', value: moduleId }];
+		await performSirenAction(this._token, action, fields);
+	}
+
 	/**
 	 * Updates the module to have the given color
 	 * @param {string} color Color to set on the module
