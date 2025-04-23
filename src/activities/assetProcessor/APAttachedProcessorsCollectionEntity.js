@@ -2,7 +2,7 @@ import { Actions, Classes } from '../../hypermedia-constants.js';
 import { Entity } from '../../es6/Entity.js';
 import { performSirenAction } from '../../es6/SirenAction.js';
 
-class APAttachedProcessorEntity extends Entity {
+export class APAttachedProcessorEntity extends Entity {
 
 	/**
 	 * @returns {string} The external deployment id of the deployment this processor belongs to.
