@@ -1,10 +1,10 @@
 import { APAttachedProcessorEntity } from '../../../src/activities/assetProcessor/APAttachedProcessorsCollectionEntity.js';
-import { disabledAttachedProcessor } from './data/DisabledProcessor.js';
 import { deletableAttachedProcessor } from './data/DeletableProcessor.js';
+import { disabledAttachedProcessor } from './data/DisabledProcessor.js';
 import { enabledAttachedProcessor } from './data/EnabledProcessor.js';
 import { expect } from '@open-wc/testing';
-import { getFormData } from '../../utility/test-helpers.js';
 import fetchMock from 'fetch-mock/esm/client.js';
+import { getFormData } from '../../utility/test-helpers.js';
 import SirenParse from 'siren-parser';
 
 describe('APAttachedProcessorEntity', () => {

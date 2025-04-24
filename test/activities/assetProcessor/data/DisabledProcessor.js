@@ -18,18 +18,18 @@ export const disabledAttachedProcessor = {
 		'width': 300,
 		'height': 399,
 	},
-	"actions": [
-	  {
-		"href": "https://lti.api.brightspace.com/6609/asset-processor/1",
-		"name": "enable-asset-processor",
-		"method": "PATCH",
-		"fields": [
-			{
-				"type": "checkbox",
-				"name": "isEnabled",
-				"value": true
-			}
-		]
-	  }
+	'actions': [
+		{
+			'href': 'https://lti.api.brightspace.com/6609/asset-processor/1',
+			'name': 'enable-asset-processor',
+			'method': 'PATCH',
+			'fields': [
+				{
+					'type': 'checkbox',
+					'name': 'isEnabled',
+					'value': true
+				}
+			]
+		}
 	]
 };

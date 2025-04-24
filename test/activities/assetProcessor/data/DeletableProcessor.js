@@ -18,11 +18,11 @@ export const deletableAttachedProcessor = {
 		'width': 300,
 		'height': 399,
 	},
-	"actions": [
-	  {
-		"href": "https://lti.api.brightspace.com/6609/asset-processor/1",
-		"name": "delete-asset-processor",
-		"method": "DELETE"
-	  }
+	'actions': [
+		{
+			'href': 'https://lti.api.brightspace.com/6609/asset-processor/1',
+			'name': 'delete-asset-processor',
+			'method': 'DELETE'
+		}
 	]
 };
