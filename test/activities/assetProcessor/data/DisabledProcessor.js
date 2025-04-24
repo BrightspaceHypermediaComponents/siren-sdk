@@ -20,7 +20,7 @@ export const disabledAttachedProcessor = {
 	},
 	'actions': [
 		{
-			'href': 'https://lti.api.brightspace.com/6609/asset-processor/1',
+			'href': 'https://lti.api.brightspace.com/6609/asset-processor/1/update',
 			'name': 'enable-asset-processor',
 			'method': 'PATCH',
 			'fields': [

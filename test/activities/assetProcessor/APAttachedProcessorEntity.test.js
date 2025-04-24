@@ -76,7 +76,7 @@ describe('APAttachedProcessorEntity', () => {
 	describe('enable', () => {
 
 		it('updates isEnabled to true', async() => {
-			fetchMock.patchOnce('https://lti.api.brightspace.com/6609/asset-processor/1', disabledEntity);
+			fetchMock.patchOnce('https://lti.api.brightspace.com/6609/asset-processor/1/update', disabledEntity);
 			const disabledProcessor = new APAttachedProcessorEntity(disabledEntity);
 
 			await disabledProcessor.enable();
@@ -91,7 +91,7 @@ describe('APAttachedProcessorEntity', () => {
 	describe('disable', () => {
 
 		it('updates isEnabled to false', async() => {
-			fetchMock.patchOnce('https://lti.api.brightspace.com/6609/asset-processor/1', enabledEntity);
+			fetchMock.patchOnce('https://lti.api.brightspace.com/6609/asset-processor/1/update', enabledEntity);
 			const enabledProcessor = new APAttachedProcessorEntity(enabledEntity);
 
 			await enabledProcessor.disable();
@@ -106,7 +106,7 @@ describe('APAttachedProcessorEntity', () => {
 	describe('delete', () => {
 
 		it('deletes', async() => {
-			fetchMock.deleteOnce('https://lti.api.brightspace.com/6609/asset-processor/1', deletableEntity);
+			fetchMock.deleteOnce('https://lti.api.brightspace.com/6609/asset-processor/1/delete', deletableEntity);
 			const deletableProcessor = new APAttachedProcessorEntity(deletableEntity);
 
 			await deletableProcessor.delete();
