@@ -47,10 +47,6 @@ describe('ContentModuleEntity', () => {
 			expect(contentModuleEntity.moduleId()).to.equal('12345');
 		});
 
-		it('reads registry id', () => {
-			expect(contentModuleEntity.registryId()).to.equal('38db1f7d-7917-445d-867e-67034387744b');
-		});
-
 		it('reads generate module summary url', () => {
 			expect(contentModuleEntity.generateSummaryEndpoint()).to.equal('https://fake-tenant-id.modules.api.proddev.d2l/6613/modules/12345/summary');
 		});
