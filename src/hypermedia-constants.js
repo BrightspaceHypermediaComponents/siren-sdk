@@ -351,6 +351,7 @@ export const Classes = {
 		assignmentSubmission: 'assignment-submission',
 		assignmentType: {
 			individual: 'individual',
+			group: 'group',
 			noGroupType: 'no-group-type',
 			hasSubmissions: 'has-submissions'
 		},
@@ -744,8 +745,8 @@ export const Actions = {
 	assignments: {
 		assign: 'assign',
 		delete: 'delete',
-		setToGroup: 'set-to-group',
-		setToIndividual: 'set-to-individual',
+		updateGroupType: 'update-group-type',
+		updateFolderType: 'update-folder-type',
 		updateInstructions: 'update-instructions',
 		anonymousMarking: {
 			updateAnonymousMarking: 'update-anonymous-marking'
