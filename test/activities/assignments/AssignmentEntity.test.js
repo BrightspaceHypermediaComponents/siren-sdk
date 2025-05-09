@@ -50,7 +50,7 @@ describe('AssignmentEntity', () => {
 				allowableFileType: String(undefined),
 				isAnonymous: false,
 				annotationToolsAvailable: true,
-				isIndividualAssignmentType: false,
+				assignmentType: 'group',
 				groupTypeId: '314',
 				filesSubmissionLimit: 'unlimited',
 				defaultScoringRubricId: null
@@ -67,7 +67,7 @@ describe('AssignmentEntity', () => {
 				allowableFileType: String(undefined),
 				isAnonymous: false,
 				annotationToolsAvailable: true,
-				isIndividualAssignmentType: true,
+				assignmentType: 'individual',
 				filesSubmissionLimit: 'unlimited'
 			})).to.be.false;
 		});
@@ -80,7 +80,7 @@ describe('AssignmentEntity', () => {
 				submissionType: undefined,
 				allowableFileType: String(undefined),
 				annotationToolsAvailable: true,
-				isIndividualAssignmentType: false,
+				assignmentType: 'group',
 				groupTypeId: '314',
 				defaultScoringRubricId: null
 			})).to.be.true;
