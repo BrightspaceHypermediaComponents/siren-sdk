@@ -110,14 +110,6 @@ export class ContentModuleEntity extends Entity {
 	}
 
 	/**
-	 * @returns {string} The registryId of the content-module (read-only)
-	 */
-
-	registryId() {
-		return this._entity && this._entity.properties && this._entity.properties.registryId;
-	}
-
-	/**
 	 * @returns {string} Returns the endpoint for generating a summary for the module
 	 */
 	generateSummaryEndpoint() {
