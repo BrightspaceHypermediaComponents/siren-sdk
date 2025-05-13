@@ -235,8 +235,7 @@ export class AssignmentEntity extends Entity {
 		if (!subEntity) {
 			return false;
 		}
-		return !subEntity.hasActionByName(Actions.assignments.setToGroup) &&
-			!subEntity.hasActionByName(Actions.assignments.setToIndividual);
+		return !subEntity.hasActionByName(Actions.assignments.updateFolderType);
 	}
 
 	/**
@@ -288,17 +287,23 @@ export class AssignmentEntity extends Entity {
 	}
 
 	/**
-	 * @returns {bool} If the assignment type is set to individual assignment
+	 * @returns {String} The assignmentType of the assignment
 	 */
-	isIndividualAssignmentType() {
+	getAssignmentType() {
 		if (!this._entity) {
-			return false;
+			return;
 		}
 		const subEntity = this._entity.getSubEntityByRel(Rels.Assignments.folderType);
 		if (!subEntity) {
-			return false;
+			return;
 		}
-		return subEntity.hasClass(Classes.assignments.assignmentType.individual);
+		if (subEntity.hasClass(Classes.assignments.assignmentType.individual)) {
+			return Classes.assignments.assignmentType.individual;
+		} else if (subEntity.hasClass(Classes.assignments.assignmentType.group)) {
+			return Classes.assignments.assignmentType.group;
+		} else {
+			return;
+		}
 	}
 
 	/**
@@ -312,7 +317,7 @@ export class AssignmentEntity extends Entity {
 		if (!subEntity) {
 			return [];
 		}
-		const action = subEntity.getActionByName(Actions.assignments.setToGroup);
+		const action = subEntity.getActionByName(Actions.assignments.updateGroupType);
 		if (!action || !action.hasFieldByName('groupTypeId')) {
 			return [];
 		}
@@ -522,11 +527,11 @@ export class AssignmentEntity extends Entity {
 
 	/**
 	 * Sets the group/individual status for an assignment
-	 * @param {boolean} isIndividualAssignmentType Allowable filetype option
+	 * @param {String} assignmentType Allowable filetype option see https://docs.valence.desire2learn.com/res/dropbox.html#term-DROPBOXTYPE_T
 	 * @param {Number} groupTypeId Group id
 	 */
-	_formatIndividualAssignmentTypeAction(isIndividualAssignmentType, groupTypeId) {
-		if (!this._entity || isIndividualAssignmentType === undefined || this.isAssignmentTypeReadOnly()) {
+	_formatAssignmentTypeAction(assignmentType, groupTypeId) {
+		if (!this._entity || assignmentType === undefined || this.isAssignmentTypeReadOnly()) {
 			return;
 		}
 
@@ -538,16 +543,23 @@ export class AssignmentEntity extends Entity {
 		const fields = [];
 		let action;
 
-		if (isIndividualAssignmentType) {
-			action = subEntity.getActionByName(Actions.assignments.setToIndividual);
+		switch (assignmentType) {
+			case Classes.assignments.assignmentType.individual:
+				action = subEntity.getActionByName(Actions.assignments.updateFolderType);
+				fields.push({ name: 'groupTypeId', value: null });
+				fields.push({ name: 'folderType', value: 2 });
+				break;
 
-			fields.push({ name: 'groupTypeId', value: null });
-			fields.push({ name: 'folderType', value: 2 });
-		} else if (!isIndividualAssignmentType && !this.isGroupAssignmentTypeDisabled()) {
-			action = subEntity.getActionByName(Actions.assignments.setToGroup);
-
-			fields.push({ name: 'groupTypeId', value: groupTypeId });
-			fields.push({ name: 'folderType', value: 1 });
+			case Classes.assignments.assignmentType.group:
+				if (!this.isGroupAssignmentTypeDisabled()) {
+					action = subEntity.getActionByName(Actions.assignments.updateFolderType);
+					fields.push({ name: 'groupTypeId', value: groupTypeId });
+					fields.push({ name: 'folderType', value: 1 });
+				}
+				break;
+			default:
+				// Handle invalid or unsupported AssignmentType
+				return;
 		}
 
 		if (!action || fields.length < 1) {
@@ -972,7 +984,7 @@ export class AssignmentEntity extends Entity {
 		const updateFileSubmissionLimitAction = this._formatFileSubmissionLimitAction(assignment.filesSubmissionLimit);
 		const updateSubmissionRuleAction = this._formatSubmissionsRuleAction(assignment.submissionsRule);
 		const updateCompletionTypeAction = this._formatCompletionTypeAction(assignment.completionType);
-		const updateIsIndividualAssignmentTypeAction = this._formatIndividualAssignmentTypeAction(assignment.isIndividualAssignmentType, assignment.groupTypeId);
+		const updateformatAssignmentTypeAction = this._formatAssignmentTypeAction(assignment.assignmentType, assignment.groupTypeId);
 		const updateDefaultScoringRubricAction = this._formatDefaultScoringRubricAction(assignment.defaultScoringRubricId);
 		const updateNotificationEmailAction = this._formatUpdateNotificationEmailAction(assignment.notificationEmail);
 		const updateAllowTextSubmissionAction = this._formatUpdateAllowTextSubmissionAction(assignment.allowTextSubmission);
@@ -989,7 +1001,7 @@ export class AssignmentEntity extends Entity {
 			updateFileSubmissionLimitAction,
 			updateSubmissionRuleAction,
 			updateCompletionTypeAction,
-			updateIsIndividualAssignmentTypeAction,
+			updateformatAssignmentTypeAction,
 			updateDefaultScoringRubricAction,
 			updateNotificationEmailAction,
 			updateAllowTextSubmissionAction,
@@ -1005,7 +1017,7 @@ export class AssignmentEntity extends Entity {
 			[this.instructionsEditorHtml(), assignment.instructions],
 			[this.submissionType() && String(this.submissionType().value), assignment.submissionType],
 			[this.getAvailableAnnotationTools(), assignment.annotationToolsAvailable],
-			[this.isIndividualAssignmentType(), assignment.isIndividualAssignmentType],
+			[this.getAssignmentType(), assignment.assignmentType],
 			[this.getDefaultScoringRubric(), assignment.defaultScoringRubricId]
 		];
 		if (assignment.hasOwnProperty('isAnonymous')) {
@@ -1039,7 +1051,7 @@ export class AssignmentEntity extends Entity {
 			}
 		}
 
-		if (!this.isAssignmentTypeReadOnly() && !assignment.isIndividualAssignmentType && !this.isGroupAssignmentTypeDisabled()) {
+		if (!this.isAssignmentTypeReadOnly() && assignment.assignmentType === Classes.assignments.assignmentType.group && !this.isGroupAssignmentTypeDisabled()) {
 			const selected = this.getAssignmentTypeGroupCategoryOptions().find(x => x.selected);
 			if (String(selected && selected.value) !== assignment.groupTypeId) {
 				return false;
