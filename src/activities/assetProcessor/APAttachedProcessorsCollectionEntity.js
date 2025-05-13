@@ -1,10 +1,8 @@
-import { Classes } from '../../hypermedia-constants.js';
+import { Actions, Classes } from '../../hypermedia-constants.js';
 import { Entity } from '../../es6/Entity.js';
+import { performSirenAction } from '../../es6/SirenAction.js';
 
-class APAttachedProcessorEntity {
-	constructor(_entity) {
-		this._entity = _entity;
-	}
+export class APAttachedProcessorEntity extends Entity {
 
 	/**
 	 * @returns {string} The external deployment id of the deployment this processor belongs to.
@@ -74,6 +72,80 @@ class APAttachedProcessorEntity {
 	 */
 	height() {
 		return this._entity && this._entity.properties && this._entity.properties.height;
+	}
+
+	/**
+	 * @returns {bool} Whether this processor is enabled.
+	 */
+	enabled() {
+		return this._entity && this._entity.properties && this._entity.properties.isEnabled;
+	}
+
+	/**
+	 * @returns {bool} Whether this processor can be enabled.
+	 */
+	canEnable() {
+		return !this.enabled() && this._entity.hasActionByName(Actions.LTI.enableAssetProcessor);
+	}
+
+	/**
+	 * @returns {bool} Whether this processor can be disabled.
+	 */
+	canDisable() {
+		return this.enabled() && this._entity.hasActionByName(Actions.LTI.disableAssetProcessor);
+	}
+
+	/**
+	 * @returns {bool} Whether this processor can be deleted.
+	 */
+	canDelete() {
+		return this._entity.hasActionByName(Actions.LTI.deleteAssetProcessor);
+	}
+
+	/**
+	 * @summary Enables this processor.
+	 */
+	async enable() {
+		const action = this.canEnable() && this._entity.getActionByName(Actions.LTI.enableAssetProcessor);
+		if (!action) {
+			return;
+		}
+
+		const fields = [
+			{ name: 'isEnabled', value: true }
+		];
+
+		await performSirenAction(this._token, action, fields);
+	}
+
+	/**
+	 * @summary Disables this processor.
+	 */
+	async disable() {
+		const action = this.canDisable() && this._entity.getActionByName(Actions.LTI.disableAssetProcessor);
+		if (!action) {
+			return;
+		}
+
+		const fields = [
+			{ name: 'isEnabled', value: false }
+		];
+
+		await performSirenAction(this._token, action, fields);
+	}
+
+	/**
+	 * @summary Deletes this processor.
+	 */
+	async delete() {
+		const action = this.canDelete() && this._entity.getActionByName(Actions.LTI.deleteAssetProcessor);
+		if (!action) {
+			return;
+		}
+
+		await performSirenAction(this._token, action, []).then(() => {
+			this.dispose();
+		});
 	}
 }
 

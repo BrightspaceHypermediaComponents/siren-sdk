@@ -770,7 +770,8 @@ export const Actions = {
 		updateLor: 'update-lor',
 		updateCompletionCriteria: 'update-completion-criteria',
 		updateColor: 'update-color',
-		updateAiOrigin: 'update-ai-origin'
+		updateAiOrigin: 'update-ai-origin',
+		saveObjectToCreateSpace: 'save-object-to-create-space',
 	},
 	module: {
 		deleteModule: 'delete-module'
@@ -975,5 +976,10 @@ export const Actions = {
 		checkout: 'checkout',
 		checkin: 'checkin',
 		commit: 'commit'
+	},
+	LTI: {
+		enableAssetProcessor: 'enable-asset-processor',
+		disableAssetProcessor: 'disable-asset-processor',
+		deleteAssetProcessor: 'delete-asset-processor'
 	}
 };

@@ -110,14 +110,6 @@ export class ContentModuleEntity extends Entity {
 	}
 
 	/**
-	 * @returns {string} The registryId of the content-module (read-only)
-	 */
-
-	registryId() {
-		return this._entity && this._entity.properties && this._entity.properties.registryId;
-	}
-
-	/**
 	 * @returns {string} Returns the endpoint for generating a summary for the module
 	 */
 	generateSummaryEndpoint() {
@@ -170,6 +162,19 @@ export class ContentModuleEntity extends Entity {
 		}
 
 		const fields = [{ name: 'title', value: title }];
+		await performSirenAction(this._token, action, fields);
+	}
+
+	async saveObjectToCreateSpace(moduleId) {
+		if (!this._entity) {
+			return;
+		}
+		const action = this._entity.getActionByName(Actions.content.saveObjectToCreateSpace);
+		if (!action) {
+			return;
+		}
+
+		const fields = [{ name: 'toolObjectId', value: moduleId }];
 		await performSirenAction(this._token, action, fields);
 	}
 
