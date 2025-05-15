@@ -22,6 +22,7 @@ describe('APAttachedProcessorsCollectionEntity', () => {
 				expect(attachedProcessor.assetProcessorId()).to.be.a('number');
 				expect(attachedProcessor.title()).to.be.a('string');
 				expect(attachedProcessor.settingsLinkId()).to.be.a('number');
+				expect(attachedProcessor.settingsLink()).to.be.a('string');
 				expect(attachedProcessor.eulaLaunchRoute()).to.be.a('string');
 				expect(attachedProcessor.isEnabled()).to.be.a('boolean');
 				expect(attachedProcessor.isExternalResource()).to.be.a('boolean');

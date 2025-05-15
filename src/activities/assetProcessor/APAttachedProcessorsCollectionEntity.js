@@ -40,6 +40,13 @@ export class APAttachedProcessorEntity extends Entity {
 	}
 
 	/**
+	 * @returns {string} The link id of the settings link for this processor.
+	 */
+	settingsLink() {
+		return this._entity && this._entity.properties && this._entity.properties.settingsLaunchRoute;
+	}
+
+	/**
 	 * @returns {string} The launch route for the EULA.
 	 */
 	eulaLaunchRoute() {

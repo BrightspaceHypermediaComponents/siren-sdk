@@ -17,7 +17,7 @@ export const attachedProcessorsCollection = {
 				'assetProcessorId': 1,
 				'title': 'Processor 1',
 				'settingsLinkId': 10,
-				'settingsLaunchRoute': '',
+				'settingsLaunchRoute': 'www.google.com',
 				'eulaLaunchRoute': '',
 				'isEnabled': true,
 				'isExternalResource': false,
