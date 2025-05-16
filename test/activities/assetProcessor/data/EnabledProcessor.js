@@ -12,7 +12,7 @@ export const enabledAttachedProcessor = {
 		'title': 'Processor 1',
 		'settingsLinkId': 10,
 		'settingsLaunchRoute': '',
-		'eulaLaunchRoute': '',
+		'hasEula': true,
 		'isEnabled': true,
 		'isExternalResource': false,
 		'width': 300,
