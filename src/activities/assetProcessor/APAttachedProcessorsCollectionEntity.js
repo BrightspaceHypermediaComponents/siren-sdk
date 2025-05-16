@@ -49,8 +49,8 @@ export class APAttachedProcessorEntity extends Entity {
 	/**
 	 * @returns {string} The launch route for the EULA.
 	 */
-	eulaLaunchRoute() {
-		return this._entity && this._entity.properties && this._entity.properties.eulaLaunchRoute;
+	hasEula() {
+		return this._entity && this._entity.properties && this._entity.properties.hasEula;
 	}
 
 	/**
