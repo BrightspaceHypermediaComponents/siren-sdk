@@ -234,7 +234,8 @@ export const Rels = {
 		studySupportCompatibility: 'https://quizzes.api.brightspace.com/rels/study-support-compatibility',
 		showResultsOverview: 'https://quizzes.api.brightspace.com/rels/show-results-overview',
 		suggestContent: 'https://quizzes.api.brightspace.com/rels/suggest-content-selection',
-		remediationCandidates: 'https://quizzes.api.brightspace.com/rels/remediation-candidates'
+		remediationCandidates: 'https://quizzes.api.brightspace.com/rels/remediation-candidates',
+		recommendAlignments: 'https://quizzes.api.brightspace.com/rels/recommend-alignments'
 	},
 	// Themes API sub-domain rels
 	Themes: {

@@ -67,7 +67,13 @@ export const editableQuiz = {
 				'https://activities.api.brightspace.com/rels/activity-usage'
 			],
 			'href': 'https://afe99802-9130-4320-a770-8d138b941e74.activities.api.proddev.d2l/activities/6606_51000_22/usages/6606'
-		}
+		},
+		{
+			'rel': [
+				'https://quizzes.api.brightspace.com/rels/recommend-alignments'
+			],
+			'href': 'https://www.d2l.com'
+		},
 	],
 	'entities': [
 		{
