@@ -401,6 +401,13 @@ export class QuizEntity extends Entity {
 			&& headerEntity.properties.text;
 	}
 
+	recommendAlignmentsEndpoint() {
+		if (!this._entity || !this._entity.hasLinkByRel(Rels.Quizzes.recommendAlignments)) {
+			return;
+		}
+		return this._entity.getLinkByRel(Rels.Quizzes.recommendAlignments).href;
+	}
+
 	/**
 	 * @returns {string} Quiz header in HTML
 	 */

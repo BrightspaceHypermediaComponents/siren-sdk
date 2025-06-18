@@ -887,4 +887,18 @@ describe('QuizEntity', () => {
 			});
 		});
 	});
+
+	describe('recommendAlignments', () => {
+		describe('Has recommend alignments endpoint', () => {
+			it('returns value when topic has reccomend alignment url', () => {
+				const quizEntity = new QuizEntity(editableEntity);
+				expect(quizEntity.recommendAlignmentsEndpoint()).to.equal('https://www.d2l.com');
+			});
+
+			it('Does not have recommend alignments endpoint', () => {
+				const quizEntity = new QuizEntity(nonEditableEntity);
+				expect(quizEntity.recommendAlignmentsEndpoint()).to.be.undefined;
+			});
+		});
+	});
 });
