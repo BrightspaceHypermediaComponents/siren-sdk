@@ -144,6 +144,12 @@ describe('ActivityUsageEntity', () => {
 			});
 		});
 
+		describe('isAIContentEnabled', () => {
+			it('gets AIContent Enabled', () => {
+				expect(entity.isAIContentEnabled()).to.be.true;
+			});
+		});
+
 		describe('Draft Status', () => {
 			describe('Can edit', () => {
 				let setDraftStatusSpy;
