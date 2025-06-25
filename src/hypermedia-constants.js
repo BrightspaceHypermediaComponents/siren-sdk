@@ -400,6 +400,7 @@ export const Classes = {
 		rawDescription: 'raw-description',
 		lastModified: 'lastModified',
 		aiInspired: 'ai-inspired',
+		AIContentEnabled: 'ai-content-enabled'
 	},
 	contentStyler: {
 		contentStyler: 'content-styler',

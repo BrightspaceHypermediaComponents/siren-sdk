@@ -682,6 +682,13 @@ export class ActivityUsageEntity extends Entity {
 	}
 
 	/**
+	 * @returns {bool} Whether or not the activity usage entity has AI modify content functionality enabled
+	 */
+	isAIContentEnabled() {
+		return this._entity && this._entity.hasClass('ai-content-enabled');
+	}
+
+	/**
 	 * @returns {bool} Whether or not the activity usage entity is draft
 	 */
 	isDraft() {

@@ -3,7 +3,8 @@ export const testData = {
 		'class': [
 			'assignment-activity',
 			'draft-published-entity',
-			'draft'
+			'draft',
+			'ai-content-enabled'
 		],
 		'entities': [
 			{
