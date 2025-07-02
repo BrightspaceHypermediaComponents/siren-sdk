@@ -21,7 +21,7 @@
   },
   "dependencies": {
     "@brightspace-ui/core": "^3",
-    "@open-wc/dedupe-mixin": "^1",
+    "@open-wc/dedupe-mixin": "^2",
     "@polymer/polymer": "^3",
     "d2l-fetch": "^2",
     "d2l-polymer-siren-behaviors": "^2",
