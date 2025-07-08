@@ -148,6 +148,29 @@ export const editableQuiz = {
 		},
 		{
 			'class': [
+				'hide-question-points',
+				'checked'
+			],
+			'rel': [
+				'https://quizzes.api.brightspace.com/rels/hide-question-points'
+			],
+			'actions': [
+				{
+					'href': 'https://afe99802-9130-4320-a770-8d138b941e74.quizzes.api.proddev.d2l/6606/quizzes/22',
+					'name': 'update-hide-question-points',
+					'method': 'PATCH',
+					'fields': [
+						{
+							'type': 'checkbox',
+							'name': 'hideQuestionPoints',
+							'value': true
+						}
+					]
+				}
+			]
+		},
+		{
+			'class': [
 				'quiz-password'
 			],
 			'rel': [

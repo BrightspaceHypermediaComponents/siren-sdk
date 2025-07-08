@@ -81,6 +81,15 @@ export const nonEditableQuiz = {
 		},
 		{
 			'class': [
+				'hide-question-points',
+				'unchecked'
+			],
+			'rel': [
+				'https://quizzes.api.brightspace.com/rels/hide-question-points'
+			],
+		},
+		{
+			'class': [
 				'quiz-password'
 			],
 			'rel': [

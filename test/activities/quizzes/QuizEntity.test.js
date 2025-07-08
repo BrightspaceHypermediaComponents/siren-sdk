@@ -36,6 +36,7 @@ describe('QuizEntity', () => {
 				shuffle: true,
 				allowHints: true,
 				disablePagerAndAlerts: true,
+				hideQuestionPoints: true,
 				password: 'hello',
 				notificationEmail: 'moose@d2l.com',
 				preventMovingBackwards: true,
@@ -254,6 +255,32 @@ describe('QuizEntity', () => {
 			it('returns false when isDisablePagerAndAlertsEnabled is false', () => {
 				const quizEntity = new QuizEntity(nonEditableEntity);
 				expect(quizEntity.isDisablePagerAndAlertsEnabled()).to.be.false;
+			});
+		});
+	});
+
+	describe('hideQuestionPoints', () => {
+		describe('canEditHideQuestionPoints', () => {
+			it('returns true when canEditHideQuestionPoints is editable', () => {
+				const quizEntity = new QuizEntity(editableEntity);
+				expect(quizEntity.canEditHideQuestionPoints()).to.be.true;
+			});
+
+			it('returns false when canEditHideQuestionPoints is not editable', () => {
+				const quizEntity = new QuizEntity(nonEditableEntity);
+				expect(quizEntity.canEditHideQuestionPoints()).to.be.false;
+			});
+		});
+
+		describe('isHideQuestionPointsEnabled', () => {
+			it('returns true when isHideQuestionPointsEnabled is true', () => {
+				const quizEntity = new QuizEntity(editableEntity);
+				expect(quizEntity.isHideQuestionPointsEnabled()).to.be.true;
+			});
+
+			it('returns false when isHideQuestionPointsEnabled is false', () => {
+				const quizEntity = new QuizEntity(nonEditableEntity);
+				expect(quizEntity.isHideQuestionPointsEnabled()).to.be.false;
 			});
 		});
 	});
@@ -502,6 +529,7 @@ describe('QuizEntity', () => {
 				shuffle: true,
 				allowHints: true,
 				disablePagerAndAlerts: true,
+				hideQuestionPoints: true,
 				password: 'hello',
 				notificationEmail: 'moose@d2l.com',
 				preventMovingBackwards: true,

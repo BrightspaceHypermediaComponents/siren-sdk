@@ -148,6 +148,22 @@ export class QuizEntity extends Entity {
 	}
 
 	/**
+	 * @returns {bool} Whether or not the user can edit the HideQuestionPoints quiz entity property
+	 */
+	canEditHideQuestionPoints() {
+		const entity = this._entity.getSubEntityByRel(Rels.Quizzes.hideQuestionPoints);
+		return entity && entity.hasActionByName(Actions.quizzes.updateHideQuestionPoints);
+	}
+
+	/**
+	 * @returns {bool} Whether or not HideQuestionPoints are enabled for the quiz entity
+	 */
+	isHideQuestionPointsEnabled() {
+		const entity = this._entity.getSubEntityByRel(Rels.Quizzes.hideQuestionPoints);
+		return entity && entity.hasClass(Classes.quizzes.checked);
+	}
+
+	/**
 	 * @returns {bool} Whether or not the user can edit the Notification Email property
 	 */
 	canEditNotificationEmail() {
@@ -704,6 +720,7 @@ export class QuizEntity extends Entity {
 		const updateHintsAction = this.canEditHints() ? this._formatUpdateHintsAction(quiz) : null;
 		const updateDisableRightClickAction = this.canEditDisableRightClick() ? this._formatUpdateDisableRightClickAction(quiz) : null;
 		const updateDisablePagerAndAlerts = this.canEditDisablePagerAndAlerts() ? this._formatUpdateDisablePagerAndAlerts(quiz) : null;
+		const updateHideQuestionPoints = this.canEditHideQuestionPoints() ? this._formatUpdateHideQuestionPoints(quiz) : null;
 		const updatePasswordAction = this.canEditPassword() ? this._formatUpdatePasswordAction(quiz) : null;
 		const updateNotificationEmail = this.canEditNotificationEmail() ? this._formatNotificationEmailAction(quiz) : null;
 		const updatePreventMovingBackwards = this.canEditPreventMovingBackwards() ? this._formatUpdatePreventMovingBackwards(quiz) : null;
@@ -726,6 +743,7 @@ export class QuizEntity extends Entity {
 			updateHintsAction,
 			updateDisableRightClickAction,
 			updateDisablePagerAndAlerts,
+			updateHideQuestionPoints,
 			updatePasswordAction,
 			updateNotificationEmail,
 			updatePreventMovingBackwards,
@@ -874,6 +892,27 @@ export class QuizEntity extends Entity {
 		return { action, fields };
 	}
 
+	/**
+	 * Checks if quiz hideQuestionPoints has changed and if so returns the appropriate action/fields to update
+	 * @param {object} quiz the quiz that's being modified
+	 */
+
+	_formatUpdateHideQuestionPoints(quiz) {
+		if (!quiz) return;
+		if (!this._hasHideQuestionPointsChanged(quiz.hideQuestionPoints)) return;
+
+		const entity = this._entity.getSubEntityByRel(Rels.Quizzes.hideQuestionPoints);
+		if (!entity) return;
+
+		const action = entity.getActionByName(Actions.quizzes.updateHideQuestionPoints);
+		if (!action) return;
+
+		const fields = [
+			{ name: 'hideQuestionPoints', value: quiz.hideQuestionPoints },
+		];
+
+		return { action, fields };
+	}
 	/**
 	 * Checks if quiz password has changed and if so returns the appropriate action/fields to update
 	 * @param {object} quiz the quiz that's being modified
@@ -1211,6 +1250,10 @@ export class QuizEntity extends Entity {
 		return disablePagerAndAlerts !== this.isDisablePagerAndAlertsEnabled();
 	}
 
+	_hasHideQuestionPointsChanged(hideQuestionPoints) {
+		return hideQuestionPoints !== this.isHideQuestionPointsEnabled();
+	}
+
 	_hasPasswordChanged(password) {
 		return password !== this.password();
 	}
@@ -1277,6 +1320,7 @@ export class QuizEntity extends Entity {
 			[this.isShuffleEnabled(), quiz.shuffle],
 			[this.getHintsToolEnabled(), quiz.allowHints],
 			[this.isDisablePagerAndAlertsEnabled(), quiz.disablePagerAndAlerts],
+			[this.isHideQuestionPointsEnabled(), quiz.hideQuestionPoints],
 			[this.password(), quiz.password],
 			[this.notificationEmail(), quiz.notificationEmail],
 			[this.deductionPercentage(), quiz.deductionPercentage],
