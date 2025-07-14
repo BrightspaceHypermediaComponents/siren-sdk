@@ -77,6 +77,13 @@ export class ContentFileEntity extends ContentWorkingCopyEntity {
 	}
 
 	/**
+	 * @returns  {string|null} Remix Content Endpoint
+	 */
+	getRemixContentHref() {
+		return ContentHelperFunctions.getHrefFromRel(Rels.Files.remixContent, this._entity);
+	}
+
+	/**
 	 * @returns {string|undefined} Title of the content-file item
 	 */
 	title() {
