@@ -33,6 +33,10 @@ class APDeepLinkEntity {
 	deepLinkLaunchRoute() {
 		return this._entity && this._entity.properties && this._entity.properties.deepLinkLaunchRoute;
 	}
+
+	requiresEula() {
+		return this._entity && this._entity.properties && (this._entity.properties.requiresEula ?? false);
+	}
 }
 
 /**
