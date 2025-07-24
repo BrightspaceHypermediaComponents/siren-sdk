@@ -21,6 +21,7 @@ describe('APDeepLinksCollectionEntity', () => {
 				expect(deepLink.linkId()).to.be.a('number');
 				expect(deepLink.linkName()).to.be.a('string');
 				expect(deepLink.deepLinkLaunchRoute()).to.be.a('string');
+				expect(deepLink.requiresEula()).to.be.a('boolean');
 			});
 		});
 	});
