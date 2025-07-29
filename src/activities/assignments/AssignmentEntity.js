@@ -223,6 +223,17 @@ export class AssignmentEntity extends Entity {
 		return subEntity.properties.groupName;
 	}
 
+	getAssignmentTypeSelectedTargetDropboxId() {
+		if (!this._entity) {
+			return null;
+		}
+		const subEntity = this._entity.getSubEntityByRel(Rels.Assignments.folderType);
+		if (!subEntity || !subEntity.properties || !subEntity.properties.targetDropboxId) {
+			return null;
+		}
+		return subEntity.properties.targetDropboxId;
+	}
+
 	/**
 	 * @returns {bool} If the assignment type cannot be changed
 	 */
@@ -301,6 +312,8 @@ export class AssignmentEntity extends Entity {
 			return Classes.assignments.assignmentType.individual;
 		} else if (subEntity.hasClass(Classes.assignments.assignmentType.group)) {
 			return Classes.assignments.assignmentType.group;
+		} else if (subEntity.hasClass(Classes.assignments.assignmentType.peerReview)) {
+			return Classes.assignments.assignmentType.peerReview;
 		} else {
 			return;
 		}
@@ -352,6 +365,15 @@ export class AssignmentEntity extends Entity {
 		const subEntity = this._entity.getSubEntityByRel(Rels.Assignments.categories);
 
 		return subEntity && subEntity.href;
+	}
+
+	getFolderListLink() {
+		if (!this._entity) {
+			return;
+		}
+		const link = this._entity.getLinkByRel(Rels.Assignments.folderList);
+
+		return link && link.href;
 	}
 
 	/**
@@ -530,7 +552,7 @@ export class AssignmentEntity extends Entity {
 	 * @param {String} assignmentType Allowable filetype option see https://docs.valence.desire2learn.com/res/dropbox.html#term-DROPBOXTYPE_T
 	 * @param {Number} groupTypeId Group id
 	 */
-	_formatAssignmentTypeAction(assignmentType, groupTypeId) {
+	_formatAssignmentTypeAction(assignmentType, groupTypeId, targetDropboxId) {
 		if (!this._entity || assignmentType === undefined || this.isAssignmentTypeReadOnly()) {
 			return;
 		}
@@ -548,6 +570,7 @@ export class AssignmentEntity extends Entity {
 				action = subEntity.getActionByName(Actions.assignments.updateFolderType);
 				fields.push({ name: 'groupTypeId', value: null });
 				fields.push({ name: 'folderType', value: 2 });
+				fields.push({ name: 'targetDropboxId', value: null });
 				break;
 
 			case Classes.assignments.assignmentType.group:
@@ -555,7 +578,14 @@ export class AssignmentEntity extends Entity {
 					action = subEntity.getActionByName(Actions.assignments.updateFolderType);
 					fields.push({ name: 'groupTypeId', value: groupTypeId });
 					fields.push({ name: 'folderType', value: 1 });
+					fields.push({ name: 'targetDropboxId', value: null });
 				}
+				break;
+			case Classes.assignments.assignmentType.peerReview:
+				action = subEntity.getActionByName(Actions.assignments.updateFolderType);
+				fields.push({ name: 'groupTypeId', value: null });
+				fields.push({ name: 'folderType', value: 3 });
+				fields.push({ name: 'targetDropboxId', value: targetDropboxId });
 				break;
 			default:
 				// Handle invalid or unsupported AssignmentType
@@ -984,12 +1014,11 @@ export class AssignmentEntity extends Entity {
 		const updateFileSubmissionLimitAction = this._formatFileSubmissionLimitAction(assignment.filesSubmissionLimit);
 		const updateSubmissionRuleAction = this._formatSubmissionsRuleAction(assignment.submissionsRule);
 		const updateCompletionTypeAction = this._formatCompletionTypeAction(assignment.completionType);
-		const updateformatAssignmentTypeAction = this._formatAssignmentTypeAction(assignment.assignmentType, assignment.groupTypeId);
+		const updateformatAssignmentTypeAction = this._formatAssignmentTypeAction(assignment.assignmentType, assignment.groupTypeId, assignment.targetDropboxId);
 		const updateDefaultScoringRubricAction = this._formatDefaultScoringRubricAction(assignment.defaultScoringRubricId);
 		const updateNotificationEmailAction = this._formatUpdateNotificationEmailAction(assignment.notificationEmail);
 		const updateAllowTextSubmissionAction = this._formatUpdateAllowTextSubmissionAction(assignment.allowTextSubmission);
 		const updateIsAiInspiredAction = this._formatUpdateAiInspiredAction(assignment.isAiInspired);
-
 		const sirenActions = [
 			updateNameAction,
 			updateInstructionsAction,

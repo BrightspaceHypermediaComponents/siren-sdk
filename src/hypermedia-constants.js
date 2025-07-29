@@ -109,6 +109,7 @@ export const Rels = {
 		turnitinDialogOpener: 'https://assignments.api.brightspace.com/rels/turnitin-dialog-opener',
 		attachments: 'https://assignments.api.brightspace.com/rels/attachments',
 		annotations: 'https://assignments.api.brightspace.com/rels/annotations',
+		folderList: 'folder-list',
 		folderType: 'https://assignments.api.brightspace.com/rels/folder-type',
 		groupsHomepage: 'https://assignments.api.brightspace.com/rels/groups-homepage',
 		filesSubmissionLimit: 'https://assignments.api.brightspace.com/rels/files-submission-limit',
@@ -355,6 +356,7 @@ export const Classes = {
 		assignmentType: {
 			individual: 'individual',
 			group: 'group',
+			peerReview: 'peer-review',
 			noGroupType: 'no-group-type',
 			hasSubmissions: 'has-submissions'
 		},
