@@ -234,6 +234,14 @@ export class AssignmentEntity extends Entity {
 		return subEntity.properties.targetDropboxId;
 	}
 
+	getPromptHeaders() {
+		if (!this._entity) {
+			return null;
+		}
+		const promptHeaders = this._entity.properties.prompts;
+		return promptHeaders ? promptHeaders : null;
+	}
+
 	/**
 	 * @returns {bool} If the assignment type cannot be changed
 	 */
