@@ -551,7 +551,7 @@ export class AssignmentEntity extends Entity {
 			return;
 		}
 		const fields = [
-			{ name: 'promptHeaders', value: JSON.stringify(promptHeaders) },
+			{ name: 'promptHeaders', value: JSON.stringify(promptHeaders.filter(p => p.state !== 'unedited')) },
 		];
 
 		return { action, fields };
