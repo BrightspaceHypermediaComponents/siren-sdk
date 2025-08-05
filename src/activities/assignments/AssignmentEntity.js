@@ -297,6 +297,14 @@ export class AssignmentEntity extends Entity {
 		return this._entity && this._entity.hasClass(Classes.assignments.aiInspired);
 	}
 
+	promptHeaders() {
+		if (!this._entity) {
+			return null;
+		}
+		const subEntity = this._entity.getSubEntityByRel(Rels.Assignments.promptHeaders);
+		return subEntity?.properties?.prompts ?? null;
+	}
+
 	/**
 	 * @returns {String} The assignmentType of the assignment
 	 */
@@ -521,6 +529,21 @@ export class AssignmentEntity extends Entity {
 		}
 		const fields = [
 			{ name: 'aiHumanOrigin', value: isAiInspired ? AI_INSPIRED : HUMAN_GENERATED },
+		];
+
+		return { action, fields };
+	}
+
+	_formatUpdatePromptHeadersAction(promptHeaders) {
+		if (typeof promptHeaders === 'undefined' || !Array.isArray(promptHeaders)) return;
+		if (!this._hasPromptHeadersChanged(promptHeaders)) return;
+
+		const action = this._entity.getActionByName(Actions.assignments.updatePromptHeaders);
+		if (!action) {
+			return;
+		}
+		const fields = [
+			{ name: 'promptHeaders', value: JSON.stringify(promptHeaders) },
 		];
 
 		return { action, fields };
@@ -1019,6 +1042,7 @@ export class AssignmentEntity extends Entity {
 		const updateNotificationEmailAction = this._formatUpdateNotificationEmailAction(assignment.notificationEmail);
 		const updateAllowTextSubmissionAction = this._formatUpdateAllowTextSubmissionAction(assignment.allowTextSubmission);
 		const updateIsAiInspiredAction = this._formatUpdateAiInspiredAction(assignment.isAiInspired);
+		const updatePromptHeaders = this._formatUpdatePromptHeadersAction(assignment.promptHeaders);
 		const sirenActions = [
 			updateNameAction,
 			updateInstructionsAction,
@@ -1034,7 +1058,8 @@ export class AssignmentEntity extends Entity {
 			updateDefaultScoringRubricAction,
 			updateNotificationEmailAction,
 			updateAllowTextSubmissionAction,
-			updateIsAiInspiredAction
+			updateIsAiInspiredAction,
+			updatePromptHeaders
 		];
 
 		await performSirenActions(this._token, sirenActions);
@@ -1126,6 +1151,11 @@ export class AssignmentEntity extends Entity {
 
 	_hasAiInspiredChanged(aiInspired) {
 		return aiInspired !== this.isAiInspired();
+	}
+
+	_hasPromptHeadersChanged(promptHeaders) {
+		// If there are any entities which are not 'unedited', then the prompt headers have changed
+		return promptHeaders.some(x => x.state !== 'unedited');
 	}
 
 	_hasInstructionsChanged(instructions) {

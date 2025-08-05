@@ -116,7 +116,8 @@ export const Rels = {
 		submissionsRule: 'https://assignments.api.brightspace.com/rels/submissions-rule',
 		notificationEmail: 'https://assignments.api.brightspace.com/rels/notification-email',
 		categories: 'https://assignments.api.brightspace.com/rels/categories',
-		recommendAlignments: 'https://assignments.api.brightspace.com/rels/recommend-alignments'
+		recommendAlignments: 'https://assignments.api.brightspace.com/rels/recommend-alignments',
+		promptHeaders: 'https://assignments.api.brightspace.com/rels/prompt-headers',
 	},
 	// Awards
 	Awards: {
@@ -374,7 +375,8 @@ export const Classes = {
 		annotationEnabled: 'enabled',
 		annotationDisabled: 'disabled',
 		collection: 'collection',
-		aiInspired: 'ai-inspired'
+		aiInspired: 'ai-inspired',
+		promptHeaders: 'prompt-headers',
 	},
 	associations: {
 		singleAssociation: 'single-association',
@@ -769,7 +771,8 @@ export const Actions = {
 		updateFilesSubmissionLimit: 'update-files-submission-limit',
 		updateDefaultScoringRubric: 'update-default-scoring-rubric',
 		updateNotificationEmail: 'update-notification-email',
-		updateAllowTextSubmission: 'update-allow-text-submission'
+		updateAllowTextSubmission: 'update-allow-text-submission',
+		updatePromptHeaders: 'update-prompt-headers',
 	},
 	content: {
 		updateTitle: 'update-title',
