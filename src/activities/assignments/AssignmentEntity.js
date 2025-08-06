@@ -242,6 +242,34 @@ export class AssignmentEntity extends Entity {
 		return promptHeaders ? promptHeaders : null;
 	}
 
+	_getNumReviewsAction() {
+		if (!this._entity) {
+			return null;
+		}
+		const subEntity = this._entity.getSubEntityByClass(Classes.assignments.assignmentType.folderType);
+		if (!subEntity || !subEntity.hasActionByName(Classes.assignments.numReviews)) {
+			return null;
+		}
+		return subEntity.getActionByName(Classes.assignments.numReviews);
+	}
+
+	getNumReviews() {
+		const action = this._getNumReviewsAction();
+		if (!action || !action.hasFieldByName('numReviews')) {
+			return null;
+		}
+		// Still slightly hacky, but this gives the selected number of reviewers as an int
+		return action.getFieldByName('numReviews').value.find(option => option.selected).value;
+	}
+
+	getNumReviewsOptions() {
+		const action = this._getNumReviewsAction();
+		if (!action || !action.hasFieldByName('numReviews')) {
+			return null;
+		}
+		return action.getFieldByName('numReviews').value;
+	}
+
 	/**
 	 * @returns {bool} If the assignment type cannot be changed
 	 */
@@ -552,6 +580,17 @@ export class AssignmentEntity extends Entity {
 		}
 		const fields = [
 			{ name: 'promptHeaders', value: JSON.stringify(promptHeaders.filter(p => p.state !== 'unedited')) },
+		];
+
+		return { action, fields };
+	}
+
+	_formatUpdateNumReviewsAction(numReviews) {
+		if (typeof numReviews === 'undefined' || !this._hasNumReviewsChanged(numReviews)) return;
+
+		const action = this._getNumReviewsAction();
+		const fields = [
+			{ name: 'numReviews', value: numReviews }
 		];
 
 		return { action, fields };
@@ -1050,7 +1089,8 @@ export class AssignmentEntity extends Entity {
 		const updateNotificationEmailAction = this._formatUpdateNotificationEmailAction(assignment.notificationEmail);
 		const updateAllowTextSubmissionAction = this._formatUpdateAllowTextSubmissionAction(assignment.allowTextSubmission);
 		const updateIsAiInspiredAction = this._formatUpdateAiInspiredAction(assignment.isAiInspired);
-		const updatePromptHeaders = this._formatUpdatePromptHeadersAction(assignment.promptHeaders);
+		const updatePromptHeadersAction = this._formatUpdatePromptHeadersAction(assignment.promptHeaders);
+		const updateNumReviewsAction = this._formatUpdateNumReviewsAction(assignment.numReviews);
 		const sirenActions = [
 			updateNameAction,
 			updateInstructionsAction,
@@ -1067,7 +1107,8 @@ export class AssignmentEntity extends Entity {
 			updateNotificationEmailAction,
 			updateAllowTextSubmissionAction,
 			updateIsAiInspiredAction,
-			updatePromptHeaders
+			updatePromptHeadersAction,
+			updateNumReviewsAction,
 		];
 
 		await performSirenActions(this._token, sirenActions);
@@ -1164,6 +1205,10 @@ export class AssignmentEntity extends Entity {
 	_hasPromptHeadersChanged(promptHeaders) {
 		// If there are any entities which are not 'unedited', then the prompt headers have changed
 		return promptHeaders.some(x => x.state !== 'unedited');
+	}
+
+	_hasNumReviewsChanged(numReviews) {
+		return numReviews !== this.getNumReviews();
 	}
 
 	_hasInstructionsChanged(instructions) {

@@ -359,7 +359,8 @@ export const Classes = {
 			group: 'group',
 			peerReview: 'peer-review',
 			noGroupType: 'no-group-type',
-			hasSubmissions: 'has-submissions'
+			hasSubmissions: 'has-submissions',
+			folderType: 'folder-type',
 		},
 		attachment: 'attachment',
 		attachmentList: 'attachment-list',
@@ -377,6 +378,7 @@ export const Classes = {
 		collection: 'collection',
 		aiInspired: 'ai-inspired',
 		promptHeaders: 'prompt-headers',
+		numReviews: 'update-num-peer-reviews',
 	},
 	associations: {
 		singleAssociation: 'single-association',
