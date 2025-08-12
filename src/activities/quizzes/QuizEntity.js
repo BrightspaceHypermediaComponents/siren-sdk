@@ -75,6 +75,13 @@ export class QuizEntity extends Entity {
 		return '';
 	}
 
+	outcomesTerm() {
+		if (!this._entity || !this._entity.properties) {
+			return;
+		}
+		return this._entity.properties['outcomes-term'];
+	}
+
 	/**
 	 * @returns {bool} Whether or not the user can edit the Shuffle quiz entity property
 	 */
