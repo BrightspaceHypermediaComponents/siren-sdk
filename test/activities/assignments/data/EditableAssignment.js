@@ -3,7 +3,12 @@ export const editableAssignment = {
 		'assignment'
 	],
 	'properties': {
-		'name': 'Extra Special Assignment'
+		'name': 'Extra Special Assignment',
+		'allowedSubmissionTypesForAssetProcessor': [
+			0,
+			1,
+			4
+		]
 	},
 	'entities': [
 		{

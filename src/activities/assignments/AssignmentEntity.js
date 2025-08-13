@@ -965,6 +965,13 @@ export class AssignmentEntity extends Entity {
 		return this._entity.getLinkByRel(Rels.LTI.assetProcessorAttachedProcessors).href;
 	}
 
+	/**
+	 * @returns {string} Submission Types allowed when asset processor items are attached
+	 */
+	allowedSubmissionTypesForAssetProcessor() {
+		return this._entity && this._entity.properties && this._entity.properties.allowedSubmissionTypesForAssetProcessor;
+	}
+
 	canSave() {
 		return this._entity && this._entity.hasActionByName(Actions.assignments.update);
 	}

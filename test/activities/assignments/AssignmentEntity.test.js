@@ -53,7 +53,8 @@ describe('AssignmentEntity', () => {
 				assignmentType: 'group',
 				groupTypeId: '314',
 				filesSubmissionLimit: 'unlimited',
-				defaultScoringRubricId: null
+				defaultScoringRubricId: null,
+				allowedSubmissionTypesForAssetProcessor: [ 0, 1, 4 ],
 			})).to.be.true;
 		});
 
