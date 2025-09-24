@@ -283,7 +283,7 @@ export const Rels = {
 		intent: 'https://outcomes.api.brightspace.com/rels/intent',
 		outcome: 'https://outcomes.api.brightspace.com/rels/outcome',
 		settings: 'https://outcomes.api.brightspace.com/rels/outcomes-settings',
-		outcomeSets: 'https://outcomes.api.brightspace.com/rels/ou-outcome-set-collection'
+		outcomeSets: 'https://outcomes.api.brightspace.com/rels/outcome-sets'
 	},
 	Meetings: {
 		meetingManagementTool: 'https://meetings.api.brightspace.com/rels/meeting-management-tool'
