@@ -844,7 +844,7 @@ export class ActivityUsageEntity extends Entity {
 	/**
 	 * @returns {string} URL of outcome sets for the org unit associated with this activity usage
 	 */
-	orgUnitOutcomeSetsHref() {
+	outcomeSetsHref() {
 		if (!this._entity || !this._entity.hasLinkByRel(Rels.Outcomes.outcomeSets)) {
 			return;
 		}

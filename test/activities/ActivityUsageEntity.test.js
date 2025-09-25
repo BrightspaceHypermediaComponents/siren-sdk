@@ -83,7 +83,7 @@ describe('ActivityUsageEntity', () => {
 		});
 
 		it('can get outcome sets url', () => {
-			expect(entity.orgUnitOutcomeSetsHref()).to.equal('https://12a61d15-f4c4-4360-960e-c4fdd5bf27a6.outcomes.api.dev.brightspace.com/outcome-sets/ou/6609');
+			expect(entity.outcomeSetsHref()).to.equal('https://12a61d15-f4c4-4360-960e-c4fdd5bf27a6.outcomes.api.dev.brightspace.com/outcome-sets/ou/6609');
 		});
 	});
 
