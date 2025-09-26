@@ -200,7 +200,7 @@ export const testData = {
 			},
 			{
 				'rel': [
-					'https://outcomes.api.brightspace.com/rels/ou-outcome-set-collection'
+					'https://outcomes.api.brightspace.com/rels/outcome-sets'
 				],
 				'href': 'https://12a61d15-f4c4-4360-960e-c4fdd5bf27a6.outcomes.api.dev.brightspace.com/outcome-sets/ou/6609'
 			}
