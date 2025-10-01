@@ -81,6 +81,10 @@ describe('ActivityUsageEntity', () => {
 		it('can get create-form url', () => {
 			expect(entity.createFormHref()).to.equal('http://vlx1-mdulat.desire2learn.d2l:44444/d2l/api/hm/activities/activities/6606_2000_31/usages/6609?mode=creating');
 		});
+
+		it('can get outcome sets url', () => {
+			expect(entity.outcomeSetsHref()).to.equal('https://12a61d15-f4c4-4360-960e-c4fdd5bf27a6.outcomes.api.dev.brightspace.com/outcome-sets/ou/6609');
+		});
 	});
 
 	describe('read only loading', () => {

@@ -842,6 +842,17 @@ export class ActivityUsageEntity extends Entity {
 	}
 
 	/**
+	 * @returns {string} URL of outcome sets for the org unit associated with this activity usage
+	 */
+	outcomeSetsHref() {
+		if (!this._entity || !this._entity.hasLinkByRel(Rels.Outcomes.outcomeSets)) {
+			return;
+		}
+
+		return this._entity.getLinkByRel(Rels.Outcomes.outcomeSets).href;
+	}
+
+	/**
 	* @returns {string} URL of the associate-grade API, for managing grade association with the activity usage, using working copy, if present
 	*/
 	associateGradeHref() {
