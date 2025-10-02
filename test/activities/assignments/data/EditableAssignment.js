@@ -149,6 +149,7 @@ export const editableAssignment = {
 			],
 			'properties': {
 				'groupName': 'Project 1',
+				'groupCategoryId': '1234',
 				'informationText': 'Create new groups in the Groups tool.'
 			},
 			'entities': [

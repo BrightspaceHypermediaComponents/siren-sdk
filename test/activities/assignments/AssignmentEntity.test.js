@@ -405,4 +405,14 @@ describe('AssignmentEntity', () => {
 			expect(assignmentEntity.notificationEmail()).to.equal('test@d2l.com');
 		});
 	});
+	describe('getAssignmentTypeSelectedGroupCategoryId', () => {
+		it('returns group categoryId when entities exist', () => {
+			const assignmentEntity = new AssignmentEntity(editableEntity);
+			expect(assignmentEntity.getAssignmentTypeSelectedGroupCategoryId()).to.equal(1234);
+		});
+		it('returns null when no groupCategoryId exists', () => {
+			const assignmentEntity = new AssignmentEntity(nonEditableEntity);
+			expect(assignmentEntity.getAssignmentTypeSelectedGroupCategoryId()).to.be.null;
+		});
+	});
 });
