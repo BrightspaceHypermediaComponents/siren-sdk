@@ -224,6 +224,20 @@ export class AssignmentEntity extends Entity {
 	}
 
 	/**
+	 * @returns {string} ID of the selected group category for the assignment type
+	 */
+	getAssignmentTypeSelectedGroupCategoryId() {
+		if (!this._entity) {
+			return null;
+		}
+		const subEntity = this._entity.getSubEntityByRel(Rels.Assignments.folderType);
+		if (!subEntity || !subEntity.properties || !subEntity.properties.groupCategoryId) {
+			return null;
+		}
+		return subEntity.properties.groupCategoryId;
+	}
+
+	/**
 	 * @returns {bool} If the assignment type cannot be changed
 	 */
 	isAssignmentTypeReadOnly() {
