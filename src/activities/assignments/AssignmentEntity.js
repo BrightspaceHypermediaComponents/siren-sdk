@@ -231,10 +231,10 @@ export class AssignmentEntity extends Entity {
 			return null;
 		}
 		const subEntity = this._entity.getSubEntityByRel(Rels.Assignments.folderType);
-		if (!subEntity || !subEntity.properties || !subEntity.properties.categoryId) {
+		if (!subEntity || !subEntity.properties || !subEntity.properties.groupCategoryId) {
 			return null;
 		}
-		return subEntity.properties.categoryId;
+		return subEntity.properties.groupCategoryId;
 	}
 
 	/**
