@@ -254,7 +254,7 @@ export class ActivityUsageEntity extends Entity {
 	 * @returns {bool} Whether or not the activity is reusable
 	 */
 	isReusableActivity() {
-		return this._entity.hasClass('reusable-activity');
+		return this._entity && this._entity.hasClass(Classes.activities.reusable);
 	}
 
 	/**
