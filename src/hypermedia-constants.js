@@ -334,6 +334,7 @@ export const Classes = {
 		feedbackDate: 'feedback-date',
 		activityName: 'activity-name',
 		published: 'published',
+		reusable: 'reusable-activity',
 		scoreOutOf: 'score-out-of',
 		selected: 'selected',
 		started: 'started',

@@ -154,6 +154,12 @@ describe('ActivityUsageEntity', () => {
 			});
 		});
 
+		describe('isReusableActivity', () => {
+			it('gets isReusableActivity', () => {
+				expect(entity.isReusableActivity()).to.be.false;
+			});
+		});
+
 		describe('Draft Status', () => {
 			describe('Can edit', () => {
 				let setDraftStatusSpy;

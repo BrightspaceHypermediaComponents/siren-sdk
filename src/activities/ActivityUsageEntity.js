@@ -251,6 +251,20 @@ export class ActivityUsageEntity extends Entity {
 	}
 
 	/**
+	 * @returns {bool} Whether or not the activity is reusable
+	 */
+	isReusableActivity() {
+		return this._entity && this._entity.hasClass(Classes.activities.reusable);
+	}
+
+	/**
+	 * @returns {bool} Whether or not the to show the due date
+	 */
+	showDueDate() {
+		return !this.isReusableActivity() && this._entity.hasSubEntityByClass(Classes.dates.dueDate);
+	}
+
+	/**
 	 * @returns {string} Due date of the activity usage
 	 */
 	dueDate() {
@@ -711,6 +725,13 @@ export class ActivityUsageEntity extends Entity {
 		}
 
 		return this._entity.getLinkByRel(Rels.Grades.grade).href;
+	}
+
+	/**
+	 * @returns {bool} Whether or not the to show the score
+	 */
+	showScore() {
+		return !this.isReusableActivity() && this._entity.hasSubEntityByClass(Classes.scoreOutOf);
 	}
 
 	/**
