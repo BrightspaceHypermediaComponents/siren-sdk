@@ -261,7 +261,7 @@ export class ActivityUsageEntity extends Entity {
 	 * @returns {bool} Whether or not the to show the due date
 	 */
 	showDueDate() {
-		return !this.isReusableActivity() && this._entity.hasSubEntityByClass(Classes.dates.dueDate);
+		return !this.isReusableActivity() && this.dueDate() !== undefined;
 	}
 
 	/**
@@ -731,7 +731,7 @@ export class ActivityUsageEntity extends Entity {
 	 * @returns {bool} Whether or not the to show the score
 	 */
 	showScore() {
-		return !this.isReusableActivity() && this._entity.hasSubEntityByClass(Classes.scoreOutOf);
+		return !this.isReusableActivity() && this.scoringHref() !== undefined;
 	}
 
 	/**
