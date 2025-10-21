@@ -777,17 +777,6 @@ export class AssignmentEntity extends Entity {
 		return { fields, action };
 	}
 
-	/**
-	 * @returns {bool} Whether or not the show allow text submission is present on the assignment entity
-	 */
-	showAllowTextSubmission() {
-		return this._entity && this._entity.properties && this._entity.properties.showAllowTextSubmission;
-	}
-
-	allowTextSubmission() {
-		return this._entity && this._entity.properties && this._entity.properties.allowTextSubmission;
-	}
-
 	notificationEmail() {
 		const subEntity = this._entity && this._entity.getSubEntityByRel(Rels.Assignments.notificationEmail);
 		if (!subEntity || !subEntity.properties) {
@@ -1035,9 +1024,6 @@ export class AssignmentEntity extends Entity {
 		if (assignment.hasOwnProperty('customAllowableFileTypes')) {
 			diffs.push([this.customAllowableFileTypes(), assignment.customAllowableFileTypes]);
 		}
-		if (assignment.hasOwnProperty('allowTextSubmission')) {
-			diffs.push([this.allowTextSubmission(), assignment.allowTextSubmission]);
-		}
 		if (assignment.hasOwnProperty('allowableFileType')) {
 			diffs.push([this.allowableFileTypeValue(), assignment.allowableFileType]);
 		}
@@ -1118,10 +1104,6 @@ export class AssignmentEntity extends Entity {
 
 	_hasFileSubmissionLimitChanged(filesSubmissionLimit) {
 		return filesSubmissionLimit !== this.filesSubmissionLimit();
-	}
-
-	_hasAllowTextSubmissionChanged(allowTextSubmission) {
-		return allowTextSubmission !== this.allowTextSubmission();
 	}
 
 	_hasSubmissionsRuleChanged(submissionsRule) {
