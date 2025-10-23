@@ -777,39 +777,6 @@ export class AssignmentEntity extends Entity {
 		return { fields, action };
 	}
 
-	/**
-	 * @returns {bool} Whether or not the show allow text submission is present on the assignment entity
-	 */
-	showAllowTextSubmission() {
-		return this._entity && this._entity.properties && this._entity.properties.showAllowTextSubmission;
-	}
-
-	allowTextSubmission() {
-		return this._entity && this._entity.properties && this._entity.properties.allowTextSubmission;
-	}
-
-	canEditAllowTextSubmission() {
-		this._entity && this._entity.hasActionByName(Actions.assignments.updateAllowTextSubmission);
-	}
-
-	_formatUpdateAllowTextSubmissionAction(allowTextSubmission) {
-		if (allowTextSubmission === undefined || !this._hasAllowTextSubmissionChanged(allowTextSubmission)) {
-			return;
-		}
-
-		const action = this.canEditAllowTextSubmission && this._entity.getActionByName(Actions.assignments.updateAllowTextSubmission);
-		if (!action) {
-			return;
-		}
-
-		const fields = [
-			{ name: 'allowTextSubmission', value: allowTextSubmission }
-		];
-
-		return { fields, action };
-
-	}
-
 	notificationEmail() {
 		const subEntity = this._entity && this._entity.getSubEntityByRel(Rels.Assignments.notificationEmail);
 		if (!subEntity || !subEntity.properties) {
@@ -1008,7 +975,6 @@ export class AssignmentEntity extends Entity {
 		const updateformatAssignmentTypeAction = this._formatAssignmentTypeAction(assignment.assignmentType, assignment.groupTypeId);
 		const updateDefaultScoringRubricAction = this._formatDefaultScoringRubricAction(assignment.defaultScoringRubricId);
 		const updateNotificationEmailAction = this._formatUpdateNotificationEmailAction(assignment.notificationEmail);
-		const updateAllowTextSubmissionAction = this._formatUpdateAllowTextSubmissionAction(assignment.allowTextSubmission);
 		const updateIsAiInspiredAction = this._formatUpdateAiInspiredAction(assignment.isAiInspired);
 
 		const sirenActions = [
@@ -1025,7 +991,6 @@ export class AssignmentEntity extends Entity {
 			updateformatAssignmentTypeAction,
 			updateDefaultScoringRubricAction,
 			updateNotificationEmailAction,
-			updateAllowTextSubmissionAction,
 			updateIsAiInspiredAction
 		];
 
@@ -1058,9 +1023,6 @@ export class AssignmentEntity extends Entity {
 		}
 		if (assignment.hasOwnProperty('customAllowableFileTypes')) {
 			diffs.push([this.customAllowableFileTypes(), assignment.customAllowableFileTypes]);
-		}
-		if (assignment.hasOwnProperty('allowTextSubmission')) {
-			diffs.push([this.allowTextSubmission(), assignment.allowTextSubmission]);
 		}
 		if (assignment.hasOwnProperty('allowableFileType')) {
 			diffs.push([this.allowableFileTypeValue(), assignment.allowableFileType]);
@@ -1142,10 +1104,6 @@ export class AssignmentEntity extends Entity {
 
 	_hasFileSubmissionLimitChanged(filesSubmissionLimit) {
 		return filesSubmissionLimit !== this.filesSubmissionLimit();
-	}
-
-	_hasAllowTextSubmissionChanged(allowTextSubmission) {
-		return allowTextSubmission !== this.allowTextSubmission();
 	}
 
 	_hasSubmissionsRuleChanged(submissionsRule) {
