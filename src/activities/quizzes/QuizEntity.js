@@ -1079,8 +1079,13 @@ export class QuizEntity extends Entity {
 	}
 
 	_formatUpdateRemediationCandidates(quiz) {
+		const SUGGEST_CONTENT = {
+			AnyAligned: '0',
+			Selected: '1'
+		};
 		if (!quiz) return;
 		if (!quiz.studySupportEnabled) return;
+		if (quiz.suggestContent === SUGGEST_CONTENT.AnyAligned) return;
 		if (!this._hasRemediationCandidatesChanged(quiz.remediationCandidates)) return;
 
 		const studySupportEntity = this._entity.getSubEntityByRel(Rels.Quizzes.studySupportEnabled);
