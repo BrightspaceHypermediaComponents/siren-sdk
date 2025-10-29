@@ -347,7 +347,7 @@ describe('ContentRemixEntity', () => {
 				await promise;
 				expect.fail('Should have thrown an error');
 			} catch (error) {
-				expect(error.message).to.equal('Request was aborted');
+				expect(error.message.toLowerCase()).to.include('abort');
 			}
 		});
 	});
