@@ -27,49 +27,12 @@ export class ContentRemixEntity extends Entity {
 		if (!remixParams) return;
 		if (!this.canPerformContentRemix()) return;
 
-		// Check if request was already aborted
-		if (abortSignal && abortSignal.aborted) {
-			throw new Error('Request was aborted');
-		}
-
 		const sirenAction = this._formatContentRemixAction(remixParams);
 		if (!sirenAction) return;
 
 		const { action, fields } = sirenAction;
 
-		// Handle abort signal by wrapping the performSirenAction with our own promise handling
-		if (abortSignal) {
-			return await this._performActionWithAbortSignal(action, fields, abortSignal);
-		}
-
-		return await performSirenAction(this._token, action, fields);
-	}
-
-	/**
-	 * @summary Performs siren action with abort signal support
-	 * @param {object} action The siren action
-	 * @param {Array} fields The action fields
-	 * @param {AbortSignal} abortSignal The abort signal
-	 * @private
-	 */
-	async _performActionWithAbortSignal(action, fields, abortSignal) {
-		// Create a promise that rejects when abort signal is triggered
-		const abortPromise = new Promise((_, reject) => {
-			if (abortSignal.aborted) {
-				reject(new Error('Request was aborted'));
-				return;
-			}
-
-			abortSignal.addEventListener('abort', () => {
-				reject(new Error('Request was aborted'));
-			}, { once: true });
-		});
-
-		// Race the actual action against the abort signal
-		return await Promise.race([
-			performSirenAction(this._token, action, fields),
-			abortPromise
-		]);
+		return await performSirenAction(this._token, action, fields, false, false, abortSignal);
 	}
 
 	/**

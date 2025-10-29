@@ -248,7 +248,7 @@ describe('ContentRemixEntity', () => {
 		});
 	});
 
-	describe('_performActionWithAbortSignal', () => {
+	describe('AbortSignal handling', () => {
 		let entity;
 
 		beforeEach(() => {
@@ -256,32 +256,95 @@ describe('ContentRemixEntity', () => {
 			entity = new ContentRemixEntity(entityJson, 'fake-token');
 		});
 
-		it('throws error when abort signal is already aborted', async() => {
+		it('passes abort signal to performSirenAction', async() => {
 			const abortController = new AbortController();
-			abortController.abort();
+			const params = {
+				originalHtmlContent: '<p>Test content</p>',
+				textComplexity: 'simple'
+			};
 
-			const mockAction = { name: 'test' };
-			const mockFields = [];
-
+			// This test verifies that the abort signal is properly passed through
+			// The actual abort behavior is tested in SirenAction.test.js
 			try {
-				await entity._performActionWithAbortSignal(mockAction, mockFields, abortController.signal);
+				// Start the operation and immediately abort
+				const promise = entity.performContentRemix(params, abortController.signal);
+				abortController.abort();
+				await promise;
 				expect.fail('Should have thrown an error');
 			} catch (error) {
 				expect(error.message).to.equal('Request was aborted');
 			}
 		});
 
-		it('throws error when abort signal is triggered during execution', async() => {
+		it('works without abort signal', async() => {
+			const params = {
+				originalHtmlContent: '<p>Test content</p>',
+				textComplexity: 'simple'
+			};
+
+			try {
+				await entity.performContentRemix(params);
+			} catch (error) {
+				expect(error.message).to.not.equal('Request was aborted');
+			}
+		});
+
+		it('handles null abort signal gracefully', async() => {
+			const params = {
+				originalHtmlContent: '<p>Test content</p>',
+				textComplexity: 'simple'
+			};
+
+			try {
+				await entity.performContentRemix(params, null);
+			} catch (error) {
+				expect(error.message).to.not.equal('Request was aborted');
+			}
+		});
+
+		it('handles undefined abort signal gracefully', async() => {
+			const params = {
+				originalHtmlContent: '<p>Test content</p>',
+				textComplexity: 'simple'
+			};
+
+			try {
+				await entity.performContentRemix(params, undefined);
+			} catch (error) {
+				expect(error.message).to.not.equal('Request was aborted');
+			}
+		});
+
+		it('abort signal aborted after creation but before call', async() => {
 			const abortController = new AbortController();
+			const params = {
+				originalHtmlContent: '<p>Test content</p>',
+				textComplexity: 'simple'
+			};
 
-			const mockAction = { name: 'test' };
-			const mockFields = [];
+			abortController.abort();
 
-			// Abort immediately
+			try {
+				await entity.performContentRemix(params, abortController.signal);
+				expect.fail('Should have thrown an error');
+			} catch (error) {
+				expect(error.message).to.equal('Request was aborted');
+			}
+		});
+
+		it('abort signal during execution', async() => {
+			const abortController = new AbortController();
+			const params = {
+				originalHtmlContent: '<p>Test content</p>',
+				textComplexity: 'simple'
+			};
+
+			const promise = entity.performContentRemix(params, abortController.signal);
+
 			setTimeout(() => abortController.abort(), 0);
 
 			try {
-				await entity._performActionWithAbortSignal(mockAction, mockFields, abortController.signal);
+				await promise;
 				expect.fail('Should have thrown an error');
 			} catch (error) {
 				expect(error.message).to.equal('Request was aborted');
