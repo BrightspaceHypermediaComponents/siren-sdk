@@ -3,7 +3,12 @@ export const editableAssignment = {
 		'assignment'
 	],
 	'properties': {
-		'name': 'Extra Special Assignment'
+		'name': 'Extra Special Assignment',
+		'allowedSubmissionTypesForAssetProcessor': [
+			0,
+			1,
+			4
+		]
 	},
 	'entities': [
 		{
@@ -144,6 +149,7 @@ export const editableAssignment = {
 			],
 			'properties': {
 				'groupName': 'Project 1',
+				'groupCategoryId': '1234',
 				'informationText': 'Create new groups in the Groups tool.'
 			},
 			'entities': [
@@ -161,24 +167,31 @@ export const editableAssignment = {
 			],
 			'actions': [
 				{
-					'href': 'https://ce6a9031-de13-4f58-bfdf-e88412930452.assignments.api.dev.brightspace.com/123065/folders/7',
-					'name': 'set-to-individual',
+					'href': 'https://5f3ff1d7-b202-4a7a-acd4-2a91bd8cdafb.assignments.api.dev.brightspace.com/6609/folders/11',
+					'name': 'update-folder-type',
 					'method': 'PATCH',
 					'fields': [
 						{
-							'type': 'hidden',
-							'name': 'groupTypeId'
-						},
-						{
-							'type': 'hidden',
+							'type': 'radio',
 							'name': 'folderType',
-							'value': 2
+							'value': [
+								{
+									'title': 'Individual',
+									'value': 2,
+									'selected': false
+								},
+								{
+									'title': 'Group',
+									'value': 1,
+									'selected': true
+								}
+							]
 						}
 					]
 				},
 				{
 					'href': 'https://ce6a9031-de13-4f58-bfdf-e88412930452.assignments.api.dev.brightspace.com/123065/folders/7',
-					'name': 'set-to-group',
+					'name': 'update-group-type',
 					'method': 'PATCH',
 					'fields': [
 						{

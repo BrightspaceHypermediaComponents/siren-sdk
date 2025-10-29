@@ -36,6 +36,7 @@ describe('QuizEntity', () => {
 				shuffle: true,
 				allowHints: true,
 				disablePagerAndAlerts: true,
+				hideQuestionPoints: true,
 				password: 'hello',
 				notificationEmail: 'moose@d2l.com',
 				preventMovingBackwards: true,
@@ -48,7 +49,12 @@ describe('QuizEntity', () => {
 				footer: 'Bottom of the quiz to ya!',
 				passingPercentage: 75,
 				studySupportEnabled: true,
-				showResultsOverview: true
+				showResultsOverview: true,
+				suggestContent: '1',
+				remediationCandidates: [{
+					ToolId: 37000,
+					ToolObjectId: 97705
+				}]
 			};
 		});
 
@@ -146,6 +152,19 @@ describe('QuizEntity', () => {
 			modifiedEntity.showResultsOverview = false;
 			expect(quizEntity.equals(modifiedEntity)).to.be.false;
 		});
+		it('returns false when suggestContent not equal', () => {
+			const quizEntity = new QuizEntity(editableEntity);
+			modifiedEntity.suggestContent = '0';
+			expect(quizEntity.equals(modifiedEntity)).to.be.false;
+		});
+		it('returns false when remediationCandidates not equal', () => {
+			const quizEntity = new QuizEntity(editableEntity);
+			modifiedEntity.remediationCandidates = [{
+				ToolId: 37000,
+				ToolObjectId: 97706
+			}];
+			expect(quizEntity.equals(modifiedEntity)).to.be.false;
+		});
 	});
 
 	describe('name', () => {
@@ -236,6 +255,32 @@ describe('QuizEntity', () => {
 			it('returns false when isDisablePagerAndAlertsEnabled is false', () => {
 				const quizEntity = new QuizEntity(nonEditableEntity);
 				expect(quizEntity.isDisablePagerAndAlertsEnabled()).to.be.false;
+			});
+		});
+	});
+
+	describe('hideQuestionPoints', () => {
+		describe('canEditHideQuestionPoints', () => {
+			it('returns true when canEditHideQuestionPoints is editable', () => {
+				const quizEntity = new QuizEntity(editableEntity);
+				expect(quizEntity.canEditHideQuestionPoints()).to.be.true;
+			});
+
+			it('returns false when canEditHideQuestionPoints is not editable', () => {
+				const quizEntity = new QuizEntity(nonEditableEntity);
+				expect(quizEntity.canEditHideQuestionPoints()).to.be.false;
+			});
+		});
+
+		describe('isHideQuestionPointsEnabled', () => {
+			it('returns true when isHideQuestionPointsEnabled is true', () => {
+				const quizEntity = new QuizEntity(editableEntity);
+				expect(quizEntity.isHideQuestionPointsEnabled()).to.be.true;
+			});
+
+			it('returns false when isHideQuestionPointsEnabled is false', () => {
+				const quizEntity = new QuizEntity(nonEditableEntity);
+				expect(quizEntity.isHideQuestionPointsEnabled()).to.be.false;
 			});
 		});
 	});
@@ -441,7 +486,13 @@ describe('QuizEntity', () => {
 				header: 'New header',
 				footer: 'New footer',
 				passingPercentage: 30,
-				studySupportEnabled: false
+				studySupportEnabled: false,
+				showResultsOverview: false,
+				suggestContent: '0',
+				remediationCandidates: [{
+					ToolId: 37000,
+					ToolObjectId: 97706
+				}]
 			});
 
 			const form = await getFormData(fetchMock.lastCall().request);
@@ -462,6 +513,9 @@ describe('QuizEntity', () => {
 				expect(form.get('footer')).to.equal('New footer');
 				expect(form.get('passingPercentage')).to.equal('30');
 				expect(form.get('studySupportEnabled')).to.equal('false');
+				expect(form.get('showResultsOverview')).to.equal(null); // not included when studySupportEnabled is false
+				expect(form.get('suggestContent')).to.equal(null); // not included when studySupportEnabled is false
+				expect(form.get('remediationCandidates')).to.equal(null); // not included when studySupportEnabled is false
 			}
 
 			expect(fetchMock.called()).to.be.true;
@@ -475,6 +529,7 @@ describe('QuizEntity', () => {
 				shuffle: true,
 				allowHints: true,
 				disablePagerAndAlerts: true,
+				hideQuestionPoints: true,
 				password: 'hello',
 				notificationEmail: 'moose@d2l.com',
 				preventMovingBackwards: true,
@@ -487,7 +542,12 @@ describe('QuizEntity', () => {
 				footer: 'Bottom of the quiz to ya!',
 				passingPercentage: 75,
 				studySupportEnabled: true,
-				showResultsOverview: true
+				showResultsOverview: true,
+				suggestContent: '1',
+				remediationCandidates: [{
+					ToolId: 37000,
+					ToolObjectId: 97705
+				}]
 			});
 
 			expect(fetchMock.done());
@@ -670,6 +730,46 @@ describe('QuizEntity', () => {
 				expect(quizEntity.showResultsOverview()).to.be.undefined;
 			});
 		});
+
+		describe('suggestContent', () => {
+			it('returns 1 when suggestContent is 1', () => {
+				const quizEntity = new QuizEntity(editableEntity);
+				expect(quizEntity.suggestContent()).to.equal('1');
+			});
+
+			it('returns undefined when suggestContent is undefined', () => {
+				const quizEntity = new QuizEntity(nonEditableEntity);
+				expect(quizEntity.suggestContent()).to.be.undefined;
+			});
+		});
+
+		describe('remediationCandidates', () => {
+			it('returns object when remediationCandidates contains an object', () => {
+				const quizEntity = new QuizEntity(editableEntity);
+				expect(quizEntity.remediationCandidates()).to.deep.include({
+					ToolId: 37000,
+					ToolObjectId: 97705
+				});
+			});
+
+			it('returns undefined when remediationCandidates is undefined', () => {
+				const quizEntity = new QuizEntity(nonEditableEntity);
+				expect(quizEntity.remediationCandidates()).to.be.undefined;
+			});
+		});
+
+		describe('studySupportCompatibility', () => {
+			const href = 'https://test.dev.brightspace.com/d2l/api/hm/quizzes/6609/quizzes/14/studySupportCompatibility';
+			it('can read studySupportCompatibility href when quiz is editable', () => {
+				const quizEntity = new QuizEntity(editableEntity);
+				expect(quizEntity.studySupportCompatibilityHref()).to.equal(href);
+			});
+
+			it('returns undefined if studySupportCompatibility is not available', () => {
+				const quizEntity = new QuizEntity(nonEditableEntity);
+				expect(quizEntity.studySupportCompatibilityHref()).to.be.undefined;
+			});
+		});
 	});
 
 	describe('syncGradebook', () => {
@@ -812,6 +912,20 @@ describe('QuizEntity', () => {
 				const quizEntity = new QuizEntity(nonEditableEntity);
 				await quizEntity.checkin();
 				expect(fetchMock.done());
+			});
+		});
+	});
+
+	describe('recommendAlignments', () => {
+		describe('Has recommend alignments endpoint', () => {
+			it('returns value when topic has reccomend alignment url', () => {
+				const quizEntity = new QuizEntity(editableEntity);
+				expect(quizEntity.recommendAlignmentsEndpoint()).to.equal('https://www.d2l.com');
+			});
+
+			it('Does not have recommend alignments endpoint', () => {
+				const quizEntity = new QuizEntity(nonEditableEntity);
+				expect(quizEntity.recommendAlignmentsEndpoint()).to.be.undefined;
 			});
 		});
 	});

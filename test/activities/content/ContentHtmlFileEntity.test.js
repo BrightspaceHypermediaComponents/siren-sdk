@@ -39,11 +39,15 @@ describe('ContentHtmlFileEntity', () => {
 		it('reads font face', () => {
 			expect(contentHtmlFileEntity.fontFace()).to.equal('arial');
 		});
+		it('reads aiHuman Origin', () => {
+			expect(contentHtmlFileEntity.aiHumanOrigin()).to.equal(0);
+		});
 	});
 
 	describe('Equality tests', () => {
 		it('Equality should return true when details match', () => {
 			const fileData = {
+				aiHumanOrigin: 0,
 				fileType: FILE_TYPES.html,
 				title: 'Test Html File Title',
 				fileHref: 'https://fake-tenant-id.files.api.proddev.d2l/my-file.html/usages/6614'
@@ -53,6 +57,7 @@ describe('ContentHtmlFileEntity', () => {
 
 		it('Equality should return false when title is different', () => {
 			const fileData = {
+				aiHumanOrigin: 0,
 				fileType: FILE_TYPES.html,
 				title: 'New Title',
 				fileHref: 'https://fake-tenant-id.files.api.proddev.d2l/my-file.html/usages/6614'
@@ -62,6 +67,7 @@ describe('ContentHtmlFileEntity', () => {
 
 		it('Equality should return false when fileHref is different', () => {
 			const fileData = {
+				aiHumanOrigin: 0,
 				fileType: FILE_TYPES.html,
 				title: 'Test Html File Title',
 				fileHref: 'https://fake-tenant-id.files.api.proddev.d2l/my-super-cool-file.html/usages/6614'

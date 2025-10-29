@@ -104,6 +104,13 @@ export class DiscussionTopicEntity extends Entity {
 		return entity && entity.hasActionByName(Actions.discussions.topic.updateParticipationOption);
 	}
 
+	recommendAlignmentsEndpoint() {
+		if (!this._entity || !this._entity.hasLinkByRel(Rels.Discussions.recommendAlignments)) {
+			return;
+		}
+		return this._entity.getLinkByRel(Rels.Discussions.recommendAlignments).href;
+	}
+
 	/**
 	 * @returns {bool} If the discussion topic requires approval is enabled.
 	 */

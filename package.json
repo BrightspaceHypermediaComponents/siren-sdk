@@ -1,6 +1,6 @@
 {
   "name": "@brightspace-hmc/siren-sdk",
-  "version": "3.17.0",
+  "version": "3.53.0",
   "type": "module",
   "description": "",
   "main": "index.js",
@@ -21,10 +21,11 @@
   },
   "dependencies": {
     "@brightspace-ui/core": "^3",
-    "@open-wc/dedupe-mixin": "^1",
+    "@open-wc/dedupe-mixin": "^2",
     "@polymer/polymer": "^3",
     "d2l-fetch": "^2",
-    "d2l-polymer-siren-behaviors": "^2"
+    "d2l-polymer-siren-behaviors": "^2",
+    "lodash-es": "^4.17.21"
   },
   "devDependencies": {
     "@babel/core": "^7",

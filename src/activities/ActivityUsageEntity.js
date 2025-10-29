@@ -251,6 +251,20 @@ export class ActivityUsageEntity extends Entity {
 	}
 
 	/**
+	 * @returns {bool} Whether or not the activity is reusable
+	 */
+	isReusableActivity() {
+		return this._entity && this._entity.hasClass(Classes.activities.reusable);
+	}
+
+	/**
+	 * @returns {bool} Whether or not the to show the due date
+	 */
+	showDueDate() {
+		return !this.isReusableActivity() && this._entity.hasSubEntityByClass(Classes.dates.dueDate);
+	}
+
+	/**
 	 * @returns {string} Due date of the activity usage
 	 */
 	dueDate() {
@@ -682,6 +696,13 @@ export class ActivityUsageEntity extends Entity {
 	}
 
 	/**
+	 * @returns {bool} Whether or not the activity usage entity has AI modify content functionality enabled
+	 */
+	isAIContentEnabled() {
+		return this._entity && this._entity.hasClass('ai-content-enabled');
+	}
+
+	/**
 	 * @returns {bool} Whether or not the activity usage entity is draft
 	 */
 	isDraft() {
@@ -704,6 +725,13 @@ export class ActivityUsageEntity extends Entity {
 		}
 
 		return this._entity.getLinkByRel(Rels.Grades.grade).href;
+	}
+
+	/**
+	 * @returns {bool} Whether or not the to show the score
+	 */
+	showScore() {
+		return !this.isReusableActivity() && this._entity.hasSubEntityByClass(Classes.scoreOutOf);
 	}
 
 	/**
@@ -832,6 +860,17 @@ export class ActivityUsageEntity extends Entity {
 		}
 
 		return this._entity.getLinkByRel(Rels.Alignments.alignmentsHierarchical).href;
+	}
+
+	/**
+	 * @returns {string} URL of outcome sets for the org unit associated with this activity usage
+	 */
+	outcomeSetsHref() {
+		if (!this._entity || !this._entity.hasLinkByRel(Rels.Outcomes.outcomeSets)) {
+			return;
+		}
+
+		return this._entity.getLinkByRel(Rels.Outcomes.outcomeSets).href;
 	}
 
 	/**

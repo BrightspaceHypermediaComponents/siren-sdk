@@ -224,6 +224,20 @@ export class AssignmentEntity extends Entity {
 	}
 
 	/**
+	 * @returns {string} ID of the selected group category for the assignment type
+	 */
+	getAssignmentTypeSelectedGroupCategoryId() {
+		if (!this._entity) {
+			return null;
+		}
+		const subEntity = this._entity.getSubEntityByRel(Rels.Assignments.folderType);
+		if (!subEntity || !subEntity.properties || !subEntity.properties.groupCategoryId) {
+			return null;
+		}
+		return subEntity.properties.groupCategoryId;
+	}
+
+	/**
 	 * @returns {bool} If the assignment type cannot be changed
 	 */
 	isAssignmentTypeReadOnly() {
@@ -235,8 +249,7 @@ export class AssignmentEntity extends Entity {
 		if (!subEntity) {
 			return false;
 		}
-		return !subEntity.hasActionByName(Actions.assignments.setToGroup) &&
-			!subEntity.hasActionByName(Actions.assignments.setToIndividual);
+		return !subEntity.hasActionByName(Actions.assignments.updateFolderType);
 	}
 
 	/**
@@ -288,17 +301,23 @@ export class AssignmentEntity extends Entity {
 	}
 
 	/**
-	 * @returns {bool} If the assignment type is set to individual assignment
+	 * @returns {String} The assignmentType of the assignment
 	 */
-	isIndividualAssignmentType() {
+	getAssignmentType() {
 		if (!this._entity) {
-			return false;
+			return;
 		}
 		const subEntity = this._entity.getSubEntityByRel(Rels.Assignments.folderType);
 		if (!subEntity) {
-			return false;
+			return;
 		}
-		return subEntity.hasClass(Classes.assignments.assignmentType.individual);
+		if (subEntity.hasClass(Classes.assignments.assignmentType.individual)) {
+			return Classes.assignments.assignmentType.individual;
+		} else if (subEntity.hasClass(Classes.assignments.assignmentType.group)) {
+			return Classes.assignments.assignmentType.group;
+		} else {
+			return;
+		}
 	}
 
 	/**
@@ -312,7 +331,7 @@ export class AssignmentEntity extends Entity {
 		if (!subEntity) {
 			return [];
 		}
-		const action = subEntity.getActionByName(Actions.assignments.setToGroup);
+		const action = subEntity.getActionByName(Actions.assignments.updateGroupType);
 		if (!action || !action.hasFieldByName('groupTypeId')) {
 			return [];
 		}
@@ -522,11 +541,11 @@ export class AssignmentEntity extends Entity {
 
 	/**
 	 * Sets the group/individual status for an assignment
-	 * @param {boolean} isIndividualAssignmentType Allowable filetype option
+	 * @param {String} assignmentType Allowable filetype option see https://docs.valence.desire2learn.com/res/dropbox.html#term-DROPBOXTYPE_T
 	 * @param {Number} groupTypeId Group id
 	 */
-	_formatIndividualAssignmentTypeAction(isIndividualAssignmentType, groupTypeId) {
-		if (!this._entity || isIndividualAssignmentType === undefined || this.isAssignmentTypeReadOnly()) {
+	_formatAssignmentTypeAction(assignmentType, groupTypeId) {
+		if (!this._entity || assignmentType === undefined || this.isAssignmentTypeReadOnly()) {
 			return;
 		}
 
@@ -538,16 +557,23 @@ export class AssignmentEntity extends Entity {
 		const fields = [];
 		let action;
 
-		if (isIndividualAssignmentType) {
-			action = subEntity.getActionByName(Actions.assignments.setToIndividual);
+		switch (assignmentType) {
+			case Classes.assignments.assignmentType.individual:
+				action = subEntity.getActionByName(Actions.assignments.updateFolderType);
+				fields.push({ name: 'groupTypeId', value: null });
+				fields.push({ name: 'folderType', value: 2 });
+				break;
 
-			fields.push({ name: 'groupTypeId', value: null });
-			fields.push({ name: 'folderType', value: 2 });
-		} else if (!isIndividualAssignmentType && !this.isGroupAssignmentTypeDisabled()) {
-			action = subEntity.getActionByName(Actions.assignments.setToGroup);
-
-			fields.push({ name: 'groupTypeId', value: groupTypeId });
-			fields.push({ name: 'folderType', value: 1 });
+			case Classes.assignments.assignmentType.group:
+				if (!this.isGroupAssignmentTypeDisabled()) {
+					action = subEntity.getActionByName(Actions.assignments.updateFolderType);
+					fields.push({ name: 'groupTypeId', value: groupTypeId });
+					fields.push({ name: 'folderType', value: 1 });
+				}
+				break;
+			default:
+				// Handle invalid or unsupported AssignmentType
+				return;
 		}
 
 		if (!action || fields.length < 1) {
@@ -751,39 +777,6 @@ export class AssignmentEntity extends Entity {
 		return { fields, action };
 	}
 
-	/**
-	 * @returns {bool} Whether or not the show allow text submission is present on the assignment entity
-	 */
-	showAllowTextSubmission() {
-		return this._entity && this._entity.properties && this._entity.properties.showAllowTextSubmission;
-	}
-
-	allowTextSubmission() {
-		return this._entity && this._entity.properties && this._entity.properties.allowTextSubmission;
-	}
-
-	canEditAllowTextSubmission() {
-		this._entity && this._entity.hasActionByName(Actions.assignments.updateAllowTextSubmission);
-	}
-
-	_formatUpdateAllowTextSubmissionAction(allowTextSubmission) {
-		if (allowTextSubmission === undefined || !this._hasAllowTextSubmissionChanged(allowTextSubmission)) {
-			return;
-		}
-
-		const action = this.canEditAllowTextSubmission && this._entity.getActionByName(Actions.assignments.updateAllowTextSubmission);
-		if (!action) {
-			return;
-		}
-
-		const fields = [
-			{ name: 'allowTextSubmission', value: allowTextSubmission }
-		];
-
-		return { fields, action };
-
-	}
-
 	notificationEmail() {
 		const subEntity = this._entity && this._entity.getSubEntityByRel(Rels.Assignments.notificationEmail);
 		if (!subEntity || !subEntity.properties) {
@@ -931,6 +924,35 @@ export class AssignmentEntity extends Entity {
 		return this._entity.getLinkByRel(Rels.Assignments.attachments).href;
 	}
 
+	/**
+	 * @returns {string} URL of the assignment's asset processor deep links collection
+	 */
+	assetProcessorDeepLinksCollectionHref() {
+		if (!this._entity || !this._entity.hasLinkByRel(Rels.LTI.assetProcessorDeepLinks)) {
+			return;
+		}
+
+		return this._entity.getLinkByRel(Rels.LTI.assetProcessorDeepLinks).href;
+	}
+
+	/**
+	 * @returns {string} URL of the assignment's asset processor attached processors collection
+	 */
+	assetProcessorAttachedProcessorsCollectionHref() {
+		if (!this._entity || !this._entity.hasLinkByRel(Rels.LTI.assetProcessorAttachedProcessors)) {
+			return;
+		}
+
+		return this._entity.getLinkByRel(Rels.LTI.assetProcessorAttachedProcessors).href;
+	}
+
+	/**
+	 * @returns {string} Submission Types allowed when asset processor items are attached
+	 */
+	allowedSubmissionTypesForAssetProcessor() {
+		return this._entity && this._entity.properties && this._entity.properties.allowedSubmissionTypesForAssetProcessor;
+	}
+
 	canSave() {
 		return this._entity && this._entity.hasActionByName(Actions.assignments.update);
 	}
@@ -950,10 +972,9 @@ export class AssignmentEntity extends Entity {
 		const updateFileSubmissionLimitAction = this._formatFileSubmissionLimitAction(assignment.filesSubmissionLimit);
 		const updateSubmissionRuleAction = this._formatSubmissionsRuleAction(assignment.submissionsRule);
 		const updateCompletionTypeAction = this._formatCompletionTypeAction(assignment.completionType);
-		const updateIsIndividualAssignmentTypeAction = this._formatIndividualAssignmentTypeAction(assignment.isIndividualAssignmentType, assignment.groupTypeId);
+		const updateformatAssignmentTypeAction = this._formatAssignmentTypeAction(assignment.assignmentType, assignment.groupTypeId);
 		const updateDefaultScoringRubricAction = this._formatDefaultScoringRubricAction(assignment.defaultScoringRubricId);
 		const updateNotificationEmailAction = this._formatUpdateNotificationEmailAction(assignment.notificationEmail);
-		const updateAllowTextSubmissionAction = this._formatUpdateAllowTextSubmissionAction(assignment.allowTextSubmission);
 		const updateIsAiInspiredAction = this._formatUpdateAiInspiredAction(assignment.isAiInspired);
 
 		const sirenActions = [
@@ -967,10 +988,9 @@ export class AssignmentEntity extends Entity {
 			updateFileSubmissionLimitAction,
 			updateSubmissionRuleAction,
 			updateCompletionTypeAction,
-			updateIsIndividualAssignmentTypeAction,
+			updateformatAssignmentTypeAction,
 			updateDefaultScoringRubricAction,
 			updateNotificationEmailAction,
-			updateAllowTextSubmissionAction,
 			updateIsAiInspiredAction
 		];
 
@@ -983,7 +1003,7 @@ export class AssignmentEntity extends Entity {
 			[this.instructionsEditorHtml(), assignment.instructions],
 			[this.submissionType() && String(this.submissionType().value), assignment.submissionType],
 			[this.getAvailableAnnotationTools(), assignment.annotationToolsAvailable],
-			[this.isIndividualAssignmentType(), assignment.isIndividualAssignmentType],
+			[this.getAssignmentType(), assignment.assignmentType],
 			[this.getDefaultScoringRubric(), assignment.defaultScoringRubricId]
 		];
 		if (assignment.hasOwnProperty('isAnonymous')) {
@@ -1004,9 +1024,6 @@ export class AssignmentEntity extends Entity {
 		if (assignment.hasOwnProperty('customAllowableFileTypes')) {
 			diffs.push([this.customAllowableFileTypes(), assignment.customAllowableFileTypes]);
 		}
-		if (assignment.hasOwnProperty('allowTextSubmission')) {
-			diffs.push([this.allowTextSubmission(), assignment.allowTextSubmission]);
-		}
 		if (assignment.hasOwnProperty('allowableFileType')) {
 			diffs.push([this.allowableFileTypeValue(), assignment.allowableFileType]);
 		}
@@ -1017,7 +1034,7 @@ export class AssignmentEntity extends Entity {
 			}
 		}
 
-		if (!this.isAssignmentTypeReadOnly() && !assignment.isIndividualAssignmentType && !this.isGroupAssignmentTypeDisabled()) {
+		if (!this.isAssignmentTypeReadOnly() && assignment.assignmentType === Classes.assignments.assignmentType.group && !this.isGroupAssignmentTypeDisabled()) {
 			const selected = this.getAssignmentTypeGroupCategoryOptions().find(x => x.selected);
 			if (String(selected && selected.value) !== assignment.groupTypeId) {
 				return false;
@@ -1087,10 +1104,6 @@ export class AssignmentEntity extends Entity {
 
 	_hasFileSubmissionLimitChanged(filesSubmissionLimit) {
 		return filesSubmissionLimit !== this.filesSubmissionLimit();
-	}
-
-	_hasAllowTextSubmissionChanged(allowTextSubmission) {
-		return allowTextSubmission !== this.allowTextSubmission();
 	}
 
 	_hasSubmissionsRuleChanged(submissionsRule) {

@@ -161,12 +161,15 @@ export const Rels = {
 		topicCategories: 'https://discussions.api.brightspace.com/rels/topic-categories',
 		topic: 'https://discussions.api.brightspace.com/rels/topic',
 		groupSectionRestrictions: 'https://discussions.api.brightspace.com/rels/group-section-restrictions',
-		groupSectionRestrictionsDetail: 'https://discussions.api.brightspace.com/rels/topic/group-section-restrictions-detail'
+		groupSectionRestrictionsDetail: 'https://discussions.api.brightspace.com/rels/topic/group-section-restrictions-detail',
+		recommendAlignments: 'https://discussions.api.brightspace.com/rels/recommend-alignments'
 	},
 	// Files API sub-domain rels
 	Files: {
 		files: 'https://files.api.brightspace.com/rels/files',
-		file: 'https://files.api.brightspace.com/rels/file'
+		file: 'https://files.api.brightspace.com/rels/file',
+		recommendAlignments: 'https://files.api.brightspace.com/rels/recommend-alignments',
+		remixContent: 'https://files.api.brightspace.com/rels/remix-content'
 	},
 	// Folio API sub-domain rels
 	Folio: {
@@ -209,6 +212,7 @@ export const Rels = {
 		header: 'https://quizzes.api.brightspace.com/rels/header',
 		footer: 'https://quizzes.api.brightspace.com/rels/footer',
 		shuffle: 'https://quizzes.api.brightspace.com/rels/shuffle',
+		hideQuestionPoints: 'https://quizzes.api.brightspace.com/rels/hide-question-points',
 		hints: 'https://quizzes.api.brightspace.com/rels/has-hints',
 		disableRightClick: 'https://quizzes.api.brightspace.com/rels/disable-right-click',
 		disablePagerAndAlerts: 'https://quizzes.api.brightspace.com/rels/disable-pager-access',
@@ -229,7 +233,11 @@ export const Rels = {
 		hasAttempts: 'https://quizzes.api.brightspace.com/rels/has-attempts',
 		questionText: 'https://questions.api.brightspace.com/rels/questionText',
 		studySupportEnabled: 'https://quizzes.api.brightspace.com/rels/study-support-enabled',
-		showResultsOverview: 'https://quizzes.api.brightspace.com/rels/show-results-overview'
+		studySupportCompatibility: 'https://quizzes.api.brightspace.com/rels/study-support-compatibility',
+		showResultsOverview: 'https://quizzes.api.brightspace.com/rels/show-results-overview',
+		suggestContent: 'https://quizzes.api.brightspace.com/rels/suggest-content-selection',
+		remediationCandidates: 'https://quizzes.api.brightspace.com/rels/remediation-candidates',
+		recommendAlignments: 'https://quizzes.api.brightspace.com/rels/recommend-alignments'
 	},
 	// Themes API sub-domain rels
 	Themes: {
@@ -274,7 +282,8 @@ export const Rels = {
 		intents: 'https://outcomes.api.brightspace.com/rels/intents',
 		intent: 'https://outcomes.api.brightspace.com/rels/intent',
 		outcome: 'https://outcomes.api.brightspace.com/rels/outcome',
-		settings: 'https://outcomes.api.brightspace.com/rels/outcomes-settings'
+		settings: 'https://outcomes.api.brightspace.com/rels/outcomes-settings',
+		outcomeSets: 'https://outcomes.api.brightspace.com/rels/outcome-sets'
 	},
 	Meetings: {
 		meetingManagementTool: 'https://meetings.api.brightspace.com/rels/meeting-management-tool'
@@ -293,6 +302,10 @@ export const Rels = {
 		semesters: 'https://organizations.api.brightspace.com/rels/ancestors#semesters',
 		components: 'https://organizations.api.brightspace.com/rels/components',
 		userProgress: 'https://organizations.api.brightspace.com/rels/user-progress'
+	},
+	LTI: {
+		assetProcessorDeepLinks: 'https://lti.api.brightspace.com/rels/asset-processor-deep-links',
+		assetProcessorAttachedProcessors: 'https://lti.api.brightspace.com/rels/asset-processor-attached-processors',
 	}
 };
 
@@ -321,6 +334,7 @@ export const Classes = {
 		feedbackDate: 'feedback-date',
 		activityName: 'activity-name',
 		published: 'published',
+		reusable: 'reusable-activity',
 		scoreOutOf: 'score-out-of',
 		selected: 'selected',
 		started: 'started',
@@ -342,6 +356,7 @@ export const Classes = {
 		assignmentSubmission: 'assignment-submission',
 		assignmentType: {
 			individual: 'individual',
+			group: 'group',
 			noGroupType: 'no-group-type',
 			hasSubmissions: 'has-submissions'
 		},
@@ -389,6 +404,7 @@ export const Classes = {
 		rawDescription: 'raw-description',
 		lastModified: 'lastModified',
 		aiInspired: 'ai-inspired',
+		AIContentEnabled: 'ai-content-enabled'
 	},
 	contentStyler: {
 		contentStyler: 'content-styler',
@@ -495,6 +511,7 @@ export const Classes = {
 		hints: 'has-hints',
 		disableRightClick: 'disable-right-click',
 		disablePagerAndAlerts: 'disable-pager-access',
+		hideQuestionPoints: 'hide-question-points',
 		checked: 'checked',
 		password: 'password',
 		notificationEmail: 'notificationEmail',
@@ -503,7 +520,10 @@ export const Classes = {
 		syncGradebook: 'sync-gradebook',
 		default: 'default',
 		studySupportEnabled: 'study-support-enabled',
+		studySupportCompatible: 'study-support-compatible',
 		showResultsOverview: 'show-results-overview',
+		suggestContent: 'suggest-content-selection',
+		remediationCandidates: 'remediation-candidates',
 		timing: {
 			recommended: 'recommended',
 			enforced: 'enforced',
@@ -631,6 +651,10 @@ export const Classes = {
 			targetLog: 'target-log',
 			sourceLog: 'source-log'
 		}
+	},
+	assetProcessor: {
+		deepLink: 'asset-processor-deep-link',
+		attachedProcessor: 'asset-processor-attached-processor'
 	}
 };
 
@@ -728,8 +752,8 @@ export const Actions = {
 	assignments: {
 		assign: 'assign',
 		delete: 'delete',
-		setToGroup: 'set-to-group',
-		setToIndividual: 'set-to-individual',
+		updateGroupType: 'update-group-type',
+		updateFolderType: 'update-folder-type',
 		updateInstructions: 'update-instructions',
 		anonymousMarking: {
 			updateAnonymousMarking: 'update-anonymous-marking'
@@ -744,8 +768,7 @@ export const Actions = {
 		update: 'quick-create-folder',
 		updateFilesSubmissionLimit: 'update-files-submission-limit',
 		updateDefaultScoringRubric: 'update-default-scoring-rubric',
-		updateNotificationEmail: 'update-notification-email',
-		updateAllowTextSubmission: 'update-allow-text-submission'
+		updateNotificationEmail: 'update-notification-email'
 	},
 	content: {
 		updateTitle: 'update-title',
@@ -753,7 +776,8 @@ export const Actions = {
 		updateLor: 'update-lor',
 		updateCompletionCriteria: 'update-completion-criteria',
 		updateColor: 'update-color',
-		updateAiOrigin: 'update-ai-origin'
+		updateAiOrigin: 'update-ai-origin',
+		saveObjectToCreateSpace: 'save-object-to-create-space',
 	},
 	module: {
 		deleteModule: 'delete-module'
@@ -875,6 +899,7 @@ export const Actions = {
 		updateHints: 'update-hints',
 		updateDisableRightClick: 'update-disable-right-click',
 		updateDisablePagerAndAlerts: 'update-disable-pager-access',
+		updateHideQuestionPoints: 'update-hide-question-points',
 		updatePassword: 'update-quiz-password',
 		updateNotificationEmail: 'update-notification-email',
 		updatePreventMovingBackwards: 'update-prevent-moving-backwards',
@@ -889,6 +914,8 @@ export const Actions = {
 		getActivityTypes: 'get-activity-types',
 		updateStudySupportEnabled: 'study-support-enabled',
 		updateShowResultsOverview: 'show-results-overview',
+		updateSuggestContent: 'suggest-content-selection',
+		updateRemediationCandidates: 'remediation-candidates',
 		timing: {
 			updateType: 'update-timing-type',
 			updateTimeLimit: 'update-timing-time-limit',
@@ -956,5 +983,10 @@ export const Actions = {
 		checkout: 'checkout',
 		checkin: 'checkin',
 		commit: 'commit'
+	},
+	LTI: {
+		enableAssetProcessor: 'enable-asset-processor',
+		disableAssetProcessor: 'disable-asset-processor',
+		deleteAssetProcessor: 'delete-asset-processor'
 	}
 };

@@ -30,6 +30,19 @@ export const contentModuleData = {
 			'href': 'https://fake-tenant-id.modules.api.proddev.d2l/6613/modules/12345',
 			'name': 'delete-module',
 			'method': 'DELETE'
+		},
+		{
+			'href': 'https://fake-tenant-id.modules.api.proddev.d2l/6613/modules/12345',
+			'name': 'update-ai-origin',
+			'method': 'PATCH',
+			'fields': [
+				{
+					'class': ['required'],
+					'type': 'number',
+					'name': 'aiHumanOrigin',
+					'value': 0
+				}
+			]
 		}
 	],
 	'class': [
@@ -43,7 +56,6 @@ export const contentModuleData = {
 		'customAccentColor': 'FF0000',
 		'orgUnitId': '6613',
 		'moduleId': '12345',
-		'registryId': '38db1f7d-7917-445d-867e-67034387744b',
 		'aiHumanOrigin': 0
 	},
 	'entities': [

@@ -180,6 +180,12 @@ export const editableDiscussionTopic = {
 			],
 			'href': `https://${tenantId}.discussions.api.dev.brightspace.com/6613/forums/10003`
 		},
+		{
+			'rel': [
+				'https://discussions.api.brightspace.com/rels/recommend-alignments'
+			],
+			'href': 'https://www.d2l.com'
+		},
 	],
 	'rel': [
 		'https://discussions.api.brightspace.com/rels/topic'

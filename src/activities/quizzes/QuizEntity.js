@@ -2,6 +2,7 @@ import { Actions, Classes, Rels } from '../../hypermedia-constants.js';
 import { performSirenAction, performSirenActions } from '../../es6/SirenAction.js';
 import { ActivityTypeEntity } from './types/ActivityTypeEntity.js';
 import { Entity } from '../../es6/Entity.js';
+import isEqual from 'lodash-es/isEqual';
 
 /**
  * QuizEntity class representation of a d2l Quiz.
@@ -74,6 +75,13 @@ export class QuizEntity extends Entity {
 		return '';
 	}
 
+	outcomesTerm() {
+		if (!this._entity || !this._entity.properties) {
+			return;
+		}
+		return this._entity.properties['outcomes-term'];
+	}
+
 	/**
 	 * @returns {bool} Whether or not the user can edit the Shuffle quiz entity property
 	 */
@@ -143,6 +151,22 @@ export class QuizEntity extends Entity {
 	 */
 	isDisablePagerAndAlertsEnabled() {
 		const entity = this._entity.getSubEntityByRel(Rels.Quizzes.disablePagerAndAlerts);
+		return entity && entity.hasClass(Classes.quizzes.checked);
+	}
+
+	/**
+	 * @returns {bool} Whether or not the user can edit the HideQuestionPoints quiz entity property
+	 */
+	canEditHideQuestionPoints() {
+		const entity = this._entity.getSubEntityByRel(Rels.Quizzes.hideQuestionPoints);
+		return entity && entity.hasActionByName(Actions.quizzes.updateHideQuestionPoints);
+	}
+
+	/**
+	 * @returns {bool} Whether or not HideQuestionPoints are enabled for the quiz entity
+	 */
+	isHideQuestionPointsEnabled() {
+		const entity = this._entity.getSubEntityByRel(Rels.Quizzes.hideQuestionPoints);
 		return entity && entity.hasClass(Classes.quizzes.checked);
 	}
 
@@ -255,6 +279,24 @@ export class QuizEntity extends Entity {
 		const studySupportEntity = this._entity.getSubEntityByRel(Rels.Quizzes.studySupportEnabled);
 		const showResultsOverviewEntity = studySupportEntity.getSubEntityByRel(Rels.Quizzes.showResultsOverview);
 		return showResultsOverviewEntity && showResultsOverviewEntity.hasClass(Classes.quizzes.checked);
+	}
+
+	suggestContent() {
+		if (!this.isStudySupportEnabledVisible()) {
+			return;
+		}
+		const studySupportEntity = this._entity.getSubEntityByRel(Rels.Quizzes.studySupportEnabled);
+		const suggestContentEntity = studySupportEntity.getSubEntityByRel(Rels.Quizzes.suggestContent);
+		return suggestContentEntity && suggestContentEntity.properties.suggestContentSelection.toString();
+	}
+
+	remediationCandidates() {
+		if (!this.isStudySupportEnabledVisible()) {
+			return;
+		}
+		const studySupportEntity = this._entity.getSubEntityByRel(Rels.Quizzes.studySupportEnabled);
+		const remediationCandidatesEntity = studySupportEntity.getSubEntityByRel(Rels.Quizzes.remediationCandidates);
+		return remediationCandidatesEntity && remediationCandidatesEntity.properties.remediationCandidates;
 	}
 
 	/**
@@ -380,6 +422,13 @@ export class QuizEntity extends Entity {
 		return headerEntity
 			&& headerEntity.properties
 			&& headerEntity.properties.text;
+	}
+
+	recommendAlignmentsEndpoint() {
+		if (!this._entity || !this._entity.hasLinkByRel(Rels.Quizzes.recommendAlignments)) {
+			return;
+		}
+		return this._entity.getLinkByRel(Rels.Quizzes.recommendAlignments).href;
 	}
 
 	/**
@@ -663,6 +712,14 @@ export class QuizEntity extends Entity {
 		return this._entity.getLinkByRel('hasNonAutoGradingQuestion').href;
 	}
 
+	studySupportCompatibilityHref() {
+		const entity = this._entity.getSubEntityByRel(Rels.Quizzes.studySupportEnabled);
+		if (!entity || !entity.hasLinkByRel(Rels.Quizzes.studySupportCompatibility)) {
+			return;
+		}
+		return entity.getLinkByRel(Rels.Quizzes.studySupportCompatibility).href;
+	}
+
 	async save(quiz) {
 		if (!quiz) return;
 		const updateNameAction = this.canEditName() ? this._formatUpdateNameAction(quiz) : null;
@@ -670,6 +727,7 @@ export class QuizEntity extends Entity {
 		const updateHintsAction = this.canEditHints() ? this._formatUpdateHintsAction(quiz) : null;
 		const updateDisableRightClickAction = this.canEditDisableRightClick() ? this._formatUpdateDisableRightClickAction(quiz) : null;
 		const updateDisablePagerAndAlerts = this.canEditDisablePagerAndAlerts() ? this._formatUpdateDisablePagerAndAlerts(quiz) : null;
+		const updateHideQuestionPoints = this.canEditHideQuestionPoints() ? this._formatUpdateHideQuestionPoints(quiz) : null;
 		const updatePasswordAction = this.canEditPassword() ? this._formatUpdatePasswordAction(quiz) : null;
 		const updateNotificationEmail = this.canEditNotificationEmail() ? this._formatNotificationEmailAction(quiz) : null;
 		const updatePreventMovingBackwards = this.canEditPreventMovingBackwards() ? this._formatUpdatePreventMovingBackwards(quiz) : null;
@@ -683,6 +741,8 @@ export class QuizEntity extends Entity {
 		const updatePassingPercentageAction = this.canEditPassingPercentage() ? this._formatPassingPercentageAction(quiz) : null;
 		const updateStudySupportEnabledAction = this.canEditStudySupportEnabled() ? this._formatUpdateStudySupportEnabled(quiz) : null;
 		const updateShowResultsOverviewAction = this.canEditStudySupportEnabled() ? this._formatUpdateShowResultsOverview(quiz) : null;
+		const updateSuggestContentAction = this.canEditStudySupportEnabled() ? this._formatUpdateSuggestContent(quiz) : null;
+		const updateRemediationCandidatesAction = this.canEditStudySupportEnabled() ? this._formatUpdateRemediationCandidates(quiz) : null;
 
 		const sirenActions = [
 			updateNameAction,
@@ -690,6 +750,7 @@ export class QuizEntity extends Entity {
 			updateHintsAction,
 			updateDisableRightClickAction,
 			updateDisablePagerAndAlerts,
+			updateHideQuestionPoints,
 			updatePasswordAction,
 			updateNotificationEmail,
 			updatePreventMovingBackwards,
@@ -702,7 +763,9 @@ export class QuizEntity extends Entity {
 			updateFooterAction,
 			updatePassingPercentageAction,
 			updateStudySupportEnabledAction,
-			updateShowResultsOverviewAction
+			updateShowResultsOverviewAction,
+			updateSuggestContentAction,
+			updateRemediationCandidatesAction
 		];
 		await performSirenActions(this._token, sirenActions);
 	}
@@ -837,6 +900,27 @@ export class QuizEntity extends Entity {
 	}
 
 	/**
+	 * Checks if quiz hideQuestionPoints has changed and if so returns the appropriate action/fields to update
+	 * @param {object} quiz the quiz that's being modified
+	 */
+
+	_formatUpdateHideQuestionPoints(quiz) {
+		if (!quiz) return;
+		if (!this._hasHideQuestionPointsChanged(quiz.hideQuestionPoints)) return;
+
+		const entity = this._entity.getSubEntityByRel(Rels.Quizzes.hideQuestionPoints);
+		if (!entity) return;
+
+		const action = entity.getActionByName(Actions.quizzes.updateHideQuestionPoints);
+		if (!action) return;
+
+		const fields = [
+			{ name: 'hideQuestionPoints', value: quiz.hideQuestionPoints },
+		];
+
+		return { action, fields };
+	}
+	/**
 	 * Checks if quiz password has changed and if so returns the appropriate action/fields to update
 	 * @param {object} quiz the quiz that's being modified
 	*/
@@ -954,6 +1038,7 @@ export class QuizEntity extends Entity {
 
 	_formatUpdateShowResultsOverview(quiz) {
 		if (!quiz) return;
+		if (!quiz.studySupportEnabled) return;
 		if (!this._hasShowResultsOverviewChanged(quiz.showResultsOverview)) return;
 
 		const studySupportEntity = this._entity.getSubEntityByRel(Rels.Quizzes.studySupportEnabled);
@@ -969,6 +1054,55 @@ export class QuizEntity extends Entity {
 			{ name: 'showResultsOverview', value: quiz.showResultsOverview },
 		];
 
+		return { action, fields };
+	}
+
+	_formatUpdateSuggestContent(quiz) {
+		if (!quiz) return;
+		if (!quiz.studySupportEnabled) return;
+		if (!this._hasSuggestContentChanged(quiz.suggestContent)) return;
+
+		const studySupportEntity = this._entity.getSubEntityByRel(Rels.Quizzes.studySupportEnabled);
+		if (!studySupportEntity) return;
+
+		const suggestContentEntity = studySupportEntity.getSubEntityByRel(Rels.Quizzes.suggestContent);
+		if (!suggestContentEntity) return;
+
+		const action = suggestContentEntity.getActionByName(Actions.quizzes.updateSuggestContent);
+		if (!action) return;
+
+		const fields = [
+			{ name: 'suggestContentSelection', value: quiz.suggestContent },
+		];
+
+		return { action, fields };
+	}
+
+	_formatUpdateRemediationCandidates(quiz) {
+		const SUGGEST_CONTENT = {
+			AnyAligned: '0',
+			Selected: '1'
+		};
+		if (!quiz) return;
+		if (!quiz.studySupportEnabled) return;
+		if (quiz.suggestContent === SUGGEST_CONTENT.AnyAligned) return;
+		if (!this._hasRemediationCandidatesChanged(quiz.remediationCandidates)) return;
+
+		const studySupportEntity = this._entity.getSubEntityByRel(Rels.Quizzes.studySupportEnabled);
+		if (!studySupportEntity) return;
+
+		const remediationCandidatesEntity = studySupportEntity.getSubEntityByRel(Rels.Quizzes.remediationCandidates);
+		if (!remediationCandidatesEntity) return;
+
+		const action = remediationCandidatesEntity.getActionByName(Actions.quizzes.updateRemediationCandidates);
+		if (!action) return;
+
+		const formattedCandidates = quiz.remediationCandidates?.map(candidate => `${candidate.ToolId},${candidate.ToolObjectId}`) || [];
+
+		const fields = [];
+		for (const candidate of formattedCandidates) {
+			fields.push({ name: 'remediationCandidates', value: candidate });
+		}
 		return { action, fields };
 	}
 
@@ -1128,6 +1262,10 @@ export class QuizEntity extends Entity {
 		return disablePagerAndAlerts !== this.isDisablePagerAndAlertsEnabled();
 	}
 
+	_hasHideQuestionPointsChanged(hideQuestionPoints) {
+		return hideQuestionPoints !== this.isHideQuestionPointsEnabled();
+	}
+
 	_hasPasswordChanged(password) {
 		return password !== this.password();
 	}
@@ -1154,6 +1292,14 @@ export class QuizEntity extends Entity {
 
 	_hasShowResultsOverviewChanged(showResultsOverview) {
 		return showResultsOverview !== this.showResultsOverview();
+	}
+
+	_hasSuggestContentChanged(suggestContent) {
+		return suggestContent !== this.suggestContent();
+	}
+
+	_hasRemediationCandidatesChanged(remediationCandidates) {
+		return !isEqual(remediationCandidates, this.remediationCandidates());
 	}
 
 	_hasSyncGradebookChanged(syncGradebook) {
@@ -1186,6 +1332,7 @@ export class QuizEntity extends Entity {
 			[this.isShuffleEnabled(), quiz.shuffle],
 			[this.getHintsToolEnabled(), quiz.allowHints],
 			[this.isDisablePagerAndAlertsEnabled(), quiz.disablePagerAndAlerts],
+			[this.isHideQuestionPointsEnabled(), quiz.hideQuestionPoints],
 			[this.password(), quiz.password],
 			[this.notificationEmail(), quiz.notificationEmail],
 			[this.deductionPercentage(), quiz.deductionPercentage],
@@ -1197,7 +1344,8 @@ export class QuizEntity extends Entity {
 			[this.footerEditorHtml(), quiz.footer],
 			[this.passingPercentage(), quiz.passingPercentage],
 			[this.isStudySupportEnabled(), quiz.studySupportEnabled],
-			[this.showResultsOverview(), quiz.showResultsOverview]
+			[this.showResultsOverview(), quiz.showResultsOverview],
+			[this.suggestContent(), quiz.suggestContent]
 		];
 
 		for (const [left, right] of diffs) {
@@ -1205,7 +1353,8 @@ export class QuizEntity extends Entity {
 				return false;
 			}
 		}
-		return true;
+
+		return isEqual(this.remediationCandidates(), quiz.remediationCandidates);
 	}
 
 	canDelete() {

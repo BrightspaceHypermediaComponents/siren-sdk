@@ -29,6 +29,16 @@ const CLASS_FILE_TYPE_MAP = {
  * ContentFileEntity class representation of a d2l content-file entity.
  */
 export class ContentFileEntity extends ContentWorkingCopyEntity {
+	aiHumanOrigin() {
+		return this._entity && this._entity.properties && this._entity.properties.aiHumanOrigin;
+	}
+
+	recommendAlignmentsEndpoint() {
+		if (!this._entity || !this._entity.hasLinkByRel(Rels.Files.recommendAlignments)) {
+			return;
+		}
+		return this._entity.getLinkByRel(Rels.Files.recommendAlignments).href;
+	}
 
 	/**
 	 * @returns {string|null} Description html of the content-file item
@@ -64,6 +74,13 @@ export class ContentFileEntity extends ContentWorkingCopyEntity {
 	 */
 	getActivityUsageHref() {
 		return ContentHelperFunctions.getHrefFromRel(Rels.Activities.activityUsage, this._entity);
+	}
+
+	/**
+	 * @returns  {string|null} Remix Content Endpoint
+	 */
+	getRemixContentHref() {
+		return ContentHelperFunctions.getHrefFromRel(Rels.Files.remixContent, this._entity);
 	}
 
 	/**
@@ -140,6 +157,17 @@ export class ContentFileEntity extends ContentWorkingCopyEntity {
 	}
 
 	/**
+ 	* @summary Updates the module to have the given aiHumanOrigin
+ 	* @param {number} aiHumanOrigin to set on the module
+ 	*/
+	async setAiHumanOrigin(aiHumanOrigin) {
+		const action = this._entity.getActionByName(Actions.content.updateAiOrigin);
+		if (!this._entity || !action) return;
+		const fields = [{ name: 'aiHumanOrigin', value: aiHumanOrigin }];
+		await performSirenAction(this._token, action, fields);
+	}
+
+	/**
 	 * Deletes the file
 	 */
 	async deleteFile() {
@@ -183,6 +211,7 @@ export class ContentFileEntity extends ContentWorkingCopyEntity {
 	 */
 	equals(contentFile) {
 		const diffs = [
+			[this.aiHumanOrigin(), contentFile.aiHumanOrigin],
 			[this.title(), contentFile.title],
 			[this.getFileHref(), contentFile.fileHref],
 			...(contentFile.fileType !== FILE_TYPES.html ? [[this.descriptionRichText(), contentFile.descriptionRichText]] : [])

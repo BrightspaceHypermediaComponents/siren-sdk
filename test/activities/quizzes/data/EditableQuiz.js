@@ -67,7 +67,13 @@ export const editableQuiz = {
 				'https://activities.api.brightspace.com/rels/activity-usage'
 			],
 			'href': 'https://afe99802-9130-4320-a770-8d138b941e74.activities.api.proddev.d2l/activities/6606_51000_22/usages/6606'
-		}
+		},
+		{
+			'rel': [
+				'https://quizzes.api.brightspace.com/rels/recommend-alignments'
+			],
+			'href': 'https://www.d2l.com'
+		},
 	],
 	'entities': [
 		{
@@ -134,6 +140,29 @@ export const editableQuiz = {
 						{
 							'type': 'checkbox',
 							'name': 'disablePagerAccess',
+							'value': true
+						}
+					]
+				}
+			]
+		},
+		{
+			'class': [
+				'hide-question-points',
+				'checked'
+			],
+			'rel': [
+				'https://quizzes.api.brightspace.com/rels/hide-question-points'
+			],
+			'actions': [
+				{
+					'href': 'https://afe99802-9130-4320-a770-8d138b941e74.quizzes.api.proddev.d2l/6606/quizzes/22',
+					'name': 'update-hide-question-points',
+					'method': 'PATCH',
+					'fields': [
+						{
+							'type': 'checkbox',
+							'name': 'hideQuestionPoints',
 							'value': true
 						}
 					]
@@ -309,6 +338,80 @@ export const editableQuiz = {
 							]
 						}
 					]
+				},
+				{
+					'class': [
+						'suggest-content-selection'
+					],
+					'rel': [
+						'https://quizzes.api.brightspace.com/rels/suggest-content-selection'
+					],
+					'properties': {
+						'suggestContentSelection': '1'
+					},
+					'actions': [
+						{
+							'href': 'https://afe99802-9130-4320-a770-8d138b941e74.quizzes.api.proddev.d2l/6606/quizzes/22',
+							'name': 'suggest-content-selection',
+							'method': 'PATCH',
+							'fields': [
+								{
+									'type': 'radio',
+									'name': 'suggestContentSelection',
+									'value': [
+										{
+											'title': 'AnyAligned',
+											'value': '0',
+											'selected': false
+										},
+										{
+											'title': 'Selected',
+											'value': '1',
+											'selected': true
+										}
+									]
+								}
+							]
+						}
+					]
+				},
+				{
+					'class': [
+						'remediation-candidates'
+					],
+					'rel': [
+						'https://quizzes.api.brightspace.com/rels/remediation-candidates'
+					],
+					'properties': {
+						'remediationCandidates': [
+							{
+								'ToolId': 37000,
+								'ToolObjectId': 97705
+							}
+						]
+					},
+					'actions': [
+						{
+							'href': 'https://afe99802-9130-4320-a770-8d138b941e74.quizzes.api.proddev.d2l/6606/quizzes/22',
+							'name': 'remediation-candidates',
+							'method': 'PATCH',
+							'fields': [
+								{
+									'type': 'text',
+									'name': 'remediationCandidates',
+									'value': ['37000,97705']
+								}
+							]
+						}
+					]
+				}
+			],
+			'links': [
+				{
+					'rel': [
+						'https://quizzes.api.brightspace.com/rels/study-support-compatibility'
+					],
+					'href': 'https://test.dev.brightspace.com/d2l/api/hm/quizzes/6609/quizzes/14/studySupportCompatibility'
 				}
 			]
 		},

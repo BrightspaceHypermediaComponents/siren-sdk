@@ -47,10 +47,6 @@ describe('ContentModuleEntity', () => {
 			expect(contentModuleEntity.moduleId()).to.equal('12345');
 		});
 
-		it('reads registry id', () => {
-			expect(contentModuleEntity.registryId()).to.equal('38db1f7d-7917-445d-867e-67034387744b');
-		});
-
 		it('reads generate module summary url', () => {
 			expect(contentModuleEntity.generateSummaryEndpoint()).to.equal('https://fake-tenant-id.modules.api.proddev.d2l/6613/modules/12345/summary');
 		});
@@ -75,7 +71,8 @@ describe('ContentModuleEntity', () => {
 				descriptionRichText: '<p>description text</p>',
 				rawDescriptionRichText: '<p>description text</p>',
 				depth: 8675309,
-				customAccentColor: 'FF0000'
+				customAccentColor: 'FF0000',
+				aiHumanOrigin: 0
 			};
 			expect(contentModuleEntity.equals(contentModule)).to.equal(true);
 		});
@@ -86,7 +83,8 @@ describe('ContentModuleEntity', () => {
 				descriptionRichText: '<p>description text</p>',
 				rawDescriptionRichText: '<p>description text</p>',
 				depth: 8675309,
-				customAccentColor: 'FF0000'
+				customAccentColor: 'FF0000',
+				aiHumanOrigin: 0
 			};
 			expect(contentModuleEntity.equals(contentModule)).to.equal(false);
 		});
@@ -97,7 +95,8 @@ describe('ContentModuleEntity', () => {
 				descriptionRichText: '<p>Different description text</p>',
 				rawDescriptionRichText: '<p>description text</p>',
 				depth: 8675309,
-				customAccentColor: 'FF0000'
+				customAccentColor: 'FF0000',
+				aiHumanOrigin: 0
 			};
 			expect(contentModuleEntity.equals(contentModule)).to.equal(false);
 		});
@@ -108,7 +107,8 @@ describe('ContentModuleEntity', () => {
 				descriptionRichText: '<p>description text</p>',
 				rawDescriptionRichText: '<p>description text</p>',
 				depth: 1,
-				customAccentColor: 'FF0000'
+				customAccentColor: 'FF0000',
+				aiHumanOrigin: 0
 			};
 			expect(contentModuleEntity.equals(contentModule)).to.equal(false);
 		});
@@ -119,7 +119,8 @@ describe('ContentModuleEntity', () => {
 				descriptionRichText: '<p>description text</p>',
 				rawDescriptionRichText: '<p>description text</p>',
 				depth: 1,
-				customAccentColor: 'AAAAAA'
+				customAccentColor: 'AAAAAA',
+				aiHumanOrigin: 0
 			};
 			expect(contentModuleEntity.equals(contentModule)).to.equal(false);
 		});
@@ -153,6 +154,18 @@ describe('ContentModuleEntity', () => {
 		it('performs delete request', async() => {
 			fetchMock.deleteOnce('https://fake-tenant-id.modules.api.proddev.d2l/6613/modules/12345', moduleData);
 			await contentModuleEntity.deleteModule();
+			expect(fetchMock.called()).to.be.true;
+		});
+
+		it('saves aiHumanOrigin', async() => {
+			fetchMock.patchOnce('https://fake-tenant-id.modules.api.proddev.d2l/6613/modules/12345', moduleData);
+
+			await contentModuleEntity.setAiHumanOrigin(3);
+
+			const form = await getFormData(fetchMock.lastCall().request);
+			if (!form.notSupported) {
+				expect(form.get('aiHumanOrigin')).to.equal('3');
+			}
 			expect(fetchMock.called()).to.be.true;
 		});
 	});

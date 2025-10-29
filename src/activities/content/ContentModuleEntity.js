@@ -52,6 +52,17 @@ export class ContentModuleEntity extends Entity {
 	}
 
 	/**
+ 	* @summary Updates the module to have the given aiHumanOrigin
+ 	* @param {number} aiHumanOrigin to set on the module
+ 	*/
+	async setAiHumanOrigin(aiHumanOrigin) {
+		const action = this._entity.getActionByName(Actions.content.updateAiOrigin);
+		if (!this._entity || !action) return;
+		const fields = [{ name: 'aiHumanOrigin', value: aiHumanOrigin }];
+		await performSirenAction(this._token, action, fields);
+	}
+
+	/**
 	 * @returns {string|undefined} Title of the content-module item
 	 */
 	title() {
@@ -96,14 +107,6 @@ export class ContentModuleEntity extends Entity {
 	 */
 	moduleId() {
 		return this._entity && this._entity.properties && this._entity.properties.moduleId;
-	}
-
-	/**
-	 * @returns {string} The registryId of the content-module (read-only)
-	 */
-
-	registryId() {
-		return this._entity && this._entity.properties && this._entity.properties.registryId;
 	}
 
 	/**
@@ -162,6 +165,19 @@ export class ContentModuleEntity extends Entity {
 		await performSirenAction(this._token, action, fields);
 	}
 
+	async saveObjectToCreateSpace(moduleId) {
+		if (!this._entity) {
+			return;
+		}
+		const action = this._entity.getActionByName(Actions.content.saveObjectToCreateSpace);
+		if (!action) {
+			return;
+		}
+
+		const fields = [{ name: 'toolObjectId', value: moduleId }];
+		await performSirenAction(this._token, action, fields);
+	}
+
 	/**
 	 * Updates the module to have the given color
 	 * @param {string} color Color to set on the module
@@ -205,7 +221,8 @@ export class ContentModuleEntity extends Entity {
 			[this.depth(), contentModule.depth],
 			[this.descriptionRichText(), contentModule.descriptionRichText],
 			[this.rawDescriptionRichText(), contentModule.rawDescriptionRichText],
-			[this.customAccentColor(), contentModule.customAccentColor]
+			[this.customAccentColor(), contentModule.customAccentColor],
+			[this.aiHumanOrigin(), contentModule.aiHumanOrigin]
 		];
 		for (const [left, right] of diffs) {
 			if (left !== right) {
