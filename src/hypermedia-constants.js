@@ -404,7 +404,8 @@ export const Classes = {
 		rawDescription: 'raw-description',
 		lastModified: 'lastModified',
 		aiInspired: 'ai-inspired',
-		AIContentEnabled: 'ai-content-enabled'
+		AIContentEnabled: 'ai-content-enabled',
+		remixPage: 'remix-page'
 	},
 	contentStyler: {
 		contentStyler: 'content-styler',
@@ -778,6 +779,7 @@ export const Actions = {
 		updateColor: 'update-color',
 		updateAiOrigin: 'update-ai-origin',
 		saveObjectToCreateSpace: 'save-object-to-create-space',
+		contentRemix: 'simplify-content',
 	},
 	module: {
 		deleteModule: 'delete-module'
