@@ -243,7 +243,7 @@ describe('ContentRemixEntity', () => {
 				await entity.performContentRemix(params, abortController.signal);
 				expect.fail('Should have thrown an error');
 			} catch (error) {
-				expect(error.message).to.equal('Request was aborted');
+				expect(error.message).to.equal('The operation was aborted.');
 			}
 		});
 	});
@@ -272,7 +272,7 @@ describe('ContentRemixEntity', () => {
 				await promise;
 				expect.fail('Should have thrown an error');
 			} catch (error) {
-				expect(error.message).to.equal('Request was aborted');
+				expect(error.message).to.equal('The operation was aborted.');
 			}
 		});
 
@@ -285,7 +285,7 @@ describe('ContentRemixEntity', () => {
 			try {
 				await entity.performContentRemix(params);
 			} catch (error) {
-				expect(error.message).to.not.equal('Request was aborted');
+				expect(error.message).to.not.equal('The operation was aborted.');
 			}
 		});
 
@@ -298,7 +298,7 @@ describe('ContentRemixEntity', () => {
 			try {
 				await entity.performContentRemix(params, null);
 			} catch (error) {
-				expect(error.message).to.not.equal('Request was aborted');
+				expect(error.message).to.not.equal('The operation was aborted.');
 			}
 		});
 
@@ -311,7 +311,7 @@ describe('ContentRemixEntity', () => {
 			try {
 				await entity.performContentRemix(params, undefined);
 			} catch (error) {
-				expect(error.message).to.not.equal('Request was aborted');
+				expect(error.message).to.not.equal('The operation was aborted.');
 			}
 		});
 
@@ -328,7 +328,7 @@ describe('ContentRemixEntity', () => {
 				await entity.performContentRemix(params, abortController.signal);
 				expect.fail('Should have thrown an error');
 			} catch (error) {
-				expect(error.message).to.equal('Request was aborted');
+				expect(error.message).to.equal('The operation was aborted.');
 			}
 		});
 

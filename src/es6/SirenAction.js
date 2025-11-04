@@ -129,7 +129,9 @@ const _performSirenAction = function(action, fields, tokenValue, bypassCache, ab
 	}
 
 	if (abortSignal && abortSignal.aborted) {
-		return Promise.reject(new Error('Request was aborted'));
+		const error = new Error('The operation was aborted.');
+		error.name = 'AbortError';
+		return Promise.reject(error);
 	}
 
 	const headers = new Headers();

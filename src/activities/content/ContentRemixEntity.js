@@ -11,7 +11,15 @@ export class ContentRemixEntity extends Entity {
 	 * Get the characterLimit from the underlying entity
 	 */
 	get characterLimit() {
-		return this._entity?.properties.characterLimit || null;
+		return this._entity?.properties?.characterLimit || null;
+	}
+
+	get remixedHtmlContent() {
+		return this._entity?.properties?.remixedHtmlContent || null;
+	}
+
+	get properties() {
+		return { ...this._entity?.properties };
 	}
 
 	get actions() {
