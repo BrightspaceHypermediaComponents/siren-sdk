@@ -171,6 +171,22 @@ export class QuizEntity extends Entity {
 	}
 
 	/**
+	 * @returns {bool} Whether or not the user can edit the Is Single Session property
+	 */
+	canEditIsSingleSession() {
+		const entity = this._entity.getSubEntityByRel(Rels.Quizzes.isSingleSession);
+		return entity && entity.hasActionByName(Actions.quizzes.updateIsSingleSession);
+	}
+
+	/**
+	 * @returns {boolean|undefined} Is Single Session enabled for the quiz entity
+	 */
+	isSingleSessionEnabled() {
+		const entity = this._entity.getSubEntityByRel(Rels.Quizzes.isSingleSession);
+		return entity?.hasClass(Classes.quizzes.checked);
+	}
+
+	/**
 	 * @returns {bool} Whether or not the user can edit the Notification Email property
 	 */
 	canEditNotificationEmail() {
@@ -743,6 +759,7 @@ export class QuizEntity extends Entity {
 		const updateShowResultsOverviewAction = this.canEditStudySupportEnabled() ? this._formatUpdateShowResultsOverview(quiz) : null;
 		const updateSuggestContentAction = this.canEditStudySupportEnabled() ? this._formatUpdateSuggestContent(quiz) : null;
 		const updateRemediationCandidatesAction = this.canEditStudySupportEnabled() ? this._formatUpdateRemediationCandidates(quiz) : null;
+		const updateIsSingleSessionAction = this.canEditIsSingleSession() ? this._formatUpdateIsSingleSession(quiz) : null;
 
 		const sirenActions = [
 			updateNameAction,
@@ -765,7 +782,8 @@ export class QuizEntity extends Entity {
 			updateStudySupportEnabledAction,
 			updateShowResultsOverviewAction,
 			updateSuggestContentAction,
-			updateRemediationCandidatesAction
+			updateRemediationCandidatesAction,
+			updateIsSingleSessionAction
 		];
 		await performSirenActions(this._token, sirenActions);
 	}
@@ -920,6 +938,28 @@ export class QuizEntity extends Entity {
 
 		return { action, fields };
 	}
+
+	/**
+	 * Checks if quiz is single session has changed and if so returns the appropriate action/fields to update
+	 * @param {object} quiz the quiz that's being modified
+	 */
+	_formatUpdateIsSingleSession(quiz) {
+		if (!quiz) return;
+		if (!this._hasIsSingleSessionChanged(quiz.isSingleSession)) return;
+
+		const entity = this._entity.getSubEntityByRel(Rels.Quizzes.isSingleSession);
+		if (!entity) return;
+
+		const action = entity.getActionByName(Actions.quizzes.updateIsSingleSession);
+		if (!action) return;
+
+		const fields = [
+			{ name: 'isSingleSession', value: quiz.isSingleSession },
+		];
+
+		return { action, fields };
+	}
+
 	/**
 	 * Checks if quiz password has changed and if so returns the appropriate action/fields to update
 	 * @param {object} quiz the quiz that's being modified
@@ -1266,6 +1306,10 @@ export class QuizEntity extends Entity {
 		return hideQuestionPoints !== this.isHideQuestionPointsEnabled();
 	}
 
+	_hasIsSingleSessionChanged(isSingleSession) {
+		return isSingleSession !== this.isSingleSessionEnabled();
+	}
+
 	_hasPasswordChanged(password) {
 		return password !== this.password();
 	}
@@ -1345,7 +1389,8 @@ export class QuizEntity extends Entity {
 			[this.passingPercentage(), quiz.passingPercentage],
 			[this.isStudySupportEnabled(), quiz.studySupportEnabled],
 			[this.showResultsOverview(), quiz.showResultsOverview],
-			[this.suggestContent(), quiz.suggestContent]
+			[this.suggestContent(), quiz.suggestContent],
+			[this.isSingleSessionEnabled(), quiz.isSingleSession]
 		];
 
 		for (const [left, right] of diffs) {
