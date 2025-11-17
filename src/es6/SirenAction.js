@@ -123,9 +123,15 @@ const _fetch = function(href, opts) {
 		});
 };
 
-const _performSirenAction = function(action, fields, tokenValue, bypassCache) {
+const _performSirenAction = function(action, fields, tokenValue, bypassCache, abortSignal = undefined) {
 	if (!action) {
 		return Promise.reject(new Error('No action given'));
+	}
+
+	if (abortSignal && abortSignal.aborted) {
+		const error = new Error('The operation was aborted.');
+		error.name = 'AbortError';
+		return Promise.reject(error);
 	}
 
 	const headers = new Headers();
@@ -159,11 +165,17 @@ const _performSirenAction = function(action, fields, tokenValue, bypassCache) {
 
 	const token = tokenValue;
 
-	return _fetch(url.href, {
+	const fetchOptions = {
 		method: action.method,
 		body: body,
 		headers: headers
-	})
+	};
+
+	if (abortSignal) {
+		fetchOptions.signal = abortSignal;
+	}
+
+	return _fetch(url.href, fetchOptions)
 		.then((result) => {
 			const linkRequests = [];
 			if (result.links) {
@@ -241,7 +253,7 @@ export const performSirenActions = function(token, actionsAndFields) {
 			const tokenValue = resolved.tokenValue;
 			const actionPromises = combinedActions.map(action => {
 				return window.D2L.Siren.ActionQueue.enqueue(() => {
-					return _performSirenAction(action, null, tokenValue);
+					return _performSirenAction(action, null, tokenValue, false, undefined);
 				});
 			});
 			return Promise.all(actionPromises);
@@ -254,15 +266,16 @@ export const performSirenActions = function(token, actionsAndFields) {
  * @param {FieldOverride[]} [fields]
  * @param {boolean} [immediate]
  * @param {boolean} [bypassCache]
+ * @param {AbortSignal} [abortSignal]
  * @returns {Promise<ParsedEntity>}
  */
-export const performSirenAction = function(token, action, fields, immediate, bypassCache) {
+export const performSirenAction = function(token, action, fields, immediate, bypassCache, abortSignal = undefined) {
 	return window.D2L.Siren.EntityStore.getToken(token)
 		.then((resolved) => {
 			const tokenValue = resolved.tokenValue;
 			return !immediate ? window.D2L.Siren.ActionQueue.enqueue(() => {
-				return _performSirenAction(action, fields, tokenValue, bypassCache);
-			}) : _performSirenAction(action, fields, tokenValue, bypassCache);
+				return _performSirenAction(action, fields, tokenValue, bypassCache, abortSignal);
+			}) : _performSirenAction(action, fields, tokenValue, bypassCache, abortSignal);
 		});
 };
 
@@ -289,7 +302,7 @@ export const performLazySirenAction = function(token, actionFactory, fieldOverri
 				});
 			});
 
-			return _performSirenAction(action, fields, resolved.tokenValue, bypassCache);
+			return _performSirenAction(action, fields, resolved.tokenValue, bypassCache, undefined);
 		})
 	);
 };

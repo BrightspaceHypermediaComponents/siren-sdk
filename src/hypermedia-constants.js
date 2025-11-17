@@ -234,7 +234,8 @@ export const Rels = {
 		showResultsOverview: 'https://quizzes.api.brightspace.com/rels/show-results-overview',
 		suggestContent: 'https://quizzes.api.brightspace.com/rels/suggest-content-selection',
 		remediationCandidates: 'https://quizzes.api.brightspace.com/rels/remediation-candidates',
-		recommendAlignments: 'https://quizzes.api.brightspace.com/rels/recommend-alignments'
+		recommendAlignments: 'https://quizzes.api.brightspace.com/rels/recommend-alignments',
+		isSingleSession: 'https://quizzes.api.brightspace.com/rels/is-single-session'
 	},
 	// Themes API sub-domain rels
 	Themes: {
@@ -399,7 +400,8 @@ export const Classes = {
 		rawDescription: 'raw-description',
 		lastModified: 'lastModified',
 		aiInspired: 'ai-inspired',
-		AIContentEnabled: 'ai-content-enabled'
+		AIContentEnabled: 'ai-content-enabled',
+		remixPage: 'remix-page'
 	},
 	contentStyler: {
 		contentStyler: 'content-styler',
@@ -582,7 +584,8 @@ export const Classes = {
 			question: 'question',
 			external: 'external'
 		},
-		passingPercentage: 'passing-percentage'
+		passingPercentage: 'passing-percentage',
+		isSingleSession: 'is-single-session'
 	},
 	text: {
 		richtext: 'richtext'
@@ -763,8 +766,7 @@ export const Actions = {
 		update: 'quick-create-folder',
 		updateFilesSubmissionLimit: 'update-files-submission-limit',
 		updateDefaultScoringRubric: 'update-default-scoring-rubric',
-		updateNotificationEmail: 'update-notification-email',
-		updateAllowTextSubmission: 'update-allow-text-submission'
+		updateNotificationEmail: 'update-notification-email'
 	},
 	content: {
 		updateTitle: 'update-title',
@@ -774,6 +776,7 @@ export const Actions = {
 		updateColor: 'update-color',
 		updateAiOrigin: 'update-ai-origin',
 		saveObjectToCreateSpace: 'save-object-to-create-space',
+		contentRemix: 'simplify-content',
 	},
 	module: {
 		deleteModule: 'delete-module'
@@ -973,7 +976,8 @@ export const Actions = {
 		submissionViews: {
 			add: 'add'
 		},
-		updatePassingPercentage: 'update-passing-percentage'
+		updatePassingPercentage: 'update-passing-percentage',
+		updateIsSingleSession: 'update-is-single-session'
 	},
 	workingCopy: {
 		checkout: 'checkout',
