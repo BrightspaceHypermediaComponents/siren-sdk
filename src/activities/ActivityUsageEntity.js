@@ -1,4 +1,5 @@
 import { Actions, Classes, Rels } from '../hypermedia-constants.js';
+import { ActivityUsageCollectionEntity } from './ActivityUsageCollectionEntity.js';
 import { Entity } from '../es6/Entity.js';
 import { OrganizationEntity } from '../organizations/OrganizationEntity.js';
 import { performSirenAction } from '../es6/SirenAction.js';
@@ -51,6 +52,17 @@ export class ActivityUsageEntity extends Entity {
 		}
 
 		return this._entity.getLinkByRel(Rels.Activities.userActivityUsage).href;
+	}
+
+	/**
+	 * @returns {string} URL of the activity collection associated with the activity usage, if present
+	 */
+	activityCollectionHref() {
+		if (!this._entity || !this._entity.hasLinkByRel(Rels.Activities.activityCollection)) {
+			return;
+		}
+
+		return this._entity.getLinkByRel(Rels.Activities.activityCollection).href;
 	}
 
 	/**
@@ -231,6 +243,11 @@ export class ActivityUsageEntity extends Entity {
 	onUserActivityUsageChange(onChange) {
 		const userActivityUsageHref = this.userActivityUsageHref();
 		userActivityUsageHref && this._subEntity(UserActivityUsageEntity, userActivityUsageHref, onChange);
+	}
+
+	onActivityCollectionChange(onChange) {
+		const activityCollectionHref = this.activityCollectionHref();
+		activityCollectionHref && this._subEntity(ActivityUsageCollectionEntity, activityCollectionHref, onChange);
 	}
 
 	/**
