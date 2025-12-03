@@ -57,6 +57,7 @@ export const Rels = {
 		myActivitiesEmpty: 'https://activities.api.brightspace.com/rels/my-activities#empty',
 		myOrganizationActivities: 'https://activities.api.brightspace.com/rels/my-organization-activities',
 		myOrganizationActivitiesEmpty: 'https://activities.api.brightspace.com/rels/my-organization-activities#empty',
+		activityCollection: 'https://activities.api.brightspace.com/rels/activity-collection',
 		pagedActivityCollection: 'https://activities.api.brightspace.com/rels/activity-collection-paged',
 		parentCollections: 'https://activities.api.brightspace.com/rels/parent-collections',
 		activityUsage: 'https://activities.api.brightspace.com/rels/activity-usage',
@@ -84,6 +85,7 @@ export const Rels = {
 		associateGrade: 'https://activities.api.brightspace.com/rels/associate-grade',
 		associateMultipleGrades: 'https://activities.api.brightspace.com/rels/associate-multiple-grades',
 		evaluation: 'https://activities.api.brightspace.com/rels/evaluation',
+		pagingType: 'https://activities.api.brightspace.com/rels/activity-collection/paging-type',
 		activityName: 'https://activities.api.brightspace.com/rels/activity-name'
 	},
 	Conditions: {
