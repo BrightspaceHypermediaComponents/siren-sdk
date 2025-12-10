@@ -52,6 +52,15 @@ export class ContentRemixEntity extends Entity {
 	}
 
 	/**
+	 * @summary Checks if content remix with Creator Plus is available
+	 * @returns {bool}
+	 */
+	canRemixWithCPlus() {
+		const action = this._entity?.getActionByName(Actions.content.contentRemix);
+		return action?.getFieldByName('applyCPlusElements') != null;
+	}
+
+	/**
 	 * @summary Checks if content remix is enabled
 	 * @returns {bool} true if content remix is enabled
 	 */
@@ -96,6 +105,9 @@ export class ContentRemixEntity extends Entity {
 		}
 		if (remixParams.topicId !== null && remixParams.topicId !== undefined) {
 			fields.push({ name: 'topicId', value: remixParams.topicId });
+		}
+		if (remixParams.applyCPlusElements !== null && remixParams.applyCPlusElements !== undefined) {
+			fields.push({ name: 'applyCPlusElements', value: remixParams.applyCPlusElements });
 		}
 
 		return { action, fields };

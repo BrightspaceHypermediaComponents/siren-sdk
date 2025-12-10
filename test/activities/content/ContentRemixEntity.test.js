@@ -1,6 +1,7 @@
 import {
 	contentRemixEntityData,
 	contentRemixEntityDataMinimal,
+	contentRemixEntityDataWithCPlus,
 	contentRemixEntityDataWithoutAction,
 	contentRemixEntityDataWithoutClass
 } from './data/TestContentRemixEntity.js';
@@ -34,21 +35,32 @@ describe('ContentRemixEntity', () => {
 		});
 	});
 
-	describe('Content Remix Capabilities', () => {
+	describe('Content Remix Basic Capabilities', () => {
 		describe('when entity has remix-page class and simplify-content action', () => {
 			let entity;
+			let cPlusEntity;
 
 			beforeEach(() => {
 				const entityJson = SirenParse(contentRemixEntityData);
 				entity = new ContentRemixEntity(entityJson, 'fake-token');
+
+				const cPlusEntityJson = SirenParse(contentRemixEntityDataWithCPlus);
+				cPlusEntity = new ContentRemixEntity(cPlusEntityJson, 'fake-token');
 			});
 
 			it('canPerformContentRemix returns true', () => {
 				expect(entity.canPerformContentRemix()).to.be.true;
+				expect(cPlusEntity.canPerformContentRemix()).to.be.true;
 			});
 
 			it('isContentRemixEnabled returns true', () => {
 				expect(entity.isContentRemixEnabled()).to.be.true;
+				expect(cPlusEntity.isContentRemixEnabled()).to.be.true;
+			});
+
+			it('canRemixWithCPlus returns true', () => {
+				expect(entity.canRemixWithCPlus()).to.be.false;
+				expect(cPlusEntity.canRemixWithCPlus()).to.be.true;
 			});
 		});
 
@@ -108,7 +120,7 @@ describe('ContentRemixEntity', () => {
 		let entity;
 
 		beforeEach(() => {
-			const entityJson = SirenParse(contentRemixEntityData);
+			const entityJson = SirenParse(contentRemixEntityDataWithCPlus);
 			entity = new ContentRemixEntity(entityJson, 'fake-token');
 		});
 
@@ -122,7 +134,8 @@ describe('ContentRemixEntity', () => {
 				generationId: 'gen-456',
 				iterationNumber: 1,
 				sourceIndex: 0,
-				topicId: 'topic-789'
+				topicId: 'topic-789',
+				applyCPlusElements: true
 			};
 
 			const result = entity._formatContentRemixAction(params);
@@ -130,7 +143,7 @@ describe('ContentRemixEntity', () => {
 			expect(result).to.have.property('action');
 			expect(result).to.have.property('fields');
 			expect(result.action.name).to.equal('simplify-content');
-			expect(result.fields).to.have.lengthOf(9);
+			expect(result.fields).to.have.lengthOf(10);
 
 			const fieldNames = result.fields.map(f => f.name);
 			expect(fieldNames).to.include.members([
@@ -142,7 +155,8 @@ describe('ContentRemixEntity', () => {
 				'generationId',
 				'iterationNumber',
 				'sourceIndex',
-				'topicId'
+				'topicId',
+				'applyCPlusElements'
 			]);
 		});
 
@@ -205,7 +219,7 @@ describe('ContentRemixEntity', () => {
 		let entity;
 
 		beforeEach(() => {
-			const entityJson = SirenParse(contentRemixEntityData);
+			const entityJson = SirenParse(contentRemixEntityDataWithCPlus);
 			entity = new ContentRemixEntity(entityJson, 'fake-token');
 		});
 
@@ -252,7 +266,7 @@ describe('ContentRemixEntity', () => {
 		let entity;
 
 		beforeEach(() => {
-			const entityJson = SirenParse(contentRemixEntityData);
+			const entityJson = SirenParse(contentRemixEntityDataWithCPlus);
 			entity = new ContentRemixEntity(entityJson, 'fake-token');
 		});
 
