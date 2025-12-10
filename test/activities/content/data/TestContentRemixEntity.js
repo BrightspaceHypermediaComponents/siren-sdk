@@ -1,3 +1,55 @@
+const baseSimplifyContentAction = {
+	'name': 'simplify-content',
+	'title': 'Simplify Content',
+	'method': 'POST',
+	'href': 'https://content.api.brightspace.com/6613/remix',
+	'type': 'application/x-www-form-urlencoded',
+	'fields': [
+		{
+			'name': 'originalHtmlContent',
+			'type': 'text',
+			'class': ['required']
+		},
+		{
+			'name': 'textComplexity',
+			'type': 'text'
+		},
+		{
+			'name': 'customInstructions',
+			'type': 'text'
+		},
+		{
+			'name': 'detectedLang',
+			'type': 'text',
+			'class': ['required']
+		},
+		{
+			'name': 'sessionId',
+			'type': 'text',
+			'class': ['required']
+		},
+		{
+			'name': 'generationId',
+			'type': 'text',
+			'class': ['required']
+		},
+		{
+			'name': 'iterationNumber',
+			'type': 'number',
+			'class': ['required']
+		},
+		{
+			'name': 'sourceIndex',
+			'type': 'number',
+			'class': ['required']
+		},
+		{
+			'name': 'topicId',
+			'type': 'text'
+		}
+	]
+};
+
 export const contentRemixEntityData = {
 	'class': [
 		'remix-page'
@@ -5,63 +57,24 @@ export const contentRemixEntityData = {
 	'properties': {
 		'characterLimit': 6000
 	},
-	'actions': [
-		{
-			'name': 'simplify-content',
-			'title': 'Simplify Content',
-			'method': 'POST',
-			'href': 'https://content.api.brightspace.com/6613/remix',
-			'type': 'application/x-www-form-urlencoded',
-			'fields': [
-				{
-					'name': 'originalHtmlContent',
-					'type': 'text',
-					'class': ['required']
-				},
-				{
-					'name': 'textComplexity',
-					'type': 'text'
-				},
-				{
-					'name': 'customInstructions',
-					'type': 'text'
-				},
-				{
-					'name': 'detectedLang',
-					'type': 'text',
-					'class': ['required']
-				},
-				{
-					'name': 'sessionId',
-					'type': 'text',
-					'class': ['required']
-				},
-				{
-					'name': 'generationId',
-					'type': 'text',
-					'class': ['required']
-				},
-				{
-					'name': 'iterationNumber',
-					'type': 'number',
-					'class': ['required']
-				},
-				{
-					'name': 'sourceIndex',
-					'type': 'number',
-					'class': ['required']
-				},
-				{
-					'name': 'topicId',
-					'type': 'text'
-				}
-			]
-		}
-	],
+	'actions': [baseSimplifyContentAction],
 	'links': [
 		{
 			'rel': ['self'],
 			'href': 'https://content.api.brightspace.com/6613/remix'
+		}
+	]
+};
+
+export const contentRemixEntityDataWithCPlus = {
+	...contentRemixEntityData,
+	'actions': [
+		{
+			...baseSimplifyContentAction,
+			'fields': [
+				...baseSimplifyContentAction.fields,
+				{ 'type': 'checkbox', 'name': 'applyCPlusElements' }
+			]
 		}
 	]
 };
