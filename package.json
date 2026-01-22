@@ -37,6 +37,6 @@
     "fetch-mock": "^9",
     "jsdoc": "^4",
     "lit": "^2",
-    "sinon": "^15"
+    "sinon": "^17"
   }
 }
