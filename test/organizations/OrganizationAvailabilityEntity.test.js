@@ -79,12 +79,11 @@ describe('OrganizationAvailabilityEntity', () => {
 		it('can delete availability', () => {
 			expect(explicitEntity.canDelete()).to.be.true;
 		});
+
 		it('cannot delete availability', () => {
 			expect(cannotDeleteEntity.canDelete()).to.be.false;
 		});
-	});
 
-	describe('Delete Availability Action', () => {
 		describe('Has Action', () => {
 			let sandbox, deleteExplicitEntitySpy, deleteInheritEntitySpy, deleteInheritWithDescendantTypeEntitySpy;
 

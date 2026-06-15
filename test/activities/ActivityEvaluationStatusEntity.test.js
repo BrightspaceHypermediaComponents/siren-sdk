@@ -46,7 +46,7 @@ describe('ActivityEvaluationStatusEntity', () => {
 			expect(entity.assessNewApplication()).to.equal('assess-new');
 		});
 
-		it('can get assess all application href', () => {
+		it('can get submission application href', () => {
 			expect(entity.submissionApplication()).to.equal('submission');
 		});
 	});

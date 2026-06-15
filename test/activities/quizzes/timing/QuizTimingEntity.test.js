@@ -131,7 +131,7 @@ describe('QuizTimingEntity', () => {
 				const entity = new QuizTimingEntity(nonEditableRecommendedTimingEntity);
 				expect(entity.canEditTimeLimit()).to.be.false;
 			});
-			it('cannot edit noneditable recommended time limit', () => {
+			it('cannot edit noneditable enforced time limit', () => {
 				const entity = new QuizTimingEntity(nonEditableEnforcedTimingEntity);
 				expect(entity.canEditTimeLimit()).to.be.false;
 			});
