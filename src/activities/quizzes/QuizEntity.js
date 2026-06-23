@@ -153,6 +153,7 @@ export class QuizEntity extends Entity {
 		const entity = this._entity.getSubEntityByRel(Rels.Quizzes.disablePagerAndAlerts);
 		return entity && entity.hasClass(Classes.quizzes.checked);
 	}
+
 	/**
 	 * @returns {bool} Whether or not the user can edit the HideQuestionPoints quiz entity property
 	 */
