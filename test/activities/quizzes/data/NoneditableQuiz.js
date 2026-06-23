@@ -90,6 +90,15 @@ export const nonEditableQuiz = {
 		},
 		{
 			'class': [
+				'annotation-tools-enabled',
+				'unchecked'
+			],
+			'rel': [
+				'https://quizzes.api.brightspace.com/rels/annotation-tools-enabled'
+			],
+		},
+		{
+			'class': [
 				'quiz-password'
 			],
 			'rel': [

@@ -153,7 +153,6 @@ export class QuizEntity extends Entity {
 		const entity = this._entity.getSubEntityByRel(Rels.Quizzes.disablePagerAndAlerts);
 		return entity && entity.hasClass(Classes.quizzes.checked);
 	}
-
 	/**
 	 * @returns {bool} Whether or not the user can edit the HideQuestionPoints quiz entity property
 	 */
@@ -183,6 +182,22 @@ export class QuizEntity extends Entity {
 	 */
 	isSingleSessionEnabled() {
 		const entity = this._entity.getSubEntityByRel(Rels.Quizzes.isSingleSession);
+		return entity?.hasClass(Classes.quizzes.checked);
+	}
+
+	/**
+	 * @returns {bool} Whether or not the user can edit the Annotation Tools Enabled property
+	 */
+	canEditAnnotationToolsEnabled() {
+		const entity = this._entity.getSubEntityByRel(Rels.Quizzes.annotationToolsEnabled);
+		return entity && entity.hasActionByName(Actions.quizzes.updateAnnotationToolsEnabled);
+	}
+
+	/**
+	 * @returns {boolean|undefined} Whether or not Annotation Tools are enabled for the quiz entity
+	 */
+	isAnnotationToolsEnabled() {
+		const entity = this._entity.getSubEntityByRel(Rels.Quizzes.annotationToolsEnabled);
 		return entity?.hasClass(Classes.quizzes.checked);
 	}
 
@@ -760,6 +775,7 @@ export class QuizEntity extends Entity {
 		const updateSuggestContentAction = this.canEditStudySupportEnabled() ? this._formatUpdateSuggestContent(quiz) : null;
 		const updateRemediationCandidatesAction = this.canEditStudySupportEnabled() ? this._formatUpdateRemediationCandidates(quiz) : null;
 		const updateIsSingleSessionAction = this.canEditIsSingleSession() ? this._formatUpdateIsSingleSession(quiz) : null;
+		const updateAnnotationToolsEnabledAction = this.canEditAnnotationToolsEnabled() ? this._formatUpdateAnnotationToolsEnabled(quiz) : null;
 
 		const sirenActions = [
 			updateNameAction,
@@ -783,7 +799,8 @@ export class QuizEntity extends Entity {
 			updateShowResultsOverviewAction,
 			updateSuggestContentAction,
 			updateRemediationCandidatesAction,
-			updateIsSingleSessionAction
+			updateIsSingleSessionAction,
+			updateAnnotationToolsEnabledAction
 		];
 		await performSirenActions(this._token, sirenActions);
 	}
@@ -955,6 +972,27 @@ export class QuizEntity extends Entity {
 
 		const fields = [
 			{ name: 'isSingleSession', value: quiz.isSingleSession },
+		];
+
+		return { action, fields };
+	}
+
+	/**
+	 * Checks if quiz annotation has changed and if so returns the appropriate action/fields to update
+	 * @param {object} quiz the quiz that's being modified
+	 */
+	_formatUpdateAnnotationToolsEnabled(quiz) {
+		if (!quiz) return;
+		if (!this._hasAnnotationToolsEnabledChanged(quiz.annotationToolsEnabled)) return;
+
+		const entity = this._entity.getSubEntityByRel(Rels.Quizzes.annotationToolsEnabled);
+		if (!entity) return;
+
+		const action = entity.getActionByName(Actions.quizzes.updateAnnotationToolsEnabled);
+		if (!action) return;
+
+		const fields = [
+			{ name: 'annotationToolsEnabled', value: quiz.annotationToolsEnabled },
 		];
 
 		return { action, fields };
@@ -1310,6 +1348,10 @@ export class QuizEntity extends Entity {
 		return isSingleSession !== this.isSingleSessionEnabled();
 	}
 
+	_hasAnnotationToolsEnabledChanged(annotationToolsEnabled) {
+		return annotationToolsEnabled !== this.isAnnotationToolsEnabled();
+	}
+
 	_hasPasswordChanged(password) {
 		return password !== this.password();
 	}
@@ -1390,7 +1432,8 @@ export class QuizEntity extends Entity {
 			[this.isStudySupportEnabled(), quiz.studySupportEnabled],
 			[this.showResultsOverview(), quiz.showResultsOverview],
 			[this.suggestContent(), quiz.suggestContent],
-			[this.isSingleSessionEnabled(), quiz.isSingleSession]
+			[this.isSingleSessionEnabled(), quiz.isSingleSession],
+			[this.isAnnotationToolsEnabled(), quiz.annotationToolsEnabled]
 		];
 
 		for (const [left, right] of diffs) {
