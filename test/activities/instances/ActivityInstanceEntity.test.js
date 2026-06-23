@@ -24,7 +24,7 @@ describe('ActivityInstanceEntity', () => {
 			expect(entity.startDateType()).to.equal(1);
 		});
 
-		it('should return end date type', () => {
+		it('should return end date', () => {
 			expect(entity.endDate()).to.equal('2023-07-25T03:59:59.000Z');
 		});
 

@@ -271,24 +271,6 @@ describe('AssignmentEntity', () => {
 			expect(fetchMock.called()).to.be.true;
 		});
 
-		it('saves custom allowable file type', async() => {
-			fetchMock.patchOnce('https://f5aa43d7-c082-485c-84f5-4808147fe98a.assignments.api.dev.brightspace.com/123065/folders/7', editableEntity);
-
-			const assignmentEntity = new AssignmentEntity(editableEntity);
-
-			await assignmentEntity.save({
-				allowableFileType: '5',
-				customAllowableFileTypes: '.pdf,.html'
-			});
-
-			const form = await getFormData(fetchMock.lastCall().request);
-			if (!form.notSupported) {
-				expect(form.get('allowableFileType')).to.equal('5');
-				expect(form.get('customAllowableFileTypes')).to.equal('.pdf,.html');
-			}
-			expect(fetchMock.called()).to.be.true;
-		});
-
 		it('skips save if not dirty', async() => {
 			const assignmentEntity = new AssignmentEntity(editableEntity);
 

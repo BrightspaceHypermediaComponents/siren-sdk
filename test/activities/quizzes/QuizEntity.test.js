@@ -881,7 +881,7 @@ describe('QuizEntity', () => {
 		});
 	});
 
-	describe('activityUsage href', async() => {
+	describe('activityUsage href', () => {
 		const href = 'https://afe99802-9130-4320-a770-8d138b941e74.activities.api.proddev.d2l/activities/6606_51000_22/usages/6606';
 		describe('activityUsageHref', () => {
 			it('can read activity-usage href when quiz is editable', () => {
@@ -896,7 +896,7 @@ describe('QuizEntity', () => {
 		});
 	});
 
-	describe('working copy actions', async() => {
+	describe('working copy actions', () => {
 		describe('checkout', () => {
 			it('can checkout quiz working copy', async() => {
 				fetchMock.postOnce('https://afe99802-9130-4320-a770-8d138b941e74.quizzes.api.proddev.d2l/6606/quizzes/22', workingCopyEntity);

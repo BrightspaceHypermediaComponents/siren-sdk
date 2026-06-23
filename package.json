@@ -1,6 +1,6 @@
 {
   "name": "@brightspace-hmc/siren-sdk",
-  "version": "3.58.0",
+  "version": "3.60.1",
   "type": "module",
   "description": "",
   "main": "index.js",
@@ -17,7 +17,8 @@
     "/src"
   ],
   "publishConfig": {
-    "access": "public"
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
   },
   "dependencies": {
     "@brightspace-ui/core": "^3",
@@ -28,15 +29,13 @@
     "lodash-es": "^4.17.21"
   },
   "devDependencies": {
-    "@babel/core": "^7",
-    "@babel/eslint-parser": "^7",
     "@open-wc/testing": "^3",
     "@web/test-runner": "^0.17",
-    "eslint": "^8",
-    "eslint-config-brightspace": "^0.24",
+    "eslint": "^9",
+    "eslint-config-brightspace": "^3",
     "fetch-mock": "^9",
     "jsdoc": "^4",
-    "lit": "^2",
-    "sinon": "^15"
+    "lit": "^3",
+    "sinon": "^22"
   }
 }
