@@ -171,6 +171,29 @@ export const editableQuiz = {
 		},
 		{
 			'class': [
+				'annotation-tools-enabled',
+				'checked'
+			],
+			'rel': [
+				'https://quizzes.api.brightspace.com/rels/annotation-tools-enabled'
+			],
+			'actions': [
+				{
+					'href': 'https://afe99802-9130-4320-a770-8d138b941e74.quizzes.api.proddev.d2l/6606/quizzes/22',
+					'name': 'update-annotation-tools-enabled',
+					'method': 'PATCH',
+					'fields': [
+						{
+							'type': 'checkbox',
+							'name': 'annotationToolsEnabled',
+							'value': true
+						}
+					]
+				}
+			]
+		},
+		{
+			'class': [
 				'quiz-password'
 			],
 			'rel': [

@@ -237,7 +237,8 @@ export const Rels = {
 		suggestContent: 'https://quizzes.api.brightspace.com/rels/suggest-content-selection',
 		remediationCandidates: 'https://quizzes.api.brightspace.com/rels/remediation-candidates',
 		recommendAlignments: 'https://quizzes.api.brightspace.com/rels/recommend-alignments',
-		isSingleSession: 'https://quizzes.api.brightspace.com/rels/is-single-session'
+		isSingleSession: 'https://quizzes.api.brightspace.com/rels/is-single-session',
+		annotationToolsEnabled: 'https://quizzes.api.brightspace.com/rels/annotation-tools-enabled'
 	},
 	// Themes API sub-domain rels
 	Themes: {
@@ -587,7 +588,8 @@ export const Classes = {
 			external: 'external'
 		},
 		passingPercentage: 'passing-percentage',
-		isSingleSession: 'is-single-session'
+		isSingleSession: 'is-single-session',
+		annotationToolsEnabled: 'annotation-tools-enabled'
 	},
 	text: {
 		richtext: 'richtext'
@@ -979,7 +981,8 @@ export const Actions = {
 			add: 'add'
 		},
 		updatePassingPercentage: 'update-passing-percentage',
-		updateIsSingleSession: 'update-is-single-session'
+		updateIsSingleSession: 'update-is-single-session',
+		updateAnnotationToolsEnabled: 'update-annotation-tools-enabled'
 	},
 	workingCopy: {
 		checkout: 'checkout',

@@ -37,6 +37,7 @@ describe('QuizEntity', () => {
 				allowHints: true,
 				disablePagerAndAlerts: true,
 				hideQuestionPoints: true,
+				annotationToolsEnabled: true,
 				password: 'hello',
 				notificationEmail: 'moose@d2l.com',
 				preventMovingBackwards: true,
@@ -281,6 +282,32 @@ describe('QuizEntity', () => {
 			it('returns false when isHideQuestionPointsEnabled is false', () => {
 				const quizEntity = new QuizEntity(nonEditableEntity);
 				expect(quizEntity.isHideQuestionPointsEnabled()).to.be.false;
+			});
+		});
+	});
+
+	describe('annotationToolsEnabled', () => {
+		describe('canEditAnnotationToolsEnabled', () => {
+			it('returns true when canEditAnnotationToolsEnabled is editable', () => {
+				const quizEntity = new QuizEntity(editableEntity);
+				expect(quizEntity.canEditAnnotationToolsEnabled()).to.be.true;
+			});
+
+			it('returns false when canEditAnnotationToolsEnabled is not editable', () => {
+				const quizEntity = new QuizEntity(nonEditableEntity);
+				expect(quizEntity.canEditAnnotationToolsEnabled()).to.be.false;
+			});
+		});
+
+		describe('isAnnotationToolsEnabled', () => {
+			it('returns true when isAnnotationToolsEnabled is true', () => {
+				const quizEntity = new QuizEntity(editableEntity);
+				expect(quizEntity.isAnnotationToolsEnabled()).to.be.true;
+			});
+
+			it('returns false when isAnnotationToolsEnabled is false', () => {
+				const quizEntity = new QuizEntity(nonEditableEntity);
+				expect(quizEntity.isAnnotationToolsEnabled()).to.be.false;
 			});
 		});
 	});
@@ -530,6 +557,7 @@ describe('QuizEntity', () => {
 				allowHints: true,
 				disablePagerAndAlerts: true,
 				hideQuestionPoints: true,
+				annotationToolsEnabled: true,
 				password: 'hello',
 				notificationEmail: 'moose@d2l.com',
 				preventMovingBackwards: true,
