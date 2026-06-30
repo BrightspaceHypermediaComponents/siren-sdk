@@ -33,7 +33,7 @@
     "@web/test-runner": "^0.17",
     "eslint": "^9",
     "eslint-config-brightspace": "^3",
-    "fetch-mock": "^9",
+    "fetch-mock": "^12",
     "jsdoc": "^4",
     "lit": "^3",
     "sinon": "^22"
