@@ -30,7 +30,7 @@
   },
   "devDependencies": {
     "@open-wc/testing": "^3",
-    "@web/test-runner": "^0.17",
+    "@web/test-runner": "^0.20",
     "eslint": "^9",
     "eslint-config-brightspace": "^3",
     "fetch-mock": "^9",
