@@ -285,6 +285,35 @@ describe('DiscussionTopicEntity', () => {
 
 			expect(fetchMock.called()).to.be.false;
 		});
+
+		it('saves to Createspace when the action is present', async() => {
+			const createspaceHref = 'https://f5aa43d7-c082-485c-84f5-4808147fe98a.discussions.api.dev.brightspace.com/6613/forums/10003/topics/10004/save-to-createspace';
+			fetchMock.postOnce(createspaceHref, {});
+
+			const discussionTopic = new DiscussionTopicEntity(SirenParse({
+				...editableDiscussionTopic,
+				actions: [
+					...editableDiscussionTopic.actions,
+					{
+						href: createspaceHref,
+						name: 'save-to-createspace',
+						method: 'POST'
+					}
+				]
+			}));
+
+			await discussionTopic.save({
+				name: 'New name',
+			});
+
+			const calls = fetchMock.calls();
+			expect(calls.length).to.equal(2);
+			const form = await getFormData(calls[0].request);
+			if (!form.notSupported) {
+				expect(form.get('name')).to.equal('New name');
+			}
+			expect(calls[1][0]).to.equal(createspaceHref);
+		});
 	});
 
 	describe('recommendAlignments', () => {

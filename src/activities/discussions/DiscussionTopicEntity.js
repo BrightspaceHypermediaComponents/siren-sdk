@@ -208,6 +208,15 @@ export class DiscussionTopicEntity extends Entity {
 		return { action, fields };
 	}
 
+	_formatSaveToCreatespaceAction() {
+		const action = this._entity && this._entity.getActionByName(Actions.discussions.topic.saveToCreatespace);
+		if (!action) {
+			return;
+		}
+
+		return { action };
+	}
+
 	/**
 	 * @returns {bool} Whether or not the edit description action is present on the topic description entity
 	 */
@@ -450,6 +459,7 @@ export class DiscussionTopicEntity extends Entity {
 		const updateParticipationOption = this._formatUpdateParticipationOptionAction(topic);
 		const updateRequiresApproval = this._formatUpdateRequiresApproval(topic);
 		const updateIsAiInspired = this._formatUpdateAiInspiredAction(topic);
+		const saveToCreatespace = this._formatSaveToCreatespaceAction();
 
 		const sirenActions = [
 			updateNameAction,
@@ -458,7 +468,8 @@ export class DiscussionTopicEntity extends Entity {
 			updateRatePostType,
 			updateParticipationOption,
 			updateRequiresApproval,
-			updateIsAiInspired
+			updateIsAiInspired,
+			saveToCreatespace
 		];
 
 		await performSirenActions(this._token, sirenActions);

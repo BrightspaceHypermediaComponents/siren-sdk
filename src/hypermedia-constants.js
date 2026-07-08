@@ -849,7 +849,8 @@ export const Actions = {
 			updateRatingType: 'update-ratingtype',
 			updateParticipationOption: 'update-participationtype',
 			createAndAssociateWithForum: 'create-and-associate-with-forum',
-			requiresApproval : 'requires-approval'
+			requiresApproval : 'requires-approval',
+			saveToCreatespace: 'save-to-createspace'
 		},
 		groupSectionRestrictions: {
 			startUpdateRestrictions: 'start-update-restrictions',
