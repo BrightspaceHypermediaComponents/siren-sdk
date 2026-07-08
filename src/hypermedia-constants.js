@@ -754,6 +754,7 @@ export const Actions = {
 	assignments: {
 		assign: 'assign',
 		delete: 'delete',
+		saveToCreatespace: 'save-to-createspace',
 		updateGroupType: 'update-group-type',
 		updateFolderType: 'update-folder-type',
 		updateInstructions: 'update-instructions',

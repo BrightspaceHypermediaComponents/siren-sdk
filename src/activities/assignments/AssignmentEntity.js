@@ -883,6 +883,18 @@ export class AssignmentEntity extends Entity {
 	}
 
 	/**
+	 * Saves the assignment to Createspace
+	 */
+	_formatSaveToCreatespaceAction() {
+		const action = this._entity && this._entity.getActionByName(Actions.assignments.saveToCreatespace);
+		if (!action) {
+			return;
+		}
+
+		return { action };
+	}
+
+	/**
 	 * @returns {bool} Whether or not the user can see and set annotation availability for the assignment entity
 	 */
 	canEditAnnotations() {
@@ -976,6 +988,7 @@ export class AssignmentEntity extends Entity {
 		const updateDefaultScoringRubricAction = this._formatDefaultScoringRubricAction(assignment.defaultScoringRubricId);
 		const updateNotificationEmailAction = this._formatUpdateNotificationEmailAction(assignment.notificationEmail);
 		const updateIsAiInspiredAction = this._formatUpdateAiInspiredAction(assignment.isAiInspired);
+		const saveToCreatespaceAction = this._formatSaveToCreatespaceAction();
 
 		const sirenActions = [
 			updateNameAction,
@@ -991,7 +1004,8 @@ export class AssignmentEntity extends Entity {
 			updateformatAssignmentTypeAction,
 			updateDefaultScoringRubricAction,
 			updateNotificationEmailAction,
-			updateIsAiInspiredAction
+			updateIsAiInspiredAction,
+			saveToCreatespaceAction
 		];
 
 		await performSirenActions(this._token, sirenActions);
