@@ -271,6 +271,36 @@ describe('AssignmentEntity', () => {
 			expect(fetchMock.called()).to.be.true;
 		});
 
+		it('saves to Createspace', async() => {
+			const createspaceHref = 'https://f5aa43d7-c082-485c-84f5-4808147fe98a.assignments.api.dev.brightspace.com/123065/folders/7/saveToCreatespace';
+			fetchMock.patchOnce('https://f5aa43d7-c082-485c-84f5-4808147fe98a.assignments.api.dev.brightspace.com/123065/folders/7', editableEntity);
+			fetchMock.postOnce(createspaceHref, {});
+
+			const createspaceAssignmentEntity = new AssignmentEntity(SirenParse({
+				...editableAssignment,
+				actions: [
+					...editableAssignment.actions,
+					{
+						href: createspaceHref,
+						name: 'save-to-createspace',
+						method: 'POST'
+					}
+				]
+			}));
+
+			await createspaceAssignmentEntity.save({
+				instructions: 'Instructions for Createspace assignment'
+			});
+
+			const calls = fetchMock.calls();
+			expect(calls.length).to.equal(2);
+			const form = await getFormData(calls[0].request);
+			if (!form.notSupported) {
+				expect(form.get('instructions')).to.equal('Instructions for Createspace assignment');
+			}
+			expect(calls[1][0]).to.equal(createspaceHref);
+		});
+
 		it('skips save if not dirty', async() => {
 			const assignmentEntity = new AssignmentEntity(editableEntity);
 
