@@ -187,6 +187,22 @@ export class QuizEntity extends Entity {
 	}
 
 	/**
+	 * @returns {bool} Whether or not the user can edit the Yubikey property
+	 */
+	canEditYubikey() {
+		const entity = this._entity.getSubEntityByRel(Rels.Quizzes.yubikey);
+		return entity && entity.hasActionByName(Actions.quizzes.updateYubikey);
+	}
+
+	/**
+	 * @returns {boolean|undefined} Is Yubikey enabled for the quiz entity
+	 */
+	isYubikeyEnabled() {
+		const entity = this._entity.getSubEntityByRel(Rels.Quizzes.yubikey);
+		return entity?.hasClass(Classes.quizzes.checked);
+	}
+
+	/**
 	 * @returns {bool} Whether or not the user can edit the Annotation Tools Enabled property
 	 */
 	canEditAnnotationToolsEnabled() {
@@ -777,6 +793,7 @@ export class QuizEntity extends Entity {
 		const updateRemediationCandidatesAction = this.canEditStudySupportEnabled() ? this._formatUpdateRemediationCandidates(quiz) : null;
 		const updateIsSingleSessionAction = this.canEditIsSingleSession() ? this._formatUpdateIsSingleSession(quiz) : null;
 		const updateAnnotationToolsEnabledAction = this.canEditAnnotationToolsEnabled() ? this._formatUpdateAnnotationToolsEnabled(quiz) : null;
+		const updateYubikeyAction = this.canEditYubikey() ? this._formatUpdateYubikey(quiz) : null;
 
 		const sirenActions = [
 			updateNameAction,
@@ -801,7 +818,8 @@ export class QuizEntity extends Entity {
 			updateSuggestContentAction,
 			updateRemediationCandidatesAction,
 			updateIsSingleSessionAction,
-			updateAnnotationToolsEnabledAction
+			updateAnnotationToolsEnabledAction,
+			updateYubikeyAction
 		];
 		await performSirenActions(this._token, sirenActions);
 	}
@@ -994,6 +1012,27 @@ export class QuizEntity extends Entity {
 
 		const fields = [
 			{ name: 'annotationToolsEnabled', value: quiz.annotationToolsEnabled },
+		];
+
+		return { action, fields };
+	}
+
+	/**
+	 * Checks if quiz yubikey has changed and if so returns the appropriate action/fields to update
+	 * @param {object} quiz the quiz that's being modified
+	 */
+	_formatUpdateYubikey(quiz) {
+		if (!quiz) return;
+		if (!this._hasYubikeyChanged(quiz.yubikeyEnabled)) return;
+
+		const entity = this._entity.getSubEntityByRel(Rels.Quizzes.yubikey);
+		if (!entity) return;
+
+		const action = entity.getActionByName(Actions.quizzes.updateYubikey);
+		if (!action) return;
+
+		const fields = [
+			{ name: 'yubikeyEnabled', value: quiz.yubikeyEnabled },
 		];
 
 		return { action, fields };
@@ -1353,6 +1392,10 @@ export class QuizEntity extends Entity {
 		return annotationToolsEnabled !== this.isAnnotationToolsEnabled();
 	}
 
+	_hasYubikeyChanged(yubikeyEnabled) {
+		return yubikeyEnabled !== this.isYubikeyEnabled();
+	}
+
 	_hasPasswordChanged(password) {
 		return password !== this.password();
 	}
@@ -1434,7 +1477,8 @@ export class QuizEntity extends Entity {
 			[this.showResultsOverview(), quiz.showResultsOverview],
 			[this.suggestContent(), quiz.suggestContent],
 			[this.isSingleSessionEnabled(), quiz.isSingleSession],
-			[this.isAnnotationToolsEnabled(), quiz.annotationToolsEnabled]
+			[this.isAnnotationToolsEnabled(), quiz.annotationToolsEnabled],
+			[this.isYubikeyEnabled(), quiz.yubikeyEnabled]
 		];
 
 		for (const [left, right] of diffs) {
