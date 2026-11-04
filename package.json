@@ -3,6 +3,7 @@
   "version": "3.64.0",
   "type": "module",
   "description": "",
+  "repository": "https://github.com/BrightspaceHypermediaComponents/siren-sdk.git",
   "main": "index.js",
   "scripts": {
     "lint": "eslint . --ext .js,.html",
