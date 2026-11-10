@@ -548,6 +548,51 @@ describe('QuizEntity', () => {
 			expect(fetchMock.called()).to.be.true;
 		});
 
+		it('saves to Createspace when the action is present', async() => {
+			const quizHref = 'https://afe99802-9130-4320-a770-8d138b941e74.quizzes.api.proddev.d2l/6606/quizzes/22';
+			const createspaceHref = `${quizHref}/save-to-createspace`;
+			fetchMock.patchOnce(quizHref, editableEntity);
+			fetchMock.postOnce(createspaceHref, {});
+
+			const quizEntity = new QuizEntity(SirenParse({
+				...editableQuiz,
+				actions: [
+					...editableQuiz.actions,
+					{
+						href: createspaceHref,
+						name: 'save-to-createspace',
+						method: 'POST'
+					}
+				]
+			}));
+
+			await quizEntity.save({ name: 'New name' });
+
+			const calls = fetchMock.calls();
+			expect(calls.length).to.equal(2);
+			expect(calls[0][0]).to.equal(quizHref);
+			const form = await getFormData(calls[0].request);
+			if (!form.notSupported) {
+				expect(form.get('name')).to.equal('New name');
+			}
+			expect(calls[1][0]).to.equal(createspaceHref);
+		});
+
+		it('does not save to Createspace when the action is not present', async() => {
+			const quizHref = 'https://afe99802-9130-4320-a770-8d138b941e74.quizzes.api.proddev.d2l/6606/quizzes/22';
+			const createspaceHref = `${quizHref}/save-to-createspace`;
+			fetchMock.patchOnce(quizHref, editableEntity);
+
+			const quizEntity = new QuizEntity(editableEntity);
+
+			await quizEntity.save({ name: 'New name' });
+
+			const calls = fetchMock.calls();
+			expect(calls.length).to.equal(1);
+			expect(calls[0][0]).to.equal(quizHref);
+			expect(fetchMock.called(createspaceHref)).to.be.false;
+		});
+
 		it('skips save if not dirty', async() => {
 			const quizEntity = new QuizEntity(editableEntity);
 
