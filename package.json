@@ -1,6 +1,6 @@
 {
   "name": "@brightspace-hmc/siren-sdk",
-  "version": "3.64.1",
+  "version": "3.65.0",
   "type": "module",
   "description": "",
   "repository": "https://github.com/BrightspaceHypermediaComponents/siren-sdk.git",
