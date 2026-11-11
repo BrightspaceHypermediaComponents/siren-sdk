@@ -984,7 +984,8 @@ export const Actions = {
 		},
 		updatePassingPercentage: 'update-passing-percentage',
 		updateIsSingleSession: 'update-is-single-session',
-		updateAnnotationToolsEnabled: 'update-annotation-tools-enabled'
+		updateAnnotationToolsEnabled: 'update-annotation-tools-enabled',
+		saveToCreatespace: 'save-to-createspace'
 	},
 	workingCopy: {
 		checkout: 'checkout',

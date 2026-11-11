@@ -777,6 +777,7 @@ export class QuizEntity extends Entity {
 		const updateRemediationCandidatesAction = this.canEditStudySupportEnabled() ? this._formatUpdateRemediationCandidates(quiz) : null;
 		const updateIsSingleSessionAction = this.canEditIsSingleSession() ? this._formatUpdateIsSingleSession(quiz) : null;
 		const updateAnnotationToolsEnabledAction = this.canEditAnnotationToolsEnabled() ? this._formatUpdateAnnotationToolsEnabled(quiz) : null;
+		const saveToCreatespace = this._formatSaveToCreatespaceAction();
 
 		const sirenActions = [
 			updateNameAction,
@@ -801,7 +802,8 @@ export class QuizEntity extends Entity {
 			updateSuggestContentAction,
 			updateRemediationCandidatesAction,
 			updateIsSingleSessionAction,
-			updateAnnotationToolsEnabledAction
+			updateAnnotationToolsEnabledAction,
+			saveToCreatespace
 		];
 		await performSirenActions(this._token, sirenActions);
 	}
@@ -818,6 +820,13 @@ export class QuizEntity extends Entity {
 		const hintsAction = this._generateHintsAction(quiz.allowHints);
 
 		return hintsAction;
+	}
+
+	_formatSaveToCreatespaceAction() {
+		const action = this._entity && this._entity.getActionByName(Actions.quizzes.saveToCreatespace);
+		if (!action) return;
+
+		return { action };
 	}
 
 	/**
