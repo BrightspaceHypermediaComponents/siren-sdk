@@ -822,6 +822,9 @@ export class QuizEntity extends Entity {
 		return hintsAction;
 	}
 
+	/**
+	 * Returns a save to Createspace action if one exists
+	 */
 	_formatSaveToCreatespaceAction() {
 		const action = this._entity && this._entity.getActionByName(Actions.quizzes.saveToCreatespace);
 		if (!action) return;
