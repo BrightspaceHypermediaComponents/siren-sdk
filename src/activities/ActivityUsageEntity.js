@@ -706,7 +706,7 @@ export class ActivityUsageEntity extends Entity {
 	 * @returns {bool} Whether or not the activity usage entity has Createspace AI content functionality enabled
 	 */
 	isCreatespaceAIContentEnabled() {
-		return this._entity && this._entity.hasClass('createspace-ai-content-enabled');
+		return this._entity && this.isReusableActivity() && this._entity.hasClass('createspace-ai-content-enabled');
 	}
 
 	/**
