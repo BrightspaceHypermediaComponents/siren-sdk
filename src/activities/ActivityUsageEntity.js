@@ -703,6 +703,13 @@ export class ActivityUsageEntity extends Entity {
 	}
 
 	/**
+	 * @returns {bool} Whether or not the activity usage entity has Createspace AI content functionality enabled
+	 */
+	isCreatespaceAIModifyContentEnabled() {
+		return this._entity && this.isReusableActivity() && this._entity.hasClass('createspace-ai-modify-content-enabled');
+	}
+
+	/**
 	 * @returns {bool} Whether or not the activity usage entity is draft
 	 */
 	isDraft() {
